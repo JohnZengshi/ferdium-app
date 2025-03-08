@@ -228,6 +228,8 @@
       "es5-ext",
       "esbuild",
       "fast-folder-size",
+      "macos-notification-state",
+      "node-mac-permissions",
       "preval-build-info",
       "sqlite3"
     ]

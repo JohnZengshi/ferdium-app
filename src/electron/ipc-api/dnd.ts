@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
-import { isDevMode } from '../../environment-remote';
 import { isMac } from '../../environment';
+import { isDevMode } from '../../environment-remote';
 
 const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:dnd');
 

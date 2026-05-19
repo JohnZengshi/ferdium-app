@@ -374,7 +374,12 @@ export default class AppStore extends TypedStore {
     this._readSandboxes();
 
     // Check partitions of the sandboxes that no longer exist
-    const dir = readdirSync(userDataPath('Partitions'));
+    let dir;
+    try {
+      dir = readdirSync(userDataPath('Partitions'));
+    } catch {
+      dir = [];
+    }
     dir
       .filter(d => d.startsWith('sandbox-'))
       .forEach(d => {
@@ -410,9 +415,13 @@ export default class AppStore extends TypedStore {
   }
 
   _readSandboxes() {
-    this.sandboxServices = readJsonSync(
-      userDataPath('config', 'sandboxes.json'),
-    );
+    try {
+      this.sandboxServices = readJsonSync(
+        userDataPath('config', 'sandboxes.json'),
+      );
+    } catch {
+      this.sandboxServices = [];
+    }
   }
 
   _writeSandboxes() {

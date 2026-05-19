@@ -35,7 +35,11 @@ class RecipesScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
+    try {
+      this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
+    } catch {
+      this.customRecipes = [];
+    }
     this.state = {
       needle: null,
       currentFilter: 'featured',

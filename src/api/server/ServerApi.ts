@@ -453,7 +453,12 @@ export default class ServerApi {
 
       const packageUrl = `${apiBase()}/recipes/download/${recipeId}`;
 
-      const res = await window.fetch(packageUrl);
+      const res = await sendAuthRequest(packageUrl);
+      if (!res.ok) {
+        throw new Error(
+          `Failed to download recipe package ${recipeId}: ${res.status} ${res.statusText}`,
+        );
+      }
       debug('Recipe downloaded', recipeId);
       const blob = await res.blob();
       const buffer = await blob.arrayBuffer();

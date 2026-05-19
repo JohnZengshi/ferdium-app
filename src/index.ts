@@ -497,11 +497,17 @@ const createWindow = () => {
 
   if (isMac) {
     // Note: Do not remove the extension. See https://github.com/ferdium/ferdium-app/issues/1755 for explanation
-    import('./electron/macOSPermissions.js').then(macOSPermissions => {
-      const { askFormacOSPermissions } = macOSPermissions;
+    import('./electron/macOSPermissions.js')
+      .then(macOSPermissions => {
+        const { askFormacOSPermissions } = macOSPermissions;
 
-      setTimeout(() => askFormacOSPermissions(mainWindow!), ms('30s'));
-    });
+        if (typeof askFormacOSPermissions === 'function') {
+          setTimeout(() => askFormacOSPermissions(mainWindow!), ms('30s'));
+        }
+      })
+      .catch(error => {
+        console.error('Failed to load macOSPermissions module:', error);
+      });
   }
 
   mainWindow.on('show', () => {

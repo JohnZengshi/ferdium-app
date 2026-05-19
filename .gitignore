@@ -389,3 +389,8 @@ server*.log
 
 # env
 .envrc
+
+# Local dev tooling directories
+.vscode/
+.sisyphus/
+.playwright-mcp/

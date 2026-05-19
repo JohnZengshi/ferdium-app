@@ -1,5 +1,5 @@
 import { outputJsonSync, pathExistsSync, readJsonSync } from 'fs-extra';
-import { makeObservable, observable, toJS } from 'mobx';
+import { action, makeObservable, observable, toJS } from 'mobx';
 import { userDataPath } from '../environment-remote';
 
 const debug = require('../preload-safe-debug')('Ferdium:Settings');
@@ -25,7 +25,7 @@ export default class Settings {
     }
   }
 
-  set(settings: object): void {
+  @action set(settings: object): void {
     this.store = this._merge(settings);
 
     this._writeFile();

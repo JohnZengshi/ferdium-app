@@ -1,0 +1,1353 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": ".codespellrc",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 9,
+      "metrics": {}
+    },
+    {
+      "path": ".dockerignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 32,
+      "metrics": {}
+    },
+    {
+      "path": ".eslintignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 27,
+      "metrics": {}
+    },
+    {
+      "path": ".gitattributes",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 12,
+      "metrics": {}
+    },
+    {
+      "path": ".gitmodules",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 5,
+      "nonEmptyLines": 5,
+      "metrics": {}
+    },
+    {
+      "path": ".npmrc",
+      "language": "unknown",
+      "fileCategory": "config",
+      "totalLines": 5,
+      "nonEmptyLines": 5,
+      "metrics": {}
+    },
+    {
+      "path": ".nvmrc",
+      "language": "unknown",
+      "fileCategory": "config",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {}
+    },
+    {
+      "path": "CHANGELOG.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 255,
+      "nonEmptyLines": 202,
+      "sections": [
+        {
+          "heading": "[v6.2.0](https://github.com/ferdium/ferdium-app/compare/v6.1.0...v6.2.0) (2022-09-22)",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": ":warning: BREAKING CHANGES :warning:",
+          "level": 3,
+          "line": 3
+        },
+        {
+          "heading": "Features",
+          "level": 3,
+          "line": 8
+        },
+        {
+          "heading": "Services",
+          "level": 3,
+          "line": 14
+        },
+        {
+          "heading": "Bug fixes",
+          "level": 3,
+          "line": 23
+        },
+        {
+          "heading": "Under the hood",
+          "level": 3,
+          "line": 26
+        },
+        {
+          "heading": "[v6.1.0](https://github.com/ferdium/ferdium-app/compare/v6.0.1-nightly.23...v6.1.0) (2022-08-27)",
+          "level": 1,
+          "line": 33
+        },
+        {
+          "heading": "Features",
+          "level": 3,
+          "line": 35
+        },
+        {
+          "heading": "Services",
+          "level": 3,
+          "line": 41
+        },
+        {
+          "heading": "Bug fixes",
+          "level": 3,
+          "line": 46
+        },
+        {
+          "heading": "Under the hood",
+          "level": 3,
+          "line": 53
+        },
+        {
+          "heading": "[v6.0.0](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.97...v6.0.0) (2022-07-21)",
+          "level": 1,
+          "line": 68
+        },
+        {
+          "heading": "Features",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "Services",
+          "level": 3,
+          "line": 78
+        },
+        {
+          "heading": "Bug fixes",
+          "level": 3,
+          "line": 80
+        },
+        {
+          "heading": "Under the hood",
+          "level": 3,
+          "line": 88
+        },
+        {
+          "heading": "[v6.0.0-beta.3](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.77...v6.0.0-nightly.97) (2022-07-12)",
+          "level": 1,
+          "line": 95
+        },
+        {
+          "heading": "Features",
+          "level": 3,
+          "line": 97
+        },
+        {
+          "heading": "Services",
+          "level": 3,
+          "line": 109
+        },
+        {
+          "heading": "Bug fixes",
+          "level": 3,
+          "line": 129
+        },
+        {
+          "heading": "Under the hood",
+          "level": 3,
+          "line": 145
+        },
+        {
+          "heading": "[v6.0.0-beta.2](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.47...v6.0.0-nightly.77) (2022-06-25)",
+          "level": 1,
+          "line": 163
+        },
+        {
+          "heading": "Features",
+          "level": 3,
+          "line": 165
+        },
+        {
+          "heading": "Services",
+          "level": 3,
+          "line": 182
+        },
+        {
+          "heading": "Bug fixes",
+          "level": 3,
+          "line": 184
+        },
+        {
+          "heading": "Under the hood",
+          "level": 3,
+          "line": 200
+        },
+        {
+          "heading": "[v6.0.0-beta.1](https://github.com/ferdium/ferdium-app/compare/v5.8.2-nightly.2...v6.0.0-nightly.47) (2022-05-26)",
+          "level": 1,
+          "line": 215
+        },
+        {
+          "heading": "Features",
+          "level": 3,
+          "line": 217
+        },
+        {
+          "heading": "Services",
+          "level": 3,
+          "line": 230
+        },
+        {
+          "heading": "Bug fixes",
+          "level": 3,
+          "line": 240
+        },
+        {
+          "heading": "Under the hood",
+          "level": 3,
+          "line": 246
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 31
+      }
+    },
+    {
+      "path": "CLAUDE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 113,
+      "nonEmptyLines": 78,
+      "sections": [
+        {
+          "heading": "CLAUDE.md",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Project Overview",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Essential Commands",
+          "level": 2,
+          "line": 9
+        },
+        {
+          "heading": "Git Hooks",
+          "level": 2,
+          "line": 29
+        },
+        {
+          "heading": "Architecture",
+          "level": 2,
+          "line": 34
+        },
+        {
+          "heading": "Process Model (Electron)",
+          "level": 3,
+          "line": 36
+        },
+        {
+          "heading": "State Management (MobX)",
+          "level": 3,
+          "line": 41
+        },
+        {
+          "heading": "API Layer",
+          "level": 3,
+          "line": 57
+        },
+        {
+          "heading": "Recipe/Service System",
+          "level": 3,
+          "line": 65
+        },
+        {
+          "heading": "Internal Server",
+          "level": 3,
+          "line": 71
+        },
+        {
+          "heading": "Feature Modules",
+          "level": 3,
+          "line": 75
+        },
+        {
+          "heading": "Key Directories",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "Build System",
+          "level": 3,
+          "line": 96
+        },
+        {
+          "heading": "Styling",
+          "level": 3,
+          "line": 100
+        },
+        {
+          "heading": "Testing",
+          "level": 2,
+          "line": 104
+        },
+        {
+          "heading": "Code Quality",
+          "level": 2,
+          "line": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 16
+      }
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 11,
+      "nonEmptyLines": 6,
+      "sections": [
+        {
+          "heading": "Contributor Code of Conduct",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 208,
+      "nonEmptyLines": 147,
+      "sections": [
+        {
+          "heading": "Contributing to Ferdium 7",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Table of contents",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Code of Conduct",
+          "level": 2,
+          "line": 35
+        },
+        {
+          "heading": "What should I know before I get started?",
+          "level": 2,
+          "line": 40
+        },
+        {
+          "heading": "How can I contribute?",
+          "level": 2,
+          "line": 44
+        },
+        {
+          "heading": "Setting up your development machine",
+          "level": 2,
+          "line": 49
+        },
+        {
+          "heading": "Install system-level dependencies",
+          "level": 3,
+          "line": 51
+        },
+        {
+          "heading": "Node.js, pnpm",
+          "level": 4,
+          "line": 55
+        },
+        {
+          "heading": "Git",
+          "level": 4,
+          "line": 72
+        },
+        {
+          "heading": "On Debian/Ubuntu",
+          "level": 4,
+          "line": 76
+        },
+        {
+          "heading": "On Fedora",
+          "level": 4,
+          "line": 82
+        },
+        {
+          "heading": "On Windows",
+          "level": 4,
+          "line": 88
+        },
+        {
+          "heading": "Clone repository with submodule",
+          "level": 3,
+          "line": 94
+        },
+        {
+          "heading": "Run the script",
+          "level": 3,
+          "line": 104
+        },
+        {
+          "heading": "Using Docker to build a linux-targetted packaged app (not supported as a 1st-class citizen)",
+          "level": 3,
+          "line": 120
+        },
+        {
+          "heading": "Start development app",
+          "level": 3,
+          "line": 144
+        },
+        {
+          "heading": "Styleguide",
+          "level": 3,
+          "line": 156
+        },
+        {
+          "heading": "Git Commit Messages format",
+          "level": 4,
+          "line": 158
+        },
+        {
+          "heading": "Javascript Coding style-checker",
+          "level": 4,
+          "line": 166
+        },
+        {
+          "heading": "Code Signing on a mac (not necessary in the normal circumstances)",
+          "level": 3,
+          "line": 170
+        },
+        {
+          "heading": "Release",
+          "level": 2,
+          "line": 178
+        },
+        {
+          "heading": "Nightly releases",
+          "level": 3,
+          "line": 202
+        },
+        {
+          "heading": "Updating the code after a hiatus",
+          "level": 3,
+          "line": 206
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 23
+      }
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 51,
+      "nonEmptyLines": 33,
+      "services": [
+        {
+          "name": "builder",
+          "image": "docker.io/library/node:22.18.0-bookworm",
+          "ports": [],
+          "startLine": 3,
+          "endLine": 44
+        },
+        {
+          "name": "busybox",
+          "image": "docker.io/library/busybox:latest",
+          "ports": [],
+          "startLine": 45,
+          "endLine": 52
+        }
+      ],
+      "steps": [
+        {
+          "name": "FROM docker.io/library/node:22.18.0-bookworm AS builder",
+          "startLine": 3,
+          "endLine": 3
+        },
+        {
+          "name": "ENV PATH=\"/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin",
+          "startLine": 5,
+          "endLine": 5
+        },
+        {
+          "name": "ARG DEBIAN_FRONTEND=noninteractive",
+          "startLine": 7,
+          "endLine": 7
+        },
+        {
+          "name": "ARG USE_SYSTEM_FPM=true",
+          "startLine": 9,
+          "endLine": 9
+        },
+        {
+          "name": "ARG PREVAL_BUILD_INFO_PLACEHOLDERS=true",
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "name": "RUN apt-get update -y \\",
+          "startLine": 14,
+          "endLine": 14
+        },
+        {
+          "name": "WORKDIR /usr/src/ferdium",
+          "startLine": 19,
+          "endLine": 19
+        },
+        {
+          "name": "COPY package*.json ./",
+          "startLine": 21,
+          "endLine": 21
+        },
+        {
+          "name": "COPY .npmrc ./",
+          "startLine": 22,
+          "endLine": 22
+        },
+        {
+          "name": "RUN npm i -gf \"pnpm@$(node -p 'require(\"./package.json\").engines",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "name": "RUN pnpm i",
+          "startLine": 26,
+          "endLine": 26
+        },
+        {
+          "name": "COPY . .",
+          "startLine": 28,
+          "endLine": 28
+        },
+        {
+          "name": "WORKDIR /usr/src/ferdium/recipes",
+          "startLine": 30,
+          "endLine": 30
+        },
+        {
+          "name": "RUN pnpm i && pnpm lint && pnpm reformat-files && pnpm package",
+          "startLine": 32,
+          "endLine": 32
+        },
+        {
+          "name": "WORKDIR /usr/src/ferdium",
+          "startLine": 34,
+          "endLine": 34
+        },
+        {
+          "name": "RUN arch=\"$(dpkg --print-architecture)\"; \\",
+          "startLine": 36,
+          "endLine": 36
+        },
+        {
+          "name": "FROM docker.io/library/busybox:latest",
+          "startLine": 45,
+          "endLine": 45
+        },
+        {
+          "name": "WORKDIR /ferdium",
+          "startLine": 47,
+          "endLine": 47
+        },
+        {
+          "name": "COPY --from=builder /usr/src/ferdium/out/* /ferdium/",
+          "startLine": 49,
+          "endLine": 49
+        },
+        {
+          "name": "VOLUME [ \"/ferdium-out\" ]",
+          "startLine": 51,
+          "endLine": 51
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "serviceCount": 2,
+        "stepCount": 20
+      }
+    },
+    {
+      "path": "LICENSE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 201,
+      "nonEmptyLines": 169,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 526,
+      "nonEmptyLines": 500,
+      "sections": [
+        {
+          "heading": "Ferdium",
+          "level": 1,
+          "line": 12
+        },
+        {
+          "heading": "Screenshots",
+          "level": 2,
+          "line": 39
+        },
+        {
+          "heading": "Download",
+          "level": 2,
+          "line": 55
+        },
+        {
+          "heading": "Migrating from Ferdi",
+          "level": 2,
+          "line": 63
+        },
+        {
+          "heading": "Styling",
+          "level": 2,
+          "line": 67
+        },
+        {
+          "heading": "Contributing",
+          "level": 2,
+          "line": 79
+        },
+        {
+          "heading": "Contributors ✨",
+          "level": 2,
+          "line": 83
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 7
+      }
+    },
+    {
+      "path": "SECURITY.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 15,
+      "nonEmptyLines": 9,
+      "sections": [
+        {
+          "heading": "Security Policy",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Supported Versions",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Reporting a Vulnerability",
+          "level": 2,
+          "line": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "biome.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 38,
+      "nonEmptyLines": 38,
+      "sections": [
+        {
+          "heading": "$schema",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "formatter",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "organizeImports",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "linter",
+          "level": 1,
+          "line": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "branding/README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 13,
+      "nonEmptyLines": 9,
+      "sections": [
+        {
+          "heading": "Ferdium branding",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Logo",
+          "level": 2,
+          "line": 4
+        },
+        {
+          "heading": "Beard",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "Gradient",
+          "level": 2,
+          "line": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "commitlint.config.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "crowdin.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 12,
+      "nonEmptyLines": 12,
+      "sections": [
+        {
+          "heading": "pull_request_title",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "commit_message",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "append_commit_message",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "files",
+          "level": 1,
+          "line": 4
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "electron-builder.env",
+      "language": "config",
+      "fileCategory": "config",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "definitions": [
+        {
+          "name": "BUNDLING",
+          "kind": "variable",
+          "fields": [],
+          "startLine": 1,
+          "endLine": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 1
+      }
+    },
+    {
+      "path": "electron-builder.npmrc",
+      "language": "npmrc",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "metrics": {}
+    },
+    {
+      "path": "electron-builder.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 114,
+      "nonEmptyLines": 99,
+      "sections": [
+        {
+          "heading": "directories",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "appId",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "publish",
+          "level": 1,
+          "line": 7
+        },
+        {
+          "heading": "snap",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "nsis",
+          "level": 1,
+          "line": 20
+        },
+        {
+          "heading": "portable",
+          "level": 1,
+          "line": 26
+        },
+        {
+          "heading": "dmg",
+          "level": 1,
+          "line": 30
+        },
+        {
+          "heading": "appImage",
+          "level": 1,
+          "line": 41
+        },
+        {
+          "heading": "deb",
+          "level": 1,
+          "line": 44
+        },
+        {
+          "heading": "rpm",
+          "level": 1,
+          "line": 47
+        },
+        {
+          "heading": "afterSign",
+          "level": 1,
+          "line": 53
+        },
+        {
+          "heading": "protocols",
+          "level": 1,
+          "line": 55
+        },
+        {
+          "heading": "asarUnpack",
+          "level": 1,
+          "line": 59
+        },
+        {
+          "heading": "mac",
+          "level": 1,
+          "line": 65
+        },
+        {
+          "heading": "win",
+          "level": 1,
+          "line": 85
+        },
+        {
+          "heading": "linux",
+          "level": 1,
+          "line": 98
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 16
+      }
+    },
+    {
+      "path": "esbuild.mjs",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 130,
+      "functions": [
+        {
+          "name": "staticAssets",
+          "startLine": 18,
+          "endLine": 61,
+          "params": []
+        },
+        {
+          "name": "copyManualAssets",
+          "startLine": 63,
+          "endLine": 76,
+          "params": []
+        },
+        {
+          "name": "runEsbuild",
+          "startLine": 78,
+          "endLine": 141,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 19
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 25
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 31
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 37
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 43
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 49
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 55
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.existsSync",
+          "lineNumber": 64
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.mkdirSync",
+          "lineNumber": 65
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.copyFileSync",
+          "lineNumber": 67
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.copyFileSync",
+          "lineNumber": 68
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fsPkg.outputJsonSync",
+          "lineNumber": 75
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "performance.now",
+          "lineNumber": 79
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "process.argv.slice",
+          "lineNumber": 81
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "myArgs.includes",
+          "lineNumber": 82
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 83
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.blue",
+          "lineNumber": 83
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "fs.existsSync",
+          "lineNumber": 85
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "fs.rmSync",
+          "lineNumber": 86
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 87
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.blue",
+          "lineNumber": 87
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "copyManualAssets",
+          "lineNumber": 89
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "glob",
+          "lineNumber": 92
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "entryPoints.push",
+          "lineNumber": 95
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "esbuild.build",
+          "lineNumber": 102
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "log",
+          "lineNumber": 113
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "chalk.red",
+          "lineNumber": 113
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "log",
+          "lineNumber": 115
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "chalk.blue",
+          "lineNumber": 115
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "livereload.reload",
+          "lineNumber": 116
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "sassPlugin",
+          "lineNumber": 121
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "staticAssets",
+          "lineNumber": 121
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "esbuild.serve",
+          "lineNumber": 125
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 132
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.green",
+          "lineNumber": 132
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "livereload.listen",
+          "lineNumber": 133
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "performance.now",
+          "lineNumber": 135
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 137
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.green",
+          "lineNumber": 138
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "moment(duration).format",
+          "lineNumber": 138
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "moment",
+          "lineNumber": 138
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "jest.config.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 31,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 254,
+      "nonEmptyLines": 254,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "productName",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "desktopName",
+          "level": 1,
+          "line": 4
+        },
+        {
+          "heading": "appId",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "version",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "description",
+          "level": 1,
+          "line": 7
+        },
+        {
+          "heading": "author",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "license",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "copyright",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "main",
+          "level": 1,
+          "line": 11
+        },
+        {
+          "heading": "homepage",
+          "level": 1,
+          "line": 12
+        },
+        {
+          "heading": "repository",
+          "level": 1,
+          "line": 13
+        },
+        {
+          "heading": "private",
+          "level": 1,
+          "line": 14
+        },
+        {
+          "heading": "engines",
+          "level": 1,
+          "line": 15
+        },
+        {
+          "heading": "engine-strict",
+          "level": 1,
+          "line": 19
+        },
+        {
+          "heading": "volta",
+          "level": 1,
+          "line": 20
+        },
+        {
+          "heading": "packageManager",
+          "level": 1,
+          "line": 24
+        },
+        {
+          "heading": "scripts",
+          "level": 1,
+          "line": 25
+        },
+        {
+          "heading": "dependencies",
+          "level": 1,
+          "line": 54
+        },
+        {
+          "heading": "devDependencies",
+          "level": 1,
+          "line": 137
+        },
+        {
+          "heading": "pnpm",
+          "level": 1,
+          "line": 17
+        },
+        {
+          "heading": "overrides",
+          "level": 1,
+          "line": 202
+        },
+        {
+          "heading": "optionalDependencies",
+          "level": 1,
+          "line": 244
+        },
+        {
+          "heading": "browserslist",
+          "level": 1,
+          "line": 248
+        },
+        {
+          "heading": "autoload",
+          "level": 1,
+          "line": 251
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 25
+      }
+    }
+  ]
+}

@@ -1,0 +1,616 @@
+{
+  "batchIndex": 23,
+  "nodes": [
+    {
+      "id": "config:.codespellrc",
+      "type": "config",
+      "name": ".codespellrc",
+      "filePath": ".codespellrc",
+      "summary": "Codespell spell-check configuration file defining skip patterns, hidden file checking, and regex-based ignore rules for the Ferdium codebase",
+      "tags": ["spell-check", "code-quality", "config"],
+      "language": "unknown",
+      "complexity": "simple",
+      "definitions": [
+        {"name": "skip", "kind": "config-key", "value": ".git*,*.svg,*.css,.codespellrc,locales,pnpm-lock.yaml,i18n,config.ts,extensions.json", "startLine": 3, "endLine": 3},
+        {"name": "check-hidden", "kind": "config-key", "value": "true", "startLine": 4, "endLine": 4},
+        {"name": "ignore-regex", "kind": "config-key", "value": "\\\\b(Manuel|Sie diesen|Sie den|l'authentification)\\\\b", "startLine": 7, "endLine": 7}
+      ],
+      "metrics": {"definitionCount": 3}
+    },
+    {
+      "id": "config:.dockerignore",
+      "type": "config",
+      "name": ".dockerignore",
+      "filePath": ".dockerignore",
+      "summary": "Docker build context exclusion list preventing node_modules, build artifacts, git data, docs, and temp files from entering Docker image builds",
+      "tags": ["docker", "build", "infrastructure"],
+      "language": "unknown",
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:.eslintignore",
+      "type": "config",
+      "name": ".eslintignore",
+      "filePath": ".eslintignore",
+      "summary": "ESLint ignore patterns excluding logs, coverage, build output, recipes, and generated type definition files from linting checks",
+      "tags": ["eslint", "linting", "code-quality"],
+      "language": "unknown",
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:.gitattributes",
+      "type": "config",
+      "name": ".gitattributes",
+      "filePath": ".gitattributes",
+      "summary": "Git attributes enforcing LF line endings for text files and binary detection for images, icons, and font file formats",
+      "tags": ["git", "configuration", "cross-platform"],
+      "language": "unknown",
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.gitmodules",
+      "type": "config",
+      "name": ".gitmodules",
+      "filePath": ".gitmodules",
+      "summary": "Git submodule definition pointing ferdium-recipes repository at the recipes/ directory for service recipe templates",
+      "tags": ["git", "submodules", "recipes", "dependencies"],
+      "language": "unknown",
+      "complexity": "simple",
+      "definitions": [
+        {"name": "recipes", "kind": "submodule", "fields": [{"name": "path", "value": "recipes"}, {"name": "url", "value": "http://git.lzxlai.com/john/ferdium-recipes.git"}, {"name": "branch", "value": "main"}], "startLine": 1, "endLine": 5}
+      ],
+      "metrics": {"definitionCount": 1}
+    },
+    {
+      "id": "config:.npmrc",
+      "type": "config",
+      "name": ".npmrc",
+      "filePath": ".npmrc",
+      "summary": "pnpm configuration for exact dependency version pinning, relaxed engine and peer-dep strictness, and unfrozen lockfile updates",
+      "tags": ["npm", "pnpm", "package-management"],
+      "language": "unknown",
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.nvmrc",
+      "type": "config",
+      "name": ".nvmrc",
+      "filePath": ".nvmrc",
+      "summary": "Node.js version pinning to 22.18.0 matching the engines field in package.json for consistent runtime across environments",
+      "tags": ["nodejs", "version-management", "nvm"],
+      "language": "unknown",
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "CHANGELOG.md",
+      "filePath": "CHANGELOG.md",
+      "summary": "Release changelog documenting Ferdium version history with breaking changes, features, service additions, and bug fixes across releases",
+      "tags": ["changelog", "release-notes", "version-history"],
+      "language": "markdown",
+      "complexity": "complex"
+    },
+    {
+      "id": "document:CLAUDE.md",
+      "type": "document",
+      "name": "CLAUDE.md",
+      "filePath": "CLAUDE.md",
+      "summary": "AI coding assistant guide documenting Ferdium project architecture, essential pnpm commands, MobX stores, API layer, recipe system, build pipeline, and code quality conventions",
+      "tags": ["ai", "documentation", "development-guide", "claude"],
+      "language": "markdown",
+      "complexity": "complex",
+      "sections": [
+        {"heading": "CLAUDE.md", "level": 1, "line": 1},
+        {"heading": "Project Overview", "level": 2, "line": 5},
+        {"heading": "Essential Commands", "level": 2, "line": 9},
+        {"heading": "Git Hooks", "level": 2, "line": 29},
+        {"heading": "Architecture", "level": 2, "line": 35},
+        {"heading": "Process Model (Electron)", "level": 3, "line": 36},
+        {"heading": "State Management (MobX)", "level": 3, "line": 41},
+        {"heading": "API Layer", "level": 3, "line": 57},
+        {"heading": "Recipe/Service System", "level": 3, "line": 65},
+        {"heading": "Internal Server", "level": 3, "line": 71},
+        {"heading": "Feature Modules", "level": 3, "line": 75},
+        {"heading": "Key Directories", "level": 3, "line": 86},
+        {"heading": "Build System", "level": 3, "line": 96},
+        {"heading": "Styling", "level": 3, "line": 100},
+        {"heading": "Testing", "level": 3, "line": 104},
+        {"heading": "Code Quality", "level": 3, "line": 108}
+      ],
+      "metrics": {"sectionCount": 16}
+    },
+    {
+      "id": "document:CODE_OF_CONDUCT.md",
+      "type": "document",
+      "name": "CODE_OF_CONDUCT.md",
+      "filePath": "CODE_OF_CONDUCT.md",
+      "summary": "Contributor Covenant Code of Conduct establishing community behavior expectations and enforcement reporting process",
+      "tags": ["community", "conduct", "contributing"],
+      "language": "markdown",
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Comprehensive contribution guide covering system dependency setup, repository cloning with submodules, Docker cross-architecture builds, conventional commits styleguide, and release process",
+      "tags": ["contributing", "development-setup", "guide"],
+      "language": "markdown",
+      "complexity": "complex",
+      "sections": [
+        {"heading": "Contributing to Ferdium 7", "level": 1, "line": 1},
+        {"heading": "Table of contents", "level": 2, "line": 5},
+        {"heading": "Code of Conduct", "level": 2, "line": 35},
+        {"heading": "What should I know before I get started?", "level": 2, "line": 41},
+        {"heading": "How can I contribute?", "level": 2, "line": 44},
+        {"heading": "Setting up your development machine", "level": 2, "line": 48}
+      ],
+      "metrics": {"sectionCount": 6}
+    },
+    {
+      "id": "service:Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "Dockerfile",
+      "summary": "Multi-stage Docker build for cross-architecture Ferdium packaging using Node 22.18.0 builder stage and minimal busybox runtime stage",
+      "tags": ["docker", "build", "cross-platform", "container"],
+      "language": "dockerfile",
+      "complexity": "moderate",
+      "definitions": [
+        {"name": "builder", "kind": "stage", "fields": [{"name": "baseImage", "value": "docker.io/library/node:22.18.0-bookworm"}], "startLine": 3, "endLine": 41},
+        {"name": "runtime", "kind": "stage", "fields": [{"name": "baseImage", "value": "docker.io/library/busybox:latest"}], "startLine": 45, "endLine": 51}
+      ],
+      "metrics": {"definitionCount": 2}
+    },
+    {
+      "id": "document:LICENSE.md",
+      "type": "document",
+      "name": "LICENSE.md",
+      "filePath": "LICENSE.md",
+      "summary": "Apache License 2.0 governing Ferdium's open source distribution, use, modification, and reproduction rights",
+      "tags": ["license", "legal", "apache"],
+      "language": "markdown",
+      "complexity": "complex"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project README introducing Ferdium as a hard-fork of Franz, with download links, CI badges, Crowdin status, Ferdi migration guide, custom styling instructions, and contributor acknowledgments",
+      "tags": ["readme", "project-overview", "documentation"],
+      "language": "markdown",
+      "complexity": "very-complex",
+      "sections": [
+        {"heading": "Ferdium", "level": 1, "line": 12},
+        {"heading": "Screenshots", "level": 2, "line": 39},
+        {"heading": "Download", "level": 2, "line": 55},
+        {"heading": "Migrating from Ferdi", "level": 2, "line": 63},
+        {"heading": "Styling", "level": 2, "line": 67},
+        {"heading": "Contributing", "level": 2, "line": 79},
+        {"heading": "Contributors", "level": 2, "line": 81}
+      ],
+      "metrics": {"sectionCount": 7}
+    },
+    {
+      "id": "document:SECURITY.md",
+      "type": "document",
+      "name": "SECURITY.md",
+      "filePath": "SECURITY.md",
+      "summary": "Security policy defining supported versions (>6.x) and vulnerability reporting process via email disclosure",
+      "tags": ["security", "policy", "vulnerability-reporting"],
+      "language": "markdown",
+      "complexity": "simple"
+    },
+    {
+      "id": "config:biome.json",
+      "type": "config",
+      "name": "biome.json",
+      "filePath": "biome.json",
+      "summary": "Biome linter configuration with disabled formatter, enabled import organization, and relaxed rules for non-null assertions, explicit any, and empty interfaces",
+      "tags": ["biome", "linter", "code-quality", "configuration"],
+      "language": "json",
+      "complexity": "moderate",
+      "definitions": [
+        {"name": "formatter.enabled", "kind": "config-key", "value": "false", "startLine": 4, "endLine": 4},
+        {"name": "organizeImports.enabled", "kind": "config-key", "value": "true", "startLine": 7, "endLine": 7},
+        {"name": "linter.ignore", "kind": "config-list", "fields": [{"name": "0", "value": "build"}, {"name": "1", "value": "coverage"}, {"name": "2", "value": "node_modules"}, {"name": "3", "value": "recipes"}, {"name": "4", "value": "*.json"}], "startLine": 10, "endLine": 10}
+      ],
+      "metrics": {"definitionCount": 3}
+    },
+    {
+      "id": "document:branding/README.md",
+      "type": "document",
+      "name": "branding/README.md",
+      "filePath": "branding/README.md",
+      "summary": "Branding assets directory guide describing available Ferdium logo derivatives, beard icon, and gradient visual identity resources",
+      "tags": ["branding", "assets", "design"],
+      "language": "markdown",
+      "complexity": "simple"
+    },
+    {
+      "id": "file:commitlint.config.js",
+      "type": "file",
+      "name": "commitlint.config.js",
+      "filePath": "commitlint.config.js",
+      "summary": "Commitlint configuration extending @commitlint/config-conventional for standardized conventional commit message enforcement",
+      "tags": ["commitlint", "git-hooks", "commit-messages", "conventional-commits"],
+      "language": "javascript",
+      "complexity": "simple",
+      "exports": [
+        {"name": "default", "line": 1, "isDefault": true}
+      ],
+      "metrics": {"exportCount": 1}
+    },
+    {
+      "id": "config:crowdin.yml",
+      "type": "config",
+      "name": "crowdin.yml",
+      "filePath": "crowdin.yml",
+      "summary": "Crowdin translation management mapping en-US source locale to multi-language targets with language code overrides for Dutch, Portuguese, and Chinese variants",
+      "tags": ["i18n", "translations", "crowdin", "localization"],
+      "language": "yaml",
+      "complexity": "simple",
+      "definitions": [
+        {"name": "source", "kind": "i18n-source", "fields": [{"name": "path", "value": "/src/i18n/locales/en-US.json"}], "startLine": 5, "endLine": 6},
+        {"name": "translation", "kind": "i18n-target", "fields": [{"name": "pattern", "value": "/src/i18n/locales/%two_letters_code%.json"}], "startLine": 6, "endLine": 6},
+        {"name": "languages_mapping", "kind": "i18n-mapping", "fields": [{"name": "nl-BE", "value": "nl-BE"}, {"name": "pt-BR", "value": "pt-BR"}, {"name": "zh-CN", "value": "zh-HANS"}, {"name": "zh-TW", "value": "zh-HANT"}], "startLine": 7, "endLine": 11}
+      ],
+      "metrics": {"definitionCount": 3}
+    },
+    {
+      "id": "config:electron-builder.env",
+      "type": "config",
+      "name": "electron-builder.env",
+      "filePath": "electron-builder.env",
+      "summary": "Environment variable setting BUNDLING=true for electron-builder to indicate production packaging mode",
+      "tags": ["electron-builder", "env", "build", "packaging"],
+      "language": "config",
+      "complexity": "simple"
+    },
+    {
+      "id": "config:electron-builder.npmrc",
+      "type": "config",
+      "name": "electron-builder.npmrc",
+      "filePath": "electron-builder.npmrc",
+      "summary": "pnpm workaround configuration for electron-builder compatibility with hoisted node-linker and legacy peer dependencies",
+      "tags": ["pnpm", "electron-builder", "build", "packaging"],
+      "language": "npmrc",
+      "complexity": "simple"
+    },
+    {
+      "id": "config:electron-builder.yml",
+      "type": "config",
+      "name": "electron-builder.yml",
+      "filePath": "electron-builder.yml",
+      "summary": "Multi-platform electron-builder packaging config for Windows NSIS/portable, macOS DMG/ZIP, and Linux AppImage/deb/rpm/snap with code signing and notarization",
+      "tags": ["electron-builder", "packaging", "cross-platform", "distribution"],
+      "language": "yaml",
+      "complexity": "complex",
+      "definitions": [
+        {"name": "mac", "kind": "platform-config", "fields": [{"name": "category", "value": "public.app-category.productivity"}, {"name": "hardenedRuntime", "value": "true"}, {"name": "targets", "value": "dmg, zip"}, {"name": "architectures", "value": "x64, arm64"}], "startLine": 65, "endLine": 84},
+        {"name": "win", "kind": "platform-config", "fields": [{"name": "targets", "value": "nsis, portable"}, {"name": "architectures", "value": "x64, ia32, arm64"}], "startLine": 85, "endLine": 96},
+        {"name": "linux", "kind": "platform-config", "fields": [{"name": "targets", "value": "AppImage, deb, tar.gz, rpm, freebsd, snap"}, {"name": "architectures", "value": "x64, arm64, armv7l"}, {"name": "category", "value": "Network;InstantMessaging;"}], "startLine": 98, "endLine": 114}
+      ],
+      "metrics": {"definitionCount": 3}
+    },
+    {
+      "id": "file:esbuild.mjs",
+      "type": "file",
+      "name": "esbuild.mjs",
+      "filePath": "esbuild.mjs",
+      "summary": "Core build script using esbuild for bundling TypeScript/React sources, SCSS processing, static asset copying, with optional watch/dev-server mode on port 8080",
+      "tags": ["build", "bundler", "esbuild", "dev-server"],
+      "language": "javascript",
+      "complexity": "complex",
+      "functions": [
+        {"name": "staticAssets", "startLine": 18, "endLine": 61, "params": []},
+        {"name": "copyManualAssets", "startLine": 63, "endLine": 76, "params": []},
+        {"name": "runEsbuild", "startLine": 78, "endLine": 141, "params": []}
+      ],
+      "metrics": {"functionCount": 3}
+    },
+    {
+      "id": "file:jest.config.js",
+      "type": "file",
+      "name": "jest.config.js",
+      "filePath": "jest.config.js",
+      "summary": "Jest configuration with esbuild-runner transform, node test environment, code coverage collection from src/, and test roots in src/ and test/ directories",
+      "tags": ["jest", "testing", "configuration", "unit-tests"],
+      "language": "javascript",
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "Ferdium v7.1.3-nightly.3 project manifest with Electron/React/MobX dependencies, build/test/dev scripts, and pnpm configuration for the messaging aggregator desktop app",
+      "tags": ["npm", "package-manifest", "dependencies", "scripts", "project-metadata"],
+      "language": "json",
+      "complexity": "complex",
+      "definitions": [
+        {"name": "scripts", "kind": "npm-scripts", "fields": [{"name": "dev", "value": "node esbuild.mjs --watch"}, {"name": "start", "value": "electron ./build"}, {"name": "test", "value": "jest"}, {"name": "build", "value": "preval-build-info-cli && node esbuild.mjs && electron-builder"}, {"name": "typecheck", "value": "tsc --noEmit"}, {"name": "lint", "value": "eslint . --max-warnings 0"}, {"name": "prepare-code", "value": "typecheck && lint:fix && biome:check:fix && reformat-files && manage-translations"}], "startLine": 25, "endLine": 52},
+        {"name": "engines", "kind": "engine-requirements", "fields": [{"name": "node", "value": "22.18.0"}, {"name": "pnpm", "value": "10.14.0"}], "startLine": 15, "endLine": 18}
+      ],
+      "metrics": {"definitionCount": 2}
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:package.json",
+      "target": "file:esbuild.mjs",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "script 'dev' and 'build' invoke esbuild.mjs"
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:electron-builder.yml",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "script 'build' runs electron-builder for packaging"
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:jest.config.js",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "script 'test' runs jest with this configuration"
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:commitlint.config.js",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "husky prepare script enables commit-msg hook via commitlint"
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:biome.json",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "script 'biome:check' uses biome.json configuration"
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:electron-builder.env",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "build script uses BUNDLING env variable"
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:electron-builder.npmrc",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "electron-builder consumes pnpm config from this file"
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:crowdin.yml",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "manage-translations and add-crowdin-contributors scripts coordinate with crowdin.yml"
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:.npmrc",
+      "type": "depends_on",
+      "weight": 0.6,
+      "label": "pnpm behavior settings affect dependency installation"
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:.nvmrc",
+      "type": "depends_on",
+      "weight": 0.6,
+      "label": "Node 22.18.0 engine requirement matches .nvmrc version"
+    },
+    {
+      "source": "file:esbuild.mjs",
+      "target": "config:package.json",
+      "type": "depends_on",
+      "weight": 0.7,
+      "label": "copyManualAssets copies package.json to build output"
+    },
+    {
+      "source": "file:esbuild.mjs",
+      "target": "config:electron-builder.npmrc",
+      "type": "depends_on",
+      "weight": 0.7,
+      "label": "copyManualAssets copies electron-builder.npmrc to build/.npmrc"
+    },
+    {
+      "source": "config:electron-builder.yml",
+      "target": "file:esbuild.mjs",
+      "type": "depends_on",
+      "weight": 0.7,
+      "label": "packaging stage reads from build/ directory produced by esbuild"
+    },
+    {
+      "source": "config:electron-builder.yml",
+      "target": "config:electron-builder.env",
+      "type": "depends_on",
+      "weight": 0.6,
+      "label": "reads BUNDLING environment variable during packaging"
+    },
+    {
+      "source": "file:jest.config.js",
+      "target": "file:esbuild.mjs",
+      "type": "depends_on",
+      "weight": 0.6,
+      "label": "uses esbuild-runner/jest transform for TS/TSX compilation"
+    },
+    {
+      "source": "config:.eslintignore",
+      "target": "config:package.json",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "eslint reads .eslintignore implicitly during lint script execution"
+    },
+    {
+      "source": "config:biome.json",
+      "target": "config:.eslintignore",
+      "type": "related",
+      "weight": 0.5,
+      "label": "both linter configs share overlapping ignore patterns"
+    },
+    {
+      "source": "service:Dockerfile",
+      "target": "config:package.json",
+      "type": "depends_on",
+      "weight": 0.7,
+      "label": "COPY package*.json for pnpm dependency installation"
+    },
+    {
+      "source": "service:Dockerfile",
+      "target": "config:.npmrc",
+      "type": "depends_on",
+      "weight": 0.7,
+      "label": "COPY .npmrc for pnpm configuration in Docker build"
+    },
+    {
+      "source": "config:.dockerignore",
+      "target": "service:Dockerfile",
+      "type": "configures",
+      "weight": 0.6,
+      "label": "defines build context exclusions for Docker image builds"
+    },
+    {
+      "source": "config:.gitattributes",
+      "target": "config:package.json",
+      "type": "configures",
+      "weight": 0.5,
+      "label": "enforces LF line endings on package.json text file"
+    },
+    {
+      "source": "config:.gitmodules",
+      "target": "config:package.json",
+      "type": "configures",
+      "weight": 0.5,
+      "label": "recipes submodule is used during build and recipe loading via scripts"
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:CONTRIBUTING.md",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "README links to CONTRIBUTING.md for development setup instructions"
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "document:CODE_OF_CONDUCT.md",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "contributing guide references the code of conduct"
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "service:Dockerfile",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "documents Docker build process for cross-architecture packaging"
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "file:commitlint.config.js",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "describes conventional commit format enforced by commitlint"
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "config:package.json",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "documents pnpm setup matching package.json engine requirements"
+    },
+    {
+      "source": "document:CLAUDE.md",
+      "target": "config:package.json",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "documents essential pnpm commands defined in package.json scripts"
+    },
+    {
+      "source": "document:CLAUDE.md",
+      "target": "file:esbuild.mjs",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "documents esbuild-based build system architecture"
+    },
+    {
+      "source": "document:CLAUDE.md",
+      "target": "file:jest.config.js",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "documents Jest testing setup and configuration"
+    },
+    {
+      "source": "document:CLAUDE.md",
+      "target": "file:commitlint.config.js",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "documents conventional commits commit-msg hook enforced by commitlint"
+    },
+    {
+      "source": "document:CHANGELOG.md",
+      "target": "config:package.json",
+      "type": "related",
+      "weight": 0.5,
+      "label": "changelog version history reflects package.json version field"
+    },
+    {
+      "source": "document:SECURITY.md",
+      "target": "config:package.json",
+      "type": "related",
+      "weight": 0.5,
+      "label": "security policy supported versions align with package versioning"
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:branding/README.md",
+      "type": "documents",
+      "weight": 0.5,
+      "label": "README references branding assets for screenshots and icons"
+    },
+    {
+      "source": "document:branding/README.md",
+      "target": "document:README.md",
+      "type": "related",
+      "weight": 0.5,
+      "label": "branding assets provide images used throughout README"
+    },
+    {
+      "source": "config:crowdin.yml",
+      "target": "document:CHANGELOG.md",
+      "type": "related",
+      "weight": 0.5,
+      "label": "Crowdin translation updates are recorded in the changelog"
+    },
+    {
+      "source": "config:electron-builder.npmrc",
+      "target": "config:.npmrc",
+      "type": "related",
+      "weight": 0.5,
+      "label": "both configure pnpm behavior for different build stages"
+    },
+    {
+      "source": "document:LICENSE.md",
+      "target": "document:README.md",
+      "type": "related",
+      "weight": 0.5,
+      "label": "license information governs the project described in README"
+    },
+    {
+      "source": "config:.codespellrc",
+      "target": "config:package.json",
+      "type": "configures",
+      "weight": 0.5,
+      "label": "spell-check configuration for code quality in CI pipeline"
+    }
+  ]
+}

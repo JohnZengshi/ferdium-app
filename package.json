@@ -48,6 +48,7 @@
     "minify-images": "./scripts/minify-images.sh",
     "start:server": "ts-node src/internal-server/test.ts",
     "add-crowdin-contributors": "ts-node scripts/add-crowdin-contributors.ts",
+    "git:submodules": "git submodule update --init --recursive --remote",
     "debug": "cross-env-shell DEBUG_COLORS=1 DEBUG=Ferdium:* pnpm start:all-dev"
   },
   "dependencies": {

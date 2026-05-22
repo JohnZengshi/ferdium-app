@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable, observe } from 'mobx';
 
 import type ElectronWebView from 'react-electron-web-view';
-import defaultUserAgent from '../helpers/userAgent-helpers';
+import { getRandomPlatformUserAgent } from '../helpers/userAgent-helpers';
 
 const debug = require('../preload-safe-debug')('Ferdium:UserAgent');
 
@@ -46,7 +46,7 @@ export default class UserAgent {
         return trimmed;
       }
     }
-    return defaultUserAgent();
+    return getRandomPlatformUserAgent();
   }
 
   @computed get serviceUserAgentPref(): string | null {

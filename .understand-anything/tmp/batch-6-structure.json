@@ -1,0 +1,1131 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/components/ui/FAB.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 42,
+      "classes": [
+        {
+          "name": "Button",
+          "startLine": 15,
+          "endLine": 45,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/FullscreenLoader/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 48,
+      "classes": [
+        {
+          "name": "FullscreenLoader",
+          "startLine": 19,
+          "endLine": 50,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/FullscreenLoader/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 24,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/InfoBar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 97,
+      "classes": [
+        {
+          "name": "InfoBar",
+          "startLine": 36,
+          "endLine": 102,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 57
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 65
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/Infobox.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 124,
+      "nonEmptyLines": 113,
+      "classes": [
+        {
+          "name": "Infobox",
+          "startLine": 49,
+          "endLine": 122,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 52
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "onSeen",
+          "lineNumber": 61
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 83
+        },
+        {
+          "caller": "render",
+          "callee": "this.setState",
+          "lineNumber": 110
+        },
+        {
+          "caller": "render",
+          "callee": "onDismiss",
+          "lineNumber": 111
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 114
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/Link.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 67,
+      "classes": [
+        {
+          "name": "Link",
+          "startLine": 25,
+          "endLine": 72,
+          "methods": [
+            "onClick",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "onClick",
+          "callee": "e.preventDefault",
+          "lineNumber": 31
+        },
+        {
+          "caller": "onClick",
+          "callee": "e.preventDefault",
+          "lineNumber": 33
+        },
+        {
+          "caller": "onClick",
+          "callee": "openExternalUrl",
+          "lineNumber": 34
+        },
+        {
+          "caller": "render",
+          "callee": "matchRoute",
+          "lineNumber": 53
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 55
+        },
+        {
+          "caller": "render",
+          "callee": "router.history.createHref",
+          "lineNumber": 63
+        },
+        {
+          "caller": "render",
+          "callee": "this.onClick",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/Modal/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 53,
+      "classes": [
+        {
+          "name": "Modal",
+          "startLine": 20,
+          "endLine": 56,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 36
+        },
+        {
+          "caller": "render",
+          "callee": "document.querySelector",
+          "lineNumber": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/Modal/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 33,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/Radio.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 76,
+      "nonEmptyLines": 68,
+      "classes": [
+        {
+          "name": "Radio",
+          "startLine": 16,
+          "endLine": 74,
+          "methods": [
+            "componentDidMount",
+            "focus",
+            "render"
+          ],
+          "properties": [
+            "inputElement"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "componentDidMount",
+          "callee": "this.focus",
+          "lineNumber": 21
+        },
+        {
+          "caller": "focus",
+          "callee": "this.inputElement.focus",
+          "lineNumber": 27
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 35
+        },
+        {
+          "caller": "render",
+          "callee": "field.options?.map",
+          "lineNumber": 48
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/SearchInput.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 111,
+      "nonEmptyLines": 94,
+      "classes": [
+        {
+          "name": "SearchInput",
+          "startLine": 24,
+          "endLine": 109,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "onChange",
+            "throttledOnChange",
+            "reset",
+            "render"
+          ],
+          "properties": [
+            "input"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 29
+        },
+        {
+          "caller": "constructor",
+          "callee": "debounce",
+          "lineNumber": 35
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.input.focus",
+          "lineNumber": 45
+        },
+        {
+          "caller": "onChange",
+          "callee": "this.setState",
+          "lineNumber": 52
+        },
+        {
+          "caller": "onChange",
+          "callee": "e.persist",
+          "lineNumber": 55
+        },
+        {
+          "caller": "onChange",
+          "callee": "this.throttledOnChange",
+          "lineNumber": 56
+        },
+        {
+          "caller": "onChange",
+          "callee": "onChange",
+          "lineNumber": 58
+        },
+        {
+          "caller": "throttledOnChange",
+          "callee": "onChange",
+          "lineNumber": 65
+        },
+        {
+          "caller": "reset",
+          "callee": "this.setState",
+          "lineNumber": 70
+        },
+        {
+          "caller": "reset",
+          "callee": "onReset",
+          "lineNumber": 72
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 84
+        },
+        {
+          "caller": "render",
+          "callee": "this.onChange",
+          "lineNumber": 94
+        },
+        {
+          "caller": "render",
+          "callee": "this.reset",
+          "lineNumber": 102
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/Select.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 111,
+      "nonEmptyLines": 102,
+      "classes": [
+        {
+          "name": "Select",
+          "startLine": 22,
+          "endLine": 109,
+          "methods": [
+            "multipleChange",
+            "render"
+          ],
+          "properties": [
+            "element"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "multipleChange",
+          "callee": "e.preventDefault",
+          "lineNumber": 28
+        },
+        {
+          "caller": "multipleChange",
+          "callee": "result.push",
+          "lineNumber": 36
+        },
+        {
+          "caller": "render",
+          "callee": "field.value.startsWith",
+          "lineNumber": 56
+        },
+        {
+          "caller": "render",
+          "callee": "JSON.parse",
+          "lineNumber": 58
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 68
+        },
+        {
+          "caller": "render",
+          "callee": "this.multipleChange",
+          "lineNumber": 83
+        },
+        {
+          "caller": "render",
+          "callee": "field.options!.map",
+          "lineNumber": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/ServiceIcon.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 47,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 7,
+          "endLine": 23,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "ServiceIcon",
+          "startLine": 31,
+          "endLine": 50,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 37
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/Slider.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 69,
+      "nonEmptyLines": 62,
+      "classes": [
+        {
+          "name": "Slider",
+          "startLine": 16,
+          "endLine": 67,
+          "methods": [
+            "onChange",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "onChange",
+          "callee": "field.onChange",
+          "lineNumber": 20
+        },
+        {
+          "caller": "onChange",
+          "callee": "onSliderChange",
+          "lineNumber": 21
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 39
+        },
+        {
+          "caller": "render",
+          "callee": "this.onChange",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/StatusBarTargetUrl.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "StatusBarTargetUrl",
+          "startLine": 12,
+          "endLine": 28,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 19
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/Tabs/TabItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "TabItem",
+          "startLine": 15,
+          "endLine": 17,
+          "params": [
+            "{ children, title = '' }"
+          ]
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/Tabs/Tabs.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 85,
+      "nonEmptyLines": 76,
+      "classes": [
+        {
+          "name": "Tab",
+          "startLine": 22,
+          "endLine": 83,
+          "methods": [
+            "constructor",
+            "switchTab",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 25
+        },
+        {
+          "caller": "switchTab",
+          "callee": "this.setState",
+          "lineNumber": 33
+        },
+        {
+          "caller": "render",
+          "callee": "Children.toArray",
+          "lineNumber": 39
+        },
+        {
+          "caller": "render",
+          "callee": "Children.map",
+          "lineNumber": 49
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 53
+        },
+        {
+          "caller": "render",
+          "callee": "this.switchTab",
+          "lineNumber": 57
+        },
+        {
+          "caller": "render",
+          "callee": "Children.map",
+          "lineNumber": 66
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 70
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/WebviewLoader/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 43,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 18,
+          "endLine": 26,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "WebviewLoader",
+          "startLine": 33,
+          "endLine": 44,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/badge/ProBadge.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 65,
+      "nonEmptyLines": 59,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 10,
+          "endLine": 26,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ProBadgeComponent",
+          "startLine": 35,
+          "endLine": 61,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProBadge",
+          "line": 63,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 43
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/badge/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 56,
+      "functions": [
+        {
+          "name": "badgeStyles",
+          "startLine": 7,
+          "endLine": 20,
+          "params": [
+            "theme"
+          ]
+        },
+        {
+          "name": "styles",
+          "startLine": 22,
+          "endLine": 39,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "BadgeComponent",
+          "startLine": 47,
+          "endLine": 64,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "badgeStyles",
+          "callee": "Object.keys(theme.styleTypes).map",
+          "lineNumber": 9
+        },
+        {
+          "caller": "badgeStyles",
+          "callee": "Object.keys",
+          "lineNumber": 9
+        },
+        {
+          "caller": "badgeStyles",
+          "callee": "Object.assign",
+          "lineNumber": 10
+        },
+        {
+          "caller": "styles",
+          "callee": "badgeStyles",
+          "lineNumber": 38
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 53
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/button/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 247,
+      "nonEmptyLines": 223,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 33,
+          "endLine": 125,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ButtonComponent",
+          "startLine": 147,
+          "endLine": 245,
+          "methods": [
+            "constructor",
+            "getDerivedStateFromProps",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 149
+        },
+        {
+          "caller": "render",
+          "callee": "console.warn",
+          "lineNumber": 185
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 213
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 229
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/colorPickerInput/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 65,
+      "classes": [
+        {
+          "name": "ColorPickerInput",
+          "startLine": 18,
+          "endLine": 69,
+          "methods": [
+            "onChange",
+            "render"
+          ],
+          "properties": [
+            "inputElement"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "onChange",
+          "callee": "onColorChange",
+          "lineNumber": 25
+        },
+        {
+          "caller": "onChange",
+          "callee": "onChange",
+          "lineNumber": 26
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 43
+        },
+        {
+          "caller": "render",
+          "callee": "this.onChange",
+          "lineNumber": 51
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/effects/Appear.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 40,
+      "functions": [
+        {
+          "name": "Appear",
+          "startLine": 15,
+          "endLine": 41,
+          "params": [
+            "{\n  children,\n  transitionName = 'fadeIn',\n  className = '',\n  transitionAppear = true,\n  transitionLeave = true,\n  transitionAppearTimeout = 1500,\n  transitionEnterTimeout = 1500,\n  transitionLeaveTimeout = 1500,\n}"
+          ]
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/error/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "ErrorComponent",
+          "startLine": 12,
+          "endLine": 18,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/error/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/headline/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 73,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 14,
+          "endLine": 38,
+          "params": [
+            "theme"
+          ]
+        },
+        {
+          "name": "createH",
+          "startLine": 70,
+          "endLine": 74,
+          "params": [
+            "level"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HeadlineComponent",
+          "startLine": 48,
+          "endLine": 67,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "H1",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "H2",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "H3",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "H4",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "H5",
+          "line": 80,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "createElement",
+          "lineNumber": 52
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 56
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 5,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    }
+  ]
+}

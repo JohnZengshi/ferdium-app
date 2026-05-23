@@ -1,0 +1,612 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/components/ui/icon/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/icon/index.tsx",
+      "summary": "Defines IconComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 41
+    },
+    {
+      "id": "file:src/components/ui/imageUpload/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/imageUpload/index.tsx",
+      "summary": "Defines ImageUpload.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 172
+    },
+    {
+      "id": "file:src/components/ui/infobox/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/infobox/index.tsx",
+      "summary": "Defines InfoboxComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 199
+    },
+    {
+      "id": "file:src/components/ui/input/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/input/index.tsx",
+      "summary": "Defines Input.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 225
+    },
+    {
+      "id": "file:src/components/ui/input/scorePassword.ts",
+      "type": "file",
+      "name": "scorePassword.ts",
+      "filePath": "src/components/ui/input/scorePassword.ts",
+      "summary": "Exports scorePasswordFunc.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 42
+    },
+    {
+      "id": "file:src/components/ui/input/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/components/ui/input/styles.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 101
+    },
+    {
+      "id": "file:src/components/ui/label/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/label/index.tsx",
+      "summary": "Defines LabelComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 49
+    },
+    {
+      "id": "file:src/components/ui/label/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/components/ui/label/styles.ts",
+      "summary": "Source file: src/components/ui/label/styles.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 12
+    },
+    {
+      "id": "file:src/components/ui/loader/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/loader/index.tsx",
+      "summary": "Defines LoaderComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 60
+    },
+    {
+      "id": "file:src/components/ui/select/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/select/index.tsx",
+      "summary": "Defines SelectComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 462
+    },
+    {
+      "id": "file:src/components/ui/textarea/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/textarea/index.tsx",
+      "summary": "Defines TextareaComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 117
+    },
+    {
+      "id": "file:src/components/ui/textarea/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/components/ui/textarea/styles.ts",
+      "summary": "Source file: src/components/ui/textarea/styles.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 54
+    },
+    {
+      "id": "file:src/components/ui/toggle/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/toggle/index.tsx",
+      "summary": "Defines Toggle.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 118
+    },
+    {
+      "id": "file:src/components/ui/typings/generic.ts",
+      "type": "file",
+      "name": "generic.ts",
+      "filePath": "src/components/ui/typings/generic.ts",
+      "summary": "Source file: src/components/ui/typings/generic.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 10
+    },
+    {
+      "id": "file:src/components/ui/wrapper/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/wrapper/index.tsx",
+      "summary": "Defines WrapperComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 38
+    },
+    {
+      "id": "file:src/components/util/ErrorBoundary/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/util/ErrorBoundary/index.tsx",
+      "summary": "Defines ErrorBoundary.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 67
+    },
+    {
+      "id": "file:src/components/util/ErrorBoundary/styles.tsx",
+      "type": "file",
+      "name": "styles.tsx",
+      "filePath": "src/components/util/ErrorBoundary/styles.tsx",
+      "summary": "Source file: src/components/util/ErrorBoundary/styles.tsx",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "react-component"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 13
+    },
+    {
+      "id": "file:src/components/util/WithParams.tsx",
+      "type": "file",
+      "name": "WithParams.tsx",
+      "filePath": "src/components/util/WithParams.tsx",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-exports",
+        "react-component"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 8
+    },
+    {
+      "id": "file:src/config.ts",
+      "type": "file",
+      "name": "config.ts",
+      "filePath": "src/config.ts",
+      "summary": "Exports DEFAULT_ACCENT_COLOR, CHECK_INTERVAL, LOCAL_HOSTNAME, LOCAL_PORT, LOCAL_API, DEV_FRANZ_API, LIVE_FERDIUM_API, LIVE_FRANZ_API, DEBUG_API, LOCAL_WS_API, DEV_WS_API, LIVE_WS_API, LOCAL_API_WEBSITE, DEV_API_FRANZ_WEBSITE, LIVE_API_FERDIUM_WEBSITE, LIVE_API_FERDIUM_LIBRETRANSLATE, LOCAL_TODOS_FRONTEND_URL, PRODUCTION_TODOS_FRONTEND_URL, CDN_URL, KEEP_WS_LOADED_USID, configMessages, WEBRTC_IP_HANDLING_POLICY, SCREENSHARE_CANCELLED_BY_USER, HIBERNATION_STRATEGIES, WAKE_UP_STRATEGIES, WAKE_UP_HIBERNATION_STRATEGIES, NAVIGATION_BAR_BEHAVIOURS, SEARCH_ENGINE_NAMES, TRANSLATOR_ENGINE_GOOGLE, TRANSLATOR_ENGINE_LIBRETRANSLATE, TRANSLATOR_ENGINE_NAMES, LIBRETRANSLATE_TRANSLATOR_LANGUAGES, GOOGLE_TRANSLATOR_LANGUAGES, SEARCH_ENGINE_URLS, CUSTOM_TODO_SERVICE, TODO_SERVICE_RECIPE_IDS, TODO_APPS, SIDEBAR_WIDTH, SIDEBAR_SERVICES_LOCATION_TOPLEFT, SIDEBAR_SERVICES_LOCATION_CENTER, SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT, SIDEBAR_SERVICES_LOCATION, ICON_SIZES, iconSizeBias, DEFAULT_WINDOW_OPTIONS, GITHUB_FRANZ_URL, GITHUB_FERDIUM_URL, FERDIUM_SERVICE_REQUEST, FERDIUM_TRANSLATION, FERDIUM_DEV_DOCS, FILE_SYSTEM_SETTINGS_TYPES, LOCAL_SERVER, SERVER_NOT_LOADED, ALLOWED_PROTOCOLS, DEFAULT_TODOS_WIDTH, TODOS_MIN_WIDTH, DEFAULT_TODOS_VISIBLE, DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER, TODOS_PARTITION_ID, CUSTOM_WEBSITE_RECIPE_ID, DEFAULT_SERVICE_ORDER, SPLIT_COLUMNS_MIN, SPLIT_COLUMNS_MAX, DEFAULT_LOADER_COLOR, DEFAULT_APP_SETTINGS, DEFAULT_SERVICE_SETTINGS, DEFAULT_SHORTCUTS, getI18nConfigObjects.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 751
+    },
+    {
+      "id": "file:src/containers/auth/AuthLayoutContainer.tsx",
+      "type": "file",
+      "name": "AuthLayoutContainer.tsx",
+      "filePath": "src/containers/auth/AuthLayoutContainer.tsx",
+      "summary": "Defines AuthLayoutContainer.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:containers",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 79
+    },
+    {
+      "id": "file:src/containers/auth/AuthReleaseNotesScreen.tsx",
+      "type": "file",
+      "name": "AuthReleaseNotesScreen.tsx",
+      "filePath": "src/containers/auth/AuthReleaseNotesScreen.tsx",
+      "summary": "Defines AuthReleaseNotesScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:containers",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 107
+    },
+    {
+      "id": "file:src/containers/auth/ChangeServerScreen.tsx",
+      "type": "file",
+      "name": "ChangeServerScreen.tsx",
+      "filePath": "src/containers/auth/ChangeServerScreen.tsx",
+      "summary": "Defines ChangeServerScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:containers",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 39
+    },
+    {
+      "id": "file:src/containers/auth/InviteScreen.tsx",
+      "type": "file",
+      "name": "InviteScreen.tsx",
+      "filePath": "src/containers/auth/InviteScreen.tsx",
+      "summary": "Defines InviteScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:containers",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 14
+    },
+    {
+      "id": "file:src/containers/auth/LockedScreen.tsx",
+      "type": "file",
+      "name": "LockedScreen.tsx",
+      "filePath": "src/containers/auth/LockedScreen.tsx",
+      "summary": "Defines LockedScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:containers",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 83
+    },
+    {
+      "id": "file:src/containers/auth/LoginScreen.tsx",
+      "type": "file",
+      "name": "LoginScreen.tsx",
+      "filePath": "src/containers/auth/LoginScreen.tsx",
+      "summary": "Defines LoginScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:containers",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 34
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/components/ui/imageUpload/index.tsx",
+      "target": "file:src/components/ui/icon/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/icon/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/infobox/index.tsx",
+      "target": "file:src/components/ui/icon/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/icon/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/input/index.tsx",
+      "target": "file:src/components/ui/icon/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/icon/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/input/index.tsx",
+      "target": "file:src/components/ui/input/scorePassword.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/input/scorePassword.ts"
+    },
+    {
+      "source": "file:src/components/ui/input/index.tsx",
+      "target": "file:src/components/ui/input/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/input/styles.ts"
+    },
+    {
+      "source": "file:src/components/ui/input/index.tsx",
+      "target": "file:src/components/ui/label/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/label/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/input/index.tsx",
+      "target": "file:src/components/ui/typings/generic.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/typings/generic.ts"
+    },
+    {
+      "source": "file:src/components/ui/input/index.tsx",
+      "target": "file:src/components/ui/wrapper/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/wrapper/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/label/index.tsx",
+      "target": "file:src/components/ui/label/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/label/styles.ts"
+    },
+    {
+      "source": "file:src/components/ui/label/index.tsx",
+      "target": "file:src/components/ui/typings/generic.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/typings/generic.ts"
+    },
+    {
+      "source": "file:src/components/ui/loader/index.tsx",
+      "target": "file:src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/config.ts"
+    },
+    {
+      "source": "file:src/components/ui/select/index.tsx",
+      "target": "file:src/components/ui/label/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/label/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/select/index.tsx",
+      "target": "file:src/components/ui/typings/generic.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/typings/generic.ts"
+    },
+    {
+      "source": "file:src/components/ui/select/index.tsx",
+      "target": "file:src/components/ui/wrapper/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/wrapper/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/textarea/index.tsx",
+      "target": "file:src/components/ui/label/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/label/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/textarea/index.tsx",
+      "target": "file:src/components/ui/textarea/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/textarea/styles.ts"
+    },
+    {
+      "source": "file:src/components/ui/textarea/index.tsx",
+      "target": "file:src/components/ui/typings/generic.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/typings/generic.ts"
+    },
+    {
+      "source": "file:src/components/ui/textarea/index.tsx",
+      "target": "file:src/components/ui/wrapper/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/wrapper/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/toggle/index.tsx",
+      "target": "file:src/components/ui/label/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/label/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/toggle/index.tsx",
+      "target": "file:src/components/ui/typings/generic.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/typings/generic.ts"
+    },
+    {
+      "source": "file:src/components/ui/toggle/index.tsx",
+      "target": "file:src/components/ui/wrapper/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/wrapper/index.tsx"
+    },
+    {
+      "source": "file:src/components/util/ErrorBoundary/index.tsx",
+      "target": "file:src/components/util/ErrorBoundary/styles.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/util/ErrorBoundary/styles.tsx"
+    },
+    {
+      "source": "file:src/containers/auth/AuthReleaseNotesScreen.tsx",
+      "target": "file:src/components/ui/icon/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/icon/index.tsx"
+    }
+  ]
+}

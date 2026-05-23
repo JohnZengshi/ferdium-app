@@ -1,0 +1,78 @@
+{
+  "nodes": [
+    {
+      "id": "file:test/helpers/update-helpers.test.ts",
+      "type": "file",
+      "name": "update-helpers.test.ts",
+      "filePath": "test/helpers/update-helpers.test.ts",
+      "summary": "Source file: test/helpers/update-helpers.test.ts",
+      "tags": [
+        "typescript",
+        "test",
+        "test-file"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 97
+    },
+    {
+      "id": "file:test/helpers/url-helpers.test.ts",
+      "type": "file",
+      "name": "url-helpers.test.ts",
+      "filePath": "test/helpers/url-helpers.test.ts",
+      "summary": "Source file: test/helpers/url-helpers.test.ts",
+      "tags": [
+        "typescript",
+        "test",
+        "test-file"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 137
+    },
+    {
+      "id": "file:test/jsUtils.test.ts",
+      "type": "file",
+      "name": "jsUtils.test.ts",
+      "filePath": "test/jsUtils.test.ts",
+      "summary": "Source file: test/jsUtils.test.ts",
+      "tags": [
+        "typescript",
+        "test",
+        "test-file"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 254
+    },
+    {
+      "id": "file:test/themes/index.test.ts",
+      "type": "file",
+      "name": "index.test.ts",
+      "filePath": "test/themes/index.test.ts",
+      "summary": "Source file: test/themes/index.test.ts",
+      "tags": [
+        "typescript",
+        "test",
+        "test-file"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 17
+    },
+    {
+      "id": "config:tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "tsconfig.json",
+      "summary": "Config: tsconfig.json",
+      "tags": [
+        "json"
+      ],
+      "complexity": "moderate",
+      "language": "json",
+      "sizeLines": 57
+    }
+  ],
+  "edges": []
+}

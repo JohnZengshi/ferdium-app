@@ -1,0 +1,380 @@
+{
+  "nodes": [
+    {
+      "id": "markup:src/styles/image-upload.scss",
+      "type": "markup",
+      "name": "image-upload.scss",
+      "filePath": "src/styles/image-upload.scss",
+      "summary": "Markup: src/styles/image-upload.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 128
+    },
+    {
+      "id": "markup:src/styles/info-bar.scss",
+      "type": "markup",
+      "name": "info-bar.scss",
+      "filePath": "src/styles/info-bar.scss",
+      "summary": "Markup: src/styles/info-bar.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 82
+    },
+    {
+      "id": "markup:src/styles/infobox.scss",
+      "type": "markup",
+      "name": "infobox.scss",
+      "filePath": "src/styles/infobox.scss",
+      "summary": "Markup: src/styles/infobox.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 66
+    },
+    {
+      "id": "markup:src/styles/input.scss",
+      "type": "markup",
+      "name": "input.scss",
+      "filePath": "src/styles/input.scss",
+      "summary": "Markup: src/styles/input.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 130
+    },
+    {
+      "id": "markup:src/styles/invite.scss",
+      "type": "markup",
+      "name": "invite.scss",
+      "filePath": "src/styles/invite.scss",
+      "summary": "Markup: src/styles/invite.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "simple",
+      "language": "css",
+      "sizeLines": 12
+    },
+    {
+      "id": "markup:src/styles/layout.scss",
+      "type": "markup",
+      "name": "layout.scss",
+      "filePath": "src/styles/layout.scss",
+      "summary": "Markup: src/styles/layout.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 309
+    },
+    {
+      "id": "markup:src/styles/main.scss",
+      "type": "markup",
+      "name": "main.scss",
+      "filePath": "src/styles/main.scss",
+      "summary": "Markup: src/styles/main.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 36
+    },
+    {
+      "id": "markup:src/styles/mixins.scss",
+      "type": "markup",
+      "name": "mixins.scss",
+      "filePath": "src/styles/mixins.scss",
+      "summary": "Markup: src/styles/mixins.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "simple",
+      "language": "css",
+      "sizeLines": 9
+    },
+    {
+      "id": "markup:src/styles/radio.scss",
+      "type": "markup",
+      "name": "radio.scss",
+      "filePath": "src/styles/radio.scss",
+      "summary": "Markup: src/styles/radio.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 48
+    },
+    {
+      "id": "markup:src/styles/recipes.scss",
+      "type": "markup",
+      "name": "recipes.scss",
+      "filePath": "src/styles/recipes.scss",
+      "summary": "Markup: src/styles/recipes.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 93
+    },
+    {
+      "id": "markup:src/styles/reset.scss",
+      "type": "markup",
+      "name": "reset.scss",
+      "filePath": "src/styles/reset.scss",
+      "summary": "Markup: src/styles/reset.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 178
+    },
+    {
+      "id": "markup:src/styles/searchInput.scss",
+      "type": "markup",
+      "name": "searchInput.scss",
+      "filePath": "src/styles/searchInput.scss",
+      "summary": "Markup: src/styles/searchInput.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 38
+    },
+    {
+      "id": "markup:src/styles/select.scss",
+      "type": "markup",
+      "name": "select.scss",
+      "filePath": "src/styles/select.scss",
+      "summary": "Markup: src/styles/select.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 27
+    },
+    {
+      "id": "markup:src/styles/service-table.scss",
+      "type": "markup",
+      "name": "service-table.scss",
+      "filePath": "src/styles/service-table.scss",
+      "summary": "Markup: src/styles/service-table.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 79
+    },
+    {
+      "id": "markup:src/styles/services.scss",
+      "type": "markup",
+      "name": "services.scss",
+      "filePath": "src/styles/services.scss",
+      "summary": "Markup: src/styles/services.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 108
+    },
+    {
+      "id": "markup:src/styles/settings.scss",
+      "type": "markup",
+      "name": "settings.scss",
+      "filePath": "src/styles/settings.scss",
+      "summary": "Markup: src/styles/settings.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 732
+    },
+    {
+      "id": "markup:src/styles/slider.scss",
+      "type": "markup",
+      "name": "slider.scss",
+      "filePath": "src/styles/slider.scss",
+      "summary": "Markup: src/styles/slider.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 46
+    },
+    {
+      "id": "markup:src/styles/status-bar-target-url.scss",
+      "type": "markup",
+      "name": "status-bar-target-url.scss",
+      "filePath": "src/styles/status-bar-target-url.scss",
+      "summary": "Markup: src/styles/status-bar-target-url.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "simple",
+      "language": "css",
+      "sizeLines": 14
+    },
+    {
+      "id": "markup:src/styles/tabs.scss",
+      "type": "markup",
+      "name": "tabs.scss",
+      "filePath": "src/styles/tabs.scss",
+      "summary": "Markup: src/styles/tabs.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 162
+    },
+    {
+      "id": "markup:src/styles/title-bar.scss",
+      "type": "markup",
+      "name": "title-bar.scss",
+      "filePath": "src/styles/title-bar.scss",
+      "summary": "Markup: src/styles/title-bar.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 101
+    },
+    {
+      "id": "markup:src/styles/toggle.scss",
+      "type": "markup",
+      "name": "toggle.scss",
+      "filePath": "src/styles/toggle.scss",
+      "summary": "Markup: src/styles/toggle.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 57
+    },
+    {
+      "id": "markup:src/styles/tooltip.scss",
+      "type": "markup",
+      "name": "tooltip.scss",
+      "filePath": "src/styles/tooltip.scss",
+      "summary": "Markup: src/styles/tooltip.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "simple",
+      "language": "css",
+      "sizeLines": 4
+    },
+    {
+      "id": "markup:src/styles/type-helper.scss",
+      "type": "markup",
+      "name": "type-helper.scss",
+      "filePath": "src/styles/type-helper.scss",
+      "summary": "Markup: src/styles/type-helper.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 123
+    },
+    {
+      "id": "markup:src/styles/type.scss",
+      "type": "markup",
+      "name": "type.scss",
+      "filePath": "src/styles/type.scss",
+      "summary": "Markup: src/styles/type.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 97
+    },
+    {
+      "id": "markup:src/styles/util.scss",
+      "type": "markup",
+      "name": "util.scss",
+      "filePath": "src/styles/util.scss",
+      "summary": "Markup: src/styles/util.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "simple",
+      "language": "css",
+      "sizeLines": 20
+    }
+  ],
+  "edges": []
+}

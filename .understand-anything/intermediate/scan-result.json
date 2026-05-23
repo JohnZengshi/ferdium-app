@@ -1,0 +1,4638 @@
+{
+  "name": "ferdium",
+  "description": "Messaging app for WhatsApp, Slack, Telegram, Hangouts and many many more. Note: this project has over 100 source files; consider scoping analysis to a subdirectory for faster results.",
+  "languages": [
+    "afphoto",
+    "config",
+    "css",
+    "dockerfile",
+    "edge",
+    "html",
+    "icns",
+    "javascript",
+    "json",
+    "markdown",
+    "mjs",
+    "npmrc",
+    "plist",
+    "powershell",
+    "psd",
+    "python",
+    "shell",
+    "sqlite",
+    "tiff",
+    "txt",
+    "typescript",
+    "unknown",
+    "xcf",
+    "xml",
+    "yaml"
+  ],
+  "frameworks": [
+    "Docker",
+    "ESLint",
+    "Electron",
+    "Emotion",
+    "GitHub Actions",
+    "Jest",
+    "MUI",
+    "MobX",
+    "Prettier",
+    "React",
+    "TypeScript",
+    "esbuild"
+  ],
+  "files": [
+    {
+      "path": ".all-contributorsrc",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 3087
+    },
+    {
+      "path": ".codespellrc",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 10
+    },
+    {
+      "path": ".dockerignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 33
+    },
+    {
+      "path": ".eslintignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 35
+    },
+    {
+      "path": ".gitattributes",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 13
+    },
+    {
+      "path": ".github/CODEOWNERS",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 2
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/app_bug_report.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 96
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/app_feature_request.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 44
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 6
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/recipe_bug_report.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 76
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/recipe_request.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 49
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/something_else_open_issue.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 16
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 33
+    },
+    {
+      "path": ".github/config.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 18
+    },
+    {
+      "path": ".github/issue_label_bot.yaml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 3
+    },
+    {
+      "path": ".github/release.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 23
+    },
+    {
+      "path": ".github/workflows/builds.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 410
+    },
+    {
+      "path": ".github/workflows/codespell.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 24
+    },
+    {
+      "path": ".github/workflows/homebrew-cask-updates.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 49
+    },
+    {
+      "path": ".github/workflows/reddit.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 23
+    },
+    {
+      "path": ".github/workflows/tag-repos.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 47
+    },
+    {
+      "path": ".github/workflows/winget-bucket-update.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 139
+    },
+    {
+      "path": ".gitmodules",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 6
+    },
+    {
+      "path": ".husky/commit-msg",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 11
+    },
+    {
+      "path": ".husky/pre-commit",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 9
+    },
+    {
+      "path": ".npmrc",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 6
+    },
+    {
+      "path": ".nvmrc",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 2
+    },
+    {
+      "path": ".prettierrc.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 6
+    },
+    {
+      "path": "CHANGELOG.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 256
+    },
+    {
+      "path": "CLAUDE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 114
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 12
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 209
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "sizeLines": 52
+    },
+    {
+      "path": "LICENSE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 202
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 527
+    },
+    {
+      "path": "SECURITY.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 16
+    },
+    {
+      "path": "biome.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 39
+    },
+    {
+      "path": "branding/Ferdium.afphoto",
+      "language": "afphoto",
+      "fileCategory": "code",
+      "sizeLines": 118
+    },
+    {
+      "path": "branding/README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 14
+    },
+    {
+      "path": "branding/darwin-20-icons-lo-res.xcf",
+      "language": "xcf",
+      "fileCategory": "code",
+      "sizeLines": 32
+    },
+    {
+      "path": "branding/darwin-20-icons.xcf",
+      "language": "xcf",
+      "fileCategory": "code",
+      "sizeLines": 64
+    },
+    {
+      "path": "branding/dmgInstaller.psd",
+      "language": "psd",
+      "fileCategory": "code",
+      "sizeLines": 3104
+    },
+    {
+      "path": "branding/download.psd",
+      "language": "psd",
+      "fileCategory": "code",
+      "sizeLines": 363
+    },
+    {
+      "path": "branding/social-preview.psd",
+      "language": "psd",
+      "fileCategory": "code",
+      "sizeLines": 2244
+    },
+    {
+      "path": "build-helpers/entitlements.mas.inherit.plist",
+      "language": "plist",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "build-helpers/entitlements.mas.plist",
+      "language": "plist",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "build-helpers/images/dmgInstaller.tiff",
+      "language": "tiff",
+      "fileCategory": "code",
+      "sizeLines": 779
+    },
+    {
+      "path": "build-helpers/images/icon.icns",
+      "language": "icns",
+      "fileCategory": "code",
+      "sizeLines": 488
+    },
+    {
+      "path": "build-helpers/notarize.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 24
+    },
+    {
+      "path": "build-helpers/snap-hooks/configure",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 8
+    },
+    {
+      "path": "commitlint.config.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 2
+    },
+    {
+      "path": "crowdin.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 13
+    },
+    {
+      "path": "docs/DBUS.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 21
+    },
+    {
+      "path": "docs/INTERNAL_SERVER.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 29
+    },
+    {
+      "path": "docs/MIGRATION.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "sizeLines": 39
+    },
+    {
+      "path": "docs/dbus/ferdium_bar.py",
+      "language": "python",
+      "fileCategory": "code",
+      "sizeLines": 103
+    },
+    {
+      "path": "docs/dbus/org.ferdium.Ferdium.xml",
+      "language": "xml",
+      "fileCategory": "config",
+      "sizeLines": 88
+    },
+    {
+      "path": "docs/dbus/requirements.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "sizeLines": 2
+    },
+    {
+      "path": "electron-builder.env",
+      "language": "config",
+      "fileCategory": "code",
+      "sizeLines": 2
+    },
+    {
+      "path": "electron-builder.npmrc",
+      "language": "npmrc",
+      "fileCategory": "code",
+      "sizeLines": 5
+    },
+    {
+      "path": "electron-builder.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 115
+    },
+    {
+      "path": "esbuild.mjs",
+      "language": "mjs",
+      "fileCategory": "code",
+      "sizeLines": 144
+    },
+    {
+      "path": "jest.config.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 39
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 253
+    },
+    {
+      "path": "recipes",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 0
+    },
+    {
+      "path": "scripts/add-crowdin-contributors.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 1091
+    },
+    {
+      "path": "scripts/build-unix.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "sizeLines": 144
+    },
+    {
+      "path": "scripts/build-windows.ps1",
+      "language": "powershell",
+      "fileCategory": "script",
+      "sizeLines": 186
+    },
+    {
+      "path": "scripts/link-readme.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 66
+    },
+    {
+      "path": "scripts/migration/migrate-unix.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "sizeLines": 71
+    },
+    {
+      "path": "scripts/migration/migrate-windows.ps1",
+      "language": "powershell",
+      "fileCategory": "script",
+      "sizeLines": 54
+    },
+    {
+      "path": "scripts/minify-images.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "sizeLines": 13
+    },
+    {
+      "path": "src/@types/ferdium-components.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 14
+    },
+    {
+      "path": "src/@types/ferdium.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 25
+    },
+    {
+      "path": "src/@types/legacy-types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 6
+    },
+    {
+      "path": "src/@types/mobx-form.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 37
+    },
+    {
+      "path": "src/@types/stores.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 375
+    },
+    {
+      "path": "src/I18n.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 46
+    },
+    {
+      "path": "src/actions/app.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 41
+    },
+    {
+      "path": "src/actions/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 31
+    },
+    {
+      "path": "src/actions/lib/actions.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 61
+    },
+    {
+      "path": "src/actions/recipe.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 11
+    },
+    {
+      "path": "src/actions/recipePreview.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 9
+    },
+    {
+      "path": "src/actions/requests.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 6
+    },
+    {
+      "path": "src/actions/service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 117
+    },
+    {
+      "path": "src/actions/settings.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 14
+    },
+    {
+      "path": "src/actions/ui.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 16
+    },
+    {
+      "path": "src/actions/user.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "src/api/AppApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 12
+    },
+    {
+      "path": "src/api/FeaturesApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 16
+    },
+    {
+      "path": "src/api/LocalApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 27
+    },
+    {
+      "path": "src/api/RecipePreviewsApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 20
+    },
+    {
+      "path": "src/api/RecipesApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 20
+    },
+    {
+      "path": "src/api/ServicesApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 35
+    },
+    {
+      "path": "src/api/UserApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 59
+    },
+    {
+      "path": "src/api/apiBase.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 106
+    },
+    {
+      "path": "src/api/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 28
+    },
+    {
+      "path": "src/api/server/LocalApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 66
+    },
+    {
+      "path": "src/api/server/ServerApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 624
+    },
+    {
+      "path": "src/api/utils/auth.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 57
+    },
+    {
+      "path": "src/app.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 69
+    },
+    {
+      "path": "src/components/AppUpdateInfoBar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 75
+    },
+    {
+      "path": "src/components/MediaSource.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 186
+    },
+    {
+      "path": "src/components/auth/AuthLayout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 131
+    },
+    {
+      "path": "src/components/auth/ChangeServer.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 158
+    },
+    {
+      "path": "src/components/auth/Invite.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 217
+    },
+    {
+      "path": "src/components/auth/Locked.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 148
+    },
+    {
+      "path": "src/components/auth/Login.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 214
+    },
+    {
+      "path": "src/components/auth/Password.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 134
+    },
+    {
+      "path": "src/components/auth/SetupAssistant.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 341
+    },
+    {
+      "path": "src/components/auth/Signup.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 214
+    },
+    {
+      "path": "src/components/auth/Welcome.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 116
+    },
+    {
+      "path": "src/components/downloadManager/DownloadManagerDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 307
+    },
+    {
+      "path": "src/components/downloadManager/DownloadManagerLayout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 84
+    },
+    {
+      "path": "src/components/layout/AppLayout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 252
+    },
+    {
+      "path": "src/components/layout/Sidebar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 400
+    },
+    {
+      "path": "src/components/services/content/ConnectionLostBanner.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 105
+    },
+    {
+      "path": "src/components/services/content/ServiceDisabled.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 46
+    },
+    {
+      "path": "src/components/services/content/ServiceView.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 215
+    },
+    {
+      "path": "src/components/services/content/ServiceWebview.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 160
+    },
+    {
+      "path": "src/components/services/content/Services.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 167
+    },
+    {
+      "path": "src/components/services/content/WebviewCrashHandler.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 95
+    },
+    {
+      "path": "src/components/services/content/WebviewErrorHandler.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 101
+    },
+    {
+      "path": "src/components/services/tabs/TabBarSortableList.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 83
+    },
+    {
+      "path": "src/components/services/tabs/TabItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 451
+    },
+    {
+      "path": "src/components/services/tabs/Tabbar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 133
+    },
+    {
+      "path": "src/components/settings/SandboxServiceTabs.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 157
+    },
+    {
+      "path": "src/components/settings/SandboxTransferList.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 217
+    },
+    {
+      "path": "src/components/settings/SettingsLayout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 82
+    },
+    {
+      "path": "src/components/settings/account/AccountDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 238
+    },
+    {
+      "path": "src/components/settings/navigation/SettingsNavigation.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 208
+    },
+    {
+      "path": "src/components/settings/recipes/RecipeItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 37
+    },
+    {
+      "path": "src/components/settings/recipes/RecipesDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 313
+    },
+    {
+      "path": "src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 94
+    },
+    {
+      "path": "src/components/settings/releaseNotes/ReleaseNotesLayout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 83
+    },
+    {
+      "path": "src/components/settings/services/EditServiceForm.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 574
+    },
+    {
+      "path": "src/components/settings/services/ServiceError.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 69
+    },
+    {
+      "path": "src/components/settings/services/ServiceItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 107
+    },
+    {
+      "path": "src/components/settings/services/ServicesDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 193
+    },
+    {
+      "path": "src/components/settings/settings/EditSettingsForm.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 1428
+    },
+    {
+      "path": "src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 98
+    },
+    {
+      "path": "src/components/settings/team/TeamDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 216
+    },
+    {
+      "path": "src/components/settings/user/EditUserForm.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 143
+    },
+    {
+      "path": "src/components/ui/AppLoader/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 129
+    },
+    {
+      "path": "src/components/ui/AppLoader/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "src/components/ui/FAB.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 48
+    },
+    {
+      "path": "src/components/ui/FullscreenLoader/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 53
+    },
+    {
+      "path": "src/components/ui/FullscreenLoader/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 25
+    },
+    {
+      "path": "src/components/ui/InfoBar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 105
+    },
+    {
+      "path": "src/components/ui/Infobox.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 125
+    },
+    {
+      "path": "src/components/ui/Link.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 75
+    },
+    {
+      "path": "src/components/ui/Modal/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 59
+    },
+    {
+      "path": "src/components/ui/Modal/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 34
+    },
+    {
+      "path": "src/components/ui/Radio.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 77
+    },
+    {
+      "path": "src/components/ui/SearchInput.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 112
+    },
+    {
+      "path": "src/components/ui/Select.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 112
+    },
+    {
+      "path": "src/components/ui/ServiceIcon.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 53
+    },
+    {
+      "path": "src/components/ui/Slider.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 70
+    },
+    {
+      "path": "src/components/ui/StatusBarTargetUrl.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 31
+    },
+    {
+      "path": "src/components/ui/Tabs/TabItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 20
+    },
+    {
+      "path": "src/components/ui/Tabs/Tabs.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 86
+    },
+    {
+      "path": "src/components/ui/WebviewLoader/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 49
+    },
+    {
+      "path": "src/components/ui/badge/ProBadge.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 66
+    },
+    {
+      "path": "src/components/ui/badge/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 67
+    },
+    {
+      "path": "src/components/ui/button/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 248
+    },
+    {
+      "path": "src/components/ui/colorPickerInput/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 72
+    },
+    {
+      "path": "src/components/ui/effects/Appear.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 44
+    },
+    {
+      "path": "src/components/ui/error/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 21
+    },
+    {
+      "path": "src/components/ui/error/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 10
+    },
+    {
+      "path": "src/components/ui/headline/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 81
+    },
+    {
+      "path": "src/components/ui/icon/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 42
+    },
+    {
+      "path": "src/components/ui/imageUpload/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 173
+    },
+    {
+      "path": "src/components/ui/infobox/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 200
+    },
+    {
+      "path": "src/components/ui/input/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 226
+    },
+    {
+      "path": "src/components/ui/input/scorePassword.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 43
+    },
+    {
+      "path": "src/components/ui/input/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 102
+    },
+    {
+      "path": "src/components/ui/label/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 50
+    },
+    {
+      "path": "src/components/ui/label/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 13
+    },
+    {
+      "path": "src/components/ui/loader/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 61
+    },
+    {
+      "path": "src/components/ui/select/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 463
+    },
+    {
+      "path": "src/components/ui/textarea/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 118
+    },
+    {
+      "path": "src/components/ui/textarea/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 55
+    },
+    {
+      "path": "src/components/ui/toggle/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 119
+    },
+    {
+      "path": "src/components/ui/typings/generic.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 11
+    },
+    {
+      "path": "src/components/ui/wrapper/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 39
+    },
+    {
+      "path": "src/components/util/ErrorBoundary/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 68
+    },
+    {
+      "path": "src/components/util/ErrorBoundary/styles.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 14
+    },
+    {
+      "path": "src/components/util/WithParams.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 9
+    },
+    {
+      "path": "src/config.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 752
+    },
+    {
+      "path": "src/containers/auth/AuthLayoutContainer.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 80
+    },
+    {
+      "path": "src/containers/auth/AuthReleaseNotesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 108
+    },
+    {
+      "path": "src/containers/auth/ChangeServerScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 40
+    },
+    {
+      "path": "src/containers/auth/InviteScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 15
+    },
+    {
+      "path": "src/containers/auth/LockedScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 84
+    },
+    {
+      "path": "src/containers/auth/LoginScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 35
+    },
+    {
+      "path": "src/containers/auth/PasswordScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "src/containers/auth/SetupAssistantScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 108
+    },
+    {
+      "path": "src/containers/auth/SignupScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "src/containers/auth/WelcomeScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 26
+    },
+    {
+      "path": "src/containers/download-manager/DownloadManagerScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 13
+    },
+    {
+      "path": "src/containers/download-manager/DownloadManagerWindow.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 47
+    },
+    {
+      "path": "src/containers/layout/AppLayoutContainer.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 209
+    },
+    {
+      "path": "src/containers/settings/AccountScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 65
+    },
+    {
+      "path": "src/containers/settings/EditServiceScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 578
+    },
+    {
+      "path": "src/containers/settings/EditSettingsScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 1471
+    },
+    {
+      "path": "src/containers/settings/EditUserScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 157
+    },
+    {
+      "path": "src/containers/settings/InviteScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 33
+    },
+    {
+      "path": "src/containers/settings/RecipesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 188
+    },
+    {
+      "path": "src/containers/settings/ReleaseNotesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 13
+    },
+    {
+      "path": "src/containers/settings/ReleaseNotesWindow.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 47
+    },
+    {
+      "path": "src/containers/settings/ServicesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 63
+    },
+    {
+      "path": "src/containers/settings/SettingsWindow.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 60
+    },
+    {
+      "path": "src/containers/settings/SupportScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 13
+    },
+    {
+      "path": "src/containers/settings/TeamScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 49
+    },
+    {
+      "path": "src/dev-app-update.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "sizeLines": 4
+    },
+    {
+      "path": "src/electron-util.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 40
+    },
+    {
+      "path": "src/electron/Settings.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 69
+    },
+    {
+      "path": "src/electron/deepLinking.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "src/electron/exception.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 5
+    },
+    {
+      "path": "src/electron/ipc-api/appIndicator.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 92
+    },
+    {
+      "path": "src/electron/ipc-api/autoUpdate.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 93
+    },
+    {
+      "path": "src/electron/ipc-api/dnd.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "src/electron/ipc-api/download.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 66
+    },
+    {
+      "path": "src/electron/ipc-api/focusState.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 12
+    },
+    {
+      "path": "src/electron/ipc-api/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 31
+    },
+    {
+      "path": "src/electron/ipc-api/languageDetect.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 22
+    },
+    {
+      "path": "src/electron/ipc-api/localServer.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 60
+    },
+    {
+      "path": "src/electron/ipc-api/processManager.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 9
+    },
+    {
+      "path": "src/electron/ipc-api/sessionStorage.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 39
+    },
+    {
+      "path": "src/electron/ipc-api/settings.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 15
+    },
+    {
+      "path": "src/electron/macOSPermissions.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 88
+    },
+    {
+      "path": "src/electron/windowUtils.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 17
+    },
+    {
+      "path": "src/enforce-macos-app-location.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 45
+    },
+    {
+      "path": "src/environment-remote.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 81
+    },
+    {
+      "path": "src/environment.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 52
+    },
+    {
+      "path": "src/features/appearance/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 628
+    },
+    {
+      "path": "src/features/basicAuth/Component.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 107
+    },
+    {
+      "path": "src/features/basicAuth/Form.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 18
+    },
+    {
+      "path": "src/features/basicAuth/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "src/features/basicAuth/mainIpcHandler.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 14
+    },
+    {
+      "path": "src/features/basicAuth/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 42
+    },
+    {
+      "path": "src/features/basicAuth/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 13
+    },
+    {
+      "path": "src/features/communityRecipes/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 8
+    },
+    {
+      "path": "src/features/communityRecipes/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 41
+    },
+    {
+      "path": "src/features/publishDebugInfo/Component.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 212
+    },
+    {
+      "path": "src/features/publishDebugInfo/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 18
+    },
+    {
+      "path": "src/features/publishDebugInfo/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 8
+    },
+    {
+      "path": "src/features/quickSwitch/Component.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 358
+    },
+    {
+      "path": "src/features/quickSwitch/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 22
+    },
+    {
+      "path": "src/features/quickSwitch/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 8
+    },
+    {
+      "path": "src/features/serviceProxy/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 57
+    },
+    {
+      "path": "src/features/todos/actions.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 48
+    },
+    {
+      "path": "src/features/todos/components/TodosWebview.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 248
+    },
+    {
+      "path": "src/features/todos/constants.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 9
+    },
+    {
+      "path": "src/features/todos/containers/TodosScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 50
+    },
+    {
+      "path": "src/features/todos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 10
+    },
+    {
+      "path": "src/features/todos/preload.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 63
+    },
+    {
+      "path": "src/features/todos/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 333
+    },
+    {
+      "path": "src/features/utils/ActionBinding.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 29
+    },
+    {
+      "path": "src/features/utils/FeatureStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 49
+    },
+    {
+      "path": "src/features/webControls/components/WebControls.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 265
+    },
+    {
+      "path": "src/features/webControls/containers/WebControlsScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 174
+    },
+    {
+      "path": "src/features/workspaces/actions.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 43
+    },
+    {
+      "path": "src/features/workspaces/api.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 89
+    },
+    {
+      "path": "src/features/workspaces/components/CreateWorkspaceForm.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 106
+    },
+    {
+      "path": "src/features/workspaces/components/EditWorkspaceForm.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 256
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 261
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceDrawerItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 213
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 39
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceServiceListItem.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 69
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceSwitchingIndicator.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 95
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspacesDashboard.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 198
+    },
+    {
+      "path": "src/features/workspaces/constants.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 5
+    },
+    {
+      "path": "src/features/workspaces/containers/EditWorkspaceScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 50
+    },
+    {
+      "path": "src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 41
+    },
+    {
+      "path": "src/features/workspaces/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 10
+    },
+    {
+      "path": "src/features/workspaces/models/Workspace.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 42
+    },
+    {
+      "path": "src/features/workspaces/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 389
+    },
+    {
+      "path": "src/helpers/array-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 7
+    },
+    {
+      "path": "src/helpers/asar-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 11
+    },
+    {
+      "path": "src/helpers/async-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 5
+    },
+    {
+      "path": "src/helpers/certs-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 44
+    },
+    {
+      "path": "src/helpers/favicon-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 4
+    },
+    {
+      "path": "src/helpers/i18n-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 92
+    },
+    {
+      "path": "src/helpers/password-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 37
+    },
+    {
+      "path": "src/helpers/recipe-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 35
+    },
+    {
+      "path": "src/helpers/routing-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 6
+    },
+    {
+      "path": "src/helpers/schedule-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 48
+    },
+    {
+      "path": "src/helpers/serverless-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 19
+    },
+    {
+      "path": "src/helpers/service-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 22
+    },
+    {
+      "path": "src/helpers/translation-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 48
+    },
+    {
+      "path": "src/helpers/update-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 66
+    },
+    {
+      "path": "src/helpers/url-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 61
+    },
+    {
+      "path": "src/helpers/userAgent-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 47
+    },
+    {
+      "path": "src/helpers/validation-helpers.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 98
+    },
+    {
+      "path": "src/i18n/globalMessages.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 86
+    },
+    {
+      "path": "src/i18n/languages.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 148
+    },
+    {
+      "path": "src/i18n/locales/af.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 2
+    },
+    {
+      "path": "src/i18n/locales/ar.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 419
+    },
+    {
+      "path": "src/i18n/locales/be.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 9
+    },
+    {
+      "path": "src/i18n/locales/bg.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 332
+    },
+    {
+      "path": "src/i18n/locales/bs.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 2
+    },
+    {
+      "path": "src/i18n/locales/ca.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 276
+    },
+    {
+      "path": "src/i18n/locales/cs.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 411
+    },
+    {
+      "path": "src/i18n/locales/da.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 408
+    },
+    {
+      "path": "src/i18n/locales/de.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 585
+    },
+    {
+      "path": "src/i18n/locales/defaultMessages.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 6759
+    },
+    {
+      "path": "src/i18n/locales/el.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 410
+    },
+    {
+      "path": "src/i18n/locales/en-US.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 588
+    },
+    {
+      "path": "src/i18n/locales/es.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 516
+    },
+    {
+      "path": "src/i18n/locales/et.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 332
+    },
+    {
+      "path": "src/i18n/locales/fa.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 2
+    },
+    {
+      "path": "src/i18n/locales/fi.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 420
+    },
+    {
+      "path": "src/i18n/locales/fil.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 332
+    },
+    {
+      "path": "src/i18n/locales/fr.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 585
+    },
+    {
+      "path": "src/i18n/locales/ga.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 220
+    },
+    {
+      "path": "src/i18n/locales/he.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 586
+    },
+    {
+      "path": "src/i18n/locales/hi.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 73
+    },
+    {
+      "path": "src/i18n/locales/hr.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 173
+    },
+    {
+      "path": "src/i18n/locales/hu.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 332
+    },
+    {
+      "path": "src/i18n/locales/id.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 378
+    },
+    {
+      "path": "src/i18n/locales/it.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 519
+    },
+    {
+      "path": "src/i18n/locales/ja.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 494
+    },
+    {
+      "path": "src/i18n/locales/ka.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 145
+    },
+    {
+      "path": "src/i18n/locales/kk.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 332
+    },
+    {
+      "path": "src/i18n/locales/ko.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 369
+    },
+    {
+      "path": "src/i18n/locales/lv.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 528
+    },
+    {
+      "path": "src/i18n/locales/ms.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 332
+    },
+    {
+      "path": "src/i18n/locales/nb.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 145
+    },
+    {
+      "path": "src/i18n/locales/nl-BE.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 249
+    },
+    {
+      "path": "src/i18n/locales/nl.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 493
+    },
+    {
+      "path": "src/i18n/locales/no.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 410
+    },
+    {
+      "path": "src/i18n/locales/pl.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 488
+    },
+    {
+      "path": "src/i18n/locales/pt-BR.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 504
+    },
+    {
+      "path": "src/i18n/locales/pt.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 486
+    },
+    {
+      "path": "src/i18n/locales/ro.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 405
+    },
+    {
+      "path": "src/i18n/locales/ru.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 586
+    },
+    {
+      "path": "src/i18n/locales/si.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 130
+    },
+    {
+      "path": "src/i18n/locales/sk.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 488
+    },
+    {
+      "path": "src/i18n/locales/sl.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 446
+    },
+    {
+      "path": "src/i18n/locales/sq.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 333
+    },
+    {
+      "path": "src/i18n/locales/sr.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 234
+    },
+    {
+      "path": "src/i18n/locales/sv.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 414
+    },
+    {
+      "path": "src/i18n/locales/te.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 446
+    },
+    {
+      "path": "src/i18n/locales/tr.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 541
+    },
+    {
+      "path": "src/i18n/locales/uk.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 448
+    },
+    {
+      "path": "src/i18n/locales/vi.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 396
+    },
+    {
+      "path": "src/i18n/locales/vls.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 252
+    },
+    {
+      "path": "src/i18n/locales/zh-HANS.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 407
+    },
+    {
+      "path": "src/i18n/locales/zh-HANT.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 270
+    },
+    {
+      "path": "src/i18n/locales/zh-TW.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 319
+    },
+    {
+      "path": "src/i18n/locales/zh.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 637
+    },
+    {
+      "path": "src/i18n/messages/src/components/settings/recipes/RecipesDashboard.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 184
+    },
+    {
+      "path": "src/i18n/translations.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 17
+    },
+    {
+      "path": "src/index.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "sizeLines": 88
+    },
+    {
+      "path": "src/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 942
+    },
+    {
+      "path": "src/internal-server/ace",
+      "language": "unknown",
+      "fileCategory": "code",
+      "sizeLines": 22
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/ImageController.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/RecipeController.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 138
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/ServiceController.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 272
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/StaticController.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 25
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/UserController.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 355
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/WorkspaceController.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 139
+    },
+    {
+      "path": "src/internal-server/app/Exceptions/Handler.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 41
+    },
+    {
+      "path": "src/internal-server/app/ImageHelper.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 35
+    },
+    {
+      "path": "src/internal-server/app/Middleware/ConvertEmptyStringsToNull.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 16
+    },
+    {
+      "path": "src/internal-server/app/Models/Recipe.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 7
+    },
+    {
+      "path": "src/internal-server/app/Models/Service.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 7
+    },
+    {
+      "path": "src/internal-server/app/Models/Token.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 7
+    },
+    {
+      "path": "src/internal-server/app/Models/Traits/NoTimestamp.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 15
+    },
+    {
+      "path": "src/internal-server/app/Models/User.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 8
+    },
+    {
+      "path": "src/internal-server/app/Models/Workspace.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 7
+    },
+    {
+      "path": "src/internal-server/config/app.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 240
+    },
+    {
+      "path": "src/internal-server/config/auth.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 93
+    },
+    {
+      "path": "src/internal-server/config/bodyParser.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 150
+    },
+    {
+      "path": "src/internal-server/config/cors.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 86
+    },
+    {
+      "path": "src/internal-server/config/database.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 83
+    },
+    {
+      "path": "src/internal-server/config/drive.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 46
+    },
+    {
+      "path": "src/internal-server/config/hash.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 48
+    },
+    {
+      "path": "src/internal-server/config/session.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 98
+    },
+    {
+      "path": "src/internal-server/config/shield.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 143
+    },
+    {
+      "path": "src/internal-server/database/factory.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 21
+    },
+    {
+      "path": "src/internal-server/database/migrations/1503250034279_user.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 19
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566385379883_service_schema.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 22
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566554231482_recipe_schema.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 21
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566554359294_workspace_schema.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "src/internal-server/database/template.sqlite",
+      "language": "sqlite",
+      "fileCategory": "code",
+      "sizeLines": 7
+    },
+    {
+      "path": "src/internal-server/env.ini",
+      "language": "config",
+      "fileCategory": "config",
+      "sizeLines": 16
+    },
+    {
+      "path": "src/internal-server/package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 4
+    },
+    {
+      "path": "src/internal-server/public/css/main.css",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 73
+    },
+    {
+      "path": "src/internal-server/public/css/vanilla.css",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 138
+    },
+    {
+      "path": "src/internal-server/public/js/transfer.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 19
+    },
+    {
+      "path": "src/internal-server/resources/views/import.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "sizeLines": 19
+    },
+    {
+      "path": "src/internal-server/resources/views/index.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "sizeLines": 20
+    },
+    {
+      "path": "src/internal-server/resources/views/layouts/main.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "sizeLines": 20
+    },
+    {
+      "path": "src/internal-server/resources/views/transfer.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "sizeLines": 33
+    },
+    {
+      "path": "src/internal-server/start.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 78
+    },
+    {
+      "path": "src/internal-server/start/app.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 63
+    },
+    {
+      "path": "src/internal-server/start/kernel.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 52
+    },
+    {
+      "path": "src/internal-server/start/migrate.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 55
+    },
+    {
+      "path": "src/internal-server/start/routes.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "sizeLines": 129
+    },
+    {
+      "path": "src/internal-server/test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 11
+    },
+    {
+      "path": "src/jsUtils.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 49
+    },
+    {
+      "path": "src/lib/DBus.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 130
+    },
+    {
+      "path": "src/lib/Form.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 46
+    },
+    {
+      "path": "src/lib/Menu.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 1351
+    },
+    {
+      "path": "src/lib/TouchBar.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 63
+    },
+    {
+      "path": "src/lib/Tray.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 309
+    },
+    {
+      "path": "src/lib/dbus/Ferdium.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 97
+    },
+    {
+      "path": "src/models/IContextMenuParams.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 8
+    },
+    {
+      "path": "src/models/Recipe.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 206
+    },
+    {
+      "path": "src/models/RecipePreview.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 42
+    },
+    {
+      "path": "src/models/Service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 691
+    },
+    {
+      "path": "src/models/User.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 68
+    },
+    {
+      "path": "src/models/UserAgent.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 106
+    },
+    {
+      "path": "src/preload-safe-debug.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 33
+    },
+    {
+      "path": "src/prop-types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 14
+    },
+    {
+      "path": "src/routes.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 205
+    },
+    {
+      "path": "src/sentry.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 6
+    },
+    {
+      "path": "src/stores/AppStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 864
+    },
+    {
+      "path": "src/stores/FeaturesStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 93
+    },
+    {
+      "path": "src/stores/GlobalErrorStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 118
+    },
+    {
+      "path": "src/stores/RecipePreviewsStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 65
+    },
+    {
+      "path": "src/stores/RecipesStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 174
+    },
+    {
+      "path": "src/stores/RequestStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 97
+    },
+    {
+      "path": "src/stores/ServicesStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 1467
+    },
+    {
+      "path": "src/stores/SettingsStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 248
+    },
+    {
+      "path": "src/stores/UIStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 146
+    },
+    {
+      "path": "src/stores/UserStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 434
+    },
+    {
+      "path": "src/stores/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 67
+    },
+    {
+      "path": "src/stores/lib/CachedRequest.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 123
+    },
+    {
+      "path": "src/stores/lib/Reaction.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 30
+    },
+    {
+      "path": "src/stores/lib/Request.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 152
+    },
+    {
+      "path": "src/stores/lib/TypedStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 65
+    },
+    {
+      "path": "src/styles/animations.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 93
+    },
+    {
+      "path": "src/styles/auth.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 253
+    },
+    {
+      "path": "src/styles/badge.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 31
+    },
+    {
+      "path": "src/styles/button.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 181
+    },
+    {
+      "path": "src/styles/capture-sources.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 76
+    },
+    {
+      "path": "src/styles/colors.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 50
+    },
+    {
+      "path": "src/styles/config.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 5
+    },
+    {
+      "path": "src/styles/content-tabs.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 74
+    },
+    {
+      "path": "src/styles/features.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 29
+    },
+    {
+      "path": "src/styles/fonts.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 50
+    },
+    {
+      "path": "src/styles/globals.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 27
+    },
+    {
+      "path": "src/styles/image-upload.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 129
+    },
+    {
+      "path": "src/styles/info-bar.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 83
+    },
+    {
+      "path": "src/styles/infobox.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 67
+    },
+    {
+      "path": "src/styles/input.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 131
+    },
+    {
+      "path": "src/styles/invite.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 13
+    },
+    {
+      "path": "src/styles/layout.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 310
+    },
+    {
+      "path": "src/styles/main.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 37
+    },
+    {
+      "path": "src/styles/mixins.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 10
+    },
+    {
+      "path": "src/styles/radio.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 49
+    },
+    {
+      "path": "src/styles/recipes.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 94
+    },
+    {
+      "path": "src/styles/reset.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 179
+    },
+    {
+      "path": "src/styles/searchInput.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 39
+    },
+    {
+      "path": "src/styles/select.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 28
+    },
+    {
+      "path": "src/styles/service-table.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 80
+    },
+    {
+      "path": "src/styles/services.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 109
+    },
+    {
+      "path": "src/styles/settings.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 733
+    },
+    {
+      "path": "src/styles/slider.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 47
+    },
+    {
+      "path": "src/styles/status-bar-target-url.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 15
+    },
+    {
+      "path": "src/styles/tabs.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 163
+    },
+    {
+      "path": "src/styles/title-bar.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 102
+    },
+    {
+      "path": "src/styles/toggle.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 58
+    },
+    {
+      "path": "src/styles/tooltip.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 5
+    },
+    {
+      "path": "src/styles/type-helper.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 124
+    },
+    {
+      "path": "src/styles/type.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 98
+    },
+    {
+      "path": "src/styles/util.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 21
+    },
+    {
+      "path": "src/styles/vertical.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 121
+    },
+    {
+      "path": "src/styles/welcome.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "sizeLines": 138
+    },
+    {
+      "path": "src/themes/IStyleTypes.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 8
+    },
+    {
+      "path": "src/themes/dark/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 174
+    },
+    {
+      "path": "src/themes/default/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 255
+    },
+    {
+      "path": "src/themes/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "src/themes/legacy/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 29
+    },
+    {
+      "path": "src/webview/badge.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 20
+    },
+    {
+      "path": "src/webview/contextMenu.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "src/webview/contextMenuBuilder.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 1094
+    },
+    {
+      "path": "src/webview/darkmode.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 48
+    },
+    {
+      "path": "src/webview/darkmode/custom.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 23
+    },
+    {
+      "path": "src/webview/darkmode/ignore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 2
+    },
+    {
+      "path": "src/webview/dialogTitle.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "src/webview/find.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 32
+    },
+    {
+      "path": "src/webview/lib/RecipeWebview.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 210
+    },
+    {
+      "path": "src/webview/lib/Userscript.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 111
+    },
+    {
+      "path": "src/webview/notifications.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 97
+    },
+    {
+      "path": "src/webview/recipe.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 496
+    },
+    {
+      "path": "src/webview/screenshare.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 44
+    },
+    {
+      "path": "src/webview/sessionHandler.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 17
+    },
+    {
+      "path": "src/webview/spellchecker.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 30
+    },
+    {
+      "path": "src/webview/zoom.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 36
+    },
+    {
+      "path": "test/features/utils/FeatureStore.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 94
+    },
+    {
+      "path": "test/helpers/array-helpers.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 15
+    },
+    {
+      "path": "test/helpers/update-helpers.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 98
+    },
+    {
+      "path": "test/helpers/url-helpers.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 138
+    },
+    {
+      "path": "test/jsUtils.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 255
+    },
+    {
+      "path": "test/themes/index.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "sizeLines": 18
+    },
+    {
+      "path": "tsconfig.json",
+      "language": "json",
+      "fileCategory": "config",
+      "sizeLines": 58
+    }
+  ],
+  "totalFiles": 500,
+  "filteredByIgnore": 0,
+  "estimatedComplexity": "large",
+  "importMap": {
+    ".all-contributorsrc": [],
+    ".codespellrc": [],
+    ".dockerignore": [],
+    ".eslintignore": [],
+    ".gitattributes": [],
+    ".github/CODEOWNERS": [],
+    ".gitmodules": [],
+    ".husky/commit-msg": [],
+    ".husky/pre-commit": [],
+    ".npmrc": [],
+    ".nvmrc": [],
+    ".prettierrc.js": [],
+    "branding/Ferdium.afphoto": [],
+    "branding/darwin-20-icons-lo-res.xcf": [],
+    "branding/darwin-20-icons.xcf": [],
+    "branding/dmgInstaller.psd": [],
+    "branding/download.psd": [],
+    "branding/social-preview.psd": [],
+    "build-helpers/entitlements.mas.inherit.plist": [],
+    "build-helpers/entitlements.mas.plist": [],
+    "build-helpers/images/dmgInstaller.tiff": [],
+    "build-helpers/images/icon.icns": [],
+    "build-helpers/notarize.js": [],
+    "build-helpers/snap-hooks/configure": [],
+    "commitlint.config.js": [],
+    "docs/dbus/ferdium_bar.py": [],
+    "electron-builder.env": [],
+    "electron-builder.npmrc": [],
+    "esbuild.mjs": [],
+    "jest.config.js": [],
+    "recipes": [],
+    "scripts/add-crowdin-contributors.ts": [],
+    "scripts/link-readme.ts": [],
+    "src/@types/ferdium-components.types.ts": [
+      "src/actions/lib/actions.ts",
+      "src/stores/index.ts"
+    ],
+    "src/@types/ferdium.types.ts": [],
+    "src/@types/legacy-types.ts": [],
+    "src/@types/mobx-form.types.ts": [
+      "src/@types/ferdium-components.types.ts"
+    ],
+    "src/@types/stores.types.ts": [
+      "src/features/workspaces/models/Workspace.ts",
+      "src/models/Recipe.ts",
+      "src/models/Service.ts",
+      "src/models/User.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Reaction.ts",
+      "src/stores/lib/Request.ts"
+    ],
+    "src/I18n.tsx": [
+      "src/i18n/translations.ts",
+      "src/stores/AppStore.ts",
+      "src/stores/UserStore.ts"
+    ],
+    "src/actions/app.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/index.ts": [
+      "src/actions/app.ts",
+      "src/actions/lib/actions.ts",
+      "src/actions/recipe.ts",
+      "src/actions/recipePreview.ts",
+      "src/actions/requests.ts",
+      "src/actions/service.ts",
+      "src/actions/settings.ts",
+      "src/actions/ui.ts",
+      "src/actions/user.ts",
+      "src/features/todos/actions.ts",
+      "src/features/workspaces/actions.ts"
+    ],
+    "src/actions/lib/actions.ts": [],
+    "src/actions/recipe.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/recipePreview.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/requests.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/service.ts": [
+      "src/actions/lib/actions.ts",
+      "src/models/Service.ts"
+    ],
+    "src/actions/settings.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/ui.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/user.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/api/AppApi.ts": [],
+    "src/api/FeaturesApi.ts": [],
+    "src/api/LocalApi.ts": [],
+    "src/api/RecipePreviewsApi.ts": [],
+    "src/api/RecipesApi.ts": [],
+    "src/api/ServicesApi.ts": [],
+    "src/api/UserApi.ts": [
+      "src/helpers/password-helpers.ts"
+    ],
+    "src/api/apiBase.ts": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/url-helpers.ts"
+    ],
+    "src/api/index.ts": [
+      "src/api/AppApi.ts",
+      "src/api/FeaturesApi.ts",
+      "src/api/LocalApi.ts",
+      "src/api/RecipePreviewsApi.ts",
+      "src/api/RecipesApi.ts",
+      "src/api/ServicesApi.ts",
+      "src/api/UserApi.ts"
+    ],
+    "src/api/server/LocalApi.ts": [
+      "src/helpers/service-helpers.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/api/server/ServerApi.ts": [
+      "src/api/apiBase.ts",
+      "src/api/utils/auth.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/async-helpers.ts",
+      "src/helpers/recipe-helpers.ts",
+      "src/helpers/service-helpers.ts",
+      "src/models/Recipe.ts",
+      "src/models/RecipePreview.ts",
+      "src/models/Service.ts",
+      "src/models/User.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/api/utils/auth.ts": [
+      "src/api/apiBase.ts",
+      "src/environment-remote.ts"
+    ],
+    "src/app.tsx": [
+      "src/I18n.tsx",
+      "src/actions/index.ts",
+      "src/api/index.ts",
+      "src/api/server/LocalApi.ts",
+      "src/api/server/ServerApi.ts",
+      "src/lib/Menu.ts",
+      "src/lib/TouchBar.ts",
+      "src/routes.tsx",
+      "src/stores/index.ts"
+    ],
+    "src/components/AppUpdateInfoBar.tsx": [
+      "src/components/ui/InfoBar.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/helpers/update-helpers.ts"
+    ],
+    "src/components/MediaSource.tsx": [
+      "src/components/ui/FullscreenLoader/index.tsx",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/models/Service.ts"
+    ],
+    "src/components/auth/AuthLayout.tsx": [
+      "src/api/apiBase.ts",
+      "src/components/AppUpdateInfoBar.tsx",
+      "src/components/ui/InfoBar.tsx",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/features/publishDebugInfo/index.ts",
+      "src/helpers/update-helpers.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/components/auth/ChangeServer.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/Select.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Invite.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Locked.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/environment.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Login.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/apiBase.ts",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Password.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/SetupAssistant.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/badge/index.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/components/auth/Signup.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/apiBase.ts",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Welcome.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/apiBase.ts",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/helpers/array-helpers.ts",
+      "src/helpers/serverless-helpers.ts",
+      "src/models/RecipePreview.ts"
+    ],
+    "src/components/downloadManager/DownloadManagerDashboard.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/ui/icon/index.tsx",
+      "src/stores/index.ts"
+    ],
+    "src/components/downloadManager/DownloadManagerLayout.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/components/layout/AppLayout.tsx": [
+      "src/components/AppUpdateInfoBar.tsx",
+      "src/components/ui/InfoBar.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/containers/auth/LockedScreen.tsx",
+      "src/environment.ts",
+      "src/features/basicAuth/index.ts",
+      "src/features/publishDebugInfo/index.ts",
+      "src/features/quickSwitch/index.ts",
+      "src/features/todos/containers/TodosScreen.tsx",
+      "src/features/workspaces/components/WorkspaceSwitchingIndicator.tsx",
+      "src/features/workspaces/index.ts",
+      "src/helpers/update-helpers.ts",
+      "src/stores/SettingsStore.ts"
+    ],
+    "src/components/layout/Sidebar.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/services/tabs/Tabbar.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/features/todos/actions.ts",
+      "src/features/todos/index.ts",
+      "src/i18n/globalMessages.ts",
+      "src/models/Service.ts",
+      "src/stores/index.ts"
+    ],
+    "src/components/services/content/ConnectionLostBanner.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/services/content/ServiceDisabled.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx"
+    ],
+    "src/components/services/content/ServiceView.tsx": [
+      "src/components/MediaSource.tsx",
+      "src/components/services/content/ServiceDisabled.tsx",
+      "src/components/services/content/ServiceWebview.tsx",
+      "src/components/services/content/WebviewCrashHandler.tsx",
+      "src/components/services/content/WebviewErrorHandler.tsx",
+      "src/components/ui/StatusBarTargetUrl.tsx",
+      "src/components/ui/WebviewLoader/index.tsx",
+      "src/config.ts",
+      "src/features/webControls/containers/WebControlsScreen.tsx",
+      "src/models/Service.ts",
+      "src/stores/index.ts"
+    ],
+    "src/components/services/content/ServiceWebview.tsx": [
+      "src/models/Service.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/index.ts"
+    ],
+    "src/components/services/content/Services.tsx": [
+      "src/components/services/content/ServiceView.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/services/content/WebviewCrashHandler.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx"
+    ],
+    "src/components/services/content/WebviewErrorHandler.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx"
+    ],
+    "src/components/services/tabs/TabBarSortableList.tsx": [
+      "src/components/services/tabs/TabItem.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/services/tabs/TabItem.tsx": [
+      "src/@types/stores.types.ts",
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/i18n/globalMessages.ts",
+      "src/jsUtils.ts",
+      "src/models/Service.ts"
+    ],
+    "src/components/services/tabs/Tabbar.tsx": [
+      "src/components/services/tabs/TabBarSortableList.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/SandboxServiceTabs.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/SandboxTransferList.tsx",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/components/settings/SandboxTransferList.tsx": [
+      "src/@types/ferdium-components.types.ts"
+    ],
+    "src/components/settings/SettingsLayout.tsx": [
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/components/settings/account/AccountDashboard.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/infobox/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts",
+      "src/models/User.ts"
+    ],
+    "src/components/settings/navigation/SettingsNavigation.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/config.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/components/settings/recipes/RecipeItem.tsx": [
+      "src/models/RecipePreview.ts"
+    ],
+    "src/components/settings/recipes/RecipesDashboard.tsx": [
+      "src/components/settings/recipes/RecipeItem.tsx",
+      "src/components/ui/SearchInput.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/infobox/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts",
+      "src/models/RecipePreview.ts"
+    ],
+    "src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx": [
+      "src/environment-remote.ts",
+      "src/helpers/update-helpers.ts"
+    ],
+    "src/components/settings/releaseNotes/ReleaseNotesLayout.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/components/settings/services/EditServiceForm.tsx": [
+      "src/components/ui/Select.tsx",
+      "src/components/ui/Slider.tsx",
+      "src/components/ui/Tabs/TabItem.tsx",
+      "src/components/ui/Tabs/Tabs.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/imageUpload/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/environment.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts",
+      "src/models/Recipe.ts",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/services/ServiceError.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/button/index.tsx"
+    ],
+    "src/components/settings/services/ServiceItem.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/services/ServicesDashboard.tsx": [
+      "src/components/settings/services/ServiceItem.tsx",
+      "src/components/ui/FAB.tsx",
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/SearchInput.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/settings/EditSettingsForm.tsx": [
+      "src/components/settings/SandboxServiceTabs.tsx",
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Select.tsx",
+      "src/components/ui/Slider.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/colorPickerInput/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/helpers/update-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx": [
+      "src/config.ts"
+    ],
+    "src/components/settings/team/TeamDashboard.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/settings/user/EditUserForm.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Radio.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/lib/Form.ts"
+    ],
+    "src/components/ui/AppLoader/index.tsx": [
+      "src/components/ui/AppLoader/styles.ts",
+      "src/components/ui/FullscreenLoader/index.tsx",
+      "src/helpers/array-helpers.ts",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/AppLoader/styles.ts": [],
+    "src/components/ui/FAB.tsx": [],
+    "src/components/ui/FullscreenLoader/index.tsx": [
+      "src/components/ui/FullscreenLoader/styles.ts",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/FullscreenLoader/styles.ts": [],
+    "src/components/ui/InfoBar.tsx": [
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/ui/Infobox.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/ui/Link.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/helpers/routing-helpers.ts",
+      "src/helpers/url-helpers.ts"
+    ],
+    "src/components/ui/Modal/index.tsx": [
+      "src/components/ui/Modal/styles.ts",
+      "src/components/ui/icon/index.tsx"
+    ],
+    "src/components/ui/Modal/styles.ts": [],
+    "src/components/ui/Radio.tsx": [
+      "src/components/ui/error/index.tsx"
+    ],
+    "src/components/ui/SearchInput.tsx": [
+      "src/components/ui/icon/index.tsx"
+    ],
+    "src/components/ui/Select.tsx": [
+      "src/@types/mobx-form.types.ts"
+    ],
+    "src/components/ui/ServiceIcon.tsx": [
+      "src/models/Service.ts"
+    ],
+    "src/components/ui/Slider.tsx": [],
+    "src/components/ui/StatusBarTargetUrl.tsx": [
+      "src/components/ui/effects/Appear.tsx"
+    ],
+    "src/components/ui/Tabs/TabItem.tsx": [],
+    "src/components/ui/Tabs/Tabs.tsx": [
+      "src/components/ui/Tabs/TabItem.tsx"
+    ],
+    "src/components/ui/WebviewLoader/index.tsx": [
+      "src/components/ui/FullscreenLoader/index.tsx"
+    ],
+    "src/components/ui/badge/ProBadge.tsx": [
+      "src/components/ui/badge/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/badge/index.tsx": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/button/index.tsx": [
+      "src/components/ui/loader/index.tsx",
+      "src/components/ui/typings/generic.ts",
+      "src/config.ts",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/colorPickerInput/index.tsx": [
+      "src/@types/mobx-form.types.ts"
+    ],
+    "src/components/ui/effects/Appear.tsx": [],
+    "src/components/ui/error/index.tsx": [
+      "src/components/ui/error/styles.ts"
+    ],
+    "src/components/ui/error/styles.ts": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/headline/index.tsx": [
+      "src/components/ui/typings/generic.ts",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/icon/index.tsx": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/imageUpload/index.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts"
+    ],
+    "src/components/ui/infobox/index.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/input/index.tsx": [
+      "src/components/ui/error/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/scorePassword.ts",
+      "src/components/ui/input/styles.ts",
+      "src/components/ui/label/index.tsx",
+      "src/components/ui/typings/generic.ts",
+      "src/components/ui/wrapper/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/components/ui/input/scorePassword.ts": [],
+    "src/components/ui/input/styles.ts": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/label/index.tsx": [
+      "src/components/ui/label/styles.ts",
+      "src/components/ui/typings/generic.ts"
+    ],
+    "src/components/ui/label/styles.ts": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/loader/index.tsx": [
+      "src/@types/stores.types.ts",
+      "src/config.ts"
+    ],
+    "src/components/ui/select/index.tsx": [
+      "src/components/ui/error/index.tsx",
+      "src/components/ui/label/index.tsx",
+      "src/components/ui/typings/generic.ts",
+      "src/components/ui/wrapper/index.tsx",
+      "src/jsUtils.ts",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/textarea/index.tsx": [
+      "src/components/ui/error/index.tsx",
+      "src/components/ui/label/index.tsx",
+      "src/components/ui/textarea/styles.ts",
+      "src/components/ui/typings/generic.ts",
+      "src/components/ui/wrapper/index.tsx"
+    ],
+    "src/components/ui/textarea/styles.ts": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/toggle/index.tsx": [
+      "src/components/ui/error/index.tsx",
+      "src/components/ui/label/index.tsx",
+      "src/components/ui/typings/generic.ts",
+      "src/components/ui/wrapper/index.tsx",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/typings/generic.ts": [],
+    "src/components/ui/wrapper/index.tsx": [],
+    "src/components/util/ErrorBoundary/index.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/util/ErrorBoundary/styles.tsx"
+    ],
+    "src/components/util/ErrorBoundary/styles.tsx": [],
+    "src/components/util/WithParams.tsx": [],
+    "src/config.ts": [
+      "src/environment.ts"
+    ],
+    "src/containers/auth/AuthLayoutContainer.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/AuthLayout.tsx",
+      "src/components/ui/AppLoader/index.tsx"
+    ],
+    "src/containers/auth/AuthReleaseNotesScreen.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/environment-remote.ts",
+      "src/helpers/update-helpers.ts",
+      "src/helpers/url-helpers.ts"
+    ],
+    "src/containers/auth/ChangeServerScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/components/auth/ChangeServer.tsx",
+      "src/stores/index.ts"
+    ],
+    "src/containers/auth/InviteScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Invite.tsx"
+    ],
+    "src/containers/auth/LockedScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/components/auth/Locked.tsx",
+      "src/helpers/password-helpers.ts",
+      "src/stores/index.ts"
+    ],
+    "src/containers/auth/LoginScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Login.tsx"
+    ],
+    "src/containers/auth/PasswordScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Password.tsx"
+    ],
+    "src/containers/auth/SetupAssistantScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/legacy-types.ts",
+      "src/components/auth/SetupAssistant.tsx",
+      "src/helpers/async-helpers.ts"
+    ],
+    "src/containers/auth/SignupScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Signup.tsx"
+    ],
+    "src/containers/auth/WelcomeScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Welcome.tsx"
+    ],
+    "src/containers/download-manager/DownloadManagerScreen.tsx": [
+      "src/components/downloadManager/DownloadManagerDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/download-manager/DownloadManagerWindow.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/downloadManager/DownloadManagerLayout.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/layout/AppLayoutContainer.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/layout/AppLayout.tsx",
+      "src/components/layout/Sidebar.tsx",
+      "src/components/services/content/Services.tsx",
+      "src/components/ui/AppLoader/index.tsx",
+      "src/config.ts",
+      "src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "src/features/workspaces/index.ts"
+    ],
+    "src/containers/settings/AccountScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/account/AccountDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts"
+    ],
+    "src/containers/settings/EditServiceScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/mobx-form.types.ts",
+      "src/components/settings/services/EditServiceForm.tsx",
+      "src/components/settings/services/ServiceError.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/components/util/WithParams.tsx",
+      "src/config.ts",
+      "src/features/serviceProxy/index.ts",
+      "src/helpers/i18n-helpers.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/i18n/languages.ts",
+      "src/jsUtils.ts",
+      "src/lib/Form.ts",
+      "src/models/Recipe.ts",
+      "src/models/Service.ts"
+    ],
+    "src/containers/settings/EditSettingsScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/mobx-form.types.ts",
+      "src/api/apiBase.ts",
+      "src/components/settings/settings/EditSettingsForm.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/helpers/i18n-helpers.ts",
+      "src/helpers/password-helpers.ts",
+      "src/helpers/userAgent-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/i18n/languages.ts",
+      "src/jsUtils.ts",
+      "src/lib/Form.ts",
+      "src/lib/Menu.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/containers/settings/EditUserScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/mobx-form.types.ts",
+      "src/components/settings/user/EditUserForm.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/containers/settings/InviteScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Invite.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/RecipesScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/recipes/RecipesDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/components/util/WithParams.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/features/communityRecipes/index.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/models/Recipe.ts",
+      "src/models/RecipePreview.ts"
+    ],
+    "src/containers/settings/ReleaseNotesScreen.tsx": [
+      "src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/ReleaseNotesWindow.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/releaseNotes/ReleaseNotesLayout.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/ServicesScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/services/ServicesDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/SettingsWindow.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/SettingsLayout.tsx",
+      "src/components/settings/navigation/SettingsNavigation.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/features/workspaces/index.ts"
+    ],
+    "src/containers/settings/SupportScreen.tsx": [
+      "src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/TeamScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/team/TeamDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts"
+    ],
+    "src/electron-util.ts": [],
+    "src/electron/Settings.ts": [
+      "src/environment-remote.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/deepLinking.ts": [
+      "src/environment-remote.ts"
+    ],
+    "src/electron/exception.ts": [],
+    "src/electron/ipc-api/appIndicator.ts": [
+      "src/environment.ts",
+      "src/lib/Tray.ts"
+    ],
+    "src/electron/ipc-api/autoUpdate.ts": [
+      "src/environment.ts",
+      "src/index.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/dnd.ts": [
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/download.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/focusState.ts": [],
+    "src/electron/ipc-api/index.ts": [
+      "src/electron/ipc-api/appIndicator.ts",
+      "src/electron/ipc-api/autoUpdate.ts",
+      "src/electron/ipc-api/dnd.ts",
+      "src/electron/ipc-api/download.ts",
+      "src/electron/ipc-api/focusState.ts",
+      "src/electron/ipc-api/languageDetect.ts",
+      "src/electron/ipc-api/localServer.ts",
+      "src/electron/ipc-api/processManager.ts",
+      "src/electron/ipc-api/sessionStorage.ts",
+      "src/electron/ipc-api/settings.ts",
+      "src/lib/Tray.ts"
+    ],
+    "src/electron/ipc-api/languageDetect.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/localServer.ts": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/internal-server/start.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/processManager.ts": [],
+    "src/electron/ipc-api/sessionStorage.ts": [
+      "src/config.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/settings.ts": [],
+    "src/electron/macOSPermissions.ts": [
+      "src/environment-remote.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/windowUtils.ts": [],
+    "src/enforce-macos-app-location.ts": [
+      "src/electron-util.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts"
+    ],
+    "src/environment-remote.ts": [
+      "src/config.ts",
+      "src/electron-util.ts",
+      "src/environment.ts"
+    ],
+    "src/environment.ts": [],
+    "src/features/appearance/index.ts": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/features/workspaces/index.ts"
+    ],
+    "src/features/basicAuth/Component.tsx": [
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/features/basicAuth/Form.ts",
+      "src/features/basicAuth/store.ts",
+      "src/features/basicAuth/styles.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/features/basicAuth/Form.ts": [
+      "src/lib/Form.ts"
+    ],
+    "src/features/basicAuth/index.ts": [
+      "src/features/basicAuth/store.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/basicAuth/mainIpcHandler.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/basicAuth/store.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/basicAuth/styles.ts": [],
+    "src/features/communityRecipes/index.ts": [
+      "src/features/communityRecipes/store.ts"
+    ],
+    "src/features/communityRecipes/store.ts": [
+      "src/features/utils/FeatureStore.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/publishDebugInfo/Component.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/utils/auth.ts",
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/features/publishDebugInfo/store.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/publishDebugInfo/index.ts": [
+      "src/features/publishDebugInfo/store.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/publishDebugInfo/store.ts": [],
+    "src/features/quickSwitch/Component.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/features/quickSwitch/store.ts",
+      "src/models/Service.ts"
+    ],
+    "src/features/quickSwitch/index.ts": [
+      "src/features/quickSwitch/store.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/quickSwitch/store.ts": [],
+    "src/features/serviceProxy/index.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/todos/actions.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/features/todos/components/TodosWebview.tsx": [
+      "src/config.ts",
+      "src/features/todos/actions.ts"
+    ],
+    "src/features/todos/constants.ts": [],
+    "src/features/todos/containers/TodosScreen.tsx": [
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts",
+      "src/features/todos/actions.ts",
+      "src/features/todos/components/TodosWebview.tsx",
+      "src/features/todos/index.ts",
+      "src/stores/index.ts"
+    ],
+    "src/features/todos/index.ts": [
+      "src/features/todos/store.ts"
+    ],
+    "src/features/todos/preload.ts": [
+      "src/features/todos/constants.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/todos/store.ts": [
+      "src/actions/lib/actions.ts",
+      "src/config.ts",
+      "src/features/todos/actions.ts",
+      "src/features/todos/constants.ts",
+      "src/features/utils/ActionBinding.ts",
+      "src/features/utils/FeatureStore.ts",
+      "src/helpers/url-helpers.ts",
+      "src/jsUtils.ts",
+      "src/models/UserAgent.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/Reaction.ts",
+      "src/themes/index.ts"
+    ],
+    "src/features/utils/ActionBinding.ts": [],
+    "src/features/utils/FeatureStore.ts": [
+      "src/stores/lib/Reaction.ts"
+    ],
+    "src/features/webControls/components/WebControls.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/features/webControls/containers/WebControlsScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/config.ts",
+      "src/features/webControls/components/WebControls.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/features/workspaces/actions.ts": [
+      "src/actions/lib/actions.ts",
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/api.ts": [
+      "src/api/apiBase.ts",
+      "src/api/utils/auth.ts",
+      "src/features/workspaces/models/Workspace.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/Request.ts"
+    ],
+    "src/features/workspaces/components/CreateWorkspaceForm.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/features/workspaces/index.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/features/workspaces/components/EditWorkspaceForm.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/infobox/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/config.ts",
+      "src/features/workspaces/components/WorkspaceServiceListItem.tsx",
+      "src/features/workspaces/models/Workspace.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts",
+      "src/models/Service.ts",
+      "src/stores/lib/Request.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceDrawer.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/features/workspaces/actions.ts",
+      "src/features/workspaces/api.ts",
+      "src/features/workspaces/components/WorkspaceDrawerItem.tsx",
+      "src/features/workspaces/index.ts",
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceDrawerItem.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceItem.tsx": [
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceServiceListItem.tsx": [
+      "src/components/ui/ServiceIcon.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceSwitchingIndicator.tsx": [
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts",
+      "src/features/workspaces/index.ts"
+    ],
+    "src/features/workspaces/components/WorkspacesDashboard.tsx": [
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/infobox/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/features/workspaces/components/CreateWorkspaceForm.tsx",
+      "src/features/workspaces/components/WorkspaceItem.tsx",
+      "src/features/workspaces/models/Workspace.ts",
+      "src/stores/lib/Request.ts"
+    ],
+    "src/features/workspaces/constants.ts": [],
+    "src/features/workspaces/containers/EditWorkspaceScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/features/workspaces/api.ts",
+      "src/features/workspaces/components/EditWorkspaceForm.tsx",
+      "src/features/workspaces/index.ts",
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/containers/WorkspacesScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/features/workspaces/api.ts",
+      "src/features/workspaces/components/WorkspacesDashboard.tsx",
+      "src/features/workspaces/index.ts",
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/index.ts": [
+      "src/features/workspaces/store.ts"
+    ],
+    "src/features/workspaces/models/Workspace.ts": [
+      "src/config.ts"
+    ],
+    "src/features/workspaces/store.ts": [
+      "src/actions/lib/actions.ts",
+      "src/config.ts",
+      "src/features/utils/ActionBinding.ts",
+      "src/features/utils/FeatureStore.ts",
+      "src/features/workspaces/actions.ts",
+      "src/features/workspaces/api.ts",
+      "src/features/workspaces/constants.ts",
+      "src/features/workspaces/models/Workspace.ts",
+      "src/helpers/routing-helpers.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/Reaction.ts"
+    ],
+    "src/helpers/array-helpers.ts": [],
+    "src/helpers/asar-helpers.ts": [],
+    "src/helpers/async-helpers.ts": [],
+    "src/helpers/certs-helpers.ts": [
+      "src/environment-remote.ts",
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/helpers/favicon-helpers.ts": [],
+    "src/helpers/i18n-helpers.ts": [
+      "src/i18n/translations.ts"
+    ],
+    "src/helpers/password-helpers.ts": [],
+    "src/helpers/recipe-helpers.ts": [
+      "src/environment-remote.ts"
+    ],
+    "src/helpers/routing-helpers.ts": [],
+    "src/helpers/schedule-helpers.ts": [],
+    "src/helpers/serverless-helpers.ts": [
+      "src/config.ts"
+    ],
+    "src/helpers/service-helpers.ts": [
+      "src/environment-remote.ts"
+    ],
+    "src/helpers/translation-helpers.ts": [
+      "src/config.ts"
+    ],
+    "src/helpers/update-helpers.ts": [],
+    "src/helpers/url-helpers.ts": [
+      "src/config.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/helpers/userAgent-helpers.ts": [
+      "src/environment.ts"
+    ],
+    "src/helpers/validation-helpers.ts": [
+      "src/helpers/url-helpers.ts"
+    ],
+    "src/i18n/globalMessages.ts": [],
+    "src/i18n/languages.ts": [],
+    "src/i18n/translations.ts": [
+      "src/i18n/languages.ts"
+    ],
+    "src/index.ts": [
+      "src/config.ts",
+      "src/electron-util.ts",
+      "src/electron/Settings.ts",
+      "src/electron/deepLinking.ts",
+      "src/electron/ipc-api/index.ts",
+      "src/electron/windowUtils.ts",
+      "src/enforce-macos-app-location.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/features/basicAuth/index.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/certs-helpers.ts",
+      "src/helpers/translation-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/helpers/userAgent-helpers.ts",
+      "src/i18n/translations.ts",
+      "src/jsUtils.ts",
+      "src/lib/DBus.ts",
+      "src/lib/Tray.ts",
+      "src/preload-safe-debug.ts",
+      "src/sentry.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/internal-server/ace": [],
+    "src/internal-server/app/Controllers/Http/ImageController.js": [],
+    "src/internal-server/app/Controllers/Http/RecipeController.js": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/internal-server/app/Controllers/Http/ServiceController.js": [
+      "src/config.ts",
+      "src/internal-server/app/ImageHelper.js",
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/app/Controllers/Http/StaticController.js": [],
+    "src/internal-server/app/Controllers/Http/UserController.js": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/userAgent-helpers.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/app/Controllers/Http/WorkspaceController.js": [
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/app/Exceptions/Handler.js": [],
+    "src/internal-server/app/ImageHelper.js": [
+      "src/environment-remote.ts"
+    ],
+    "src/internal-server/app/Middleware/ConvertEmptyStringsToNull.js": [],
+    "src/internal-server/app/Models/Recipe.js": [],
+    "src/internal-server/app/Models/Service.js": [],
+    "src/internal-server/app/Models/Token.js": [],
+    "src/internal-server/app/Models/Traits/NoTimestamp.js": [],
+    "src/internal-server/app/Models/User.js": [],
+    "src/internal-server/app/Models/Workspace.js": [],
+    "src/internal-server/config/app.js": [],
+    "src/internal-server/config/auth.js": [],
+    "src/internal-server/config/bodyParser.js": [],
+    "src/internal-server/config/cors.js": [],
+    "src/internal-server/config/database.js": [],
+    "src/internal-server/config/drive.js": [],
+    "src/internal-server/config/hash.js": [],
+    "src/internal-server/config/session.js": [],
+    "src/internal-server/config/shield.js": [],
+    "src/internal-server/database/factory.js": [],
+    "src/internal-server/database/migrations/1503250034279_user.js": [],
+    "src/internal-server/database/migrations/1566385379883_service_schema.js": [],
+    "src/internal-server/database/migrations/1566554231482_recipe_schema.js": [],
+    "src/internal-server/database/migrations/1566554359294_workspace_schema.js": [],
+    "src/internal-server/database/template.sqlite": [],
+    "src/internal-server/public/js/transfer.js": [],
+    "src/internal-server/resources/views/import.edge": [],
+    "src/internal-server/resources/views/index.edge": [],
+    "src/internal-server/resources/views/layouts/main.edge": [],
+    "src/internal-server/resources/views/transfer.edge": [],
+    "src/internal-server/start.ts": [
+      "src/config.ts",
+      "src/environment.ts"
+    ],
+    "src/internal-server/start/app.js": [],
+    "src/internal-server/start/kernel.js": [],
+    "src/internal-server/start/migrate.js": [
+      "src/environment-remote.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/start/routes.js": [
+      "src/environment-remote.ts",
+      "src/internal-server/start/migrate.js"
+    ],
+    "src/internal-server/test.ts": [
+      "src/internal-server/start.ts"
+    ],
+    "src/jsUtils.ts": [],
+    "src/lib/DBus.ts": [
+      "src/environment.ts",
+      "src/lib/Tray.ts",
+      "src/lib/dbus/Ferdium.ts"
+    ],
+    "src/lib/Form.ts": [
+      "src/@types/mobx-form.types.ts"
+    ],
+    "src/lib/Menu.ts": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/apiBase.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/features/todos/actions.ts",
+      "src/features/workspaces/actions.ts",
+      "src/features/workspaces/index.ts",
+      "src/helpers/update-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/jsUtils.ts",
+      "src/models/Service.ts",
+      "src/stores/index.ts"
+    ],
+    "src/lib/TouchBar.ts": [
+      "src/environment.ts"
+    ],
+    "src/lib/Tray.ts": [
+      "src/environment.ts",
+      "src/helpers/i18n-helpers.ts"
+    ],
+    "src/lib/dbus/Ferdium.ts": [
+      "src/lib/DBus.ts"
+    ],
+    "src/models/IContextMenuParams.ts": [],
+    "src/models/Recipe.ts": [
+      "src/config.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/models/RecipePreview.ts": [],
+    "src/models/Service.ts": [
+      "src/api/apiBase.ts",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/features/todos/index.ts",
+      "src/helpers/favicon-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/jsUtils.ts",
+      "src/models/Recipe.ts",
+      "src/models/UserAgent.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/models/User.ts": [],
+    "src/models/UserAgent.ts": [
+      "src/helpers/userAgent-helpers.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/preload-safe-debug.ts": [],
+    "src/prop-types.ts": [],
+    "src/routes.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/containers/auth/AuthLayoutContainer.tsx",
+      "src/containers/auth/AuthReleaseNotesScreen.tsx",
+      "src/containers/auth/ChangeServerScreen.tsx",
+      "src/containers/auth/InviteScreen.tsx",
+      "src/containers/auth/LoginScreen.tsx",
+      "src/containers/auth/PasswordScreen.tsx",
+      "src/containers/auth/SetupAssistantScreen.tsx",
+      "src/containers/auth/SignupScreen.tsx",
+      "src/containers/auth/WelcomeScreen.tsx",
+      "src/containers/download-manager/DownloadManagerScreen.tsx",
+      "src/containers/download-manager/DownloadManagerWindow.tsx",
+      "src/containers/layout/AppLayoutContainer.tsx",
+      "src/containers/settings/AccountScreen.tsx",
+      "src/containers/settings/EditServiceScreen.tsx",
+      "src/containers/settings/EditSettingsScreen.tsx",
+      "src/containers/settings/EditUserScreen.tsx",
+      "src/containers/settings/InviteScreen.tsx",
+      "src/containers/settings/RecipesScreen.tsx",
+      "src/containers/settings/ReleaseNotesScreen.tsx",
+      "src/containers/settings/ReleaseNotesWindow.tsx",
+      "src/containers/settings/ServicesScreen.tsx",
+      "src/containers/settings/SettingsWindow.tsx",
+      "src/containers/settings/SupportScreen.tsx",
+      "src/containers/settings/TeamScreen.tsx",
+      "src/features/workspaces/constants.ts",
+      "src/features/workspaces/containers/EditWorkspaceScreen.tsx",
+      "src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "src/stores/index.ts"
+    ],
+    "src/sentry.ts": [],
+    "src/stores/AppStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/helpers/async-helpers.ts",
+      "src/helpers/i18n-helpers.ts",
+      "src/helpers/service-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/translations.ts",
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/FeaturesStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/features/appearance/index.ts",
+      "src/features/basicAuth/index.ts",
+      "src/features/communityRecipes/index.ts",
+      "src/features/publishDebugInfo/index.ts",
+      "src/features/quickSwitch/index.ts",
+      "src/features/serviceProxy/index.ts",
+      "src/features/todos/index.ts",
+      "src/features/workspaces/index.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/GlobalErrorStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/RecipePreviewsStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/models/Recipe.ts",
+      "src/models/RecipePreview.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/RecipesStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/routing-helpers.ts",
+      "src/models/Recipe.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/RequestStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/ServicesStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/features/workspaces/index.ts",
+      "src/helpers/recipe-helpers.ts",
+      "src/helpers/routing-helpers.ts",
+      "src/helpers/schedule-helpers.ts",
+      "src/i18n/languages.ts",
+      "src/jsUtils.ts",
+      "src/lib/dbus/Ferdium.ts",
+      "src/models/Service.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/SettingsStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/helpers/password-helpers.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/UIStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/stores/lib/TypedStore.ts",
+      "src/themes/index.ts"
+    ],
+    "src/stores/UserStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/index.ts": [
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/features/communityRecipes/index.ts",
+      "src/features/todos/index.ts",
+      "src/features/workspaces/index.ts",
+      "src/stores/AppStore.ts",
+      "src/stores/FeaturesStore.ts",
+      "src/stores/GlobalErrorStore.ts",
+      "src/stores/RecipePreviewsStore.ts",
+      "src/stores/RecipesStore.ts",
+      "src/stores/RequestStore.ts",
+      "src/stores/ServicesStore.ts",
+      "src/stores/SettingsStore.ts",
+      "src/stores/UIStore.ts",
+      "src/stores/UserStore.ts"
+    ],
+    "src/stores/lib/CachedRequest.ts": [
+      "src/stores/lib/Request.ts"
+    ],
+    "src/stores/lib/Reaction.ts": [],
+    "src/stores/lib/Request.ts": [],
+    "src/stores/lib/TypedStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/stores/lib/Reaction.ts"
+    ],
+    "src/themes/IStyleTypes.ts": [],
+    "src/themes/dark/index.ts": [
+      "src/themes/default/index.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/themes/default/index.ts": [
+      "src/config.ts",
+      "src/themes/IStyleTypes.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/themes/index.ts": [
+      "src/themes/dark/index.ts",
+      "src/themes/default/index.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/themes/legacy/index.ts": [],
+    "src/webview/badge.ts": [
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/contextMenu.ts": [
+      "src/webview/contextMenuBuilder.ts"
+    ],
+    "src/webview/contextMenuBuilder.ts": [
+      "src/config.ts",
+      "src/environment.ts",
+      "src/helpers/url-helpers.ts",
+      "src/models/IContextMenuParams.ts"
+    ],
+    "src/webview/darkmode.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/darkmode/custom.ts": [],
+    "src/webview/darkmode/ignore.ts": [],
+    "src/webview/dialogTitle.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/find.ts": [],
+    "src/webview/lib/RecipeWebview.ts": [
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/lib/Userscript.ts": [
+      "src/jsUtils.ts"
+    ],
+    "src/webview/notifications.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/recipe.ts": [
+      "src/@types/stores.types.ts",
+      "src/config.ts",
+      "src/jsUtils.ts",
+      "src/models/Service.ts",
+      "src/preload-safe-debug.ts",
+      "src/webview/badge.ts",
+      "src/webview/contextMenu.ts",
+      "src/webview/darkmode.ts",
+      "src/webview/darkmode/custom.ts",
+      "src/webview/darkmode/ignore.ts",
+      "src/webview/dialogTitle.ts",
+      "src/webview/find.ts",
+      "src/webview/lib/RecipeWebview.ts",
+      "src/webview/lib/Userscript.ts",
+      "src/webview/notifications.ts",
+      "src/webview/screenshare.ts",
+      "src/webview/sessionHandler.ts",
+      "src/webview/spellchecker.ts"
+    ],
+    "src/webview/screenshare.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/sessionHandler.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/spellchecker.ts": [
+      "src/environment.ts",
+      "src/i18n/languages.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/zoom.ts": [],
+    "test/features/utils/FeatureStore.test.ts": [
+      "src/actions/lib/actions.ts",
+      "src/features/utils/ActionBinding.ts",
+      "src/features/utils/FeatureStore.ts",
+      "src/stores/lib/Reaction.ts"
+    ],
+    "test/helpers/array-helpers.test.ts": [
+      "src/helpers/array-helpers.ts"
+    ],
+    "test/helpers/update-helpers.test.ts": [
+      "src/helpers/update-helpers.ts"
+    ],
+    "test/helpers/url-helpers.test.ts": [
+      "src/helpers/url-helpers.ts"
+    ],
+    "test/jsUtils.test.ts": [
+      "src/jsUtils.ts"
+    ],
+    "test/themes/index.test.ts": [
+      "src/themes/dark/index.ts",
+      "src/themes/default/index.ts",
+      "src/themes/index.ts"
+    ]
+  }
+}

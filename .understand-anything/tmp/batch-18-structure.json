@@ -1,0 +1,207 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/styles/image-upload.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 128,
+      "nonEmptyLines": 110,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/info-bar.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 82,
+      "nonEmptyLines": 68,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/infobox.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 66,
+      "nonEmptyLines": 55,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/input.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 130,
+      "nonEmptyLines": 111,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/invite.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 12,
+      "nonEmptyLines": 11,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/layout.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 309,
+      "nonEmptyLines": 263,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/main.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 36,
+      "nonEmptyLines": 34,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/mixins.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 9,
+      "nonEmptyLines": 8,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/radio.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 48,
+      "nonEmptyLines": 41,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/recipes.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 93,
+      "nonEmptyLines": 78,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/reset.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 178,
+      "nonEmptyLines": 163,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/searchInput.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 38,
+      "nonEmptyLines": 33,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/select.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 27,
+      "nonEmptyLines": 23,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/service-table.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 79,
+      "nonEmptyLines": 63,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/services.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 108,
+      "nonEmptyLines": 89,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/settings.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 732,
+      "nonEmptyLines": 613,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/slider.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 46,
+      "nonEmptyLines": 40,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/status-bar-target-url.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 14,
+      "nonEmptyLines": 13,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/tabs.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 162,
+      "nonEmptyLines": 142,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/title-bar.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 101,
+      "nonEmptyLines": 83,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/toggle.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 57,
+      "nonEmptyLines": 47,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/tooltip.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/type-helper.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 123,
+      "nonEmptyLines": 108,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/type.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 97,
+      "nonEmptyLines": 82,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/util.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 20,
+      "nonEmptyLines": 18,
+      "metrics": {}
+    }
+  ]
+}

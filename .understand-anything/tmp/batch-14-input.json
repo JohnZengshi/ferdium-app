@@ -1,0 +1,216 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/i18n/locales/uk.json",
+      "language": "json",
+      "sizeLines": 448,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/vi.json",
+      "language": "json",
+      "sizeLines": 396,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/vls.json",
+      "language": "json",
+      "sizeLines": 252,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/zh-HANS.json",
+      "language": "json",
+      "sizeLines": 407,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/zh-HANT.json",
+      "language": "json",
+      "sizeLines": 270,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/zh-TW.json",
+      "language": "json",
+      "sizeLines": 319,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/zh.json",
+      "language": "json",
+      "sizeLines": 637,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/messages/src/components/settings/recipes/RecipesDashboard.json",
+      "language": "json",
+      "sizeLines": 184,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/translations.ts",
+      "language": "typescript",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/index.html",
+      "language": "html",
+      "sizeLines": 88,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/index.ts",
+      "language": "typescript",
+      "sizeLines": 942,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/ace",
+      "language": "unknown",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/ImageController.js",
+      "language": "javascript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/RecipeController.js",
+      "language": "javascript",
+      "sizeLines": 138,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/ServiceController.js",
+      "language": "javascript",
+      "sizeLines": 272,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/StaticController.js",
+      "language": "javascript",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/UserController.js",
+      "language": "javascript",
+      "sizeLines": 355,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Controllers/Http/WorkspaceController.js",
+      "language": "javascript",
+      "sizeLines": 139,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Exceptions/Handler.js",
+      "language": "javascript",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/ImageHelper.js",
+      "language": "javascript",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Middleware/ConvertEmptyStringsToNull.js",
+      "language": "javascript",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Models/Recipe.js",
+      "language": "javascript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Models/Service.js",
+      "language": "javascript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Models/Token.js",
+      "language": "javascript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Models/Traits/NoTimestamp.js",
+      "language": "javascript",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/i18n/translations.ts": [
+      "src/i18n/languages.ts"
+    ],
+    "src/index.ts": [
+      "src/config.ts",
+      "src/electron-util.ts",
+      "src/electron/Settings.ts",
+      "src/electron/deepLinking.ts",
+      "src/electron/ipc-api/index.ts",
+      "src/electron/windowUtils.ts",
+      "src/enforce-macos-app-location.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/features/basicAuth/index.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/certs-helpers.ts",
+      "src/helpers/translation-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/helpers/userAgent-helpers.ts",
+      "src/i18n/translations.ts",
+      "src/jsUtils.ts",
+      "src/lib/DBus.ts",
+      "src/lib/Tray.ts",
+      "src/preload-safe-debug.ts",
+      "src/sentry.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/internal-server/ace": [],
+    "src/internal-server/app/Controllers/Http/ImageController.js": [],
+    "src/internal-server/app/Controllers/Http/RecipeController.js": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/internal-server/app/Controllers/Http/ServiceController.js": [
+      "src/config.ts",
+      "src/internal-server/app/ImageHelper.js",
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/app/Controllers/Http/StaticController.js": [],
+    "src/internal-server/app/Controllers/Http/UserController.js": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/userAgent-helpers.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/app/Controllers/Http/WorkspaceController.js": [
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/app/Exceptions/Handler.js": [],
+    "src/internal-server/app/ImageHelper.js": [
+      "src/environment-remote.ts"
+    ],
+    "src/internal-server/app/Middleware/ConvertEmptyStringsToNull.js": [],
+    "src/internal-server/app/Models/Recipe.js": [],
+    "src/internal-server/app/Models/Service.js": [],
+    "src/internal-server/app/Models/Token.js": [],
+    "src/internal-server/app/Models/Traits/NoTimestamp.js": []
+  }
+}

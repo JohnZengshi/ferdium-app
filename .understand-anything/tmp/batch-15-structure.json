@@ -1,0 +1,569 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/internal-server/app/Models/User.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 5,
+      "classes": [
+        {
+          "name": "User",
+          "startLine": 5,
+          "endLine": 5,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/internal-server/app/Models/Workspace.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 4,
+      "classes": [
+        {
+          "name": "Workspace",
+          "startLine": 4,
+          "endLine": 4,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/internal-server/config/app.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 239,
+      "nonEmptyLines": 221,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/auth.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 87,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/bodyParser.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 149,
+      "nonEmptyLines": 140,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/cors.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 85,
+      "nonEmptyLines": 80,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/database.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 82,
+      "nonEmptyLines": 77,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/drive.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 42,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/hash.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 44,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/session.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 97,
+      "nonEmptyLines": 90,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/config/shield.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 142,
+      "nonEmptyLines": 136,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/database/factory.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 18,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/database/migrations/1503250034279_user.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "UserSchema",
+          "startLine": 4,
+          "endLine": 16,
+          "methods": [
+            "up",
+            "down"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "up",
+          "callee": "this.create",
+          "lineNumber": 6
+        },
+        {
+          "caller": "up",
+          "callee": "table.increments",
+          "lineNumber": 7
+        },
+        {
+          "caller": "up",
+          "callee": "table.json",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.timestamps",
+          "lineNumber": 9
+        },
+        {
+          "caller": "down",
+          "callee": "this.drop",
+          "lineNumber": 14
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566385379883_service_schema.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "ServiceSchema",
+          "startLine": 4,
+          "endLine": 19,
+          "methods": [
+            "up",
+            "down"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "up",
+          "callee": "this.create",
+          "lineNumber": 6
+        },
+        {
+          "caller": "up",
+          "callee": "table.increments",
+          "lineNumber": 7
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('serviceId', 80).notNullable",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.string",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('name', 80).notNullable",
+          "lineNumber": 9
+        },
+        {
+          "caller": "up",
+          "callee": "table.string",
+          "lineNumber": 9
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('recipeId', 254).notNullable",
+          "lineNumber": 10
+        },
+        {
+          "caller": "up",
+          "callee": "table.string",
+          "lineNumber": 10
+        },
+        {
+          "caller": "up",
+          "callee": "table.json",
+          "lineNumber": 11
+        },
+        {
+          "caller": "up",
+          "callee": "table.timestamps",
+          "lineNumber": 12
+        },
+        {
+          "caller": "down",
+          "callee": "this.drop",
+          "lineNumber": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566554231482_recipe_schema.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 17,
+      "classes": [
+        {
+          "name": "RecipeSchema",
+          "startLine": 4,
+          "endLine": 18,
+          "methods": [
+            "up",
+            "down"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "up",
+          "callee": "this.create",
+          "lineNumber": 6
+        },
+        {
+          "caller": "up",
+          "callee": "table.increments",
+          "lineNumber": 7
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('name', 80).notNullable",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.string",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('recipeId', 254).notNullable().unique",
+          "lineNumber": 9
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('recipeId', 254).notNullable",
+          "lineNumber": 9
+        },
+        {
+          "caller": "up",
+          "callee": "table.string",
+          "lineNumber": 9
+        },
+        {
+          "caller": "up",
+          "callee": "table.json",
+          "lineNumber": 10
+        },
+        {
+          "caller": "up",
+          "callee": "table.timestamps",
+          "lineNumber": 11
+        },
+        {
+          "caller": "down",
+          "callee": "this.drop",
+          "lineNumber": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566554359294_workspace_schema.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "WorkspaceSchema",
+          "startLine": 4,
+          "endLine": 20,
+          "methods": [
+            "up",
+            "down"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "up",
+          "callee": "this.create",
+          "lineNumber": 6
+        },
+        {
+          "caller": "up",
+          "callee": "table.increments",
+          "lineNumber": 7
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('workspaceId', 80).notNullable().unique",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('workspaceId', 80).notNullable",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.string",
+          "lineNumber": 8
+        },
+        {
+          "caller": "up",
+          "callee": "table.string('name', 80).notNullable",
+          "lineNumber": 9
+        },
+        {
+          "caller": "up",
+          "callee": "table.string",
+          "lineNumber": 9
+        },
+        {
+          "caller": "up",
+          "callee": "table.integer",
+          "lineNumber": 10
+        },
+        {
+          "caller": "up",
+          "callee": "table.json",
+          "lineNumber": 11
+        },
+        {
+          "caller": "up",
+          "callee": "table.json",
+          "lineNumber": 12
+        },
+        {
+          "caller": "up",
+          "callee": "table.timestamps",
+          "lineNumber": 13
+        },
+        {
+          "caller": "down",
+          "callee": "this.drop",
+          "lineNumber": 18
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/internal-server/database/template.sqlite",
+      "language": "sqlite",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 7,
+      "metrics": {}
+    },
+    {
+      "path": "src/internal-server/env.ini",
+      "language": "config",
+      "fileCategory": "config",
+      "totalLines": 15,
+      "nonEmptyLines": 15,
+      "metrics": {}
+    },
+    {
+      "path": "src/internal-server/package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "sections": [
+        {
+          "heading": "main",
+          "level": 1,
+          "line": 2
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "src/internal-server/public/css/main.css",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 72,
+      "nonEmptyLines": 64,
+      "metrics": {}
+    },
+    {
+      "path": "src/internal-server/public/css/vanilla.css",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 138,
+      "nonEmptyLines": 112,
+      "metrics": {}
+    },
+    {
+      "path": "src/internal-server/public/js/transfer.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 17,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/resources/views/import.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 14,
+      "metrics": {}
+    },
+    {
+      "path": "src/internal-server/resources/views/index.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 17,
+      "metrics": {}
+    },
+    {
+      "path": "src/internal-server/resources/views/layouts/main.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 15,
+      "metrics": {}
+    }
+  ]
+}

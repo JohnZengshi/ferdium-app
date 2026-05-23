@@ -1,0 +1,105 @@
+{
+  "issues": [
+    {
+      "severity": "error",
+      "category": "completeness",
+      "message": "Missing graph nodes for 21 files from scan inventory: .gitattributes, .gitmodules, recipes (git submodule entry), .github/CODEOWNERS, .github/config.yml, .github/issue_label_bot.yaml, .github/release.yml, .github/PULL_REQUEST_TEMPLATE.md, .github/ISSUE_TEMPLATE/app_bug_report.yml, .github/ISSUE_TEMPLATE/app_feature_request.yml, .github/ISSUE_TEMPLATE/config.yml, .github/ISSUE_TEMPLATE/recipe_bug_report.yml, .github/ISSUE_TEMPLATE/recipe_request.yml, .github/ISSUE_TEMPLATE/something_else_open_issue.yml, .github/workflows/builds.yml, .github/workflows/codespell.yml, .github/workflows/homebrew-cask-updates.yml, .github/workflows/reddit.yml, .github/workflows/tag-repos.yml, .github/workflows/winget-bucket-update.yml",
+      "nodeId": null
+    },
+    {
+      "severity": "warning",
+      "category": "completeness",
+      "message": "Critical main entry-point files have generic summaries instead of descriptive ones: src/app.tsx (Renderer entry point, renders React app with stores/routes) has 'Source file: src/app.tsx'; src/stores/index.ts (initializes all MobX stores) has 'Source file: src/stores/index.ts'; src/actions/index.ts (aggregates all action definitions) has 'Source file: src/actions/index.ts'",
+      "nodeId": "file:src/app.tsx"
+    },
+    {
+      "severity": "warning",
+      "category": "completeness",
+      "message": "src/index.ts (Electron main process entry, 941 lines) has undersized summary 'Exports appEvents.' — should describe that it manages app lifecycle, window creation, IPC, auto-updates, and tray",
+      "nodeId": "file:src/index.ts"
+    },
+    {
+      "severity": "warning",
+      "category": "completeness",
+      "message": "src/stores/index.ts has no tags indicating its role as the store aggregator/orchestrator — missing 'mobx', 'has-exports', 'has-functions' tags",
+      "nodeId": "file:src/stores/index.ts"
+    },
+    {
+      "severity": "warning",
+      "category": "completeness",
+      "message": "Root config files have overly generic summaries — 'Source file: X' instead of describing their purpose (e.g. .all-contributorsrc, .codespellrc, .dockerignore, .eslintignore, .prettierrc.js, jest.config.js, commitlint.config.js)",
+      "nodeId": null
+    },
+    {
+      "severity": "error",
+      "category": "correctness",
+      "message": "Imported-by relationships missing from graph edges. The import map shows reverse imports exist (e.g. src/api/AppApi.ts is imported by src/api/index.ts, src/api/FeaturesApi.ts is imported by src/api/index.ts) but the edges section only captures forward imports, creating false 'orphan' appearances. No reverse-direction edges exist in the 991 edge set.",
+      "nodeId": null
+    },
+    {
+      "severity": "error",
+      "category": "correctness",
+      "message": "Source code files in src/ with zero edges (no imports, not imported): src/@types/ferdium.types.ts, src/@types/legacy-types.ts, src/prop-types.ts, src/webview/zoom.ts, src/electron/exception.ts, src/helpers/favicon-helpers.ts — these should at minimum be used by or import something in the codebase",
+      "nodeId": null
+    },
+    {
+      "severity": "warning",
+      "category": "correctness",
+      "message": "Incorrect fileCategory in scan for assets: branding/*.afphoto/.xcf/.psd files are assets, not 'code'. Similarly build-helpers/images/* are binary assets, not code files. Graph correctly types them as 'file' but tags are inconsistent.",
+      "nodeId": null
+    },
+    {
+      "severity": "info",
+      "category": "correctness",
+      "message": "Tag 'unknown' used liberally (e.g. .all-contributorsrc, .codespellrc, .dockerignore, .eslintignore, .npmrc, .nvmrc). Config dotfiles could have tags like 'config', 'dotfile', 'build-config' etc.",
+      "nodeId": "file:.all-contributorsrc"
+    },
+    {
+      "severity": "info",
+      "category": "correctness",
+      "message": "Edge weights are all 1 (unweighted). For files with multiple import relationships (e.g., src/index.ts imports ~20 files), edges have weight=1 rather than reflecting dependency frequency or importance.",
+      "nodeId": null
+    },
+    {
+      "severity": "warning",
+      "category": "consistency",
+      "message": "Size line counts differ between scan and graph for many files (e.g., .all-contributorsrc: scan=3087, graph=3086; .codespellrc: scan=10, graph=9; .dockerignore: scan=33, graph=32; .eslintignore: scan=35, graph=34). Differences of 1-2 lines likely from trailing newline handling.",
+      "nodeId": null
+    },
+    {
+      "severity": "info",
+      "category": "consistency",
+      "message": "Type assignment for all .md files is consistent — all typed as 'document' in the graph.",
+      "nodeId": null
+    },
+    {
+      "severity": "info",
+      "category": "completeness",
+      "message": "Test files present in graph (6 nodes) match scan inventory. Good coverage.",
+      "nodeId": null
+    },
+    {
+      "severity": "info",
+      "category": "consistency",
+      "message": "i18n locale JSON files (58 locales) consistently typed as 'config' in both scan and graph. Good.",
+      "nodeId": null
+    }
+  ],
+  "summary": {
+    "totalIssues": 14,
+    "errors": 3,
+    "warnings": 6,
+    "info": 5
+  },
+  "recommendations": [
+    "Add 21 missing graph nodes for GitHub workflow/config files (.github/*, .gitattributes, .gitmodules, recipes submodule entry) — these are valid project files that should be represented even if they lack import relationships",
+    "Improve generic summaries on root entry points: src/app.tsx, src/stores/index.ts, src/index.ts, src/actions/index.ts — describe their actual architectural role rather than just restating the filename",
+    "Add reverse-direction edges ('imported-by' type) to complement the existing forward 'imports' edges, so that dependency analysis is bidirectional and files appear connected even when they don't import anything themselves",
+    "Investigate 6 src/ source files with zero edges: src/@types/ferdium.types.ts, src/@types/legacy-types.ts, src/prop-types.ts, src/webview/zoom.ts, src/electron/exception.ts, src/helpers/favicon-helpers.ts — determine if genuinely unused or if import detection missed their references",
+    "Add descriptive tags to config dotfiles (.all-contributorsrc, .codespellrc, .dockerignore, .eslintignore, .npmrc, .nvmrc) instead of generic 'unknown' tag — use tags like 'config', 'dotfile', 'build-config', 'lint'",
+    "Reconcile the 1-2 line size discrepancies between scan and graph values by using a consistent line counting method",
+    "Tag src/stores/index.ts with 'mobx', 'has-functions', 'has-exports', and 'store-aggregator' to reflect its role as the store initialization hub",
+    "Add SCSS/CSS style import edges where TypeScript/TSX components import .scss styles for a more complete dependency picture"
+  ],
+  "overallAssessment": "NeedsImprovement"
+}

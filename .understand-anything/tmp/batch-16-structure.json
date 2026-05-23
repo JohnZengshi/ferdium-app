@@ -1,0 +1,5436 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/internal-server/resources/views/transfer.edge",
+      "language": "edge",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 26,
+      "metrics": {}
+    },
+    {
+      "path": "src/internal-server/start.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 77,
+      "nonEmptyLines": 70,
+      "functions": [
+        {
+          "name": "ensureDB",
+          "startLine": 27,
+          "endLine": 45,
+          "params": [
+            "dbPath"
+          ]
+        },
+        {
+          "name": "server",
+          "startLine": 47,
+          "endLine": 77,
+          "params": [
+            "userPath",
+            "port",
+            "token"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "server",
+          "line": 47,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ensureDB",
+          "callee": "stat",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ensureDB",
+          "callee": "join",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ensureDB",
+          "callee": "readFile",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ensureDB",
+          "callee": "writeFile",
+          "lineNumber": 36
+        },
+        {
+          "caller": "ensureDB",
+          "callee": "stat",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ensureDB",
+          "callee": "chmod",
+          "lineNumber": 42
+        },
+        {
+          "caller": "server",
+          "callee": "join",
+          "lineNumber": 48
+        },
+        {
+          "caller": "server",
+          "callee": "ensureDB",
+          "lineNumber": 49
+        },
+        {
+          "caller": "server",
+          "callee": "port.toString",
+          "lineNumber": 55
+        },
+        {
+          "caller": "server",
+          "callee": "hooks.after.httpServer",
+          "lineNumber": 60
+        },
+        {
+          "caller": "server",
+          "callee": "resolve",
+          "lineNumber": 62
+        },
+        {
+          "caller": "server",
+          "callee": "new Ignitor(fold)\n      .appRoot(__dirname)\n      .fireHttpServer()\n      .catch",
+          "lineNumber": 66
+        },
+        {
+          "caller": "server",
+          "callee": "new Ignitor(fold)\n      .appRoot(__dirname)\n      .fireHttpServer",
+          "lineNumber": 66
+        },
+        {
+          "caller": "server",
+          "callee": "new Ignitor(fold)\n      .appRoot",
+          "lineNumber": 66
+        },
+        {
+          "caller": "server",
+          "callee": "console.error",
+          "lineNumber": 70
+        },
+        {
+          "caller": "server",
+          "callee": "reject",
+          "lineNumber": 73
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/start/app.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 58,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/start/kernel.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 47,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/start/migrate.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 45,
+      "functions": [
+        {
+          "name": "migrateLog",
+          "startLine": 10,
+          "endLine": 13,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "migrateLog",
+          "callee": "console.log",
+          "lineNumber": 12
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/start/routes.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 128,
+      "nonEmptyLines": 107,
+      "functions": [
+        {
+          "name": "validateToken",
+          "startLine": 19,
+          "endLine": 33,
+          "params": [
+            "clientToken",
+            "response",
+            "next"
+          ]
+        },
+        {
+          "name": "OnlyAllowFerdium",
+          "startLine": 35,
+          "endLine": 43,
+          "params": [
+            "next"
+          ]
+        },
+        {
+          "name": "RequireTokenInQS",
+          "startLine": 45,
+          "endLine": 48,
+          "params": [
+            "next"
+          ]
+        },
+        {
+          "name": "RequireAuthenticatedBrowser",
+          "startLine": 52,
+          "endLine": 55,
+          "params": [
+            "next"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "validateToken",
+          "callee": "timingSafeEqual",
+          "lineNumber": 24
+        },
+        {
+          "caller": "validateToken",
+          "callee": "Buffer.from",
+          "lineNumber": 25
+        },
+        {
+          "caller": "validateToken",
+          "callee": "Buffer.from",
+          "lineNumber": 26
+        },
+        {
+          "caller": "validateToken",
+          "callee": "next",
+          "lineNumber": 29
+        },
+        {
+          "caller": "validateToken",
+          "callee": "response.forbidden",
+          "lineNumber": 32
+        },
+        {
+          "caller": "OnlyAllowFerdium",
+          "callee": "request.header",
+          "lineNumber": 36
+        },
+        {
+          "caller": "OnlyAllowFerdium",
+          "callee": "response.forbidden",
+          "lineNumber": 38
+        },
+        {
+          "caller": "OnlyAllowFerdium",
+          "callee": "request.header",
+          "lineNumber": 41
+        },
+        {
+          "caller": "OnlyAllowFerdium",
+          "callee": "validateToken",
+          "lineNumber": 42
+        },
+        {
+          "caller": "RequireTokenInQS",
+          "callee": "request.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "RequireTokenInQS",
+          "callee": "validateToken",
+          "lineNumber": 47
+        },
+        {
+          "caller": "RequireAuthenticatedBrowser",
+          "callee": "request.cookie",
+          "lineNumber": 53
+        },
+        {
+          "caller": "RequireAuthenticatedBrowser",
+          "callee": "validateToken",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/internal-server/test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/jsUtils.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "ifUndefined",
+          "startLine": 1,
+          "endLine": 4,
+          "params": [
+            "source",
+            "defaultValue"
+          ]
+        },
+        {
+          "name": "convertToJSON",
+          "startLine": 6,
+          "endLine": 7,
+          "params": [
+            "data"
+          ]
+        },
+        {
+          "name": "cleanseJSObject",
+          "startLine": 9,
+          "endLine": 10,
+          "params": [
+            "data"
+          ]
+        },
+        {
+          "name": "isArrowUpKeyPress",
+          "startLine": 12,
+          "endLine": 12,
+          "params": [
+            "key"
+          ]
+        },
+        {
+          "name": "isArrowDownKeyPress",
+          "startLine": 13,
+          "endLine": 13,
+          "params": [
+            "key"
+          ]
+        },
+        {
+          "name": "isEnterKeyPress",
+          "startLine": 14,
+          "endLine": 14,
+          "params": [
+            "key"
+          ]
+        },
+        {
+          "name": "isEscapeKeyPress",
+          "startLine": 15,
+          "endLine": 15,
+          "params": [
+            "key"
+          ]
+        },
+        {
+          "name": "isShiftKeyPress",
+          "startLine": 16,
+          "endLine": 16,
+          "params": [
+            "key"
+          ]
+        },
+        {
+          "name": "safeParseInt",
+          "startLine": 18,
+          "endLine": 29,
+          "params": [
+            "text"
+          ]
+        },
+        {
+          "name": "acceleratorString",
+          "startLine": 38,
+          "endLine": 45,
+          "params": [
+            "{\n  index,\n  keyCombo,\n  prefix = '(',\n  suffix = ')',\n  maxIndex = 9,\n}"
+          ]
+        },
+        {
+          "name": "removeNewLines",
+          "startLine": 47,
+          "endLine": 48,
+          "params": [
+            "input"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ifUndefined",
+          "line": 1,
+          "isDefault": false
+        },
+        {
+          "name": "convertToJSON",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "cleanseJSObject",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "isArrowUpKeyPress",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "isArrowDownKeyPress",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "isEnterKeyPress",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "isEscapeKeyPress",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "isShiftKeyPress",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "safeParseInt",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "acceleratorString",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "removeNewLines",
+          "line": 47,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "convertToJSON",
+          "callee": "JSON.parse",
+          "lineNumber": 7
+        },
+        {
+          "caller": "cleanseJSObject",
+          "callee": "JSON.parse",
+          "lineNumber": 10
+        },
+        {
+          "caller": "cleanseJSObject",
+          "callee": "JSON.stringify",
+          "lineNumber": 10
+        },
+        {
+          "caller": "safeParseInt",
+          "callee": "Number.parseInt",
+          "lineNumber": 26
+        },
+        {
+          "caller": "safeParseInt",
+          "callee": "text.toString",
+          "lineNumber": 26
+        },
+        {
+          "caller": "safeParseInt",
+          "callee": "Number.isNaN",
+          "lineNumber": 27
+        },
+        {
+          "caller": "safeParseInt",
+          "callee": "Math.max",
+          "lineNumber": 28
+        },
+        {
+          "caller": "removeNewLines",
+          "callee": "input.replaceAll",
+          "lineNumber": 48
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 11,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/DBus.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 129,
+      "nonEmptyLines": 112,
+      "classes": [
+        {
+          "name": "DBus",
+          "startLine": 9,
+          "endLine": 129,
+          "methods": [
+            "constructor",
+            "updateSettings",
+            "setUnread",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "bus",
+            "trayIcon",
+            "ferdium",
+            "muted",
+            "unreadDirectMessageCount",
+            "unreadIndirectMessageCount",
+            "unreadServices"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 9,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "ipcMain.on",
+          "lineNumber": 26
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.updateSettings",
+          "lineNumber": 27
+        },
+        {
+          "caller": "constructor",
+          "callee": "ipcMain.on",
+          "lineNumber": 29
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.updateSettings",
+          "lineNumber": 30
+        },
+        {
+          "caller": "constructor",
+          "callee": "ipcMain.on",
+          "lineNumber": 32
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.setUnread",
+          "lineNumber": 40
+        },
+        {
+          "caller": "updateSettings",
+          "callee": "this.ferdium?.emitMutedChanged",
+          "lineNumber": 53
+        },
+        {
+          "caller": "setUnread",
+          "callee": "comparer.structural",
+          "lineNumber": 65
+        },
+        {
+          "caller": "setUnread",
+          "callee": "this.ferdium?.emitUnreadChanged",
+          "lineNumber": 70
+        },
+        {
+          "caller": "start",
+          "callee": "sessionBus",
+          "lineNumber": 80
+        },
+        {
+          "caller": "start",
+          "callee": "this.bus.requestName",
+          "lineNumber": 81
+        },
+        {
+          "caller": "start",
+          "callee": "this.bus.export",
+          "lineNumber": 88
+        },
+        {
+          "caller": "start",
+          "callee": "this.bus._addMatch",
+          "lineNumber": 92
+        },
+        {
+          "caller": "start",
+          "callee": "JSON.stringify",
+          "lineNumber": 95
+        },
+        {
+          "caller": "start",
+          "callee": "this.bus._signals.on",
+          "lineNumber": 101
+        },
+        {
+          "caller": "start",
+          "callee": "setTimeout",
+          "lineNumber": 113
+        },
+        {
+          "caller": "start",
+          "callee": "this.trayIcon.refreshTrayAfterWatcherRestart",
+          "lineNumber": 114
+        },
+        {
+          "caller": "stop",
+          "callee": "this.bus.disconnect",
+          "lineNumber": 125
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/lib/Form.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 41,
+      "classes": [
+        {
+          "name": "DefaultForm",
+          "startLine": 5,
+          "endLine": 45,
+          "methods": [
+            "constructor",
+            "bindings",
+            "options",
+            "plugins"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 8
+        },
+        {
+          "caller": "plugins",
+          "callee": "vjf",
+          "lineNumber": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/lib/Menu.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1350,
+      "nonEmptyLines": 1288,
+      "functions": [
+        {
+          "name": "getActiveService",
+          "startLine": 365,
+          "endLine": 367,
+          "params": []
+        },
+        {
+          "name": "toggleFullScreen",
+          "startLine": 369,
+          "endLine": 379,
+          "params": []
+        },
+        {
+          "name": "titleBarTemplateFactory",
+          "startLine": 381,
+          "endLine": 680,
+          "params": [
+            "intl",
+            "locked"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FranzMenu",
+          "startLine": 682,
+          "endLine": 1348,
+          "methods": [
+            "constructor",
+            "_setCurrentTemplate",
+            "rebuild",
+            "template",
+            "getOsName",
+            "_build",
+            "serviceTpl",
+            "workspacesMenu",
+            "todosMenu",
+            "debugMenu",
+            "_getServiceName"
+          ],
+          "properties": [
+            "currentTemplate",
+            "actions",
+            "stores"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "menuItems",
+          "line": 58,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toggleFullScreen",
+          "callee": "getCurrentWindow",
+          "lineNumber": 370
+        },
+        {
+          "caller": "toggleFullScreen",
+          "callee": "mainWindow.isFullScreen",
+          "lineNumber": 374
+        },
+        {
+          "caller": "toggleFullScreen",
+          "callee": "mainWindow.setFullScreen",
+          "lineNumber": 375
+        },
+        {
+          "caller": "toggleFullScreen",
+          "callee": "mainWindow.setFullScreen",
+          "lineNumber": 377
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 387
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "altKey",
+          "lineNumber": 388
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 391
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 395
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 402
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 403
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 407
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 408
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 412
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 413
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 417
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 418
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "shiftKey",
+          "lineNumber": 418
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 422
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 426
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 427
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 433
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "altKey",
+          "lineNumber": 434
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 441
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 442
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 451
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 452
+        },
+        {
+          "caller": "click",
+          "callee": "getActiveService",
+          "lineNumber": 454
+        },
+        {
+          "caller": "click",
+          "callee": "activeService.webview.focus",
+          "lineNumber": 458
+        },
+        {
+          "caller": "click",
+          "callee": "window['ferdium'].actions.service.sendIPCMessage",
+          "lineNumber": 459
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 470
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 471
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "altKey",
+          "lineNumber": 471
+        },
+        {
+          "caller": "click",
+          "callee": "getActiveService",
+          "lineNumber": 473
+        },
+        {
+          "caller": "click",
+          "callee": "activeService.webview.goBack",
+          "lineNumber": 477
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 481
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 482
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "altKey",
+          "lineNumber": 482
+        },
+        {
+          "caller": "click",
+          "callee": "getActiveService",
+          "lineNumber": 484
+        },
+        {
+          "caller": "click",
+          "callee": "activeService.webview.goForward",
+          "lineNumber": 488
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 495
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 496
+        },
+        {
+          "caller": "click",
+          "callee": "getActiveService",
+          "lineNumber": 498
+        },
+        {
+          "caller": "click",
+          "callee": "activeService.webview.setZoomLevel",
+          "lineNumber": 502
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 506
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 511
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 512
+        },
+        {
+          "caller": "click",
+          "callee": "getActiveService",
+          "lineNumber": 517
+        },
+        {
+          "caller": "click",
+          "callee": "webview.getZoomLevel",
+          "lineNumber": 522
+        },
+        {
+          "caller": "click",
+          "callee": "webview.setZoomLevel",
+          "lineNumber": 523
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 527
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 528
+        },
+        {
+          "caller": "click",
+          "callee": "getActiveService",
+          "lineNumber": 530
+        },
+        {
+          "caller": "click",
+          "callee": "webview.getZoomLevel",
+          "lineNumber": 535
+        },
+        {
+          "caller": "click",
+          "callee": "webview.setZoomLevel",
+          "lineNumber": 536
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 543
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "toggleFullScreen",
+          "lineNumber": 545
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "toggleFullScreenKey",
+          "lineNumber": 547
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 550
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 551
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "window['ferdium'].actions.settings.update",
+          "lineNumber": 557
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 568
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "splitModeToggleShortcutKey",
+          "lineNumber": 569
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "window['ferdium'].actions.settings.update",
+          "lineNumber": 574
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 583
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 585
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "shiftKey",
+          "lineNumber": 585
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "window['ferdium'].actions.settings.update",
+          "lineNumber": 588
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 599
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "altKey",
+          "lineNumber": 600
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 605
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "altKey",
+          "lineNumber": 606
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 611
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 616
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 620
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 624
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 630
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "altKey",
+          "lineNumber": 631
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 635
+        },
+        {
+          "caller": "click",
+          "callee": "openExternalUrl",
+          "lineNumber": 637
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 641
+        },
+        {
+          "caller": "click",
+          "callee": "onAuthGoToReleaseNotes",
+          "lineNumber": 643
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 647
+        },
+        {
+          "caller": "click",
+          "callee": "openExternalUrl",
+          "lineNumber": 649
+        },
+        {
+          "caller": "click",
+          "callee": "importExportURL",
+          "lineNumber": 649
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 657
+        },
+        {
+          "caller": "click",
+          "callee": "openExternalUrl",
+          "lineNumber": 659
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 666
+        },
+        {
+          "caller": "click",
+          "callee": "openExternalUrl",
+          "lineNumber": 668
+        },
+        {
+          "caller": "click",
+          "callee": "serverBase",
+          "lineNumber": 668
+        },
+        {
+          "caller": "titleBarTemplateFactory",
+          "callee": "intl.formatMessage",
+          "lineNumber": 672
+        },
+        {
+          "caller": "click",
+          "callee": "openExternalUrl",
+          "lineNumber": 674
+        },
+        {
+          "caller": "click",
+          "callee": "serverBase",
+          "lineNumber": 674
+        },
+        {
+          "caller": "constructor",
+          "callee": "makeObservable",
+          "lineNumber": 694
+        },
+        {
+          "caller": "constructor",
+          "callee": "setTimeout",
+          "lineNumber": 696
+        },
+        {
+          "caller": "constructor",
+          "callee": "autorun",
+          "lineNumber": 696
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._build.bind",
+          "lineNumber": 696
+        },
+        {
+          "caller": "rebuild",
+          "callee": "this._build",
+          "lineNumber": 704
+        },
+        {
+          "caller": "template",
+          "callee": "fromJS(this.currentTemplate).toJS",
+          "lineNumber": 709
+        },
+        {
+          "caller": "template",
+          "callee": "fromJS",
+          "lineNumber": 709
+        },
+        {
+          "caller": "getOsName",
+          "callee": "semver.satisfies",
+          "lineNumber": 713
+        },
+        {
+          "caller": "getOsName",
+          "callee": "os.release",
+          "lineNumber": 713
+        },
+        {
+          "caller": "getOsName",
+          "callee": "osName",
+          "lineNumber": 715
+        },
+        {
+          "caller": "getOsName",
+          "callee": "os.platform",
+          "lineNumber": 715
+        },
+        {
+          "caller": "getOsName",
+          "callee": "os.release",
+          "lineNumber": 715
+        },
+        {
+          "caller": "_build",
+          "callee": "Object.assign",
+          "lineNumber": 720
+        },
+        {
+          "caller": "_build",
+          "callee": "this.serviceTpl",
+          "lineNumber": 720
+        },
+        {
+          "caller": "_build",
+          "callee": "console.log",
+          "lineNumber": 725
+        },
+        {
+          "caller": "_build",
+          "callee": "titleBarTemplateFactory",
+          "lineNumber": 735
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[1].submenu as MenuItemConstructorOptions[]).push",
+          "lineNumber": 738
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 739
+        },
+        {
+          "caller": "_build",
+          "callee": "window['ferdium'].actions.settings.update",
+          "lineNumber": 743
+        },
+        {
+          "caller": "_build",
+          "callee": "systemPreferences.canPromptTouchID",
+          "lineNumber": 757
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[0].submenu as MenuItemConstructorOptions[]).unshift",
+          "lineNumber": 760
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 762
+        },
+        {
+          "caller": "_build",
+          "callee": "lockFerdiumShortcutKey",
+          "lineNumber": 763
+        },
+        {
+          "caller": "click",
+          "callee": "systemPreferences\n              .promptTouchID(intl.formatMessage(menuItems.touchId))\n              .then",
+          "lineNumber": 766
+        },
+        {
+          "caller": "click",
+          "callee": "systemPreferences\n              .promptTouchID",
+          "lineNumber": 766
+        },
+        {
+          "caller": "click",
+          "callee": "intl.formatMessage",
+          "lineNumber": 767
+        },
+        {
+          "caller": "click",
+          "callee": "actions.settings.update",
+          "lineNumber": 769
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[1].submenu as MenuItemConstructorOptions[]).push",
+          "lineNumber": 784
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 789
+        },
+        {
+          "caller": "_build",
+          "callee": "shiftKey",
+          "lineNumber": 790
+        },
+        {
+          "caller": "_build",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 792
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 796
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 797
+        },
+        {
+          "caller": "_build",
+          "callee": "altKey",
+          "lineNumber": 797
+        },
+        {
+          "caller": "_build",
+          "callee": "webContents.fromId",
+          "lineNumber": 798
+        },
+        {
+          "caller": "_build",
+          "callee": "webContents.fromId",
+          "lineNumber": 800
+        },
+        {
+          "caller": "_build",
+          "callee": "isDevToolsOpened",
+          "lineNumber": 805
+        },
+        {
+          "caller": "_build",
+          "callee": "closeDevTools",
+          "lineNumber": 806
+        },
+        {
+          "caller": "_build",
+          "callee": "openDevTools",
+          "lineNumber": 808
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 814
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 815
+        },
+        {
+          "caller": "_build",
+          "callee": "shiftKey",
+          "lineNumber": 815
+        },
+        {
+          "caller": "_build",
+          "callee": "altKey",
+          "lineNumber": 815
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.service.openDevToolsForActiveService",
+          "lineNumber": 817
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[1].submenu as MenuItemConstructorOptions[]).push",
+          "lineNumber": 826
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 827
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 828
+        },
+        {
+          "caller": "_build",
+          "callee": "shiftKey",
+          "lineNumber": 828
+        },
+        {
+          "caller": "_build",
+          "callee": "altKey",
+          "lineNumber": 828
+        },
+        {
+          "caller": "_build",
+          "callee": "document.querySelector",
+          "lineNumber": 830
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.todos.openDevTools",
+          "lineNumber": 831
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[1].submenu as MenuItemConstructorOptions[]).unshift",
+          "lineNumber": 836
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 838
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 839
+        },
+        {
+          "caller": "_build",
+          "callee": "getActiveService",
+          "lineNumber": 845
+        },
+        {
+          "caller": "_build",
+          "callee": "getActiveService()?.webview.reload",
+          "lineNumber": 846
+        },
+        {
+          "caller": "_build",
+          "callee": "getActiveService",
+          "lineNumber": 846
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.service.reloadActive",
+          "lineNumber": 848
+        },
+        {
+          "caller": "_build",
+          "callee": "window.location.reload",
+          "lineNumber": 851
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 856
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 857
+        },
+        {
+          "caller": "_build",
+          "callee": "shiftKey",
+          "lineNumber": 857
+        },
+        {
+          "caller": "_build",
+          "callee": "window.location.reload",
+          "lineNumber": 859
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 863
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 864
+        },
+        {
+          "caller": "_build",
+          "callee": "shiftKey",
+          "lineNumber": 864
+        },
+        {
+          "caller": "_build",
+          "callee": "altKey",
+          "lineNumber": 864
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.todos.reload",
+          "lineNumber": 866
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 873
+        },
+        {
+          "caller": "_build",
+          "callee": "lockFerdiumShortcutKey",
+          "lineNumber": 874
+        },
+        {
+          "caller": "click",
+          "callee": "actions.settings.update",
+          "lineNumber": 879
+        },
+        {
+          "caller": "_build",
+          "callee": "this.workspacesMenu",
+          "lineNumber": 893
+        },
+        {
+          "caller": "_build",
+          "callee": "this.todosMenu",
+          "lineNumber": 895
+        },
+        {
+          "caller": "_build",
+          "callee": "tpl.unshift",
+          "lineNumber": 898
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 899
+        },
+        {
+          "caller": "_build",
+          "callee": "altKey",
+          "lineNumber": 900
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 906
+        },
+        {
+          "caller": "_build",
+          "callee": "downloadsShortcutKey",
+          "lineNumber": 907
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.ui.openDownloads",
+          "lineNumber": 909
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 915
+        },
+        {
+          "caller": "_build",
+          "callee": "settingsShortcutKey",
+          "lineNumber": 916
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.ui.openSettings",
+          "lineNumber": 918
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 924
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.app.checkForUpdates",
+          "lineNumber": 927
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 935
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 943
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 947
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 951
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 958
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 959
+        },
+        {
+          "caller": "click",
+          "callee": "app.quit",
+          "lineNumber": 961
+        },
+        {
+          "caller": "_build",
+          "callee": "[\n      `Version: ${ferdiumVersion}`,\n      `Server: ${serverName()} Server`,\n      `Electron: ${electronVersion}`,\n      `Chrome: ${chromeVersion}`,\n      `Node.js: ${nodeVersion}`,\n      `Platform: ${this.getOsName()}`,\n      `Arch: ${osArch}`,\n      `Build date: ${new Date(Number(timestamp))}`,\n      `Git SHA: ${gitHashShort}`,\n      `Git branch: ${gitBranch}`,\n    ].join",
+          "lineNumber": 967
+        },
+        {
+          "caller": "_build",
+          "callee": "serverName",
+          "lineNumber": 969
+        },
+        {
+          "caller": "_build",
+          "callee": "this.getOsName",
+          "lineNumber": 973
+        },
+        {
+          "caller": "_build",
+          "callee": "Number",
+          "lineNumber": 975
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 981
+        },
+        {
+          "caller": "_build",
+          "callee": "dialog\n          .showMessageBox({\n            type: 'info',\n            title: 'Ferdium',\n            message: 'Ferdium',\n            detail: aboutAppDetails,\n            buttons: [\n              intl.formatMessage(menuItems.ok),\n              intl.formatMessage(menuItems.copyToClipboard),\n            ],\n          })\n          .then",
+          "lineNumber": 983
+        },
+        {
+          "caller": "_build",
+          "callee": "dialog\n          .showMessageBox",
+          "lineNumber": 983
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 990
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 991
+        },
+        {
+          "caller": "_build",
+          "callee": "clipboard.write",
+          "lineNumber": 996
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[1].submenu as MenuItemConstructorOptions[]).push",
+          "lineNumber": 1006
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1011
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1014
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1018
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[0].submenu as MenuItemConstructorOptions[]).unshift",
+          "lineNumber": 1025
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1031
+        },
+        {
+          "caller": "_build",
+          "callee": "downloadsShortcutKey",
+          "lineNumber": 1032
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.ui.openDownloads",
+          "lineNumber": 1034
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1040
+        },
+        {
+          "caller": "_build",
+          "callee": "settingsShortcutKey",
+          "lineNumber": 1041
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.ui.openSettings",
+          "lineNumber": 1043
+        },
+        {
+          "caller": "_build",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1052
+        },
+        {
+          "caller": "_build",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1053
+        },
+        {
+          "caller": "click",
+          "callee": "app.quit",
+          "lineNumber": 1055
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push",
+          "lineNumber": 1061
+        },
+        {
+          "caller": "_build",
+          "callee": "this.workspacesMenu",
+          "lineNumber": 1074
+        },
+        {
+          "caller": "_build",
+          "callee": "this.todosMenu",
+          "lineNumber": 1076
+        },
+        {
+          "caller": "_build",
+          "callee": "(tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push",
+          "lineNumber": 1079
+        },
+        {
+          "caller": "_build",
+          "callee": "this.debugMenu",
+          "lineNumber": 1083
+        },
+        {
+          "caller": "_build",
+          "callee": "this._setCurrentTemplate",
+          "lineNumber": 1086
+        },
+        {
+          "caller": "_build",
+          "callee": "Menu.buildFromTemplate",
+          "lineNumber": 1087
+        },
+        {
+          "caller": "_build",
+          "callee": "Menu.setApplicationMenu",
+          "lineNumber": 1088
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "menu.push",
+          "lineNumber": 1100
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1102
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "addNewServiceShortcutKey",
+          "lineNumber": 1103
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.ui.openSettings",
+          "lineNumber": 1105
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1112
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "ifUndefined",
+          "lineNumber": 1113
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.service.setActiveNext",
+          "lineNumber": 1117
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1121
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1122
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "altKey",
+          "lineNumber": 1122
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.service.setActiveNext",
+          "lineNumber": 1123
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1127
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "ifUndefined",
+          "lineNumber": 1128
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.service.setActivePrev",
+          "lineNumber": 1132
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1136
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1137
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "altKey",
+          "lineNumber": 1137
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.service.setActivePrev",
+          "lineNumber": 1138
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl\n          .formatMessage(\n            settings.all.app.isAppMuted\n              ? menuItems.unmuteApp\n              : menuItems.muteApp,\n          )\n          .replace",
+          "lineNumber": 1142
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl\n          .formatMessage",
+          "lineNumber": 1142
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "muteFerdiumShortcutKey",
+          "lineNumber": 1149
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.app.toggleMuteApp",
+          "lineNumber": 1150
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "services.allDisplayed.entries",
+          "lineNumber": 1157
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "menu.push",
+          "lineNumber": 1158
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this._getServiceName",
+          "lineNumber": 1159
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "acceleratorString",
+          "lineNumber": 1160
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "altKey",
+          "lineNumber": 1163
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1164
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.service.setActive",
+          "lineNumber": 1171
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "getCurrentWindow().restore",
+          "lineNumber": 1175
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "getCurrentWindow",
+          "lineNumber": 1175
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "menu.push",
+          "lineNumber": 1185
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1190
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1191
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "shiftKey",
+          "lineNumber": 1191
+        },
+        {
+          "caller": "serviceTpl",
+          "callee": "this.actions.service.reloadActive",
+          "lineNumber": 1192
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "menu.push",
+          "lineNumber": 1207
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1208
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1209
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "shiftKey",
+          "lineNumber": 1209
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "workspaceActions.openWorkspaceSettings",
+          "lineNumber": 1211
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "menu.push",
+          "lineNumber": 1221
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1222
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "workspaceToggleShortcutKey",
+          "lineNumber": 1223
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "workspaceActions.toggleWorkspaceDrawer",
+          "lineNumber": 1225
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "menu.push",
+          "lineNumber": 1232
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1237
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1238
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "altKey",
+          "lineNumber": 1238
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "workspaceActions.deactivate",
+          "lineNumber": 1242
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "workspaces.entries",
+          "lineNumber": 1249
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "menu.push",
+          "lineNumber": 1250
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1253
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "altKey",
+          "lineNumber": 1253
+        },
+        {
+          "caller": "workspacesMenu",
+          "callee": "workspaceActions.activate",
+          "lineNumber": 1257
+        },
+        {
+          "caller": "todosMenu",
+          "callee": "menu.push",
+          "lineNumber": 1270
+        },
+        {
+          "caller": "todosMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1271
+        },
+        {
+          "caller": "todosMenu",
+          "callee": "todoActions.toggleTodosFeatureVisibility",
+          "lineNumber": 1275
+        },
+        {
+          "caller": "todosMenu",
+          "callee": "menu.push",
+          "lineNumber": 1281
+        },
+        {
+          "caller": "todosMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1286
+        },
+        {
+          "caller": "todosMenu",
+          "callee": "todosToggleShortcutKey",
+          "lineNumber": 1291
+        },
+        {
+          "caller": "todosMenu",
+          "callee": "todoActions.toggleTodosPanel",
+          "lineNumber": 1293
+        },
+        {
+          "caller": "debugMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1308
+        },
+        {
+          "caller": "debugMenu",
+          "callee": "clipboard.write",
+          "lineNumber": 1312
+        },
+        {
+          "caller": "debugMenu",
+          "callee": "JSON.stringify",
+          "lineNumber": 1313
+        },
+        {
+          "caller": "debugMenu",
+          "callee": "this.actions.app.notify",
+          "lineNumber": 1316
+        },
+        {
+          "caller": "debugMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1317
+        },
+        {
+          "caller": "debugMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1319
+        },
+        {
+          "caller": "debugMenu",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1325
+        }
+      ],
+      "metrics": {
+        "importCount": 14,
+        "exportCount": 1,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/lib/TouchBar.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 52,
+      "classes": [
+        {
+          "name": "FranzTouchBar",
+          "startLine": 7,
+          "endLine": 62,
+          "methods": [
+            "constructor",
+            "_build"
+          ],
+          "properties": [
+            "stores",
+            "actions",
+            "build"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 7,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "semver.gt",
+          "lineNumber": 21
+        },
+        {
+          "caller": "constructor",
+          "callee": "autorun",
+          "lineNumber": 22
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._build.bind",
+          "lineNumber": 22
+        },
+        {
+          "caller": "constructor",
+          "callee": "console.error",
+          "lineNumber": 25
+        },
+        {
+          "caller": "_build",
+          "callee": "getCurrentWindow",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_build",
+          "callee": "buttons.push",
+          "lineNumber": 37
+        },
+        {
+          "caller": "_build",
+          "callee": "this.actions.service.setActive",
+          "lineNumber": 49
+        },
+        {
+          "caller": "_build",
+          "callee": "currentWindow.setTouchBar",
+          "lineNumber": 57
+        },
+        {
+          "caller": "_build",
+          "callee": "currentWindow.setTouchBar",
+          "lineNumber": 59
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/lib/Tray.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 308,
+      "nonEmptyLines": 266,
+      "classes": [
+        {
+          "name": "TrayIcon",
+          "startLine": 22,
+          "endLine": 308,
+          "methods": [
+            "constructor",
+            "trayMenuTemplate",
+            "_updateTrayMenu",
+            "show",
+            "_show",
+            "_toggleWindow",
+            "hide",
+            "_hide",
+            "recreateIfVisible",
+            "refreshTrayAfterWatcherRestart",
+            "setIndicator",
+            "_getAssetFromIndicator",
+            "_refreshIcon",
+            "_getAsset"
+          ],
+          "properties": [
+            "tray",
+            "indicator",
+            "themeChangeSubscriberId",
+            "trayMenu",
+            "visible",
+            "isAppMuted",
+            "mainWindow",
+            "currentLocale"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 22,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "ipcMain.on",
+          "lineNumber": 40
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 41
+        },
+        {
+          "caller": "constructor",
+          "callee": "ipcMain.on",
+          "lineNumber": 43
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 44
+        },
+        {
+          "caller": "constructor",
+          "callee": "BrowserWindow.getAllWindows",
+          "lineNumber": 47
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.mainWindow.on",
+          "lineNumber": 52
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 53
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.mainWindow.on",
+          "lineNumber": 55
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 56
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.mainWindow.on",
+          "lineNumber": 58
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 59
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.mainWindow.on",
+          "lineNumber": 61
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 62
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.mainWindow.on",
+          "lineNumber": 64
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 65
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.mainWindow.on",
+          "lineNumber": 67
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateTrayMenu",
+          "lineNumber": 68
+        },
+        {
+          "caller": "trayMenuTemplate",
+          "callee": "tray.mainWindow.isVisible",
+          "lineNumber": 76
+        },
+        {
+          "caller": "trayMenuTemplate",
+          "callee": "tray.mainWindow.isFocused",
+          "lineNumber": 76
+        },
+        {
+          "caller": "trayMenuTemplate",
+          "callee": "getTranslatedText",
+          "lineNumber": 77
+        },
+        {
+          "caller": "trayMenuTemplate",
+          "callee": "getTranslatedText",
+          "lineNumber": 82
+        },
+        {
+          "caller": "click",
+          "callee": "tray._toggleWindow",
+          "lineNumber": 88
+        },
+        {
+          "caller": "trayMenuTemplate",
+          "callee": "getTranslatedText",
+          "lineNumber": 93
+        },
+        {
+          "caller": "trayMenuTemplate",
+          "callee": "getTranslatedText",
+          "lineNumber": 98
+        },
+        {
+          "caller": "click",
+          "callee": "tray.mainWindow.webContents.send",
+          "lineNumber": 105
+        },
+        {
+          "caller": "trayMenuTemplate",
+          "callee": "getTranslatedText",
+          "lineNumber": 109
+        },
+        {
+          "caller": "click",
+          "callee": "app.quit",
+          "lineNumber": 115
+        },
+        {
+          "caller": "_updateTrayMenu",
+          "callee": "Menu.buildFromTemplate",
+          "lineNumber": 133
+        },
+        {
+          "caller": "_updateTrayMenu",
+          "callee": "this.trayMenuTemplate",
+          "lineNumber": 133
+        },
+        {
+          "caller": "_updateTrayMenu",
+          "callee": "this.tray.setContextMenu",
+          "lineNumber": 135
+        },
+        {
+          "caller": "show",
+          "callee": "this._show",
+          "lineNumber": 141
+        },
+        {
+          "caller": "_show",
+          "callee": "this._getAsset",
+          "lineNumber": 149
+        },
+        {
+          "caller": "_show",
+          "callee": "this.tray.setToolTip",
+          "lineNumber": 150
+        },
+        {
+          "caller": "_show",
+          "callee": "Menu.buildFromTemplate",
+          "lineNumber": 152
+        },
+        {
+          "caller": "_show",
+          "callee": "this.trayMenuTemplate",
+          "lineNumber": 152
+        },
+        {
+          "caller": "_show",
+          "callee": "this.tray.setContextMenu",
+          "lineNumber": 154
+        },
+        {
+          "caller": "_show",
+          "callee": "this.tray.on",
+          "lineNumber": 157
+        },
+        {
+          "caller": "_show",
+          "callee": "this._toggleWindow",
+          "lineNumber": 158
+        },
+        {
+          "caller": "_show",
+          "callee": "this.tray.on",
+          "lineNumber": 162
+        },
+        {
+          "caller": "_show",
+          "callee": "this.tray.popUpContextMenu",
+          "lineNumber": 164
+        },
+        {
+          "caller": "_show",
+          "callee": "systemPreferences.subscribeNotification",
+          "lineNumber": 170
+        },
+        {
+          "caller": "_show",
+          "callee": "this._refreshIcon",
+          "lineNumber": 173
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "BrowserWindow.getAllWindows",
+          "lineNumber": 180
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.isMinimized",
+          "lineNumber": 182
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.restore",
+          "lineNumber": 183
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.isVisible",
+          "lineNumber": 184
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.isFocused",
+          "lineNumber": 184
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.isFullScreen",
+          "lineNumber": 185
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.once",
+          "lineNumber": 186
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.setFullScreen",
+          "lineNumber": 186
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.once",
+          "lineNumber": 187
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.hide",
+          "lineNumber": 187
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.setFullScreen",
+          "lineNumber": 188
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.hide",
+          "lineNumber": 190
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.show",
+          "lineNumber": 193
+        },
+        {
+          "caller": "_toggleWindow",
+          "callee": "mainWindow.focus",
+          "lineNumber": 194
+        },
+        {
+          "caller": "hide",
+          "callee": "this._hide",
+          "lineNumber": 200
+        },
+        {
+          "caller": "_hide",
+          "callee": "this.tray.destroy",
+          "lineNumber": 206
+        },
+        {
+          "caller": "_hide",
+          "callee": "systemPreferences.unsubscribeNotification",
+          "lineNumber": 210
+        },
+        {
+          "caller": "recreateIfVisible",
+          "callee": "this._hide",
+          "lineNumber": 217
+        },
+        {
+          "caller": "recreateIfVisible",
+          "callee": "setTimeout",
+          "lineNumber": 218
+        },
+        {
+          "caller": "recreateIfVisible",
+          "callee": "this._show",
+          "lineNumber": 220
+        },
+        {
+          "caller": "refreshTrayAfterWatcherRestart",
+          "callee": "this._getAsset",
+          "lineNumber": 238
+        },
+        {
+          "caller": "refreshTrayAfterWatcherRestart",
+          "callee": "this._getAssetFromIndicator",
+          "lineNumber": 240
+        },
+        {
+          "caller": "refreshTrayAfterWatcherRestart",
+          "callee": "this.tray.setImage",
+          "lineNumber": 242
+        },
+        {
+          "caller": "setIndicator",
+          "callee": "this._refreshIcon",
+          "lineNumber": 247
+        },
+        {
+          "caller": "_refreshIcon",
+          "callee": "this.tray.setImage",
+          "lineNumber": 266
+        },
+        {
+          "caller": "_refreshIcon",
+          "callee": "this._getAsset",
+          "lineNumber": 267
+        },
+        {
+          "caller": "_refreshIcon",
+          "callee": "this._getAssetFromIndicator",
+          "lineNumber": 267
+        },
+        {
+          "caller": "_refreshIcon",
+          "callee": "macosVersion.isGreaterThanOrEqualTo",
+          "lineNumber": 270
+        },
+        {
+          "caller": "_refreshIcon",
+          "callee": "this.tray.setPressedImage",
+          "lineNumber": 271
+        },
+        {
+          "caller": "_refreshIcon",
+          "callee": "this._getAsset",
+          "lineNumber": 272
+        },
+        {
+          "caller": "_refreshIcon",
+          "callee": "this._getAssetFromIndicator",
+          "lineNumber": 274
+        },
+        {
+          "caller": "_getAsset",
+          "callee": "macosVersion.isGreaterThanOrEqualTo",
+          "lineNumber": 284
+        },
+        {
+          "caller": "_getAsset",
+          "callee": "nativeImage.createFromPath",
+          "lineNumber": 290
+        },
+        {
+          "caller": "_getAsset",
+          "callee": "join",
+          "lineNumber": 291
+        },
+        {
+          "caller": "_getAsset",
+          "callee": "macosVersion.isGreaterThanOrEqualTo",
+          "lineNumber": 302
+        },
+        {
+          "caller": "_getAsset",
+          "callee": "trayImg.setTemplateImage",
+          "lineNumber": 303
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/lib/dbus/Ferdium.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 96,
+      "nonEmptyLines": 82,
+      "classes": [
+        {
+          "name": "Ferdium",
+          "startLine": 7,
+          "endLine": 61,
+          "methods": [
+            "constructor",
+            "emitMutedChanged",
+            "Muted",
+            "Muted",
+            "ToggleMute",
+            "ToggleWindow",
+            "ToggleToTalk",
+            "emitUnreadChanged",
+            "UnreadDirectMessageCount",
+            "UnreadIndirectMessageCount",
+            "UnreadServices"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 7,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 9
+        },
+        {
+          "caller": "emitMutedChanged",
+          "callee": "Ferdium.emitPropertiesChanged",
+          "lineNumber": 13
+        },
+        {
+          "caller": "Muted",
+          "callee": "this.ToggleMute",
+          "lineNumber": 22
+        },
+        {
+          "caller": "ToggleMute",
+          "callee": "this.dbus.trayIcon.mainWindow?.webContents.send",
+          "lineNumber": 27
+        },
+        {
+          "caller": "ToggleWindow",
+          "callee": "this.dbus.trayIcon._toggleWindow",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ToggleToTalk",
+          "callee": "this.dbus.trayIcon.mainWindow?.webContents.send",
+          "lineNumber": 35
+        },
+        {
+          "caller": "emitUnreadChanged",
+          "callee": "Ferdium.emitPropertiesChanged",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/models/IContextMenuParams.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/models/Recipe.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 205,
+      "nonEmptyLines": 168,
+      "classes": [
+        {
+          "name": "Recipe",
+          "startLine": 72,
+          "endLine": 205,
+          "methods": [
+            "constructor",
+            "author",
+            "hasDarkMode"
+          ],
+          "properties": [
+            "id",
+            "name",
+            "description",
+            "version",
+            "defaultIcon",
+            "aliases",
+            "serviceURL",
+            "hasDirectMessages",
+            "hasIndirectMessages",
+            "hasNotificationSound",
+            "hasTeamId",
+            "hasCustomUrl",
+            "hasHostedOption",
+            "urlInputPrefix",
+            "urlInputSuffix",
+            "message",
+            "allowFavoritesDelineationInUnreadCount",
+            "disablewebsecurity",
+            "path",
+            "partition",
+            "local",
+            "validateUrl"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 72,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "semver.valid",
+          "lineNumber": 133
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 140
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 141
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 142
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 143
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 144
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 145
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 149
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 153
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 157
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 161
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 165
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 169
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 173
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 177
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 181
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 185
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 186
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 187
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 194
+        },
+        {
+          "caller": "hasDarkMode",
+          "callee": "pathExistsSync",
+          "lineNumber": 203
+        },
+        {
+          "caller": "hasDarkMode",
+          "callee": "join",
+          "lineNumber": 203
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/models/RecipePreview.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 31,
+      "classes": [
+        {
+          "name": "RecipePreview",
+          "startLine": 13,
+          "endLine": 41,
+          "methods": [
+            "constructor"
+          ],
+          "properties": [
+            "id",
+            "name",
+            "icon",
+            "featured",
+            "aliases",
+            "isDevRecipe",
+            "icons"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 13,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "Object.assign",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/models/Service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 690,
+      "nonEmptyLines": 560,
+      "classes": [
+        {
+          "name": "Service",
+          "startLine": 31,
+          "endLine": 690,
+          "methods": [
+            "_setAutoRun",
+            "constructor",
+            "_didStartLoading",
+            "_didStopLoading",
+            "_didLoad",
+            "_didFailLoad",
+            "_hasCrashed",
+            "_didMediaPlaying",
+            "_didMediaPaused",
+            "shareWithWebview",
+            "isTodosService",
+            "canHibernate",
+            "isHibernating",
+            "webview",
+            "webview",
+            "url",
+            "icon",
+            "hasCustomIcon",
+            "userAgent",
+            "userAgentPref",
+            "userAgentPref",
+            "defaultUserAgent",
+            "partition",
+            "initializeWebViewEvents",
+            "initializeWebViewListener",
+            "resetMessageCount",
+            "toggleToTalk"
+          ],
+          "properties": [
+            "id",
+            "recipe",
+            "_webview",
+            "timer",
+            "events",
+            "isAttached",
+            "isActive",
+            "name",
+            "unreadDirectMessageCount",
+            "unreadIndirectMessageCount",
+            "dialogTitle",
+            "order",
+            "isEnabled",
+            "isMuted",
+            "team",
+            "customUrl",
+            "isNotificationEnabled",
+            "isBadgeEnabled",
+            "isMediaBadgeEnabled",
+            "trapLinkClicks",
+            "isIndirectMessageBadgeEnabled",
+            "iconUrl",
+            "customIconUrl",
+            "hasCustomUploadedIcon",
+            "hasCrashed",
+            "isDarkModeEnabled",
+            "isProgressbarEnabled",
+            "darkReaderSettings",
+            "spellcheckerLanguage",
+            "isFirstLoad",
+            "isLoading",
+            "isLoadingPage",
+            "isError",
+            "errorMessage",
+            "isUsingCustomUrl",
+            "isServiceAccessRestricted",
+            "restrictionType",
+            "isHibernationEnabled",
+            "isWakeUpEnabled",
+            "isHibernationRequested",
+            "onlyShowFavoritesInUnreadCount",
+            "lastUsed",
+            "lastHibernated",
+            "lastPoll",
+            "lastPollAnswer",
+            "lostRecipeConnection",
+            "lostRecipeReloadAttempt",
+            "userAgentModel",
+            "proxy",
+            "isMediaPlaying",
+            "useFavicon"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 31,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "makeObservable",
+          "lineNumber": 167
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 173
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 174
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 175
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 176
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 177
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 178
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 179
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 180
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 181
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 185
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 190
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 194
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 198
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 202
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 203
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 207
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 211
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 215
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 219
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 223
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 224
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 228
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 232
+        },
+        {
+          "caller": "constructor",
+          "callee": "ifUndefined",
+          "lineNumber": 236
+        },
+        {
+          "caller": "constructor",
+          "callee": "JSON.parse",
+          "lineNumber": 246
+        },
+        {
+          "caller": "constructor",
+          "callee": "autorun",
+          "lineNumber": 251
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._setAutoRun",
+          "lineNumber": 252
+        },
+        {
+          "caller": "url",
+          "callee": "normalizedUrl",
+          "lineNumber": 339
+        },
+        {
+          "caller": "url",
+          "callee": "console.error",
+          "lineNumber": 341
+        },
+        {
+          "caller": "url",
+          "callee": "buildUrl",
+          "lineNumber": 348
+        },
+        {
+          "caller": "url",
+          "callee": "this.recipe.serviceURL.replace",
+          "lineNumber": 355
+        },
+        {
+          "caller": "icon",
+          "callee": "getFaviconUrl",
+          "lineNumber": 363
+        },
+        {
+          "caller": "icon",
+          "callee": "needsToken",
+          "lineNumber": 367
+        },
+        {
+          "caller": "icon",
+          "callee": "debug",
+          "lineNumber": 372
+        },
+        {
+          "caller": "icon",
+          "callee": "url.searchParams.set",
+          "lineNumber": 378
+        },
+        {
+          "caller": "icon",
+          "callee": "url.toString",
+          "lineNumber": 379
+        },
+        {
+          "caller": "icon",
+          "callee": "join",
+          "lineNumber": 389
+        },
+        {
+          "caller": "hasCustomIcon",
+          "callee": "Boolean",
+          "lineNumber": 393
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "webContents.fromId",
+          "lineNumber": 417
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.getWebContentsId",
+          "lineNumber": 418
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.userAgentModel.setWebviewReference",
+          "lineNumber": 421
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.recipe.modifyRequestHeaders",
+          "lineNumber": 426
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 427
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 428
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 433
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.recipe.knownCertificateHosts",
+          "lineNumber": 438
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 439
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 440
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 445
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 448
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "Promise.all",
+          "lineNumber": 450
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "e.args.map",
+          "lineNumber": 451
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.executeJavaScript",
+          "lineNumber": 452
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "handleIPCMessage",
+          "lineNumber": 458
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 466
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 469
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "isValidExternalURL",
+          "lineNumber": 470
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "openWindow",
+          "lineNumber": 477
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 484
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 492
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 493
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this._didStartLoading",
+          "lineNumber": 495
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 498
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 499
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this._didStopLoading",
+          "lineNumber": 501
+        },
+        {
+          "caller": "didLoad",
+          "callee": "this._didLoad",
+          "lineNumber": 506
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 509
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "didLoad.bind",
+          "lineNumber": 509
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 510
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "didLoad.bind",
+          "lineNumber": 510
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 512
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 513
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this._didFailLoad",
+          "lineNumber": 519
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 523
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 524
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this._hasCrashed",
+          "lineNumber": 525
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 528
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 529
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.send",
+          "lineNumber": 530
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 533
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 534
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this._didMediaPlaying",
+          "lineNumber": 535
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 538
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 539
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this._didMediaPaused",
+          "lineNumber": 540
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "webviewWebContents.session.getStoragePath",
+          "lineNumber": 545
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "activePartitions.has",
+          "lineNumber": 548
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "activePartitions.add",
+          "lineNumber": 553
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "webviewWebContents.on",
+          "lineNumber": 560
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "event.preventDefault",
+          "lineNumber": 562
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview?.getZoomLevel",
+          "lineNumber": 563
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "this.webview?.setZoomLevel",
+          "lineNumber": 564
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "webviewWebContents.session.on",
+          "lineNumber": 569
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "event.preventDefault",
+          "lineNumber": 570
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "uuidV4",
+          "lineNumber": 572
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "window['ferdium'].actions.app.addDownload",
+          "lineNumber": 574
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getFilename",
+          "lineNumber": 577
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getURL",
+          "lineNumber": 578
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getSavePath",
+          "lineNumber": 579
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.addListener",
+          "lineNumber": 582
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 584
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.isPaused",
+          "lineNumber": 586
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 587
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 589
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getReceivedBytes",
+          "lineNumber": 589
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "window['ferdium'].actions.app.updateDownload",
+          "lineNumber": 592
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "basename",
+          "lineNumber": 595
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getSavePath",
+          "lineNumber": 595
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getURL",
+          "lineNumber": 596
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getSavePath",
+          "lineNumber": 597
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getReceivedBytes",
+          "lineNumber": 598
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getTotalBytes",
+          "lineNumber": 599
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 602
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.addListener",
+          "lineNumber": 604
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 605
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 607
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getSavePath",
+          "lineNumber": 609
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "window['ferdium'].actions.app.removeDownload",
+          "lineNumber": 610
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 611
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 613
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "window['ferdium'].actions.app.endedDownload",
+          "lineNumber": 616
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getReceivedBytes",
+          "lineNumber": 619
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getTotalBytes",
+          "lineNumber": 620
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 625
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 626
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.isPaused",
+          "lineNumber": 626
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getState",
+          "lineNumber": 626
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.isPaused",
+          "lineNumber": 628
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.resume",
+          "lineNumber": 629
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.pause",
+          "lineNumber": 631
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 634
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.isPaused",
+          "lineNumber": 634
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.getState",
+          "lineNumber": 634
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "window['ferdium'].actions.app.updateDownload",
+          "lineNumber": 635
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.isPaused",
+          "lineNumber": 637
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 641
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "item.cancel",
+          "lineNumber": 643
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "webviewWebContents.on",
+          "lineNumber": 647
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 649
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "event.preventDefault",
+          "lineNumber": 650
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 653
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "webviewWebContents.send",
+          "lineNumber": 654
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 656
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 661
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "callback",
+          "lineNumber": 662
+        },
+        {
+          "caller": "initializeWebViewEvents",
+          "callee": "debug",
+          "lineNumber": 664
+        },
+        {
+          "caller": "initializeWebViewListener",
+          "callee": "Object.keys",
+          "lineNumber": 673
+        },
+        {
+          "caller": "initializeWebViewListener",
+          "callee": "this.webview.addEventListener",
+          "lineNumber": 676
+        },
+        {
+          "caller": "toggleToTalk",
+          "callee": "this.webview?.send",
+          "lineNumber": 688
+        }
+      ],
+      "metrics": {
+        "importCount": 10,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/models/User.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 49,
+      "classes": [
+        {
+          "name": "User",
+          "startLine": 17,
+          "endLine": 67,
+          "methods": [
+            "constructor"
+          ],
+          "properties": [
+            "id",
+            "email",
+            "firstname",
+            "lastname",
+            "organization",
+            "accountType",
+            "subscription",
+            "isSubscriptionOwner",
+            "beta",
+            "locale",
+            "team"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 17,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "makeObservable",
+          "lineNumber": 43
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/models/UserAgent.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 105,
+      "nonEmptyLines": 85,
+      "classes": [
+        {
+          "name": "UserAgent",
+          "startLine": 8,
+          "endLine": 105,
+          "methods": [
+            "constructor",
+            "defaultUserAgent",
+            "serviceUserAgentPref",
+            "userAgentWithoutChromeVersion",
+            "userAgent",
+            "setWebviewReference",
+            "_handleNavigate",
+            "_addWebviewEvents",
+            "_removeWebviewEvents"
+          ],
+          "properties": [
+            "_didNavigateListener",
+            "webview",
+            "userAgentPref",
+            "overrideUserAgent"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 8,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "makeObservable",
+          "lineNumber": 19
+        },
+        {
+          "caller": "constructor",
+          "callee": "observe",
+          "lineNumber": 25
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._removeWebviewEvents",
+          "lineNumber": 28
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._addWebviewEvents",
+          "lineNumber": 31
+        },
+        {
+          "caller": "defaultUserAgent",
+          "callee": "this.overrideUserAgent",
+          "lineNumber": 37
+        },
+        {
+          "caller": "defaultUserAgent",
+          "callee": "globalPref.trim",
+          "lineNumber": 44
+        },
+        {
+          "caller": "defaultUserAgent",
+          "callee": "defaultUserAgent",
+          "lineNumber": 49
+        },
+        {
+          "caller": "serviceUserAgentPref",
+          "callee": "this.userAgentPref.trim",
+          "lineNumber": 54
+        },
+        {
+          "caller": "userAgentWithoutChromeVersion",
+          "callee": "withChrome.replace",
+          "lineNumber": 64
+        },
+        {
+          "caller": "_handleNavigate",
+          "callee": "url.startsWith",
+          "lineNumber": 76
+        },
+        {
+          "caller": "_handleNavigate",
+          "callee": "debug",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_handleNavigate",
+          "callee": "debug",
+          "lineNumber": 87
+        },
+        {
+          "caller": "_addWebviewEvents",
+          "callee": "debug",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_addWebviewEvents",
+          "callee": "this._handleNavigate",
+          "lineNumber": 96
+        },
+        {
+          "caller": "_addWebviewEvents",
+          "callee": "webview.addEventListener",
+          "lineNumber": 97
+        },
+        {
+          "caller": "_removeWebviewEvents",
+          "callee": "debug",
+          "lineNumber": 101
+        },
+        {
+          "caller": "_removeWebviewEvents",
+          "callee": "webview.removeEventListener",
+          "lineNumber": 103
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/preload-safe-debug.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 31,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/prop-types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "exports": [
+        {
+          "name": "oneOrManyChildElements",
+          "line": 3,
+          "isDefault": false
+        },
+        {
+          "name": "globalError",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/routes.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 204,
+      "nonEmptyLines": 199,
+      "classes": [
+        {
+          "name": "FerdiumRoutes",
+          "startLine": 47,
+          "endLine": 202,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 30,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/sentry.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 5,
+      "nonEmptyLines": 4,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/stores/AppStore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 863,
+      "nonEmptyLines": 721,
+      "classes": [
+        {
+          "name": "AppStore",
+          "startLine": 86,
+          "endLine": 863,
+          "methods": [
+            "constructor",
+            "setup",
+            "_initializeSandboxes",
+            "_readSandboxes",
+            "_writeSandboxes",
+            "cacheSize",
+            "isDownloading",
+            "debugInfo",
+            "getSandbox",
+            "_notify",
+            "_setBadge",
+            "_launchOnStartup",
+            "_openExternalUrl",
+            "_checkForUpdates",
+            "_installUpdate",
+            "_resetUpdateStatus",
+            "_healthCheck",
+            "_muteApp",
+            "_toggleMuteApp",
+            "_toggleCollapseMenu",
+            "_clearAllCache",
+            "_changeLocale",
+            "_addDownload",
+            "_removeDownload",
+            "_updateDownload",
+            "_endedDownload",
+            "_stopDownload",
+            "_togglePauseDownload",
+            "_addSandboxService",
+            "_editSandboxService",
+            "_deleteSandboxService",
+            "_setLocale",
+            "_offlineCheck",
+            "_getDefaultLocale",
+            "_muteAppHandler",
+            "_handleFullScreen",
+            "_handleLogout",
+            "_appStartsCounter",
+            "_autoStart",
+            "_checkAutoStart",
+            "_systemDND"
+          ],
+          "properties": [
+            "updateStatusTypes",
+            "healthCheckRequest",
+            "sandboxServices",
+            "getAppCacheSizeRequest",
+            "clearAppCacheRequest",
+            "autoLaunchOnStart",
+            "isOnline",
+            "authRequestFailed",
+            "timeSuspensionStart",
+            "timeOfflineStart",
+            "updateStatus",
+            "updateVersion",
+            "locale",
+            "isSystemMuteOverridden",
+            "isSystemDarkModeEnabled",
+            "isClearingAllCache",
+            "isFullScreen",
+            "isFocused",
+            "isLockingFeatureEnabled",
+            "launchInBackground",
+            "fetchDataInterval",
+            "downloads",
+            "justFinishedDownloading"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 86,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 144
+        },
+        {
+          "caller": "constructor",
+          "callee": "makeObservable",
+          "lineNumber": 146
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.notify.listen",
+          "lineNumber": 149
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._notify.bind",
+          "lineNumber": 149
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.setBadge.listen",
+          "lineNumber": 150
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._setBadge.bind",
+          "lineNumber": 150
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.launchOnStartup.listen",
+          "lineNumber": 151
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._launchOnStartup.bind",
+          "lineNumber": 151
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.openExternalUrl.listen",
+          "lineNumber": 152
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._openExternalUrl.bind",
+          "lineNumber": 152
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.checkForUpdates.listen",
+          "lineNumber": 153
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._checkForUpdates.bind",
+          "lineNumber": 153
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.installUpdate.listen",
+          "lineNumber": 154
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._installUpdate.bind",
+          "lineNumber": 154
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.resetUpdateStatus.listen",
+          "lineNumber": 155
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._resetUpdateStatus.bind",
+          "lineNumber": 156
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.healthCheck.listen",
+          "lineNumber": 158
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._healthCheck.bind",
+          "lineNumber": 158
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.muteApp.listen",
+          "lineNumber": 159
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._muteApp.bind",
+          "lineNumber": 159
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.toggleMuteApp.listen",
+          "lineNumber": 160
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._toggleMuteApp.bind",
+          "lineNumber": 160
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.toggleCollapseMenu.listen",
+          "lineNumber": 161
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._toggleCollapseMenu.bind",
+          "lineNumber": 162
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.clearAllCache.listen",
+          "lineNumber": 164
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._clearAllCache.bind",
+          "lineNumber": 164
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.addDownload.listen",
+          "lineNumber": 165
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._addDownload.bind",
+          "lineNumber": 165
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.removeDownload.listen",
+          "lineNumber": 166
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._removeDownload.bind",
+          "lineNumber": 166
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.updateDownload.listen",
+          "lineNumber": 167
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._updateDownload.bind",
+          "lineNumber": 167
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.endedDownload.listen",
+          "lineNumber": 168
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._endedDownload.bind",
+          "lineNumber": 168
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.stopDownload.listen",
+          "lineNumber": 169
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._stopDownload.bind",
+          "lineNumber": 169
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.togglePauseDownload.listen",
+          "lineNumber": 170
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._togglePauseDownload.bind",
+          "lineNumber": 171
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.addSandboxService.listen",
+          "lineNumber": 174
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._addSandboxService.bind",
+          "lineNumber": 175
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.editSandboxService.listen",
+          "lineNumber": 177
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._editSandboxService.bind",
+          "lineNumber": 178
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.actions.app.deleteSandboxService.listen",
+          "lineNumber": 180
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._deleteSandboxService.bind",
+          "lineNumber": 181
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.registerReactions",
+          "lineNumber": 184
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._offlineCheck.bind",
+          "lineNumber": 185
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._setLocale.bind",
+          "lineNumber": 186
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._muteAppHandler.bind",
+          "lineNumber": 187
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._handleFullScreen.bind",
+          "lineNumber": 188
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._handleLogout.bind",
+          "lineNumber": 189
+        },
+        {
+          "caller": "setup",
+          "callee": "this._appStartsCounter",
+          "lineNumber": 194
+        },
+        {
+          "caller": "setup",
+          "callee": "window.addEventListener",
+          "lineNumber": 196
+        },
+        {
+          "caller": "setup",
+          "callee": "window.addEventListener",
+          "lineNumber": 199
+        },
+        {
+          "caller": "setup",
+          "callee": "window.addEventListener",
+          "lineNumber": 202
+        },
+        {
+          "caller": "setup",
+          "callee": "mainWindow.on",
+          "lineNumber": 206
+        },
+        {
+          "caller": "setup",
+          "callee": "mainWindow.on",
+          "lineNumber": 209
+        },
+        {
+          "caller": "setup",
+          "callee": "this._autoStart",
+          "lineNumber": 217
+        },
+        {
+          "caller": "setup",
+          "callee": "this._systemDND",
+          "lineNumber": 221
+        },
+        {
+          "caller": "setup",
+          "callee": "setInterval",
+          "lineNumber": 222
+        },
+        {
+          "caller": "setup",
+          "callee": "this._systemDND",
+          "lineNumber": 222
+        },
+        {
+          "caller": "setup",
+          "callee": "ms",
+          "lineNumber": 222
+        },
+        {
+          "caller": "setup",
+          "callee": "setInterval",
+          "lineNumber": 224
+        },
+        {
+          "caller": "setup",
+          "callee": "this.stores.user.getUserInfoRequest.invalidate",
+          "lineNumber": 225
+        },
+        {
+          "caller": "setup",
+          "callee": "this.stores.features.featuresRequest.invalidate",
+          "lineNumber": 228
+        },
+        {
+          "caller": "setup",
+          "callee": "ms",
+          "lineNumber": 231
+        },
+        {
+          "caller": "setup",
+          "callee": "setInterval",
+          "lineNumber": 234
+        },
+        {
+          "caller": "setup",
+          "callee": "this._checkForUpdates",
+          "lineNumber": 234
+        },
+        {
+          "caller": "setup",
+          "callee": "setTimeout",
+          "lineNumber": 236
+        },
+        {
+          "caller": "setup",
+          "callee": "this._checkForUpdates",
+          "lineNumber": 236
+        },
+        {
+          "caller": "setup",
+          "callee": "ms",
+          "lineNumber": 236
+        },
+        {
+          "caller": "setup",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 237
+        },
+        {
+          "caller": "setup",
+          "callee": "app.dock?.bounce",
+          "lineNumber": 243
+        },
+        {
+          "caller": "setup",
+          "callee": "app.dock?.bounce",
+          "lineNumber": 254
+        },
+        {
+          "caller": "setup",
+          "callee": "data.error.message?.startsWith",
+          "lineNumber": 259
+        },
+        {
+          "caller": "setup",
+          "callee": "console.warn",
+          "lineNumber": 261
+        },
+        {
+          "caller": "setup",
+          "callee": "console.error",
+          "lineNumber": 266
+        },
+        {
+          "caller": "setup",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 274
+        },
+        {
+          "caller": "setup",
+          "callee": "debug",
+          "lineNumber": 275
+        },
+        {
+          "caller": "setup",
+          "callee": "url.replace",
+          "lineNumber": 279
+        },
+        {
+          "caller": "setup",
+          "callee": "url.replace",
+          "lineNumber": 280
+        },
+        {
+          "caller": "setup",
+          "callee": "url.startsWith",
+          "lineNumber": 282
+        },
+        {
+          "caller": "setup",
+          "callee": "pattern.exec",
+          "lineNumber": 285
+        },
+        {
+          "caller": "setup",
+          "callee": "this.actions.service.setActive",
+          "lineNumber": 289
+        },
+        {
+          "caller": "setup",
+          "callee": "this.stores.router.push",
+          "lineNumber": 296
+        },
+        {
+          "caller": "setup",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 299
+        },
+        {
+          "caller": "setup",
+          "callee": "this._toggleMuteApp",
+          "lineNumber": 300
+        },
+        {
+          "caller": "setup",
+          "callee": "this._getDefaultLocale",
+          "lineNumber": 303
+        },
+        {
+          "caller": "setup",
+          "callee": "setTimeout",
+          "lineNumber": 305
+        },
+        {
+          "caller": "setup",
+          "callee": "this._healthCheck",
+          "lineNumber": 306
+        },
+        {
+          "caller": "setup",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 311
+        },
+        {
+          "caller": "setup",
+          "callee": "debug",
+          "lineNumber": 312
+        },
+        {
+          "caller": "setup",
+          "callee": "powerMonitor.on",
+          "lineNumber": 316
+        },
+        {
+          "caller": "setup",
+          "callee": "debug",
+          "lineNumber": 317
+        },
+        {
+          "caller": "setup",
+          "callee": "moment",
+          "lineNumber": 319
+        },
+        {
+          "caller": "setup",
+          "callee": "powerMonitor.on",
+          "lineNumber": 322
+        },
+        {
+          "caller": "setup",
+          "callee": "debug",
+          "lineNumber": 323
+        },
+        {
+          "caller": "setup",
+          "callee": "this.actions.service.resetLastPollTimer",
+          "lineNumber": 324
+        },
+        {
+          "caller": "setup",
+          "callee": "this.timeSuspensionStart.add(idleTime, 'm').isBefore",
+          "lineNumber": 329
+        },
+        {
+          "caller": "setup",
+          "callee": "this.timeSuspensionStart.add",
+          "lineNumber": 329
+        },
+        {
+          "caller": "setup",
+          "callee": "moment",
+          "lineNumber": 329
+        },
+        {
+          "caller": "setup",
+          "callee": "debug",
+          "lineNumber": 332
+        },
+        {
+          "caller": "setup",
+          "callee": "setInterval",
+          "lineNumber": 334
+        },
+        {
+          "caller": "setup",
+          "callee": "debug",
+          "lineNumber": 335
+        },
+        {
+          "caller": "setup",
+          "callee": "window.location.reload",
+          "lineNumber": 337
+        },
+        {
+          "caller": "setup",
+          "callee": "ms",
+          "lineNumber": 339
+        },
+        {
+          "caller": "setup",
+          "callee": "localStorage.getItem",
+          "lineNumber": 346
+        },
+        {
+          "caller": "setup",
+          "callee": "debug",
+          "lineNumber": 347
+        },
+        {
+          "caller": "setup",
+          "callee": "getTranslatedText",
+          "lineNumber": 350
+        },
+        {
+          "caller": "setup",
+          "callee": "ferdiumVersion.split",
+          "lineNumber": 355
+        },
+        {
+          "caller": "setup",
+          "callee": "ferdiumVersion.split",
+          "lineNumber": 356
+        },
+        {
+          "caller": "setup",
+          "callee": "getTranslatedText",
+          "lineNumber": 359
+        },
+        {
+          "caller": "setup",
+          "callee": "localStorage.setItem",
+          "lineNumber": 367
+        },
+        {
+          "caller": "setup",
+          "callee": "this._initializeSandboxes",
+          "lineNumber": 370
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "this._readSandboxes",
+          "lineNumber": 374
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "readdirSync",
+          "lineNumber": 377
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "userDataPath",
+          "lineNumber": 377
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "dir\n      .filter(d => d.startsWith('sandbox-'))\n      .forEach",
+          "lineNumber": 378
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "dir\n      .filter",
+          "lineNumber": 378
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "d.startsWith",
+          "lineNumber": 379
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "this.sandboxServices.some",
+          "lineNumber": 382
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "s.id.includes",
+          "lineNumber": 383
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "d.replace",
+          "lineNumber": 383
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "removeServicePartitionDirectory",
+          "lineNumber": 387
+        },
+        {
+          "caller": "_initializeSandboxes",
+          "callee": "console.error",
+          "lineNumber": 389
+        },
+        {
+          "caller": "_readSandboxes",
+          "callee": "readJsonSync",
+          "lineNumber": 413
+        },
+        {
+          "caller": "_readSandboxes",
+          "callee": "userDataPath",
+          "lineNumber": 414
+        },
+        {
+          "caller": "_writeSandboxes",
+          "callee": "this.sandboxServices.map",
+          "lineNumber": 420
+        },
+        {
+          "caller": "_writeSandboxes",
+          "callee": "sandbox.services.filter",
+          "lineNumber": 422
+        },
+        {
+          "caller": "_writeSandboxes",
+          "callee": "this.stores.services.all.some",
+          "lineNumber": 423
+        },
+        {
+          "caller": "_writeSandboxes",
+          "callee": "writeJsonSync",
+          "lineNumber": 427
+        },
+        {
+          "caller": "_writeSandboxes",
+          "callee": "userDataPath",
+          "lineNumber": 428
+        },
+        {
+          "caller": "cacheSize",
+          "callee": "this.getAppCacheSizeRequest.execute",
+          "lineNumber": 434
+        },
+        {
+          "caller": "isDownloading",
+          "callee": "this.downloads.some",
+          "lineNumber": 438
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "cleanseJSObject",
+          "lineNumber": 442
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "screen.getAllDisplays",
+          "lineNumber": 449
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "this.stores.recipes.all.map",
+          "lineNumber": 454
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "this.stores.recipePreviews.dev.map",
+          "lineNumber": 458
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "this.stores.services.all.map",
+          "lineNumber": 462
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "this.stores.workspaces.workspaces.map",
+          "lineNumber": 474
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "readJsonSync",
+          "lineNumber": 478
+        },
+        {
+          "caller": "debugInfo",
+          "callee": "userDataPath",
+          "lineNumber": 478
+        },
+        {
+          "caller": "getSandbox",
+          "callee": "this.sandboxServices.find",
+          "lineNumber": 487
+        },
+        {
+          "caller": "getSandbox",
+          "callee": "s.services.includes",
+          "lineNumber": 487
+        },
+        {
+          "caller": "_notify",
+          "callee": "options.icon?.startsWith",
+          "lineNumber": 495
+        },
+        {
+          "caller": "_notify",
+          "callee": "debug",
+          "lineNumber": 502
+        },
+        {
+          "caller": "_notify",
+          "callee": "notification.addEventListener",
+          "lineNumber": 504
+        },
+        {
+          "caller": "_notify",
+          "callee": "this.actions.service.sendIPCMessage",
+          "lineNumber": 506
+        },
+        {
+          "caller": "_notify",
+          "callee": "this.actions.service.setActive",
+          "lineNumber": 512
+        },
+        {
+          "caller": "_notify",
+          "callee": "mainWindow.isVisible",
+          "lineNumber": 516
+        },
+        {
+          "caller": "_notify",
+          "callee": "mainWindow.show",
+          "lineNumber": 517
+        },
+        {
+          "caller": "_notify",
+          "callee": "mainWindow.isMinimized",
+          "lineNumber": 519
+        },
+        {
+          "caller": "_notify",
+          "callee": "mainWindow.restore",
+          "lineNumber": 520
+        },
+        {
+          "caller": "_notify",
+          "callee": "mainWindow.focus",
+          "lineNumber": 522
+        },
+        {
+          "caller": "_notify",
+          "callee": "debug",
+          "lineNumber": 524
+        },
+        {
+          "caller": "_setBadge",
+          "callee": "Number.parseInt",
+          "lineNumber": 540
+        },
+        {
+          "caller": "_setBadge",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 543
+        },
+        {
+          "caller": "_launchOnStartup",
+          "callee": "debug",
+          "lineNumber": 553
+        },
+        {
+          "caller": "_launchOnStartup",
+          "callee": "autoLauncher.enable",
+          "lineNumber": 554
+        },
+        {
+          "caller": "_launchOnStartup",
+          "callee": "debug",
+          "lineNumber": 556
+        },
+        {
+          "caller": "_launchOnStartup",
+          "callee": "autoLauncher.disable",
+          "lineNumber": 557
+        },
+        {
+          "caller": "_launchOnStartup",
+          "callee": "console.warn",
+          "lineNumber": 560
+        },
+        {
+          "caller": "_openExternalUrl",
+          "callee": "openExternalUrl",
+          "lineNumber": 566
+        },
+        {
+          "caller": "_checkForUpdates",
+          "callee": "debug",
+          "lineNumber": 571
+        },
+        {
+          "caller": "_checkForUpdates",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 573
+        },
+        {
+          "caller": "_checkForUpdates",
+          "callee": "this.actions.recipe.update",
+          "lineNumber": 579
+        },
+        {
+          "caller": "_installUpdate",
+          "callee": "debug",
+          "lineNumber": 584
+        },
+        {
+          "caller": "_installUpdate",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 585
+        },
+        {
+          "caller": "_healthCheck",
+          "callee": "this.healthCheckRequest.execute",
+          "lineNumber": 595
+        },
+        {
+          "caller": "_muteApp",
+          "callee": "this.actions.settings.update",
+          "lineNumber": 600
+        },
+        {
+          "caller": "_toggleMuteApp",
+          "callee": "this._muteApp",
+          "lineNumber": 609
+        },
+        {
+          "caller": "_toggleCollapseMenu",
+          "callee": "this.actions.settings.update",
+          "lineNumber": 615
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "this.clearAppCacheRequest.execute",
+          "lineNumber": 625
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "getServiceIdsFromPartitions",
+          "lineNumber": 626
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "allServiceIds.filter",
+          "lineNumber": 627
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "this.stores.services.all.some",
+          "lineNumber": 629
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "id.replace",
+          "lineNumber": 630
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "Promise.all",
+          "lineNumber": 635
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "allOrphanedServiceIds.map",
+          "lineNumber": 636
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "removeServicePartitionDirectory",
+          "lineNumber": 636
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "console.log",
+          "lineNumber": 640
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "Promise.all",
+          "lineNumber": 642
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "this.stores.services.all.map",
+          "lineNumber": 643
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "this.actions.service.clearCache",
+          "lineNumber": 644
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "sleep",
+          "lineNumber": 652
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "ms",
+          "lineNumber": 652
+        },
+        {
+          "caller": "_clearAllCache",
+          "callee": "this.getAppCacheSizeRequest.execute",
+          "lineNumber": 654
+        },
+        {
+          "caller": "_addDownload",
+          "callee": "this.downloads.unshift",
+          "lineNumber": 664
+        },
+        {
+          "caller": "_addDownload",
+          "callee": "debug",
+          "lineNumber": 665
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "debug",
+          "lineNumber": 669
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "this.downloads.forEach",
+          "lineNumber": 672
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "indexesToRemove.push",
+          "lineNumber": 675
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "this.downloads.indexOf",
+          "lineNumber": 675
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "this.downloads.filter",
+          "lineNumber": 681
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "indexesToRemove.includes",
+          "lineNumber": 682
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "debug",
+          "lineNumber": 685
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "this.downloads.findIndex",
+          "lineNumber": 689
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "this.downloads.splice",
+          "lineNumber": 691
+        },
+        {
+          "caller": "_removeDownload",
+          "callee": "debug",
+          "lineNumber": 694
+        },
+        {
+          "caller": "_updateDownload",
+          "callee": "this.downloads.findIndex",
+          "lineNumber": 698
+        },
+        {
+          "caller": "_updateDownload",
+          "callee": "debug",
+          "lineNumber": 703
+        },
+        {
+          "caller": "_endedDownload",
+          "callee": "this.downloads.findIndex",
+          "lineNumber": 707
+        },
+        {
+          "caller": "_endedDownload",
+          "callee": "debug",
+          "lineNumber": 712
+        },
+        {
+          "caller": "_endedDownload",
+          "callee": "setTimeout",
+          "lineNumber": 717
+        },
+        {
+          "caller": "_endedDownload",
+          "callee": "ms",
+          "lineNumber": 719
+        },
+        {
+          "caller": "_stopDownload",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 724
+        },
+        {
+          "caller": "_togglePauseDownload",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 730
+        },
+        {
+          "caller": "_addSandboxService",
+          "callee": "getTranslatedText",
+          "lineNumber": 736
+        },
+        {
+          "caller": "_addSandboxService",
+          "callee": "uuidV4",
+          "lineNumber": 739
+        },
+        {
+          "caller": "_addSandboxService",
+          "callee": "this.sandboxServices.push",
+          "lineNumber": 743
+        },
+        {
+          "caller": "_addSandboxService",
+          "callee": "this._writeSandboxes",
+          "lineNumber": 745
+        },
+        {
+          "caller": "_editSandboxService",
+          "callee": "this.sandboxServices.find",
+          "lineNumber": 750
+        },
+        {
+          "caller": "_editSandboxService",
+          "callee": "this._writeSandboxes",
+          "lineNumber": 754
+        },
+        {
+          "caller": "_deleteSandboxService",
+          "callee": "this.sandboxServices.filter",
+          "lineNumber": 759
+        },
+        {
+          "caller": "_deleteSandboxService",
+          "callee": "this._writeSandboxes",
+          "lineNumber": 760
+        },
+        {
+          "caller": "_setLocale",
+          "callee": "this._changeLocale",
+          "lineNumber": 765
+        },
+        {
+          "caller": "_setLocale",
+          "callee": "this._changeLocale",
+          "lineNumber": 767
+        },
+        {
+          "caller": "_setLocale",
+          "callee": "this._getDefaultLocale",
+          "lineNumber": 767
+        },
+        {
+          "caller": "_setLocale",
+          "callee": "moment.locale",
+          "lineNumber": 770
+        },
+        {
+          "caller": "_setLocale",
+          "callee": "debug",
+          "lineNumber": 771
+        },
+        {
+          "caller": "_offlineCheck",
+          "callee": "moment().diff",
+          "lineNumber": 777
+        },
+        {
+          "caller": "_offlineCheck",
+          "callee": "moment",
+          "lineNumber": 777
+        },
+        {
+          "caller": "_offlineCheck",
+          "callee": "ms",
+          "lineNumber": 779
+        },
+        {
+          "caller": "_offlineCheck",
+          "callee": "this.actions.service.reloadAll",
+          "lineNumber": 780
+        },
+        {
+          "caller": "_offlineCheck",
+          "callee": "moment",
+          "lineNumber": 783
+        },
+        {
+          "caller": "_getDefaultLocale",
+          "callee": "getLocale",
+          "lineNumber": 788
+        },
+        {
+          "caller": "_muteAppHandler",
+          "callee": "this.actions.app.setBadge",
+          "lineNumber": 799
+        },
+        {
+          "caller": "_handleFullScreen",
+          "callee": "document.querySelector",
+          "lineNumber": 807
+        },
+        {
+          "caller": "_handleFullScreen",
+          "callee": "body.classList.add",
+          "lineNumber": 811
+        },
+        {
+          "caller": "_handleFullScreen",
+          "callee": "body.classList.remove",
+          "lineNumber": 813
+        },
+        {
+          "caller": "_handleLogout",
+          "callee": "clearInterval",
+          "lineNumber": 820
+        },
+        {
+          "caller": "_appStartsCounter",
+          "callee": "this.actions.settings.update",
+          "lineNumber": 826
+        },
+        {
+          "caller": "_autoStart",
+          "callee": "this._checkAutoStart",
+          "lineNumber": 835
+        },
+        {
+          "caller": "_autoStart",
+          "callee": "debug",
+          "lineNumber": 838
+        },
+        {
+          "caller": "_autoStart",
+          "callee": "this.actions.app.launchOnStartup",
+          "lineNumber": 839
+        },
+        {
+          "caller": "_checkAutoStart",
+          "callee": "autoLauncher.isEnabled",
+          "lineNumber": 846
+        },
+        {
+          "caller": "_systemDND",
+          "callee": "debug",
+          "lineNumber": 850
+        },
+        {
+          "caller": "_systemDND",
+          "callee": "ipcRenderer.invoke",
+          "lineNumber": 851
+        },
+        {
+          "caller": "_systemDND",
+          "callee": "debug",
+          "lineNumber": 852
+        },
+        {
+          "caller": "_systemDND",
+          "callee": "this.actions.app.muteApp",
+          "lineNumber": 857
+        }
+      ],
+      "metrics": {
+        "importCount": 15,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,284 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/stores/FeaturesStore.ts",
+      "language": "typescript",
+      "sizeLines": 93,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/GlobalErrorStore.ts",
+      "language": "typescript",
+      "sizeLines": 118,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/RecipePreviewsStore.ts",
+      "language": "typescript",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/RecipesStore.ts",
+      "language": "typescript",
+      "sizeLines": 174,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/RequestStore.ts",
+      "language": "typescript",
+      "sizeLines": 97,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/ServicesStore.ts",
+      "language": "typescript",
+      "sizeLines": 1467,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/SettingsStore.ts",
+      "language": "typescript",
+      "sizeLines": 248,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/UIStore.ts",
+      "language": "typescript",
+      "sizeLines": 146,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/UserStore.ts",
+      "language": "typescript",
+      "sizeLines": 434,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/index.ts",
+      "language": "typescript",
+      "sizeLines": 67,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/lib/CachedRequest.ts",
+      "language": "typescript",
+      "sizeLines": 123,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/lib/Reaction.ts",
+      "language": "typescript",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/lib/Request.ts",
+      "language": "typescript",
+      "sizeLines": 152,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/lib/TypedStore.ts",
+      "language": "typescript",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/styles/animations.scss",
+      "language": "css",
+      "sizeLines": 93,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/auth.scss",
+      "language": "css",
+      "sizeLines": 253,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/badge.scss",
+      "language": "css",
+      "sizeLines": 31,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/button.scss",
+      "language": "css",
+      "sizeLines": 181,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/capture-sources.scss",
+      "language": "css",
+      "sizeLines": 76,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/colors.scss",
+      "language": "css",
+      "sizeLines": 50,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/config.scss",
+      "language": "css",
+      "sizeLines": 5,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/content-tabs.scss",
+      "language": "css",
+      "sizeLines": 74,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/features.scss",
+      "language": "css",
+      "sizeLines": 29,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/fonts.scss",
+      "language": "css",
+      "sizeLines": 50,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/globals.scss",
+      "language": "css",
+      "sizeLines": 27,
+      "fileCategory": "markup"
+    }
+  ],
+  "batchImportData": {
+    "src/stores/FeaturesStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/features/appearance/index.ts",
+      "src/features/basicAuth/index.ts",
+      "src/features/communityRecipes/index.ts",
+      "src/features/publishDebugInfo/index.ts",
+      "src/features/quickSwitch/index.ts",
+      "src/features/serviceProxy/index.ts",
+      "src/features/todos/index.ts",
+      "src/features/workspaces/index.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/GlobalErrorStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/RecipePreviewsStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/models/Recipe.ts",
+      "src/models/RecipePreview.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/RecipesStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/routing-helpers.ts",
+      "src/models/Recipe.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/RequestStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/ServicesStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/features/workspaces/index.ts",
+      "src/helpers/recipe-helpers.ts",
+      "src/helpers/routing-helpers.ts",
+      "src/helpers/schedule-helpers.ts",
+      "src/i18n/languages.ts",
+      "src/jsUtils.ts",
+      "src/lib/dbus/Ferdium.ts",
+      "src/models/Service.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/SettingsStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/helpers/password-helpers.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/UIStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/stores/lib/TypedStore.ts",
+      "src/themes/index.ts"
+    ],
+    "src/stores/UserStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ],
+    "src/stores/index.ts": [
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/features/communityRecipes/index.ts",
+      "src/features/todos/index.ts",
+      "src/features/workspaces/index.ts",
+      "src/stores/AppStore.ts",
+      "src/stores/FeaturesStore.ts",
+      "src/stores/GlobalErrorStore.ts",
+      "src/stores/RecipePreviewsStore.ts",
+      "src/stores/RecipesStore.ts",
+      "src/stores/RequestStore.ts",
+      "src/stores/ServicesStore.ts",
+      "src/stores/SettingsStore.ts",
+      "src/stores/UIStore.ts",
+      "src/stores/UserStore.ts"
+    ],
+    "src/stores/lib/CachedRequest.ts": [
+      "src/stores/lib/Request.ts"
+    ],
+    "src/stores/lib/Reaction.ts": [],
+    "src/stores/lib/Request.ts": [],
+    "src/stores/lib/TypedStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/stores/lib/Reaction.ts"
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/styles/image-upload.scss",
+      "language": "css",
+      "sizeLines": 129,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/info-bar.scss",
+      "language": "css",
+      "sizeLines": 83,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/infobox.scss",
+      "language": "css",
+      "sizeLines": 67,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/input.scss",
+      "language": "css",
+      "sizeLines": 131,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/invite.scss",
+      "language": "css",
+      "sizeLines": 13,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/layout.scss",
+      "language": "css",
+      "sizeLines": 310,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/main.scss",
+      "language": "css",
+      "sizeLines": 37,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/mixins.scss",
+      "language": "css",
+      "sizeLines": 10,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/radio.scss",
+      "language": "css",
+      "sizeLines": 49,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/recipes.scss",
+      "language": "css",
+      "sizeLines": 94,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/reset.scss",
+      "language": "css",
+      "sizeLines": 179,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/searchInput.scss",
+      "language": "css",
+      "sizeLines": 39,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/select.scss",
+      "language": "css",
+      "sizeLines": 28,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/service-table.scss",
+      "language": "css",
+      "sizeLines": 80,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/services.scss",
+      "language": "css",
+      "sizeLines": 109,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/settings.scss",
+      "language": "css",
+      "sizeLines": 733,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/slider.scss",
+      "language": "css",
+      "sizeLines": 47,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/status-bar-target-url.scss",
+      "language": "css",
+      "sizeLines": 15,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/tabs.scss",
+      "language": "css",
+      "sizeLines": 163,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/title-bar.scss",
+      "language": "css",
+      "sizeLines": 102,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/toggle.scss",
+      "language": "css",
+      "sizeLines": 58,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/tooltip.scss",
+      "language": "css",
+      "sizeLines": 5,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/type-helper.scss",
+      "language": "css",
+      "sizeLines": 124,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/type.scss",
+      "language": "css",
+      "sizeLines": 98,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/util.scss",
+      "language": "css",
+      "sizeLines": 21,
+      "fileCategory": "markup"
+    }
+  ],
+  "batchImportData": {}
+}

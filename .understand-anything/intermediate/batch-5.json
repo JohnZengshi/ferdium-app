@@ -1,0 +1,487 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/components/services/content/Services.tsx",
+      "type": "file",
+      "name": "Services.tsx",
+      "filePath": "src/components/services/content/Services.tsx",
+      "summary": "Defines Services.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 166
+    },
+    {
+      "id": "file:src/components/services/content/WebviewCrashHandler.tsx",
+      "type": "file",
+      "name": "WebviewCrashHandler.tsx",
+      "filePath": "src/components/services/content/WebviewCrashHandler.tsx",
+      "summary": "Defines WebviewCrashHandler.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 94
+    },
+    {
+      "id": "file:src/components/services/content/WebviewErrorHandler.tsx",
+      "type": "file",
+      "name": "WebviewErrorHandler.tsx",
+      "filePath": "src/components/services/content/WebviewErrorHandler.tsx",
+      "summary": "Defines WebviewErrorHandler.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 100
+    },
+    {
+      "id": "file:src/components/services/tabs/TabBarSortableList.tsx",
+      "type": "file",
+      "name": "TabBarSortableList.tsx",
+      "filePath": "src/components/services/tabs/TabBarSortableList.tsx",
+      "summary": "Defines TabBarSortableList.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 82
+    },
+    {
+      "id": "file:src/components/services/tabs/TabItem.tsx",
+      "type": "file",
+      "name": "TabItem.tsx",
+      "filePath": "src/components/services/tabs/TabItem.tsx",
+      "summary": "Defines TabItem.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 450
+    },
+    {
+      "id": "file:src/components/services/tabs/Tabbar.tsx",
+      "type": "file",
+      "name": "Tabbar.tsx",
+      "filePath": "src/components/services/tabs/Tabbar.tsx",
+      "summary": "Defines TabBar.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 132
+    },
+    {
+      "id": "file:src/components/settings/SandboxServiceTabs.tsx",
+      "type": "file",
+      "name": "SandboxServiceTabs.tsx",
+      "filePath": "src/components/settings/SandboxServiceTabs.tsx",
+      "summary": "Defines 3 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 156
+    },
+    {
+      "id": "file:src/components/settings/SandboxTransferList.tsx",
+      "type": "file",
+      "name": "SandboxTransferList.tsx",
+      "filePath": "src/components/settings/SandboxTransferList.tsx",
+      "summary": "Defines 3 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 216
+    },
+    {
+      "id": "file:src/components/settings/SettingsLayout.tsx",
+      "type": "file",
+      "name": "SettingsLayout.tsx",
+      "filePath": "src/components/settings/SettingsLayout.tsx",
+      "summary": "Defines SettingsLayout.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 81
+    },
+    {
+      "id": "file:src/components/settings/account/AccountDashboard.tsx",
+      "type": "file",
+      "name": "AccountDashboard.tsx",
+      "filePath": "src/components/settings/account/AccountDashboard.tsx",
+      "summary": "Defines AccountDashboard.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 237
+    },
+    {
+      "id": "file:src/components/settings/navigation/SettingsNavigation.tsx",
+      "type": "file",
+      "name": "SettingsNavigation.tsx",
+      "filePath": "src/components/settings/navigation/SettingsNavigation.tsx",
+      "summary": "Defines SettingsNavigation.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 207
+    },
+    {
+      "id": "file:src/components/settings/recipes/RecipeItem.tsx",
+      "type": "file",
+      "name": "RecipeItem.tsx",
+      "filePath": "src/components/settings/recipes/RecipeItem.tsx",
+      "summary": "Defines RecipeItem.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 36
+    },
+    {
+      "id": "file:src/components/settings/recipes/RecipesDashboard.tsx",
+      "type": "file",
+      "name": "RecipesDashboard.tsx",
+      "filePath": "src/components/settings/recipes/RecipesDashboard.tsx",
+      "summary": "Defines RecipesDashboard.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 312
+    },
+    {
+      "id": "file:src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx",
+      "type": "file",
+      "name": "ReleaseNotesDashboard.tsx",
+      "filePath": "src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx",
+      "summary": "Defines ReleaseNotesDashboard.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 93
+    },
+    {
+      "id": "file:src/components/settings/releaseNotes/ReleaseNotesLayout.tsx",
+      "type": "file",
+      "name": "ReleaseNotesLayout.tsx",
+      "filePath": "src/components/settings/releaseNotes/ReleaseNotesLayout.tsx",
+      "summary": "Defines ReleaseNotesLayout.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 82
+    },
+    {
+      "id": "file:src/components/settings/services/EditServiceForm.tsx",
+      "type": "file",
+      "name": "EditServiceForm.tsx",
+      "filePath": "src/components/settings/services/EditServiceForm.tsx",
+      "summary": "Defines EditServiceForm.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 573
+    },
+    {
+      "id": "file:src/components/settings/services/ServiceError.tsx",
+      "type": "file",
+      "name": "ServiceError.tsx",
+      "filePath": "src/components/settings/services/ServiceError.tsx",
+      "summary": "Defines ServiceError.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 68
+    },
+    {
+      "id": "file:src/components/settings/services/ServiceItem.tsx",
+      "type": "file",
+      "name": "ServiceItem.tsx",
+      "filePath": "src/components/settings/services/ServiceItem.tsx",
+      "summary": "Defines ServiceItem.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 106
+    },
+    {
+      "id": "file:src/components/settings/services/ServicesDashboard.tsx",
+      "type": "file",
+      "name": "ServicesDashboard.tsx",
+      "filePath": "src/components/settings/services/ServicesDashboard.tsx",
+      "summary": "Defines ServicesDashboard.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 192
+    },
+    {
+      "id": "file:src/components/settings/settings/EditSettingsForm.tsx",
+      "type": "file",
+      "name": "EditSettingsForm.tsx",
+      "filePath": "src/components/settings/settings/EditSettingsForm.tsx",
+      "summary": "Defines EditSettingsForm.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 1427
+    },
+    {
+      "id": "file:src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx",
+      "type": "file",
+      "name": "SupportFerdiumDashboard.tsx",
+      "filePath": "src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 97
+    },
+    {
+      "id": "file:src/components/settings/team/TeamDashboard.tsx",
+      "type": "file",
+      "name": "TeamDashboard.tsx",
+      "filePath": "src/components/settings/team/TeamDashboard.tsx",
+      "summary": "Defines TeamDashboard.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 215
+    },
+    {
+      "id": "file:src/components/settings/user/EditUserForm.tsx",
+      "type": "file",
+      "name": "EditUserForm.tsx",
+      "filePath": "src/components/settings/user/EditUserForm.tsx",
+      "summary": "Defines EditUserForm.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 142
+    },
+    {
+      "id": "file:src/components/ui/AppLoader/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/AppLoader/index.tsx",
+      "summary": "Defines AppLoader.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 128
+    },
+    {
+      "id": "file:src/components/ui/AppLoader/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/components/ui/AppLoader/styles.ts",
+      "summary": "Source file: src/components/ui/AppLoader/styles.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 22
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/components/services/tabs/TabBarSortableList.tsx",
+      "target": "file:src/components/services/tabs/TabItem.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/services/tabs/TabItem.tsx"
+    },
+    {
+      "source": "file:src/components/services/tabs/Tabbar.tsx",
+      "target": "file:src/components/services/tabs/TabBarSortableList.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/services/tabs/TabBarSortableList.tsx"
+    },
+    {
+      "source": "file:src/components/settings/SandboxServiceTabs.tsx",
+      "target": "file:src/components/settings/SandboxTransferList.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/settings/SandboxTransferList.tsx"
+    },
+    {
+      "source": "file:src/components/settings/recipes/RecipesDashboard.tsx",
+      "target": "file:src/components/settings/recipes/RecipeItem.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/settings/recipes/RecipeItem.tsx"
+    },
+    {
+      "source": "file:src/components/settings/services/ServicesDashboard.tsx",
+      "target": "file:src/components/settings/services/ServiceItem.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/settings/services/ServiceItem.tsx"
+    },
+    {
+      "source": "file:src/components/settings/settings/EditSettingsForm.tsx",
+      "target": "file:src/components/settings/SandboxServiceTabs.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/settings/SandboxServiceTabs.tsx"
+    },
+    {
+      "source": "file:src/components/ui/AppLoader/index.tsx",
+      "target": "file:src/components/ui/AppLoader/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/AppLoader/styles.ts"
+    }
+  ]
+}

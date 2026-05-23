@@ -1,0 +1,237 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/components/ui/FAB.tsx",
+      "language": "typescript",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/FullscreenLoader/index.tsx",
+      "language": "typescript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/FullscreenLoader/styles.ts",
+      "language": "typescript",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/InfoBar.tsx",
+      "language": "typescript",
+      "sizeLines": 105,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Infobox.tsx",
+      "language": "typescript",
+      "sizeLines": 125,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Link.tsx",
+      "language": "typescript",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Modal/index.tsx",
+      "language": "typescript",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Modal/styles.ts",
+      "language": "typescript",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Radio.tsx",
+      "language": "typescript",
+      "sizeLines": 77,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/SearchInput.tsx",
+      "language": "typescript",
+      "sizeLines": 112,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Select.tsx",
+      "language": "typescript",
+      "sizeLines": 112,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/ServiceIcon.tsx",
+      "language": "typescript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Slider.tsx",
+      "language": "typescript",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/StatusBarTargetUrl.tsx",
+      "language": "typescript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Tabs/TabItem.tsx",
+      "language": "typescript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/Tabs/Tabs.tsx",
+      "language": "typescript",
+      "sizeLines": 86,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/WebviewLoader/index.tsx",
+      "language": "typescript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/badge/ProBadge.tsx",
+      "language": "typescript",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/badge/index.tsx",
+      "language": "typescript",
+      "sizeLines": 67,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/button/index.tsx",
+      "language": "typescript",
+      "sizeLines": 248,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/colorPickerInput/index.tsx",
+      "language": "typescript",
+      "sizeLines": 72,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/effects/Appear.tsx",
+      "language": "typescript",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/error/index.tsx",
+      "language": "typescript",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/error/styles.ts",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/headline/index.tsx",
+      "language": "typescript",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/components/ui/FAB.tsx": [],
+    "src/components/ui/FullscreenLoader/index.tsx": [
+      "src/components/ui/FullscreenLoader/styles.ts",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/FullscreenLoader/styles.ts": [],
+    "src/components/ui/InfoBar.tsx": [
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/ui/Infobox.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/ui/Link.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/helpers/routing-helpers.ts",
+      "src/helpers/url-helpers.ts"
+    ],
+    "src/components/ui/Modal/index.tsx": [
+      "src/components/ui/Modal/styles.ts",
+      "src/components/ui/icon/index.tsx"
+    ],
+    "src/components/ui/Modal/styles.ts": [],
+    "src/components/ui/Radio.tsx": [
+      "src/components/ui/error/index.tsx"
+    ],
+    "src/components/ui/SearchInput.tsx": [
+      "src/components/ui/icon/index.tsx"
+    ],
+    "src/components/ui/Select.tsx": [
+      "src/@types/mobx-form.types.ts"
+    ],
+    "src/components/ui/ServiceIcon.tsx": [
+      "src/models/Service.ts"
+    ],
+    "src/components/ui/Slider.tsx": [],
+    "src/components/ui/StatusBarTargetUrl.tsx": [
+      "src/components/ui/effects/Appear.tsx"
+    ],
+    "src/components/ui/Tabs/TabItem.tsx": [],
+    "src/components/ui/Tabs/Tabs.tsx": [
+      "src/components/ui/Tabs/TabItem.tsx"
+    ],
+    "src/components/ui/WebviewLoader/index.tsx": [
+      "src/components/ui/FullscreenLoader/index.tsx"
+    ],
+    "src/components/ui/badge/ProBadge.tsx": [
+      "src/components/ui/badge/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/badge/index.tsx": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/button/index.tsx": [
+      "src/components/ui/loader/index.tsx",
+      "src/components/ui/typings/generic.ts",
+      "src/config.ts",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/colorPickerInput/index.tsx": [
+      "src/@types/mobx-form.types.ts"
+    ],
+    "src/components/ui/effects/Appear.tsx": [],
+    "src/components/ui/error/index.tsx": [
+      "src/components/ui/error/styles.ts"
+    ],
+    "src/components/ui/error/styles.ts": [
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/headline/index.tsx": [
+      "src/components/ui/typings/generic.ts",
+      "src/themes/index.ts"
+    ]
+  }
+}

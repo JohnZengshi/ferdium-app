@@ -1,0 +1,263 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/electron/ipc-api/autoUpdate.ts",
+      "language": "typescript",
+      "sizeLines": 93,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/dnd.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/download.ts",
+      "language": "typescript",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/focusState.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/index.ts",
+      "language": "typescript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/languageDetect.ts",
+      "language": "typescript",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/localServer.ts",
+      "language": "typescript",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/processManager.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/sessionStorage.ts",
+      "language": "typescript",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/settings.ts",
+      "language": "typescript",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/macOSPermissions.ts",
+      "language": "typescript",
+      "sizeLines": 88,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/windowUtils.ts",
+      "language": "typescript",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/enforce-macos-app-location.ts",
+      "language": "typescript",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/environment-remote.ts",
+      "language": "typescript",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/environment.ts",
+      "language": "typescript",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/appearance/index.ts",
+      "language": "typescript",
+      "sizeLines": 628,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/basicAuth/Component.tsx",
+      "language": "typescript",
+      "sizeLines": 107,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/basicAuth/Form.ts",
+      "language": "typescript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/basicAuth/index.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/basicAuth/mainIpcHandler.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/basicAuth/store.ts",
+      "language": "typescript",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/basicAuth/styles.ts",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/communityRecipes/index.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/communityRecipes/store.ts",
+      "language": "typescript",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/publishDebugInfo/Component.tsx",
+      "language": "typescript",
+      "sizeLines": 212,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/electron/ipc-api/autoUpdate.ts": [
+      "src/environment.ts",
+      "src/index.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/dnd.ts": [
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/download.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/focusState.ts": [],
+    "src/electron/ipc-api/index.ts": [
+      "src/electron/ipc-api/appIndicator.ts",
+      "src/electron/ipc-api/autoUpdate.ts",
+      "src/electron/ipc-api/dnd.ts",
+      "src/electron/ipc-api/download.ts",
+      "src/electron/ipc-api/focusState.ts",
+      "src/electron/ipc-api/languageDetect.ts",
+      "src/electron/ipc-api/localServer.ts",
+      "src/electron/ipc-api/processManager.ts",
+      "src/electron/ipc-api/sessionStorage.ts",
+      "src/electron/ipc-api/settings.ts",
+      "src/lib/Tray.ts"
+    ],
+    "src/electron/ipc-api/languageDetect.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/localServer.ts": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/internal-server/start.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/processManager.ts": [],
+    "src/electron/ipc-api/sessionStorage.ts": [
+      "src/config.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/ipc-api/settings.ts": [],
+    "src/electron/macOSPermissions.ts": [
+      "src/environment-remote.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/windowUtils.ts": [],
+    "src/enforce-macos-app-location.ts": [
+      "src/electron-util.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts"
+    ],
+    "src/environment-remote.ts": [
+      "src/config.ts",
+      "src/electron-util.ts",
+      "src/environment.ts"
+    ],
+    "src/environment.ts": [],
+    "src/features/appearance/index.ts": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/features/workspaces/index.ts"
+    ],
+    "src/features/basicAuth/Component.tsx": [
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/features/basicAuth/Form.ts",
+      "src/features/basicAuth/store.ts",
+      "src/features/basicAuth/styles.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/features/basicAuth/Form.ts": [
+      "src/lib/Form.ts"
+    ],
+    "src/features/basicAuth/index.ts": [
+      "src/features/basicAuth/store.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/basicAuth/mainIpcHandler.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/basicAuth/store.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/basicAuth/styles.ts": [],
+    "src/features/communityRecipes/index.ts": [
+      "src/features/communityRecipes/store.ts"
+    ],
+    "src/features/communityRecipes/store.ts": [
+      "src/features/utils/FeatureStore.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/publishDebugInfo/Component.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/utils/auth.ts",
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/features/publishDebugInfo/store.ts",
+      "src/preload-safe-debug.ts"
+    ]
+  }
+}

@@ -1,0 +1,528 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/features/workspaces/components/WorkspaceSwitchingIndicator.tsx",
+      "type": "file",
+      "name": "WorkspaceSwitchingIndicator.tsx",
+      "filePath": "src/features/workspaces/components/WorkspaceSwitchingIndicator.tsx",
+      "summary": "Defines WorkspaceSwitchingIndicator.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 94
+    },
+    {
+      "id": "file:src/features/workspaces/components/WorkspacesDashboard.tsx",
+      "type": "file",
+      "name": "WorkspacesDashboard.tsx",
+      "filePath": "src/features/workspaces/components/WorkspacesDashboard.tsx",
+      "summary": "Defines WorkspacesDashboard.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 197
+    },
+    {
+      "id": "file:src/features/workspaces/constants.ts",
+      "type": "file",
+      "name": "constants.ts",
+      "filePath": "src/features/workspaces/constants.ts",
+      "summary": "Exports WORKSPACES_ROUTES.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 4
+    },
+    {
+      "id": "file:src/features/workspaces/containers/EditWorkspaceScreen.tsx",
+      "type": "file",
+      "name": "EditWorkspaceScreen.tsx",
+      "filePath": "src/features/workspaces/containers/EditWorkspaceScreen.tsx",
+      "summary": "Defines EditWorkspaceScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 49
+    },
+    {
+      "id": "file:src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "type": "file",
+      "name": "WorkspacesScreen.tsx",
+      "filePath": "src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "summary": "Defines WorkspacesScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 40
+    },
+    {
+      "id": "file:src/features/workspaces/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/workspaces/index.ts",
+      "summary": "Exports workspaceStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 9
+    },
+    {
+      "id": "file:src/features/workspaces/models/Workspace.ts",
+      "type": "file",
+      "name": "Workspace.ts",
+      "filePath": "src/features/workspaces/models/Workspace.ts",
+      "summary": "Defines Workspace.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 41
+    },
+    {
+      "id": "file:src/features/workspaces/store.ts",
+      "type": "file",
+      "name": "store.ts",
+      "filePath": "src/features/workspaces/store.ts",
+      "summary": "Defines WorkspacesStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 388
+    },
+    {
+      "id": "file:src/helpers/array-helpers.ts",
+      "type": "file",
+      "name": "array-helpers.ts",
+      "filePath": "src/helpers/array-helpers.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 6
+    },
+    {
+      "id": "file:src/helpers/asar-helpers.ts",
+      "type": "file",
+      "name": "asar-helpers.ts",
+      "filePath": "src/helpers/asar-helpers.ts",
+      "summary": "Exports asarPath, asarRecipesPath.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 10
+    },
+    {
+      "id": "file:src/helpers/async-helpers.ts",
+      "type": "file",
+      "name": "async-helpers.ts",
+      "filePath": "src/helpers/async-helpers.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 4
+    },
+    {
+      "id": "file:src/helpers/certs-helpers.ts",
+      "type": "file",
+      "name": "certs-helpers.ts",
+      "filePath": "src/helpers/certs-helpers.ts",
+      "summary": "Exports checkIfCertIsPresent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 43
+    },
+    {
+      "id": "file:src/helpers/favicon-helpers.ts",
+      "type": "file",
+      "name": "favicon-helpers.ts",
+      "filePath": "src/helpers/favicon-helpers.ts",
+      "summary": "Exports getFaviconUrl.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 3
+    },
+    {
+      "id": "file:src/helpers/i18n-helpers.ts",
+      "type": "file",
+      "name": "i18n-helpers.ts",
+      "filePath": "src/helpers/i18n-helpers.ts",
+      "summary": "Exports getLocale, getTranslatedText, getSelectOptions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 91
+    },
+    {
+      "id": "file:src/helpers/password-helpers.ts",
+      "type": "file",
+      "name": "password-helpers.ts",
+      "filePath": "src/helpers/password-helpers.ts",
+      "summary": "Exports hash, scorePassword.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 36
+    },
+    {
+      "id": "file:src/helpers/recipe-helpers.ts",
+      "type": "file",
+      "name": "recipe-helpers.ts",
+      "filePath": "src/helpers/recipe-helpers.ts",
+      "summary": "Exports getRecipeDirectory, getDevRecipeDirectory, loadRecipeConfig.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 34
+    },
+    {
+      "id": "file:src/helpers/routing-helpers.ts",
+      "type": "file",
+      "name": "routing-helpers.ts",
+      "filePath": "src/helpers/routing-helpers.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 5
+    },
+    {
+      "id": "file:src/helpers/schedule-helpers.ts",
+      "type": "file",
+      "name": "schedule-helpers.ts",
+      "filePath": "src/helpers/schedule-helpers.ts",
+      "summary": "Exports isInTimeframe.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 47
+    },
+    {
+      "id": "file:src/helpers/serverless-helpers.ts",
+      "type": "file",
+      "name": "serverless-helpers.ts",
+      "filePath": "src/helpers/serverless-helpers.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 18
+    },
+    {
+      "id": "file:src/helpers/service-helpers.ts",
+      "type": "file",
+      "name": "service-helpers.ts",
+      "filePath": "src/helpers/service-helpers.ts",
+      "summary": "Exports getServicePartitionsDirectory, removeServicePartitionDirectory, getServiceIdsFromPartitions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 21
+    },
+    {
+      "id": "file:src/helpers/translation-helpers.ts",
+      "type": "file",
+      "name": "translation-helpers.ts",
+      "filePath": "src/helpers/translation-helpers.ts",
+      "summary": "Exports translateTo.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 47
+    },
+    {
+      "id": "file:src/helpers/update-helpers.ts",
+      "type": "file",
+      "name": "update-helpers.ts",
+      "filePath": "src/helpers/update-helpers.ts",
+      "summary": "Exports getFerdiumVersion, updateVersionParse, onAuthGoToReleaseNotes, getUpdateInfoFromGH.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 65
+    },
+    {
+      "id": "file:src/helpers/url-helpers.ts",
+      "type": "file",
+      "name": "url-helpers.ts",
+      "filePath": "src/helpers/url-helpers.ts",
+      "summary": "Exports isValidExternalURL, fixUrl, isValidFileUrl, openPath, openExternalUrl, normalizedUrl.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 60
+    },
+    {
+      "id": "file:src/helpers/userAgent-helpers.ts",
+      "type": "file",
+      "name": "userAgent-helpers.ts",
+      "filePath": "src/helpers/userAgent-helpers.ts",
+      "summary": "Defines 4 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 46
+    },
+    {
+      "id": "file:src/helpers/validation-helpers.ts",
+      "type": "file",
+      "name": "validation-helpers.ts",
+      "filePath": "src/helpers/validation-helpers.ts",
+      "summary": "Exports required, email, url, minLength, oneRequired.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:helpers",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 97
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/features/workspaces/components/WorkspaceSwitchingIndicator.tsx",
+      "target": "file:src/features/workspaces/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/index.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/components/WorkspacesDashboard.tsx",
+      "target": "file:src/features/workspaces/models/Workspace.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/models/Workspace.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/containers/EditWorkspaceScreen.tsx",
+      "target": "file:src/features/workspaces/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/index.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/containers/EditWorkspaceScreen.tsx",
+      "target": "file:src/features/workspaces/models/Workspace.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/models/Workspace.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "target": "file:src/features/workspaces/components/WorkspacesDashboard.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/components/WorkspacesDashboard.tsx"
+    },
+    {
+      "source": "file:src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "target": "file:src/features/workspaces/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/index.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "target": "file:src/features/workspaces/models/Workspace.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/models/Workspace.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/index.ts",
+      "target": "file:src/features/workspaces/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/store.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/store.ts",
+      "target": "file:src/features/workspaces/constants.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/constants.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/store.ts",
+      "target": "file:src/features/workspaces/models/Workspace.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/models/Workspace.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/store.ts",
+      "target": "file:src/helpers/routing-helpers.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/helpers/routing-helpers.ts"
+    },
+    {
+      "source": "file:src/helpers/validation-helpers.ts",
+      "target": "file:src/helpers/url-helpers.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/helpers/url-helpers.ts"
+    }
+  ]
+}

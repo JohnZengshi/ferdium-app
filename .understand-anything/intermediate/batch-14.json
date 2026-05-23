@@ -1,0 +1,413 @@
+{
+  "nodes": [
+    {
+      "id": "config:src/i18n/locales/uk.json",
+      "type": "config",
+      "name": "uk.json",
+      "filePath": "src/i18n/locales/uk.json",
+      "summary": "Config: src/i18n/locales/uk.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 447
+    },
+    {
+      "id": "config:src/i18n/locales/vi.json",
+      "type": "config",
+      "name": "vi.json",
+      "filePath": "src/i18n/locales/vi.json",
+      "summary": "Config: src/i18n/locales/vi.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 395
+    },
+    {
+      "id": "config:src/i18n/locales/vls.json",
+      "type": "config",
+      "name": "vls.json",
+      "filePath": "src/i18n/locales/vls.json",
+      "summary": "Config: src/i18n/locales/vls.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 252
+    },
+    {
+      "id": "config:src/i18n/locales/zh-HANS.json",
+      "type": "config",
+      "name": "zh-HANS.json",
+      "filePath": "src/i18n/locales/zh-HANS.json",
+      "summary": "Config: src/i18n/locales/zh-HANS.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 406
+    },
+    {
+      "id": "config:src/i18n/locales/zh-HANT.json",
+      "type": "config",
+      "name": "zh-HANT.json",
+      "filePath": "src/i18n/locales/zh-HANT.json",
+      "summary": "Config: src/i18n/locales/zh-HANT.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 269
+    },
+    {
+      "id": "config:src/i18n/locales/zh-TW.json",
+      "type": "config",
+      "name": "zh-TW.json",
+      "filePath": "src/i18n/locales/zh-TW.json",
+      "summary": "Config: src/i18n/locales/zh-TW.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 318
+    },
+    {
+      "id": "config:src/i18n/locales/zh.json",
+      "type": "config",
+      "name": "zh.json",
+      "filePath": "src/i18n/locales/zh.json",
+      "summary": "Config: src/i18n/locales/zh.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 637
+    },
+    {
+      "id": "config:src/i18n/messages/src/components/settings/recipes/RecipesDashboard.json",
+      "type": "config",
+      "name": "RecipesDashboard.json",
+      "filePath": "src/i18n/messages/src/components/settings/recipes/RecipesDashboard.json",
+      "summary": "Config: src/i18n/messages/src/components/settings/recipes/RecipesDashboard.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 184
+    },
+    {
+      "id": "file:src/i18n/translations.ts",
+      "type": "file",
+      "name": "translations.ts",
+      "filePath": "src/i18n/translations.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:i18n",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 16
+    },
+    {
+      "id": "markup:src/index.html",
+      "type": "markup",
+      "name": "index.html",
+      "filePath": "src/index.html",
+      "summary": "Markup: src/index.html",
+      "tags": [
+        "html",
+        "source"
+      ],
+      "complexity": "moderate",
+      "language": "html",
+      "sizeLines": 87
+    },
+    {
+      "id": "file:src/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/index.ts",
+      "summary": "Exports appEvents.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 941
+    },
+    {
+      "id": "file:src/internal-server/ace",
+      "type": "file",
+      "name": "ace",
+      "filePath": "src/internal-server/ace",
+      "summary": "Source file: src/internal-server/ace",
+      "tags": [
+        "unknown",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "unknown",
+      "sizeLines": 21
+    },
+    {
+      "id": "file:src/internal-server/app/Controllers/Http/ImageController.js",
+      "type": "file",
+      "name": "ImageController.js",
+      "filePath": "src/internal-server/app/Controllers/Http/ImageController.js",
+      "summary": "Defines ImageController.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 35
+    },
+    {
+      "id": "file:src/internal-server/app/Controllers/Http/RecipeController.js",
+      "type": "file",
+      "name": "RecipeController.js",
+      "filePath": "src/internal-server/app/Controllers/Http/RecipeController.js",
+      "summary": "Defines RecipeController.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 137
+    },
+    {
+      "id": "file:src/internal-server/app/Controllers/Http/ServiceController.js",
+      "type": "file",
+      "name": "ServiceController.js",
+      "filePath": "src/internal-server/app/Controllers/Http/ServiceController.js",
+      "summary": "Defines ServiceController.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 271
+    },
+    {
+      "id": "file:src/internal-server/app/Controllers/Http/StaticController.js",
+      "type": "file",
+      "name": "StaticController.js",
+      "filePath": "src/internal-server/app/Controllers/Http/StaticController.js",
+      "summary": "Defines StaticController.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 24
+    },
+    {
+      "id": "file:src/internal-server/app/Controllers/Http/UserController.js",
+      "type": "file",
+      "name": "UserController.js",
+      "filePath": "src/internal-server/app/Controllers/Http/UserController.js",
+      "summary": "Defines UserController.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-functions",
+        "has-classes"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 354
+    },
+    {
+      "id": "file:src/internal-server/app/Controllers/Http/WorkspaceController.js",
+      "type": "file",
+      "name": "WorkspaceController.js",
+      "filePath": "src/internal-server/app/Controllers/Http/WorkspaceController.js",
+      "summary": "Defines WorkspaceController.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 138
+    },
+    {
+      "id": "file:src/internal-server/app/Exceptions/Handler.js",
+      "type": "file",
+      "name": "Handler.js",
+      "filePath": "src/internal-server/app/Exceptions/Handler.js",
+      "summary": "Defines ExceptionHandler.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 40
+    },
+    {
+      "id": "file:src/internal-server/app/ImageHelper.js",
+      "type": "file",
+      "name": "ImageHelper.js",
+      "filePath": "src/internal-server/app/ImageHelper.js",
+      "summary": "Defines 2 functions.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-functions"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 34
+    },
+    {
+      "id": "file:src/internal-server/app/Middleware/ConvertEmptyStringsToNull.js",
+      "type": "file",
+      "name": "ConvertEmptyStringsToNull.js",
+      "filePath": "src/internal-server/app/Middleware/ConvertEmptyStringsToNull.js",
+      "summary": "Defines ConvertEmptyStringsToNull.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 15
+    },
+    {
+      "id": "file:src/internal-server/app/Models/Recipe.js",
+      "type": "file",
+      "name": "Recipe.js",
+      "filePath": "src/internal-server/app/Models/Recipe.js",
+      "summary": "Defines Recipe.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 6
+    },
+    {
+      "id": "file:src/internal-server/app/Models/Service.js",
+      "type": "file",
+      "name": "Service.js",
+      "filePath": "src/internal-server/app/Models/Service.js",
+      "summary": "Defines Service.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 6
+    },
+    {
+      "id": "file:src/internal-server/app/Models/Token.js",
+      "type": "file",
+      "name": "Token.js",
+      "filePath": "src/internal-server/app/Models/Token.js",
+      "summary": "Defines Token.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 6
+    },
+    {
+      "id": "file:src/internal-server/app/Models/Traits/NoTimestamp.js",
+      "type": "file",
+      "name": "NoTimestamp.js",
+      "filePath": "src/internal-server/app/Models/Traits/NoTimestamp.js",
+      "summary": "Defines NoTimestamp.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 14
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/index.ts",
+      "target": "file:src/i18n/translations.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/i18n/translations.ts"
+    },
+    {
+      "source": "file:src/internal-server/app/Controllers/Http/ServiceController.js",
+      "target": "file:src/internal-server/app/ImageHelper.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/internal-server/app/ImageHelper.js"
+    }
+  ]
+}

@@ -1,0 +1,3077 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/containers/auth/PasswordScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "PasswordScreen",
+          "startLine": 6,
+          "endLine": 20,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/SetupAssistantScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 94,
+      "classes": [
+        {
+          "name": "SetupAssistantScreen",
+          "startLine": 15,
+          "endLine": 105,
+          "methods": [
+            "constructor",
+            "setupServices",
+            "render"
+          ],
+          "properties": [
+            "services"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 21
+        },
+        {
+          "caller": "setupServices",
+          "callee": "this.setState",
+          "lineNumber": 71
+        },
+        {
+          "caller": "setupServices",
+          "callee": "services._createService",
+          "lineNumber": 76
+        },
+        {
+          "caller": "setupServices",
+          "callee": "sleep",
+          "lineNumber": 87
+        },
+        {
+          "caller": "setupServices",
+          "callee": "ms",
+          "lineNumber": 87
+        },
+        {
+          "caller": "setupServices",
+          "callee": "this.setState",
+          "lineNumber": 90
+        },
+        {
+          "caller": "setupServices",
+          "callee": "sleep",
+          "lineNumber": 91
+        },
+        {
+          "caller": "setupServices",
+          "callee": "ms",
+          "lineNumber": 91
+        },
+        {
+          "caller": "setupServices",
+          "callee": "router.push",
+          "lineNumber": 92
+        },
+        {
+          "caller": "render",
+          "callee": "this.setupServices",
+          "lineNumber": 98
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/SignupScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "SignupScreen",
+          "startLine": 14,
+          "endLine": 33,
+          "methods": [
+            "onSignup",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "onSignup",
+          "callee": "actions.user.signup",
+          "lineNumber": 18
+        },
+        {
+          "caller": "render",
+          "callee": "this.onSignup",
+          "lineNumber": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/WelcomeScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 21,
+      "classes": [
+        {
+          "name": "WelcomeScreen",
+          "startLine": 8,
+          "endLine": 23,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/download-manager/DownloadManagerScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "functions": [
+        {
+          "name": "DownloadManagerScreen",
+          "startLine": 4,
+          "endLine": 10,
+          "params": [
+            "{ ...props }"
+          ]
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/containers/download-manager/DownloadManagerWindow.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 36,
+      "classes": [
+        {
+          "name": "DownloadManagerContainer",
+          "startLine": 12,
+          "endLine": 44,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "componentWillUnmount",
+            "render"
+          ],
+          "properties": [
+            "portalRoot",
+            "el"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 20
+        },
+        {
+          "caller": "constructor",
+          "callee": "document.querySelector",
+          "lineNumber": 22
+        },
+        {
+          "caller": "constructor",
+          "callee": "document.createElement",
+          "lineNumber": 23
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.portalRoot.append",
+          "lineNumber": 27
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.el.remove",
+          "lineNumber": 31
+        },
+        {
+          "caller": "render",
+          "callee": "ReactDOM.createPortal",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/layout/AppLayoutContainer.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 208,
+      "nonEmptyLines": 188,
+      "classes": [
+        {
+          "name": "AppLayoutContainer",
+          "startLine": 22,
+          "endLine": 206,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "router.push",
+          "lineNumber": 35
+        },
+        {
+          "caller": "render",
+          "callee": "tinycolor(accentColor).isValid",
+          "lineNumber": 58
+        },
+        {
+          "caller": "render",
+          "callee": "tinycolor",
+          "lineNumber": 58
+        },
+        {
+          "caller": "render",
+          "callee": "createTheme",
+          "lineNumber": 64
+        },
+        {
+          "caller": "render",
+          "callee": "createTheme",
+          "lineNumber": 73
+        },
+        {
+          "caller": "render",
+          "callee": "workspaceStore.getWorkspaceServices(workspace).map",
+          "lineNumber": 113
+        },
+        {
+          "caller": "render",
+          "callee": "workspaceStore.getWorkspaceServices",
+          "lineNumber": 113
+        },
+        {
+          "caller": "render",
+          "callee": "services.all.map",
+          "lineNumber": 114
+        }
+      ],
+      "metrics": {
+        "importCount": 8,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/AccountScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 52,
+      "classes": [
+        {
+          "name": "AccountScreen",
+          "startLine": 11,
+          "endLine": 62,
+          "methods": [
+            "reloadData",
+            "handleWebsiteLink",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "reloadData",
+          "callee": "user.getUserInfoRequest.reload",
+          "lineNumber": 15
+        },
+        {
+          "caller": "handleWebsiteLink",
+          "callee": "stores.user.getAuthURL",
+          "lineNumber": 25
+        },
+        {
+          "caller": "handleWebsiteLink",
+          "callee": "actions.app.openExternalUrl",
+          "lineNumber": 30
+        },
+        {
+          "caller": "render",
+          "callee": "this.reloadData",
+          "lineNumber": 49
+        },
+        {
+          "caller": "render",
+          "callee": "this.handleWebsiteLink",
+          "lineNumber": 56
+        },
+        {
+          "caller": "render",
+          "callee": "this.handleWebsiteLink",
+          "lineNumber": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/EditServiceScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 577,
+      "nonEmptyLines": 541,
+      "classes": [
+        {
+          "name": "EditServiceScreen",
+          "startLine": 141,
+          "endLine": 575,
+          "methods": [
+            "onSubmit",
+            "prepareForm",
+            "deleteService",
+            "clearCache",
+            "openRecipeFile",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "onSubmit",
+          "callee": "updateService",
+          "lineNumber": 165
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "createService",
+          "lineNumber": 167
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 178
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 183
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 185
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 192
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 198
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 199
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 203
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 204
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 212
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 213
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 221
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 222
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 230
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 231
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 239
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 240
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 248
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 249
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 257
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 258
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 266
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 267
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 275
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "!ifUndefined",
+          "lineNumber": 276
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 284
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 289
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 290
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 298
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 305
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 312
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 319
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 320
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 328
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 334
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 336
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 347
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 348
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 356
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "oneRequired",
+          "lineNumber": 365
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "oneRequired",
+          "lineNumber": 368
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 386
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 387
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 401
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 402
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 430
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 431
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 439
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 440
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 447
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 448
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 455
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 456
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 463
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 464
+        },
+        {
+          "caller": "deleteService",
+          "callee": "deleteService",
+          "lineNumber": 485
+        },
+        {
+          "caller": "clearCache",
+          "callee": "clearCache",
+          "lineNumber": 498
+        },
+        {
+          "caller": "openRecipeFile",
+          "callee": "openRecipeFile",
+          "lineNumber": 508
+        },
+        {
+          "caller": "render",
+          "callee": "this.prepareForm",
+          "lineNumber": 550
+        },
+        {
+          "caller": "render",
+          "callee": "this.onSubmit",
+          "lineNumber": 566
+        },
+        {
+          "caller": "render",
+          "callee": "this.deleteService",
+          "lineNumber": 567
+        },
+        {
+          "caller": "render",
+          "callee": "this.clearCache",
+          "lineNumber": 568
+        },
+        {
+          "caller": "render",
+          "callee": "this.openRecipeFile",
+          "lineNumber": 569
+        }
+      ],
+      "metrics": {
+        "importCount": 16,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/EditSettingsScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1470,
+      "nonEmptyLines": 1418,
+      "classes": [
+        {
+          "name": "EditSettingsScreen",
+          "startLine": 381,
+          "endLine": 1468,
+          "methods": [
+            "constructor",
+            "onSubmit",
+            "openProcessManager",
+            "prepareForm",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 388
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "this.setState",
+          "lineNumber": 408
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "app.launchOnStartup",
+          "lineNumber": 412
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 413
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 414
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "debug",
+          "lineNumber": 417
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 422
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 423
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 424
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 425
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 426
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 427
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 428
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 429
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 430
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 431
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 432
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 433
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 442
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 443
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 444
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 445
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 446
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 447
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 450
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "hash",
+          "lineNumber": 453
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "String",
+          "lineNumber": 453
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 454
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 455
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 456
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 459
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "String",
+          "lineNumber": 460
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 461
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 462
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 463
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 464
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 465
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 466
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 467
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 468
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 469
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 470
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 471
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 472
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 475
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 476
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 477
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 478
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 479
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Number",
+          "lineNumber": 480
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 481
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 482
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 483
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 484
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 485
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 486
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 489
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 492
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 495
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 496
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 497
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 498
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 503
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 504
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 506
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 512
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "requiredRestartKeys.some",
+          "lineNumber": 526
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "debug",
+          "lineNumber": 531
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "intl.formatMessage",
+          "lineNumber": 536
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "intl.formatMessage",
+          "lineNumber": 537
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "intl.formatMessage",
+          "lineNumber": 541
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "intl.formatMessage",
+          "lineNumber": 542
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "intl.formatMessage",
+          "lineNumber": 543
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 546
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "settings.update",
+          "lineNumber": 549
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "settings.update",
+          "lineNumber": 555
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "user.update",
+          "lineNumber": 561
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 563
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 564
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 571
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 572
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "workspaceActions.toggleKeepAllWorkspacesLoadedSetting",
+          "lineNumber": 574
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 580
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "Boolean",
+          "lineNumber": 580
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "todosActions.toggleTodosFeatureVisibility",
+          "lineNumber": 582
+        },
+        {
+          "caller": "openProcessManager",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 588
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getI18nConfigObjects",
+          "lineNumber": 597
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 599
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 604
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 610
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 615
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 620
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 625
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 631
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 637
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 643
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 648
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 654
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 660
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 666
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 671
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 673
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 681
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 682
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 690
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 691
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 699
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 700
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 708
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 709
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 717
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 718
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 726
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 729
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 737
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 738
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 746
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 747
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 754
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 755
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 763
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 764
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 772
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 773
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 781
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 782
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 790
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 791
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 799
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 800
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 808
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 809
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 816
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 817
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 825
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 826
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 834
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 835
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 843
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 844
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 852
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 853
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 861
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 862
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 870
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 871
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 879
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 880
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 888
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 889
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 897
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 898
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 906
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 907
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 915
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 916
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 924
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 925
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 932
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 933
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 941
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 942
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 950
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 951
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 959
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 960
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 968
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 969
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 977
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 978
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 986
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 987
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 995
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 996
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1004
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1005
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1013
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1014
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1022
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1023
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1031
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1032
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1040
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1041
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1049
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1050
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1058
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1059
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1067
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1068
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "defaultUserAgent",
+          "lineNumber": 1073
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1076
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1077
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1084
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1085
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1093
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1094
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1102
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1103
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1111
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1112
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1120
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1123
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1130
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1131
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1139
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1140
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1148
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1149
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1157
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1158
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1166
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1167
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1175
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1176
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1184
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1185
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1193
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1194
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1202
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1203
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1211
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1212
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1219
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1220
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1228
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1229
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1237
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1238
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1246
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1247
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1255
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1256
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1264
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1265
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1273
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1274
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1282
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1283
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1290
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1291
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1298
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1299
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1307
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1308
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1316
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1317
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1322
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1323
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1331
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1332
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1340
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1341
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1349
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1350
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1358
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1359
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1367
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1368
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "getSelectOptions",
+          "lineNumber": 1379
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1388
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1389
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 1400
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "ifUndefined",
+          "lineNumber": 1401
+        },
+        {
+          "caller": "render",
+          "callee": "this.prepareForm",
+          "lineNumber": 1424
+        },
+        {
+          "caller": "render",
+          "callee": "this.onSubmit",
+          "lineNumber": 1440
+        },
+        {
+          "caller": "render",
+          "callee": "this.openProcessManager",
+          "lineNumber": 1461
+        },
+        {
+          "caller": "render",
+          "callee": "importExportURL",
+          "lineNumber": 1463
+        }
+      ],
+      "metrics": {
+        "importCount": 16,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/EditUserScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 156,
+      "nonEmptyLines": 140,
+      "classes": [
+        {
+          "name": "EditUserScreen",
+          "startLine": 56,
+          "endLine": 152,
+          "methods": [
+            "componentWillUnmount",
+            "onSubmit",
+            "prepareForm",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.props.actions.user.resetStatus",
+          "lineNumber": 58
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "update",
+          "lineNumber": 64
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "document.querySelector('#form')?.scrollIntoView",
+          "lineNumber": 66
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "document.querySelector",
+          "lineNumber": 66
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 75
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 76
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 81
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 82
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 87
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 88
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 95
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 99
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 103
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 107
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 112
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 113
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 117
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "minLength",
+          "lineNumber": 119
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "intl.formatMessage",
+          "lineNumber": 122
+        },
+        {
+          "caller": "prepareForm",
+          "callee": "minLength",
+          "lineNumber": 124
+        },
+        {
+          "caller": "render",
+          "callee": "this.prepareForm",
+          "lineNumber": 139
+        },
+        {
+          "caller": "render",
+          "callee": "this.onSubmit",
+          "lineNumber": 147
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/InviteScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 27,
+      "classes": [
+        {
+          "name": "InviteScreen",
+          "startLine": 8,
+          "endLine": 30,
+          "methods": [
+            "componentWillUnmount",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.props.stores.user.inviteRequest.reset",
+          "lineNumber": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/RecipesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 187,
+      "nonEmptyLines": 161,
+      "classes": [
+        {
+          "name": "RecipesScreen",
+          "startLine": 28,
+          "endLine": 185,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "componentWillUnmount",
+            "searchRecipes",
+            "_sortByName",
+            "prepareRecipes",
+            "createPreviews",
+            "resetSearch",
+            "render"
+          ],
+          "properties": [
+            "autorunDisposer",
+            "customRecipes"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 36
+        },
+        {
+          "caller": "constructor",
+          "callee": "readJsonSync",
+          "lineNumber": 38
+        },
+        {
+          "caller": "constructor",
+          "callee": "asarRecipesPath",
+          "lineNumber": 38
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "autorun",
+          "lineNumber": 46
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.setState",
+          "lineNumber": 51
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.setState",
+          "lineNumber": 53
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.setState",
+          "lineNumber": 55
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.props.stores!.services.resetStatus",
+          "lineNumber": 61
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.autorunDisposer",
+          "lineNumber": 64
+        },
+        {
+          "caller": "searchRecipes",
+          "callee": "this.resetSearch",
+          "lineNumber": 70
+        },
+        {
+          "caller": "searchRecipes",
+          "callee": "this.setState",
+          "lineNumber": 73
+        },
+        {
+          "caller": "searchRecipes",
+          "callee": "search",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_sortByName",
+          "callee": "recipe1.name.toLowerCase",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_sortByName",
+          "callee": "recipe2.name.toLowerCase",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_sortByName",
+          "callee": "recipe1.name.toLowerCase",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_sortByName",
+          "callee": "recipe2.name.toLowerCase",
+          "lineNumber": 82
+        },
+        {
+          "caller": "prepareRecipes",
+          "callee": "recipes\n        // Filter out duplicate recipes\n        .filter((recipe, index, self) => {\n          const ids = self.map(rec => rec.id);\n          return ids.indexOf(recipe.id) === index;\n\n          // Sort alphabetically\n        })\n        .sort",
+          "lineNumber": 90
+        },
+        {
+          "caller": "prepareRecipes",
+          "callee": "recipes\n        // Filter out duplicate recipes\n        .filter",
+          "lineNumber": 90
+        },
+        {
+          "caller": "prepareRecipes",
+          "callee": "self.map",
+          "lineNumber": 93
+        },
+        {
+          "caller": "prepareRecipes",
+          "callee": "ids.indexOf",
+          "lineNumber": 94
+        },
+        {
+          "caller": "createPreviews",
+          "callee": "recipes.map",
+          "lineNumber": 104
+        },
+        {
+          "caller": "resetSearch",
+          "callee": "this.setState",
+          "lineNumber": 108
+        },
+        {
+          "caller": "render",
+          "callee": "this.prepareRecipes",
+          "lineNumber": 119
+        },
+        {
+          "caller": "render",
+          "callee": "this.createPreviews",
+          "lineNumber": 121
+        },
+        {
+          "caller": "render",
+          "callee": "[...recipeFilter].sort",
+          "lineNumber": 128
+        },
+        {
+          "caller": "render",
+          "callee": "this.prepareRecipes([\n            // All search recipes from server\n            ...recipePreviews.searchResults,\n            // All search recipes from local recipes\n            ...this.createPreviews(\n              this.customRecipes.filter(\n                (recipe: Recipe) =>\n                  recipe.name.toLowerCase().includes(needle.toLowerCase()) ||\n                  (recipe.aliases || []).some(alias =>\n                    alias.toLowerCase().includes(needle.toLowerCase()),\n                  ),\n              ),\n            ),\n          ]).sort",
+          "lineNumber": 134
+        },
+        {
+          "caller": "render",
+          "callee": "this.prepareRecipes",
+          "lineNumber": 134
+        },
+        {
+          "caller": "render",
+          "callee": "this.createPreviews",
+          "lineNumber": 138
+        },
+        {
+          "caller": "render",
+          "callee": "this.customRecipes.filter",
+          "lineNumber": 139
+        },
+        {
+          "caller": "render",
+          "callee": "recipe.name.toLowerCase().includes",
+          "lineNumber": 141
+        },
+        {
+          "caller": "render",
+          "callee": "recipe.name.toLowerCase",
+          "lineNumber": 141
+        },
+        {
+          "caller": "render",
+          "callee": "needle.toLowerCase",
+          "lineNumber": 141
+        },
+        {
+          "caller": "render",
+          "callee": "(recipe.aliases || []).some",
+          "lineNumber": 142
+        },
+        {
+          "caller": "render",
+          "callee": "alias.toLowerCase().includes",
+          "lineNumber": 143
+        },
+        {
+          "caller": "render",
+          "callee": "alias.toLowerCase",
+          "lineNumber": 143
+        },
+        {
+          "caller": "render",
+          "callee": "needle.toLowerCase",
+          "lineNumber": 143
+        },
+        {
+          "caller": "render",
+          "callee": "recipePreviews.all.find",
+          "lineNumber": 149
+        },
+        {
+          "caller": "render",
+          "callee": "userDataRecipesPath",
+          "lineNumber": 159
+        },
+        {
+          "caller": "render",
+          "callee": "this.searchRecipes",
+          "lineNumber": 171
+        },
+        {
+          "caller": "render",
+          "callee": "this.resetSearch",
+          "lineNumber": 172
+        },
+        {
+          "caller": "render",
+          "callee": "openPath",
+          "lineNumber": 177
+        },
+        {
+          "caller": "render",
+          "callee": "appActions.openExternalUrl",
+          "lineNumber": 179
+        }
+      ],
+      "metrics": {
+        "importCount": 11,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/ReleaseNotesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "functions": [
+        {
+          "name": "ReleaseNotesScreen",
+          "startLine": 4,
+          "endLine": 10,
+          "params": []
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/containers/settings/ReleaseNotesWindow.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 36,
+      "classes": [
+        {
+          "name": "SettingsContainer",
+          "startLine": 12,
+          "endLine": 44,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "componentWillUnmount",
+            "render"
+          ],
+          "properties": [
+            "portalRoot",
+            "el"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 20
+        },
+        {
+          "caller": "constructor",
+          "callee": "document.querySelector",
+          "lineNumber": 22
+        },
+        {
+          "caller": "constructor",
+          "callee": "document.createElement",
+          "lineNumber": 23
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.portalRoot.append",
+          "lineNumber": 27
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.el.remove",
+          "lineNumber": 31
+        },
+        {
+          "caller": "render",
+          "callee": "ReactDOM.createPortal",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/ServicesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 56,
+      "classes": [
+        {
+          "name": "ServicesScreen",
+          "startLine": 9,
+          "endLine": 60,
+          "methods": [
+            "componentWillUnmount",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.props.actions.service.resetFilter",
+          "lineNumber": 13
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.props.actions.service.resetStatus",
+          "lineNumber": 14
+        },
+        {
+          "caller": "render",
+          "callee": "services.allServicesRequest.reload",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/SettingsWindow.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 59,
+      "nonEmptyLines": 48,
+      "classes": [
+        {
+          "name": "SettingsContainer",
+          "startLine": 13,
+          "endLine": 57,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "componentWillUnmount",
+            "render"
+          ],
+          "properties": [
+            "portalRoot",
+            "el"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 21
+        },
+        {
+          "caller": "constructor",
+          "callee": "document.querySelector",
+          "lineNumber": 23
+        },
+        {
+          "caller": "constructor",
+          "callee": "document.createElement",
+          "lineNumber": 24
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.portalRoot.append",
+          "lineNumber": 29
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "this.el.remove",
+          "lineNumber": 34
+        },
+        {
+          "caller": "render",
+          "callee": "ReactDOM.createPortal",
+          "lineNumber": 48
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/settings/SupportScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "functions": [
+        {
+          "name": "SupportScreen",
+          "startLine": 4,
+          "endLine": 10,
+          "params": []
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/containers/settings/TeamScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 37,
+      "classes": [
+        {
+          "name": "TeamScreen",
+          "startLine": 10,
+          "endLine": 46,
+          "methods": [
+            "handleWebsiteLink",
+            "reloadData",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "handleWebsiteLink",
+          "callee": "actions.app.openExternalUrl",
+          "lineNumber": 16
+        },
+        {
+          "caller": "reloadData",
+          "callee": "user.getUserInfoRequest.reload",
+          "lineNumber": 22
+        },
+        {
+          "caller": "render",
+          "callee": "this.reloadData",
+          "lineNumber": 39
+        },
+        {
+          "caller": "render",
+          "callee": "this.handleWebsiteLink",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/dev-app-update.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "sections": [
+        {
+          "heading": "owner",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "repo",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "provider",
+          "level": 1,
+          "line": 3
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "src/electron-util.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "initializeRemote",
+          "startLine": 6,
+          "endLine": 14,
+          "params": []
+        },
+        {
+          "name": "enableWebContents",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "webContents"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "initializeRemote",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "enableWebContents",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "remote",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "api",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "initializeRemote",
+          "callee": "initialize",
+          "lineNumber": 13
+        },
+        {
+          "caller": "enableWebContents",
+          "callee": "enable",
+          "lineNumber": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/Settings.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 68,
+      "nonEmptyLines": 52,
+      "classes": [
+        {
+          "name": "Settings",
+          "startLine": 7,
+          "endLine": 68,
+          "methods": [
+            "constructor",
+            "set",
+            "all",
+            "allSerialized",
+            "get",
+            "_merge",
+            "_hydrate",
+            "_writeFile",
+            "settingsFile"
+          ],
+          "properties": [
+            "type",
+            "defaultState",
+            "store"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 7,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "makeObservable",
+          "lineNumber": 15
+        },
+        {
+          "caller": "constructor",
+          "callee": "pathExistsSync",
+          "lineNumber": 21
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._hydrate",
+          "lineNumber": 22
+        },
+        {
+          "caller": "constructor",
+          "callee": "this._writeFile",
+          "lineNumber": 24
+        },
+        {
+          "caller": "set",
+          "callee": "this._merge",
+          "lineNumber": 29
+        },
+        {
+          "caller": "set",
+          "callee": "this._writeFile",
+          "lineNumber": 31
+        },
+        {
+          "caller": "allSerialized",
+          "callee": "toJS",
+          "lineNumber": 39
+        },
+        {
+          "caller": "_merge",
+          "callee": "Object.assign",
+          "lineNumber": 47
+        },
+        {
+          "caller": "_hydrate",
+          "callee": "this._merge",
+          "lineNumber": 51
+        },
+        {
+          "caller": "_hydrate",
+          "callee": "readJsonSync",
+          "lineNumber": 51
+        },
+        {
+          "caller": "_hydrate",
+          "callee": "debug",
+          "lineNumber": 52
+        },
+        {
+          "caller": "_writeFile",
+          "callee": "outputJsonSync",
+          "lineNumber": 56
+        },
+        {
+          "caller": "_writeFile",
+          "callee": "debug",
+          "lineNumber": 59
+        },
+        {
+          "caller": "settingsFile",
+          "callee": "userDataPath",
+          "lineNumber": 63
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/electron/deepLinking.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "handleDeepLink",
+          "startLine": 4,
+          "endLine": 22,
+          "params": [
+            "window",
+            "rawUrl"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "handleDeepLink",
+          "line": 4,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "handleDeepLink",
+          "callee": "rawUrl.replace",
+          "lineNumber": 12
+        },
+        {
+          "caller": "handleDeepLink",
+          "callee": "workaroundDeepLink.includes",
+          "lineNumber": 19
+        },
+        {
+          "caller": "handleDeepLink",
+          "callee": "window.webContents.send",
+          "lineNumber": 21
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/exception.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/appIndicator.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 91,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "getAsset",
+          "startLine": 12,
+          "endLine": 23,
+          "params": [
+            "type",
+            "asset"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getAsset",
+          "callee": "join",
+          "lineNumber": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/internal-server/app/Models/User.js",
+      "language": "javascript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/app/Models/Workspace.js",
+      "language": "javascript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/app.js",
+      "language": "javascript",
+      "sizeLines": 240,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/auth.js",
+      "language": "javascript",
+      "sizeLines": 93,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/bodyParser.js",
+      "language": "javascript",
+      "sizeLines": 150,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/cors.js",
+      "language": "javascript",
+      "sizeLines": 86,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/database.js",
+      "language": "javascript",
+      "sizeLines": 83,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/drive.js",
+      "language": "javascript",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/hash.js",
+      "language": "javascript",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/session.js",
+      "language": "javascript",
+      "sizeLines": 98,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/config/shield.js",
+      "language": "javascript",
+      "sizeLines": 143,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/database/factory.js",
+      "language": "javascript",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/database/migrations/1503250034279_user.js",
+      "language": "javascript",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566385379883_service_schema.js",
+      "language": "javascript",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566554231482_recipe_schema.js",
+      "language": "javascript",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/database/migrations/1566554359294_workspace_schema.js",
+      "language": "javascript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/database/template.sqlite",
+      "language": "sqlite",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/env.ini",
+      "language": "config",
+      "sizeLines": 16,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/internal-server/package.json",
+      "language": "json",
+      "sizeLines": 4,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/internal-server/public/css/main.css",
+      "language": "css",
+      "sizeLines": 73,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/internal-server/public/css/vanilla.css",
+      "language": "css",
+      "sizeLines": 138,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/internal-server/public/js/transfer.js",
+      "language": "javascript",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/resources/views/import.edge",
+      "language": "edge",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/resources/views/index.edge",
+      "language": "edge",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/resources/views/layouts/main.edge",
+      "language": "edge",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/internal-server/app/Models/User.js": [],
+    "src/internal-server/app/Models/Workspace.js": [],
+    "src/internal-server/config/app.js": [],
+    "src/internal-server/config/auth.js": [],
+    "src/internal-server/config/bodyParser.js": [],
+    "src/internal-server/config/cors.js": [],
+    "src/internal-server/config/database.js": [],
+    "src/internal-server/config/drive.js": [],
+    "src/internal-server/config/hash.js": [],
+    "src/internal-server/config/session.js": [],
+    "src/internal-server/config/shield.js": [],
+    "src/internal-server/database/factory.js": [],
+    "src/internal-server/database/migrations/1503250034279_user.js": [],
+    "src/internal-server/database/migrations/1566385379883_service_schema.js": [],
+    "src/internal-server/database/migrations/1566554231482_recipe_schema.js": [],
+    "src/internal-server/database/migrations/1566554359294_workspace_schema.js": [],
+    "src/internal-server/database/template.sqlite": [],
+    "src/internal-server/public/js/transfer.js": [],
+    "src/internal-server/resources/views/import.edge": [],
+    "src/internal-server/resources/views/index.edge": [],
+    "src/internal-server/resources/views/layouts/main.edge": []
+  }
+}

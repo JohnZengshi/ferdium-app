@@ -1,0 +1,228 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "scripts/migration/migrate-windows.ps1",
+      "language": "powershell",
+      "sizeLines": 54,
+      "fileCategory": "script"
+    },
+    {
+      "path": "scripts/minify-images.sh",
+      "language": "shell",
+      "sizeLines": 13,
+      "fileCategory": "script"
+    },
+    {
+      "path": "src/@types/ferdium-components.types.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/@types/ferdium.types.ts",
+      "language": "typescript",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/@types/legacy-types.ts",
+      "language": "typescript",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/@types/mobx-form.types.ts",
+      "language": "typescript",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/@types/stores.types.ts",
+      "language": "typescript",
+      "sizeLines": 375,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/I18n.tsx",
+      "language": "typescript",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/app.ts",
+      "language": "typescript",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/index.ts",
+      "language": "typescript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/lib/actions.ts",
+      "language": "typescript",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/recipe.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/recipePreview.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/requests.ts",
+      "language": "typescript",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/service.ts",
+      "language": "typescript",
+      "sizeLines": 117,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/settings.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/ui.ts",
+      "language": "typescript",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/actions/user.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/AppApi.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/FeaturesApi.ts",
+      "language": "typescript",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/LocalApi.ts",
+      "language": "typescript",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/RecipePreviewsApi.ts",
+      "language": "typescript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/RecipesApi.ts",
+      "language": "typescript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/ServicesApi.ts",
+      "language": "typescript",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/UserApi.ts",
+      "language": "typescript",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/@types/ferdium-components.types.ts": [
+      "src/actions/lib/actions.ts",
+      "src/stores/index.ts"
+    ],
+    "src/@types/ferdium.types.ts": [],
+    "src/@types/legacy-types.ts": [],
+    "src/@types/mobx-form.types.ts": [
+      "src/@types/ferdium-components.types.ts"
+    ],
+    "src/@types/stores.types.ts": [
+      "src/features/workspaces/models/Workspace.ts",
+      "src/models/Recipe.ts",
+      "src/models/Service.ts",
+      "src/models/User.ts",
+      "src/stores/lib/CachedRequest.ts",
+      "src/stores/lib/Reaction.ts",
+      "src/stores/lib/Request.ts"
+    ],
+    "src/I18n.tsx": [
+      "src/i18n/translations.ts",
+      "src/stores/AppStore.ts",
+      "src/stores/UserStore.ts"
+    ],
+    "src/actions/app.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/index.ts": [
+      "src/actions/app.ts",
+      "src/actions/lib/actions.ts",
+      "src/actions/recipe.ts",
+      "src/actions/recipePreview.ts",
+      "src/actions/requests.ts",
+      "src/actions/service.ts",
+      "src/actions/settings.ts",
+      "src/actions/ui.ts",
+      "src/actions/user.ts",
+      "src/features/todos/actions.ts",
+      "src/features/workspaces/actions.ts"
+    ],
+    "src/actions/lib/actions.ts": [],
+    "src/actions/recipe.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/recipePreview.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/requests.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/service.ts": [
+      "src/actions/lib/actions.ts",
+      "src/models/Service.ts"
+    ],
+    "src/actions/settings.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/ui.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/actions/user.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/api/AppApi.ts": [],
+    "src/api/FeaturesApi.ts": [],
+    "src/api/LocalApi.ts": [],
+    "src/api/RecipePreviewsApi.ts": [],
+    "src/api/RecipesApi.ts": [],
+    "src/api/ServicesApi.ts": [],
+    "src/api/UserApi.ts": [
+      "src/helpers/password-helpers.ts"
+    ]
+  }
+}

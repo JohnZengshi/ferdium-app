@@ -1,0 +1,746 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "scripts/migration/migrate-windows.ps1",
+      "language": "powershell",
+      "fileCategory": "script",
+      "totalLines": 53,
+      "nonEmptyLines": 46,
+      "metrics": {}
+    },
+    {
+      "path": "scripts/minify-images.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "totalLines": 12,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/@types/ferdium-components.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/@types/ferdium.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 22,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/@types/legacy-types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 5,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/@types/mobx-form.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 33,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/@types/stores.types.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 374,
+      "nonEmptyLines": 353,
+      "metrics": {
+        "importCount": 7,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/I18n.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 38,
+      "classes": [
+        {
+          "name": "I18N",
+          "startLine": 19,
+          "endLine": 43,
+          "methods": [
+            "componentDidUpdate",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "componentDidUpdate",
+          "callee": "window['ferdium'].menu.rebuild",
+          "lineNumber": 21
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/actions/app.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 39,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 27,
+      "metrics": {
+        "importCount": 11,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/lib/actions.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "createActionsFromDefinitions",
+          "startLine": 20,
+          "endLine": 48,
+          "params": [
+            "actionDefinitions",
+            "validate"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "createActionsFromDefinitions",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "createActionsFromDefinitions",
+          "callee": "Object.keys",
+          "lineNumber": 26
+        },
+        {
+          "caller": "action",
+          "callee": "validate",
+          "lineNumber": 29
+        },
+        {
+          "caller": "action",
+          "callee": "action.notify",
+          "lineNumber": 30
+        },
+        {
+          "caller": "createActionsFromDefinitions",
+          "callee": "action.listeners.push",
+          "lineNumber": 35
+        },
+        {
+          "caller": "createActionsFromDefinitions",
+          "callee": "listeners.splice",
+          "lineNumber": 38
+        },
+        {
+          "caller": "createActionsFromDefinitions",
+          "callee": "listeners.indexOf",
+          "lineNumber": 38
+        },
+        {
+          "caller": "createActionsFromDefinitions",
+          "callee": "listener",
+          "lineNumber": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/recipe.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 9,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/recipePreview.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/requests.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 5,
+      "nonEmptyLines": 4,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 116,
+      "nonEmptyLines": 115,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/settings.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 12,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/ui.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 14,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/actions/user.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 34,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/api/AppApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "classes": [
+        {
+          "name": "AppApi",
+          "startLine": 1,
+          "endLine": 11,
+          "methods": [
+            "constructor",
+            "health"
+          ],
+          "properties": [
+            "server"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 1,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "health",
+          "callee": "this.server.healthCheck",
+          "lineNumber": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/api/FeaturesApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "FeaturesApi",
+          "startLine": 1,
+          "endLine": 15,
+          "methods": [
+            "constructor",
+            "default",
+            "features"
+          ],
+          "properties": [
+            "server"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 1,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "default",
+          "callee": "this.server.getDefaultFeatures",
+          "lineNumber": 9
+        },
+        {
+          "caller": "features",
+          "callee": "this.server.getFeatures",
+          "lineNumber": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/api/LocalApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "LocalApi",
+          "startLine": 1,
+          "endLine": 26,
+          "methods": [
+            "constructor",
+            "getAppSettings",
+            "updateAppSettings",
+            "getAppCacheSize",
+            "clearCache"
+          ],
+          "properties": [
+            "server",
+            "local"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 1,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getAppSettings",
+          "callee": "this.local.getAppSettings",
+          "lineNumber": 12
+        },
+        {
+          "caller": "updateAppSettings",
+          "callee": "this.local.updateAppSettings",
+          "lineNumber": 16
+        },
+        {
+          "caller": "getAppCacheSize",
+          "callee": "this.local.getAppCacheSize",
+          "lineNumber": 20
+        },
+        {
+          "caller": "clearCache",
+          "callee": "this.local.clearCache",
+          "lineNumber": 24
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/api/RecipePreviewsApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "RecipePreviewsApi",
+          "startLine": 1,
+          "endLine": 19,
+          "methods": [
+            "constructor",
+            "all",
+            "featured",
+            "search"
+          ],
+          "properties": [
+            "server"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 1,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "all",
+          "callee": "this.server.getRecipePreviews",
+          "lineNumber": 9
+        },
+        {
+          "caller": "featured",
+          "callee": "this.server.getFeaturedRecipePreviews",
+          "lineNumber": 13
+        },
+        {
+          "caller": "search",
+          "callee": "this.server.searchRecipePreviews",
+          "lineNumber": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/api/RecipesApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "RecipesApi",
+          "startLine": 1,
+          "endLine": 19,
+          "methods": [
+            "constructor",
+            "all",
+            "install",
+            "update"
+          ],
+          "properties": [
+            "server"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 1,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "all",
+          "callee": "this.server.getInstalledRecipes",
+          "lineNumber": 9
+        },
+        {
+          "caller": "install",
+          "callee": "this.server.getRecipePackage",
+          "lineNumber": 13
+        },
+        {
+          "caller": "update",
+          "callee": "this.server.getRecipeUpdates",
+          "lineNumber": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/api/ServicesApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "ServicesApi",
+          "startLine": 1,
+          "endLine": 34,
+          "methods": [
+            "constructor",
+            "all",
+            "create",
+            "delete",
+            "update",
+            "reorder",
+            "clearCache"
+          ],
+          "properties": [
+            "server",
+            "local"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 1,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "all",
+          "callee": "this.server.getServices",
+          "lineNumber": 12
+        },
+        {
+          "caller": "create",
+          "callee": "this.server.createService",
+          "lineNumber": 16
+        },
+        {
+          "caller": "delete",
+          "callee": "this.server.deleteService",
+          "lineNumber": 20
+        },
+        {
+          "caller": "update",
+          "callee": "this.server.updateService",
+          "lineNumber": 24
+        },
+        {
+          "caller": "reorder",
+          "callee": "this.server.reorderService",
+          "lineNumber": 28
+        },
+        {
+          "caller": "clearCache",
+          "callee": "this.local.clearCache",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/api/UserApi.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 45,
+      "classes": [
+        {
+          "name": "UserApi",
+          "startLine": 4,
+          "endLine": 58,
+          "methods": [
+            "constructor",
+            "login",
+            "logout",
+            "signup",
+            "password",
+            "invite",
+            "getInfo",
+            "requestNewToken",
+            "updateInfo",
+            "delete"
+          ],
+          "properties": [
+            "server",
+            "local"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 4,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "login",
+          "callee": "this.server.login",
+          "lineNumber": 15
+        },
+        {
+          "caller": "login",
+          "callee": "hash",
+          "lineNumber": 15
+        },
+        {
+          "caller": "signup",
+          "callee": "Object.assign",
+          "lineNumber": 23
+        },
+        {
+          "caller": "signup",
+          "callee": "hash",
+          "lineNumber": 24
+        },
+        {
+          "caller": "signup",
+          "callee": "this.server.signup",
+          "lineNumber": 26
+        },
+        {
+          "caller": "password",
+          "callee": "this.server.retrievePassword",
+          "lineNumber": 30
+        },
+        {
+          "caller": "invite",
+          "callee": "this.server.inviteUser",
+          "lineNumber": 34
+        },
+        {
+          "caller": "getInfo",
+          "callee": "this.server.userInfo",
+          "lineNumber": 38
+        },
+        {
+          "caller": "requestNewToken",
+          "callee": "this.server.requestNewToken",
+          "lineNumber": 42
+        },
+        {
+          "caller": "updateInfo",
+          "callee": "hash",
+          "lineNumber": 48
+        },
+        {
+          "caller": "updateInfo",
+          "callee": "hash",
+          "lineNumber": 49
+        },
+        {
+          "caller": "updateInfo",
+          "callee": "this.server.updateUserInfo",
+          "lineNumber": 52
+        },
+        {
+          "caller": "delete",
+          "callee": "this.server.deleteAccount",
+          "lineNumber": 56
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+{
+  "nodes": [
+    {
+      "id": "config:src/i18n/locales/id.json",
+      "type": "config",
+      "name": "id.json",
+      "filePath": "src/i18n/locales/id.json",
+      "summary": "Config: src/i18n/locales/id.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 377
+    },
+    {
+      "id": "config:src/i18n/locales/it.json",
+      "type": "config",
+      "name": "it.json",
+      "filePath": "src/i18n/locales/it.json",
+      "summary": "Config: src/i18n/locales/it.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 518
+    },
+    {
+      "id": "config:src/i18n/locales/ja.json",
+      "type": "config",
+      "name": "ja.json",
+      "filePath": "src/i18n/locales/ja.json",
+      "summary": "Config: src/i18n/locales/ja.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 493
+    },
+    {
+      "id": "config:src/i18n/locales/ka.json",
+      "type": "config",
+      "name": "ka.json",
+      "filePath": "src/i18n/locales/ka.json",
+      "summary": "Config: src/i18n/locales/ka.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 144
+    },
+    {
+      "id": "config:src/i18n/locales/kk.json",
+      "type": "config",
+      "name": "kk.json",
+      "filePath": "src/i18n/locales/kk.json",
+      "summary": "Config: src/i18n/locales/kk.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 331
+    },
+    {
+      "id": "config:src/i18n/locales/ko.json",
+      "type": "config",
+      "name": "ko.json",
+      "filePath": "src/i18n/locales/ko.json",
+      "summary": "Config: src/i18n/locales/ko.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 368
+    },
+    {
+      "id": "config:src/i18n/locales/lv.json",
+      "type": "config",
+      "name": "lv.json",
+      "filePath": "src/i18n/locales/lv.json",
+      "summary": "Config: src/i18n/locales/lv.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 527
+    },
+    {
+      "id": "config:src/i18n/locales/ms.json",
+      "type": "config",
+      "name": "ms.json",
+      "filePath": "src/i18n/locales/ms.json",
+      "summary": "Config: src/i18n/locales/ms.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 331
+    },
+    {
+      "id": "config:src/i18n/locales/nb.json",
+      "type": "config",
+      "name": "nb.json",
+      "filePath": "src/i18n/locales/nb.json",
+      "summary": "Config: src/i18n/locales/nb.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 144
+    },
+    {
+      "id": "config:src/i18n/locales/nl-BE.json",
+      "type": "config",
+      "name": "nl-BE.json",
+      "filePath": "src/i18n/locales/nl-BE.json",
+      "summary": "Config: src/i18n/locales/nl-BE.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 248
+    },
+    {
+      "id": "config:src/i18n/locales/nl.json",
+      "type": "config",
+      "name": "nl.json",
+      "filePath": "src/i18n/locales/nl.json",
+      "summary": "Config: src/i18n/locales/nl.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 492
+    },
+    {
+      "id": "config:src/i18n/locales/no.json",
+      "type": "config",
+      "name": "no.json",
+      "filePath": "src/i18n/locales/no.json",
+      "summary": "Config: src/i18n/locales/no.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 409
+    },
+    {
+      "id": "config:src/i18n/locales/pl.json",
+      "type": "config",
+      "name": "pl.json",
+      "filePath": "src/i18n/locales/pl.json",
+      "summary": "Config: src/i18n/locales/pl.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 487
+    },
+    {
+      "id": "config:src/i18n/locales/pt-BR.json",
+      "type": "config",
+      "name": "pt-BR.json",
+      "filePath": "src/i18n/locales/pt-BR.json",
+      "summary": "Config: src/i18n/locales/pt-BR.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 503
+    },
+    {
+      "id": "config:src/i18n/locales/pt.json",
+      "type": "config",
+      "name": "pt.json",
+      "filePath": "src/i18n/locales/pt.json",
+      "summary": "Config: src/i18n/locales/pt.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 485
+    },
+    {
+      "id": "config:src/i18n/locales/ro.json",
+      "type": "config",
+      "name": "ro.json",
+      "filePath": "src/i18n/locales/ro.json",
+      "summary": "Config: src/i18n/locales/ro.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 404
+    },
+    {
+      "id": "config:src/i18n/locales/ru.json",
+      "type": "config",
+      "name": "ru.json",
+      "filePath": "src/i18n/locales/ru.json",
+      "summary": "Config: src/i18n/locales/ru.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 585
+    },
+    {
+      "id": "config:src/i18n/locales/si.json",
+      "type": "config",
+      "name": "si.json",
+      "filePath": "src/i18n/locales/si.json",
+      "summary": "Config: src/i18n/locales/si.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 129
+    },
+    {
+      "id": "config:src/i18n/locales/sk.json",
+      "type": "config",
+      "name": "sk.json",
+      "filePath": "src/i18n/locales/sk.json",
+      "summary": "Config: src/i18n/locales/sk.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 487
+    },
+    {
+      "id": "config:src/i18n/locales/sl.json",
+      "type": "config",
+      "name": "sl.json",
+      "filePath": "src/i18n/locales/sl.json",
+      "summary": "Config: src/i18n/locales/sl.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 445
+    },
+    {
+      "id": "config:src/i18n/locales/sq.json",
+      "type": "config",
+      "name": "sq.json",
+      "filePath": "src/i18n/locales/sq.json",
+      "summary": "Config: src/i18n/locales/sq.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 332
+    },
+    {
+      "id": "config:src/i18n/locales/sr.json",
+      "type": "config",
+      "name": "sr.json",
+      "filePath": "src/i18n/locales/sr.json",
+      "summary": "Config: src/i18n/locales/sr.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 233
+    },
+    {
+      "id": "config:src/i18n/locales/sv.json",
+      "type": "config",
+      "name": "sv.json",
+      "filePath": "src/i18n/locales/sv.json",
+      "summary": "Config: src/i18n/locales/sv.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 413
+    },
+    {
+      "id": "config:src/i18n/locales/te.json",
+      "type": "config",
+      "name": "te.json",
+      "filePath": "src/i18n/locales/te.json",
+      "summary": "Config: src/i18n/locales/te.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 445
+    },
+    {
+      "id": "config:src/i18n/locales/tr.json",
+      "type": "config",
+      "name": "tr.json",
+      "filePath": "src/i18n/locales/tr.json",
+      "summary": "Config: src/i18n/locales/tr.json",
+      "tags": [
+        "json",
+        "source",
+        "src:i18n"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 540
+    }
+  ],
+  "edges": []
+}

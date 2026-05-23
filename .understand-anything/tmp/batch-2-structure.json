@@ -1,0 +1,1035 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "build-helpers/entitlements.mas.inherit.plist",
+      "language": "plist",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 22,
+      "metrics": {}
+    },
+    {
+      "path": "build-helpers/entitlements.mas.plist",
+      "language": "plist",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 22,
+      "metrics": {}
+    },
+    {
+      "path": "build-helpers/images/dmgInstaller.tiff",
+      "language": "tiff",
+      "fileCategory": "code",
+      "totalLines": 779,
+      "nonEmptyLines": 757,
+      "metrics": {}
+    },
+    {
+      "path": "build-helpers/images/icon.icns",
+      "language": "icns",
+      "fileCategory": "code",
+      "totalLines": 488,
+      "nonEmptyLines": 488,
+      "metrics": {}
+    },
+    {
+      "path": "build-helpers/notarize.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 20,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "build-helpers/snap-hooks/configure",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 6,
+      "metrics": {}
+    },
+    {
+      "path": "commitlint.config.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "crowdin.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 12,
+      "nonEmptyLines": 12,
+      "sections": [
+        {
+          "heading": "pull_request_title",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "commit_message",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "append_commit_message",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "files",
+          "level": 1,
+          "line": 4
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "docs/DBUS.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 20,
+      "nonEmptyLines": 12,
+      "sections": [
+        {
+          "heading": "D-Bus interface",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Desktop integration",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "Low-level API",
+          "level": 2,
+          "line": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "docs/INTERNAL_SERVER.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 28,
+      "nonEmptyLines": 22,
+      "sections": [
+        {
+          "heading": "ferdium-internal-server",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "Differences to ferdium-server",
+          "level": 2,
+          "line": 8
+        },
+        {
+          "heading": "Configuration",
+          "level": 2,
+          "line": 16
+        },
+        {
+          "heading": "Exporting backups",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "Importing your Franz/Ferdi account",
+          "level": 2,
+          "line": 25
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "docs/MIGRATION.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 38,
+      "nonEmptyLines": 24,
+      "sections": [
+        {
+          "heading": "Migrating account data",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Using Ferdi with an Account",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "Using Ferdi without an account i.e. Accountless",
+          "level": 2,
+          "line": 13
+        },
+        {
+          "heading": "Exporting",
+          "level": 2,
+          "line": 17
+        },
+        {
+          "heading": "Importing",
+          "level": 2,
+          "line": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "docs/dbus/ferdium_bar.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 102,
+      "nonEmptyLines": 78,
+      "functions": [
+        {
+          "name": "toggle_window",
+          "startLine": 8,
+          "endLine": 11,
+          "params": [
+            "client",
+            "args"
+          ]
+        },
+        {
+          "name": "toggle_mute",
+          "startLine": 14,
+          "endLine": 17,
+          "params": [
+            "client",
+            "args"
+          ]
+        },
+        {
+          "name": "unread",
+          "startLine": 20,
+          "endLine": 63,
+          "params": [
+            "client",
+            "args"
+          ]
+        },
+        {
+          "name": "main",
+          "startLine": 66,
+          "endLine": 98,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "toggle_window",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "toggle_mute",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "unread",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "main",
+          "line": 66,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "toggle_window",
+          "callee": "client.toggle_window",
+          "lineNumber": 11
+        },
+        {
+          "caller": "toggle_mute",
+          "callee": "client.toggle_mute",
+          "lineNumber": 17
+        },
+        {
+          "caller": "callback",
+          "callee": "html.escape",
+          "lineNumber": 30
+        },
+        {
+          "caller": "callback",
+          "callee": "print",
+          "lineNumber": 37
+        },
+        {
+          "caller": "callback",
+          "callee": "print",
+          "lineNumber": 48
+        },
+        {
+          "caller": "callback",
+          "callee": "sum",
+          "lineNumber": 48
+        },
+        {
+          "caller": "callback",
+          "callee": "counts.values",
+          "lineNumber": 48
+        },
+        {
+          "caller": "callback",
+          "callee": "print",
+          "lineNumber": 52
+        },
+        {
+          "caller": "callback",
+          "callee": "\"\\n\".join",
+          "lineNumber": 53
+        },
+        {
+          "caller": "callback",
+          "callee": "counts.items",
+          "lineNumber": 55
+        },
+        {
+          "caller": "unread",
+          "callee": "callback",
+          "lineNumber": 60
+        },
+        {
+          "caller": "unread",
+          "callee": "client.on_change",
+          "lineNumber": 62
+        },
+        {
+          "caller": "unread",
+          "callee": "asyncio.get_running_loop().create_future",
+          "lineNumber": 63
+        },
+        {
+          "caller": "unread",
+          "callee": "asyncio.get_running_loop",
+          "lineNumber": 63
+        },
+        {
+          "caller": "main",
+          "callee": "argparse.ArgumentParser",
+          "lineNumber": 77
+        },
+        {
+          "caller": "main",
+          "callee": "argparser.add_subparsers",
+          "lineNumber": 78
+        },
+        {
+          "caller": "main",
+          "callee": "subparsers.add_parser",
+          "lineNumber": 80
+        },
+        {
+          "caller": "main",
+          "callee": "argparser_unread.add_argument",
+          "lineNumber": 81
+        },
+        {
+          "caller": "main",
+          "callee": "argparser_unread.add_argument",
+          "lineNumber": 82
+        },
+        {
+          "caller": "main",
+          "callee": "argparser_unread.add_argument",
+          "lineNumber": 83
+        },
+        {
+          "caller": "main",
+          "callee": "subparsers.add_parser",
+          "lineNumber": 85
+        },
+        {
+          "caller": "main",
+          "callee": "subparsers.add_parser",
+          "lineNumber": 86
+        },
+        {
+          "caller": "main",
+          "callee": "argparser.parse_args",
+          "lineNumber": 88
+        },
+        {
+          "caller": "main",
+          "callee": "Client",
+          "lineNumber": 91
+        },
+        {
+          "caller": "main",
+          "callee": "client.connect",
+          "lineNumber": 92
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 94
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "docs/dbus/org.ferdium.Ferdium.xml",
+      "language": "xml",
+      "fileCategory": "config",
+      "totalLines": 87,
+      "nonEmptyLines": 70,
+      "metrics": {}
+    },
+    {
+      "path": "docs/dbus/requirements.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {}
+    },
+    {
+      "path": "electron-builder.env",
+      "language": "config",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "definitions": [
+        {
+          "name": "BUNDLING",
+          "kind": "variable",
+          "fields": [],
+          "startLine": 1,
+          "endLine": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 1
+      }
+    },
+    {
+      "path": "electron-builder.npmrc",
+      "language": "npmrc",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "metrics": {}
+    },
+    {
+      "path": "electron-builder.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 114,
+      "nonEmptyLines": 99,
+      "sections": [
+        {
+          "heading": "directories",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "appId",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "publish",
+          "level": 1,
+          "line": 7
+        },
+        {
+          "heading": "snap",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "nsis",
+          "level": 1,
+          "line": 20
+        },
+        {
+          "heading": "portable",
+          "level": 1,
+          "line": 26
+        },
+        {
+          "heading": "dmg",
+          "level": 1,
+          "line": 30
+        },
+        {
+          "heading": "appImage",
+          "level": 1,
+          "line": 41
+        },
+        {
+          "heading": "deb",
+          "level": 1,
+          "line": 44
+        },
+        {
+          "heading": "rpm",
+          "level": 1,
+          "line": 47
+        },
+        {
+          "heading": "afterSign",
+          "level": 1,
+          "line": 53
+        },
+        {
+          "heading": "protocols",
+          "level": 1,
+          "line": 55
+        },
+        {
+          "heading": "asarUnpack",
+          "level": 1,
+          "line": 59
+        },
+        {
+          "heading": "mac",
+          "level": 1,
+          "line": 65
+        },
+        {
+          "heading": "win",
+          "level": 1,
+          "line": 85
+        },
+        {
+          "heading": "linux",
+          "level": 1,
+          "line": 98
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 16
+      }
+    },
+    {
+      "path": "esbuild.mjs",
+      "language": "mjs",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 130,
+      "functions": [
+        {
+          "name": "staticAssets",
+          "startLine": 18,
+          "endLine": 61,
+          "params": []
+        },
+        {
+          "name": "copyManualAssets",
+          "startLine": 63,
+          "endLine": 76,
+          "params": []
+        },
+        {
+          "name": "runEsbuild",
+          "startLine": 78,
+          "endLine": 141,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 19
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 25
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 31
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 37
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 43
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 49
+        },
+        {
+          "caller": "staticAssets",
+          "callee": "copy",
+          "lineNumber": 55
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.existsSync",
+          "lineNumber": 64
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.mkdirSync",
+          "lineNumber": 65
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.copyFileSync",
+          "lineNumber": 67
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fs.copyFileSync",
+          "lineNumber": 68
+        },
+        {
+          "caller": "copyManualAssets",
+          "callee": "fsPkg.outputJsonSync",
+          "lineNumber": 75
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "performance.now",
+          "lineNumber": 79
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "process.argv.slice",
+          "lineNumber": 81
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "myArgs.includes",
+          "lineNumber": 82
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 83
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.blue",
+          "lineNumber": 83
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "fs.existsSync",
+          "lineNumber": 85
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "fs.rmSync",
+          "lineNumber": 86
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 87
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.blue",
+          "lineNumber": 87
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "copyManualAssets",
+          "lineNumber": 89
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "glob",
+          "lineNumber": 92
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "entryPoints.push",
+          "lineNumber": 95
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "esbuild.build",
+          "lineNumber": 102
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "log",
+          "lineNumber": 113
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "chalk.red",
+          "lineNumber": 113
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "log",
+          "lineNumber": 115
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "chalk.blue",
+          "lineNumber": 115
+        },
+        {
+          "caller": "onRebuild",
+          "callee": "livereload.reload",
+          "lineNumber": 116
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "sassPlugin",
+          "lineNumber": 121
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "staticAssets",
+          "lineNumber": 121
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "esbuild.serve",
+          "lineNumber": 125
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 132
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.green",
+          "lineNumber": 132
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "livereload.listen",
+          "lineNumber": 133
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "performance.now",
+          "lineNumber": 135
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "log",
+          "lineNumber": 137
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "chalk.green",
+          "lineNumber": 138
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "moment(duration).format",
+          "lineNumber": 138
+        },
+        {
+          "caller": "runEsbuild",
+          "callee": "moment",
+          "lineNumber": 138
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "jest.config.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 31,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 252,
+      "nonEmptyLines": 252,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "productName",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "desktopName",
+          "level": 1,
+          "line": 4
+        },
+        {
+          "heading": "appId",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "version",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "description",
+          "level": 1,
+          "line": 7
+        },
+        {
+          "heading": "author",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "license",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "copyright",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "main",
+          "level": 1,
+          "line": 11
+        },
+        {
+          "heading": "homepage",
+          "level": 1,
+          "line": 12
+        },
+        {
+          "heading": "repository",
+          "level": 1,
+          "line": 13
+        },
+        {
+          "heading": "private",
+          "level": 1,
+          "line": 14
+        },
+        {
+          "heading": "engines",
+          "level": 1,
+          "line": 15
+        },
+        {
+          "heading": "engine-strict",
+          "level": 1,
+          "line": 19
+        },
+        {
+          "heading": "volta",
+          "level": 1,
+          "line": 20
+        },
+        {
+          "heading": "packageManager",
+          "level": 1,
+          "line": 24
+        },
+        {
+          "heading": "scripts",
+          "level": 1,
+          "line": 25
+        },
+        {
+          "heading": "dependencies",
+          "level": 1,
+          "line": 52
+        },
+        {
+          "heading": "devDependencies",
+          "level": 1,
+          "line": 135
+        },
+        {
+          "heading": "pnpm",
+          "level": 1,
+          "line": 17
+        },
+        {
+          "heading": "overrides",
+          "level": 1,
+          "line": 200
+        },
+        {
+          "heading": "optionalDependencies",
+          "level": 1,
+          "line": 242
+        },
+        {
+          "heading": "browserslist",
+          "level": 1,
+          "line": 246
+        },
+        {
+          "heading": "autoload",
+          "level": 1,
+          "line": 249
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 25
+      }
+    },
+    {
+      "path": "scripts/add-crowdin-contributors.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1090,
+      "nonEmptyLines": 1081,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/build-unix.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "totalLines": 143,
+      "nonEmptyLines": 118,
+      "functions": [
+        {
+          "name": "fail_with_docs",
+          "startLine": 19,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "command_exists",
+          "startLine": 27,
+          "endLine": 29,
+          "params": []
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/build-windows.ps1",
+      "language": "powershell",
+      "fileCategory": "script",
+      "totalLines": 185,
+      "nonEmptyLines": 152,
+      "metrics": {}
+    },
+    {
+      "path": "scripts/link-readme.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 65,
+      "nonEmptyLines": 54,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/migration/migrate-unix.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "totalLines": 70,
+      "nonEmptyLines": 61,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

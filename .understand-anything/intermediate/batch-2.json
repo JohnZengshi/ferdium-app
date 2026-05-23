@@ -1,0 +1,351 @@
+{
+  "nodes": [
+    {
+      "id": "file:build-helpers/entitlements.mas.inherit.plist",
+      "type": "file",
+      "name": "entitlements.mas.inherit.plist",
+      "filePath": "build-helpers/entitlements.mas.inherit.plist",
+      "summary": "Source file: build-helpers/entitlements.mas.inherit.plist",
+      "tags": [
+        "plist",
+        "build-helpers"
+      ],
+      "complexity": "moderate",
+      "language": "plist",
+      "sizeLines": 22
+    },
+    {
+      "id": "file:build-helpers/entitlements.mas.plist",
+      "type": "file",
+      "name": "entitlements.mas.plist",
+      "filePath": "build-helpers/entitlements.mas.plist",
+      "summary": "Source file: build-helpers/entitlements.mas.plist",
+      "tags": [
+        "plist",
+        "build-helpers"
+      ],
+      "complexity": "moderate",
+      "language": "plist",
+      "sizeLines": 22
+    },
+    {
+      "id": "file:build-helpers/images/dmgInstaller.tiff",
+      "type": "file",
+      "name": "dmgInstaller.tiff",
+      "filePath": "build-helpers/images/dmgInstaller.tiff",
+      "summary": "Source file: build-helpers/images/dmgInstaller.tiff",
+      "tags": [
+        "tiff",
+        "build-helpers"
+      ],
+      "complexity": "complex",
+      "language": "tiff",
+      "sizeLines": 779
+    },
+    {
+      "id": "file:build-helpers/images/icon.icns",
+      "type": "file",
+      "name": "icon.icns",
+      "filePath": "build-helpers/images/icon.icns",
+      "summary": "Source file: build-helpers/images/icon.icns",
+      "tags": [
+        "icns",
+        "build-helpers"
+      ],
+      "complexity": "complex",
+      "language": "icns",
+      "sizeLines": 488
+    },
+    {
+      "id": "file:build-helpers/notarize.js",
+      "type": "file",
+      "name": "notarize.js",
+      "filePath": "build-helpers/notarize.js",
+      "summary": "Source file: build-helpers/notarize.js",
+      "tags": [
+        "javascript",
+        "build-helpers"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 23
+    },
+    {
+      "id": "file:build-helpers/snap-hooks/configure",
+      "type": "file",
+      "name": "configure",
+      "filePath": "build-helpers/snap-hooks/configure",
+      "summary": "Source file: build-helpers/snap-hooks/configure",
+      "tags": [
+        "unknown",
+        "build-helpers"
+      ],
+      "complexity": "simple",
+      "language": "unknown",
+      "sizeLines": 7
+    },
+    {
+      "id": "file:commitlint.config.js",
+      "type": "file",
+      "name": "commitlint.config.js",
+      "filePath": "commitlint.config.js",
+      "summary": "Source file: commitlint.config.js",
+      "tags": [
+        "javascript"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 1
+    },
+    {
+      "id": "config:crowdin.yml",
+      "type": "config",
+      "name": "crowdin.yml",
+      "filePath": "crowdin.yml",
+      "summary": "Config: crowdin.yml",
+      "tags": [
+        "yaml"
+      ],
+      "complexity": "simple",
+      "language": "yaml",
+      "sizeLines": 12
+    },
+    {
+      "id": "document:docs/DBUS.md",
+      "type": "document",
+      "name": "DBUS.md",
+      "filePath": "docs/DBUS.md",
+      "summary": "Document: docs/DBUS.md",
+      "tags": [
+        "markdown",
+        "docs"
+      ],
+      "complexity": "simple",
+      "language": "markdown",
+      "sizeLines": 20
+    },
+    {
+      "id": "document:docs/INTERNAL_SERVER.md",
+      "type": "document",
+      "name": "INTERNAL_SERVER.md",
+      "filePath": "docs/INTERNAL_SERVER.md",
+      "summary": "Document: docs/INTERNAL_SERVER.md",
+      "tags": [
+        "markdown",
+        "docs"
+      ],
+      "complexity": "moderate",
+      "language": "markdown",
+      "sizeLines": 28
+    },
+    {
+      "id": "document:docs/MIGRATION.md",
+      "type": "document",
+      "name": "MIGRATION.md",
+      "filePath": "docs/MIGRATION.md",
+      "summary": "Document: docs/MIGRATION.md",
+      "tags": [
+        "markdown",
+        "docs"
+      ],
+      "complexity": "moderate",
+      "language": "markdown",
+      "sizeLines": 38
+    },
+    {
+      "id": "file:docs/dbus/ferdium_bar.py",
+      "type": "file",
+      "name": "ferdium_bar.py",
+      "filePath": "docs/dbus/ferdium_bar.py",
+      "summary": "Exports toggle_window, toggle_mute, unread, main.",
+      "tags": [
+        "python",
+        "docs",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "python",
+      "sizeLines": 102
+    },
+    {
+      "id": "config:docs/dbus/org.ferdium.Ferdium.xml",
+      "type": "config",
+      "name": "org.ferdium.Ferdium.xml",
+      "filePath": "docs/dbus/org.ferdium.Ferdium.xml",
+      "summary": "Config: docs/dbus/org.ferdium.Ferdium.xml",
+      "tags": [
+        "xml",
+        "docs"
+      ],
+      "complexity": "moderate",
+      "language": "xml",
+      "sizeLines": 87
+    },
+    {
+      "id": "document:docs/dbus/requirements.txt",
+      "type": "document",
+      "name": "requirements.txt",
+      "filePath": "docs/dbus/requirements.txt",
+      "summary": "Document: docs/dbus/requirements.txt",
+      "tags": [
+        "txt",
+        "docs"
+      ],
+      "complexity": "simple",
+      "language": "txt",
+      "sizeLines": 1
+    },
+    {
+      "id": "file:electron-builder.env",
+      "type": "file",
+      "name": "electron-builder.env",
+      "filePath": "electron-builder.env",
+      "summary": "Source file: electron-builder.env",
+      "tags": [
+        "config"
+      ],
+      "complexity": "simple",
+      "language": "config",
+      "sizeLines": 1
+    },
+    {
+      "id": "file:electron-builder.npmrc",
+      "type": "file",
+      "name": "electron-builder.npmrc",
+      "filePath": "electron-builder.npmrc",
+      "summary": "Source file: electron-builder.npmrc",
+      "tags": [
+        "npmrc"
+      ],
+      "complexity": "simple",
+      "language": "npmrc",
+      "sizeLines": 4
+    },
+    {
+      "id": "config:electron-builder.yml",
+      "type": "config",
+      "name": "electron-builder.yml",
+      "filePath": "electron-builder.yml",
+      "summary": "Config: electron-builder.yml",
+      "tags": [
+        "yaml"
+      ],
+      "complexity": "complex",
+      "language": "yaml",
+      "sizeLines": 114
+    },
+    {
+      "id": "file:esbuild.mjs",
+      "type": "file",
+      "name": "esbuild.mjs",
+      "filePath": "esbuild.mjs",
+      "summary": "Defines 3 functions.",
+      "tags": [
+        "mjs",
+        "has-functions"
+      ],
+      "complexity": "complex",
+      "language": "mjs",
+      "sizeLines": 143
+    },
+    {
+      "id": "file:jest.config.js",
+      "type": "file",
+      "name": "jest.config.js",
+      "filePath": "jest.config.js",
+      "summary": "Source file: jest.config.js",
+      "tags": [
+        "javascript"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 38
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "Config: package.json",
+      "tags": [
+        "json"
+      ],
+      "complexity": "complex",
+      "language": "json",
+      "sizeLines": 252
+    },
+    {
+      "id": "file:scripts/add-crowdin-contributors.ts",
+      "type": "file",
+      "name": "add-crowdin-contributors.ts",
+      "filePath": "scripts/add-crowdin-contributors.ts",
+      "summary": "Source file: scripts/add-crowdin-contributors.ts",
+      "tags": [
+        "typescript",
+        "scripts"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 1090
+    },
+    {
+      "id": "script:scripts/build-unix.sh",
+      "type": "script",
+      "name": "build-unix.sh",
+      "filePath": "scripts/build-unix.sh",
+      "summary": "Script: scripts/build-unix.sh",
+      "tags": [
+        "shell",
+        "scripts",
+        "has-functions"
+      ],
+      "complexity": "complex",
+      "language": "shell",
+      "sizeLines": 143
+    },
+    {
+      "id": "script:scripts/build-windows.ps1",
+      "type": "script",
+      "name": "build-windows.ps1",
+      "filePath": "scripts/build-windows.ps1",
+      "summary": "Script: scripts/build-windows.ps1",
+      "tags": [
+        "powershell",
+        "scripts"
+      ],
+      "complexity": "complex",
+      "language": "powershell",
+      "sizeLines": 185
+    },
+    {
+      "id": "file:scripts/link-readme.ts",
+      "type": "file",
+      "name": "link-readme.ts",
+      "filePath": "scripts/link-readme.ts",
+      "summary": "Source file: scripts/link-readme.ts",
+      "tags": [
+        "typescript",
+        "scripts"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 65
+    },
+    {
+      "id": "script:scripts/migration/migrate-unix.sh",
+      "type": "script",
+      "name": "migrate-unix.sh",
+      "filePath": "scripts/migration/migrate-unix.sh",
+      "summary": "Script: scripts/migration/migrate-unix.sh",
+      "tags": [
+        "shell",
+        "scripts"
+      ],
+      "complexity": "moderate",
+      "language": "shell",
+      "sizeLines": 70
+    }
+  ],
+  "edges": []
+}

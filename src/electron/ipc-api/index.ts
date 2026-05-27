@@ -11,6 +11,7 @@ import localServer from './localServer';
 import processManager from './processManager';
 import sessionStorage from './sessionStorage';
 import settings from './settings';
+import whatsappWebhook from './whatsappWebhook';
 
 export default (params: {
   mainWindow: BrowserWindow;
@@ -27,4 +28,5 @@ export default (params: {
   languageDetect();
   dnd();
   focusState(params);
+  whatsappWebhook(params);
 };

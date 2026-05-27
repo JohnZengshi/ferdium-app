@@ -7,7 +7,7 @@
     "enabled": true
   },
   "linter": {
-    "ignore": ["build", "coverage", "node_modules", "recipes", "*.json"],
+    "ignore": ["build", "coverage", "node_modules", "recipes", "*.json", "src/whatsapp-automation/api/generated"],
     "rules": {
       "style": {
         "noNonNullAssertion": "off",

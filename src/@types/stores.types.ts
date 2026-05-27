@@ -24,6 +24,7 @@ export interface FerdiumStores {
   todos: TodosStore;
   ui: UIStore;
   user: UserStore;
+  whatsappAutomation: any;
   workspaces: WorkspacesStore;
 }
 
@@ -41,6 +42,7 @@ export interface Stores {
   todos: TodosStore;
   ui: UIStore;
   user: UserStore;
+  whatsappAutomation: any;
   workspaces: WorkspacesStore;
 }
 

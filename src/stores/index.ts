@@ -3,6 +3,7 @@ import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
 import { communityRecipesStore } from '../features/communityRecipes';
 import { todosStore } from '../features/todos';
+import { whatsappAutomationStore } from '../features/whatsappAutomation';
 import { workspaceStore } from '../features/workspaces';
 import AppStore from './AppStore';
 import FeaturesStore from './FeaturesStore';
@@ -30,6 +31,7 @@ export interface RealStores {
   workspaces: typeof workspaceStore;
   communityRecipes: typeof communityRecipesStore;
   todos: typeof todosStore;
+  whatsappAutomation: typeof whatsappAutomationStore;
 }
 
 export default (
@@ -53,6 +55,7 @@ export default (
     workspaces: workspaceStore,
     communityRecipes: communityRecipesStore,
     todos: todosStore,
+    whatsappAutomation: whatsappAutomationStore,
   });
 
   // Initialize all stores

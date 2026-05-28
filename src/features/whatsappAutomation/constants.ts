@@ -1,6 +1,7 @@
 export const WHATSAPP_RECIPE_ID = 'whatsapp';
 
-export const WA_AKG_BASE_URL = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
+export const WA_AKG_BASE_URL =
+  process.env.WA_AKG_BASE ?? 'http://localhost:3000';
 
 export const IPC = {
   SET_WEBVIEW: 'whatsapp-automation:set-webview',

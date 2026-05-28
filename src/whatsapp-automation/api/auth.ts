@@ -14,7 +14,8 @@ import * as http from 'node:http';
 
 const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
 const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
-const API_KEY_STORAGE_KEY = process.env.API_KEY_STORAGE_KEY ?? 'whatsappAutomationApiKey';
+const API_KEY_STORAGE_KEY =
+  process.env.API_KEY_STORAGE_KEY ?? 'whatsappAutomationApiKey';
 
 interface AuthCredentials {
   email: string;

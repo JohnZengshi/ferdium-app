@@ -1,21 +1,5 @@
 import { webFrame } from 'electron';
 
-// React 18 deprecated findDOMNode but many third-party libs (react-sortable-hoc,
-// react-transition-group) still use it. These are just warnings — the APIs
-// still work on React 18 and will only break in React 19.
-{
-  const origError = console.error;
-  console.error = (...args: any[]) => {
-    if (
-      typeof args[0] === 'string' &&
-      args[0].includes('findDOMNode is deprecated')
-    ) {
-      return;
-    }
-    origError.call(console, ...args);
-  };
-}
-
 import { RouterStore } from '@superwf/mobx-react-router';
 import { createHashHistory } from 'history';
 import { Provider } from 'mobx-react';
@@ -31,6 +15,22 @@ import storeFactory from './stores';
 
 import I18N from './I18n';
 import FerdiumRoutes from './routes';
+
+// React 18 deprecated findDOMNode but many third-party libs (react-sortable-hoc,
+// react-transition-group) still use it. These are just warnings — the APIs
+// still work on React 18 and will only break in React 19.
+{
+  const origError = console.error;
+  console.error = (...args: any[]) => {
+    if (
+      typeof args[0] === 'string' &&
+      args[0].includes('findDOMNode is deprecated')
+    ) {
+      return;
+    }
+    origError.call(console, ...args);
+  };
+}
 
 // Basic electron Setup
 webFrame.setVisualZoomLevelLimits(1, 1);

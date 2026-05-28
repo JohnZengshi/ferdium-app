@@ -139,7 +139,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
     console.log('[WA-AKG] WhatsApp services found:', services.length);
     for (const service of services) {
-      console.log(`[WA-AKG] Service ${service.id}: isAttached=${service.isAttached}, hasWebview=${!!service.webview}`);
+      console.log(
+        `[WA-AKG] Service ${service.id}: isAttached=${service.isAttached}, hasWebview=${!!service.webview}`,
+      );
       if (
         !this._initializedServices.has(service.id) &&
         service.isAttached &&
@@ -218,7 +220,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     }
 
     // Show initial status indicator
-    this._injectOrUpdateStatusIndicator(serviceId, WA_SESSION_STATUS.CONNECTING);
+    this._injectOrUpdateStatusIndicator(
+      serviceId,
+      WA_SESSION_STATUS.CONNECTING,
+    );
 
     // Connect Socket.IO first, then check session
     this._startSocketIoForSession(serviceId);
@@ -243,7 +248,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           ) {
             debug(`Session ${serviceId} is already connected`);
             // Update status indicator (Socket.IO won't emit for already-connected)
-            this._injectOrUpdateStatusIndicator(serviceId, WA_SESSION_STATUS.CONNECTED);
+            this._injectOrUpdateStatusIndicator(
+              serviceId,
+              WA_SESSION_STATUS.CONNECTED,
+            );
             // Notify webview — session was already active
             this._notifySessionConnected(serviceId);
           } else {
@@ -257,7 +265,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             try {
               await postSessionsIdAction(serviceId, 'start');
             } catch (startError) {
-              debug('Session start action failed (may already be starting):', startError);
+              debug(
+                'Session start action failed (may already be starting):',
+                startError,
+              );
             }
             await this._fetchAndUpdateQr(serviceId);
           }
@@ -495,7 +506,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     try {
       const qrResponse = await getSessionsIdQr(serviceId);
       if (qrResponse.status !== 200) return;
-      const base64 = qrResponse.data.base64;
+      const { base64 } = qrResponse.data;
       if (!base64) return;
 
       const service = this._getService(serviceId);
@@ -537,62 +548,85 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
-    console.log(`[WA-AKG] Starting Socket.IO connection to ${WA_AKG_BASE_URL}${WA_AKG_SOCKET_PATH} for ${serviceId}`);
+    console.log(
+      `[WA-AKG] Starting Socket.IO connection to ${WA_AKG_BASE_URL}${WA_AKG_SOCKET_PATH} for ${serviceId}`,
+    );
 
     const socket: Socket = io(WA_AKG_BASE_URL, {
       path: WA_AKG_SOCKET_PATH,
       transports: ['websocket', 'polling'],
       reconnection: true,
-      reconnectionAttempts: Infinity,
+      reconnectionAttempts: Number.POSITIVE_INFINITY,
       reconnectionDelay: 2000,
-      reconnectionDelayMax: 10000,
+      reconnectionDelayMax: 10_000,
     });
 
     socket.on('connect', () => {
-      console.log(`[WA-AKG] Socket.IO connected for ${serviceId}, joining room`);
+      console.log(
+        `[WA-AKG] Socket.IO connected for ${serviceId}, joining room`,
+      );
       // Join the session room so we receive connection.update events
       socket.emit('join-session', serviceId);
     });
 
-    socket.on('connection.update', (update: { status: string; qr?: string }) => {
-      console.log(`[WA-AKG] Socket.IO connection.update for ${serviceId}:`, update.status);
-      this._handleSocketConnectionUpdate(serviceId, update);
-    });
+    socket.on(
+      'connection.update',
+      (update: { status: string; qr?: string }) => {
+        console.log(
+          `[WA-AKG] Socket.IO connection.update for ${serviceId}:`,
+          update.status,
+        );
+        this._handleSocketConnectionUpdate(serviceId, update);
+      },
+    );
 
-    socket.on('disconnect', (reason) => {
+    socket.on('disconnect', reason => {
       console.log(`[WA-AKG] Socket.IO disconnected for ${serviceId}:`, reason);
     });
 
-    socket.on('connect_error', (err) => {
-      console.error(`[WA-AKG] Socket.IO connect error for ${serviceId}:`, err.message);
+    socket.on('connect_error', err => {
+      console.error(
+        `[WA-AKG] Socket.IO connect error for ${serviceId}:`,
+        err.message,
+      );
       // Server unreachable — show error in status indicator
-      this._handleSocketConnectionUpdate(serviceId, { status: WA_SESSION_STATUS.SERVER_ERROR });
+      this._handleSocketConnectionUpdate(serviceId, {
+        status: WA_SESSION_STATUS.SERVER_ERROR,
+      });
     });
 
-    socket.on('connection.update', (update: { status: string; qr?: string }) => {
-      this._handleSocketConnectionUpdate(serviceId, update);
-    });
+    socket.on(
+      'connection.update',
+      (update: { status: string; qr?: string }) => {
+        this._handleSocketConnectionUpdate(serviceId, update);
+      },
+    );
 
-    socket.on('disconnect', (reason) => {
+    socket.on('disconnect', reason => {
       debug('Socket.IO disconnected for session', serviceId, reason);
       if (reason === 'io server disconnect' || reason === 'transport close') {
-        this._handleSocketConnectionUpdate(serviceId, { status: WA_SESSION_STATUS.SERVER_ERROR });
+        this._handleSocketConnectionUpdate(serviceId, {
+          status: WA_SESSION_STATUS.SERVER_ERROR,
+        });
       }
     });
 
-    socket.on('connect_error', (err) => {
+    socket.on('connect_error', err => {
       debug('Socket.IO connection error for session', serviceId, err.message);
     });
 
-    socket.on('connection.update', (update: { status: string; qr?: string; pairingCode?: string }) => {
-      this._handleSocketConnectionUpdate(serviceId, update);
-    });
+    socket.on(
+      'connection.update',
+      (update: { status: string; qr?: string; pairingCode?: string }) => {
+        this._handleSocketConnectionUpdate(serviceId, update);
+      },
+    );
 
-    socket.on('disconnect', (reason) => {
+    socket.on('disconnect', reason => {
       debug('Socket.IO disconnected for session', serviceId, reason);
     });
 
-    socket.on('connect_error', (err) => {
+    socket.on('connect_error', err => {
       debug('Socket.IO connection error for session', serviceId, err.message);
     });
 
@@ -653,10 +687,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       case WA_SESSION_STATUS.STOPPED: {
         debug('Session stopped', serviceId);
         runInAction(() => {
-          this.errorMessages.set(
-            serviceId,
-            'WhatsApp session was stopped.',
-          );
+          this.errorMessages.set(serviceId, 'WhatsApp session was stopped.');
           this.isLoadingQr.set(serviceId, false);
         });
         break;
@@ -674,8 +705,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         break;
       }
 
-      default:
+      default: {
         debug('Unhandled connection status:', status, 'for', serviceId);
+      }
     }
   };
 
@@ -693,13 +725,34 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   /** Status indicator colors per state */
   _statusStyle = (status: string): { color: string; label: string } => {
     const map: Record<string, { color: string; label: string }> = {
-      [WA_SESSION_STATUS.SCAN_QR]:     { color: '#FF9800', label: '[WA-AKG] Scan QR' },
-      [WA_SESSION_STATUS.CONNECTED]:   { color: '#00E676', label: '[WA-AKG] Connected' },
-      [WA_SESSION_STATUS.DISCONNECTED]:{ color: '#FF5252', label: '[WA-AKG] Disconnected' },
-      [WA_SESSION_STATUS.CONNECTING]:  { color: '#448AFF', label: '[WA-AKG] Connecting...' },
-      [WA_SESSION_STATUS.STOPPED]:     { color: '#9E9E9E', label: '[WA-AKG] Stopped' },
-      [WA_SESSION_STATUS.LOGGED_OUT]:  { color: '#EF5350', label: '[WA-AKG] Logged Out' },
-      [WA_SESSION_STATUS.SERVER_ERROR]:{ color: '#FF1744', label: '[WA-AKG] Server Error' },
+      [WA_SESSION_STATUS.SCAN_QR]: {
+        color: '#FF9800',
+        label: '[WA-AKG] Scan QR',
+      },
+      [WA_SESSION_STATUS.CONNECTED]: {
+        color: '#00E676',
+        label: '[WA-AKG] Connected',
+      },
+      [WA_SESSION_STATUS.DISCONNECTED]: {
+        color: '#FF5252',
+        label: '[WA-AKG] Disconnected',
+      },
+      [WA_SESSION_STATUS.CONNECTING]: {
+        color: '#448AFF',
+        label: '[WA-AKG] Connecting...',
+      },
+      [WA_SESSION_STATUS.STOPPED]: {
+        color: '#9E9E9E',
+        label: '[WA-AKG] Stopped',
+      },
+      [WA_SESSION_STATUS.LOGGED_OUT]: {
+        color: '#EF5350',
+        label: '[WA-AKG] Logged Out',
+      },
+      [WA_SESSION_STATUS.SERVER_ERROR]: {
+        color: '#FF1744',
+        label: '[WA-AKG] Server Error',
+      },
     };
     return map[status] || { color: '#9E9E9E', label: status };
   };

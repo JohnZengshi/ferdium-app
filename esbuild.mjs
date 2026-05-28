@@ -4,6 +4,7 @@ import { performance } from 'node:perf_hooks';
 import chalk from 'chalk';
 import * as dotenv from 'dotenv';
 import * as esbuild from 'esbuild';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import fsPkg from 'fs-extra';
@@ -117,6 +118,7 @@ const runEsbuild = async () => {
     minifyWhitespace: true,
     minifyIdentifiers: true,
     keepNames: true,
+    sourcemap: isDev,  // Enable source maps in dev mode for UI-to-code navigation
     outdir: outDir,
     watch: isDev && {
       onRebuild(error, result) {
@@ -130,7 +132,15 @@ const runEsbuild = async () => {
     },
     incremental: isDev,
     define: envDefines,
-    plugins: [sassPlugin(), ...staticAssets()],
+    plugins: [
+      sassPlugin(),
+      ...staticAssets(),
+      ...(isDev ? [codeInspectorPlugin({ 
+        bundler: 'esbuild', 
+        dev: () => true,
+        escapeTags: ['webview'],  // Exclude webview tags to prevent GUEST_VIEW_MANAGER_CALL errors
+      })] : []),
+    ],
   });
 
   if (isDev) {

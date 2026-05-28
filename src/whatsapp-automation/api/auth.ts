@@ -12,11 +12,9 @@
 
 import * as http from 'node:http';
 
-const WA_AKG_HOST = 'localhost';
-const WA_AKG_PORT = 3000;
-const WA_AKG_BASE = `http://${WA_AKG_HOST}:${WA_AKG_PORT}`;
-const API_KEY_KEY = 'whatsapp-api-key';
-const API_KEY_STORAGE_KEY = 'whatsappAutomationApiKey';
+const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
+const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
+const API_KEY_STORAGE_KEY = process.env.API_KEY_STORAGE_KEY ?? 'whatsappAutomationApiKey';
 
 interface AuthCredentials {
   email: string;
@@ -27,8 +25,8 @@ interface AuthCredentials {
  * Default credentials for local development.
  */
 const DEFAULT_CREDENTIALS: AuthCredentials = {
-  email: 'test_001@example.com',
-  password: '123456',
+  email: process.env.WA_DEFAULT_EMAIL ?? '',
+  password: process.env.WA_DEFAULT_PASSWORD ?? '',
 };
 
 /** Cookie jar: accumulates Set-Cookie headers across requests */
@@ -86,11 +84,12 @@ function nodeRequest(options: {
   statusText: string;
   data: string;
 }> {
+  const { hostname, port } = new URL(WA_AKG_BASE);
   return new Promise((resolve, reject) => {
     const req = http.request(
       {
-        hostname: WA_AKG_HOST,
-        port: WA_AKG_PORT,
+        hostname,
+        port: Number(port) || 3000,
         path: options.path,
         method: options.method || 'GET',
         headers: {
@@ -185,7 +184,6 @@ export const initializeAuth = async (
   credentials: AuthCredentials = DEFAULT_CREDENTIALS,
 ): Promise<string | null> => {
   const { email, password } = credentials;
-
   resetCookieJar();
 
   // --- Step 1: Get CSRF token for NextAuth login ---

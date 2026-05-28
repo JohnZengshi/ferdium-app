@@ -5,11 +5,17 @@ import {
   observable,
   runInAction,
 } from 'mobx';
+import { io, Socket } from 'socket.io-client';
 import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 import FeatureStore from '../utils/FeatureStore';
 import { whatsappAutomationActions } from './actions';
-import { WHATSAPP_RECIPE_ID } from './constants';
+import {
+  WHATSAPP_RECIPE_ID,
+  WA_AKG_BASE_URL,
+  WA_AKG_SOCKET_PATH,
+  WA_SESSION_STATUS,
+} from './constants';
 
 import {
   getSessions,
@@ -38,7 +44,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _initializedServices = new Set<string>();
 
-  _sessionPollTimers = new Map<string, ReturnType<typeof setInterval>>();
+  /** One Socket.IO connection per WhatsApp session for real-time status updates */
+  _sockets = new Map<string, Socket>();
 
   _retryCounts = new Map<string, number>();
 
@@ -76,7 +83,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   // ========== PUBLIC API ========= //
 
   @action start(stores: any, actions: any) {
-    debug('WhatsAppAutomationStore::start');
+    console.log('[WA-AKG] WhatsAppAutomationStore::start');
     this.stores = stores;
     this.actions = actions;
 
@@ -106,10 +113,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     super.stop();
     debug('WhatsAppAutomationStore::stop');
 
-    for (const [, timer] of this._sessionPollTimers) {
-      clearInterval(timer);
+    // Disconnect all Socket.IO connections
+    for (const [, socket] of this._sockets) {
+      socket.removeAllListeners();
+      socket.disconnect();
     }
-    this._sessionPollTimers.clear();
+    this._sockets.clear();
     this._retryCounts.clear();
     this._initializedServices.clear();
     this.sessionStatuses.clear();
@@ -123,15 +132,20 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _detectWhatsAppServices = (): void => {
     const services = this.whatsAppServices;
-    if (services.length === 0) return;
+    if (services.length === 0) {
+      console.log('[WA-AKG] No WhatsApp services found via recipe filter');
+      return;
+    }
 
+    console.log('[WA-AKG] WhatsApp services found:', services.length);
     for (const service of services) {
+      console.log(`[WA-AKG] Service ${service.id}: isAttached=${service.isAttached}, hasWebview=${!!service.webview}`);
       if (
         !this._initializedServices.has(service.id) &&
         service.isAttached &&
         service.webview
       ) {
-        debug(`Detected attached WhatsApp service: ${service.id}`);
+        console.log(`[WA-AKG] Initializing session for service: ${service.id}`);
         this._initializedServices.add(service.id);
         this._checkSessionStatus({ serviceId: service.id });
       }
@@ -143,11 +157,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       if (!currentIds.has(trackedId)) {
         debug(`Cleaning up removed service: ${trackedId}`);
         this._initializedServices.delete(trackedId);
-        const timer = this._sessionPollTimers.get(trackedId);
-        if (timer) {
-          clearInterval(timer);
-          this._sessionPollTimers.delete(trackedId);
-        }
+        this._stopSocketIoForSession(trackedId);
         runInAction(() => {
           this.sessionStatuses.delete(trackedId);
           this.qrCodes.delete(trackedId);
@@ -165,18 +175,25 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   };
 
   _ensureAuthenticated = async (): Promise<boolean> => {
-    if (this._authInitialized && getApiKey()) return true;
+    if (this._authInitialized && getApiKey()) {
+      console.log('[WA-AKG] Already authenticated, API key found');
+      return true;
+    }
 
-    debug('No API key found, authenticating with WA-AKG...');
+    console.log('[WA-AKG] No API key found, authenticating with WA-AKG...');
     const apiKey = await initializeAuth();
 
     if (apiKey) {
-      debug('Authentication successful, API key obtained');
+      console.log('[WA-AKG] Authentication successful, API key obtained');
       this._authInitialized = true;
       return true;
     }
 
-    debug('Authentication failed');
+    console.error('[WA-AKG] Authentication failed');
+    // Update status indicator for all initialized services to show server error
+    for (const sid of this._initializedServices) {
+      this._injectOrUpdateStatusIndicator(sid, WA_SESSION_STATUS.SERVER_ERROR);
+    }
     return false;
   };
 
@@ -200,6 +217,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
+    // Show initial status indicator
+    this._injectOrUpdateStatusIndicator(serviceId, WA_SESSION_STATUS.CONNECTING);
+
+    // Connect Socket.IO first, then check session
+    this._startSocketIoForSession(serviceId);
+
     try {
       const response = await getSessions();
 
@@ -219,16 +242,24 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             SessionStatus.Connected
           ) {
             debug(`Session ${serviceId} is already connected`);
+            // Update status indicator (Socket.IO won't emit for already-connected)
+            this._injectOrUpdateStatusIndicator(serviceId, WA_SESSION_STATUS.CONNECTED);
+            // Notify webview — session was already active
+            this._notifySessionConnected(serviceId);
           } else {
             debug(
-              `Session ${serviceId} status: ${matchingSession.status}, fetching QR...`,
+              `Session ${serviceId} status: ${matchingSession.status}, starting & fetching QR...`,
             );
-            // Existing session needs QR (SCAN_QR/Disconnected/Connecting)
+            // Session exists but needs QR — start it and show QR
             runInAction(() => {
               this.isLoadingQr.set(serviceId, true);
             });
-            await this._fetchAndShowQrCode(serviceId);
-            this._startSessionPolling(serviceId);
+            try {
+              await postSessionsIdAction(serviceId, 'start');
+            } catch (startError) {
+              debug('Session start action failed (may already be starting):', startError);
+            }
+            await this._fetchAndUpdateQr(serviceId);
           }
         } else {
           debug(`No session found for service ${serviceId}, creating one`);
@@ -389,14 +420,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       if (createResponse.status === 200) {
         debug('Session created:', createResponse.data.id);
 
+        // Ensure Socket.IO is connected and join room BEFORE starting
+        // (so we don't miss early connection.update events)
+        this._startSocketIoForSession(serviceId);
+
         // Start the session to get QR
         await postSessionsIdAction(serviceId, 'start');
 
-        // Fetch QR code
-        await this._fetchAndShowQrCode(serviceId);
-
-        // Start polling for session connection
-        this._startSessionPolling(serviceId);
+        // Fetch QR and inject/update modal (Socket.IO will refresh it on SCAN_QR)
+        await this._fetchAndUpdateQr(serviceId);
       } else {
         runInAction(() => {
           this.errorMessages.set(serviceId, 'Failed to create session');
@@ -458,65 +490,259 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     }
   };
 
-  _startSessionPolling = (serviceId: string) => {
-    const existingTimer = this._sessionPollTimers.get(serviceId);
-    if (existingTimer) clearInterval(existingTimer);
+  /** Fetch fresh QR from REST, then inject or update the modal image. */
+  _fetchAndUpdateQr = async (serviceId: string) => {
+    try {
+      const qrResponse = await getSessionsIdQr(serviceId);
+      if (qrResponse.status !== 200) return;
+      const base64 = qrResponse.data.base64;
+      if (!base64) return;
 
-    debug(`Starting session polling for service ${serviceId}`);
-    let pollCount = 0;
+      const service = this._getService(serviceId);
+      if (!service?.webview) return;
 
-    const timer = setInterval(async () => {
-      pollCount += 1;
-
-      try {
-        const response = await getSessions();
-
-        if (response.status === 200) {
-          const sessions: Session[] = response.data;
-          const session = sessions.find(
-            (s: Session) => s.sessionId === serviceId,
-          );
-
-          if (session) {
-            runInAction(() => {
-              this.sessionStatuses.set(serviceId, session.status);
-            });
-
-            if (
-              this._normalizeStatus(session.status) === SessionStatus.Connected
-            ) {
-              debug(
-                `Session ${serviceId} is now connected after ${pollCount} polls!`,
-              );
-              clearInterval(timer);
-              this._sessionPollTimers.delete(serviceId);
-
-              // Notify the webview that session is connected
-              this._notifySessionConnected(serviceId);
-
-              // Remove QR modal
-              this._removeQrModal({ serviceId });
-            } else if (
-              this._normalizeStatus(session.status) ===
-                SessionStatus.Disconnected &&
-              pollCount % 6 === 0
-            ) {
-              // Refresh QR every ~30 seconds (6 * 5s)
-              debug('Refreshing QR code for service', serviceId);
-              await this._fetchAndShowQrCode(serviceId);
+      // Check if modal exists, update or inject
+      service.webview
+        .executeJavaScript(
+          `(function() {
+            var el = document.getElementById('wa-akg-qr-modal');
+            if (el) {
+              var img = el.querySelector('.waa-qrimg');
+              if (img) { img.src = '${base64.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}'; }
+              return 'updated';
             }
-          } else {
-            debug(
-              `Session ${serviceId} not found in list (poll #${pollCount})`,
-            );
+            return 'absent';
+          })()`,
+        )
+        .then((result: string) => {
+          if (result === 'absent') {
+            this._injectQrModal({ serviceId, base64 });
           }
-        }
-      } catch (error) {
-        debug('Session polling error:', error);
-      }
-    }, 5000);
+        })
+        .catch(() => {
+          this._injectQrModal({ serviceId, base64 });
+        });
+    } catch (error) {
+      debug('Error updating QR:', error);
+    }
+  };
 
-    this._sessionPollTimers.set(serviceId, timer);
+  // ========== SOCKET.IO ========= //
+
+  /** Start a Socket.IO connection for a specific session and join its room. */
+  _startSocketIoForSession = (serviceId: string) => {
+    // Don't create duplicate connections
+    if (this._sockets.has(serviceId)) {
+      console.log(`[WA-AKG] Socket already exists for ${serviceId}, skipping`);
+      return;
+    }
+
+    console.log(`[WA-AKG] Starting Socket.IO connection to ${WA_AKG_BASE_URL}${WA_AKG_SOCKET_PATH} for ${serviceId}`);
+
+    const socket: Socket = io(WA_AKG_BASE_URL, {
+      path: WA_AKG_SOCKET_PATH,
+      transports: ['websocket', 'polling'],
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 2000,
+      reconnectionDelayMax: 10000,
+    });
+
+    socket.on('connect', () => {
+      console.log(`[WA-AKG] Socket.IO connected for ${serviceId}, joining room`);
+      // Join the session room so we receive connection.update events
+      socket.emit('join-session', serviceId);
+    });
+
+    socket.on('connection.update', (update: { status: string; qr?: string }) => {
+      console.log(`[WA-AKG] Socket.IO connection.update for ${serviceId}:`, update.status);
+      this._handleSocketConnectionUpdate(serviceId, update);
+    });
+
+    socket.on('disconnect', (reason) => {
+      console.log(`[WA-AKG] Socket.IO disconnected for ${serviceId}:`, reason);
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error(`[WA-AKG] Socket.IO connect error for ${serviceId}:`, err.message);
+      // Server unreachable — show error in status indicator
+      this._handleSocketConnectionUpdate(serviceId, { status: WA_SESSION_STATUS.SERVER_ERROR });
+    });
+
+    socket.on('connection.update', (update: { status: string; qr?: string }) => {
+      this._handleSocketConnectionUpdate(serviceId, update);
+    });
+
+    socket.on('disconnect', (reason) => {
+      debug('Socket.IO disconnected for session', serviceId, reason);
+      if (reason === 'io server disconnect' || reason === 'transport close') {
+        this._handleSocketConnectionUpdate(serviceId, { status: WA_SESSION_STATUS.SERVER_ERROR });
+      }
+    });
+
+    socket.on('connect_error', (err) => {
+      debug('Socket.IO connection error for session', serviceId, err.message);
+    });
+
+    socket.on('connection.update', (update: { status: string; qr?: string; pairingCode?: string }) => {
+      this._handleSocketConnectionUpdate(serviceId, update);
+    });
+
+    socket.on('disconnect', (reason) => {
+      debug('Socket.IO disconnected for session', serviceId, reason);
+    });
+
+    socket.on('connect_error', (err) => {
+      debug('Socket.IO connection error for session', serviceId, err.message);
+    });
+
+    this._sockets.set(serviceId, socket);
+  };
+
+  /** Handle real-time connection.update events from Socket.IO. */
+  _handleSocketConnectionUpdate = (
+    serviceId: string,
+    update: { status: string },
+  ) => {
+    const { status } = update;
+    debug(`Socket.IO connection.update for ${serviceId}:`, status);
+
+    runInAction(() => {
+      this.sessionStatuses.set(serviceId, status as SessionStatus);
+    });
+
+    // Update floating status indicator in webview
+    this._injectOrUpdateStatusIndicator(serviceId, status);
+
+    switch (status) {
+      case WA_SESSION_STATUS.SCAN_QR: {
+        // Baileys QR expires every ~20s, so always fetch a fresh base64 image
+        runInAction(() => {
+          this.isLoadingQr.set(serviceId, false);
+          this.errorMessages.set(serviceId, undefined);
+        });
+        // Fetch new QR and update the existing modal (if any)
+        this._fetchAndUpdateQr(serviceId);
+        break;
+      }
+
+      case WA_SESSION_STATUS.CONNECTED: {
+        debug(`Session ${serviceId} connected via Socket.IO!`);
+        // Remove QR modal if present
+        this._removeQrModal({ serviceId });
+        // Notify the webview
+        this._notifySessionConnected(serviceId);
+        // Update status
+        runInAction(() => {
+          this.isLoadingQr.set(serviceId, false);
+          this.errorMessages.set(serviceId, undefined);
+        });
+        break;
+      }
+
+      case WA_SESSION_STATUS.DISCONNECTED: {
+        // Connection lost — update UI state
+        runInAction(() => {
+          this.isLoadingQr.set(serviceId, true);
+        });
+        // If there was a QR modal, it will auto-reconnect and show new QR
+        debug('Session disconnected, waiting for reconnect...', serviceId);
+        break;
+      }
+
+      case WA_SESSION_STATUS.STOPPED: {
+        debug('Session stopped', serviceId);
+        runInAction(() => {
+          this.errorMessages.set(
+            serviceId,
+            'WhatsApp session was stopped.',
+          );
+          this.isLoadingQr.set(serviceId, false);
+        });
+        break;
+      }
+
+      case WA_SESSION_STATUS.LOGGED_OUT: {
+        debug('Session logged out', serviceId);
+        runInAction(() => {
+          this.errorMessages.set(
+            serviceId,
+            'WhatsApp session was logged out. Please re-add the service.',
+          );
+          this.isLoadingQr.set(serviceId, false);
+        });
+        break;
+      }
+
+      default:
+        debug('Unhandled connection status:', status, 'for', serviceId);
+    }
+  };
+
+  /** Disconnect and clean up a Socket.IO connection for a session. */
+  _stopSocketIoForSession = (serviceId: string) => {
+    const socket = this._sockets.get(serviceId);
+    if (socket) {
+      debug('Disconnecting Socket.IO for session', serviceId);
+      socket.removeAllListeners();
+      socket.disconnect();
+      this._sockets.delete(serviceId);
+    }
+  };
+
+  /** Status indicator colors per state */
+  _statusStyle = (status: string): { color: string; label: string } => {
+    const map: Record<string, { color: string; label: string }> = {
+      [WA_SESSION_STATUS.SCAN_QR]:     { color: '#FF9800', label: '[WA-AKG] Scan QR' },
+      [WA_SESSION_STATUS.CONNECTED]:   { color: '#00E676', label: '[WA-AKG] Connected' },
+      [WA_SESSION_STATUS.DISCONNECTED]:{ color: '#FF5252', label: '[WA-AKG] Disconnected' },
+      [WA_SESSION_STATUS.CONNECTING]:  { color: '#448AFF', label: '[WA-AKG] Connecting...' },
+      [WA_SESSION_STATUS.STOPPED]:     { color: '#9E9E9E', label: '[WA-AKG] Stopped' },
+      [WA_SESSION_STATUS.LOGGED_OUT]:  { color: '#EF5350', label: '[WA-AKG] Logged Out' },
+      [WA_SESSION_STATUS.SERVER_ERROR]:{ color: '#FF1744', label: '[WA-AKG] Server Error' },
+    };
+    return map[status] || { color: '#9E9E9E', label: status };
+  };
+
+  /** Inject or update a floating status indicator (bottom-right) in the webview. */
+  _injectOrUpdateStatusIndicator = (serviceId: string, status: string) => {
+    const service = this._getService(serviceId);
+    if (!service?.webview) return;
+
+    const { color, label } = this._statusStyle(status);
+    // Escape for JS string literal
+    const escColor = color.replaceAll("'", "\\'");
+    const escLabel = label.replaceAll("'", "\\'");
+
+    const SID = 'wa-akg-si';
+    const script = `
+(function() {
+  var old = document.getElementById('${SID}');
+  if (old) {
+    var dot = old.querySelector('.waa-si-dot');
+    if (dot) dot.style.background = '${escColor}';
+    var txt = old.querySelector('.waa-si-label');
+    if (txt) txt.textContent = '${escLabel}';
+    return;
+  }
+  var s = document.createElement('style');
+  s.textContent = [
+    '@keyframes waa-si-pulse{0%{box-shadow:0 0 0 0 ${escColor}88}70%{box-shadow:0 0 0 14px ${escColor}00}100%{box-shadow:0 0 0 0 ${escColor}00}}',
+    '@keyframes waa-si-radar{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}',
+    '#${SID}{position:fixed;bottom:20px;right:20px;z-index:2147483646;display:flex;align-items:center;gap:10px;background:rgba(11,20,26,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:30px;padding:10px 18px 10px 14px;box-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;pointer-events:none;user-select:none}',
+    '.waa-si-radar{position:relative;width:20px;height:20px;flex-shrink:0}',
+    '.waa-si-dot{position:absolute;inset:4px;border-radius:50%;background:${escColor};z-index:2;animation:waa-si-pulse 2s infinite}',
+    '.waa-si-sweep{position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;border-top-color:${escColor}44;animation:waa-si-radar 2s linear infinite}',
+    '.waa-si-label{font-size:13px;font-weight:600;color:#e9edef;white-space:nowrap}'
+  ].join('');
+  document.head.appendChild(s);
+  var el = document.createElement('div');
+  el.id = '${SID}';
+  el.innerHTML = '<div class="waa-si-radar"><div class="waa-si-dot"></div><div class="waa-si-sweep"></div></div><span class="waa-si-label">${escLabel}</span>';
+  document.body.appendChild(el);
+})();
+`;
+    service.webview.executeJavaScript(script).catch(() => {});
   };
 
   _notifySessionConnected = (serviceId: string) => {

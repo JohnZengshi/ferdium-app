@@ -19,6 +19,12 @@ export const useCustomInstance = <T>(
   options?: RequestInit,
 ): Promise<T> => {
   const controller = new AbortController();
+
+  // Generated API files hardcode http://localhost:3000 — replace the host
+  // with the actual backend URL from .env
+  const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
+  const actualUrl = url.replace(/^https?:\/\/[^/]+/, WA_AKG_BASE);
+
   const config: RequestInit & { signal?: AbortSignal } = {
     ...options,
     signal: options?.signal ?? controller.signal,
@@ -29,7 +35,7 @@ export const useCustomInstance = <T>(
     },
   };
 
-  return fetch(url, config).then(async response => {
+  return fetch(actualUrl, config).then(async response => {
     const body = await response.json().catch(() => ({}));
 
     if (response.ok) {

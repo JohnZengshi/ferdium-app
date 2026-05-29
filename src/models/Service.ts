@@ -10,6 +10,8 @@ import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { isMac } from '../environment';
 import { todosStore } from '../features/todos';
 import { getFaviconUrl } from '../helpers/favicon-helpers';
+import { generateFingerprint } from '../helpers/fingerprint-helpers';
+import type { FingerprintConfig } from '../helpers/fingerprint-helpers';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import { ifUndefined } from '../jsUtils';
 import type { IRecipe } from './Recipe';
@@ -136,6 +138,8 @@ export default class Service {
 
   @observable userAgentModel: UserAgent;
 
+  fingerprint: FingerprintConfig;
+
   @observable proxy: string | null = null;
 
   @observable isMediaPlaying: boolean = false;
@@ -171,6 +175,7 @@ export default class Service {
     this.userAgentModel = new UserAgent(recipe.overrideUserAgent);
 
     this.id = ifUndefined<string>(data.id, this.id);
+    this.fingerprint = generateFingerprint(this.id);
     this.name = ifUndefined<string>(data.name, this.name);
     this.team = ifUndefined<string>(data.team, this.team);
     this.customUrl = ifUndefined<string>(data.customUrl, this.customUrl);
@@ -305,6 +310,7 @@ export default class Service {
       hasCustomIcon: this.hasCustomIcon,
       onlyShowFavoritesInUnreadCount: this.onlyShowFavoritesInUnreadCount,
       trapLinkClicks: this.trapLinkClicks,
+      fingerprint: this.fingerprint,
     };
   }
 

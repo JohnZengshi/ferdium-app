@@ -32,7 +32,7 @@ const linux = () => {
 };
 
 const CHROME_VERSIONS = Array.from({ length: 12 }, (_, i) => i + 120);
-const SAFARI_VERSIONS = [17.0, 17.1, 17.2, 17.3, 17.4, 17.5];
+const SAFARI_VERSIONS = [17, 17.1, 17.2, 17.3, 17.4, 17.5];
 const FIREFOX_VERSIONS = Array.from({ length: 10 }, (_, i) => i + 124);
 const EDGE_VERSIONS = Array.from({ length: 12 }, (_, i) => i + 120);
 
@@ -43,45 +43,69 @@ function pick<T>(arr: readonly T[]): T {
 type UABrowser = 'chrome' | 'safari' | 'firefox' | 'edge';
 
 const MAC_BROWSER_WEIGHTS: UABrowser[] = [
-  'chrome', 'chrome', 'chrome', 'chrome',
-  'safari', 'safari', 'safari',
-  'firefox', 'firefox',
-  'edge', 'edge',
+  'chrome',
+  'chrome',
+  'chrome',
+  'chrome',
+  'safari',
+  'safari',
+  'safari',
+  'firefox',
+  'firefox',
+  'edge',
+  'edge',
 ];
 
 const WINDOWS_BROWSER_WEIGHTS: UABrowser[] = [
-  'chrome', 'chrome', 'chrome', 'chrome', 'chrome',
-  'edge', 'edge', 'edge',
-  'firefox', 'firefox', 'firefox',
+  'chrome',
+  'chrome',
+  'chrome',
+  'chrome',
+  'chrome',
+  'edge',
+  'edge',
+  'edge',
+  'firefox',
+  'firefox',
+  'firefox',
 ];
 
 function generateMacUA(): string {
   const browser = pick(MAC_BROWSER_WEIGHTS);
   switch (browser) {
-    case 'chrome':
+    case 'chrome': {
       return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${pick(CHROME_VERSIONS)}.0.0.0 Safari/537.36`;
-    case 'safari':
+    }
+    case 'safari': {
       return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${pick(SAFARI_VERSIONS)} Safari/605.1.15`;
-    case 'firefox':
+    }
+    case 'firefox': {
       return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:${pick(FIREFOX_VERSIONS)}.0) Gecko/20100101 Firefox/${pick(FIREFOX_VERSIONS)}.0`;
-    case 'edge':
+    }
+    case 'edge': {
       return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${pick(EDGE_VERSIONS)}.0.0.0 Safari/537.36 Edg/${pick(EDGE_VERSIONS)}.0.0.0`;
-    default:
+    }
+    default: {
       return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${pick(CHROME_VERSIONS)}.0.0.0 Safari/537.36`;
+    }
   }
 }
 
 function generateWindowsUA(): string {
   const browser = pick(WINDOWS_BROWSER_WEIGHTS);
   switch (browser) {
-    case 'chrome':
+    case 'chrome': {
       return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${pick(CHROME_VERSIONS)}.0.0.0 Safari/537.36`;
-    case 'edge':
+    }
+    case 'edge': {
       return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${pick(EDGE_VERSIONS)}.0.0.0 Safari/537.36 Edg/${pick(EDGE_VERSIONS)}.0.0.0`;
-    case 'firefox':
+    }
+    case 'firefox': {
       return `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${pick(FIREFOX_VERSIONS)}.0) Gecko/20100101 Firefox/${pick(FIREFOX_VERSIONS)}.0`;
-    default:
+    }
+    default: {
       return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${pick(CHROME_VERSIONS)}.0.0.0 Safari/537.36`;
+    }
   }
 }
 
@@ -91,7 +115,7 @@ function buildPool(generator: () => string, size: number): string[] {
   let attempts = 0;
   while (pool.size < size && attempts < maxAttempts) {
     pool.add(generator());
-    attempts++;
+    attempts += 1;
   }
   return [...pool];
 }
@@ -116,13 +140,18 @@ let windowsIndex = 0;
 export function getNextPlatformUserAgent(): string {
   if (isMac) {
     if (!macPool) macPool = buildPool(generateMacUA, UA_POOL_SIZE);
-    return macPool[macIndex++ % macPool.length];
+    const currentMacIndex = macIndex;
+    macIndex += 1;
+    return macPool[currentMacIndex % macPool.length];
   }
   if (isWindows) {
     if (!windowsPool) windowsPool = buildPool(generateWindowsUA, UA_POOL_SIZE);
-    return windowsPool[windowsIndex++ % windowsPool.length];
+    const currentWindowsIndex = windowsIndex;
+    windowsIndex += 1;
+    return windowsPool[currentWindowsIndex % windowsPool.length];
   }
   // For Linux or unknown, fall back to auto-generated real UA
+  // eslint-disable-next-line no-use-before-define, @typescript-eslint/no-use-before-define
   return userAgent();
 }
 
@@ -142,6 +171,7 @@ export function getRandomPlatformUserAgent(): string {
     if (!windowsPool) windowsPool = buildPool(generateWindowsUA, UA_POOL_SIZE);
     return windowsPool[Math.floor(Math.random() * windowsPool.length)];
   }
+  // eslint-disable-next-line no-use-before-define, @typescript-eslint/no-use-before-define
   return userAgent();
 }
 

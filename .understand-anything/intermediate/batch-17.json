@@ -1,0 +1,654 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/stores/FeaturesStore.ts",
+      "type": "file",
+      "name": "FeaturesStore.ts",
+      "filePath": "src/stores/FeaturesStore.ts",
+      "summary": "Defines FeaturesStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 92
+    },
+    {
+      "id": "file:src/stores/GlobalErrorStore.ts",
+      "type": "file",
+      "name": "GlobalErrorStore.ts",
+      "filePath": "src/stores/GlobalErrorStore.ts",
+      "summary": "Defines GlobalErrorStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 117
+    },
+    {
+      "id": "file:src/stores/RecipePreviewsStore.ts",
+      "type": "file",
+      "name": "RecipePreviewsStore.ts",
+      "filePath": "src/stores/RecipePreviewsStore.ts",
+      "summary": "Defines RecipePreviewsStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 64
+    },
+    {
+      "id": "file:src/stores/RecipesStore.ts",
+      "type": "file",
+      "name": "RecipesStore.ts",
+      "filePath": "src/stores/RecipesStore.ts",
+      "summary": "Defines RecipesStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 173
+    },
+    {
+      "id": "file:src/stores/RequestStore.ts",
+      "type": "file",
+      "name": "RequestStore.ts",
+      "filePath": "src/stores/RequestStore.ts",
+      "summary": "Defines RequestStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 96
+    },
+    {
+      "id": "file:src/stores/ServicesStore.ts",
+      "type": "file",
+      "name": "ServicesStore.ts",
+      "filePath": "src/stores/ServicesStore.ts",
+      "summary": "Defines ServicesStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 1466
+    },
+    {
+      "id": "file:src/stores/SettingsStore.ts",
+      "type": "file",
+      "name": "SettingsStore.ts",
+      "filePath": "src/stores/SettingsStore.ts",
+      "summary": "Defines SettingsStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 247
+    },
+    {
+      "id": "file:src/stores/UIStore.ts",
+      "type": "file",
+      "name": "UIStore.ts",
+      "filePath": "src/stores/UIStore.ts",
+      "summary": "Defines UIStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 145
+    },
+    {
+      "id": "file:src/stores/UserStore.ts",
+      "type": "file",
+      "name": "UserStore.ts",
+      "filePath": "src/stores/UserStore.ts",
+      "summary": "Defines UserStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 433
+    },
+    {
+      "id": "file:src/stores/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/stores/index.ts",
+      "summary": "Source file: src/stores/index.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 66
+    },
+    {
+      "id": "file:src/stores/lib/CachedRequest.ts",
+      "type": "file",
+      "name": "CachedRequest.ts",
+      "filePath": "src/stores/lib/CachedRequest.ts",
+      "summary": "Defines CachedRequest.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 122
+    },
+    {
+      "id": "file:src/stores/lib/Reaction.ts",
+      "type": "file",
+      "name": "Reaction.ts",
+      "filePath": "src/stores/lib/Reaction.ts",
+      "summary": "Defines Reaction. Exports createReactions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-functions",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 29
+    },
+    {
+      "id": "file:src/stores/lib/Request.ts",
+      "type": "file",
+      "name": "Request.ts",
+      "filePath": "src/stores/lib/Request.ts",
+      "summary": "Defines Request.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 151
+    },
+    {
+      "id": "file:src/stores/lib/TypedStore.ts",
+      "type": "file",
+      "name": "TypedStore.ts",
+      "filePath": "src/stores/lib/TypedStore.ts",
+      "summary": "Source file: src/stores/lib/TypedStore.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 64
+    },
+    {
+      "id": "markup:src/styles/animations.scss",
+      "type": "markup",
+      "name": "animations.scss",
+      "filePath": "src/styles/animations.scss",
+      "summary": "Markup: src/styles/animations.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 92
+    },
+    {
+      "id": "markup:src/styles/auth.scss",
+      "type": "markup",
+      "name": "auth.scss",
+      "filePath": "src/styles/auth.scss",
+      "summary": "Markup: src/styles/auth.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 252
+    },
+    {
+      "id": "markup:src/styles/badge.scss",
+      "type": "markup",
+      "name": "badge.scss",
+      "filePath": "src/styles/badge.scss",
+      "summary": "Markup: src/styles/badge.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 30
+    },
+    {
+      "id": "markup:src/styles/button.scss",
+      "type": "markup",
+      "name": "button.scss",
+      "filePath": "src/styles/button.scss",
+      "summary": "Markup: src/styles/button.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 180
+    },
+    {
+      "id": "markup:src/styles/capture-sources.scss",
+      "type": "markup",
+      "name": "capture-sources.scss",
+      "filePath": "src/styles/capture-sources.scss",
+      "summary": "Markup: src/styles/capture-sources.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 75
+    },
+    {
+      "id": "markup:src/styles/colors.scss",
+      "type": "markup",
+      "name": "colors.scss",
+      "filePath": "src/styles/colors.scss",
+      "summary": "Markup: src/styles/colors.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 49
+    },
+    {
+      "id": "markup:src/styles/config.scss",
+      "type": "markup",
+      "name": "config.scss",
+      "filePath": "src/styles/config.scss",
+      "summary": "Markup: src/styles/config.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "simple",
+      "language": "css",
+      "sizeLines": 4
+    },
+    {
+      "id": "markup:src/styles/content-tabs.scss",
+      "type": "markup",
+      "name": "content-tabs.scss",
+      "filePath": "src/styles/content-tabs.scss",
+      "summary": "Markup: src/styles/content-tabs.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 73
+    },
+    {
+      "id": "markup:src/styles/features.scss",
+      "type": "markup",
+      "name": "features.scss",
+      "filePath": "src/styles/features.scss",
+      "summary": "Markup: src/styles/features.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 28
+    },
+    {
+      "id": "markup:src/styles/fonts.scss",
+      "type": "markup",
+      "name": "fonts.scss",
+      "filePath": "src/styles/fonts.scss",
+      "summary": "Markup: src/styles/fonts.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 49
+    },
+    {
+      "id": "markup:src/styles/globals.scss",
+      "type": "markup",
+      "name": "globals.scss",
+      "filePath": "src/styles/globals.scss",
+      "summary": "Markup: src/styles/globals.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 26
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/stores/FeaturesStore.ts",
+      "target": "file:src/stores/lib/CachedRequest.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/CachedRequest.ts"
+    },
+    {
+      "source": "file:src/stores/FeaturesStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/GlobalErrorStore.ts",
+      "target": "file:src/stores/lib/Request.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/Request.ts"
+    },
+    {
+      "source": "file:src/stores/GlobalErrorStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/RecipePreviewsStore.ts",
+      "target": "file:src/stores/lib/CachedRequest.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/CachedRequest.ts"
+    },
+    {
+      "source": "file:src/stores/RecipePreviewsStore.ts",
+      "target": "file:src/stores/lib/Request.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/Request.ts"
+    },
+    {
+      "source": "file:src/stores/RecipePreviewsStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/RecipesStore.ts",
+      "target": "file:src/stores/lib/CachedRequest.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/CachedRequest.ts"
+    },
+    {
+      "source": "file:src/stores/RecipesStore.ts",
+      "target": "file:src/stores/lib/Request.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/Request.ts"
+    },
+    {
+      "source": "file:src/stores/RecipesStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/RequestStore.ts",
+      "target": "file:src/stores/lib/CachedRequest.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/CachedRequest.ts"
+    },
+    {
+      "source": "file:src/stores/RequestStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/ServicesStore.ts",
+      "target": "file:src/stores/lib/CachedRequest.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/CachedRequest.ts"
+    },
+    {
+      "source": "file:src/stores/ServicesStore.ts",
+      "target": "file:src/stores/lib/Request.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/Request.ts"
+    },
+    {
+      "source": "file:src/stores/ServicesStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/SettingsStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/UIStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/UserStore.ts",
+      "target": "file:src/stores/lib/CachedRequest.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/CachedRequest.ts"
+    },
+    {
+      "source": "file:src/stores/UserStore.ts",
+      "target": "file:src/stores/lib/Request.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/Request.ts"
+    },
+    {
+      "source": "file:src/stores/UserStore.ts",
+      "target": "file:src/stores/lib/TypedStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/TypedStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/FeaturesStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/FeaturesStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/GlobalErrorStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/GlobalErrorStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/RecipePreviewsStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/RecipePreviewsStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/RecipesStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/RecipesStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/RequestStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/RequestStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/ServicesStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/ServicesStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/SettingsStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/SettingsStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/UIStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/UIStore.ts"
+    },
+    {
+      "source": "file:src/stores/index.ts",
+      "target": "file:src/stores/UserStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/UserStore.ts"
+    },
+    {
+      "source": "file:src/stores/lib/CachedRequest.ts",
+      "target": "file:src/stores/lib/Request.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/Request.ts"
+    },
+    {
+      "source": "file:src/stores/lib/TypedStore.ts",
+      "target": "file:src/stores/lib/Reaction.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/stores/lib/Reaction.ts"
+    }
+  ]
+}

@@ -1,0 +1,576 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/features/publishDebugInfo/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/publishDebugInfo/index.ts",
+      "summary": "Exports Component.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 17
+    },
+    {
+      "id": "file:src/features/publishDebugInfo/store.ts",
+      "type": "file",
+      "name": "store.ts",
+      "filePath": "src/features/publishDebugInfo/store.ts",
+      "summary": "Exports state.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 7
+    },
+    {
+      "id": "file:src/features/quickSwitch/Component.tsx",
+      "type": "file",
+      "name": "Component.tsx",
+      "filePath": "src/features/quickSwitch/Component.tsx",
+      "summary": "Defines QuickSwitchModal.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 357
+    },
+    {
+      "id": "file:src/features/quickSwitch/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/quickSwitch/index.ts",
+      "summary": "Exports Component.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 21
+    },
+    {
+      "id": "file:src/features/quickSwitch/store.ts",
+      "type": "file",
+      "name": "store.ts",
+      "filePath": "src/features/quickSwitch/store.ts",
+      "summary": "Exports state.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 7
+    },
+    {
+      "id": "file:src/features/serviceProxy/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/serviceProxy/index.ts",
+      "summary": "Exports config.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 56
+    },
+    {
+      "id": "file:src/features/todos/actions.ts",
+      "type": "file",
+      "name": "actions.ts",
+      "filePath": "src/features/todos/actions.ts",
+      "summary": "Exports todoActions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 47
+    },
+    {
+      "id": "file:src/features/todos/components/TodosWebview.tsx",
+      "type": "file",
+      "name": "TodosWebview.tsx",
+      "filePath": "src/features/todos/components/TodosWebview.tsx",
+      "summary": "Defines TodosWebview.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 247
+    },
+    {
+      "id": "file:src/features/todos/constants.ts",
+      "type": "file",
+      "name": "constants.ts",
+      "filePath": "src/features/todos/constants.ts",
+      "summary": "Exports IPC, TODOS_ROUTES.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 8
+    },
+    {
+      "id": "file:src/features/todos/containers/TodosScreen.tsx",
+      "type": "file",
+      "name": "TodosScreen.tsx",
+      "filePath": "src/features/todos/containers/TodosScreen.tsx",
+      "summary": "Defines TodosScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 49
+    },
+    {
+      "id": "file:src/features/todos/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/todos/index.ts",
+      "summary": "Exports todosStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 9
+    },
+    {
+      "id": "file:src/features/todos/preload.ts",
+      "type": "file",
+      "name": "preload.ts",
+      "filePath": "src/features/todos/preload.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 62
+    },
+    {
+      "id": "file:src/features/todos/store.ts",
+      "type": "file",
+      "name": "store.ts",
+      "filePath": "src/features/todos/store.ts",
+      "summary": "Defines TodoStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 332
+    },
+    {
+      "id": "file:src/features/utils/ActionBinding.ts",
+      "type": "file",
+      "name": "ActionBinding.ts",
+      "filePath": "src/features/utils/ActionBinding.ts",
+      "summary": "Defines ActionBinding. Exports createActionBindings.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 28
+    },
+    {
+      "id": "file:src/features/utils/FeatureStore.ts",
+      "type": "file",
+      "name": "FeatureStore.ts",
+      "filePath": "src/features/utils/FeatureStore.ts",
+      "summary": "Defines FeatureStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 48
+    },
+    {
+      "id": "file:src/features/webControls/components/WebControls.tsx",
+      "type": "file",
+      "name": "WebControls.tsx",
+      "filePath": "src/features/webControls/components/WebControls.tsx",
+      "summary": "Defines WebControls.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 264
+    },
+    {
+      "id": "file:src/features/webControls/containers/WebControlsScreen.tsx",
+      "type": "file",
+      "name": "WebControlsScreen.tsx",
+      "filePath": "src/features/webControls/containers/WebControlsScreen.tsx",
+      "summary": "Defines WebControlsScreen.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 173
+    },
+    {
+      "id": "file:src/features/workspaces/actions.ts",
+      "type": "file",
+      "name": "actions.ts",
+      "filePath": "src/features/workspaces/actions.ts",
+      "summary": "Source file: src/features/workspaces/actions.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 42
+    },
+    {
+      "id": "file:src/features/workspaces/api.ts",
+      "type": "file",
+      "name": "api.ts",
+      "filePath": "src/features/workspaces/api.ts",
+      "summary": "Exports workspaceApi, getUserWorkspacesRequest, createWorkspaceRequest, deleteWorkspaceRequest, updateWorkspaceRequest, resetApiRequests.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 88
+    },
+    {
+      "id": "file:src/features/workspaces/components/CreateWorkspaceForm.tsx",
+      "type": "file",
+      "name": "CreateWorkspaceForm.tsx",
+      "filePath": "src/features/workspaces/components/CreateWorkspaceForm.tsx",
+      "summary": "Defines CreateWorkspaceForm.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 105
+    },
+    {
+      "id": "file:src/features/workspaces/components/EditWorkspaceForm.tsx",
+      "type": "file",
+      "name": "EditWorkspaceForm.tsx",
+      "filePath": "src/features/workspaces/components/EditWorkspaceForm.tsx",
+      "summary": "Defines EditWorkspaceForm.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 255
+    },
+    {
+      "id": "file:src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "type": "file",
+      "name": "WorkspaceDrawer.tsx",
+      "filePath": "src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "summary": "Defines WorkspaceDrawer.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 260
+    },
+    {
+      "id": "file:src/features/workspaces/components/WorkspaceDrawerItem.tsx",
+      "type": "file",
+      "name": "WorkspaceDrawerItem.tsx",
+      "filePath": "src/features/workspaces/components/WorkspaceDrawerItem.tsx",
+      "summary": "Defines WorkspaceDrawerItem.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 212
+    },
+    {
+      "id": "file:src/features/workspaces/components/WorkspaceItem.tsx",
+      "type": "file",
+      "name": "WorkspaceItem.tsx",
+      "filePath": "src/features/workspaces/components/WorkspaceItem.tsx",
+      "summary": "Defines WorkspaceItem.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 38
+    },
+    {
+      "id": "file:src/features/workspaces/components/WorkspaceServiceListItem.tsx",
+      "type": "file",
+      "name": "WorkspaceServiceListItem.tsx",
+      "filePath": "src/features/workspaces/components/WorkspaceServiceListItem.tsx",
+      "summary": "Defines WorkspaceServiceListItem.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 68
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/features/publishDebugInfo/index.ts",
+      "target": "file:src/features/publishDebugInfo/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/publishDebugInfo/store.ts"
+    },
+    {
+      "source": "file:src/features/quickSwitch/Component.tsx",
+      "target": "file:src/features/quickSwitch/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/quickSwitch/store.ts"
+    },
+    {
+      "source": "file:src/features/quickSwitch/index.ts",
+      "target": "file:src/features/quickSwitch/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/quickSwitch/store.ts"
+    },
+    {
+      "source": "file:src/features/todos/components/TodosWebview.tsx",
+      "target": "file:src/features/todos/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/actions.ts"
+    },
+    {
+      "source": "file:src/features/todos/containers/TodosScreen.tsx",
+      "target": "file:src/features/todos/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/actions.ts"
+    },
+    {
+      "source": "file:src/features/todos/containers/TodosScreen.tsx",
+      "target": "file:src/features/todos/components/TodosWebview.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/components/TodosWebview.tsx"
+    },
+    {
+      "source": "file:src/features/todos/containers/TodosScreen.tsx",
+      "target": "file:src/features/todos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/index.ts"
+    },
+    {
+      "source": "file:src/features/todos/index.ts",
+      "target": "file:src/features/todos/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/store.ts"
+    },
+    {
+      "source": "file:src/features/todos/preload.ts",
+      "target": "file:src/features/todos/constants.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/constants.ts"
+    },
+    {
+      "source": "file:src/features/todos/store.ts",
+      "target": "file:src/features/todos/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/actions.ts"
+    },
+    {
+      "source": "file:src/features/todos/store.ts",
+      "target": "file:src/features/todos/constants.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/todos/constants.ts"
+    },
+    {
+      "source": "file:src/features/todos/store.ts",
+      "target": "file:src/features/utils/ActionBinding.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/utils/ActionBinding.ts"
+    },
+    {
+      "source": "file:src/features/todos/store.ts",
+      "target": "file:src/features/utils/FeatureStore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/utils/FeatureStore.ts"
+    },
+    {
+      "source": "file:src/features/webControls/containers/WebControlsScreen.tsx",
+      "target": "file:src/features/webControls/components/WebControls.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/webControls/components/WebControls.tsx"
+    },
+    {
+      "source": "file:src/features/workspaces/components/EditWorkspaceForm.tsx",
+      "target": "file:src/features/workspaces/components/WorkspaceServiceListItem.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/components/WorkspaceServiceListItem.tsx"
+    },
+    {
+      "source": "file:src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "target": "file:src/features/workspaces/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/actions.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "target": "file:src/features/workspaces/api.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/api.ts"
+    },
+    {
+      "source": "file:src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "target": "file:src/features/workspaces/components/WorkspaceDrawerItem.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/workspaces/components/WorkspaceDrawerItem.tsx"
+    }
+  ]
+}

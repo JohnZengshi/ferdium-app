@@ -1,0 +1,550 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/api/apiBase.ts",
+      "type": "file",
+      "name": "apiBase.ts",
+      "filePath": "src/api/apiBase.ts",
+      "summary": "Exports needsToken, localServerToken, importExportURL, serverBase, serverName.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 105
+    },
+    {
+      "id": "file:src/api/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/api/index.ts",
+      "summary": "Source file: src/api/index.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 27
+    },
+    {
+      "id": "file:src/api/server/LocalApi.ts",
+      "type": "file",
+      "name": "LocalApi.ts",
+      "filePath": "src/api/server/LocalApi.ts",
+      "summary": "Defines LocalApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 65
+    },
+    {
+      "id": "file:src/api/server/ServerApi.ts",
+      "type": "file",
+      "name": "ServerApi.ts",
+      "filePath": "src/api/server/ServerApi.ts",
+      "summary": "Defines ServerApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 623
+    },
+    {
+      "id": "file:src/api/utils/auth.ts",
+      "type": "file",
+      "name": "auth.ts",
+      "filePath": "src/api/utils/auth.ts",
+      "summary": "Exports prepareAuthRequest, prepareLocalToken, sendAuthRequest.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 56
+    },
+    {
+      "id": "file:src/app.tsx",
+      "type": "file",
+      "name": "app.tsx",
+      "filePath": "src/app.tsx",
+      "summary": "Source file: src/app.tsx",
+      "tags": [
+        "typescript",
+        "source",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 68
+    },
+    {
+      "id": "file:src/components/AppUpdateInfoBar.tsx",
+      "type": "file",
+      "name": "AppUpdateInfoBar.tsx",
+      "filePath": "src/components/AppUpdateInfoBar.tsx",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 74
+    },
+    {
+      "id": "file:src/components/MediaSource.tsx",
+      "type": "file",
+      "name": "MediaSource.tsx",
+      "filePath": "src/components/MediaSource.tsx",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 185
+    },
+    {
+      "id": "file:src/components/auth/AuthLayout.tsx",
+      "type": "file",
+      "name": "AuthLayout.tsx",
+      "filePath": "src/components/auth/AuthLayout.tsx",
+      "summary": "Defines AuthLayout.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 130
+    },
+    {
+      "id": "file:src/components/auth/ChangeServer.tsx",
+      "type": "file",
+      "name": "ChangeServer.tsx",
+      "filePath": "src/components/auth/ChangeServer.tsx",
+      "summary": "Defines ChangeServer.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 157
+    },
+    {
+      "id": "file:src/components/auth/Invite.tsx",
+      "type": "file",
+      "name": "Invite.tsx",
+      "filePath": "src/components/auth/Invite.tsx",
+      "summary": "Defines Invite.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 216
+    },
+    {
+      "id": "file:src/components/auth/Locked.tsx",
+      "type": "file",
+      "name": "Locked.tsx",
+      "filePath": "src/components/auth/Locked.tsx",
+      "summary": "Defines Locked.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 147
+    },
+    {
+      "id": "file:src/components/auth/Login.tsx",
+      "type": "file",
+      "name": "Login.tsx",
+      "filePath": "src/components/auth/Login.tsx",
+      "summary": "Defines Login.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 213
+    },
+    {
+      "id": "file:src/components/auth/Password.tsx",
+      "type": "file",
+      "name": "Password.tsx",
+      "filePath": "src/components/auth/Password.tsx",
+      "summary": "Defines Password.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 133
+    },
+    {
+      "id": "file:src/components/auth/SetupAssistant.tsx",
+      "type": "file",
+      "name": "SetupAssistant.tsx",
+      "filePath": "src/components/auth/SetupAssistant.tsx",
+      "summary": "Defines SetupAssistant.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 340
+    },
+    {
+      "id": "file:src/components/auth/Signup.tsx",
+      "type": "file",
+      "name": "Signup.tsx",
+      "filePath": "src/components/auth/Signup.tsx",
+      "summary": "Defines Signup.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 213
+    },
+    {
+      "id": "file:src/components/auth/Welcome.tsx",
+      "type": "file",
+      "name": "Welcome.tsx",
+      "filePath": "src/components/auth/Welcome.tsx",
+      "summary": "Defines Welcome.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 115
+    },
+    {
+      "id": "file:src/components/downloadManager/DownloadManagerDashboard.tsx",
+      "type": "file",
+      "name": "DownloadManagerDashboard.tsx",
+      "filePath": "src/components/downloadManager/DownloadManagerDashboard.tsx",
+      "summary": "Defines DownloadManagerDashboard.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 306
+    },
+    {
+      "id": "file:src/components/downloadManager/DownloadManagerLayout.tsx",
+      "type": "file",
+      "name": "DownloadManagerLayout.tsx",
+      "filePath": "src/components/downloadManager/DownloadManagerLayout.tsx",
+      "summary": "Defines DownloadManagerLayout.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 83
+    },
+    {
+      "id": "file:src/components/layout/AppLayout.tsx",
+      "type": "file",
+      "name": "AppLayout.tsx",
+      "filePath": "src/components/layout/AppLayout.tsx",
+      "summary": "Defines AppLayout.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 251
+    },
+    {
+      "id": "file:src/components/layout/Sidebar.tsx",
+      "type": "file",
+      "name": "Sidebar.tsx",
+      "filePath": "src/components/layout/Sidebar.tsx",
+      "summary": "Defines Sidebar.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 399
+    },
+    {
+      "id": "file:src/components/services/content/ConnectionLostBanner.tsx",
+      "type": "file",
+      "name": "ConnectionLostBanner.tsx",
+      "filePath": "src/components/services/content/ConnectionLostBanner.tsx",
+      "summary": "Defines ConnectionLostBanner.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 104
+    },
+    {
+      "id": "file:src/components/services/content/ServiceDisabled.tsx",
+      "type": "file",
+      "name": "ServiceDisabled.tsx",
+      "filePath": "src/components/services/content/ServiceDisabled.tsx",
+      "summary": "Defines ServiceDisabled.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 45
+    },
+    {
+      "id": "file:src/components/services/content/ServiceView.tsx",
+      "type": "file",
+      "name": "ServiceView.tsx",
+      "filePath": "src/components/services/content/ServiceView.tsx",
+      "summary": "Defines ServiceView.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 214
+    },
+    {
+      "id": "file:src/components/services/content/ServiceWebview.tsx",
+      "type": "file",
+      "name": "ServiceWebview.tsx",
+      "filePath": "src/components/services/content/ServiceWebview.tsx",
+      "summary": "Defines ServiceWebview.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 159
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/api/server/ServerApi.ts",
+      "target": "file:src/api/apiBase.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/apiBase.ts"
+    },
+    {
+      "source": "file:src/api/server/ServerApi.ts",
+      "target": "file:src/api/utils/auth.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/utils/auth.ts"
+    },
+    {
+      "source": "file:src/api/utils/auth.ts",
+      "target": "file:src/api/apiBase.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/apiBase.ts"
+    },
+    {
+      "source": "file:src/app.tsx",
+      "target": "file:src/api/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/index.ts"
+    },
+    {
+      "source": "file:src/app.tsx",
+      "target": "file:src/api/server/LocalApi.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/server/LocalApi.ts"
+    },
+    {
+      "source": "file:src/app.tsx",
+      "target": "file:src/api/server/ServerApi.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/server/ServerApi.ts"
+    },
+    {
+      "source": "file:src/components/auth/AuthLayout.tsx",
+      "target": "file:src/api/apiBase.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/apiBase.ts"
+    },
+    {
+      "source": "file:src/components/auth/AuthLayout.tsx",
+      "target": "file:src/components/AppUpdateInfoBar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/AppUpdateInfoBar.tsx"
+    },
+    {
+      "source": "file:src/components/auth/Login.tsx",
+      "target": "file:src/api/apiBase.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/apiBase.ts"
+    },
+    {
+      "source": "file:src/components/auth/Signup.tsx",
+      "target": "file:src/api/apiBase.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/apiBase.ts"
+    },
+    {
+      "source": "file:src/components/auth/Welcome.tsx",
+      "target": "file:src/api/apiBase.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/api/apiBase.ts"
+    },
+    {
+      "source": "file:src/components/layout/AppLayout.tsx",
+      "target": "file:src/components/AppUpdateInfoBar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/AppUpdateInfoBar.tsx"
+    },
+    {
+      "source": "file:src/components/services/content/ServiceView.tsx",
+      "target": "file:src/components/MediaSource.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/MediaSource.tsx"
+    },
+    {
+      "source": "file:src/components/services/content/ServiceView.tsx",
+      "target": "file:src/components/services/content/ServiceDisabled.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/services/content/ServiceDisabled.tsx"
+    },
+    {
+      "source": "file:src/components/services/content/ServiceView.tsx",
+      "target": "file:src/components/services/content/ServiceWebview.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/services/content/ServiceWebview.tsx"
+    }
+  ]
+}

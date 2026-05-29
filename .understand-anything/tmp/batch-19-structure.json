@@ -1,0 +1,3095 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/styles/vertical.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 120,
+      "nonEmptyLines": 103,
+      "metrics": {}
+    },
+    {
+      "path": "src/styles/welcome.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 137,
+      "nonEmptyLines": 118,
+      "metrics": {}
+    },
+    {
+      "path": "src/themes/IStyleTypes.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/themes/dark/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 173,
+      "nonEmptyLines": 151,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/themes/default/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 254,
+      "nonEmptyLines": 222,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/themes/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 18,
+      "functions": [
+        {
+          "name": "theme",
+          "startLine": 10,
+          "endLine": 17,
+          "params": [
+            "themeId",
+            "brandColor"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "theme",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "theme",
+          "callee": "makeDarkThemeConfig",
+          "lineNumber": 15
+        },
+        {
+          "caller": "theme",
+          "callee": "makeDefaultThemeConfig",
+          "lineNumber": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/themes/legacy/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 20,
+      "exports": [
+        {
+          "name": "themeBrandPrimary",
+          "line": 2,
+          "isDefault": false
+        },
+        {
+          "name": "themeBrandInfo",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "themeGrayDark",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "themeGray",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "themeGrayLight",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "themeGrayLighter",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "themeGrayLightest",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "themeBorderRadius",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "themeBorderRadiusSmall",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeBlack",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGrayDarkest",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGrayDarker",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGrayDark",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGray",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGrayLight",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGrayLighter",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGrayLightest",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeGraySmoke",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "darkThemeTextColor",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 19,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/webview/badge.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 16,
+      "classes": [
+        {
+          "name": "BadgeHandler",
+          "startLine": 6,
+          "endLine": 19,
+          "methods": [
+            "setBadge"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 6,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "setBadge",
+          "callee": "safeParseInt",
+          "lineNumber": 12
+        },
+        {
+          "caller": "setBadge",
+          "callee": "safeParseInt",
+          "lineNumber": 13
+        },
+        {
+          "caller": "setBadge",
+          "callee": "debug",
+          "lineNumber": 16
+        },
+        {
+          "caller": "setBadge",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/contextMenu.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "setupContextMenu",
+          "startLine": 6,
+          "endLine": 35,
+          "params": [
+            "isSpellcheckEnabled",
+            "getDefaultSpellcheckerLanguage",
+            "getSpellcheckerLanguage",
+            "getSearchEngine",
+            "getClipboardNotifications",
+            "getEnableTranslator",
+            "getTranslatorEngine",
+            "getTranslatorLanguage"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "setupContextMenu",
+          "line": 6,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "setupContextMenu",
+          "callee": "webContents.on",
+          "lineNumber": 18
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "contextMenuBuilder.showPopupMenu",
+          "lineNumber": 20
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "getSearchEngine",
+          "lineNumber": 23
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "getClipboardNotifications",
+          "lineNumber": 24
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "getEnableTranslator",
+          "lineNumber": 25
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "getTranslatorEngine",
+          "lineNumber": 26
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "getTranslatorLanguage",
+          "lineNumber": 27
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "isSpellcheckEnabled",
+          "lineNumber": 30
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "getDefaultSpellcheckerLanguage",
+          "lineNumber": 31
+        },
+        {
+          "caller": "setupContextMenu",
+          "callee": "getSpellcheckerLanguage",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/webview/contextMenuBuilder.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1093,
+      "nonEmptyLines": 980,
+      "functions": [
+        {
+          "name": "initializeTranslationCache",
+          "startLine": 47,
+          "endLine": 54,
+          "params": []
+        },
+        {
+          "name": "getTranslatedTextSync",
+          "startLine": 60,
+          "endLine": 77,
+          "params": [
+            "key",
+            "fallback"
+          ]
+        },
+        {
+          "name": "matchesWord",
+          "startLine": 79,
+          "endLine": 84,
+          "params": [
+            "string"
+          ]
+        },
+        {
+          "name": "childOf",
+          "startLine": 86,
+          "endLine": 93,
+          "params": [
+            "node",
+            "ancestor"
+          ]
+        },
+        {
+          "name": "translatePopup",
+          "startLine": 95,
+          "endLine": 161,
+          "params": [
+            "res",
+            "isError"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ContextMenuBuilder",
+          "startLine": 259,
+          "endLine": 1093,
+          "methods": [
+            "constructor",
+            "setAlternateStringFormatter",
+            "showPopupMenu",
+            "buildMenuForElement",
+            "buildMenuForTextInput",
+            "buildMenuForLink",
+            "buildMenuForText",
+            "buildMenuForImage",
+            "buildMenuForVideo",
+            "addSpellingItems",
+            "addSearchItems",
+            "addTranslateItems",
+            "isSrcUrlValid",
+            "addImageItems",
+            "addCut",
+            "addCopy",
+            "addPaste",
+            "addPastePlain",
+            "addSeparator",
+            "addInspectElement",
+            "convertImageToBase64",
+            "goBack",
+            "goForward",
+            "copyPageUrl",
+            "goToHomePage",
+            "openInBrowser",
+            "openInFerdium",
+            "_sendNotificationOnClipboardEvent"
+          ],
+          "properties": [
+            "debugMode",
+            "processMenu",
+            "menu",
+            "stringTable",
+            "getWebContents"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ContextMenuBuilder",
+          "line": 259,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "initializeTranslationCache",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 48
+        },
+        {
+          "caller": "initializeTranslationCache",
+          "callee": "ipcRenderer.once",
+          "lineNumber": 49
+        },
+        {
+          "caller": "initializeTranslationCache",
+          "callee": "localStorage.setItem",
+          "lineNumber": 52
+        },
+        {
+          "caller": "initializeTranslationCache",
+          "callee": "JSON.stringify",
+          "lineNumber": 52
+        },
+        {
+          "caller": "getTranslatedTextSync",
+          "callee": "localStorage.getItem",
+          "lineNumber": 68
+        },
+        {
+          "caller": "getTranslatedTextSync",
+          "callee": "JSON.parse",
+          "lineNumber": 70
+        },
+        {
+          "caller": "matchesWord",
+          "callee": "string.match",
+          "lineNumber": 83
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.querySelector",
+          "lineNumber": 96
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "elementExists.remove",
+          "lineNumber": 98
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.createElement",
+          "lineNumber": 101
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.head.append",
+          "lineNumber": 141
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.createElement",
+          "lineNumber": 143
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.createTextNode",
+          "lineNumber": 145
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "para.append",
+          "lineNumber": 146
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.createElement",
+          "lineNumber": 148
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "div.setAttribute",
+          "lineNumber": 149
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "div.setAttribute",
+          "lineNumber": 150
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "div.append",
+          "lineNumber": 152
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.body.insertBefore",
+          "lineNumber": 154
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "document.addEventListener",
+          "lineNumber": 156
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "childOf",
+          "lineNumber": 157
+        },
+        {
+          "caller": "translatePopup",
+          "callee": "div.remove",
+          "lineNumber": 158
+        },
+        {
+          "caller": "setAlternateStringFormatter",
+          "callee": "Object.assign",
+          "lineNumber": 302
+        },
+        {
+          "caller": "showPopupMenu",
+          "callee": "this.buildMenuForElement",
+          "lineNumber": 312
+        },
+        {
+          "caller": "showPopupMenu",
+          "callee": "menu.popup",
+          "lineNumber": 314
+        },
+        {
+          "caller": "buildMenuForElement",
+          "callee": "this.buildMenuForLink",
+          "lineNumber": 326
+        },
+        {
+          "caller": "buildMenuForElement",
+          "callee": "this.buildMenuForImage",
+          "lineNumber": 330
+        },
+        {
+          "caller": "buildMenuForElement",
+          "callee": "this.buildMenuForVideo",
+          "lineNumber": 334
+        },
+        {
+          "caller": "buildMenuForElement",
+          "callee": "this.buildMenuForTextInput",
+          "lineNumber": 348
+        },
+        {
+          "caller": "buildMenuForElement",
+          "callee": "this.buildMenuForText",
+          "lineNumber": 351
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addSpellingItems",
+          "lineNumber": 366
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addSearchItems",
+          "lineNumber": 367
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addTranslateItems",
+          "lineNumber": 369
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addCut",
+          "lineNumber": 372
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addCopy",
+          "lineNumber": 373
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addPaste",
+          "lineNumber": 374
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addPastePlain",
+          "lineNumber": 375
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addInspectElement",
+          "lineNumber": 376
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.processMenu",
+          "lineNumber": 377
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addSeparator",
+          "lineNumber": 378
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.copyPageUrl",
+          "lineNumber": 379
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addSeparator",
+          "lineNumber": 380
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.openInBrowser",
+          "lineNumber": 381
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.openInFerdium",
+          "lineNumber": 382
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.addSeparator",
+          "lineNumber": 383
+        },
+        {
+          "caller": "buildMenuForTextInput",
+          "callee": "this.goToHomePage",
+          "lineNumber": 384
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "menuInfo.linkURL.startsWith",
+          "lineNumber": 398
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.stringTable.copyMail",
+          "lineNumber": 402
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.stringTable.copyLinkUrl",
+          "lineNumber": 403
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "clipboard.writeText",
+          "lineNumber": 407
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this._sendNotificationOnClipboardEvent",
+          "lineNumber": 408
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "getTranslatedTextSync(\n              'contextMenu.linkUrlCopied',\n              `Link URL copied: ${url}`,\n            ).replace",
+          "lineNumber": 411
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 411
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.stringTable.openLinkUrl",
+          "lineNumber": 420
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "openExternalUrl",
+          "lineNumber": 422
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "menu.append",
+          "lineNumber": 426
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "menu.append",
+          "lineNumber": 427
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.isSrcUrlValid",
+          "lineNumber": 429
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.addSeparator",
+          "lineNumber": 430
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.addImageItems",
+          "lineNumber": 431
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.addInspectElement",
+          "lineNumber": 434
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.processMenu",
+          "lineNumber": 435
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.addSeparator",
+          "lineNumber": 436
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.goBack",
+          "lineNumber": 437
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.goForward",
+          "lineNumber": 438
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.copyPageUrl",
+          "lineNumber": 439
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.addSeparator",
+          "lineNumber": 440
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.openInBrowser",
+          "lineNumber": 441
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.openInFerdium",
+          "lineNumber": 442
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.addSeparator",
+          "lineNumber": 443
+        },
+        {
+          "caller": "buildMenuForLink",
+          "callee": "this.goToHomePage",
+          "lineNumber": 444
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addSearchItems",
+          "lineNumber": 459
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addTranslateItems",
+          "lineNumber": 461
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addCopy",
+          "lineNumber": 463
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addInspectElement",
+          "lineNumber": 465
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.processMenu",
+          "lineNumber": 466
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addSeparator",
+          "lineNumber": 467
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.goBack",
+          "lineNumber": 468
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.goForward",
+          "lineNumber": 469
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addSeparator",
+          "lineNumber": 470
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.copyPageUrl",
+          "lineNumber": 471
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addSeparator",
+          "lineNumber": 472
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.openInBrowser",
+          "lineNumber": 473
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.openInFerdium",
+          "lineNumber": 474
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.addSeparator",
+          "lineNumber": 475
+        },
+        {
+          "caller": "buildMenuForText",
+          "callee": "this.goToHomePage",
+          "lineNumber": 476
+        },
+        {
+          "caller": "buildMenuForImage",
+          "callee": "this.isSrcUrlValid",
+          "lineNumber": 491
+        },
+        {
+          "caller": "buildMenuForImage",
+          "callee": "this.addImageItems",
+          "lineNumber": 492
+        },
+        {
+          "caller": "buildMenuForImage",
+          "callee": "this.addInspectElement",
+          "lineNumber": 494
+        },
+        {
+          "caller": "buildMenuForImage",
+          "callee": "this.processMenu",
+          "lineNumber": 495
+        },
+        {
+          "caller": "buildMenuForVideo",
+          "callee": "document.querySelectorAll",
+          "lineNumber": 509
+        },
+        {
+          "caller": "buildMenuForVideo",
+          "callee": "this.isSrcUrlValid",
+          "lineNumber": 514
+        },
+        {
+          "caller": "buildMenuForVideo",
+          "callee": "menu.append",
+          "lineNumber": 516
+        },
+        {
+          "caller": "buildMenuForVideo",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 519
+        },
+        {
+          "caller": "buildMenuForVideo",
+          "callee": "document.exitPictureInPicture",
+          "lineNumber": 527
+        },
+        {
+          "caller": "buildMenuForVideo",
+          "callee": "video.requestPictureInPicture",
+          "lineNumber": 528
+        },
+        {
+          "caller": "addSpellingItems",
+          "callee": "this.getWebContents",
+          "lineNumber": 545
+        },
+        {
+          "caller": "addSpellingItems",
+          "callee": "menu.append",
+          "lineNumber": 548
+        },
+        {
+          "caller": "addSpellingItems",
+          "callee": "webContents.replaceMisspelling",
+          "lineNumber": 552
+        },
+        {
+          "caller": "addSpellingItems",
+          "callee": "menu.append",
+          "lineNumber": 559
+        },
+        {
+          "caller": "addSpellingItems",
+          "callee": "this.stringTable.addToDictionary",
+          "lineNumber": 561
+        },
+        {
+          "caller": "addSpellingItems",
+          "callee": "webContents.session.addWordToSpellCheckerDictionary",
+          "lineNumber": 563
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "matchesWord",
+          "lineNumber": 584
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "this.getWebContents",
+          "lineNumber": 590
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "this.stringTable.lookUpDefinition",
+          "lineNumber": 593
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "menuInfo.selectionText.trim",
+          "lineNumber": 594
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "webContents.showDefinitionForSelection",
+          "lineNumber": 596
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "menu.append",
+          "lineNumber": 599
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "this.stringTable.searchWith",
+          "lineNumber": 603
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "SEARCH_ENGINE_URLS[menuInfo.searchEngine]",
+          "lineNumber": 607
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "encodeURIComponent",
+          "lineNumber": 608
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "openExternalUrl",
+          "lineNumber": 610
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "menu.append",
+          "lineNumber": 614
+        },
+        {
+          "caller": "addSearchItems",
+          "callee": "this.addSeparator",
+          "lineNumber": 615
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "matchesWord",
+          "lineNumber": 633
+        },
+        {
+          "caller": "generateTranslationItems",
+          "callee": "translatePopup",
+          "lineNumber": 642
+        },
+        {
+          "caller": "generateTranslationItems",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 643
+        },
+        {
+          "caller": "generateTranslationItems",
+          "callee": "ipcRenderer.invoke",
+          "lineNumber": 647
+        },
+        {
+          "caller": "generateTranslationItems",
+          "callee": "translatePopup",
+          "lineNumber": 653
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "Object.keys(arrayLanguagesAfterEngine).map",
+          "lineNumber": 663
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "Object.keys",
+          "lineNumber": 663
+        },
+        {
+          "caller": "getLanguageCode",
+          "callee": "Object.keys(obj).find",
+          "lineNumber": 670
+        },
+        {
+          "caller": "getLanguageCode",
+          "callee": "Object.keys",
+          "lineNumber": 670
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "this.stringTable.translateLanguage",
+          "lineNumber": 675
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "getLanguageCode",
+          "lineNumber": 679
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "generateTranslationItems",
+          "lineNumber": 683
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "menuLanguages.append",
+          "lineNumber": 686
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "getLanguageCode",
+          "lineNumber": 693
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "this.stringTable.quickTranslate",
+          "lineNumber": 698
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "generateTranslationItems",
+          "lineNumber": 702
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "this.stringTable.translate",
+          "lineNumber": 707
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "generateTranslationItems",
+          "lineNumber": 710
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "menu.append",
+          "lineNumber": 714
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "menu.append",
+          "lineNumber": 715
+        },
+        {
+          "caller": "addTranslateItems",
+          "callee": "this.addSeparator",
+          "lineNumber": 716
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this.stringTable.copyImage",
+          "lineNumber": 733
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this.convertImageToBase64",
+          "lineNumber": 735
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "clipboard.writeImage",
+          "lineNumber": 738
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "nativeImage.createFromDataURL",
+          "lineNumber": 738
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this._sendNotificationOnClipboardEvent",
+          "lineNumber": 741
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync(\n              'contextMenu.imageCopiedFromUrl',\n              `Image copied from URL: ${menuInfo.srcURL}`,\n            ).replace",
+          "lineNumber": 744
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 744
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "menu.append",
+          "lineNumber": 753
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this.stringTable.copyImageUrl",
+          "lineNumber": 756
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "clipboard.writeText",
+          "lineNumber": 758
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this._sendNotificationOnClipboardEvent",
+          "lineNumber": 759
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync(\n              'contextMenu.imageUrlCopied',\n              `Image URL copied: ${menuInfo.srcURL}`,\n            ).replace",
+          "lineNumber": 762
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 762
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "menu.append",
+          "lineNumber": 771
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "menuInfo.srcURL.startsWith",
+          "lineNumber": 775
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "menuInfo.srcURL.slice",
+          "lineNumber": 777
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this.convertImageToBase64",
+          "lineNumber": 778
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "url.pathname.slice",
+          "lineNumber": 780
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 781
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this._sendNotificationOnClipboardEvent",
+          "lineNumber": 788
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync(\n                  'contextMenu.imageDownloaded',\n                  `Image downloaded: ${urlWithoutBlob}`,\n                ).replace",
+          "lineNumber": 791
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 791
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "url.pathname.slice",
+          "lineNumber": 799
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 800
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this._sendNotificationOnClipboardEvent",
+          "lineNumber": 806
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync(\n                  'contextMenu.imageDownloaded',\n                  `Image downloaded: ${menuInfo.srcURL}`,\n                ).replace",
+          "lineNumber": 809
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 809
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "this.stringTable.downloadImage",
+          "lineNumber": 816
+        },
+        {
+          "caller": "addImageItems",
+          "callee": "menu.append",
+          "lineNumber": 820
+        },
+        {
+          "caller": "addCut",
+          "callee": "this.getWebContents",
+          "lineNumber": 831
+        },
+        {
+          "caller": "addCut",
+          "callee": "menu.append",
+          "lineNumber": 832
+        },
+        {
+          "caller": "addCut",
+          "callee": "this.stringTable.cut",
+          "lineNumber": 834
+        },
+        {
+          "caller": "addCut",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 835
+        },
+        {
+          "caller": "addCut",
+          "callee": "webContents.cut",
+          "lineNumber": 837
+        },
+        {
+          "caller": "addCopy",
+          "callee": "this.getWebContents",
+          "lineNumber": 849
+        },
+        {
+          "caller": "addCopy",
+          "callee": "menu.append",
+          "lineNumber": 850
+        },
+        {
+          "caller": "addCopy",
+          "callee": "this.stringTable.copy",
+          "lineNumber": 852
+        },
+        {
+          "caller": "addCopy",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 853
+        },
+        {
+          "caller": "addCopy",
+          "callee": "webContents.copy",
+          "lineNumber": 855
+        },
+        {
+          "caller": "addPaste",
+          "callee": "this.getWebContents",
+          "lineNumber": 867
+        },
+        {
+          "caller": "addPaste",
+          "callee": "menu.append",
+          "lineNumber": 868
+        },
+        {
+          "caller": "addPaste",
+          "callee": "this.stringTable.paste",
+          "lineNumber": 870
+        },
+        {
+          "caller": "addPaste",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 871
+        },
+        {
+          "caller": "addPaste",
+          "callee": "webContents.paste",
+          "lineNumber": 873
+        },
+        {
+          "caller": "addPastePlain",
+          "callee": "this.getWebContents",
+          "lineNumber": 887
+        },
+        {
+          "caller": "addPastePlain",
+          "callee": "menu.append",
+          "lineNumber": 888
+        },
+        {
+          "caller": "addPastePlain",
+          "callee": "this.stringTable.pasteAndMatchStyle",
+          "lineNumber": 890
+        },
+        {
+          "caller": "addPastePlain",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 891
+        },
+        {
+          "caller": "addPastePlain",
+          "callee": "webContents.pasteAndMatchStyle",
+          "lineNumber": 892
+        },
+        {
+          "caller": "addSeparator",
+          "callee": "menu.append",
+          "lineNumber": 902
+        },
+        {
+          "caller": "addInspectElement",
+          "callee": "this.getWebContents",
+          "lineNumber": 913
+        },
+        {
+          "caller": "addInspectElement",
+          "callee": "this.addSeparator",
+          "lineNumber": 915
+        },
+        {
+          "caller": "addInspectElement",
+          "callee": "menu.append",
+          "lineNumber": 917
+        },
+        {
+          "caller": "addInspectElement",
+          "callee": "this.stringTable.inspectElement",
+          "lineNumber": 919
+        },
+        {
+          "caller": "addInspectElement",
+          "callee": "webContents.inspectElement",
+          "lineNumber": 920
+        },
+        {
+          "caller": "convertImageToBase64",
+          "callee": "document.createElement",
+          "lineNumber": 941
+        },
+        {
+          "caller": "convertImageToBase64",
+          "callee": "canvas.getContext",
+          "lineNumber": 942
+        },
+        {
+          "caller": "convertImageToBase64",
+          "callee": "img.addEventListener",
+          "lineNumber": 946
+        },
+        {
+          "caller": "convertImageToBase64",
+          "callee": "ctx?.drawImage",
+          "lineNumber": 950
+        },
+        {
+          "caller": "convertImageToBase64",
+          "callee": "canvas.toDataURL",
+          "lineNumber": 952
+        },
+        {
+          "caller": "convertImageToBase64",
+          "callee": "callback",
+          "lineNumber": 954
+        },
+        {
+          "caller": "goBack",
+          "callee": "this.getWebContents",
+          "lineNumber": 965
+        },
+        {
+          "caller": "goBack",
+          "callee": "menu.append",
+          "lineNumber": 967
+        },
+        {
+          "caller": "goBack",
+          "callee": "this.stringTable.goBack",
+          "lineNumber": 969
+        },
+        {
+          "caller": "goBack",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 970
+        },
+        {
+          "caller": "goBack",
+          "callee": "webContents.navigationHistory.canGoBack",
+          "lineNumber": 971
+        },
+        {
+          "caller": "goBack",
+          "callee": "webContents.navigationHistory.goBack",
+          "lineNumber": 972
+        },
+        {
+          "caller": "goForward",
+          "callee": "this.getWebContents",
+          "lineNumber": 981
+        },
+        {
+          "caller": "goForward",
+          "callee": "menu.append",
+          "lineNumber": 982
+        },
+        {
+          "caller": "goForward",
+          "callee": "this.stringTable.goForward",
+          "lineNumber": 984
+        },
+        {
+          "caller": "goForward",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 985
+        },
+        {
+          "caller": "goForward",
+          "callee": "webContents.navigationHistory.canGoForward",
+          "lineNumber": 986
+        },
+        {
+          "caller": "goForward",
+          "callee": "webContents.navigationHistory.goForward",
+          "lineNumber": 987
+        },
+        {
+          "caller": "copyPageUrl",
+          "callee": "menu.append",
+          "lineNumber": 999
+        },
+        {
+          "caller": "copyPageUrl",
+          "callee": "this.stringTable.copyPageUrl",
+          "lineNumber": 1001
+        },
+        {
+          "caller": "copyPageUrl",
+          "callee": "clipboard.writeText",
+          "lineNumber": 1004
+        },
+        {
+          "caller": "copyPageUrl",
+          "callee": "this._sendNotificationOnClipboardEvent",
+          "lineNumber": 1005
+        },
+        {
+          "caller": "copyPageUrl",
+          "callee": "getTranslatedTextSync(\n                'contextMenu.pageUrlCopied',\n                `Page URL copied: ${window.location.href}`,\n              ).replace",
+          "lineNumber": 1008
+        },
+        {
+          "caller": "copyPageUrl",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 1008
+        },
+        {
+          "caller": "goToHomePage",
+          "callee": "menu.append",
+          "lineNumber": 1026
+        },
+        {
+          "caller": "goToHomePage",
+          "callee": "this.stringTable.goToHomePage",
+          "lineNumber": 1028
+        },
+        {
+          "caller": "goToHomePage",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 1029
+        },
+        {
+          "caller": "openInBrowser",
+          "callee": "menu.append",
+          "lineNumber": 1046
+        },
+        {
+          "caller": "openInBrowser",
+          "callee": "this.stringTable.openInBrowser",
+          "lineNumber": 1048
+        },
+        {
+          "caller": "openInBrowser",
+          "callee": "openExternalUrl",
+          "lineNumber": 1051
+        },
+        {
+          "caller": "openInFerdium",
+          "callee": "menu.append",
+          "lineNumber": 1064
+        },
+        {
+          "caller": "openInFerdium",
+          "callee": "this.stringTable.openInFerdium",
+          "lineNumber": 1066
+        },
+        {
+          "caller": "_sendNotificationOnClipboardEvent",
+          "callee": "getTranslatedTextSync",
+          "lineNumber": 1084
+        },
+        {
+          "caller": "_sendNotificationOnClipboardEvent",
+          "callee": "notificationText",
+          "lineNumber": 1089
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/darkmode.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "darkModeFilePath",
+          "startLine": 12,
+          "endLine": 14,
+          "params": [
+            "recipePath"
+          ]
+        },
+        {
+          "name": "darkModeStyleExists",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "recipePath"
+          ]
+        },
+        {
+          "name": "injectDarkModeStyle",
+          "startLine": 20,
+          "endLine": 33,
+          "params": [
+            "recipePath"
+          ]
+        },
+        {
+          "name": "removeDarkModeStyle",
+          "startLine": 35,
+          "endLine": 43,
+          "params": []
+        },
+        {
+          "name": "isDarkModeStyleInjected",
+          "startLine": 45,
+          "endLine": 47,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "darkModeStyleExists",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "injectDarkModeStyle",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "removeDarkModeStyle",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "isDarkModeStyleInjected",
+          "line": 45,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "darkModeFilePath",
+          "callee": "join",
+          "lineNumber": 13
+        },
+        {
+          "caller": "darkModeStyleExists",
+          "callee": "pathExistsSync",
+          "lineNumber": 17
+        },
+        {
+          "caller": "darkModeStyleExists",
+          "callee": "darkModeFilePath",
+          "lineNumber": 17
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "darkModeStyleExists",
+          "lineNumber": 21
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "darkModeFilePath",
+          "lineNumber": 22
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "readFileSync",
+          "lineNumber": 23
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "document.createElement",
+          "lineNumber": 24
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "data.toString",
+          "lineNumber": 26
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "debug",
+          "lineNumber": 27
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "document.querySelector('head')?.append",
+          "lineNumber": 29
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "document.querySelector",
+          "lineNumber": 29
+        },
+        {
+          "caller": "injectDarkModeStyle",
+          "callee": "debug",
+          "lineNumber": 31
+        },
+        {
+          "caller": "removeDarkModeStyle",
+          "callee": "document.querySelector",
+          "lineNumber": 36
+        },
+        {
+          "caller": "removeDarkModeStyle",
+          "callee": "style.remove",
+          "lineNumber": 39
+        },
+        {
+          "caller": "removeDarkModeStyle",
+          "callee": "debug",
+          "lineNumber": 41
+        },
+        {
+          "caller": "isDarkModeStyleInjected",
+          "callee": "document.querySelector",
+          "lineNumber": 46
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/webview/darkmode/custom.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 22,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/webview/darkmode/ignore.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/webview/dialogTitle.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 27,
+      "classes": [
+        {
+          "name": "DialogTitleHandler",
+          "startLine": 7,
+          "endLine": 35,
+          "methods": [
+            "constructor",
+            "safeGetTitle",
+            "setDialogTitle"
+          ],
+          "properties": [
+            "titleCache"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 7,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "setDialogTitle",
+          "callee": "this.safeGetTitle",
+          "lineNumber": 25
+        },
+        {
+          "caller": "setDialogTitle",
+          "callee": "debug",
+          "lineNumber": 30
+        },
+        {
+          "caller": "setDialogTitle",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 31
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/find.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "FindInPage",
+          "startLine": 23,
+          "endLine": 31,
+          "methods": [
+            "constructor",
+            "openFindWindow"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 23,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 25
+        },
+        {
+          "caller": "openFindWindow",
+          "callee": "super.openFindWindow",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/lib/RecipeWebview.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 209,
+      "nonEmptyLines": 172,
+      "classes": [
+        {
+          "name": "RecipeWebview",
+          "startLine": 10,
+          "endLine": 207,
+          "methods": [
+            "constructor",
+            "ipcRenderer",
+            "BrowserWindow",
+            "loop",
+            "setBadge",
+            "setDialogTitle",
+            "safeParseInt",
+            "isImage",
+            "injectCSS",
+            "injectJSUnsafe",
+            "handleDarkMode",
+            "onNotify",
+            "initialize",
+            "clearStorageData",
+            "releaseServiceWorkers",
+            "setAvatarImage",
+            "openNewWindow",
+            "toggleToTalk"
+          ],
+          "properties": [
+            "badgeHandler",
+            "dialogTitleHandler",
+            "notificationsHandler",
+            "sessionHandler",
+            "loopFunc",
+            "toggleToTalkFunc",
+            "darkModeHandler"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 30
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.loopFunc",
+          "lineNumber": 31
+        },
+        {
+          "caller": "constructor",
+          "callee": "debug",
+          "lineNumber": 33
+        },
+        {
+          "caller": "constructor",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 37
+        },
+        {
+          "caller": "setBadge",
+          "callee": "this.badgeHandler.setBadge",
+          "lineNumber": 77
+        },
+        {
+          "caller": "setDialogTitle",
+          "callee": "this.dialogTitleHandler.setDialogTitle",
+          "lineNumber": 88
+        },
+        {
+          "caller": "safeParseInt",
+          "callee": "safeParseInt",
+          "lineNumber": 97
+        },
+        {
+          "caller": "isImage",
+          "callee": "roles.includes",
+          "lineNumber": 114
+        },
+        {
+          "caller": "isImage",
+          "callee": "link.getAttribute",
+          "lineNumber": 117
+        },
+        {
+          "caller": "isImage",
+          "callee": "regex.test",
+          "lineNumber": 121
+        },
+        {
+          "caller": "isImage",
+          "callee": "url.split",
+          "lineNumber": 121
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "files.forEach",
+          "lineNumber": 131
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "pathExistsSync",
+          "lineNumber": 132
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "document.createElement",
+          "lineNumber": 133
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "readFileSync",
+          "lineNumber": 134
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "document.querySelector",
+          "lineNumber": 136
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "head.append",
+          "lineNumber": 139
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "debug",
+          "lineNumber": 140
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "Promise.all(\n      files.map(file => {\n        if (existsSync(file)) {\n          return readFileSync(file, 'utf8');\n        }\n        debug('Script not found', file);\n        return null;\n      }),\n    ).then",
+          "lineNumber": 147
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "Promise.all",
+          "lineNumber": 147
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "files.map",
+          "lineNumber": 148
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "existsSync",
+          "lineNumber": 149
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "readFileSync",
+          "lineNumber": 150
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "debug",
+          "lineNumber": 152
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "scripts.filter",
+          "lineNumber": 156
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "debug",
+          "lineNumber": 158
+        },
+        {
+          "caller": "injectJSUnsafe",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 159
+        },
+        {
+          "caller": "initialize",
+          "callee": "fn",
+          "lineNumber": 181
+        },
+        {
+          "caller": "clearStorageData",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 186
+        },
+        {
+          "caller": "releaseServiceWorkers",
+          "callee": "this.sessionHandler.releaseServiceWorkers",
+          "lineNumber": 193
+        },
+        {
+          "caller": "setAvatarImage",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 197
+        },
+        {
+          "caller": "openNewWindow",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 201
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/lib/Userscript.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 110,
+      "nonEmptyLines": 95,
+      "classes": [
+        {
+          "name": "Userscript",
+          "startLine": 9,
+          "endLine": 110,
+          "methods": [
+            "constructor",
+            "internal_setSettings",
+            "setBadge",
+            "setDialogTitle",
+            "injectCSSFiles",
+            "injectCSS",
+            "set",
+            "get"
+          ],
+          "properties": [
+            "recipe",
+            "controller",
+            "config",
+            "settings"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 9,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "this.internal_setSettings",
+          "lineNumber": 25
+        },
+        {
+          "caller": "internal_setSettings",
+          "callee": "cleanseJSObject",
+          "lineNumber": 39
+        },
+        {
+          "caller": "setBadge",
+          "callee": "this.recipe.setBadge",
+          "lineNumber": 49
+        },
+        {
+          "caller": "setDialogTitle",
+          "callee": "this.recipe.setDialogTitle",
+          "lineNumber": 59
+        },
+        {
+          "caller": "injectCSSFiles",
+          "callee": "this.recipe.injectCSS",
+          "lineNumber": 71
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "document.createElement",
+          "lineNumber": 81
+        },
+        {
+          "caller": "injectCSS",
+          "callee": "document.head.append",
+          "lineNumber": 83
+        },
+        {
+          "caller": "set",
+          "callee": "window.localStorage.setItem",
+          "lineNumber": 93
+        },
+        {
+          "caller": "set",
+          "callee": "JSON.stringify",
+          "lineNumber": 93
+        },
+        {
+          "caller": "get",
+          "callee": "window.localStorage.getItem",
+          "lineNumber": 104
+        },
+        {
+          "caller": "get",
+          "callee": "convertToJSON",
+          "lineNumber": 107
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/notifications.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 96,
+      "nonEmptyLines": 79,
+      "classes": [
+        {
+          "name": "NotificationsHandler",
+          "startLine": 7,
+          "endLine": 31,
+          "methods": [
+            "displayNotification"
+          ],
+          "properties": [
+            "onNotify"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationsHandler",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "notificationsClassDefinition",
+          "line": 33,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "displayNotification",
+          "callee": "debug",
+          "lineNumber": 13
+        },
+        {
+          "caller": "displayNotification",
+          "callee": "uuidV4",
+          "lineNumber": 15
+        },
+        {
+          "caller": "displayNotification",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 17
+        },
+        {
+          "caller": "displayNotification",
+          "callee": "this.onNotify",
+          "lineNumber": 19
+        },
+        {
+          "caller": "displayNotification",
+          "callee": "ipcRenderer.once",
+          "lineNumber": 26
+        },
+        {
+          "caller": "displayNotification",
+          "callee": "resolve",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/recipe.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 495,
+      "nonEmptyLines": 422,
+      "classes": [
+        {
+          "name": "RecipeController",
+          "startLine": 141,
+          "endLine": 492,
+          "methods": [
+            "constructor",
+            "spellcheckerLanguage",
+            "initialize",
+            "loadRecipeModule",
+            "loadUserFiles",
+            "openFindInPage",
+            "update",
+            "updateAppSettings",
+            "updateServiceSettings",
+            "serviceIdEcho",
+            "automaticLanguageDetection",
+            "toggleToTalk"
+          ],
+          "properties": [
+            "settings",
+            "ipcEvents",
+            "universalDarkModeInjected",
+            "recipe",
+            "userscript",
+            "hasUpdatedBeforeRecipeLoaded",
+            "findInPage"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "makeObservable",
+          "lineNumber": 175
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.initialize",
+          "lineNumber": 177
+        },
+        {
+          "caller": "spellcheckerLanguage",
+          "callee": "ifUndefined",
+          "lineNumber": 181
+        },
+        {
+          "caller": "initialize",
+          "callee": "Object.keys",
+          "lineNumber": 190
+        },
+        {
+          "caller": "initialize",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 191
+        },
+        {
+          "caller": "initialize",
+          "callee": "debug",
+          "lineNumber": 192
+        },
+        {
+          "caller": "initialize",
+          "callee": "this[this.ipcEvents[channel]]",
+          "lineNumber": 193
+        },
+        {
+          "caller": "initialize",
+          "callee": "debug",
+          "lineNumber": 197
+        },
+        {
+          "caller": "initialize",
+          "callee": "setTimeout",
+          "lineNumber": 198
+        },
+        {
+          "caller": "initialize",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 198
+        },
+        {
+          "caller": "initialize",
+          "callee": "contextMenu",
+          "lineNumber": 200
+        },
+        {
+          "caller": "initialize",
+          "callee": "autorun",
+          "lineNumber": 211
+        },
+        {
+          "caller": "initialize",
+          "callee": "this.update",
+          "lineNumber": 211
+        },
+        {
+          "caller": "initialize",
+          "callee": "document.addEventListener",
+          "lineNumber": 213
+        },
+        {
+          "caller": "initialize",
+          "callee": "window.addEventListener",
+          "lineNumber": 221
+        },
+        {
+          "caller": "initialize",
+          "callee": "e.preventDefault",
+          "lineNumber": 223
+        },
+        {
+          "caller": "initialize",
+          "callee": "e.stopPropagation",
+          "lineNumber": 224
+        },
+        {
+          "caller": "initialize",
+          "callee": "window.history.back",
+          "lineNumber": 225
+        },
+        {
+          "caller": "initialize",
+          "callee": "e.preventDefault",
+          "lineNumber": 227
+        },
+        {
+          "caller": "initialize",
+          "callee": "e.stopPropagation",
+          "lineNumber": 228
+        },
+        {
+          "caller": "initialize",
+          "callee": "window.history.forward",
+          "lineNumber": 229
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "debug",
+          "lineNumber": 235
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "join",
+          "lineNumber": 236
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "debug",
+          "lineNumber": 237
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "require.resolve",
+          "lineNumber": 240
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "existsSync",
+          "lineNumber": 248
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "require(modulePath)",
+          "lineNumber": 249
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "require",
+          "lineNumber": 249
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "debug",
+          "lineNumber": 250
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "Object.assign",
+          "lineNumber": 253
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "this.update",
+          "lineNumber": 256
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "console.error",
+          "lineNumber": 258
+        },
+        {
+          "caller": "loadRecipeModule",
+          "callee": "this.loadUserFiles",
+          "lineNumber": 261
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "document.createElement",
+          "lineNumber": 265
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "join",
+          "lineNumber": 267
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "pathExistsSync",
+          "lineNumber": 268
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "readFileSync",
+          "lineNumber": 269
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "data.toString",
+          "lineNumber": 270
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "debug",
+          "lineNumber": 271
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "document.querySelector('head')?.append",
+          "lineNumber": 273
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "document.querySelector",
+          "lineNumber": 273
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "join",
+          "lineNumber": 275
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "pathExistsSync",
+          "lineNumber": 276
+        },
+        {
+          "caller": "loadUserJs",
+          "callee": "require",
+          "lineNumber": 278
+        },
+        {
+          "caller": "loadUserJs",
+          "callee": "userJsModule",
+          "lineNumber": 282
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "document.addEventListener",
+          "lineNumber": 287
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "loadUserJs",
+          "lineNumber": 288
+        },
+        {
+          "caller": "loadUserFiles",
+          "callee": "loadUserJs",
+          "lineNumber": 291
+        },
+        {
+          "caller": "openFindInPage",
+          "callee": "this.findInPage?.openFindWindow",
+          "lineNumber": 297
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 301
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 302
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 303
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 307
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 311
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 312
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 313
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 314
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 315
+        },
+        {
+          "caller": "update",
+          "callee": "this.userscript.internal_setSettings",
+          "lineNumber": 318
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 323
+        },
+        {
+          "caller": "update",
+          "callee": "spellcheckerLanguage.includes",
+          "lineNumber": 324
+        },
+        {
+          "caller": "update",
+          "callee": "this.automaticLanguageDetection",
+          "lineNumber": 325
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 326
+        },
+        {
+          "caller": "update",
+          "callee": "switchDict",
+          "lineNumber": 332
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 334
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 341
+        },
+        {
+          "caller": "update",
+          "callee": "injectDarkModeStyle",
+          "lineNumber": 354
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 359
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 363
+        },
+        {
+          "caller": "update",
+          "callee": "removeDarkModeStyle",
+          "lineNumber": 368
+        },
+        {
+          "caller": "update",
+          "callee": "disableDarkMode",
+          "lineNumber": 369
+        },
+        {
+          "caller": "update",
+          "callee": "this.recipe.darkModeHandler",
+          "lineNumber": 372
+        },
+        {
+          "caller": "update",
+          "callee": "darkModeStyleExists",
+          "lineNumber": 373
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 374
+        },
+        {
+          "caller": "update",
+          "callee": "injectDarkModeStyle",
+          "lineNumber": 375
+        },
+        {
+          "caller": "update",
+          "callee": "disableDarkMode",
+          "lineNumber": 378
+        },
+        {
+          "caller": "update",
+          "callee": "ignoreList.includes",
+          "lineNumber": 382
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 384
+        },
+        {
+          "caller": "update",
+          "callee": "enableDarkMode",
+          "lineNumber": 389
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 402
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 403
+        },
+        {
+          "caller": "update",
+          "callee": "removeDarkModeStyle",
+          "lineNumber": 409
+        },
+        {
+          "caller": "update",
+          "callee": "disableDarkMode",
+          "lineNumber": 410
+        },
+        {
+          "caller": "update",
+          "callee": "this.recipe.darkModeHandler",
+          "lineNumber": 413
+        },
+        {
+          "caller": "update",
+          "callee": "isDarkModeStyleInjected",
+          "lineNumber": 414
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 415
+        },
+        {
+          "caller": "update",
+          "callee": "removeDarkModeStyle",
+          "lineNumber": 416
+        },
+        {
+          "caller": "update",
+          "callee": "debug",
+          "lineNumber": 418
+        },
+        {
+          "caller": "update",
+          "callee": "disableDarkMode",
+          "lineNumber": 420
+        },
+        {
+          "caller": "update",
+          "callee": "disableDarkMode",
+          "lineNumber": 432
+        },
+        {
+          "caller": "updateAppSettings",
+          "callee": "Object.assign",
+          "lineNumber": 438
+        },
+        {
+          "caller": "updateServiceSettings",
+          "callee": "Object.assign",
+          "lineNumber": 442
+        },
+        {
+          "caller": "serviceIdEcho",
+          "callee": "debug",
+          "lineNumber": 446
+        },
+        {
+          "caller": "serviceIdEcho",
+          "callee": "event.sender.send",
+          "lineNumber": 447
+        },
+        {
+          "caller": "automaticLanguageDetection",
+          "callee": "window.addEventListener",
+          "lineNumber": 451
+        },
+        {
+          "caller": "automaticLanguageDetection",
+          "callee": "debounce",
+          "lineNumber": 453
+        },
+        {
+          "caller": "automaticLanguageDetection",
+          "callee": "debug",
+          "lineNumber": 468
+        },
+        {
+          "caller": "automaticLanguageDetection",
+          "callee": "ipcRenderer.invoke",
+          "lineNumber": 469
+        },
+        {
+          "caller": "automaticLanguageDetection",
+          "callee": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "lineNumber": 477
+        },
+        {
+          "caller": "automaticLanguageDetection",
+          "callee": "debug",
+          "lineNumber": 478
+        },
+        {
+          "caller": "automaticLanguageDetection",
+          "callee": "switchDict",
+          "lineNumber": 483
+        },
+        {
+          "caller": "toggleToTalk",
+          "callee": "this.recipe?.toggleToTalkFunc",
+          "lineNumber": 490
+        }
+      ],
+      "metrics": {
+        "importCount": 18,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/screenshare.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "getDisplayMediaSelector",
+          "startLine": 6,
+          "endLine": 23,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "getDisplayMediaSelector",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "screenShareJs",
+          "line": 25,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getDisplayMediaSelector",
+          "callee": "uuidV4",
+          "lineNumber": 8
+        },
+        {
+          "caller": "getDisplayMediaSelector",
+          "callee": "debug",
+          "lineNumber": 9
+        },
+        {
+          "caller": "getDisplayMediaSelector",
+          "callee": "ipcRenderer.sendToHost",
+          "lineNumber": 11
+        },
+        {
+          "caller": "getDisplayMediaSelector",
+          "callee": "ipcRenderer.once",
+          "lineNumber": 15
+        },
+        {
+          "caller": "getDisplayMediaSelector",
+          "callee": "reject",
+          "lineNumber": 17
+        },
+        {
+          "caller": "getDisplayMediaSelector",
+          "callee": "resolve",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/webview/sessionHandler.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "SessionHandler",
+          "startLine": 3,
+          "endLine": 16,
+          "methods": [
+            "releaseServiceWorkers"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "default",
+          "line": 3,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "releaseServiceWorkers",
+          "callee": "window.navigator.serviceWorker.getRegistrations",
+          "lineNumber": 7
+        },
+        {
+          "caller": "releaseServiceWorkers",
+          "callee": "registration.unregister",
+          "lineNumber": 9
+        },
+        {
+          "caller": "releaseServiceWorkers",
+          "callee": "debug",
+          "lineNumber": 10
+        },
+        {
+          "caller": "releaseServiceWorkers",
+          "callee": "debug",
+          "lineNumber": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/webview/spellchecker.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 24,
+      "functions": [
+        {
+          "name": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "startLine": 7,
+          "endLine": 15,
+          "params": [
+            "identifier"
+          ]
+        },
+        {
+          "name": "switchDict",
+          "startLine": 17,
+          "endLine": 29,
+          "params": [
+            "fuzzyLocale",
+            "serviceId"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "switchDict",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "callee": "Object.keys(SPELLCHECKER_LOCALES).filter",
+          "lineNumber": 8
+        },
+        {
+          "caller": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "callee": "Object.keys",
+          "lineNumber": 8
+        },
+        {
+          "caller": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "callee": "key.toLocaleLowerCase",
+          "lineNumber": 10
+        },
+        {
+          "caller": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "callee": "identifier.toLowerCase",
+          "lineNumber": 10
+        },
+        {
+          "caller": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "callee": "key.split",
+          "lineNumber": 11
+        },
+        {
+          "caller": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "callee": "identifier.toLowerCase",
+          "lineNumber": 11
+        },
+        {
+          "caller": "switchDict",
+          "callee": "debug",
+          "lineNumber": 19
+        },
+        {
+          "caller": "switchDict",
+          "callee": "debug",
+          "lineNumber": 23
+        },
+        {
+          "caller": "switchDict",
+          "callee": "getSpellcheckerLocaleByFuzzyIdentifier",
+          "lineNumber": 24
+        },
+        {
+          "caller": "switchDict",
+          "callee": "debug",
+          "lineNumber": 26
+        },
+        {
+          "caller": "switchDict",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/webview/zoom.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 27,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/features/utils/FeatureStore.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 93,
+      "nonEmptyLines": 82,
+      "classes": [
+        {
+          "name": "TestFeatureStore",
+          "startLine": 15,
+          "endLine": 34,
+          "methods": [
+            "start"
+          ],
+          "properties": [
+            "count",
+            "reactionInvokedCount",
+            "_countUp",
+            "_countReaction"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "start",
+          "callee": "this._registerActions",
+          "lineNumber": 21
+        },
+        {
+          "caller": "start",
+          "callee": "createActionBindings",
+          "lineNumber": 22
+        },
+        {
+          "caller": "start",
+          "callee": "this._registerReactions",
+          "lineNumber": 24
+        },
+        {
+          "caller": "start",
+          "callee": "createReactions",
+          "lineNumber": 24
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "test/helpers/array-helpers.test.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 12,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

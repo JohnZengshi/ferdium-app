@@ -1,0 +1,172 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": ".all-contributorsrc",
+      "language": "unknown",
+      "sizeLines": 3087,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".codespellrc",
+      "language": "unknown",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".dockerignore",
+      "language": "unknown",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".eslintignore",
+      "language": "unknown",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".husky/commit-msg",
+      "language": "unknown",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".husky/pre-commit",
+      "language": "unknown",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".npmrc",
+      "language": "unknown",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".nvmrc",
+      "language": "unknown",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".prettierrc.js",
+      "language": "javascript",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "language": "markdown",
+      "sizeLines": 256,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "CLAUDE.md",
+      "language": "markdown",
+      "sizeLines": 114,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "language": "markdown",
+      "sizeLines": 12,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "language": "markdown",
+      "sizeLines": 209,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 52,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "LICENSE.md",
+      "language": "markdown",
+      "sizeLines": 202,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 527,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "SECURITY.md",
+      "language": "markdown",
+      "sizeLines": 16,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "biome.json",
+      "language": "json",
+      "sizeLines": 39,
+      "fileCategory": "config"
+    },
+    {
+      "path": "branding/Ferdium.afphoto",
+      "language": "afphoto",
+      "sizeLines": 118,
+      "fileCategory": "code"
+    },
+    {
+      "path": "branding/README.md",
+      "language": "markdown",
+      "sizeLines": 14,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "branding/darwin-20-icons-lo-res.xcf",
+      "language": "xcf",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "branding/darwin-20-icons.xcf",
+      "language": "xcf",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "branding/dmgInstaller.psd",
+      "language": "psd",
+      "sizeLines": 3104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "branding/download.psd",
+      "language": "psd",
+      "sizeLines": 363,
+      "fileCategory": "code"
+    },
+    {
+      "path": "branding/social-preview.psd",
+      "language": "psd",
+      "sizeLines": 2244,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    ".all-contributorsrc": [],
+    ".codespellrc": [],
+    ".dockerignore": [],
+    ".eslintignore": [],
+    ".husky/commit-msg": [],
+    ".husky/pre-commit": [],
+    ".npmrc": [],
+    ".nvmrc": [],
+    ".prettierrc.js": [],
+    "branding/Ferdium.afphoto": [],
+    "branding/darwin-20-icons-lo-res.xcf": [],
+    "branding/darwin-20-icons.xcf": [],
+    "branding/dmgInstaller.psd": [],
+    "branding/download.psd": [],
+    "branding/social-preview.psd": []
+  }
+}

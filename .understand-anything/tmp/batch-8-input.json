@@ -1,0 +1,307 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/containers/auth/PasswordScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/auth/SetupAssistantScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/auth/SignupScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/auth/WelcomeScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/download-manager/DownloadManagerScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/download-manager/DownloadManagerWindow.tsx",
+      "language": "typescript",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/layout/AppLayoutContainer.tsx",
+      "language": "typescript",
+      "sizeLines": 209,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/AccountScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/EditServiceScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 578,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/EditSettingsScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 1471,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/EditUserScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 157,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/InviteScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/RecipesScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 188,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/ReleaseNotesScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/ReleaseNotesWindow.tsx",
+      "language": "typescript",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/ServicesScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/SettingsWindow.tsx",
+      "language": "typescript",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/SupportScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/containers/settings/TeamScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/dev-app-update.yml",
+      "language": "yaml",
+      "sizeLines": 4,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/electron-util.ts",
+      "language": "typescript",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/Settings.ts",
+      "language": "typescript",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/deepLinking.ts",
+      "language": "typescript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/exception.ts",
+      "language": "typescript",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/electron/ipc-api/appIndicator.ts",
+      "language": "typescript",
+      "sizeLines": 92,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/containers/auth/PasswordScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Password.tsx"
+    ],
+    "src/containers/auth/SetupAssistantScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/legacy-types.ts",
+      "src/components/auth/SetupAssistant.tsx",
+      "src/helpers/async-helpers.ts"
+    ],
+    "src/containers/auth/SignupScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Signup.tsx"
+    ],
+    "src/containers/auth/WelcomeScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Welcome.tsx"
+    ],
+    "src/containers/download-manager/DownloadManagerScreen.tsx": [
+      "src/components/downloadManager/DownloadManagerDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/download-manager/DownloadManagerWindow.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/downloadManager/DownloadManagerLayout.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/layout/AppLayoutContainer.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/layout/AppLayout.tsx",
+      "src/components/layout/Sidebar.tsx",
+      "src/components/services/content/Services.tsx",
+      "src/components/ui/AppLoader/index.tsx",
+      "src/config.ts",
+      "src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "src/features/workspaces/index.ts"
+    ],
+    "src/containers/settings/AccountScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/account/AccountDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts"
+    ],
+    "src/containers/settings/EditServiceScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/mobx-form.types.ts",
+      "src/components/settings/services/EditServiceForm.tsx",
+      "src/components/settings/services/ServiceError.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/components/util/WithParams.tsx",
+      "src/config.ts",
+      "src/features/serviceProxy/index.ts",
+      "src/helpers/i18n-helpers.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/i18n/languages.ts",
+      "src/jsUtils.ts",
+      "src/lib/Form.ts",
+      "src/models/Recipe.ts",
+      "src/models/Service.ts"
+    ],
+    "src/containers/settings/EditSettingsScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/mobx-form.types.ts",
+      "src/api/apiBase.ts",
+      "src/components/settings/settings/EditSettingsForm.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/helpers/i18n-helpers.ts",
+      "src/helpers/password-helpers.ts",
+      "src/helpers/userAgent-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/i18n/languages.ts",
+      "src/jsUtils.ts",
+      "src/lib/Form.ts",
+      "src/lib/Menu.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/containers/settings/EditUserScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/@types/mobx-form.types.ts",
+      "src/components/settings/user/EditUserForm.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/containers/settings/InviteScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/auth/Invite.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/RecipesScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/recipes/RecipesDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/components/util/WithParams.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/features/communityRecipes/index.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/models/Recipe.ts",
+      "src/models/RecipePreview.ts"
+    ],
+    "src/containers/settings/ReleaseNotesScreen.tsx": [
+      "src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/ReleaseNotesWindow.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/releaseNotes/ReleaseNotesLayout.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/ServicesScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/services/ServicesDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/SettingsWindow.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/SettingsLayout.tsx",
+      "src/components/settings/navigation/SettingsNavigation.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/features/workspaces/index.ts"
+    ],
+    "src/containers/settings/SupportScreen.tsx": [
+      "src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx"
+    ],
+    "src/containers/settings/TeamScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/team/TeamDashboard.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts"
+    ],
+    "src/electron-util.ts": [],
+    "src/electron/Settings.ts": [
+      "src/environment-remote.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/electron/deepLinking.ts": [
+      "src/environment-remote.ts"
+    ],
+    "src/electron/exception.ts": [],
+    "src/electron/ipc-api/appIndicator.ts": [
+      "src/environment.ts",
+      "src/lib/Tray.ts"
+    ]
+  }
+}

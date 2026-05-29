@@ -1,0 +1,538 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/internal-server/resources/views/transfer.edge",
+      "type": "file",
+      "name": "transfer.edge",
+      "filePath": "src/internal-server/resources/views/transfer.edge",
+      "summary": "Source file: src/internal-server/resources/views/transfer.edge",
+      "tags": [
+        "edge",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "edge",
+      "sizeLines": 32
+    },
+    {
+      "id": "file:src/internal-server/start.ts",
+      "type": "file",
+      "name": "start.ts",
+      "filePath": "src/internal-server/start.ts",
+      "summary": "Exports server.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:internal-server",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 77
+    },
+    {
+      "id": "file:src/internal-server/start/app.js",
+      "type": "file",
+      "name": "app.js",
+      "filePath": "src/internal-server/start/app.js",
+      "summary": "Source file: src/internal-server/start/app.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 62
+    },
+    {
+      "id": "file:src/internal-server/start/kernel.js",
+      "type": "file",
+      "name": "kernel.js",
+      "filePath": "src/internal-server/start/kernel.js",
+      "summary": "Source file: src/internal-server/start/kernel.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 51
+    },
+    {
+      "id": "file:src/internal-server/start/migrate.js",
+      "type": "file",
+      "name": "migrate.js",
+      "filePath": "src/internal-server/start/migrate.js",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-functions"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 54
+    },
+    {
+      "id": "file:src/internal-server/start/routes.js",
+      "type": "file",
+      "name": "routes.js",
+      "filePath": "src/internal-server/start/routes.js",
+      "summary": "Defines 4 functions.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-functions"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 128
+    },
+    {
+      "id": "file:src/internal-server/test.ts",
+      "type": "file",
+      "name": "test.ts",
+      "filePath": "src/internal-server/test.ts",
+      "summary": "Source file: src/internal-server/test.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 10
+    },
+    {
+      "id": "file:src/jsUtils.ts",
+      "type": "file",
+      "name": "jsUtils.ts",
+      "filePath": "src/jsUtils.ts",
+      "summary": "Exports ifUndefined, convertToJSON, cleanseJSObject, isArrowUpKeyPress, isArrowDownKeyPress, isEnterKeyPress, isEscapeKeyPress, isShiftKeyPress, safeParseInt, acceleratorString, removeNewLines.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 48
+    },
+    {
+      "id": "file:src/lib/DBus.ts",
+      "type": "file",
+      "name": "DBus.ts",
+      "filePath": "src/lib/DBus.ts",
+      "summary": "Defines DBus.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:lib",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 129
+    },
+    {
+      "id": "file:src/lib/Form.ts",
+      "type": "file",
+      "name": "Form.ts",
+      "filePath": "src/lib/Form.ts",
+      "summary": "Defines DefaultForm.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:lib",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 45
+    },
+    {
+      "id": "file:src/lib/Menu.ts",
+      "type": "file",
+      "name": "Menu.ts",
+      "filePath": "src/lib/Menu.ts",
+      "summary": "Defines FranzMenu. Exports menuItems.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:lib",
+        "has-functions",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 1350
+    },
+    {
+      "id": "file:src/lib/TouchBar.ts",
+      "type": "file",
+      "name": "TouchBar.ts",
+      "filePath": "src/lib/TouchBar.ts",
+      "summary": "Defines FranzTouchBar.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:lib",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 62
+    },
+    {
+      "id": "file:src/lib/Tray.ts",
+      "type": "file",
+      "name": "Tray.ts",
+      "filePath": "src/lib/Tray.ts",
+      "summary": "Defines TrayIcon.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:lib",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 308
+    },
+    {
+      "id": "file:src/lib/dbus/Ferdium.ts",
+      "type": "file",
+      "name": "Ferdium.ts",
+      "filePath": "src/lib/dbus/Ferdium.ts",
+      "summary": "Defines Ferdium.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:lib",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 96
+    },
+    {
+      "id": "file:src/models/IContextMenuParams.ts",
+      "type": "file",
+      "name": "IContextMenuParams.ts",
+      "filePath": "src/models/IContextMenuParams.ts",
+      "summary": "Source file: src/models/IContextMenuParams.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:models"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 7
+    },
+    {
+      "id": "file:src/models/Recipe.ts",
+      "type": "file",
+      "name": "Recipe.ts",
+      "filePath": "src/models/Recipe.ts",
+      "summary": "Defines Recipe.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:models",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 205
+    },
+    {
+      "id": "file:src/models/RecipePreview.ts",
+      "type": "file",
+      "name": "RecipePreview.ts",
+      "filePath": "src/models/RecipePreview.ts",
+      "summary": "Defines RecipePreview.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:models",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 41
+    },
+    {
+      "id": "file:src/models/Service.ts",
+      "type": "file",
+      "name": "Service.ts",
+      "filePath": "src/models/Service.ts",
+      "summary": "Defines Service.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:models",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 690
+    },
+    {
+      "id": "file:src/models/User.ts",
+      "type": "file",
+      "name": "User.ts",
+      "filePath": "src/models/User.ts",
+      "summary": "Defines User.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:models",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 67
+    },
+    {
+      "id": "file:src/models/UserAgent.ts",
+      "type": "file",
+      "name": "UserAgent.ts",
+      "filePath": "src/models/UserAgent.ts",
+      "summary": "Defines UserAgent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:models",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 105
+    },
+    {
+      "id": "file:src/preload-safe-debug.ts",
+      "type": "file",
+      "name": "preload-safe-debug.ts",
+      "filePath": "src/preload-safe-debug.ts",
+      "summary": "Source file: src/preload-safe-debug.ts",
+      "tags": [
+        "typescript",
+        "source"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 32
+    },
+    {
+      "id": "file:src/prop-types.ts",
+      "type": "file",
+      "name": "prop-types.ts",
+      "filePath": "src/prop-types.ts",
+      "summary": "Exports oneOrManyChildElements, globalError.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 13
+    },
+    {
+      "id": "file:src/routes.tsx",
+      "type": "file",
+      "name": "routes.tsx",
+      "filePath": "src/routes.tsx",
+      "summary": "Defines FerdiumRoutes.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 204
+    },
+    {
+      "id": "file:src/sentry.ts",
+      "type": "file",
+      "name": "sentry.ts",
+      "filePath": "src/sentry.ts",
+      "summary": "Source file: src/sentry.ts",
+      "tags": [
+        "typescript",
+        "source"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 5
+    },
+    {
+      "id": "file:src/stores/AppStore.ts",
+      "type": "file",
+      "name": "AppStore.ts",
+      "filePath": "src/stores/AppStore.ts",
+      "summary": "Defines AppStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:stores",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 863
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/internal-server/start/migrate.js",
+      "target": "file:src/jsUtils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/jsUtils.ts"
+    },
+    {
+      "source": "file:src/internal-server/start/routes.js",
+      "target": "file:src/internal-server/start/migrate.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/internal-server/start/migrate.js"
+    },
+    {
+      "source": "file:src/internal-server/test.ts",
+      "target": "file:src/internal-server/start.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/internal-server/start.ts"
+    },
+    {
+      "source": "file:src/lib/DBus.ts",
+      "target": "file:src/lib/Tray.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/lib/Tray.ts"
+    },
+    {
+      "source": "file:src/lib/DBus.ts",
+      "target": "file:src/lib/dbus/Ferdium.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/lib/dbus/Ferdium.ts"
+    },
+    {
+      "source": "file:src/lib/Menu.ts",
+      "target": "file:src/jsUtils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/jsUtils.ts"
+    },
+    {
+      "source": "file:src/lib/Menu.ts",
+      "target": "file:src/models/Service.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/models/Service.ts"
+    },
+    {
+      "source": "file:src/lib/dbus/Ferdium.ts",
+      "target": "file:src/lib/DBus.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/lib/DBus.ts"
+    },
+    {
+      "source": "file:src/models/Recipe.ts",
+      "target": "file:src/jsUtils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/jsUtils.ts"
+    },
+    {
+      "source": "file:src/models/Service.ts",
+      "target": "file:src/jsUtils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/jsUtils.ts"
+    },
+    {
+      "source": "file:src/models/Service.ts",
+      "target": "file:src/models/Recipe.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/models/Recipe.ts"
+    },
+    {
+      "source": "file:src/models/Service.ts",
+      "target": "file:src/models/UserAgent.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/models/UserAgent.ts"
+    },
+    {
+      "source": "file:src/models/Service.ts",
+      "target": "file:src/preload-safe-debug.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/preload-safe-debug.ts"
+    },
+    {
+      "source": "file:src/models/UserAgent.ts",
+      "target": "file:src/preload-safe-debug.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/preload-safe-debug.ts"
+    },
+    {
+      "source": "file:src/stores/AppStore.ts",
+      "target": "file:src/jsUtils.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/jsUtils.ts"
+    },
+    {
+      "source": "file:src/stores/AppStore.ts",
+      "target": "file:src/preload-safe-debug.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/preload-safe-debug.ts"
+    }
+  ]
+}

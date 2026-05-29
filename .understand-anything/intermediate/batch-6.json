@@ -1,0 +1,513 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/components/ui/FAB.tsx",
+      "type": "file",
+      "name": "FAB.tsx",
+      "filePath": "src/components/ui/FAB.tsx",
+      "summary": "Defines Button.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 47
+    },
+    {
+      "id": "file:src/components/ui/FullscreenLoader/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/FullscreenLoader/index.tsx",
+      "summary": "Defines FullscreenLoader.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 52
+    },
+    {
+      "id": "file:src/components/ui/FullscreenLoader/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/components/ui/FullscreenLoader/styles.ts",
+      "summary": "Source file: src/components/ui/FullscreenLoader/styles.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 24
+    },
+    {
+      "id": "file:src/components/ui/InfoBar.tsx",
+      "type": "file",
+      "name": "InfoBar.tsx",
+      "filePath": "src/components/ui/InfoBar.tsx",
+      "summary": "Defines InfoBar.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 104
+    },
+    {
+      "id": "file:src/components/ui/Infobox.tsx",
+      "type": "file",
+      "name": "Infobox.tsx",
+      "filePath": "src/components/ui/Infobox.tsx",
+      "summary": "Defines Infobox.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 124
+    },
+    {
+      "id": "file:src/components/ui/Link.tsx",
+      "type": "file",
+      "name": "Link.tsx",
+      "filePath": "src/components/ui/Link.tsx",
+      "summary": "Defines Link.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 74
+    },
+    {
+      "id": "file:src/components/ui/Modal/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/Modal/index.tsx",
+      "summary": "Defines Modal.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 58
+    },
+    {
+      "id": "file:src/components/ui/Modal/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/components/ui/Modal/styles.ts",
+      "summary": "Source file: src/components/ui/Modal/styles.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 33
+    },
+    {
+      "id": "file:src/components/ui/Radio.tsx",
+      "type": "file",
+      "name": "Radio.tsx",
+      "filePath": "src/components/ui/Radio.tsx",
+      "summary": "Defines Radio.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 76
+    },
+    {
+      "id": "file:src/components/ui/SearchInput.tsx",
+      "type": "file",
+      "name": "SearchInput.tsx",
+      "filePath": "src/components/ui/SearchInput.tsx",
+      "summary": "Defines SearchInput.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 111
+    },
+    {
+      "id": "file:src/components/ui/Select.tsx",
+      "type": "file",
+      "name": "Select.tsx",
+      "filePath": "src/components/ui/Select.tsx",
+      "summary": "Defines Select.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 111
+    },
+    {
+      "id": "file:src/components/ui/ServiceIcon.tsx",
+      "type": "file",
+      "name": "ServiceIcon.tsx",
+      "filePath": "src/components/ui/ServiceIcon.tsx",
+      "summary": "Defines ServiceIcon.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 52
+    },
+    {
+      "id": "file:src/components/ui/Slider.tsx",
+      "type": "file",
+      "name": "Slider.tsx",
+      "filePath": "src/components/ui/Slider.tsx",
+      "summary": "Defines Slider.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 69
+    },
+    {
+      "id": "file:src/components/ui/StatusBarTargetUrl.tsx",
+      "type": "file",
+      "name": "StatusBarTargetUrl.tsx",
+      "filePath": "src/components/ui/StatusBarTargetUrl.tsx",
+      "summary": "Defines StatusBarTargetUrl.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 30
+    },
+    {
+      "id": "file:src/components/ui/Tabs/TabItem.tsx",
+      "type": "file",
+      "name": "TabItem.tsx",
+      "filePath": "src/components/ui/Tabs/TabItem.tsx",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "react-component"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 19
+    },
+    {
+      "id": "file:src/components/ui/Tabs/Tabs.tsx",
+      "type": "file",
+      "name": "Tabs.tsx",
+      "filePath": "src/components/ui/Tabs/Tabs.tsx",
+      "summary": "Defines Tab.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 85
+    },
+    {
+      "id": "file:src/components/ui/WebviewLoader/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/WebviewLoader/index.tsx",
+      "summary": "Defines WebviewLoader.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 48
+    },
+    {
+      "id": "file:src/components/ui/badge/ProBadge.tsx",
+      "type": "file",
+      "name": "ProBadge.tsx",
+      "filePath": "src/components/ui/badge/ProBadge.tsx",
+      "summary": "Defines ProBadgeComponent. Exports ProBadge.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "has-exports",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 65
+    },
+    {
+      "id": "file:src/components/ui/badge/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/badge/index.tsx",
+      "summary": "Defines BadgeComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 66
+    },
+    {
+      "id": "file:src/components/ui/button/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/button/index.tsx",
+      "summary": "Defines ButtonComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 247
+    },
+    {
+      "id": "file:src/components/ui/colorPickerInput/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/colorPickerInput/index.tsx",
+      "summary": "Defines ColorPickerInput.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 71
+    },
+    {
+      "id": "file:src/components/ui/effects/Appear.tsx",
+      "type": "file",
+      "name": "Appear.tsx",
+      "filePath": "src/components/ui/effects/Appear.tsx",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 43
+    },
+    {
+      "id": "file:src/components/ui/error/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/error/index.tsx",
+      "summary": "Defines ErrorComponent.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 20
+    },
+    {
+      "id": "file:src/components/ui/error/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/components/ui/error/styles.ts",
+      "summary": "Source file: src/components/ui/error/styles.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 9
+    },
+    {
+      "id": "file:src/components/ui/headline/index.tsx",
+      "type": "file",
+      "name": "index.tsx",
+      "filePath": "src/components/ui/headline/index.tsx",
+      "summary": "Defines HeadlineComponent. Exports H1, H2, H3, H4, H5.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:components",
+        "has-functions",
+        "has-classes",
+        "has-exports",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 80
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/components/ui/FullscreenLoader/index.tsx",
+      "target": "file:src/components/ui/FullscreenLoader/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/FullscreenLoader/styles.ts"
+    },
+    {
+      "source": "file:src/components/ui/FullscreenLoader/index.tsx",
+      "target": "file:src/components/ui/headline/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/headline/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/InfoBar.tsx",
+      "target": "file:src/components/ui/effects/Appear.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/effects/Appear.tsx"
+    },
+    {
+      "source": "file:src/components/ui/Modal/index.tsx",
+      "target": "file:src/components/ui/Modal/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/Modal/styles.ts"
+    },
+    {
+      "source": "file:src/components/ui/Radio.tsx",
+      "target": "file:src/components/ui/error/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/error/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/StatusBarTargetUrl.tsx",
+      "target": "file:src/components/ui/effects/Appear.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/effects/Appear.tsx"
+    },
+    {
+      "source": "file:src/components/ui/Tabs/Tabs.tsx",
+      "target": "file:src/components/ui/Tabs/TabItem.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/Tabs/TabItem.tsx"
+    },
+    {
+      "source": "file:src/components/ui/WebviewLoader/index.tsx",
+      "target": "file:src/components/ui/FullscreenLoader/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/FullscreenLoader/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/badge/ProBadge.tsx",
+      "target": "file:src/components/ui/badge/index.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/badge/index.tsx"
+    },
+    {
+      "source": "file:src/components/ui/error/index.tsx",
+      "target": "file:src/components/ui/error/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/components/ui/error/styles.ts"
+    }
+  ]
+}

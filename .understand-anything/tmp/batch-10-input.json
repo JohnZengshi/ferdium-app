@@ -1,0 +1,284 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/features/publishDebugInfo/index.ts",
+      "language": "typescript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/publishDebugInfo/store.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/quickSwitch/Component.tsx",
+      "language": "typescript",
+      "sizeLines": 358,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/quickSwitch/index.ts",
+      "language": "typescript",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/quickSwitch/store.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/serviceProxy/index.ts",
+      "language": "typescript",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/todos/actions.ts",
+      "language": "typescript",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/todos/components/TodosWebview.tsx",
+      "language": "typescript",
+      "sizeLines": 248,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/todos/constants.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/todos/containers/TodosScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/todos/index.ts",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/todos/preload.ts",
+      "language": "typescript",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/todos/store.ts",
+      "language": "typescript",
+      "sizeLines": 333,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/utils/ActionBinding.ts",
+      "language": "typescript",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/utils/FeatureStore.ts",
+      "language": "typescript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/webControls/components/WebControls.tsx",
+      "language": "typescript",
+      "sizeLines": 265,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/webControls/containers/WebControlsScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 174,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/actions.ts",
+      "language": "typescript",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/api.ts",
+      "language": "typescript",
+      "sizeLines": 89,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/components/CreateWorkspaceForm.tsx",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/components/EditWorkspaceForm.tsx",
+      "language": "typescript",
+      "sizeLines": 256,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceDrawer.tsx",
+      "language": "typescript",
+      "sizeLines": 261,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceDrawerItem.tsx",
+      "language": "typescript",
+      "sizeLines": 213,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceItem.tsx",
+      "language": "typescript",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/features/workspaces/components/WorkspaceServiceListItem.tsx",
+      "language": "typescript",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/features/publishDebugInfo/index.ts": [
+      "src/features/publishDebugInfo/store.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/publishDebugInfo/store.ts": [],
+    "src/features/quickSwitch/Component.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/features/quickSwitch/store.ts",
+      "src/models/Service.ts"
+    ],
+    "src/features/quickSwitch/index.ts": [
+      "src/features/quickSwitch/store.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/quickSwitch/store.ts": [],
+    "src/features/serviceProxy/index.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/todos/actions.ts": [
+      "src/actions/lib/actions.ts"
+    ],
+    "src/features/todos/components/TodosWebview.tsx": [
+      "src/config.ts",
+      "src/features/todos/actions.ts"
+    ],
+    "src/features/todos/constants.ts": [],
+    "src/features/todos/containers/TodosScreen.tsx": [
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/config.ts",
+      "src/features/todos/actions.ts",
+      "src/features/todos/components/TodosWebview.tsx",
+      "src/features/todos/index.ts",
+      "src/stores/index.ts"
+    ],
+    "src/features/todos/index.ts": [
+      "src/features/todos/store.ts"
+    ],
+    "src/features/todos/preload.ts": [
+      "src/features/todos/constants.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/features/todos/store.ts": [
+      "src/actions/lib/actions.ts",
+      "src/config.ts",
+      "src/features/todos/actions.ts",
+      "src/features/todos/constants.ts",
+      "src/features/utils/ActionBinding.ts",
+      "src/features/utils/FeatureStore.ts",
+      "src/helpers/url-helpers.ts",
+      "src/jsUtils.ts",
+      "src/models/UserAgent.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/Reaction.ts",
+      "src/themes/index.ts"
+    ],
+    "src/features/utils/ActionBinding.ts": [],
+    "src/features/utils/FeatureStore.ts": [
+      "src/stores/lib/Reaction.ts"
+    ],
+    "src/features/webControls/components/WebControls.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/features/webControls/containers/WebControlsScreen.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/config.ts",
+      "src/features/webControls/components/WebControls.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/features/workspaces/actions.ts": [
+      "src/actions/lib/actions.ts",
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/api.ts": [
+      "src/api/apiBase.ts",
+      "src/api/utils/auth.ts",
+      "src/features/workspaces/models/Workspace.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/Request.ts"
+    ],
+    "src/features/workspaces/components/CreateWorkspaceForm.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/features/workspaces/index.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/features/workspaces/components/EditWorkspaceForm.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/infobox/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/config.ts",
+      "src/features/workspaces/components/WorkspaceServiceListItem.tsx",
+      "src/features/workspaces/models/Workspace.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts",
+      "src/models/Service.ts",
+      "src/stores/lib/Request.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceDrawer.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/features/workspaces/actions.ts",
+      "src/features/workspaces/api.ts",
+      "src/features/workspaces/components/WorkspaceDrawerItem.tsx",
+      "src/features/workspaces/index.ts",
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceDrawerItem.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceItem.tsx": [
+      "src/features/workspaces/models/Workspace.ts"
+    ],
+    "src/features/workspaces/components/WorkspaceServiceListItem.tsx": [
+      "src/components/ui/ServiceIcon.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/models/Service.ts"
+    ]
+  }
+}

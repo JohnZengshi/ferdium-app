@@ -1,0 +1,578 @@
+{
+  "nodes": [
+    {
+      "id": "markup:src/styles/vertical.scss",
+      "type": "markup",
+      "name": "vertical.scss",
+      "filePath": "src/styles/vertical.scss",
+      "summary": "Markup: src/styles/vertical.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 120
+    },
+    {
+      "id": "markup:src/styles/welcome.scss",
+      "type": "markup",
+      "name": "welcome.scss",
+      "filePath": "src/styles/welcome.scss",
+      "summary": "Markup: src/styles/welcome.scss",
+      "tags": [
+        "css",
+        "source",
+        "src:styles"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 137
+    },
+    {
+      "id": "file:src/themes/IStyleTypes.ts",
+      "type": "file",
+      "name": "IStyleTypes.ts",
+      "filePath": "src/themes/IStyleTypes.ts",
+      "summary": "Source file: src/themes/IStyleTypes.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:themes"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 7
+    },
+    {
+      "id": "file:src/themes/dark/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/themes/dark/index.ts",
+      "summary": "Source file: src/themes/dark/index.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:themes"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 173
+    },
+    {
+      "id": "file:src/themes/default/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/themes/default/index.ts",
+      "summary": "Source file: src/themes/default/index.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:themes"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 254
+    },
+    {
+      "id": "file:src/themes/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/themes/index.ts",
+      "summary": "Exports theme.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:themes",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 22
+    },
+    {
+      "id": "file:src/themes/legacy/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/themes/legacy/index.ts",
+      "summary": "Exports themeBrandPrimary, themeBrandInfo, themeGrayDark, themeGray, themeGrayLight, themeGrayLighter, themeGrayLightest, themeBorderRadius, themeBorderRadiusSmall, darkThemeBlack, darkThemeGrayDarkest, darkThemeGrayDarker, darkThemeGrayDark, darkThemeGray, darkThemeGrayLight, darkThemeGrayLighter, darkThemeGrayLightest, darkThemeGraySmoke, darkThemeTextColor.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:themes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 28
+    },
+    {
+      "id": "file:src/webview/badge.ts",
+      "type": "file",
+      "name": "badge.ts",
+      "filePath": "src/webview/badge.ts",
+      "summary": "Defines BadgeHandler.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 19
+    },
+    {
+      "id": "file:src/webview/contextMenu.ts",
+      "type": "file",
+      "name": "contextMenu.ts",
+      "filePath": "src/webview/contextMenu.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 35
+    },
+    {
+      "id": "file:src/webview/contextMenuBuilder.ts",
+      "type": "file",
+      "name": "contextMenuBuilder.ts",
+      "filePath": "src/webview/contextMenuBuilder.ts",
+      "summary": "Defines ContextMenuBuilder. Exports ContextMenuBuilder.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-functions",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 1093
+    },
+    {
+      "id": "file:src/webview/darkmode.ts",
+      "type": "file",
+      "name": "darkmode.ts",
+      "filePath": "src/webview/darkmode.ts",
+      "summary": "Exports darkModeStyleExists, injectDarkModeStyle, removeDarkModeStyle, isDarkModeStyleInjected.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 47
+    },
+    {
+      "id": "file:src/webview/darkmode/custom.ts",
+      "type": "file",
+      "name": "custom.ts",
+      "filePath": "src/webview/darkmode/custom.ts",
+      "summary": "Source file: src/webview/darkmode/custom.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 22
+    },
+    {
+      "id": "file:src/webview/darkmode/ignore.ts",
+      "type": "file",
+      "name": "ignore.ts",
+      "filePath": "src/webview/darkmode/ignore.ts",
+      "summary": "Source file: src/webview/darkmode/ignore.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 1
+    },
+    {
+      "id": "file:src/webview/dialogTitle.ts",
+      "type": "file",
+      "name": "dialogTitle.ts",
+      "filePath": "src/webview/dialogTitle.ts",
+      "summary": "Defines DialogTitleHandler.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 35
+    },
+    {
+      "id": "file:src/webview/find.ts",
+      "type": "file",
+      "name": "find.ts",
+      "filePath": "src/webview/find.ts",
+      "summary": "Defines FindInPage.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 31
+    },
+    {
+      "id": "file:src/webview/lib/RecipeWebview.ts",
+      "type": "file",
+      "name": "RecipeWebview.ts",
+      "filePath": "src/webview/lib/RecipeWebview.ts",
+      "summary": "Defines RecipeWebview.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 209
+    },
+    {
+      "id": "file:src/webview/lib/Userscript.ts",
+      "type": "file",
+      "name": "Userscript.ts",
+      "filePath": "src/webview/lib/Userscript.ts",
+      "summary": "Defines Userscript.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 110
+    },
+    {
+      "id": "file:src/webview/notifications.ts",
+      "type": "file",
+      "name": "notifications.ts",
+      "filePath": "src/webview/notifications.ts",
+      "summary": "Defines NotificationsHandler. Exports NotificationsHandler, notificationsClassDefinition.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 96
+    },
+    {
+      "id": "file:src/webview/recipe.ts",
+      "type": "file",
+      "name": "recipe.ts",
+      "filePath": "src/webview/recipe.ts",
+      "summary": "Defines RecipeController.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 495
+    },
+    {
+      "id": "file:src/webview/screenshare.ts",
+      "type": "file",
+      "name": "screenshare.ts",
+      "filePath": "src/webview/screenshare.ts",
+      "summary": "Exports getDisplayMediaSelector, screenShareJs.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 43
+    },
+    {
+      "id": "file:src/webview/sessionHandler.ts",
+      "type": "file",
+      "name": "sessionHandler.ts",
+      "filePath": "src/webview/sessionHandler.ts",
+      "summary": "Defines SessionHandler.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 16
+    },
+    {
+      "id": "file:src/webview/spellchecker.ts",
+      "type": "file",
+      "name": "spellchecker.ts",
+      "filePath": "src/webview/spellchecker.ts",
+      "summary": "Exports getSpellcheckerLocaleByFuzzyIdentifier, switchDict.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 29
+    },
+    {
+      "id": "file:src/webview/zoom.ts",
+      "type": "file",
+      "name": "zoom.ts",
+      "filePath": "src/webview/zoom.ts",
+      "summary": "Source file: src/webview/zoom.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:webview"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 35
+    },
+    {
+      "id": "file:test/features/utils/FeatureStore.test.ts",
+      "type": "file",
+      "name": "FeatureStore.test.ts",
+      "filePath": "test/features/utils/FeatureStore.test.ts",
+      "summary": "Defines TestFeatureStore.",
+      "tags": [
+        "typescript",
+        "test",
+        "has-classes",
+        "test-file"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 93
+    },
+    {
+      "id": "file:test/helpers/array-helpers.test.ts",
+      "type": "file",
+      "name": "array-helpers.test.ts",
+      "filePath": "test/helpers/array-helpers.test.ts",
+      "summary": "Source file: test/helpers/array-helpers.test.ts",
+      "tags": [
+        "typescript",
+        "test",
+        "test-file"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 14
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/themes/dark/index.ts",
+      "target": "file:src/themes/default/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/themes/default/index.ts"
+    },
+    {
+      "source": "file:src/themes/dark/index.ts",
+      "target": "file:src/themes/legacy/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/themes/legacy/index.ts"
+    },
+    {
+      "source": "file:src/themes/default/index.ts",
+      "target": "file:src/themes/IStyleTypes.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/themes/IStyleTypes.ts"
+    },
+    {
+      "source": "file:src/themes/default/index.ts",
+      "target": "file:src/themes/legacy/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/themes/legacy/index.ts"
+    },
+    {
+      "source": "file:src/themes/index.ts",
+      "target": "file:src/themes/dark/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/themes/dark/index.ts"
+    },
+    {
+      "source": "file:src/themes/index.ts",
+      "target": "file:src/themes/default/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/themes/default/index.ts"
+    },
+    {
+      "source": "file:src/themes/index.ts",
+      "target": "file:src/themes/legacy/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/themes/legacy/index.ts"
+    },
+    {
+      "source": "file:src/webview/contextMenu.ts",
+      "target": "file:src/webview/contextMenuBuilder.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/contextMenuBuilder.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/badge.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/badge.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/contextMenu.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/contextMenu.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/darkmode.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/darkmode.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/darkmode/custom.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/darkmode/custom.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/darkmode/ignore.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/darkmode/ignore.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/dialogTitle.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/dialogTitle.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/find.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/find.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/lib/RecipeWebview.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/lib/RecipeWebview.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/lib/Userscript.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/lib/Userscript.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/notifications.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/notifications.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/screenshare.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/screenshare.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/sessionHandler.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/sessionHandler.ts"
+    },
+    {
+      "source": "file:src/webview/recipe.ts",
+      "target": "file:src/webview/spellchecker.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/webview/spellchecker.ts"
+    }
+  ]
+}

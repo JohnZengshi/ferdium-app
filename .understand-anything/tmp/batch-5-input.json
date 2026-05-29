@@ -1,0 +1,321 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/components/services/content/Services.tsx",
+      "language": "typescript",
+      "sizeLines": 167,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/content/WebviewCrashHandler.tsx",
+      "language": "typescript",
+      "sizeLines": 95,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/content/WebviewErrorHandler.tsx",
+      "language": "typescript",
+      "sizeLines": 101,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/tabs/TabBarSortableList.tsx",
+      "language": "typescript",
+      "sizeLines": 83,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/tabs/TabItem.tsx",
+      "language": "typescript",
+      "sizeLines": 451,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/tabs/Tabbar.tsx",
+      "language": "typescript",
+      "sizeLines": 133,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/SandboxServiceTabs.tsx",
+      "language": "typescript",
+      "sizeLines": 157,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/SandboxTransferList.tsx",
+      "language": "typescript",
+      "sizeLines": 217,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/SettingsLayout.tsx",
+      "language": "typescript",
+      "sizeLines": 82,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/account/AccountDashboard.tsx",
+      "language": "typescript",
+      "sizeLines": 238,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/navigation/SettingsNavigation.tsx",
+      "language": "typescript",
+      "sizeLines": 208,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/recipes/RecipeItem.tsx",
+      "language": "typescript",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/recipes/RecipesDashboard.tsx",
+      "language": "typescript",
+      "sizeLines": 313,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx",
+      "language": "typescript",
+      "sizeLines": 94,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/releaseNotes/ReleaseNotesLayout.tsx",
+      "language": "typescript",
+      "sizeLines": 83,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/services/EditServiceForm.tsx",
+      "language": "typescript",
+      "sizeLines": 574,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/services/ServiceError.tsx",
+      "language": "typescript",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/services/ServiceItem.tsx",
+      "language": "typescript",
+      "sizeLines": 107,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/services/ServicesDashboard.tsx",
+      "language": "typescript",
+      "sizeLines": 193,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/settings/EditSettingsForm.tsx",
+      "language": "typescript",
+      "sizeLines": 1428,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx",
+      "language": "typescript",
+      "sizeLines": 98,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/team/TeamDashboard.tsx",
+      "language": "typescript",
+      "sizeLines": 216,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/settings/user/EditUserForm.tsx",
+      "language": "typescript",
+      "sizeLines": 143,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/AppLoader/index.tsx",
+      "language": "typescript",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/ui/AppLoader/styles.ts",
+      "language": "typescript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/components/services/content/Services.tsx": [
+      "src/components/services/content/ServiceView.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/services/content/WebviewCrashHandler.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx"
+    ],
+    "src/components/services/content/WebviewErrorHandler.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx"
+    ],
+    "src/components/services/tabs/TabBarSortableList.tsx": [
+      "src/components/services/tabs/TabItem.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/services/tabs/TabItem.tsx": [
+      "src/@types/stores.types.ts",
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/i18n/globalMessages.ts",
+      "src/jsUtils.ts",
+      "src/models/Service.ts"
+    ],
+    "src/components/services/tabs/Tabbar.tsx": [
+      "src/components/services/tabs/TabBarSortableList.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/SandboxServiceTabs.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/components/settings/SandboxTransferList.tsx",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/components/settings/SandboxTransferList.tsx": [
+      "src/@types/ferdium-components.types.ts"
+    ],
+    "src/components/settings/SettingsLayout.tsx": [
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/components/settings/account/AccountDashboard.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/infobox/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts",
+      "src/models/User.ts"
+    ],
+    "src/components/settings/navigation/SettingsNavigation.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/config.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/components/settings/recipes/RecipeItem.tsx": [
+      "src/models/RecipePreview.ts"
+    ],
+    "src/components/settings/recipes/RecipesDashboard.tsx": [
+      "src/components/settings/recipes/RecipeItem.tsx",
+      "src/components/ui/SearchInput.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/infobox/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts",
+      "src/models/RecipePreview.ts"
+    ],
+    "src/components/settings/releaseNotes/ReleaseNotesDashboard.tsx": [
+      "src/environment-remote.ts",
+      "src/helpers/update-helpers.ts"
+    ],
+    "src/components/settings/releaseNotes/ReleaseNotesLayout.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/components/settings/services/EditServiceForm.tsx": [
+      "src/components/ui/Select.tsx",
+      "src/components/ui/Slider.tsx",
+      "src/components/ui/Tabs/TabItem.tsx",
+      "src/components/ui/Tabs/Tabs.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/imageUpload/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/environment.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts",
+      "src/models/Recipe.ts",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/services/ServiceError.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/button/index.tsx"
+    ],
+    "src/components/settings/services/ServiceItem.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/services/ServicesDashboard.tsx": [
+      "src/components/settings/services/ServiceItem.tsx",
+      "src/components/ui/FAB.tsx",
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/SearchInput.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/models/Service.ts"
+    ],
+    "src/components/settings/settings/EditSettingsForm.tsx": [
+      "src/components/settings/SandboxServiceTabs.tsx",
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Select.tsx",
+      "src/components/ui/Slider.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/colorPickerInput/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/components/ui/toggle/index.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/helpers/update-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/components/settings/supportFerdium/SupportFerdiumDashboard.tsx": [
+      "src/config.ts"
+    ],
+    "src/components/settings/team/TeamDashboard.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/loader/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/settings/user/EditUserForm.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Radio.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/lib/Form.ts"
+    ],
+    "src/components/ui/AppLoader/index.tsx": [
+      "src/components/ui/AppLoader/styles.ts",
+      "src/components/ui/FullscreenLoader/index.tsx",
+      "src/helpers/array-helpers.ts",
+      "src/themes/index.ts"
+    ],
+    "src/components/ui/AppLoader/styles.ts": []
+  }
+}

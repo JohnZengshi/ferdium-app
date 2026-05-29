@@ -1,0 +1,159 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/i18n/globalMessages.ts",
+      "language": "typescript",
+      "sizeLines": 86,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/i18n/languages.ts",
+      "language": "typescript",
+      "sizeLines": 148,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/i18n/locales/af.json",
+      "language": "json",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/ar.json",
+      "language": "json",
+      "sizeLines": 419,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/be.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/bg.json",
+      "language": "json",
+      "sizeLines": 332,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/bs.json",
+      "language": "json",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/ca.json",
+      "language": "json",
+      "sizeLines": 276,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/cs.json",
+      "language": "json",
+      "sizeLines": 411,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/da.json",
+      "language": "json",
+      "sizeLines": 408,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/de.json",
+      "language": "json",
+      "sizeLines": 585,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/defaultMessages.json",
+      "language": "json",
+      "sizeLines": 6759,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/el.json",
+      "language": "json",
+      "sizeLines": 410,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/en-US.json",
+      "language": "json",
+      "sizeLines": 588,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/es.json",
+      "language": "json",
+      "sizeLines": 516,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/et.json",
+      "language": "json",
+      "sizeLines": 332,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/fa.json",
+      "language": "json",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/fi.json",
+      "language": "json",
+      "sizeLines": 420,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/fil.json",
+      "language": "json",
+      "sizeLines": 332,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/fr.json",
+      "language": "json",
+      "sizeLines": 585,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/ga.json",
+      "language": "json",
+      "sizeLines": 220,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/he.json",
+      "language": "json",
+      "sizeLines": 586,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/hi.json",
+      "language": "json",
+      "sizeLines": 73,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/hr.json",
+      "language": "json",
+      "sizeLines": 173,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/i18n/locales/hu.json",
+      "language": "json",
+      "sizeLines": 332,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "src/i18n/globalMessages.ts": [],
+    "src/i18n/languages.ts": []
+  }
+}

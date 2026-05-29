@@ -1,0 +1,1952 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/components/ui/icon/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 34,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 8,
+          "endLine": 12,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "IconComponent",
+          "startLine": 20,
+          "endLine": 39,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "console.warn",
+          "lineNumber": 25
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/imageUpload/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 172,
+      "nonEmptyLines": 158,
+      "classes": [
+        {
+          "name": "ImageUpload",
+          "startLine": 30,
+          "endLine": 170,
+          "methods": [
+            "constructor",
+            "onDropAccepted",
+            "onDropRejected",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 33
+        },
+        {
+          "caller": "onDropAccepted",
+          "callee": "this.setState",
+          "lineNumber": 46
+        },
+        {
+          "caller": "onDropAccepted",
+          "callee": "file.path.replaceAll",
+          "lineNumber": 49
+        },
+        {
+          "caller": "onDropAccepted",
+          "callee": "this.setState",
+          "lineNumber": 50
+        },
+        {
+          "caller": "onDropAccepted",
+          "callee": "this.props.field.onDrop",
+          "lineNumber": 54
+        },
+        {
+          "caller": "onDropAccepted",
+          "callee": "field.set",
+          "lineNumber": 57
+        },
+        {
+          "caller": "onDropRejected",
+          "callee": "this.setState",
+          "lineNumber": 64
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 87
+        },
+        {
+          "caller": "render",
+          "callee": "field.set",
+          "lineNumber": 116
+        },
+        {
+          "caller": "render",
+          "callee": "this.setState",
+          "lineNumber": 118
+        },
+        {
+          "caller": "render",
+          "callee": "this.onDropAccepted.bind",
+          "lineNumber": 133
+        },
+        {
+          "caller": "render",
+          "callee": "this.onDropRejected.bind",
+          "lineNumber": 135
+        },
+        {
+          "caller": "render",
+          "callee": "getRootProps",
+          "lineNumber": 147
+        },
+        {
+          "caller": "render",
+          "callee": "getInputProps",
+          "lineNumber": 150
+        },
+        {
+          "caller": "render",
+          "callee": "prettyBytes",
+          "lineNumber": 159
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/infobox/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 199,
+      "nonEmptyLines": 178,
+      "functions": [
+        {
+          "name": "buttonStyles",
+          "startLine": 10,
+          "endLine": 27,
+          "params": [
+            "theme"
+          ]
+        },
+        {
+          "name": "styles",
+          "startLine": 38,
+          "endLine": 92,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "InfoboxComponent",
+          "startLine": 111,
+          "endLine": 197,
+          "methods": [
+            "constructor",
+            "dismiss",
+            "componentWillUnmount",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "buttonStyles",
+          "callee": "Object.keys",
+          "lineNumber": 12
+        },
+        {
+          "caller": "buttonStyles",
+          "callee": "Object.assign",
+          "lineNumber": 13
+        },
+        {
+          "caller": "styles",
+          "callee": "buttonStyles",
+          "lineNumber": 91
+        },
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 113
+        },
+        {
+          "caller": "dismiss",
+          "callee": "this.setState",
+          "lineNumber": 124
+        },
+        {
+          "caller": "dismiss",
+          "callee": "onDismiss",
+          "lineNumber": 129
+        },
+        {
+          "caller": "dismiss",
+          "callee": "setTimeout",
+          "lineNumber": 132
+        },
+        {
+          "caller": "dismiss",
+          "callee": "this.setState",
+          "lineNumber": 133
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "onUnmount",
+          "lineNumber": 141
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 164
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 170
+        },
+        {
+          "caller": "render",
+          "callee": "this.dismiss.bind",
+          "lineNumber": 187
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/input/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 225,
+      "nonEmptyLines": 207,
+      "classes": [
+        {
+          "name": "Input",
+          "startLine": 59,
+          "endLine": 223,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "onChange",
+            "onInputKeyPress",
+            "render"
+          ],
+          "properties": [
+            "inputElement"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 65
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.inputElement.current.focus",
+          "lineNumber": 78
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "Object.keys",
+          "lineNumber": 81
+        },
+        {
+          "caller": "onChange",
+          "callee": "onChange",
+          "lineNumber": 90
+        },
+        {
+          "caller": "onChange",
+          "callee": "this.setState",
+          "lineNumber": 93
+        },
+        {
+          "caller": "onChange",
+          "callee": "scorePasswordFunc",
+          "lineNumber": 94
+        },
+        {
+          "caller": "onInputKeyPress",
+          "callee": "isEnterKeyPress",
+          "lineNumber": 100
+        },
+        {
+          "caller": "onInputKeyPress",
+          "callee": "onEnterKey",
+          "lineNumber": 102
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 154
+        },
+        {
+          "caller": "render",
+          "callee": "this.onChange.bind",
+          "lineNumber": 172
+        },
+        {
+          "caller": "render",
+          "callee": "this.onInputKeyPress.bind",
+          "lineNumber": 176
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 188
+        },
+        {
+          "caller": "render",
+          "callee": "this.setState",
+          "lineNumber": 192
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 197
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 205
+        }
+      ],
+      "metrics": {
+        "importCount": 8,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/input/scorePassword.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 42,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "scorePasswordFunc",
+          "startLine": 13,
+          "endLine": 42,
+          "params": [
+            "password"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "scorePasswordFunc",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "scorePasswordFunc",
+          "callee": "/\\d/.test",
+          "lineNumber": 28
+        },
+        {
+          "caller": "scorePasswordFunc",
+          "callee": "/[a-z]/.test",
+          "lineNumber": 29
+        },
+        {
+          "caller": "scorePasswordFunc",
+          "callee": "/\\W/.test",
+          "lineNumber": 30
+        },
+        {
+          "caller": "scorePasswordFunc",
+          "callee": "/[A-Z]/.test",
+          "lineNumber": 31
+        },
+        {
+          "caller": "scorePasswordFunc",
+          "callee": "Object.keys",
+          "lineNumber": 35
+        },
+        {
+          "caller": "scorePasswordFunc",
+          "callee": "Math.round",
+          "lineNumber": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/input/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 101,
+      "nonEmptyLines": 90,
+      "functions": [
+        {
+          "name": "prefixStyles",
+          "startLine": 5,
+          "endLine": 11,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/label/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 49,
+      "nonEmptyLines": 42,
+      "classes": [
+        {
+          "name": "LabelComponent",
+          "startLine": 16,
+          "endLine": 47,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/label/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/loader/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 55,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 9,
+          "endLine": 17,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "LoaderComponent",
+          "startLine": 27,
+          "endLine": 58,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 41
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/select/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 462,
+      "nonEmptyLines": 414,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 36,
+          "endLine": 129,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SelectComponent",
+          "startLine": 162,
+          "endLine": 460,
+          "methods": [
+            "getDerivedStateFromProps",
+            "constructor",
+            "UNSAFE_componentWillMount",
+            "componentDidMount",
+            "componentDidUpdate",
+            "componentWillUnmount",
+            "setFilter",
+            "select",
+            "arrowKeysHandler",
+            "render"
+          ],
+          "properties": [
+            "componentRef",
+            "inputRef",
+            "searchInputRef",
+            "scrollContainerRef",
+            "activeOptionRef",
+            "keyListener"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 191
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.arrowKeysHandler.bind",
+          "lineNumber": 202
+        },
+        {
+          "caller": "UNSAFE_componentWillMount",
+          "callee": "this.componentRef.current.removeEventListener",
+          "lineNumber": 210
+        },
+        {
+          "caller": "UNSAFE_componentWillMount",
+          "callee": "this.setState",
+          "lineNumber": 217
+        },
+        {
+          "caller": "UNSAFE_componentWillMount",
+          "callee": "this.setFilter",
+          "lineNumber": 222
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "Object.keys",
+          "lineNumber": 230
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "window.addEventListener",
+          "lineNumber": 235
+        },
+        {
+          "caller": "componentDidUpdate",
+          "callee": "this.searchInputRef.current.focus",
+          "lineNumber": 242
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "window.removeEventListener",
+          "lineNumber": 247
+        },
+        {
+          "caller": "setFilter",
+          "callee": "Object.keys",
+          "lineNumber": 255
+        },
+        {
+          "caller": "setFilter",
+          "callee": "key.toLocaleLowerCase().startsWith",
+          "lineNumber": 257
+        },
+        {
+          "caller": "setFilter",
+          "callee": "key.toLocaleLowerCase",
+          "lineNumber": 257
+        },
+        {
+          "caller": "setFilter",
+          "callee": "needle.toLocaleLowerCase",
+          "lineNumber": 257
+        },
+        {
+          "caller": "setFilter",
+          "callee": "options[key]\n            .toLocaleLowerCase()\n            .startsWith",
+          "lineNumber": 258
+        },
+        {
+          "caller": "setFilter",
+          "callee": "options[key]\n            .toLocaleLowerCase",
+          "lineNumber": 258
+        },
+        {
+          "caller": "setFilter",
+          "callee": "needle.toLocaleLowerCase",
+          "lineNumber": 260
+        },
+        {
+          "caller": "setFilter",
+          "callee": "Object.assign",
+          "lineNumber": 262
+        },
+        {
+          "caller": "setFilter",
+          "callee": "this.setState",
+          "lineNumber": 271
+        },
+        {
+          "caller": "select",
+          "callee": "this.setState",
+          "lineNumber": 279
+        },
+        {
+          "caller": "select",
+          "callee": "this.setFilter",
+          "lineNumber": 284
+        },
+        {
+          "caller": "select",
+          "callee": "this.props.onChange",
+          "lineNumber": 287
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "isArrowUpKeyPress",
+          "lineNumber": 296
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "isArrowDownKeyPress",
+          "lineNumber": 296
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "e.preventDefault",
+          "lineNumber": 297
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "isArrowUpKeyPress",
+          "lineNumber": 301
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "this.setState",
+          "lineNumber": 302
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "isArrowDownKeyPress",
+          "lineNumber": 306
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "Object.keys",
+          "lineNumber": 307
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "this.setState",
+          "lineNumber": 309
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "isEnterKeyPress",
+          "lineNumber": 312
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "this.select",
+          "lineNumber": 313
+        },
+        {
+          "caller": "arrowKeysHandler",
+          "callee": "Object.keys",
+          "lineNumber": 313
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 364
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 372
+        },
+        {
+          "caller": "render",
+          "callee": "this.setState",
+          "lineNumber": 381
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 390
+        },
+        {
+          "caller": "render",
+          "callee": "this.setFilter",
+          "lineNumber": 402
+        },
+        {
+          "caller": "render",
+          "callee": "this.setFilter",
+          "lineNumber": 411
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 419
+        },
+        {
+          "caller": "render",
+          "callee": "Object.keys(options!).map",
+          "lineNumber": 425
+        },
+        {
+          "caller": "render",
+          "callee": "Object.keys",
+          "lineNumber": 425
+        },
+        {
+          "caller": "render",
+          "callee": "this.select",
+          "lineNumber": 429
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 430
+        },
+        {
+          "caller": "render",
+          "callee": "this.setState",
+          "lineNumber": 435
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/textarea/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 117,
+      "nonEmptyLines": 104,
+      "classes": [
+        {
+          "name": "TextareaComponent",
+          "startLine": 27,
+          "endLine": 115,
+          "methods": [
+            "componentDidMount",
+            "onChange",
+            "render"
+          ],
+          "properties": [
+            "textareaRef"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "componentDidMount",
+          "callee": "Object.keys(data).forEach",
+          "lineNumber": 34
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "Object.keys",
+          "lineNumber": 34
+        },
+        {
+          "caller": "onChange",
+          "callee": "onChange",
+          "lineNumber": 44
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 85
+        },
+        {
+          "caller": "render",
+          "callee": "this.onChange.bind",
+          "lineNumber": 99
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/textarea/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 49,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/toggle/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 118,
+      "nonEmptyLines": 111,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 19,
+          "endLine": 57,
+          "params": [
+            "theme"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Toggle",
+          "startLine": 66,
+          "endLine": 116,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 90
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/ui/typings/generic.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 9,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/ui/wrapper/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 33,
+      "classes": [
+        {
+          "name": "WrapperComponent",
+          "startLine": 20,
+          "endLine": 36,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/util/ErrorBoundary/index.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 55,
+      "classes": [
+        {
+          "name": "ErrorBoundary",
+          "startLine": 30,
+          "endLine": 63,
+          "methods": [
+            "constructor",
+            "componentDidCatch",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 32
+        },
+        {
+          "caller": "componentDidCatch",
+          "callee": "this.setState",
+          "lineNumber": 40
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 50
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 53
+        },
+        {
+          "caller": "render",
+          "callee": "window.location.reload",
+          "lineNumber": 55
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/components/util/ErrorBoundary/styles.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 13,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/components/util/WithParams.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 7,
+      "functions": [
+        {
+          "name": "withParams",
+          "startLine": 3,
+          "endLine": 8,
+          "params": [
+            "Component"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "withParams",
+          "line": 3,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "withParams",
+          "callee": "useParams",
+          "lineNumber": 5
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/config.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 751,
+      "nonEmptyLines": 690,
+      "functions": [
+        {
+          "name": "getI18nConfigObjects",
+          "startLine": 668,
+          "endLine": 751,
+          "params": [
+            "intl"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DEFAULT_ACCENT_COLOR",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "CHECK_INTERVAL",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "LOCAL_HOSTNAME",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "LOCAL_PORT",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "LOCAL_API",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "DEV_FRANZ_API",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "LIVE_FERDIUM_API",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "LIVE_FRANZ_API",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "DEBUG_API",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "LOCAL_WS_API",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "DEV_WS_API",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "LIVE_WS_API",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "LOCAL_API_WEBSITE",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "DEV_API_FRANZ_WEBSITE",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "LIVE_API_FERDIUM_WEBSITE",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "LIVE_API_FERDIUM_LIBRETRANSLATE",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "LOCAL_TODOS_FRONTEND_URL",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "PRODUCTION_TODOS_FRONTEND_URL",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "CDN_URL",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "KEEP_WS_LOADED_USID",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "configMessages",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "WEBRTC_IP_HANDLING_POLICY",
+          "line": 219,
+          "isDefault": false
+        },
+        {
+          "name": "SCREENSHARE_CANCELLED_BY_USER",
+          "line": 228,
+          "isDefault": false
+        },
+        {
+          "name": "HIBERNATION_STRATEGIES",
+          "line": 232,
+          "isDefault": false
+        },
+        {
+          "name": "WAKE_UP_STRATEGIES",
+          "line": 243,
+          "isDefault": false
+        },
+        {
+          "name": "WAKE_UP_HIBERNATION_STRATEGIES",
+          "line": 255,
+          "isDefault": false
+        },
+        {
+          "name": "NAVIGATION_BAR_BEHAVIOURS",
+          "line": 267,
+          "isDefault": false
+        },
+        {
+          "name": "SEARCH_ENGINE_NAMES",
+          "line": 277,
+          "isDefault": false
+        },
+        {
+          "name": "TRANSLATOR_ENGINE_GOOGLE",
+          "line": 284,
+          "isDefault": false
+        },
+        {
+          "name": "TRANSLATOR_ENGINE_LIBRETRANSLATE",
+          "line": 285,
+          "isDefault": false
+        },
+        {
+          "name": "TRANSLATOR_ENGINE_NAMES",
+          "line": 286,
+          "isDefault": false
+        },
+        {
+          "name": "LIBRETRANSLATE_TRANSLATOR_LANGUAGES",
+          "line": 292,
+          "isDefault": false
+        },
+        {
+          "name": "GOOGLE_TRANSLATOR_LANGUAGES",
+          "line": 312,
+          "isDefault": false
+        },
+        {
+          "name": "SEARCH_ENGINE_URLS",
+          "line": 418,
+          "isDefault": false
+        },
+        {
+          "name": "CUSTOM_TODO_SERVICE",
+          "line": 429,
+          "isDefault": false
+        },
+        {
+          "name": "TODO_SERVICE_RECIPE_IDS",
+          "line": 443,
+          "isDefault": false
+        },
+        {
+          "name": "TODO_APPS",
+          "line": 453,
+          "isDefault": false
+        },
+        {
+          "name": "SIDEBAR_WIDTH",
+          "line": 468,
+          "isDefault": false
+        },
+        {
+          "name": "SIDEBAR_SERVICES_LOCATION_TOPLEFT",
+          "line": 478,
+          "isDefault": false
+        },
+        {
+          "name": "SIDEBAR_SERVICES_LOCATION_CENTER",
+          "line": 479,
+          "isDefault": false
+        },
+        {
+          "name": "SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT",
+          "line": 480,
+          "isDefault": false
+        },
+        {
+          "name": "SIDEBAR_SERVICES_LOCATION",
+          "line": 482,
+          "isDefault": false
+        },
+        {
+          "name": "ICON_SIZES",
+          "line": 489,
+          "isDefault": false
+        },
+        {
+          "name": "iconSizeBias",
+          "line": 499,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_WINDOW_OPTIONS",
+          "line": 501,
+          "isDefault": false
+        },
+        {
+          "name": "GITHUB_FRANZ_URL",
+          "line": 508,
+          "isDefault": false
+        },
+        {
+          "name": "GITHUB_FERDIUM_URL",
+          "line": 509,
+          "isDefault": false
+        },
+        {
+          "name": "FERDIUM_SERVICE_REQUEST",
+          "line": 510,
+          "isDefault": false
+        },
+        {
+          "name": "FERDIUM_TRANSLATION",
+          "line": 511,
+          "isDefault": false
+        },
+        {
+          "name": "FERDIUM_DEV_DOCS",
+          "line": 512,
+          "isDefault": false
+        },
+        {
+          "name": "FILE_SYSTEM_SETTINGS_TYPES",
+          "line": 515,
+          "isDefault": false
+        },
+        {
+          "name": "LOCAL_SERVER",
+          "line": 517,
+          "isDefault": false
+        },
+        {
+          "name": "SERVER_NOT_LOADED",
+          "line": 518,
+          "isDefault": false
+        },
+        {
+          "name": "ALLOWED_PROTOCOLS",
+          "line": 520,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_TODOS_WIDTH",
+          "line": 522,
+          "isDefault": false
+        },
+        {
+          "name": "TODOS_MIN_WIDTH",
+          "line": 523,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_TODOS_VISIBLE",
+          "line": 524,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER",
+          "line": 525,
+          "isDefault": false
+        },
+        {
+          "name": "TODOS_PARTITION_ID",
+          "line": 526,
+          "isDefault": false
+        },
+        {
+          "name": "CUSTOM_WEBSITE_RECIPE_ID",
+          "line": 528,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_SERVICE_ORDER",
+          "line": 530,
+          "isDefault": false
+        },
+        {
+          "name": "SPLIT_COLUMNS_MIN",
+          "line": 532,
+          "isDefault": false
+        },
+        {
+          "name": "SPLIT_COLUMNS_MAX",
+          "line": 533,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_LOADER_COLOR",
+          "line": 535,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_APP_SETTINGS",
+          "line": 537,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_SERVICE_SETTINGS",
+          "line": 627,
+          "isDefault": false
+        },
+        {
+          "name": "DEFAULT_SHORTCUTS",
+          "line": 661,
+          "isDefault": false
+        },
+        {
+          "name": "getI18nConfigObjects",
+          "line": 668,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 670
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 673
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 676
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 679
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 685
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 686
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 687
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 688
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 689
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 690
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 691
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 695
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 696
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 697
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 698
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 699
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 700
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 701
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 702
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 706
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 707
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 708
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 709
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 710
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 711
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 712
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 713
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 717
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 718
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 719
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 723
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 724
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 725
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 726
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 727
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 728
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 729
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 733
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 736
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 739
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 745
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 746
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 747
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 748
+        },
+        {
+          "caller": "getI18nConfigObjects",
+          "callee": "intl.formatMessage",
+          "lineNumber": 749
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 68,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/containers/auth/AuthLayoutContainer.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 71,
+      "classes": [
+        {
+          "name": "AuthLayoutContainer",
+          "startLine": 23,
+          "endLine": 77,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 48
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/AuthReleaseNotesScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 91,
+      "classes": [
+        {
+          "name": "AuthReleaseNotesScreen",
+          "startLine": 30,
+          "endLine": 103,
+          "methods": [
+            "constructor",
+            "componentDidMount",
+            "handleClick",
+            "componentWillUnmount",
+            "render"
+          ],
+          "properties": [
+            "handleClickBound"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 34
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "getUpdateInfoFromGH",
+          "lineNumber": 42
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "this.setState",
+          "lineNumber": 49
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "document.querySelectorAll",
+          "lineNumber": 53
+        },
+        {
+          "caller": "componentDidMount",
+          "callee": "link.addEventListener",
+          "lineNumber": 54
+        },
+        {
+          "caller": "handleClick",
+          "callee": "e.preventDefault",
+          "lineNumber": 59
+        },
+        {
+          "caller": "handleClick",
+          "callee": "openExternalUrl",
+          "lineNumber": 60
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "document.querySelectorAll",
+          "lineNumber": 64
+        },
+        {
+          "caller": "componentWillUnmount",
+          "callee": "link.removeEventListener",
+          "lineNumber": 65
+        },
+        {
+          "caller": "render",
+          "callee": "getFerdiumVersion",
+          "lineNumber": 78
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/ChangeServerScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 31,
+      "classes": [
+        {
+          "name": "ChangeServerScreen",
+          "startLine": 13,
+          "endLine": 37,
+          "methods": [
+            "constructor",
+            "onSubmit",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 17
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.onSubmit.bind",
+          "lineNumber": 19
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "this.props.actions!.settings.update",
+          "lineNumber": 25
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "this.props.stores!.router.push",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/InviteScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "InviteScreen",
+          "startLine": 6,
+          "endLine": 12,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/LockedScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 83,
+      "nonEmptyLines": 71,
+      "classes": [
+        {
+          "name": "LockedScreen",
+          "startLine": 19,
+          "endLine": 81,
+          "methods": [
+            "constructor",
+            "onSubmit",
+            "unlock",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 23
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.onSubmit.bind",
+          "lineNumber": 28
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.unlock.bind",
+          "lineNumber": 29
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "hash",
+          "lineNumber": 40
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "String",
+          "lineNumber": 40
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "String",
+          "lineNumber": 40
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "this.props.actions!.settings.update",
+          "lineNumber": 41
+        },
+        {
+          "caller": "onSubmit",
+          "callee": "this.setState",
+          "lineNumber": 48
+        },
+        {
+          "caller": "unlock",
+          "callee": "this.props.actions!.settings.update",
+          "lineNumber": 55
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/containers/auth/LoginScreen.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 31,
+      "classes": [
+        {
+          "name": "LoginScreen",
+          "startLine": 13,
+          "endLine": 32,
+          "methods": [
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

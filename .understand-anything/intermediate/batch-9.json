@@ -1,0 +1,600 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/electron/ipc-api/autoUpdate.ts",
+      "type": "file",
+      "name": "autoUpdate.ts",
+      "filePath": "src/electron/ipc-api/autoUpdate.ts",
+      "summary": "Source file: src/electron/ipc-api/autoUpdate.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 92
+    },
+    {
+      "id": "file:src/electron/ipc-api/dnd.ts",
+      "type": "file",
+      "name": "dnd.ts",
+      "filePath": "src/electron/ipc-api/dnd.ts",
+      "summary": "Source file: src/electron/ipc-api/dnd.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 35
+    },
+    {
+      "id": "file:src/electron/ipc-api/download.ts",
+      "type": "file",
+      "name": "download.ts",
+      "filePath": "src/electron/ipc-api/download.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron",
+        "has-functions"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 65
+    },
+    {
+      "id": "file:src/electron/ipc-api/focusState.ts",
+      "type": "file",
+      "name": "focusState.ts",
+      "filePath": "src/electron/ipc-api/focusState.ts",
+      "summary": "Source file: src/electron/ipc-api/focusState.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 11
+    },
+    {
+      "id": "file:src/electron/ipc-api/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/electron/ipc-api/index.ts",
+      "summary": "Source file: src/electron/ipc-api/index.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 30
+    },
+    {
+      "id": "file:src/electron/ipc-api/languageDetect.ts",
+      "type": "file",
+      "name": "languageDetect.ts",
+      "filePath": "src/electron/ipc-api/languageDetect.ts",
+      "summary": "Source file: src/electron/ipc-api/languageDetect.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 21
+    },
+    {
+      "id": "file:src/electron/ipc-api/localServer.ts",
+      "type": "file",
+      "name": "localServer.ts",
+      "filePath": "src/electron/ipc-api/localServer.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron",
+        "has-functions"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 59
+    },
+    {
+      "id": "file:src/electron/ipc-api/processManager.ts",
+      "type": "file",
+      "name": "processManager.ts",
+      "filePath": "src/electron/ipc-api/processManager.ts",
+      "summary": "Source file: src/electron/ipc-api/processManager.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 8
+    },
+    {
+      "id": "file:src/electron/ipc-api/sessionStorage.ts",
+      "type": "file",
+      "name": "sessionStorage.ts",
+      "filePath": "src/electron/ipc-api/sessionStorage.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron",
+        "has-functions"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 38
+    },
+    {
+      "id": "file:src/electron/ipc-api/settings.ts",
+      "type": "file",
+      "name": "settings.ts",
+      "filePath": "src/electron/ipc-api/settings.ts",
+      "summary": "Source file: src/electron/ipc-api/settings.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 14
+    },
+    {
+      "id": "file:src/electron/macOSPermissions.ts",
+      "type": "file",
+      "name": "macOSPermissions.ts",
+      "filePath": "src/electron/macOSPermissions.ts",
+      "summary": "Exports askFormacOSPermissions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 87
+    },
+    {
+      "id": "file:src/electron/windowUtils.ts",
+      "type": "file",
+      "name": "windowUtils.ts",
+      "filePath": "src/electron/windowUtils.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:electron",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 16
+    },
+    {
+      "id": "file:src/enforce-macos-app-location.ts",
+      "type": "file",
+      "name": "enforce-macos-app-location.ts",
+      "filePath": "src/enforce-macos-app-location.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 44
+    },
+    {
+      "id": "file:src/environment-remote.ts",
+      "type": "file",
+      "name": "environment-remote.ts",
+      "filePath": "src/environment-remote.ts",
+      "summary": "Exports { app }, ferdiumVersion, ferdiumLocale, isDevMode, userDataPath, userDataRecipesPath, userDataCertsPath, useLiveAPI, API, API_VERSION, WS_API, WEBSITE, protocolClient.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 80
+    },
+    {
+      "id": "file:src/environment.ts",
+      "type": "file",
+      "name": "environment.ts",
+      "filePath": "src/environment.ts",
+      "summary": "Exports isMac, isWindows, isLinux, isWinPortable, isWayland, isSnap, electronVersion, chromeVersion, nodeVersion, osArch, osRelease, is64Bit, altKey, shiftKey, cmdOrCtrlShortcutKey, lockFerdiumShortcutKey, todosToggleShortcutKey, workspaceToggleShortcutKey, muteFerdiumShortcutKey, addNewServiceShortcutKey, splitModeToggleShortcutKey, settingsShortcutKey, downloadsShortcutKey, toggleFullScreenKey.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 51
+    },
+    {
+      "id": "file:src/features/appearance/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/appearance/index.ts",
+      "summary": "Defines 16 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 627
+    },
+    {
+      "id": "file:src/features/basicAuth/Component.tsx",
+      "type": "file",
+      "name": "Component.tsx",
+      "filePath": "src/features/basicAuth/Component.tsx",
+      "summary": "Defines BasicAuthModal.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 106
+    },
+    {
+      "id": "file:src/features/basicAuth/Form.ts",
+      "type": "file",
+      "name": "Form.ts",
+      "filePath": "src/features/basicAuth/Form.ts",
+      "summary": "Source file: src/features/basicAuth/Form.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 17
+    },
+    {
+      "id": "file:src/features/basicAuth/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/basicAuth/index.ts",
+      "summary": "Exports mainIpcHandler, Component.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 35
+    },
+    {
+      "id": "file:src/features/basicAuth/mainIpcHandler.ts",
+      "type": "file",
+      "name": "mainIpcHandler.ts",
+      "filePath": "src/features/basicAuth/mainIpcHandler.ts",
+      "summary": "Defines 1 functions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 13
+    },
+    {
+      "id": "file:src/features/basicAuth/store.ts",
+      "type": "file",
+      "name": "store.ts",
+      "filePath": "src/features/basicAuth/store.ts",
+      "summary": "Exports state, resetState, sendCredentials, cancelLogin.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 41
+    },
+    {
+      "id": "file:src/features/basicAuth/styles.ts",
+      "type": "file",
+      "name": "styles.ts",
+      "filePath": "src/features/basicAuth/styles.ts",
+      "summary": "Source file: src/features/basicAuth/styles.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 12
+    },
+    {
+      "id": "file:src/features/communityRecipes/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/features/communityRecipes/index.ts",
+      "summary": "Exports communityRecipesStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 7
+    },
+    {
+      "id": "file:src/features/communityRecipes/store.ts",
+      "type": "file",
+      "name": "store.ts",
+      "filePath": "src/features/communityRecipes/store.ts",
+      "summary": "Defines CommunityRecipesStore. Exports CommunityRecipesStore.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 40
+    },
+    {
+      "id": "file:src/features/publishDebugInfo/Component.tsx",
+      "type": "file",
+      "name": "Component.tsx",
+      "filePath": "src/features/publishDebugInfo/Component.tsx",
+      "summary": "Defines PublishDebugLogModal.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:features",
+        "has-functions",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 211
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/electron/ipc-api/autoUpdate.ts",
+      "target": "file:src/environment.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/dnd.ts",
+      "target": "file:src/environment-remote.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment-remote.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/dnd.ts",
+      "target": "file:src/environment.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/autoUpdate.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/autoUpdate.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/dnd.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/dnd.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/download.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/download.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/focusState.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/focusState.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/languageDetect.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/languageDetect.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/localServer.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/localServer.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/processManager.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/processManager.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/sessionStorage.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/sessionStorage.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/index.ts",
+      "target": "file:src/electron/ipc-api/settings.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/electron/ipc-api/settings.ts"
+    },
+    {
+      "source": "file:src/electron/ipc-api/localServer.ts",
+      "target": "file:src/environment-remote.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment-remote.ts"
+    },
+    {
+      "source": "file:src/electron/macOSPermissions.ts",
+      "target": "file:src/environment-remote.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment-remote.ts"
+    },
+    {
+      "source": "file:src/enforce-macos-app-location.ts",
+      "target": "file:src/environment-remote.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment-remote.ts"
+    },
+    {
+      "source": "file:src/enforce-macos-app-location.ts",
+      "target": "file:src/environment.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment.ts"
+    },
+    {
+      "source": "file:src/environment-remote.ts",
+      "target": "file:src/environment.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment.ts"
+    },
+    {
+      "source": "file:src/features/appearance/index.ts",
+      "target": "file:src/environment-remote.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment-remote.ts"
+    },
+    {
+      "source": "file:src/features/appearance/index.ts",
+      "target": "file:src/environment.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/environment.ts"
+    },
+    {
+      "source": "file:src/features/basicAuth/Component.tsx",
+      "target": "file:src/features/basicAuth/Form.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/basicAuth/Form.ts"
+    },
+    {
+      "source": "file:src/features/basicAuth/Component.tsx",
+      "target": "file:src/features/basicAuth/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/basicAuth/store.ts"
+    },
+    {
+      "source": "file:src/features/basicAuth/Component.tsx",
+      "target": "file:src/features/basicAuth/styles.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/basicAuth/styles.ts"
+    },
+    {
+      "source": "file:src/features/basicAuth/index.ts",
+      "target": "file:src/features/basicAuth/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/basicAuth/store.ts"
+    },
+    {
+      "source": "file:src/features/communityRecipes/index.ts",
+      "target": "file:src/features/communityRecipes/store.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/features/communityRecipes/store.ts"
+    }
+  ]
+}

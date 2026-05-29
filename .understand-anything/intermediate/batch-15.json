@@ -1,0 +1,386 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/internal-server/app/Models/User.js",
+      "type": "file",
+      "name": "User.js",
+      "filePath": "src/internal-server/app/Models/User.js",
+      "summary": "Defines User.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 7
+    },
+    {
+      "id": "file:src/internal-server/app/Models/Workspace.js",
+      "type": "file",
+      "name": "Workspace.js",
+      "filePath": "src/internal-server/app/Models/Workspace.js",
+      "summary": "Defines Workspace.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 6
+    },
+    {
+      "id": "file:src/internal-server/config/app.js",
+      "type": "file",
+      "name": "app.js",
+      "filePath": "src/internal-server/config/app.js",
+      "summary": "Source file: src/internal-server/config/app.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 239
+    },
+    {
+      "id": "file:src/internal-server/config/auth.js",
+      "type": "file",
+      "name": "auth.js",
+      "filePath": "src/internal-server/config/auth.js",
+      "summary": "Source file: src/internal-server/config/auth.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 92
+    },
+    {
+      "id": "file:src/internal-server/config/bodyParser.js",
+      "type": "file",
+      "name": "bodyParser.js",
+      "filePath": "src/internal-server/config/bodyParser.js",
+      "summary": "Source file: src/internal-server/config/bodyParser.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 149
+    },
+    {
+      "id": "file:src/internal-server/config/cors.js",
+      "type": "file",
+      "name": "cors.js",
+      "filePath": "src/internal-server/config/cors.js",
+      "summary": "Source file: src/internal-server/config/cors.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 85
+    },
+    {
+      "id": "file:src/internal-server/config/database.js",
+      "type": "file",
+      "name": "database.js",
+      "filePath": "src/internal-server/config/database.js",
+      "summary": "Source file: src/internal-server/config/database.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 82
+    },
+    {
+      "id": "file:src/internal-server/config/drive.js",
+      "type": "file",
+      "name": "drive.js",
+      "filePath": "src/internal-server/config/drive.js",
+      "summary": "Source file: src/internal-server/config/drive.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 45
+    },
+    {
+      "id": "file:src/internal-server/config/hash.js",
+      "type": "file",
+      "name": "hash.js",
+      "filePath": "src/internal-server/config/hash.js",
+      "summary": "Source file: src/internal-server/config/hash.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 47
+    },
+    {
+      "id": "file:src/internal-server/config/session.js",
+      "type": "file",
+      "name": "session.js",
+      "filePath": "src/internal-server/config/session.js",
+      "summary": "Source file: src/internal-server/config/session.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 97
+    },
+    {
+      "id": "file:src/internal-server/config/shield.js",
+      "type": "file",
+      "name": "shield.js",
+      "filePath": "src/internal-server/config/shield.js",
+      "summary": "Source file: src/internal-server/config/shield.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "complex",
+      "language": "javascript",
+      "sizeLines": 142
+    },
+    {
+      "id": "file:src/internal-server/database/factory.js",
+      "type": "file",
+      "name": "factory.js",
+      "filePath": "src/internal-server/database/factory.js",
+      "summary": "Source file: src/internal-server/database/factory.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 20
+    },
+    {
+      "id": "file:src/internal-server/database/migrations/1503250034279_user.js",
+      "type": "file",
+      "name": "1503250034279_user.js",
+      "filePath": "src/internal-server/database/migrations/1503250034279_user.js",
+      "summary": "Defines UserSchema.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 18
+    },
+    {
+      "id": "file:src/internal-server/database/migrations/1566385379883_service_schema.js",
+      "type": "file",
+      "name": "1566385379883_service_schema.js",
+      "filePath": "src/internal-server/database/migrations/1566385379883_service_schema.js",
+      "summary": "Defines ServiceSchema.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 21
+    },
+    {
+      "id": "file:src/internal-server/database/migrations/1566554231482_recipe_schema.js",
+      "type": "file",
+      "name": "1566554231482_recipe_schema.js",
+      "filePath": "src/internal-server/database/migrations/1566554231482_recipe_schema.js",
+      "summary": "Defines RecipeSchema.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 20
+    },
+    {
+      "id": "file:src/internal-server/database/migrations/1566554359294_workspace_schema.js",
+      "type": "file",
+      "name": "1566554359294_workspace_schema.js",
+      "filePath": "src/internal-server/database/migrations/1566554359294_workspace_schema.js",
+      "summary": "Defines WorkspaceSchema.",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server",
+        "has-classes"
+      ],
+      "complexity": "moderate",
+      "language": "javascript",
+      "sizeLines": 22
+    },
+    {
+      "id": "file:src/internal-server/database/template.sqlite",
+      "type": "file",
+      "name": "template.sqlite",
+      "filePath": "src/internal-server/database/template.sqlite",
+      "summary": "Source file: src/internal-server/database/template.sqlite",
+      "tags": [
+        "sqlite",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "sqlite",
+      "sizeLines": 7
+    },
+    {
+      "id": "config:src/internal-server/env.ini",
+      "type": "config",
+      "name": "env.ini",
+      "filePath": "src/internal-server/env.ini",
+      "summary": "Config: src/internal-server/env.ini",
+      "tags": [
+        "config",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "config",
+      "sizeLines": 15
+    },
+    {
+      "id": "config:src/internal-server/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "src/internal-server/package.json",
+      "summary": "Config: src/internal-server/package.json",
+      "tags": [
+        "json",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "json",
+      "sizeLines": 3
+    },
+    {
+      "id": "markup:src/internal-server/public/css/main.css",
+      "type": "markup",
+      "name": "main.css",
+      "filePath": "src/internal-server/public/css/main.css",
+      "summary": "Markup: src/internal-server/public/css/main.css",
+      "tags": [
+        "css",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "moderate",
+      "language": "css",
+      "sizeLines": 72
+    },
+    {
+      "id": "markup:src/internal-server/public/css/vanilla.css",
+      "type": "markup",
+      "name": "vanilla.css",
+      "filePath": "src/internal-server/public/css/vanilla.css",
+      "summary": "Markup: src/internal-server/public/css/vanilla.css",
+      "tags": [
+        "css",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "complex",
+      "language": "css",
+      "sizeLines": 138
+    },
+    {
+      "id": "file:src/internal-server/public/js/transfer.js",
+      "type": "file",
+      "name": "transfer.js",
+      "filePath": "src/internal-server/public/js/transfer.js",
+      "summary": "Source file: src/internal-server/public/js/transfer.js",
+      "tags": [
+        "javascript",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 18
+    },
+    {
+      "id": "file:src/internal-server/resources/views/import.edge",
+      "type": "file",
+      "name": "import.edge",
+      "filePath": "src/internal-server/resources/views/import.edge",
+      "summary": "Source file: src/internal-server/resources/views/import.edge",
+      "tags": [
+        "edge",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "edge",
+      "sizeLines": 18
+    },
+    {
+      "id": "file:src/internal-server/resources/views/index.edge",
+      "type": "file",
+      "name": "index.edge",
+      "filePath": "src/internal-server/resources/views/index.edge",
+      "summary": "Source file: src/internal-server/resources/views/index.edge",
+      "tags": [
+        "edge",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "edge",
+      "sizeLines": 19
+    },
+    {
+      "id": "file:src/internal-server/resources/views/layouts/main.edge",
+      "type": "file",
+      "name": "main.edge",
+      "filePath": "src/internal-server/resources/views/layouts/main.edge",
+      "summary": "Source file: src/internal-server/resources/views/layouts/main.edge",
+      "tags": [
+        "edge",
+        "source",
+        "src:internal-server"
+      ],
+      "complexity": "simple",
+      "language": "edge",
+      "sizeLines": 19
+    }
+  ],
+  "edges": []
+}

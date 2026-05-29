@@ -1,0 +1,378 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/api/apiBase.ts",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/index.ts",
+      "language": "typescript",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/server/LocalApi.ts",
+      "language": "typescript",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/server/ServerApi.ts",
+      "language": "typescript",
+      "sizeLines": 624,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/api/utils/auth.ts",
+      "language": "typescript",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/app.tsx",
+      "language": "typescript",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/AppUpdateInfoBar.tsx",
+      "language": "typescript",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/MediaSource.tsx",
+      "language": "typescript",
+      "sizeLines": 186,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/AuthLayout.tsx",
+      "language": "typescript",
+      "sizeLines": 131,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/ChangeServer.tsx",
+      "language": "typescript",
+      "sizeLines": 158,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/Invite.tsx",
+      "language": "typescript",
+      "sizeLines": 217,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/Locked.tsx",
+      "language": "typescript",
+      "sizeLines": 148,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/Login.tsx",
+      "language": "typescript",
+      "sizeLines": 214,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/Password.tsx",
+      "language": "typescript",
+      "sizeLines": 134,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/SetupAssistant.tsx",
+      "language": "typescript",
+      "sizeLines": 341,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/Signup.tsx",
+      "language": "typescript",
+      "sizeLines": 214,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/auth/Welcome.tsx",
+      "language": "typescript",
+      "sizeLines": 116,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/downloadManager/DownloadManagerDashboard.tsx",
+      "language": "typescript",
+      "sizeLines": 307,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/downloadManager/DownloadManagerLayout.tsx",
+      "language": "typescript",
+      "sizeLines": 84,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/layout/AppLayout.tsx",
+      "language": "typescript",
+      "sizeLines": 252,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/layout/Sidebar.tsx",
+      "language": "typescript",
+      "sizeLines": 400,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/content/ConnectionLostBanner.tsx",
+      "language": "typescript",
+      "sizeLines": 105,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/content/ServiceDisabled.tsx",
+      "language": "typescript",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/content/ServiceView.tsx",
+      "language": "typescript",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/components/services/content/ServiceWebview.tsx",
+      "language": "typescript",
+      "sizeLines": 160,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/api/apiBase.ts": [
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/url-helpers.ts"
+    ],
+    "src/api/index.ts": [
+      "src/api/AppApi.ts",
+      "src/api/FeaturesApi.ts",
+      "src/api/LocalApi.ts",
+      "src/api/RecipePreviewsApi.ts",
+      "src/api/RecipesApi.ts",
+      "src/api/ServicesApi.ts",
+      "src/api/UserApi.ts"
+    ],
+    "src/api/server/LocalApi.ts": [
+      "src/helpers/service-helpers.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/api/server/ServerApi.ts": [
+      "src/api/apiBase.ts",
+      "src/api/utils/auth.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/asar-helpers.ts",
+      "src/helpers/async-helpers.ts",
+      "src/helpers/recipe-helpers.ts",
+      "src/helpers/service-helpers.ts",
+      "src/models/Recipe.ts",
+      "src/models/RecipePreview.ts",
+      "src/models/Service.ts",
+      "src/models/User.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/api/utils/auth.ts": [
+      "src/api/apiBase.ts",
+      "src/environment-remote.ts"
+    ],
+    "src/app.tsx": [
+      "src/I18n.tsx",
+      "src/actions/index.ts",
+      "src/api/index.ts",
+      "src/api/server/LocalApi.ts",
+      "src/api/server/ServerApi.ts",
+      "src/lib/Menu.ts",
+      "src/lib/TouchBar.ts",
+      "src/routes.tsx",
+      "src/stores/index.ts"
+    ],
+    "src/components/AppUpdateInfoBar.tsx": [
+      "src/components/ui/InfoBar.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/helpers/update-helpers.ts"
+    ],
+    "src/components/MediaSource.tsx": [
+      "src/components/ui/FullscreenLoader/index.tsx",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/models/Service.ts"
+    ],
+    "src/components/auth/AuthLayout.tsx": [
+      "src/api/apiBase.ts",
+      "src/components/AppUpdateInfoBar.tsx",
+      "src/components/ui/InfoBar.tsx",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/features/publishDebugInfo/index.ts",
+      "src/helpers/update-helpers.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/components/auth/ChangeServer.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/Select.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Invite.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Locked.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/environment.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Login.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/apiBase.ts",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Password.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/SetupAssistant.tsx": [
+      "src/components/ui/Infobox.tsx",
+      "src/components/ui/Modal/index.tsx",
+      "src/components/ui/badge/index.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/config.ts",
+      "src/i18n/globalMessages.ts"
+    ],
+    "src/components/auth/Signup.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/apiBase.ts",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/ui/input/index.tsx",
+      "src/helpers/validation-helpers.ts",
+      "src/lib/Form.ts"
+    ],
+    "src/components/auth/Welcome.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/apiBase.ts",
+      "src/components/ui/Link.tsx",
+      "src/components/ui/headline/index.tsx",
+      "src/helpers/array-helpers.ts",
+      "src/helpers/serverless-helpers.ts",
+      "src/models/RecipePreview.ts"
+    ],
+    "src/components/downloadManager/DownloadManagerDashboard.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/ui/icon/index.tsx",
+      "src/stores/index.ts"
+    ],
+    "src/components/downloadManager/DownloadManagerLayout.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/ui/effects/Appear.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/jsUtils.ts"
+    ],
+    "src/components/layout/AppLayout.tsx": [
+      "src/components/AppUpdateInfoBar.tsx",
+      "src/components/ui/InfoBar.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/components/util/ErrorBoundary/index.tsx",
+      "src/containers/auth/LockedScreen.tsx",
+      "src/environment.ts",
+      "src/features/basicAuth/index.ts",
+      "src/features/publishDebugInfo/index.ts",
+      "src/features/quickSwitch/index.ts",
+      "src/features/todos/containers/TodosScreen.tsx",
+      "src/features/workspaces/components/WorkspaceSwitchingIndicator.tsx",
+      "src/features/workspaces/index.ts",
+      "src/helpers/update-helpers.ts",
+      "src/stores/SettingsStore.ts"
+    ],
+    "src/components/layout/Sidebar.tsx": [
+      "src/actions/lib/actions.ts",
+      "src/components/services/tabs/Tabbar.tsx",
+      "src/components/ui/icon/index.tsx",
+      "src/environment.ts",
+      "src/features/todos/actions.ts",
+      "src/features/todos/index.ts",
+      "src/i18n/globalMessages.ts",
+      "src/models/Service.ts",
+      "src/stores/index.ts"
+    ],
+    "src/components/services/content/ConnectionLostBanner.tsx": [
+      "src/components/ui/icon/index.tsx",
+      "src/config.ts"
+    ],
+    "src/components/services/content/ServiceDisabled.tsx": [
+      "src/components/ui/button/index.tsx",
+      "src/components/ui/headline/index.tsx"
+    ],
+    "src/components/services/content/ServiceView.tsx": [
+      "src/components/MediaSource.tsx",
+      "src/components/services/content/ServiceDisabled.tsx",
+      "src/components/services/content/ServiceWebview.tsx",
+      "src/components/services/content/WebviewCrashHandler.tsx",
+      "src/components/services/content/WebviewErrorHandler.tsx",
+      "src/components/ui/StatusBarTargetUrl.tsx",
+      "src/components/ui/WebviewLoader/index.tsx",
+      "src/config.ts",
+      "src/features/webControls/containers/WebControlsScreen.tsx",
+      "src/models/Service.ts",
+      "src/stores/index.ts"
+    ],
+    "src/components/services/content/ServiceWebview.tsx": [
+      "src/models/Service.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/index.ts"
+    ]
+  }
+}

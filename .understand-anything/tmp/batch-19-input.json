@@ -1,0 +1,246 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/styles/vertical.scss",
+      "language": "css",
+      "sizeLines": 121,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/styles/welcome.scss",
+      "language": "css",
+      "sizeLines": 138,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/themes/IStyleTypes.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/themes/dark/index.ts",
+      "language": "typescript",
+      "sizeLines": 174,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/themes/default/index.ts",
+      "language": "typescript",
+      "sizeLines": 255,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/themes/index.ts",
+      "language": "typescript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/themes/legacy/index.ts",
+      "language": "typescript",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/badge.ts",
+      "language": "typescript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/contextMenu.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/contextMenuBuilder.ts",
+      "language": "typescript",
+      "sizeLines": 1094,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/darkmode.ts",
+      "language": "typescript",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/darkmode/custom.ts",
+      "language": "typescript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/darkmode/ignore.ts",
+      "language": "typescript",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/dialogTitle.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/find.ts",
+      "language": "typescript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/lib/RecipeWebview.ts",
+      "language": "typescript",
+      "sizeLines": 210,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/lib/Userscript.ts",
+      "language": "typescript",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/notifications.ts",
+      "language": "typescript",
+      "sizeLines": 97,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/recipe.ts",
+      "language": "typescript",
+      "sizeLines": 496,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/screenshare.ts",
+      "language": "typescript",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/sessionHandler.ts",
+      "language": "typescript",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/spellchecker.ts",
+      "language": "typescript",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/webview/zoom.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/features/utils/FeatureStore.test.ts",
+      "language": "typescript",
+      "sizeLines": 94,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/helpers/array-helpers.test.ts",
+      "language": "typescript",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/themes/IStyleTypes.ts": [],
+    "src/themes/dark/index.ts": [
+      "src/themes/default/index.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/themes/default/index.ts": [
+      "src/config.ts",
+      "src/themes/IStyleTypes.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/themes/index.ts": [
+      "src/themes/dark/index.ts",
+      "src/themes/default/index.ts",
+      "src/themes/legacy/index.ts"
+    ],
+    "src/themes/legacy/index.ts": [],
+    "src/webview/badge.ts": [
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/contextMenu.ts": [
+      "src/webview/contextMenuBuilder.ts"
+    ],
+    "src/webview/contextMenuBuilder.ts": [
+      "src/config.ts",
+      "src/environment.ts",
+      "src/helpers/url-helpers.ts",
+      "src/models/IContextMenuParams.ts"
+    ],
+    "src/webview/darkmode.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/darkmode/custom.ts": [],
+    "src/webview/darkmode/ignore.ts": [],
+    "src/webview/dialogTitle.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/find.ts": [],
+    "src/webview/lib/RecipeWebview.ts": [
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/lib/Userscript.ts": [
+      "src/jsUtils.ts"
+    ],
+    "src/webview/notifications.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/recipe.ts": [
+      "src/@types/stores.types.ts",
+      "src/config.ts",
+      "src/jsUtils.ts",
+      "src/models/Service.ts",
+      "src/preload-safe-debug.ts",
+      "src/webview/badge.ts",
+      "src/webview/contextMenu.ts",
+      "src/webview/darkmode.ts",
+      "src/webview/darkmode/custom.ts",
+      "src/webview/darkmode/ignore.ts",
+      "src/webview/dialogTitle.ts",
+      "src/webview/find.ts",
+      "src/webview/lib/RecipeWebview.ts",
+      "src/webview/lib/Userscript.ts",
+      "src/webview/notifications.ts",
+      "src/webview/screenshare.ts",
+      "src/webview/sessionHandler.ts",
+      "src/webview/spellchecker.ts"
+    ],
+    "src/webview/screenshare.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/sessionHandler.ts": [
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/spellchecker.ts": [
+      "src/environment.ts",
+      "src/i18n/languages.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/webview/zoom.ts": [],
+    "test/features/utils/FeatureStore.test.ts": [
+      "src/actions/lib/actions.ts",
+      "src/features/utils/ActionBinding.ts",
+      "src/features/utils/FeatureStore.ts",
+      "src/stores/lib/Reaction.ts"
+    ],
+    "test/helpers/array-helpers.test.ts": [
+      "src/helpers/array-helpers.ts"
+    ]
+  }
+}

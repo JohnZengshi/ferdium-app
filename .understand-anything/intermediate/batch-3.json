@@ -1,0 +1,548 @@
+{
+  "nodes": [
+    {
+      "id": "script:scripts/migration/migrate-windows.ps1",
+      "type": "script",
+      "name": "migrate-windows.ps1",
+      "filePath": "scripts/migration/migrate-windows.ps1",
+      "summary": "Script: scripts/migration/migrate-windows.ps1",
+      "tags": [
+        "powershell",
+        "scripts"
+      ],
+      "complexity": "moderate",
+      "language": "powershell",
+      "sizeLines": 53
+    },
+    {
+      "id": "script:scripts/minify-images.sh",
+      "type": "script",
+      "name": "minify-images.sh",
+      "filePath": "scripts/minify-images.sh",
+      "summary": "Script: scripts/minify-images.sh",
+      "tags": [
+        "shell",
+        "scripts"
+      ],
+      "complexity": "simple",
+      "language": "shell",
+      "sizeLines": 12
+    },
+    {
+      "id": "file:src/@types/ferdium-components.types.ts",
+      "type": "file",
+      "name": "ferdium-components.types.ts",
+      "filePath": "src/@types/ferdium-components.types.ts",
+      "summary": "Source file: src/@types/ferdium-components.types.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:@types"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 13
+    },
+    {
+      "id": "file:src/@types/ferdium.types.ts",
+      "type": "file",
+      "name": "ferdium.types.ts",
+      "filePath": "src/@types/ferdium.types.ts",
+      "summary": "Source file: src/@types/ferdium.types.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:@types"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 24
+    },
+    {
+      "id": "file:src/@types/legacy-types.ts",
+      "type": "file",
+      "name": "legacy-types.ts",
+      "filePath": "src/@types/legacy-types.ts",
+      "summary": "Source file: src/@types/legacy-types.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:@types"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 5
+    },
+    {
+      "id": "file:src/@types/mobx-form.types.ts",
+      "type": "file",
+      "name": "mobx-form.types.ts",
+      "filePath": "src/@types/mobx-form.types.ts",
+      "summary": "Source file: src/@types/mobx-form.types.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:@types"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 36
+    },
+    {
+      "id": "file:src/@types/stores.types.ts",
+      "type": "file",
+      "name": "stores.types.ts",
+      "filePath": "src/@types/stores.types.ts",
+      "summary": "Source file: src/@types/stores.types.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:@types"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 374
+    },
+    {
+      "id": "file:src/I18n.tsx",
+      "type": "file",
+      "name": "I18n.tsx",
+      "filePath": "src/I18n.tsx",
+      "summary": "Defines I18N.",
+      "tags": [
+        "typescript",
+        "source",
+        "has-classes",
+        "react-component"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 45
+    },
+    {
+      "id": "file:src/actions/app.ts",
+      "type": "file",
+      "name": "app.ts",
+      "filePath": "src/actions/app.ts",
+      "summary": "Source file: src/actions/app.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 40
+    },
+    {
+      "id": "file:src/actions/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/actions/index.ts",
+      "summary": "Source file: src/actions/index.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 30
+    },
+    {
+      "id": "file:src/actions/lib/actions.ts",
+      "type": "file",
+      "name": "actions.ts",
+      "filePath": "src/actions/lib/actions.ts",
+      "summary": "Exports createActionsFromDefinitions.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions",
+        "has-functions",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 60
+    },
+    {
+      "id": "file:src/actions/recipe.ts",
+      "type": "file",
+      "name": "recipe.ts",
+      "filePath": "src/actions/recipe.ts",
+      "summary": "Source file: src/actions/recipe.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 10
+    },
+    {
+      "id": "file:src/actions/recipePreview.ts",
+      "type": "file",
+      "name": "recipePreview.ts",
+      "filePath": "src/actions/recipePreview.ts",
+      "summary": "Source file: src/actions/recipePreview.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 8
+    },
+    {
+      "id": "file:src/actions/requests.ts",
+      "type": "file",
+      "name": "requests.ts",
+      "filePath": "src/actions/requests.ts",
+      "summary": "Source file: src/actions/requests.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 5
+    },
+    {
+      "id": "file:src/actions/service.ts",
+      "type": "file",
+      "name": "service.ts",
+      "filePath": "src/actions/service.ts",
+      "summary": "Source file: src/actions/service.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "complex",
+      "language": "typescript",
+      "sizeLines": 116
+    },
+    {
+      "id": "file:src/actions/settings.ts",
+      "type": "file",
+      "name": "settings.ts",
+      "filePath": "src/actions/settings.ts",
+      "summary": "Source file: src/actions/settings.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 13
+    },
+    {
+      "id": "file:src/actions/ui.ts",
+      "type": "file",
+      "name": "ui.ts",
+      "filePath": "src/actions/ui.ts",
+      "summary": "Source file: src/actions/ui.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 15
+    },
+    {
+      "id": "file:src/actions/user.ts",
+      "type": "file",
+      "name": "user.ts",
+      "filePath": "src/actions/user.ts",
+      "summary": "Source file: src/actions/user.ts",
+      "tags": [
+        "typescript",
+        "source",
+        "src:actions"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 35
+    },
+    {
+      "id": "file:src/api/AppApi.ts",
+      "type": "file",
+      "name": "AppApi.ts",
+      "filePath": "src/api/AppApi.ts",
+      "summary": "Defines AppApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 11
+    },
+    {
+      "id": "file:src/api/FeaturesApi.ts",
+      "type": "file",
+      "name": "FeaturesApi.ts",
+      "filePath": "src/api/FeaturesApi.ts",
+      "summary": "Defines FeaturesApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 15
+    },
+    {
+      "id": "file:src/api/LocalApi.ts",
+      "type": "file",
+      "name": "LocalApi.ts",
+      "filePath": "src/api/LocalApi.ts",
+      "summary": "Defines LocalApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 26
+    },
+    {
+      "id": "file:src/api/RecipePreviewsApi.ts",
+      "type": "file",
+      "name": "RecipePreviewsApi.ts",
+      "filePath": "src/api/RecipePreviewsApi.ts",
+      "summary": "Defines RecipePreviewsApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 19
+    },
+    {
+      "id": "file:src/api/RecipesApi.ts",
+      "type": "file",
+      "name": "RecipesApi.ts",
+      "filePath": "src/api/RecipesApi.ts",
+      "summary": "Defines RecipesApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "simple",
+      "language": "typescript",
+      "sizeLines": 19
+    },
+    {
+      "id": "file:src/api/ServicesApi.ts",
+      "type": "file",
+      "name": "ServicesApi.ts",
+      "filePath": "src/api/ServicesApi.ts",
+      "summary": "Defines ServicesApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 34
+    },
+    {
+      "id": "file:src/api/UserApi.ts",
+      "type": "file",
+      "name": "UserApi.ts",
+      "filePath": "src/api/UserApi.ts",
+      "summary": "Defines UserApi.",
+      "tags": [
+        "typescript",
+        "source",
+        "src:api",
+        "has-classes",
+        "has-exports"
+      ],
+      "complexity": "moderate",
+      "language": "typescript",
+      "sizeLines": 58
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/@types/ferdium-components.types.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/@types/mobx-form.types.ts",
+      "target": "file:src/@types/ferdium-components.types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/@types/ferdium-components.types.ts"
+    },
+    {
+      "source": "file:src/actions/app.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/app.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/app.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/recipe.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/recipe.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/recipePreview.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/recipePreview.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/requests.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/requests.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/service.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/service.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/settings.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/settings.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/ui.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/ui.ts"
+    },
+    {
+      "source": "file:src/actions/index.ts",
+      "target": "file:src/actions/user.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/user.ts"
+    },
+    {
+      "source": "file:src/actions/recipe.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/recipePreview.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/requests.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/service.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/settings.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/ui.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    },
+    {
+      "source": "file:src/actions/user.ts",
+      "target": "file:src/actions/lib/actions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 1,
+      "description": "Imports src/actions/lib/actions.ts"
+    }
+  ]
+}

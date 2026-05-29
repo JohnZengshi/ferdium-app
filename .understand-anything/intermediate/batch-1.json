@@ -1,0 +1,339 @@
+{
+  "nodes": [
+    {
+      "id": "file:.all-contributorsrc",
+      "type": "file",
+      "name": ".all-contributorsrc",
+      "filePath": ".all-contributorsrc",
+      "summary": "Source file: .all-contributorsrc",
+      "tags": [
+        "unknown"
+      ],
+      "complexity": "complex",
+      "language": "unknown",
+      "sizeLines": 3086
+    },
+    {
+      "id": "file:.codespellrc",
+      "type": "file",
+      "name": ".codespellrc",
+      "filePath": ".codespellrc",
+      "summary": "Source file: .codespellrc",
+      "tags": [
+        "unknown"
+      ],
+      "complexity": "simple",
+      "language": "unknown",
+      "sizeLines": 9
+    },
+    {
+      "id": "file:.dockerignore",
+      "type": "file",
+      "name": ".dockerignore",
+      "filePath": ".dockerignore",
+      "summary": "Source file: .dockerignore",
+      "tags": [
+        "unknown"
+      ],
+      "complexity": "moderate",
+      "language": "unknown",
+      "sizeLines": 32
+    },
+    {
+      "id": "file:.eslintignore",
+      "type": "file",
+      "name": ".eslintignore",
+      "filePath": ".eslintignore",
+      "summary": "Source file: .eslintignore",
+      "tags": [
+        "unknown"
+      ],
+      "complexity": "moderate",
+      "language": "unknown",
+      "sizeLines": 34
+    },
+    {
+      "id": "file:.husky/commit-msg",
+      "type": "file",
+      "name": "commit-msg",
+      "filePath": ".husky/commit-msg",
+      "summary": "Source file: .husky/commit-msg",
+      "tags": [
+        "unknown",
+        ".husky"
+      ],
+      "complexity": "simple",
+      "language": "unknown",
+      "sizeLines": 10
+    },
+    {
+      "id": "file:.husky/pre-commit",
+      "type": "file",
+      "name": "pre-commit",
+      "filePath": ".husky/pre-commit",
+      "summary": "Source file: .husky/pre-commit",
+      "tags": [
+        "unknown",
+        ".husky"
+      ],
+      "complexity": "simple",
+      "language": "unknown",
+      "sizeLines": 8
+    },
+    {
+      "id": "file:.npmrc",
+      "type": "file",
+      "name": ".npmrc",
+      "filePath": ".npmrc",
+      "summary": "Source file: .npmrc",
+      "tags": [
+        "unknown"
+      ],
+      "complexity": "simple",
+      "language": "unknown",
+      "sizeLines": 5
+    },
+    {
+      "id": "file:.nvmrc",
+      "type": "file",
+      "name": ".nvmrc",
+      "filePath": ".nvmrc",
+      "summary": "Source file: .nvmrc",
+      "tags": [
+        "unknown"
+      ],
+      "complexity": "simple",
+      "language": "unknown",
+      "sizeLines": 1
+    },
+    {
+      "id": "file:.prettierrc.js",
+      "type": "file",
+      "name": ".prettierrc.js",
+      "filePath": ".prettierrc.js",
+      "summary": "Source file: .prettierrc.js",
+      "tags": [
+        "javascript"
+      ],
+      "complexity": "simple",
+      "language": "javascript",
+      "sizeLines": 5
+    },
+    {
+      "id": "document:CHANGELOG.md",
+      "type": "document",
+      "name": "CHANGELOG.md",
+      "filePath": "CHANGELOG.md",
+      "summary": "Document: CHANGELOG.md",
+      "tags": [
+        "markdown"
+      ],
+      "complexity": "complex",
+      "language": "markdown",
+      "sizeLines": 255
+    },
+    {
+      "id": "document:CLAUDE.md",
+      "type": "document",
+      "name": "CLAUDE.md",
+      "filePath": "CLAUDE.md",
+      "summary": "Document: CLAUDE.md",
+      "tags": [
+        "markdown"
+      ],
+      "complexity": "complex",
+      "language": "markdown",
+      "sizeLines": 113
+    },
+    {
+      "id": "document:CODE_OF_CONDUCT.md",
+      "type": "document",
+      "name": "CODE_OF_CONDUCT.md",
+      "filePath": "CODE_OF_CONDUCT.md",
+      "summary": "Document: CODE_OF_CONDUCT.md",
+      "tags": [
+        "markdown"
+      ],
+      "complexity": "simple",
+      "language": "markdown",
+      "sizeLines": 11
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Document: CONTRIBUTING.md",
+      "tags": [
+        "markdown"
+      ],
+      "complexity": "complex",
+      "language": "markdown",
+      "sizeLines": 208
+    },
+    {
+      "id": "infra:Dockerfile",
+      "type": "infra",
+      "name": "Dockerfile",
+      "filePath": "Dockerfile",
+      "summary": "Infra: Dockerfile",
+      "tags": [
+        "dockerfile"
+      ],
+      "complexity": "moderate",
+      "language": "dockerfile",
+      "sizeLines": 51
+    },
+    {
+      "id": "document:LICENSE.md",
+      "type": "document",
+      "name": "LICENSE.md",
+      "filePath": "LICENSE.md",
+      "summary": "Document: LICENSE.md",
+      "tags": [
+        "markdown"
+      ],
+      "complexity": "complex",
+      "language": "markdown",
+      "sizeLines": 201
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Document: README.md",
+      "tags": [
+        "markdown"
+      ],
+      "complexity": "complex",
+      "language": "markdown",
+      "sizeLines": 526
+    },
+    {
+      "id": "document:SECURITY.md",
+      "type": "document",
+      "name": "SECURITY.md",
+      "filePath": "SECURITY.md",
+      "summary": "Document: SECURITY.md",
+      "tags": [
+        "markdown"
+      ],
+      "complexity": "simple",
+      "language": "markdown",
+      "sizeLines": 15
+    },
+    {
+      "id": "config:biome.json",
+      "type": "config",
+      "name": "biome.json",
+      "filePath": "biome.json",
+      "summary": "Config: biome.json",
+      "tags": [
+        "json"
+      ],
+      "complexity": "moderate",
+      "language": "json",
+      "sizeLines": 38
+    },
+    {
+      "id": "file:branding/Ferdium.afphoto",
+      "type": "file",
+      "name": "Ferdium.afphoto",
+      "filePath": "branding/Ferdium.afphoto",
+      "summary": "Source file: branding/Ferdium.afphoto",
+      "tags": [
+        "afphoto",
+        "branding"
+      ],
+      "complexity": "complex",
+      "language": "afphoto",
+      "sizeLines": 118
+    },
+    {
+      "id": "document:branding/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "branding/README.md",
+      "summary": "Document: branding/README.md",
+      "tags": [
+        "markdown",
+        "branding"
+      ],
+      "complexity": "simple",
+      "language": "markdown",
+      "sizeLines": 13
+    },
+    {
+      "id": "file:branding/darwin-20-icons-lo-res.xcf",
+      "type": "file",
+      "name": "darwin-20-icons-lo-res.xcf",
+      "filePath": "branding/darwin-20-icons-lo-res.xcf",
+      "summary": "Source file: branding/darwin-20-icons-lo-res.xcf",
+      "tags": [
+        "xcf",
+        "branding"
+      ],
+      "complexity": "moderate",
+      "language": "xcf",
+      "sizeLines": 32
+    },
+    {
+      "id": "file:branding/darwin-20-icons.xcf",
+      "type": "file",
+      "name": "darwin-20-icons.xcf",
+      "filePath": "branding/darwin-20-icons.xcf",
+      "summary": "Source file: branding/darwin-20-icons.xcf",
+      "tags": [
+        "xcf",
+        "branding"
+      ],
+      "complexity": "moderate",
+      "language": "xcf",
+      "sizeLines": 64
+    },
+    {
+      "id": "file:branding/dmgInstaller.psd",
+      "type": "file",
+      "name": "dmgInstaller.psd",
+      "filePath": "branding/dmgInstaller.psd",
+      "summary": "Source file: branding/dmgInstaller.psd",
+      "tags": [
+        "psd",
+        "branding"
+      ],
+      "complexity": "complex",
+      "language": "psd",
+      "sizeLines": 3104
+    },
+    {
+      "id": "file:branding/download.psd",
+      "type": "file",
+      "name": "download.psd",
+      "filePath": "branding/download.psd",
+      "summary": "Source file: branding/download.psd",
+      "tags": [
+        "psd",
+        "branding"
+      ],
+      "complexity": "complex",
+      "language": "psd",
+      "sizeLines": 363
+    },
+    {
+      "id": "file:branding/social-preview.psd",
+      "type": "file",
+      "name": "social-preview.psd",
+      "filePath": "branding/social-preview.psd",
+      "summary": "Source file: branding/social-preview.psd",
+      "tags": [
+        "psd",
+        "branding"
+      ],
+      "complexity": "complex",
+      "language": "psd",
+      "sizeLines": 2244
+    }
+  ],
+  "edges": []
+}

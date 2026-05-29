@@ -1,0 +1,285 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "src/internal-server/resources/views/transfer.edge",
+      "language": "edge",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/start.ts",
+      "language": "typescript",
+      "sizeLines": 78,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/start/app.js",
+      "language": "javascript",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/start/kernel.js",
+      "language": "javascript",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/start/migrate.js",
+      "language": "javascript",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/start/routes.js",
+      "language": "javascript",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/internal-server/test.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/jsUtils.ts",
+      "language": "typescript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/DBus.ts",
+      "language": "typescript",
+      "sizeLines": 130,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/Form.ts",
+      "language": "typescript",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/Menu.ts",
+      "language": "typescript",
+      "sizeLines": 1351,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/TouchBar.ts",
+      "language": "typescript",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/Tray.ts",
+      "language": "typescript",
+      "sizeLines": 309,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/dbus/Ferdium.ts",
+      "language": "typescript",
+      "sizeLines": 97,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/IContextMenuParams.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/Recipe.ts",
+      "language": "typescript",
+      "sizeLines": 206,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/RecipePreview.ts",
+      "language": "typescript",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/Service.ts",
+      "language": "typescript",
+      "sizeLines": 691,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/User.ts",
+      "language": "typescript",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/models/UserAgent.ts",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/preload-safe-debug.ts",
+      "language": "typescript",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/prop-types.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes.tsx",
+      "language": "typescript",
+      "sizeLines": 205,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/sentry.ts",
+      "language": "typescript",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/stores/AppStore.ts",
+      "language": "typescript",
+      "sizeLines": 864,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/internal-server/resources/views/transfer.edge": [],
+    "src/internal-server/start.ts": [
+      "src/config.ts",
+      "src/environment.ts"
+    ],
+    "src/internal-server/start/app.js": [],
+    "src/internal-server/start/kernel.js": [],
+    "src/internal-server/start/migrate.js": [
+      "src/environment-remote.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/internal-server/start/routes.js": [
+      "src/environment-remote.ts",
+      "src/internal-server/start/migrate.js"
+    ],
+    "src/internal-server/test.ts": [
+      "src/internal-server/start.ts"
+    ],
+    "src/jsUtils.ts": [],
+    "src/lib/DBus.ts": [
+      "src/environment.ts",
+      "src/lib/Tray.ts",
+      "src/lib/dbus/Ferdium.ts"
+    ],
+    "src/lib/Form.ts": [
+      "src/@types/mobx-form.types.ts"
+    ],
+    "src/lib/Menu.ts": [
+      "src/@types/ferdium-components.types.ts",
+      "src/api/apiBase.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/features/todos/actions.ts",
+      "src/features/workspaces/actions.ts",
+      "src/features/workspaces/index.ts",
+      "src/helpers/update-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/globalMessages.ts",
+      "src/jsUtils.ts",
+      "src/models/Service.ts",
+      "src/stores/index.ts"
+    ],
+    "src/lib/TouchBar.ts": [
+      "src/environment.ts"
+    ],
+    "src/lib/Tray.ts": [
+      "src/environment.ts",
+      "src/helpers/i18n-helpers.ts"
+    ],
+    "src/lib/dbus/Ferdium.ts": [
+      "src/lib/DBus.ts"
+    ],
+    "src/models/IContextMenuParams.ts": [],
+    "src/models/Recipe.ts": [
+      "src/config.ts",
+      "src/jsUtils.ts"
+    ],
+    "src/models/RecipePreview.ts": [],
+    "src/models/Service.ts": [
+      "src/api/apiBase.ts",
+      "src/config.ts",
+      "src/environment.ts",
+      "src/features/todos/index.ts",
+      "src/helpers/favicon-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/jsUtils.ts",
+      "src/models/Recipe.ts",
+      "src/models/UserAgent.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/models/User.ts": [],
+    "src/models/UserAgent.ts": [
+      "src/helpers/userAgent-helpers.ts",
+      "src/preload-safe-debug.ts"
+    ],
+    "src/preload-safe-debug.ts": [],
+    "src/prop-types.ts": [],
+    "src/routes.tsx": [
+      "src/@types/ferdium-components.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/containers/auth/AuthLayoutContainer.tsx",
+      "src/containers/auth/AuthReleaseNotesScreen.tsx",
+      "src/containers/auth/ChangeServerScreen.tsx",
+      "src/containers/auth/InviteScreen.tsx",
+      "src/containers/auth/LoginScreen.tsx",
+      "src/containers/auth/PasswordScreen.tsx",
+      "src/containers/auth/SetupAssistantScreen.tsx",
+      "src/containers/auth/SignupScreen.tsx",
+      "src/containers/auth/WelcomeScreen.tsx",
+      "src/containers/download-manager/DownloadManagerScreen.tsx",
+      "src/containers/download-manager/DownloadManagerWindow.tsx",
+      "src/containers/layout/AppLayoutContainer.tsx",
+      "src/containers/settings/AccountScreen.tsx",
+      "src/containers/settings/EditServiceScreen.tsx",
+      "src/containers/settings/EditSettingsScreen.tsx",
+      "src/containers/settings/EditUserScreen.tsx",
+      "src/containers/settings/InviteScreen.tsx",
+      "src/containers/settings/RecipesScreen.tsx",
+      "src/containers/settings/ReleaseNotesScreen.tsx",
+      "src/containers/settings/ReleaseNotesWindow.tsx",
+      "src/containers/settings/ServicesScreen.tsx",
+      "src/containers/settings/SettingsWindow.tsx",
+      "src/containers/settings/SupportScreen.tsx",
+      "src/containers/settings/TeamScreen.tsx",
+      "src/features/workspaces/constants.ts",
+      "src/features/workspaces/containers/EditWorkspaceScreen.tsx",
+      "src/features/workspaces/containers/WorkspacesScreen.tsx",
+      "src/stores/index.ts"
+    ],
+    "src/sentry.ts": [],
+    "src/stores/AppStore.ts": [
+      "src/@types/stores.types.ts",
+      "src/actions/lib/actions.ts",
+      "src/api/index.ts",
+      "src/config.ts",
+      "src/environment-remote.ts",
+      "src/environment.ts",
+      "src/helpers/async-helpers.ts",
+      "src/helpers/i18n-helpers.ts",
+      "src/helpers/service-helpers.ts",
+      "src/helpers/url-helpers.ts",
+      "src/i18n/translations.ts",
+      "src/jsUtils.ts",
+      "src/preload-safe-debug.ts",
+      "src/stores/lib/Request.ts",
+      "src/stores/lib/TypedStore.ts"
+    ]
+  }
+}

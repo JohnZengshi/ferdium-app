@@ -1,0 +1,51 @@
+{
+  "projectRoot": "F:\\project\\work\\ferdium-app",
+  "batchFiles": [
+    {
+      "path": "test/helpers/update-helpers.test.ts",
+      "language": "typescript",
+      "sizeLines": 98,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/helpers/url-helpers.test.ts",
+      "language": "typescript",
+      "sizeLines": 138,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/jsUtils.test.ts",
+      "language": "typescript",
+      "sizeLines": 255,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/themes/index.test.ts",
+      "language": "typescript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "tsconfig.json",
+      "language": "json",
+      "sizeLines": 58,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "test/helpers/update-helpers.test.ts": [
+      "src/helpers/update-helpers.ts"
+    ],
+    "test/helpers/url-helpers.test.ts": [
+      "src/helpers/url-helpers.ts"
+    ],
+    "test/jsUtils.test.ts": [
+      "src/jsUtils.ts"
+    ],
+    "test/themes/index.test.ts": [
+      "src/themes/dark/index.ts",
+      "src/themes/default/index.ts",
+      "src/themes/index.ts"
+    ]
+  }
+}

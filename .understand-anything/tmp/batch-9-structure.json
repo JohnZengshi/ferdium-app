@@ -1,0 +1,1967 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/electron/ipc-api/autoUpdate.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 75,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/dnd.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 31,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/download.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 65,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "decodeBase64Image",
+          "startLine": 8,
+          "endLine": 16,
+          "params": [
+            "dataString"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "decodeBase64Image",
+          "callee": "dataString.match",
+          "lineNumber": 9
+        },
+        {
+          "caller": "decodeBase64Image",
+          "callee": "Buffer.from",
+          "lineNumber": 15
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/focusState.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 29,
+      "metrics": {
+        "importCount": 11,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/languageDetect.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 18,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/localServer.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 59,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "portInUse",
+          "startLine": 10,
+          "endLine": 25,
+          "params": [
+            "port"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "portInUse",
+          "callee": "createServer",
+          "lineNumber": 12
+        },
+        {
+          "caller": "portInUse",
+          "callee": "socket.write",
+          "lineNumber": 13
+        },
+        {
+          "caller": "portInUse",
+          "callee": "socket.pipe",
+          "lineNumber": 14
+        },
+        {
+          "caller": "portInUse",
+          "callee": "server.listen",
+          "lineNumber": 17
+        },
+        {
+          "caller": "portInUse",
+          "callee": "server.on",
+          "lineNumber": 18
+        },
+        {
+          "caller": "portInUse",
+          "callee": "resolve",
+          "lineNumber": 19
+        },
+        {
+          "caller": "portInUse",
+          "callee": "server.on",
+          "lineNumber": 21
+        },
+        {
+          "caller": "portInUse",
+          "callee": "server.close",
+          "lineNumber": 22
+        },
+        {
+          "caller": "portInUse",
+          "callee": "resolve",
+          "lineNumber": 23
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/processManager.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/sessionStorage.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "deduceSession",
+          "startLine": 8,
+          "endLine": 15,
+          "params": [
+            "serviceId"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "deduceSession",
+          "callee": "session.fromPartition",
+          "lineNumber": 12
+        },
+        {
+          "caller": "deduceSession",
+          "callee": "session.fromPartition",
+          "lineNumber": 14
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/ipc-api/settings.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 12,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/macOSPermissions.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 87,
+      "nonEmptyLines": 73,
+      "functions": [
+        {
+          "name": "hasPromptedForScreenCapturePermission",
+          "startLine": 20,
+          "endLine": 27,
+          "params": []
+        },
+        {
+          "name": "hasScreenCapturePermissionAlreadyBeenGranted",
+          "startLine": 29,
+          "endLine": 37,
+          "params": []
+        },
+        {
+          "name": "createStatusFile",
+          "startLine": 39,
+          "endLine": 50,
+          "params": []
+        },
+        {
+          "name": "askFormacOSPermissions",
+          "startLine": 52,
+          "endLine": 87,
+          "params": [
+            "mainWindow"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "askFormacOSPermissions",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "hasPromptedForScreenCapturePermission",
+          "callee": "debug",
+          "lineNumber": 25
+        },
+        {
+          "caller": "hasPromptedForScreenCapturePermission",
+          "callee": "pathExistsSync",
+          "lineNumber": 26
+        },
+        {
+          "caller": "hasScreenCapturePermissionAlreadyBeenGranted",
+          "callee": "systemPreferences.getMediaAccessStatus",
+          "lineNumber": 34
+        },
+        {
+          "caller": "hasScreenCapturePermissionAlreadyBeenGranted",
+          "callee": "debug",
+          "lineNumber": 35
+        },
+        {
+          "caller": "createStatusFile",
+          "callee": "writeFileSync",
+          "lineNumber": 41
+        },
+        {
+          "caller": "createStatusFile",
+          "callee": "mkdirSync",
+          "lineNumber": 44
+        },
+        {
+          "caller": "createStatusFile",
+          "callee": "dirname",
+          "lineNumber": 44
+        },
+        {
+          "caller": "createStatusFile",
+          "callee": "writeFileSync",
+          "lineNumber": 45
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "debug",
+          "lineNumber": 55
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "systemPreferences.askForMediaAccess",
+          "lineNumber": 56
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "systemPreferences.askForMediaAccess",
+          "lineNumber": 57
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "hasScreenCapturePermissionAlreadyBeenGranted",
+          "lineNumber": 59
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "debug",
+          "lineNumber": 60
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "createStatusFile",
+          "lineNumber": 61
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "hasPromptedForScreenCapturePermission",
+          "lineNumber": 65
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "debug",
+          "lineNumber": 66
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "dialog.showMessageBox",
+          "lineNumber": 68
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "debug",
+          "lineNumber": 79
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "askForScreenCaptureAccess",
+          "lineNumber": 80
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "createStatusFile",
+          "lineNumber": 81
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "debug",
+          "lineNumber": 83
+        },
+        {
+          "caller": "askFormacOSPermissions",
+          "callee": "createStatusFile",
+          "lineNumber": 84
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/electron/windowUtils.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 15,
+      "functions": [
+        {
+          "name": "isPositionValid",
+          "startLine": 3,
+          "endLine": 16,
+          "params": [
+            "position"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "isPositionValid",
+          "line": 3,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "isPositionValid",
+          "callee": "screen.getAllDisplays",
+          "lineNumber": 7
+        },
+        {
+          "caller": "isPositionValid",
+          "callee": "displays.some",
+          "lineNumber": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/enforce-macos-app-location.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "enforceMacOSAppLocation",
+          "startLine": 7,
+          "endLine": 44,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "enforceMacOSAppLocation",
+          "line": 7,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "enforceMacOSAppLocation",
+          "callee": "api.app.isInApplicationsFolder",
+          "lineNumber": 8
+        },
+        {
+          "caller": "enforceMacOSAppLocation",
+          "callee": "api.dialog.showMessageBoxSync",
+          "lineNumber": 12
+        },
+        {
+          "caller": "enforceMacOSAppLocation",
+          "callee": "api.app.quit",
+          "lineNumber": 23
+        },
+        {
+          "caller": "enforceMacOSAppLocation",
+          "callee": "api.app.moveToApplicationsFolder",
+          "lineNumber": 27
+        },
+        {
+          "caller": "enforceMacOSAppLocation",
+          "callee": "api.dialog.showMessageBoxSync",
+          "lineNumber": 31
+        },
+        {
+          "caller": "enforceMacOSAppLocation",
+          "callee": "api.app.quit",
+          "lineNumber": 38
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/environment-remote.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 71,
+      "functions": [
+        {
+          "name": "userDataPath",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "...segments"
+          ]
+        },
+        {
+          "name": "userDataRecipesPath",
+          "startLine": 47,
+          "endLine": 49,
+          "params": [
+            "...segments"
+          ]
+        },
+        {
+          "name": "userDataCertsPath",
+          "startLine": 51,
+          "endLine": 53,
+          "params": [
+            "...segments"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "{ app }",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "ferdiumVersion",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "ferdiumLocale",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "isDevMode",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "userDataPath",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "userDataRecipesPath",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "userDataCertsPath",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "useLiveAPI",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "API",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "API_VERSION",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "WS_API",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "WEBSITE",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "protocolClient",
+          "line": 80,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "userDataPath",
+          "callee": "join",
+          "lineNumber": 44
+        },
+        {
+          "caller": "userDataPath",
+          "callee": "app.getPath",
+          "lineNumber": 44
+        },
+        {
+          "caller": "userDataPath",
+          "callee": "[segments].flat",
+          "lineNumber": 44
+        },
+        {
+          "caller": "userDataRecipesPath",
+          "callee": "userDataPath",
+          "lineNumber": 48
+        },
+        {
+          "caller": "userDataRecipesPath",
+          "callee": "[segments].flat",
+          "lineNumber": 48
+        },
+        {
+          "caller": "userDataCertsPath",
+          "callee": "userDataPath",
+          "lineNumber": 52
+        },
+        {
+          "caller": "userDataCertsPath",
+          "callee": "[segments].flat",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 13,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/environment.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 43,
+      "functions": [
+        {
+          "name": "altKey",
+          "startLine": 26,
+          "endLine": 27,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "shiftKey",
+          "startLine": 28,
+          "endLine": 29,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "cmdOrCtrlShortcutKey",
+          "startLine": 32,
+          "endLine": 33,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "lockFerdiumShortcutKey",
+          "startLine": 34,
+          "endLine": 35,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "todosToggleShortcutKey",
+          "startLine": 36,
+          "endLine": 37,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "workspaceToggleShortcutKey",
+          "startLine": 38,
+          "endLine": 39,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "muteFerdiumShortcutKey",
+          "startLine": 40,
+          "endLine": 41,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "addNewServiceShortcutKey",
+          "startLine": 42,
+          "endLine": 43,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "splitModeToggleShortcutKey",
+          "startLine": 44,
+          "endLine": 45,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "settingsShortcutKey",
+          "startLine": 46,
+          "endLine": 47,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "downloadsShortcutKey",
+          "startLine": 48,
+          "endLine": 49,
+          "params": [
+            "isAccelerator"
+          ]
+        },
+        {
+          "name": "toggleFullScreenKey",
+          "startLine": 50,
+          "endLine": 51,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "isMac",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "isWindows",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "isLinux",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "isWinPortable",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "isWayland",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "isSnap",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "electronVersion",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "chromeVersion",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "nodeVersion",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "osArch",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "osRelease",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "is64Bit",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "altKey",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "shiftKey",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "cmdOrCtrlShortcutKey",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "lockFerdiumShortcutKey",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "todosToggleShortcutKey",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "workspaceToggleShortcutKey",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "muteFerdiumShortcutKey",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "addNewServiceShortcutKey",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "splitModeToggleShortcutKey",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "settingsShortcutKey",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "downloadsShortcutKey",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "toggleFullScreenKey",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "lockFerdiumShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 35
+        },
+        {
+          "caller": "lockFerdiumShortcutKey",
+          "callee": "shiftKey",
+          "lineNumber": 35
+        },
+        {
+          "caller": "todosToggleShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 37
+        },
+        {
+          "caller": "workspaceToggleShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 39
+        },
+        {
+          "caller": "muteFerdiumShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 41
+        },
+        {
+          "caller": "muteFerdiumShortcutKey",
+          "callee": "shiftKey",
+          "lineNumber": 41
+        },
+        {
+          "caller": "addNewServiceShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 43
+        },
+        {
+          "caller": "splitModeToggleShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 45
+        },
+        {
+          "caller": "splitModeToggleShortcutKey",
+          "callee": "altKey",
+          "lineNumber": 45
+        },
+        {
+          "caller": "settingsShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 47
+        },
+        {
+          "caller": "downloadsShortcutKey",
+          "callee": "cmdOrCtrlShortcutKey",
+          "lineNumber": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 24,
+        "functionCount": 12,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/appearance/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 627,
+      "nonEmptyLines": 562,
+      "functions": [
+        {
+          "name": "createStyleElement",
+          "startLine": 19,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "setAppearance",
+          "startLine": 26,
+          "endLine": 32,
+          "params": []
+        },
+        {
+          "name": "darkenAbsolute",
+          "startLine": 35,
+          "endLine": 38,
+          "params": [
+            "originalColor",
+            "absoluteChange"
+          ]
+        },
+        {
+          "name": "generateUserCustomCSS",
+          "startLine": 40,
+          "endLine": 43,
+          "params": []
+        },
+        {
+          "name": "generateAccentStyle",
+          "startLine": 45,
+          "endLine": 137,
+          "params": [
+            "accentColorStr",
+            "useHorizontalStyle"
+          ]
+        },
+        {
+          "name": "generateServiceRibbonWidthStyle",
+          "startLine": 139,
+          "endLine": 318,
+          "params": [
+            "widthStr",
+            "iconSizeStr",
+            "horizontal",
+            "isLabelEnabled",
+            "sidebarServicesLocation",
+            "useGrayscaleServices",
+            "grayscaleServicesDim",
+            "shouldShowDragArea",
+            "isFullScreen"
+          ]
+        },
+        {
+          "name": "generateShowDragAreaStyle",
+          "startLine": 320,
+          "endLine": 334,
+          "params": []
+        },
+        {
+          "name": "generateCompactWorkspaceDrawerStyle",
+          "startLine": 336,
+          "endLine": 363,
+          "params": [
+            "widthStr",
+            "useCompactWorkspaceDrawer"
+          ]
+        },
+        {
+          "name": "generateWorkspaceDrawerTransform",
+          "startLine": 368,
+          "endLine": 393,
+          "params": [
+            "widthStr",
+            "useCompactWorkspaceDrawer",
+            "isWorkspaceDrawerOpen",
+            "alwaysShowWorkspaces"
+          ]
+        },
+        {
+          "name": "generateVerticalStyle",
+          "startLine": 395,
+          "endLine": 431,
+          "params": [
+            "widthStr",
+            "alwaysShowWorkspaces",
+            "useCompactWorkspaceDrawer"
+          ]
+        },
+        {
+          "name": "generateOpenWorkspaceStyle",
+          "startLine": 433,
+          "endLine": 443,
+          "params": []
+        },
+        {
+          "name": "generateAppContentTransition",
+          "startLine": 445,
+          "endLine": 472,
+          "params": []
+        },
+        {
+          "name": "generateStyle",
+          "startLine": 474,
+          "endLine": 550,
+          "params": [
+            "settings",
+            "app"
+          ]
+        },
+        {
+          "name": "updateProgressbar",
+          "startLine": 552,
+          "endLine": 560,
+          "params": []
+        },
+        {
+          "name": "updateStyle",
+          "startLine": 562,
+          "endLine": 567,
+          "params": [
+            "settings",
+            "app"
+          ]
+        },
+        {
+          "name": "initAppearance",
+          "startLine": 569,
+          "endLine": 627,
+          "params": [
+            "stores"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "initAppearance",
+          "line": 569,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "createStyleElement",
+          "callee": "document.createElement",
+          "lineNumber": 20
+        },
+        {
+          "caller": "createStyleElement",
+          "callee": "document.querySelector('head')?.append",
+          "lineNumber": 23
+        },
+        {
+          "caller": "createStyleElement",
+          "callee": "document.querySelector",
+          "lineNumber": 23
+        },
+        {
+          "caller": "setAppearance",
+          "callee": "document.querySelector",
+          "lineNumber": 27
+        },
+        {
+          "caller": "darkenAbsolute",
+          "callee": "originalColor.lightness",
+          "lineNumber": 36
+        },
+        {
+          "caller": "darkenAbsolute",
+          "callee": "originalColor.lightness",
+          "lineNumber": 37
+        },
+        {
+          "caller": "generateUserCustomCSS",
+          "callee": "userDataPath",
+          "lineNumber": 41
+        },
+        {
+          "caller": "generateUserCustomCSS",
+          "callee": "pathExistsSync",
+          "lineNumber": 42
+        },
+        {
+          "caller": "generateUserCustomCSS",
+          "callee": "readFileSync(path).toString",
+          "lineNumber": 42
+        },
+        {
+          "caller": "generateUserCustomCSS",
+          "callee": "readFileSync",
+          "lineNumber": 42
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "color",
+          "lineNumber": 48
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "color",
+          "lineNumber": 52
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "darkenAbsolute(accentColor, 5).hex",
+          "lineNumber": 54
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "darkenAbsolute",
+          "lineNumber": 54
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "darkenAbsolute(accentColor, 10).hex",
+          "lineNumber": 105
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "darkenAbsolute",
+          "lineNumber": 105
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "accentColor.lightness(90).hex",
+          "lineNumber": 133
+        },
+        {
+          "caller": "generateAccentStyle",
+          "callee": "accentColor.lightness",
+          "lineNumber": 133
+        },
+        {
+          "caller": "generateServiceRibbonWidthStyle",
+          "callee": "Number",
+          "lineNumber": 150
+        },
+        {
+          "caller": "generateServiceRibbonWidthStyle",
+          "callee": "Number",
+          "lineNumber": 151
+        },
+        {
+          "caller": "generateServiceRibbonWidthStyle",
+          "callee": "Math.max",
+          "lineNumber": 207
+        },
+        {
+          "caller": "generateCompactWorkspaceDrawerStyle",
+          "callee": "Number",
+          "lineNumber": 344
+        },
+        {
+          "caller": "generateWorkspaceDrawerTransform",
+          "callee": "Number",
+          "lineNumber": 380
+        },
+        {
+          "caller": "generateVerticalStyle",
+          "callee": "document.querySelector",
+          "lineNumber": 400
+        },
+        {
+          "caller": "generateVerticalStyle",
+          "callee": "document.createElement",
+          "lineNumber": 401
+        },
+        {
+          "caller": "generateVerticalStyle",
+          "callee": "document.head.append",
+          "lineNumber": 407
+        },
+        {
+          "caller": "generateVerticalStyle",
+          "callee": "Number",
+          "lineNumber": 409
+        },
+        {
+          "caller": "generateAppContentTransition",
+          "callee": "window?.matchMedia",
+          "lineNumber": 446
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "accentColor.toLowerCase",
+          "lineNumber": 496
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "DEFAULT_APP_SETTINGS.accentColor.toLowerCase",
+          "lineNumber": 496
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateAccentStyle",
+          "lineNumber": 498
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateServiceRibbonWidthStyle",
+          "lineNumber": 501
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateCompactWorkspaceDrawerStyle",
+          "lineNumber": 513
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateWorkspaceDrawerTransform",
+          "lineNumber": 518
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateShowDragAreaStyle",
+          "lineNumber": 526
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateVerticalStyle",
+          "lineNumber": 529
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "document.querySelector",
+          "lineNumber": 534
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "document.querySelector",
+          "lineNumber": 535
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "link.remove",
+          "lineNumber": 537
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateOpenWorkspaceStyle",
+          "lineNumber": 541
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateAppContentTransition",
+          "lineNumber": 545
+        },
+        {
+          "caller": "generateStyle",
+          "callee": "generateUserCustomCSS",
+          "lineNumber": 547
+        },
+        {
+          "caller": "updateProgressbar",
+          "callee": "TopBarProgress.config",
+          "lineNumber": 553
+        },
+        {
+          "caller": "updateStyle",
+          "callee": "generateStyle",
+          "lineNumber": 564
+        },
+        {
+          "caller": "updateStyle",
+          "callee": "setAppearance",
+          "lineNumber": 565
+        },
+        {
+          "caller": "updateStyle",
+          "callee": "updateProgressbar",
+          "lineNumber": 566
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "createStyleElement",
+          "lineNumber": 571
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "updateProgressbar",
+          "lineNumber": 572
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "reaction",
+          "lineNumber": 575
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "clearTimeout",
+          "lineNumber": 588
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "updateStyle",
+          "lineNumber": 591
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "setTimeout",
+          "lineNumber": 594
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "updateStyle",
+          "lineNumber": 596
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "updateStyle",
+          "lineNumber": 600
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "reaction",
+          "lineNumber": 606
+        },
+        {
+          "caller": "initAppearance",
+          "callee": "updateStyle",
+          "lineNumber": 623
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 16,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/basicAuth/Component.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 106,
+      "nonEmptyLines": 97,
+      "classes": [
+        {
+          "name": "BasicAuthModal",
+          "startLine": 31,
+          "endLine": 103,
+          "methods": [
+            "submit",
+            "cancel",
+            "close",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "submit",
+          "callee": "e.preventDefault",
+          "lineNumber": 34
+        },
+        {
+          "caller": "submit",
+          "callee": "Form.values",
+          "lineNumber": 35
+        },
+        {
+          "caller": "submit",
+          "callee": "sendCredentials",
+          "lineNumber": 36
+        },
+        {
+          "caller": "submit",
+          "callee": "resetState",
+          "lineNumber": 37
+        },
+        {
+          "caller": "cancel",
+          "callee": "cancelLogin",
+          "lineNumber": 41
+        },
+        {
+          "caller": "cancel",
+          "callee": "this.close",
+          "lineNumber": 42
+        },
+        {
+          "caller": "close",
+          "callee": "resetState",
+          "lineNumber": 46
+        },
+        {
+          "caller": "render",
+          "callee": "this.cancel.bind",
+          "lineNumber": 65
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 68
+        },
+        {
+          "caller": "render",
+          "callee": "this.submit.bind",
+          "lineNumber": 76
+        },
+        {
+          "caller": "render",
+          "callee": "classnames",
+          "lineNumber": 77
+        },
+        {
+          "caller": "render",
+          "callee": "Form.$('user').bind",
+          "lineNumber": 79
+        },
+        {
+          "caller": "render",
+          "callee": "Form.$",
+          "lineNumber": 79
+        },
+        {
+          "caller": "render",
+          "callee": "Form.$('password').bind",
+          "lineNumber": 81
+        },
+        {
+          "caller": "render",
+          "callee": "Form.$",
+          "lineNumber": 81
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 88
+        },
+        {
+          "caller": "render",
+          "callee": "this.cancel.bind",
+          "lineNumber": 91
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 95
+        }
+      ],
+      "metrics": {
+        "importCount": 8,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/features/basicAuth/Form.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 16,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/basicAuth/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "initialize",
+          "startLine": 9,
+          "endLine": 22,
+          "params": []
+        },
+        {
+          "name": "mainIpcHandler",
+          "startLine": 24,
+          "endLine": 33,
+          "params": [
+            "mainWindow",
+            "authInfo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "initialize",
+          "line": 9,
+          "isDefault": true
+        },
+        {
+          "name": "mainIpcHandler",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Component",
+          "line": 35,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "initialize",
+          "callee": "debug",
+          "lineNumber": 10
+        },
+        {
+          "caller": "initialize",
+          "callee": "ipcRenderer.on",
+          "lineNumber": 16
+        },
+        {
+          "caller": "initialize",
+          "callee": "debug",
+          "lineNumber": 17
+        },
+        {
+          "caller": "mainIpcHandler",
+          "callee": "debug",
+          "lineNumber": 28
+        },
+        {
+          "caller": "mainIpcHandler",
+          "callee": "mainWindow.webContents.send",
+          "lineNumber": 30
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/basicAuth/mainIpcHandler.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 10,
+      "functions": [
+        {
+          "name": "mainIpcHandler",
+          "startLine": 7,
+          "endLine": 13,
+          "params": [
+            "mainWindow",
+            "authInfo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "mainIpcHandler",
+          "line": 7,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "mainIpcHandler",
+          "callee": "debug",
+          "lineNumber": 8
+        },
+        {
+          "caller": "mainIpcHandler",
+          "callee": "mainWindow.webContents.send",
+          "lineNumber": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/basicAuth/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "resetState",
+          "startLine": 24,
+          "endLine": 26,
+          "params": []
+        },
+        {
+          "name": "sendCredentials",
+          "startLine": 28,
+          "endLine": 35,
+          "params": [
+            "user",
+            "password"
+          ]
+        },
+        {
+          "name": "cancelLogin",
+          "startLine": 37,
+          "endLine": 41,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "state",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "resetState",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "sendCredentials",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "cancelLogin",
+          "line": 37,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "resetState",
+          "callee": "Object.assign",
+          "lineNumber": 25
+        },
+        {
+          "caller": "sendCredentials",
+          "callee": "debug",
+          "lineNumber": 29
+        },
+        {
+          "caller": "sendCredentials",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 31
+        },
+        {
+          "caller": "cancelLogin",
+          "callee": "debug",
+          "lineNumber": 38
+        },
+        {
+          "caller": "cancelLogin",
+          "callee": "ipcRenderer.send",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/basicAuth/styles.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 12,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/communityRecipes/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 5,
+      "functions": [
+        {
+          "name": "initCommunityRecipes",
+          "startLine": 5,
+          "endLine": 7,
+          "params": [
+            "stores",
+            "actions"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "communityRecipesStore",
+          "line": 3,
+          "isDefault": false
+        },
+        {
+          "name": "initCommunityRecipes",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "initCommunityRecipes",
+          "callee": "communityRecipesStore.start",
+          "lineNumber": 6
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/features/communityRecipes/store.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 32,
+      "classes": [
+        {
+          "name": "CommunityRecipesStore",
+          "startLine": 8,
+          "endLine": 40,
+          "methods": [
+            "start",
+            "stop",
+            "communityRecipes"
+          ],
+          "properties": [
+            "stores",
+            "actions"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CommunityRecipesStore",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "start",
+          "callee": "debug",
+          "lineNumber": 14
+        },
+        {
+          "caller": "stop",
+          "callee": "debug",
+          "lineNumber": 20
+        },
+        {
+          "caller": "stop",
+          "callee": "super.stop",
+          "lineNumber": 21
+        },
+        {
+          "caller": "communityRecipes",
+          "callee": "this.stores.recipePreviews.dev.map",
+          "lineNumber": 27
+        },
+        {
+          "caller": "communityRecipes",
+          "callee": "recipePreview.author.some",
+          "lineNumber": 31
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/features/publishDebugInfo/Component.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 211,
+      "nonEmptyLines": 195,
+      "functions": [
+        {
+          "name": "styles",
+          "startLine": 55,
+          "endLine": 80,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "PublishDebugLogModal",
+          "startLine": 93,
+          "endLine": 207,
+          "methods": [
+            "constructor",
+            "close",
+            "publishDebugInfo",
+            "render"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 97
+        },
+        {
+          "caller": "close",
+          "callee": "this.setState",
+          "lineNumber": 109
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "debug",
+          "lineNumber": 117
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "this.setState",
+          "lineNumber": 118
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "JSON.stringify",
+          "lineNumber": 122
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "sendAuthRequest",
+          "lineNumber": 124
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "JSON.stringify",
+          "lineNumber": 128
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "debug",
+          "lineNumber": 135
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "request.json",
+          "lineNumber": 137
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "this.setState",
+          "lineNumber": 139
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "this.setState",
+          "lineNumber": 141
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "this.setState",
+          "lineNumber": 144
+        },
+        {
+          "caller": "publishDebugInfo",
+          "callee": "debug",
+          "lineNumber": 147
+        },
+        {
+          "caller": "render",
+          "callee": "this.close",
+          "lineNumber": 160
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 163
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 168
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 174
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 178
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 185
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 193
+        },
+        {
+          "caller": "render",
+          "callee": "intl.formatMessage",
+          "lineNumber": 197
+        },
+        {
+          "caller": "render",
+          "callee": "this.publishDebugInfo",
+          "lineNumber": 199
+        }
+      ],
+      "metrics": {
+        "importCount": 9,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    }
+  ]
+}

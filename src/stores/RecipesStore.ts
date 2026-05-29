@@ -119,7 +119,9 @@ export default class RecipesStore extends TypedStore {
         }
       }
     } catch {
-      debug('Could not read local recipe index (all.json), skipping local update checks');
+      debug(
+        'Could not read local recipe index (all.json), skipping local update checks',
+      );
     }
 
     const updates = [...remoteUpdates, ...localUpdates];

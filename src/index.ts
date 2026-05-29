@@ -735,6 +735,43 @@ ipcMain.on(
   },
 );
 
+ipcMain.on('setFingerprintHeaders', (_e, { partition, userAgentData }) => {
+  debug(`Received setFingerprintHeaders for partition ${partition}`);
+
+  const { brands, mobile, platform } = userAgentData;
+
+  const secChUa = brands
+    .map(
+      (b: { brand: string; version: string }) =>
+        `"${b.brand}";v="${b.version}"`,
+    )
+    .join(', ');
+
+  const secChUaFullVersionList = brands
+    .map(
+      (b: { brand: string; version: string }) =>
+        `"${b.brand}";v="${b.version}"`,
+    )
+    .join(', ');
+
+  session
+    .fromPartition(partition)
+    .webRequest.onBeforeSendHeaders((details, callback) => {
+      // eslint-disable-next-line no-param-reassign
+      details.requestHeaders['Sec-CH-UA'] = secChUa;
+      // eslint-disable-next-line no-param-reassign
+      details.requestHeaders['Sec-CH-UA-Mobile'] = mobile ? '?1' : '?0';
+      // eslint-disable-next-line no-param-reassign
+      details.requestHeaders['Sec-CH-UA-Platform'] = `"${platform}"`;
+      // eslint-disable-next-line no-param-reassign
+      details.requestHeaders['Sec-CH-UA-Platform-Version'] = '"10.0.0"';
+      // eslint-disable-next-line no-param-reassign
+      details.requestHeaders['Sec-CH-UA-Full-Version-List'] =
+        secChUaFullVersionList;
+      callback({ requestHeaders: details.requestHeaders });
+    });
+});
+
 ipcMain.on('knownCertificateHosts', (_e, { knownHosts, serviceId }) => {
   debug(
     `Received knownCertificateHosts ${knownHosts} for serviceId ${serviceId}`,

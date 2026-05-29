@@ -41,6 +41,7 @@ import {
 
 import type { AppStore } from '../@types/stores.types';
 import { DEFAULT_APP_SETTINGS } from '../config';
+import type { FingerprintConfig } from '../helpers/fingerprint-helpers';
 import { cleanseJSObject, ifUndefined, safeParseInt } from '../jsUtils';
 import type Service from '../models/Service';
 
@@ -251,6 +252,18 @@ class RecipeController {
       }
 
       this.settings.service = Object.assign(config, { recipe });
+
+      // Inject fingerprint overrides if fingerprint config is present
+      const fingerprint = config.fingerprint as FingerprintConfig | undefined;
+      if (fingerprint) {
+        // eslint-disable-next-line no-use-before-define, @typescript-eslint/no-use-before-define -- buildFingerprintScript defined below
+        const script = buildFingerprintScript(fingerprint);
+        ipcRenderer.sendToHost('inject-js-unsafe', script);
+        ipcRenderer.sendToHost('setFingerprintHeaders', {
+          partition: `persist:service-${config.id}`,
+          userAgentData: fingerprint.userAgentData,
+        });
+      }
 
       // Make sure to update the WebView, otherwise the custom darkmode handler may not be used
       this.update();
@@ -489,6 +502,188 @@ class RecipeController {
   toggleToTalk() {
     this.recipe?.toggleToTalkFunc?.();
   }
+}
+
+/**
+ * Build a JavaScript string that overrides browser fingerprinting APIs.
+ * The returned string is injected into the main world (the web page's JS context)
+ * via ipcRenderer.sendToHost('inject-js-unsafe', script).
+ *
+ * Uses an inline mulberry32 PRNG since modules cannot be imported in the main world.
+ */
+function buildFingerprintScript(fp: FingerprintConfig): string {
+  const { canvasSeed } = fp;
+  const { audioSeed } = fp;
+  const webglVendor = fp.webglConfig.vendor;
+  const webglRenderer = fp.webglConfig.renderer;
+  const { hardwareConcurrency } = fp;
+  const { deviceMemory } = fp;
+  const languages = JSON.stringify(fp.languages);
+  const brands = JSON.stringify(fp.userAgentData.brands);
+  const { mobile } = fp.userAgentData;
+  const { platform } = fp.userAgentData;
+
+  return `(function() {
+  'use strict';
+
+  // === Inline mulberry32 PRNG (seeded from numeric seed) ===
+  function _fpPRNG(seed) {
+    var s = seed | 0;
+    return function() {
+      s = (s + 0x6D2B79F5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // === 1. Canvas fingerprint override ===
+  var CANVAS_SEED = ${canvasSeed};
+  var _origToDataURL = HTMLCanvasElement.prototype.toDataURL;
+  var _origToBlob = HTMLCanvasElement.prototype.toBlob;
+
+  HTMLCanvasElement.prototype.toDataURL = function() {
+    var ctx = this.getContext('2d');
+    if (ctx) {
+      var imageData = ctx.getImageData(0, 0, this.width, this.height);
+      var s = CANVAS_SEED;
+      for (var i = 0; i < imageData.data.length; i += 4) {
+        s = (s + 0x6D2B79F5) | 0;
+        var t = Math.imul(s ^ (s >>> 15), 1 | s);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        var noise = ((t ^ (t >>> 14)) >>> 0) % 7 - 3;
+        imageData.data[i] = Math.max(0, Math.min(255, imageData.data[i] + noise));
+        imageData.data[i + 1] = Math.max(0, Math.min(255, imageData.data[i + 1] + noise));
+        imageData.data[i + 2] = Math.max(0, Math.min(255, imageData.data[i + 2] + noise));
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
+    return _origToDataURL.apply(this, arguments);
+  };
+
+  HTMLCanvasElement.prototype.toBlob = function() {
+    var ctx = this.getContext('2d');
+    if (ctx) {
+      var imageData = ctx.getImageData(0, 0, this.width, this.height);
+      var s = CANVAS_SEED;
+      for (var i = 0; i < imageData.data.length; i += 4) {
+        s = (s + 0x6D2B79F5) | 0;
+        var t = Math.imul(s ^ (s >>> 15), 1 | s);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        var noise = ((t ^ (t >>> 14)) >>> 0) % 7 - 3;
+        imageData.data[i] = Math.max(0, Math.min(255, imageData.data[i] + noise));
+        imageData.data[i + 1] = Math.max(0, Math.min(255, imageData.data[i + 1] + noise));
+        imageData.data[i + 2] = Math.max(0, Math.min(255, imageData.data[i + 2] + noise));
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
+    return _origToBlob.apply(this, arguments);
+  };
+
+  // === 2. WebGL parameter override ===
+  var UNMASKED_VENDOR = 0x9245;
+  var UNMASKED_RENDERER = 0x9246;
+
+  var _origGetParam = WebGLRenderingContext.prototype.getParameter;
+  WebGLRenderingContext.prototype.getParameter = function(param) {
+    if (param === UNMASKED_VENDOR) return ${JSON.stringify(webglVendor)};
+    if (param === UNMASKED_RENDERER) return ${JSON.stringify(webglRenderer)};
+    return _origGetParam.call(this, param);
+  };
+
+  if (typeof WebGL2RenderingContext !== 'undefined') {
+    var _origGetParam2 = WebGL2RenderingContext.prototype.getParameter;
+    WebGL2RenderingContext.prototype.getParameter = function(param) {
+      if (param === UNMASKED_VENDOR) return ${JSON.stringify(webglVendor)};
+      if (param === UNMASKED_RENDERER) return ${JSON.stringify(webglRenderer)};
+      return _origGetParam2.call(this, param);
+    };
+  }
+
+  // === 3. AudioContext fingerprint override ===
+  var AUDIO_SEED = ${audioSeed};
+
+  var _origCreateOscillator = AudioContext.prototype.createOscillator;
+  AudioContext.prototype.createOscillator = function() {
+    var osc = _origCreateOscillator.call(this);
+    osc.frequency.value = osc.frequency.value + (AUDIO_SEED % 10);
+    return osc;
+  };
+
+  var _origCreateDynamics = AudioContext.prototype.createDynamicsCompressor;
+  AudioContext.prototype.createDynamicsCompressor = function() {
+    var comp = _origCreateDynamics.call(this);
+    comp.ratio.value = comp.ratio.value + (AUDIO_SEED % 5) * 0.1;
+    comp.threshold.value = comp.threshold.value - (AUDIO_SEED % 3);
+    return comp;
+  };
+
+  var _origGetFloatFreq = AnalyserNode.prototype.getFloatFrequencyData;
+  AnalyserNode.prototype.getFloatFrequencyData = function(array) {
+    _origGetFloatFreq.call(this, array);
+    var rng = _fpPRNG(AUDIO_SEED);
+    for (var i = 0; i < array.length; i++) {
+      array[i] = array[i] + (rng() * 0.0002 - 0.0001);
+    }
+  };
+
+  var _origGetChannelData = AudioBuffer.prototype.getChannelData;
+  AudioBuffer.prototype.getChannelData = function(channel) {
+    var data = _origGetChannelData.call(this, channel);
+    var rng = _fpPRNG(AUDIO_SEED + channel);
+    for (var i = 0; i < data.length; i++) {
+      data[i] = data[i] + (rng() * 0.0002 - 0.0001);
+    }
+    return data;
+  };
+
+  // === 4. Navigator overrides ===
+  var _languages = ${languages};
+  var _brands = ${brands};
+  var _mobile = ${mobile};
+  var _platform = ${JSON.stringify(platform)};
+
+  Object.defineProperty(navigator, 'hardwareConcurrency', {
+    get: function() { return ${hardwareConcurrency}; },
+    configurable: true,
+  });
+
+  Object.defineProperty(navigator, 'deviceMemory', {
+    get: function() { return ${deviceMemory}; },
+    configurable: true,
+  });
+
+  Object.defineProperty(navigator, 'languages', {
+    get: function() { return _languages.slice(); },
+    configurable: true,
+  });
+
+  Object.defineProperty(navigator, 'userAgentData', {
+    get: function() {
+      return {
+        brands: _brands,
+        mobile: _mobile,
+        platform: _platform,
+        getHighEntropyValues: function() {
+          return Promise.resolve({
+            brands: _brands,
+            mobile: _mobile,
+            platform: _platform,
+            architecture: '',
+            bitness: '',
+            model: '',
+            platformVersion: '',
+            uaFullVersion: '',
+          });
+        },
+        toJSON: function() {
+          return { brands: _brands, mobile: _mobile, platform: _platform };
+        },
+      };
+    },
+    configurable: true,
+  });
+})();`;
 }
 
 /* eslint-disable no-new */

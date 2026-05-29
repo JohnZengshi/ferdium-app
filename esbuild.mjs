@@ -2,6 +2,7 @@
 import * as fs from 'node:fs';
 import { performance } from 'node:perf_hooks';
 import chalk from 'chalk';
+import * as dotenv from 'dotenv';
 import * as esbuild from 'esbuild';
 import { copy } from 'esbuild-plugin-copy';
 import { sassPlugin } from 'esbuild-sass-plugin';
@@ -10,6 +11,8 @@ import livereload from 'gulp-livereload';
 import moment from 'moment';
 import * as buildInfo from 'preval-build-info';
 import glob from 'tiny-glob';
+
+dotenv.config();
 
 const { log } = console;
 
@@ -98,6 +101,14 @@ const runEsbuild = async () => {
     'src/styles/animations.scss',
   );
 
+  // Inject WhatsApp env vars from .env into bundle
+  const envDefines = {};
+  for (const key of ['WA_AKG_BASE', 'WA_DEFAULT_EMAIL', 'WA_DEFAULT_PASSWORD']) {
+    if (process.env[key]) {
+      envDefines[`process.env.${key}`] = JSON.stringify(process.env[key]);
+    }
+  }
+
   // Run build
   await esbuild.build({
     entryPoints,
@@ -118,6 +129,7 @@ const runEsbuild = async () => {
       },
     },
     incremental: isDev,
+    define: envDefines,
     plugins: [sassPlugin(), ...staticAssets()],
   });
 

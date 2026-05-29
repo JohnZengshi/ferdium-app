@@ -9,7 +9,7 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  ignorePatterns: ['node_modules', 'build', 'recipes'],
+  ignorePatterns: ['node_modules', 'build', 'recipes', 'src/whatsapp-automation/api/generated'],
   extends: [
     'airbnb',
     'plugin:react/jsx-runtime',

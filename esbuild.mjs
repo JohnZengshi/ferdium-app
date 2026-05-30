@@ -7,6 +7,9 @@ import * as esbuild from 'esbuild';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import { sassPlugin } from 'esbuild-sass-plugin';
+import postcss from 'postcss';
+import tailwindcss from '@tailwindcss/postcss';
+import autoprefixer from 'autoprefixer';
 import fsPkg from 'fs-extra';
 import livereload from 'gulp-livereload';
 import moment from 'moment';
@@ -133,7 +136,12 @@ const runEsbuild = async () => {
     incremental: isDev,
     define: envDefines,
     plugins: [
-      sassPlugin(),
+      sassPlugin({
+        async transform(source, resolveDir) {
+          const { css } = await postcss([tailwindcss, autoprefixer]).process(source, { from: undefined });
+          return css;
+        },
+      }),
       ...staticAssets(),
       ...(isDev ? [codeInspectorPlugin({ 
         bundler: 'esbuild', 

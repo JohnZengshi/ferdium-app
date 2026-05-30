@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import * as fs from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import chalk from 'chalk';
 import * as dotenv from 'dotenv';
@@ -64,12 +66,28 @@ const staticAssets = () => [
   }),
 ];
 
-const copyManualAssets = () => {
+const copyManualAssets = ({ isDev = false } = {}) => {
   if (!fs.existsSync(outDir)) {
     fs.mkdirSync(outDir);
   }
   fs.copyFileSync('package.json', `${outDir}/package.json`);
   fs.copyFileSync('electron-builder.npmrc', `${outDir}/.npmrc`);
+
+  // Copy code-inspector-plugin client runtime for dev mode (esbuild can't inject into HTML)
+  if (isDev) {
+    try {
+      const require = createRequire(import.meta.url);
+      const pluginPath = require.resolve('code-inspector-plugin');
+      const pnpmRoot = path.resolve(path.dirname(pluginPath), '..', '..', '..', '..');
+      const inspectorClientPath = path.join(pnpmRoot, '@code-inspector+core@1.5.1', 'node_modules', '@code-inspector', 'core', 'dist', 'client.iife.js');
+      if (fs.existsSync(inspectorClientPath)) {
+        fs.copyFileSync(inspectorClientPath, `${outDir}/client.iife.js`);
+        log(chalk.blue('Copied code-inspector client runtime'));
+      }
+    } catch {
+      log(chalk.yellow('code-inspector client runtime not found, skipping'));
+    }
+  }
 
   const buildInfoData = {
     timestamp: buildInfo.timestamp,
@@ -90,7 +108,7 @@ const runEsbuild = async () => {
     fs.rmSync(outDir, { force: true, recursive: true });
     log(chalk.blue('Cleaning'), outDir);
   }
-  copyManualAssets();
+  copyManualAssets({ isDev });
 
   // Source files
   const entryPoints = await glob('./src/**/*.{ts,tsx,js,jsx}');

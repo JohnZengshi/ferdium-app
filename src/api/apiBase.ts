@@ -12,27 +12,39 @@ import {
 import { API_VERSION } from '../environment-remote';
 import { fixUrl } from '../helpers/url-helpers';
 
+/**
+ * Resolve the effective server value.
+ * Priority: FERDIUM_SERVER env var > settings JSON.
+ * Returns undefined if stores are not loaded yet.
+ */
+export const resolveServer = (): string | undefined => {
+  if (process.env.FERDIUM_SERVER) {
+    const env = process.env.FERDIUM_SERVER;
+    return env === 'local' ? LOCAL_SERVER : env;
+  }
+  return (window as any).ferdium?.stores?.settings?.all?.app?.server;
+};
+
 // Note: This cannot be used from the internal-server since we are not running within the context of a browser window
 export default function apiBase(withVersion = true) {
-  if (!(window as any).ferdium?.stores.settings?.all?.app.server) {
+  const server = resolveServer();
+  if (!server) {
     // Stores have not yet been loaded - return SERVER_NOT_LOADED to force a retry when stores are loaded
     return SERVER_NOT_LOADED;
   }
 
   const url =
-    (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER
+    server === LOCAL_SERVER
       ? `http://${LOCAL_HOSTNAME}:${
           (window as any).ferdium.stores.requests.localServerPort
         }`
-      : (window as any).ferdium.stores.settings.all.app.server;
+      : server;
 
   return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
 }
 
 export const needsToken = (): boolean => {
-  return (
-    (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER
-  );
+  return resolveServer() === LOCAL_SERVER;
 };
 
 export const localServerToken = (): string | undefined => {
@@ -47,7 +59,7 @@ export const importExportURL = () => {
 };
 
 export const serverBase = () => {
-  const serverType = (window as any).ferdium.stores.settings.all.app.server;
+  const serverType = resolveServer();
   const noServerFerdi = 'You are using Ferdi without a server';
   const noServerFerdium = 'You are using Ferdium without a server';
 
@@ -74,7 +86,7 @@ export const serverBase = () => {
 };
 
 export const serverName = (): string => {
-  const serverType = (window as any).ferdium.stores.settings.all.app.server;
+  const serverType = resolveServer();
   const noServerFerdi = 'You are using Ferdi without a server';
   const noServerFerdium = 'You are using Ferdium without a server';
 

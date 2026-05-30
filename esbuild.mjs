@@ -104,7 +104,7 @@ const runEsbuild = async () => {
 
   // Inject WhatsApp env vars from .env into bundle
   const envDefines = {};
-  for (const key of ['WA_AKG_BASE', 'WA_DEFAULT_EMAIL', 'WA_DEFAULT_PASSWORD']) {
+  for (const key of ['WA_AKG_BASE', 'FERDIUM_SERVER']) {
     if (process.env[key]) {
       envDefines[`process.env.${key}`] = JSON.stringify(process.env[key]);
     }

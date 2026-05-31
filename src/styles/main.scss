@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@source "../../src/**/*.{ts,tsx,js,jsx}";
+
 @import '../../node_modules/electron-react-titlebar/assets/style';
 
 // modules

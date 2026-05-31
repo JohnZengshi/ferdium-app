@@ -2,21 +2,46 @@ import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import { type IntlShape, injectIntl } from 'react-intl';
 import type { StoresProps } from '../../@types/ferdium-components.types';
+import type { AuthProvider } from '../../@types/auth';
 import DynamicLogin from '../../components/auth/DynamicLogin';
 import authManager from '../../lib/auth/AuthManager';
+import FerdiumProvider from '../../lib/auth/providers/FerdiumProvider';
 
-const debug = require('../../preload-safe-debug')('Ferdium:WaAkgLoginScreen');
+const debug = require('../../preload-safe-debug')('Ferdium:auth:PluggableAuthScreen');
 
 interface IProps extends StoresProps {
   intl: IntlShape;
   error?: { status?: number; message?: string };
+  providerType: 'ferdium' | 'nextauth';
 }
 
+/**
+ * Generic auth screen that works with any registered AuthProvider.
+ *
+ * - providerType="ferdium" → creates FerdiumProvider directly (for Ferdium JWT login)
+ * - providerType="nextauth" → uses authManager's active NextAuthProvider (for WA-AKG login)
+ *
+ * Merges WaAkgLoginScreen + DynamicLoginScreen into one component.
+ */
 @inject('stores', 'actions')
 @observer
-class WaAkgLoginScreen extends Component<IProps> {
+class PluggableAuthScreen extends Component<IProps> {
+  private ferdiumProvider: FerdiumProvider | null = null;
+
   componentDidMount(): void {
-    authManager.setActiveProvider('nextauth');
+    const { providerType } = this.props;
+    if (providerType === 'nextauth') {
+      authManager.setActiveProvider('nextauth');
+    } else {
+      this.ferdiumProvider = new FerdiumProvider();
+    }
+  }
+
+  get provider(): AuthProvider | null {
+    if (this.props.providerType === 'ferdium') {
+      return this.ferdiumProvider ?? new FerdiumProvider();
+    }
+    return authManager.getActiveProvider();
   }
 
   handleAuthenticated = (result: {
@@ -41,10 +66,15 @@ class WaAkgLoginScreen extends Component<IProps> {
       return <div>Loading...</div>;
     }
     const { isTokenExpired } = stores.user;
-    const logoutReason = (stores.user as { logoutReason: string | null }).logoutReason;
+    const logoutReason = (
+      stores.user as { logoutReason: string | null }
+    ).logoutReason;
     const isServerLogout = logoutReason === 'SERVER';
 
-    const provider = authManager.getActiveProvider();
+    const activeProvider = this.provider;
+    if (!activeProvider) {
+      return <div>Loading provider...</div>;
+    }
 
     return (
       <>
@@ -65,15 +95,13 @@ class WaAkgLoginScreen extends Component<IProps> {
           </p>
         )}
 
-        {provider && (
-          <DynamicLogin
-            provider={provider}
-            onAuthenticated={this.handleAuthenticated}
-          />
-        )}
+        <DynamicLogin
+          provider={activeProvider}
+          onAuthenticated={this.handleAuthenticated}
+        />
       </>
     );
   }
 }
 
-export default injectIntl(WaAkgLoginScreen);
+export default injectIntl(PluggableAuthScreen);

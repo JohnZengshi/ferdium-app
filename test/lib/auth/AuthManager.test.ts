@@ -21,10 +21,8 @@ jest.mock('mobx-localstorage', () => {
 });
 
 import { AuthManager } from '../../../src/lib/auth/AuthManager';
-import type {
-  AuthProvider,
-  AuthEventType,
-} from '../../../src/@types/auth';
+import type { AuthProvider } from '../../../src/@types/auth';
+import { AuthEventType } from '../../../src/@types/auth';
 
 function createMockProvider(
   name: string,
@@ -117,13 +115,13 @@ describe('AuthManager', () => {
 
     it('emits provider_changed event', () => {
       const listener = jest.fn();
-      manager.on('provider_changed' as AuthEventType, listener);
+      manager.on(AuthEventType.PROVIDER_CHANGED, listener);
       const provider = createMockProvider('test');
       manager.registerProvider(provider);
       manager.setActiveProvider('test');
       expect(listener).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: 'provider_changed',
+          type: AuthEventType.PROVIDER_CHANGED,
           provider: 'test',
         }),
       );
@@ -189,31 +187,31 @@ describe('AuthManager', () => {
 
     it('emits login_start event', async () => {
       const listener = jest.fn();
-      manager.on('login_start' as AuthEventType, listener);
+      manager.on(AuthEventType.LOGIN_START, listener);
       const provider = createMockProvider('test');
       manager.registerProvider(provider);
       manager.setActiveProvider('test');
       await manager.authenticate({ email: 'test@test.com', password: 'pass' });
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'login_start', provider: 'test' }),
+        expect.objectContaining({ type: AuthEventType.LOGIN_START, provider: 'test' }),
       );
     });
 
     it('emits login_success on success', async () => {
       const listener = jest.fn();
-      manager.on('login_success' as AuthEventType, listener);
+      manager.on(AuthEventType.LOGIN_SUCCESS, listener);
       const provider = createMockProvider('test');
       manager.registerProvider(provider);
       manager.setActiveProvider('test');
       await manager.authenticate({ email: 'test@test.com', password: 'pass' });
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'login_success', provider: 'test' }),
+        expect.objectContaining({ type: AuthEventType.LOGIN_SUCCESS, provider: 'test' }),
       );
     });
 
     it('emits login_failure on failure', async () => {
       const listener = jest.fn();
-      manager.on('login_failure' as AuthEventType, listener);
+      manager.on(AuthEventType.LOGIN_FAILURE, listener);
       const provider = createMockProvider('test', {
         authenticate: jest.fn().mockResolvedValue({
           success: false,
@@ -225,13 +223,13 @@ describe('AuthManager', () => {
       manager.setActiveProvider('test');
       await manager.authenticate({ email: 'test@test.com', password: 'pass' });
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'login_failure', provider: 'test' }),
+        expect.objectContaining({ type: AuthEventType.LOGIN_FAILURE, provider: 'test' }),
       );
     });
 
     it('emits login_failure on exception', async () => {
       const listener = jest.fn();
-      manager.on('login_failure' as AuthEventType, listener);
+      manager.on(AuthEventType.LOGIN_FAILURE, listener);
       const provider = createMockProvider('test', {
         authenticate: jest.fn().mockRejectedValue(new Error('Network error')),
       });
@@ -241,7 +239,7 @@ describe('AuthManager', () => {
         manager.authenticate({ email: 'test@test.com', password: 'pass' }),
       ).rejects.toThrow('Network error');
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'login_failure', provider: 'test' }),
+        expect.objectContaining({ type: AuthEventType.LOGIN_FAILURE, provider: 'test' }),
       );
     });
   });
@@ -257,13 +255,13 @@ describe('AuthManager', () => {
 
     it('emits logout event', async () => {
       const listener = jest.fn();
-      manager.on('logout' as AuthEventType, listener);
+      manager.on(AuthEventType.LOGOUT, listener);
       const provider = createMockProvider('test');
       manager.registerProvider(provider);
       manager.setActiveProvider('test');
       await manager.logout();
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'logout', provider: 'test' }),
+        expect.objectContaining({ type: AuthEventType.LOGOUT, provider: 'test' }),
       );
     });
 
@@ -301,19 +299,43 @@ describe('AuthManager', () => {
   describe('events', () => {
     it('subscribes to events', () => {
       const listener = jest.fn();
-      manager.on('login_start' as AuthEventType, listener);
+      manager.on(AuthEventType.LOGIN_START, listener);
       expect(listener).not.toHaveBeenCalled();
     });
 
     it('unsubscribes from events', () => {
       const listener = jest.fn();
-      manager.on('login_start' as AuthEventType, listener);
-      manager.off('login_start' as AuthEventType, listener);
+      manager.on(AuthEventType.LOGIN_START, listener);
+      manager.off(AuthEventType.LOGIN_START, listener);
       const provider = createMockProvider('test');
       manager.registerProvider(provider);
       manager.setActiveProvider('test');
       manager.authenticate({ email: 'test@test.com', password: 'pass' });
       expect(listener).not.toHaveBeenCalled();
+    });
+
+    it('removeAllListeners removes listeners for a specific event', () => {
+      const listener = jest.fn();
+      manager.on(AuthEventType.LOGIN_START, listener);
+      manager.removeAllListeners(AuthEventType.LOGIN_START);
+      const provider = createMockProvider('test');
+      manager.registerProvider(provider);
+      manager.setActiveProvider('test');
+      manager.authenticate({ email: 'test@test.com', password: 'pass' });
+      expect(listener).not.toHaveBeenCalled();
+    });
+
+    it('removeAllListeners without args removes all listeners', () => {
+      const listener1 = jest.fn();
+      const listener2 = jest.fn();
+      manager.on(AuthEventType.LOGIN_START, listener1);
+      manager.on(AuthEventType.PROVIDER_CHANGED, listener2);
+      manager.removeAllListeners();
+      const provider = createMockProvider('test');
+      manager.registerProvider(provider);
+      manager.setActiveProvider('test');
+      // Both should NOT have been called
+      expect(listener1).not.toHaveBeenCalled();
     });
   });
 

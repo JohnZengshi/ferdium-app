@@ -13,6 +13,21 @@ declare global {
       PORTABLE_EXECUTABLE_DIR?: string;
       ELECTRON_IS_DEV?: string;
       APPDATA?: string;
+      FERDIUM_SERVER?: string;
+      WA_AKG_BASE?: string;
+      API_KEY_KEY?: string;
+      API_KEY_STORAGE_KEY?: string;
+      USE_LOCAL_API?: string;
+      USE_LIVE_API?: string;
+      DEBUG?: string;
+      XDG_SESSION_TYPE?: string;
+      SNAP?: string;
+      ENV_PATH: string;
+      DB_PATH: string;
+      USER_PATH: string;
+      HOST: string;
+      PORT: string;
+      FERDIUM_LOCAL_TOKEN: string;
     }
   }
 }

@@ -25,12 +25,13 @@ export const useCustomInstance = <T>(
   const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
   const actualUrl = url.replace(/^https?:\/\/[^/]+/, WA_AKG_BASE);
 
+  const apiKey = getApiKey();
   const config: RequestInit & { signal?: AbortSignal } = {
     ...options,
     signal: options?.signal ?? controller.signal,
     headers: {
       ...options?.headers,
-      'X-API-Key': getApiKey(),
+      ...(apiKey ? { 'X-API-Key': apiKey } : {}),
       'Content-Type': 'application/json',
     },
   };

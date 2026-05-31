@@ -35,4 +35,11 @@ module.exports = {
     '^.+\\.tsx?$': 'esbuild-runner/jest',
     '^.+\\.ts?$': 'esbuild-runner/jest',
   },
+
+  moduleNameMapper: {
+    '^@electron/remote/main$': '<rootDir>/__mocks__/@electron/remote/main.js',
+    '^@electron/remote$': '<rootDir>/__mocks__/@electron/remote.js',
+    '^electron$': '<rootDir>/__mocks__/electron.js',
+    '^mobx-localstorage$': '<rootDir>/__mocks__/mobx-localstorage.js',
+  },
 };

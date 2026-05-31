@@ -394,3 +394,9 @@ server*.log
 .vscode/
 .sisyphus/
 .playwright-mcp/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

@@ -73,6 +73,10 @@
       height: -webkit-fill-available;
       max-height: 80%;
     }
+
+    div {
+      height: auto;
+    }
   }
 
   .auth__logo {
@@ -194,9 +198,11 @@
     margin-bottom: 30px;
     text-align: left;
   }
+
   .scroll-container {
     z-index: 10;
   }
+
   .info-bar {
     position: absolute;
   }

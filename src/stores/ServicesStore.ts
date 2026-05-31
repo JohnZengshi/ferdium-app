@@ -9,6 +9,7 @@ import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
+import { getNextPlatformUserAgent } from '../helpers/userAgent-helpers';
 import { ferdiumVersion } from '../environment-remote';
 import { workspaceStore } from '../features/workspaces';
 import {
@@ -479,7 +480,7 @@ export default class ServicesStore extends TypedStore {
       isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
       spellcheckerLanguage:
         SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
-      userAgentPref: '',
+      userAgentPref: getNextPlatformUserAgent(),
       ...serviceData,
     };
 

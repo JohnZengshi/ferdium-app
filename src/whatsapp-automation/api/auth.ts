@@ -14,7 +14,7 @@ import * as http from 'node:http';
 
 const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
 const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
-const API_KEY_STORAGE_KEY =
+export const API_KEY_STORAGE_KEY =
   process.env.API_KEY_STORAGE_KEY ?? 'whatsappAutomationApiKey';
 
 export interface AuthCredentials {
@@ -24,6 +24,9 @@ export interface AuthCredentials {
 
 /** Cookie jar: accumulates Set-Cookie headers across requests */
 let cookieJar: string[] = [];
+
+/** Guard flag: prevents concurrent initializeAuth() calls from corrupting the cookie jar */
+let authInProgress = false;
 
 function resetCookieJar() {
   cookieJar = [];
@@ -135,15 +138,25 @@ export const getApiKey = (): string => {
       return settings[API_KEY_KEY];
     }
   } catch {
-    // stores not loaded yet
+    console.warn('[WhatsApp Automation] Settings store not available in getApiKey');
   }
 
   // 2. Try localStorage
   try {
     const stored = localStorage.getItem(API_KEY_STORAGE_KEY);
-    if (stored) return stored;
+    if (stored) {
+      // Defensive: mobx-localstorage stores values as JSON.stringify'd strings.
+      // If this value was written by mobx-localstorage (e.g. from an older version
+      // of NextAuthProvider), it will have extra quotes. Try parsing it as JSON
+      // first, fall back to raw string.
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return stored;
+      }
+    }
   } catch {
-    // localStorage not available
+    console.warn('[WhatsApp Automation] localStorage not available in getApiKey');
   }
 
   return '';
@@ -151,12 +164,43 @@ export const getApiKey = (): string => {
 
 /**
  * Store the API key persistently.
+ * Writes to localStorage (canonical storage) and synchronises the
+ * Ferdium settings store so getApiKey() returns a consistent value
+ * regardless of which path it reads first.
  */
 export const setApiKey = (key: string): void => {
   try {
     localStorage.setItem(API_KEY_STORAGE_KEY, key);
   } catch {
-    // ignore
+    console.warn('[WhatsApp Automation] Failed to write API key to localStorage');
+  }
+  try {
+    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
+    if (settingsApp && typeof settingsApp === 'object') {
+      settingsApp[API_KEY_KEY] = key;
+    }
+  } catch {
+    console.warn('[WhatsApp Automation] Failed to sync API key to settings store');
+  }
+};
+
+/**
+ * Clear the API key from both localStorage and the Ferdium settings store.
+ * Ensures that all persisted copies are removed to prevent stale key reuse.
+ */
+export const clearApiKey = (): void => {
+  try {
+    localStorage.removeItem(API_KEY_STORAGE_KEY);
+  } catch {
+    console.warn('[WhatsApp Automation] Failed to remove API key from localStorage');
+  }
+  try {
+    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
+    if (settingsApp && typeof settingsApp === 'object') {
+      settingsApp[API_KEY_KEY] = '';
+    }
+  } catch {
+    console.warn('[WhatsApp Automation] Failed to clear API key from settings store');
   }
 };
 
@@ -177,7 +221,17 @@ export const initializeAuth = async (
   credentials: AuthCredentials,
 ): Promise<string | null> => {
   const { email, password } = credentials;
-  resetCookieJar();
+
+  if (authInProgress) {
+    console.warn(
+      '[WhatsApp Automation] Auth already in progress, skipping concurrent call',
+    );
+    return null;
+  }
+  authInProgress = true;
+
+  try {
+    resetCookieJar();
 
   // --- Step 1: Get CSRF token for NextAuth login ---
   let csrfToken = '';
@@ -289,4 +343,7 @@ export const initializeAuth = async (
   }
 
   return null;
+  } finally {
+    authInProgress = false;
+  }
 };

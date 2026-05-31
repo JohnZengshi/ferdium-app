@@ -1,7 +1,11 @@
 import localStorage from 'mobx-localstorage';
 import type { AuthConfig, AuthProvider, AuthResult, AuthResultStatus } from '../../../@types/auth';
 import { AuthFieldType, AuthProviderType } from '../../../@types/auth';
-import { initializeAuth, getApiKey } from '../../../whatsapp-automation/api/auth';
+import {
+  initializeAuth,
+  getApiKey,
+  clearApiKey,
+} from '../../../whatsapp-automation/api/auth';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:auth:NextAuthProvider');
 
@@ -57,8 +61,11 @@ export default class NextAuthProvider implements AuthProvider {
       const apiKey = await initializeAuth({ email, password });
 
       if (apiKey) {
-        localStorage.setItem(API_KEY_STORAGE_KEY, apiKey);
-        debug('Authentication successful, API key stored');
+        // No need to store here — initializeAuth() already calls setApiKey()
+        // which stores the raw value in window.localStorage correctly.
+        // mobx-localstorage.setItem does JSON.stringify(toJS(value)), which
+        // would double-quote the value and break X-API-Key authentication.
+        debug('Authentication successful, API key ready');
         return {
           success: true,
           status: 'success' as AuthResultStatus,
@@ -85,14 +92,16 @@ export default class NextAuthProvider implements AuthProvider {
   }
 
   async logout(): Promise<void> {
-    localStorage.removeItem(API_KEY_STORAGE_KEY);
+    clearApiKey();
     debug('Logged out, API key cleared');
   }
 
   getAuthHeader(): string | null {
+    // WA-AKG uses X-API-Key header, not Bearer Authorization.
+    // Return the raw key so callers can set the appropriate header.
     const apiKey = localStorage.getItem(API_KEY_STORAGE_KEY) || getApiKey();
     if (!apiKey) return null;
-    return `Bearer ${apiKey}`;
+    return apiKey;
   }
 
   isAuthenticated(): boolean {

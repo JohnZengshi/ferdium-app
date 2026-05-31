@@ -16,33 +16,8 @@ import Input from '../ui/input/index';
 
 const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 
-/**
- * Filter out raw JavaScript error messages that are not user-friendly.
- * Returns a sanitized message suitable for display to end users.
- */
-function sanitizeErrorMessage(rawMessage: string): string {
-  // Patterns that indicate raw JS errors rather than user-friendly messages
-  const rawErrorPatterns = [
-    /Cannot read properties of/i,
-    /is not a function/i,
-    /is not defined/i,
-    /undefined is not/i,
-    /null is not/i,
-    /Unexpected token/i,
-    /SyntaxError/i,
-    /TypeError/i,
-    /ReferenceError/i,
-  ];
-
-  for (const pattern of rawErrorPatterns) {
-    if (pattern.test(rawMessage)) {
-      debug(`Filtered raw JS error: ${rawMessage}`);
-      return '登录失败，请检查网络连接或稍后重试';
-    }
-  }
-
-  return rawMessage;
-}
+const USER_FRIENDLY_ERROR =
+  '登录失败，请检查网络连接或稍后重试';
 
 interface DynamicLoginProps extends WrappedComponentProps {
   provider: AuthProvider;
@@ -122,14 +97,14 @@ class DynamicLogin extends Component<DynamicLoginProps> {
           } else {
             debug(`Authentication failed: ${result.error}`);
             runInAction(() => {
-              this.authError = sanitizeErrorMessage(result.error || 'Authentication failed');
+              this.authError = result.error || USER_FRIENDLY_ERROR;
             });
           }
         } catch (err) {
           const message = err instanceof Error ? err.message : String(err);
           debug(`Authentication error caught: ${message}`);
           runInAction(() => {
-            this.authError = sanitizeErrorMessage(message || 'Authentication failed');
+            this.authError = message || USER_FRIENDLY_ERROR;
           });
         } finally {
           runInAction(() => {

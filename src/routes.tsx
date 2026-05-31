@@ -13,11 +13,10 @@ import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
 import AuthReleaseNotesScreen from './containers/auth/AuthReleaseNotesScreen';
 import ChangeServerScreen from './containers/auth/ChangeServerScreen';
 import InviteScreen from './containers/auth/InviteScreen';
-import DynamicLoginScreen from './containers/auth/DynamicLoginScreen';
 import PasswordScreen from './containers/auth/PasswordScreen';
+import PluggableAuthScreen from './containers/auth/PluggableAuthScreen';
 import SetupAssistantScreen from './containers/auth/SetupAssistantScreen';
 import SignupScreen from './containers/auth/SignupScreen';
-import WaAkgLoginScreen from './containers/auth/WaAkgLoginScreen';
 import WelcomeScreen from './containers/auth/WelcomeScreen';
 import DownloadManagerScreen from './containers/download-manager/DownloadManagerScreen';
 import DownloadManagerWindow from './containers/download-manager/DownloadManagerWindow';
@@ -68,7 +67,7 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="/auth/login"
-              element={<DynamicLoginScreen {...routeProps} {...errorProps} />}
+              element={<PluggableAuthScreen providerType="ferdium" {...routeProps} {...errorProps} />}
             />
             <Route
               path="/auth/server"
@@ -98,7 +97,7 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="/auth/logout"
-              element={<DynamicLoginScreen {...routeProps} {...errorProps} />}
+              element={<PluggableAuthScreen providerType="ferdium" {...routeProps} {...errorProps} />}
             />
             <Route
               path="/auth/releasenotes"
@@ -108,7 +107,7 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="wa-akg/login"
-              element={<WaAkgLoginScreen {...routeProps} {...errorProps} />}
+              element={<PluggableAuthScreen providerType="nextauth" {...routeProps} {...errorProps} />}
             />
           </Route>
 

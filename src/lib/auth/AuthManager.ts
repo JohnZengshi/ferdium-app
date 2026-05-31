@@ -1,13 +1,12 @@
 import localStorage from 'mobx-localstorage';
 import type {
   AuthEvent,
-  AuthEventType,
   AuthEventListener,
   AuthProvider,
   AuthResult,
   IAuthManager,
 } from '../../@types/auth';
-import { AuthResultStatus } from '../../@types/auth';
+import { AuthEventType, AuthResultStatus } from '../../@types/auth';
 
 const debug = require('../../preload-safe-debug')('Ferdium:AuthManager');
 
@@ -72,7 +71,7 @@ export class AuthManager implements IAuthManager {
     localStorage.setItem(STORAGE_KEY, name);
     debug(`Active provider changed: ${previousName} → ${name}`);
     this.emit({
-      type: 'provider_changed' as AuthEventType,
+      type: AuthEventType.PROVIDER_CHANGED,
       provider: name,
       data: { previous: previousName },
     });
@@ -96,12 +95,12 @@ export class AuthManager implements IAuthManager {
     if (!provider) {
       return {
         success: false,
-        status: 'unknown_error' as AuthResultStatus,
+        status: AuthResultStatus.UNKNOWN_ERROR,
         error: 'No active auth provider. Call setActiveProvider() first.',
       };
     }
     this.emit({
-      type: 'login_start' as AuthEventType,
+      type: AuthEventType.LOGIN_START,
       provider: provider.name,
       data: { email: credentials.email },
     });
@@ -109,12 +108,12 @@ export class AuthManager implements IAuthManager {
       const result = await provider.authenticate(credentials);
       if (result.success) {
         this.emit({
-          type: 'login_success' as AuthEventType,
+          type: AuthEventType.LOGIN_SUCCESS,
           provider: provider.name,
         });
       } else {
         this.emit({
-          type: 'login_failure' as AuthEventType,
+          type: AuthEventType.LOGIN_FAILURE,
           provider: provider.name,
           data: { error: result.error },
         });
@@ -122,7 +121,7 @@ export class AuthManager implements IAuthManager {
       return result;
     } catch (error) {
       this.emit({
-        type: 'login_failure' as AuthEventType,
+        type: AuthEventType.LOGIN_FAILURE,
         provider: provider.name,
         data: { error: error instanceof Error ? error.message : String(error) },
       });
@@ -132,10 +131,13 @@ export class AuthManager implements IAuthManager {
 
   async logout(): Promise<void> {
     const provider = this.getActiveProvider();
-    if (!provider) return;
+    if (!provider) {
+      debug('logout() called but no active provider — nothing to do');
+      return;
+    }
     await provider.logout();
     this.emit({
-      type: 'logout' as AuthEventType,
+      type: AuthEventType.LOGOUT,
       provider: provider.name,
     });
   }
@@ -161,6 +163,14 @@ export class AuthManager implements IAuthManager {
     this.eventListeners.get(event)?.delete(listener);
   }
 
+  removeAllListeners(event?: AuthEventType): void {
+    if (event) {
+      this.eventListeners.delete(event);
+    } else {
+      this.eventListeners.clear();
+    }
+  }
+
   getActiveProviderName(): string | null {
     return this.activeProviderName;
   }
@@ -174,7 +184,7 @@ export class AuthManager implements IAuthManager {
   }
 
   private emit(event: AuthEvent): void {
-    const listeners = this.eventListeners.get(event.type as AuthEventType);
+    const listeners = this.eventListeners.get(event.type);
     if (listeners) {
       for (const listener of listeners) {
         try {

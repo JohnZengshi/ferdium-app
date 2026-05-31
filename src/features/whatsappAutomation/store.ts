@@ -24,7 +24,7 @@ import {
   postSessionsIdAction,
 } from '../../whatsapp-automation/api/generated/sessions/sessions';
 
-import { getApiKey } from '../../whatsapp-automation/api/auth';
+import { getApiKey, clearApiKey } from '../../whatsapp-automation/api/auth';
 import authManager from '../../lib/auth/AuthManager';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
@@ -243,10 +243,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             this.sessionStatuses.set(serviceId, matchingSession.status);
           });
 
-          if (
-            this._normalizeStatus(matchingSession.status) ===
-            SessionStatus.Connected
-          ) {
+          if (matchingSession.status === SessionStatus.Connected) {
             debug(`Session ${serviceId} is already connected`);
             // Update status indicator (Socket.IO won't emit for already-connected)
             this._injectOrUpdateStatusIndicator(
@@ -289,16 +286,17 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     } catch (error) {
       debug('Error checking session status:', error);
       const message = error instanceof Error ? error.message : String(error);
-      const status = (error as { status?: number }).status;
+      const status =
+        error && typeof error === 'object' && 'status' in error
+          ? (error as { status: number }).status
+          : undefined;
 
       // If 401, clear stale API key so user gets redirected to login
       if (status === 401) {
         debug('API returned 401 — clearing stale API key');
-        try {
-          localStorage.removeItem('whatsappAutomationApiKey');
-        } catch {
-          // ignore
-        }
+        clearApiKey();
+        // Reset auth state so next check triggers re-auth flow
+        this._authInitialized = false;
       }
 
       runInAction(() => {
@@ -424,12 +422,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     } catch {
       return null;
     }
-  }
-
-  /** Normalize API status string to match SessionStatus enum (e.g. 'CONNECTED' → 'Connected') */
-  _normalizeStatus(apiStatus?: string | null): string | undefined {
-    if (!apiStatus) return undefined;
-    return apiStatus.charAt(0).toUpperCase() + apiStatus.slice(1).toLowerCase();
   }
 
   _createSessionAndShowQr = async (serviceId: string) => {
@@ -581,13 +573,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       console.log(
         `[WA-AKG] Socket.IO connected for ${serviceId}, joining room`,
       );
-      // Join the session room so we receive connection.update events
       socket.emit('join-session', serviceId);
     });
 
     socket.on(
       'connection.update',
-      (update: { status: string; qr?: string }) => {
+      (update: { status: string; qr?: string; pairingCode?: string }) => {
         console.log(
           `[WA-AKG] Socket.IO connection.update for ${serviceId}:`,
           update.status,
@@ -598,27 +589,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
     socket.on('disconnect', reason => {
       console.log(`[WA-AKG] Socket.IO disconnected for ${serviceId}:`, reason);
-    });
-
-    socket.on('connect_error', err => {
-      console.error(
-        `[WA-AKG] Socket.IO connect error for ${serviceId}:`,
-        err.message,
-      );
-      // Server unreachable — show error in status indicator
-      this._handleSocketConnectionUpdate(serviceId, {
-        status: WA_SESSION_STATUS.SERVER_ERROR,
-      });
-    });
-
-    socket.on(
-      'connection.update',
-      (update: { status: string; qr?: string }) => {
-        this._handleSocketConnectionUpdate(serviceId, update);
-      },
-    );
-
-    socket.on('disconnect', reason => {
       debug('Socket.IO disconnected for session', serviceId, reason);
       if (reason === 'io server disconnect' || reason === 'transport close') {
         this._handleSocketConnectionUpdate(serviceId, {
@@ -628,22 +598,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     });
 
     socket.on('connect_error', err => {
+      console.error(
+        `[WA-AKG] Socket.IO connect error for ${serviceId}:`,
+        err.message,
+      );
       debug('Socket.IO connection error for session', serviceId, err.message);
-    });
-
-    socket.on(
-      'connection.update',
-      (update: { status: string; qr?: string; pairingCode?: string }) => {
-        this._handleSocketConnectionUpdate(serviceId, update);
-      },
-    );
-
-    socket.on('disconnect', reason => {
-      debug('Socket.IO disconnected for session', serviceId, reason);
-    });
-
-    socket.on('connect_error', err => {
-      debug('Socket.IO connection error for session', serviceId, err.message);
+      this._handleSocketConnectionUpdate(serviceId, {
+        status: WA_SESSION_STATUS.SERVER_ERROR,
+      });
     });
 
     this._sockets.set(serviceId, socket);

@@ -22,6 +22,7 @@ jest.mock('../../../../src/whatsapp-automation/api/auth', () => ({
   initializeAuth: jest.fn(),
   getApiKey: jest.fn(() => ''),
   setApiKey: jest.fn(),
+  clearApiKey: jest.fn(),
 }));
 
 import type NextAuthProviderType from '../../../../src/lib/auth/providers/NextAuthProvider';
@@ -99,11 +100,14 @@ describe('NextAuthProvider', () => {
       expect(result.apiKey).toBe('api-key-123');
     });
 
-    it('stores apiKey in localStorage', async () => {
+    it('does not double-store apiKey in mobx-localstorage', async () => {
       (initializeAuth as jest.Mock).mockResolvedValue('api-key-123');
 
       await provider.authenticate({ email: 'test@test.com', password: 'correct' });
-      expect(localStorage.setItem).toHaveBeenCalledWith('whatsappAutomationApiKey', 'api-key-123');
+      // initializeAuth() already stores the raw key via setApiKey().
+      // The provider must NOT also write via mobx-localstorage, which
+      // JSON.stringifies values and corrupts the header.
+      expect(localStorage.setItem).not.toHaveBeenCalled();
     });
 
     it('handles network errors gracefully', async () => {
@@ -119,7 +123,8 @@ describe('NextAuthProvider', () => {
   describe('logout', () => {
     it('removes apiKey from localStorage', async () => {
       await provider.logout();
-      expect(localStorage.removeItem).toHaveBeenCalledWith('whatsappAutomationApiKey');
+      const { clearApiKey } = require('../../../../src/whatsapp-automation/api/auth');
+      expect(clearApiKey).toHaveBeenCalled();
     });
   });
 
@@ -130,15 +135,15 @@ describe('NextAuthProvider', () => {
       expect(provider.getAuthHeader()).toBeNull();
     });
 
-    it('returns Bearer apiKey if authenticated via localStorage', () => {
+    it('returns apiKey if authenticated via localStorage', () => {
       (localStorage.getItem as jest.Mock).mockReturnValue('api-key-123');
-      expect(provider.getAuthHeader()).toBe('Bearer api-key-123');
+      expect(provider.getAuthHeader()).toBe('api-key-123');
     });
 
-    it('returns Bearer apiKey if authenticated via getApiKey', () => {
+    it('returns apiKey if authenticated via getApiKey', () => {
       (localStorage.getItem as jest.Mock).mockReturnValue(null);
       (getApiKey as jest.Mock).mockReturnValue('fallback-key');
-      expect(provider.getAuthHeader()).toBe('Bearer fallback-key');
+      expect(provider.getAuthHeader()).toBe('fallback-key');
     });
   });
 

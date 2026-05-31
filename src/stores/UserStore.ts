@@ -15,6 +15,7 @@ import NextAuthProvider from '../lib/auth/providers/NextAuthProvider';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
+import { API_KEY_STORAGE_KEY } from '../whatsapp-automation/api/auth';
 
 const debug = require('../preload-safe-debug')('Ferdium:UserStore');
 
@@ -325,7 +326,7 @@ export default class UserStore extends TypedStore {
 
     if (!this.stores?.router) return;
     const { router } = this.stores;
-    const currentRoute = window.location.hash;
+    const currentRoute = router.location.pathname;
     const isWaAkgLoginRoute = currentRoute.includes('/auth/wa-akg/login');
 
     // Allow unauthenticated access to WA-AKG login route
@@ -349,7 +350,7 @@ export default class UserStore extends TypedStore {
       this.isLoggedIn &&
       currentRoute.includes(this.BASE_ROUTE)
     ) {
-      const waAkgApiKey = localStorage.getItem('whatsappAutomationApiKey');
+      const waAkgApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
       if (!waAkgApiKey && !isWaAkgLoginRoute) {
         router.push('/auth/wa-akg/login');
       } else {
@@ -357,7 +358,7 @@ export default class UserStore extends TypedStore {
       }
     } else if (this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE) && !isWaAkgLoginRoute) {
       // Already logged in and on main app - check WA-AKG apiKey
-      const waAkgApiKey = localStorage.getItem('whatsappAutomationApiKey');
+      const waAkgApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
       if (!waAkgApiKey) {
         router.push('/auth/wa-akg/login');
       }

@@ -154,7 +154,7 @@ const runEsbuild = async () => {
     incremental: isDev,
     define: envDefines,
     plugins: [
-      sassPlugin({
+sassPlugin({
         async transform(source, resolveDir) {
           const { css } = await postcss([tailwindcss, autoprefixer]).process(source, { from: undefined });
           return css;
@@ -164,7 +164,7 @@ const runEsbuild = async () => {
       ...(isDev ? [codeInspectorPlugin({ 
         bundler: 'esbuild', 
         dev: () => true,
-        escapeTags: ['webview'],
+escapeTags: ['webview'],
       })] : []),
     ],
   });

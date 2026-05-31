@@ -8,7 +8,10 @@ import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
 import { TODOS_PARTITION_ID } from '../config';
-import { isDevMode } from '../environment-remote';
+import serverlessLogin from '../helpers/serverless-helpers';
+import authManager from '../lib/auth/AuthManager';
+import FerdiumProvider from '../lib/auth/providers/FerdiumProvider';
+import NextAuthProvider from '../lib/auth/providers/NextAuthProvider';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
@@ -93,6 +96,16 @@ export default class UserStore extends TypedStore {
 
     makeObservable(this);
 
+    if (process.env.FERDIUM_SERVER === 'local' && !this.isLoggedIn) {
+      ipcRenderer.once('localServerPort', () => {
+        serverlessLogin(this.actions);
+      });
+    }
+
+    // Register auth providers with AuthManager
+    authManager.registerProvider(new FerdiumProvider());
+    authManager.registerProvider(new NextAuthProvider());
+
     // Register action handlers
     this.actions.user.login.listen(this._login.bind(this));
     this.actions.user.retrievePassword.listen(
@@ -173,13 +186,19 @@ export default class UserStore extends TypedStore {
     const authToken = await this.loginRequest.execute(email, password).promise;
     this._setUserData(authToken);
 
-    this.stores.router.push('/');
+    authManager.authenticate({ email, password }).catch((error: unknown) => {
+      debug('AuthManager.authenticate failed: %O', error);
+    });
+
+    // Don't push('/') here — _requireAuthenticatedUser reaction handles
+    // the correct redirect (including WA-AKG login check).
   }
 
   @action _tokenLogin(authToken: string): void {
     this._setUserData(authToken);
 
-    this.stores.router.push('/');
+    // Don't push('/') here — _requireAuthenticatedUser reaction handles
+    // the correct redirect (including WA-AKG login check).
   }
 
   @action async _signup({
@@ -247,6 +266,10 @@ export default class UserStore extends TypedStore {
   }
 
   @action _logout(): void {
+    authManager.logout().catch((error: unknown) => {
+      debug('AuthManager.logout failed: %O', error);
+    });
+
     // workaround mobx issue
     localStorage.removeItem('authToken');
     window.localStorage.removeItem('authToken');
@@ -300,9 +323,15 @@ export default class UserStore extends TypedStore {
       this._logout();
     }
 
+    if (!this.stores?.router) return;
     const { router } = this.stores;
     const currentRoute = window.location.hash;
-    if (!this.isLoggedIn && currentRoute.includes('token=')) {
+    const isWaAkgLoginRoute = currentRoute.includes('/auth/wa-akg/login');
+
+    // Allow unauthenticated access to WA-AKG login route
+    if (!this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE) && !isWaAkgLoginRoute) {
+      router.push(this.WELCOME_ROUTE);
+    } else if (!this.isLoggedIn && currentRoute.includes('token=')) {
       router.push(this.WELCOME_ROUTE);
       const token = currentRoute.split('=')[1];
 
@@ -313,18 +342,25 @@ export default class UserStore extends TypedStore {
           this._tokenLogin(token);
         }, 1000);
       }
-    } else if (!this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE)) {
-      router.push(this.WELCOME_ROUTE);
     } else if (this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
       this.actions.user.logout();
       router.push(this.LOGIN_ROUTE);
     } else if (
       this.isLoggedIn &&
-      currentRoute.includes(this.BASE_ROUTE) &&
-      (this.hasCompletedSignup || this.hasCompletedSignup === null) &&
-      !isDevMode
+      currentRoute.includes(this.BASE_ROUTE)
     ) {
-      this.stores.router.push('/');
+      const waAkgApiKey = localStorage.getItem('whatsappAutomationApiKey');
+      if (!waAkgApiKey && !isWaAkgLoginRoute) {
+        router.push('/auth/wa-akg/login');
+      } else {
+        this.stores.router.push('/');
+      }
+    } else if (this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE) && !isWaAkgLoginRoute) {
+      // Already logged in and on main app - check WA-AKG apiKey
+      const waAkgApiKey = localStorage.getItem('whatsappAutomationApiKey');
+      if (!waAkgApiKey) {
+        router.push('/auth/wa-akg/login');
+      }
     }
   };
 
@@ -368,11 +404,15 @@ export default class UserStore extends TypedStore {
   }
 
   _requestNewToken(): void {
-    // Logic to request new token (use an endpoint for that)
-    const data = this.requestNewTokenRequest.execute().result;
-    if (data) {
-      this.authToken = data.token;
-      localStorage.setItem('authToken', data.token);
+    try {
+      const data = this.requestNewTokenRequest.execute().result;
+      if (data) {
+        this.authToken = data.token;
+        localStorage.setItem('authToken', data.token);
+      }
+    } catch {
+      // Token refresh failed (e.g., local server doesn't support /me/newtoken)
+      // This is expected for local server mode
     }
   }
 
@@ -391,7 +431,7 @@ export default class UserStore extends TypedStore {
     }
   }
 
-  _setUserData(authToken: any): void {
+  @action _setUserData(authToken: any): void {
     const data = this._parseToken(authToken);
     if (data !== false && data.authToken) {
       localStorage.setItem('authToken', data.authToken);

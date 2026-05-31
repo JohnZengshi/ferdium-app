@@ -24,7 +24,8 @@ import {
   postSessionsIdAction,
 } from '../../whatsapp-automation/api/generated/sessions/sessions';
 
-import { getApiKey, initializeAuth } from '../../whatsapp-automation/api/auth';
+import { getApiKey } from '../../whatsapp-automation/api/auth';
+import authManager from '../../lib/auth/AuthManager';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
 import { SessionStatus } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
@@ -177,22 +178,22 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   };
 
   _ensureAuthenticated = async (): Promise<boolean> => {
-    if (this._authInitialized && getApiKey()) {
-      console.log('[WA-AKG] Already authenticated, API key found');
-      return true;
-    }
-
-    console.log('[WA-AKG] No API key found, authenticating with WA-AKG...');
-    const apiKey = await initializeAuth();
-
-    if (apiKey) {
-      console.log('[WA-AKG] Authentication successful, API key obtained');
+    // Check NextAuthProvider via AuthManager first (preferred)
+    const nextAuthProvider = authManager.getProvider('nextauth');
+    if (nextAuthProvider?.isAuthenticated()) {
+      debug('Authenticated via NextAuthProvider, skipping authentication');
       this._authInitialized = true;
       return true;
     }
 
-    console.error('[WA-AKG] Authentication failed');
-    // Update status indicator for all initialized services to show server error
+    // Fallback to direct API key check (backward compatibility)
+    if (getApiKey()) {
+      debug('API key found via getApiKey(), skipping authentication');
+      this._authInitialized = true;
+      return true;
+    }
+
+    debug('No authentication found — user must log in via NextAuthProvider first');
     for (const sid of this._initializedServices) {
       this._injectOrUpdateStatusIndicator(sid, WA_SESSION_STATUS.SERVER_ERROR);
     }
@@ -287,10 +288,25 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       }
     } catch (error) {
       debug('Error checking session status:', error);
+      const message = error instanceof Error ? error.message : String(error);
+      const status = (error as { status?: number }).status;
+
+      // If 401, clear stale API key so user gets redirected to login
+      if (status === 401) {
+        debug('API returned 401 — clearing stale API key');
+        try {
+          localStorage.removeItem('whatsappAutomationApiKey');
+        } catch {
+          // ignore
+        }
+      }
+
       runInAction(() => {
         this.errorMessages.set(
           serviceId,
-          error instanceof Error ? error.message : String(error),
+          status === 401
+            ? 'Authentication expired. Please log in again.'
+            : message,
         );
       });
     }

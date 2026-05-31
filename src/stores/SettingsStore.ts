@@ -52,7 +52,10 @@ export default class SettingsStore extends TypedStore {
     reaction(
       () => this.all.app.server,
       server => {
-        if (server === LOCAL_SERVER) {
+        const effectiveServer = process.env.FERDIUM_SERVER
+          ? (process.env.FERDIUM_SERVER === 'local' ? LOCAL_SERVER : process.env.FERDIUM_SERVER)
+          : server;
+        if (effectiveServer === LOCAL_SERVER) {
           ipcRenderer.send('startLocalServer');
         }
       },

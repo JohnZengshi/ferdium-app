@@ -17,18 +17,10 @@ const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
 const API_KEY_STORAGE_KEY =
   process.env.API_KEY_STORAGE_KEY ?? 'whatsappAutomationApiKey';
 
-interface AuthCredentials {
+export interface AuthCredentials {
   email: string;
   password: string;
 }
-
-/**
- * Default credentials for local development.
- */
-const DEFAULT_CREDENTIALS: AuthCredentials = {
-  email: process.env.WA_DEFAULT_EMAIL ?? '',
-  password: process.env.WA_DEFAULT_PASSWORD ?? '',
-};
 
 /** Cookie jar: accumulates Set-Cookie headers across requests */
 let cookieJar: string[] = [];
@@ -182,7 +174,7 @@ export const setApiKey = (key: string): void => {
  * The user account (text_001@example.com) is expected to already exist on the backend.
  */
 export const initializeAuth = async (
-  credentials: AuthCredentials = DEFAULT_CREDENTIALS,
+  credentials: AuthCredentials,
 ): Promise<string | null> => {
   const { email, password } = credentials;
   resetCookieJar();

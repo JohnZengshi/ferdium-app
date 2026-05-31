@@ -13,10 +13,11 @@ import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
 import AuthReleaseNotesScreen from './containers/auth/AuthReleaseNotesScreen';
 import ChangeServerScreen from './containers/auth/ChangeServerScreen';
 import InviteScreen from './containers/auth/InviteScreen';
-import LoginScreen from './containers/auth/LoginScreen';
+import DynamicLoginScreen from './containers/auth/DynamicLoginScreen';
 import PasswordScreen from './containers/auth/PasswordScreen';
 import SetupAssistantScreen from './containers/auth/SetupAssistantScreen';
 import SignupScreen from './containers/auth/SignupScreen';
+import WaAkgLoginScreen from './containers/auth/WaAkgLoginScreen';
 import WelcomeScreen from './containers/auth/WelcomeScreen';
 import DownloadManagerScreen from './containers/download-manager/DownloadManagerScreen';
 import DownloadManagerWindow from './containers/download-manager/DownloadManagerWindow';
@@ -67,7 +68,7 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="/auth/login"
-              element={<LoginScreen {...routeProps} {...errorProps} />}
+              element={<DynamicLoginScreen {...routeProps} {...errorProps} />}
             />
             <Route
               path="/auth/server"
@@ -97,13 +98,17 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="/auth/logout"
-              element={<LoginScreen {...routeProps} {...errorProps} />}
+              element={<DynamicLoginScreen {...routeProps} {...errorProps} />}
             />
             <Route
               path="/auth/releasenotes"
               element={
                 <AuthReleaseNotesScreen {...routeProps} {...errorProps} />
               }
+            />
+            <Route
+              path="wa-akg/login"
+              element={<WaAkgLoginScreen {...routeProps} {...errorProps} />}
             />
           </Route>
 

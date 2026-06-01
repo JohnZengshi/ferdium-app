@@ -16,6 +16,9 @@ param(
 )
 
 $LIVERELOAD_PORT = 35729
+$FERDIUM_SERVER_PORT = 46569
+$FERDIUM_TODOS_PORT = 4000
+$FERDIUM_DEV_API_PORT = 3000
 
 function Free-Port {
     param([int]$PortNumber)
@@ -46,5 +49,17 @@ function Free-Port {
     }
 }
 
+# User-specified port (default 8080, the esbuild dev server)
 Free-Port -PortNumber $Port
+
+# esbuild/gulp-livereload
 Free-Port -PortNumber $LIVERELOAD_PORT
+
+# Ferdium internal server (AdonisJS, see src/internal-server/env.ini)
+Free-Port -PortNumber $FERDIUM_SERVER_PORT
+
+# Ferdium todos frontend (see src/config.ts LOCAL_TODOS_FRONTEND_URL)
+Free-Port -PortNumber $FERDIUM_TODOS_PORT
+
+# Ferdium dev API (see src/config.ts LOCAL_API)
+Free-Port -PortNumber $FERDIUM_DEV_API_PORT

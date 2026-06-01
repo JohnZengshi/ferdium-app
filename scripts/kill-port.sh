@@ -14,36 +14,33 @@ set -euo pipefail
 
 PORT="${1:-8080}"
 
-# Always kill the livereload port (35729) used by esbuild/gulp-livereload
+# Always kill these Ferdium-related ports
 LIVERELOAD_PORT=35729
+FERDIUM_SERVER_PORT=46569
+FERDIUM_TODOS_PORT=4000
+FERDIUM_DEV_API_PORT=3000
 
-# macOS: use lsof to find and kill processes on the port
-if lsof -i :"${PORT}" -P -n 2>/dev/null | grep -q LISTEN; then
-  echo "→ Port ${PORT} is in use. Killing process(es) ..."
-  PIDS=$(lsof -ti :"${PORT}" 2>/dev/null || true)
-  if [ -n "${PIDS}" ]; then
-    # shellcheck disable=SC2086
-    kill ${PIDS} 2>/dev/null || true
-    sleep 1
-    # Force-kill any survivors
-    # shellcheck disable=SC2086
-    kill -9 ${PIDS} 2>/dev/null || true
-    echo "✓ Port ${PORT} freed."
+free_port() {
+  local port=$1
+  local label=$2
+  if lsof -i :"${port}" -P -n 2>/dev/null | grep -q LISTEN; then
+    echo "→ Port ${port}${label:+ ($label)} is in use. Killing process(es) ..."
+    PIDS=$(lsof -ti :"${port}" 2>/dev/null || true)
+    if [ -n "${PIDS}" ]; then
+      # shellcheck disable=SC2086
+      kill ${PIDS} 2>/dev/null || true
+      sleep 1
+      # shellcheck disable=SC2086
+      kill -9 ${PIDS} 2>/dev/null || true
+      echo "✓ Port ${port} freed."
+    fi
+  else
+    echo "→ Port ${port} is free."
   fi
-else
-  echo "→ Port ${PORT} is free."
-fi
+}
 
-# Also kill the livereload port if it's in use
-if lsof -i :"${LIVERELOAD_PORT}" -P -n 2>/dev/null | grep -q LISTEN; then
-  echo "→ Port ${LIVERELOAD_PORT} (livereload) is in use. Killing process(es) ..."
-  LRPIDS=$(lsof -ti :"${LIVERELOAD_PORT}" 2>/dev/null || true)
-  if [ -n "${LRPIDS}" ]; then
-    # shellcheck disable=SC2086
-    kill ${LRPIDS} 2>/dev/null || true
-    sleep 1
-    # shellcheck disable=SC2086
-    kill -9 ${LRPIDS} 2>/dev/null || true
-    echo "✓ Port ${LIVERELOAD_PORT} freed."
-  fi
-fi
+free_port "$PORT" "user-specified / esbuild dev server"
+free_port "$LIVERELOAD_PORT" "esbuild/gulp-livereload"
+free_port "$FERDIUM_SERVER_PORT" "Ferdium internal server"
+free_port "$FERDIUM_TODOS_PORT" "Ferdium todos frontend"
+free_port "$FERDIUM_DEV_API_PORT" "Ferdium dev API"

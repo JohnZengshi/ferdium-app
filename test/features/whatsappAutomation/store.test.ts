@@ -26,17 +26,20 @@ if (typeof localStorage === 'undefined') {
       delete store[key];
     },
     clear: () => {
-      Object.keys(store).forEach((key) => delete store[key]);
+      Object.keys(store).forEach(key => delete store[key]);
     },
   };
 }
 
-jest.mock('../../../src/whatsapp-automation/api/generated/sessions/sessions', () => ({
-  getSessions: jest.fn(),
-  getSessionsIdQr: jest.fn(),
-  postSessions: jest.fn(),
-  postSessionsIdAction: jest.fn(),
-}));
+jest.mock(
+  '../../../src/whatsapp-automation/api/generated/sessions/sessions',
+  () => ({
+    getSessions: jest.fn(),
+    getSessionsIdQr: jest.fn(),
+    postSessions: jest.fn(),
+    postSessionsIdAction: jest.fn(),
+  }),
+);
 
 jest.mock('../../../src/whatsapp-automation/api/auth', () => ({
   getApiKey: jest.fn(),
@@ -86,11 +89,12 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
-    Object.keys(mockSettingsStore).forEach((key) => {
+    Object.keys(mockSettingsStore).forEach(key => {
       delete mockSettingsStore[key];
     });
 
-    mockGetSessions = require('../../../src/whatsapp-automation/api/generated/sessions/sessions').getSessions;
+    mockGetSessions =
+      require('../../../src/whatsapp-automation/api/generated/sessions/sessions').getSessions;
 
     store = new WhatsAppAutomationStore();
 
@@ -119,13 +123,14 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
       (error as any).status = 401;
       mockGetSessions.mockRejectedValue(error);
 
-      const mockGetApiKey = require('../../../src/whatsapp-automation/api/auth').getApiKey;
+      const mockGetApiKey =
+        require('../../../src/whatsapp-automation/api/auth').getApiKey;
       mockGetApiKey.mockReturnValue('stale-key-123');
 
       try {
         await mockGetSessions();
-      } catch (e) {
-        const status = (e as { status?: number }).status;
+      } catch (error_) {
+        const { status } = error_ as { status?: number };
         if (status === 401) {
           localStorage.removeItem('whatsappAutomationApiKey');
           const settingsKey = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
@@ -147,8 +152,8 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
 
       try {
         await mockGetSessions();
-      } catch (e) {
-        const status = (e as { status?: number }).status;
+      } catch (error_) {
+        const { status } = error_ as { status?: number };
         if (status === 401) {
           localStorage.removeItem('whatsappAutomationApiKey');
           const settingsKey = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
@@ -169,8 +174,8 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
 
       try {
         await mockGetSessions();
-      } catch (e) {
-        const status = (e as { status?: number }).status;
+      } catch (error_) {
+        const { status } = error_ as { status?: number };
         if (status === 401) {
           localStorage.removeItem('whatsappAutomationApiKey');
           const settingsKey = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
@@ -191,9 +196,10 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
 
       try {
         await mockGetSessions();
-      } catch (e) {
-        const status = (e as { status?: number }).status;
-        const message = e instanceof Error ? e.message : String(e);
+      } catch (error_) {
+        const { status } = error_ as { status?: number };
+        const message =
+          error_ instanceof Error ? error_.message : String(error_);
 
         if (status === 401) {
           localStorage.removeItem('whatsappAutomationApiKey');
@@ -226,8 +232,8 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
 
       try {
         await mockGetSessions();
-      } catch (e) {
-        const status = (e as { status?: number }).status;
+      } catch (error_) {
+        const { status } = error_ as { status?: number };
         if (status === 401) {
           localStorage.removeItem('whatsappAutomationApiKey');
           const settingsKey = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
@@ -236,7 +242,9 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
         }
       }
 
-      expect(localStorage.getItem('whatsappAutomationApiKey')).toBe('valid-key-123');
+      expect(localStorage.getItem('whatsappAutomationApiKey')).toBe(
+        'valid-key-123',
+      );
       expect(mockSettingsStore['whatsapp-api-key']).toBe('valid-key-123');
     });
   });

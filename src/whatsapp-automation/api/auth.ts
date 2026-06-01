@@ -115,7 +115,9 @@ export const getApiKey = (): string => {
       return settings[API_KEY_KEY];
     }
   } catch {
-    console.warn('[WhatsApp Automation] Settings store not available in getApiKey');
+    console.warn(
+      '[WhatsApp Automation] Settings store not available in getApiKey',
+    );
   }
 
   // 2. Try localStorage
@@ -133,7 +135,9 @@ export const getApiKey = (): string => {
       }
     }
   } catch {
-    console.warn('[WhatsApp Automation] localStorage not available in getApiKey');
+    console.warn(
+      '[WhatsApp Automation] localStorage not available in getApiKey',
+    );
   }
 
   return '';
@@ -149,7 +153,9 @@ export const setApiKey = (key: string): void => {
   try {
     localStorage.setItem(API_KEY_STORAGE_KEY, key);
   } catch {
-    console.warn('[WhatsApp Automation] Failed to write API key to localStorage');
+    console.warn(
+      '[WhatsApp Automation] Failed to write API key to localStorage',
+    );
   }
   try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
@@ -157,7 +163,9 @@ export const setApiKey = (key: string): void => {
       settingsApp[API_KEY_KEY] = key;
     }
   } catch {
-    console.warn('[WhatsApp Automation] Failed to sync API key to settings store');
+    console.warn(
+      '[WhatsApp Automation] Failed to sync API key to settings store',
+    );
   }
 };
 
@@ -169,7 +177,9 @@ export const clearApiKey = (): void => {
   try {
     localStorage.removeItem(API_KEY_STORAGE_KEY);
   } catch {
-    console.warn('[WhatsApp Automation] Failed to remove API key from localStorage');
+    console.warn(
+      '[WhatsApp Automation] Failed to remove API key from localStorage',
+    );
   }
   try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
@@ -177,7 +187,9 @@ export const clearApiKey = (): void => {
       settingsApp[API_KEY_KEY] = '';
     }
   } catch {
-    console.warn('[WhatsApp Automation] Failed to clear API key from settings store');
+    console.warn(
+      '[WhatsApp Automation] Failed to clear API key from settings store',
+    );
   }
 };
 
@@ -210,116 +222,116 @@ export const initializeAuth = async (
   try {
     resetCookieJar();
 
-  // --- Step 1: Get CSRF token for NextAuth login ---
-  let csrfToken = '';
-  try {
-    const csrfRes = await nodeRequest({ path: '/api/auth/csrf' });
-    if (csrfRes.status >= 400) {
-      console.error(
-        `[WhatsApp Automation] CSRF endpoint returned ${csrfRes.status}`,
-      );
-      return null;
-    }
-    const csrfData = JSON.parse(csrfRes.data);
-    csrfToken = csrfData.csrfToken ?? csrfData.csrf ?? '';
-  } catch (error) {
-    console.error('[WhatsApp Automation] Failed to get CSRF token', error);
-    return null;
-  }
-
-  if (!csrfToken) {
-    console.error('[WhatsApp Automation] No CSRF token received');
-    return null;
-  }
-
-  // --- Step 2: Login via NextAuth credentials callback ---
-  const loginBody = new URLSearchParams({
-    csrfToken,
-    email,
-    password,
-    callbackUrl: WA_AKG_BASE,
-    json: 'true',
-  }).toString();
-
-  try {
-    const loginRes = await nodeRequest({
-      path: '/api/auth/callback/credentials',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Cookie: getCookieHeader(),
-      },
-      body: loginBody,
-    });
-
-    // NextAuth returns 302 on both success AND CSRF failure.
-    // Success: redirects to callbackUrl (/dashboard)
-    // Failure: redirects to /auth/login?error=Configuration
-    if (loginRes.status !== 302) {
-      console.error(
-        `[WhatsApp Automation] Login failed with status ${loginRes.status}`,
-      );
-      return null;
-    }
-  } catch (error) {
-    console.error('[WhatsApp Automation] Login request failed', error);
-    return null;
-  }
-
-  // --- Step 3: Check session is active ---
-  try {
-    const sessionRes = await nodeRequest({
-      path: '/api/auth/session',
-      headers: { Cookie: getCookieHeader() },
-    });
-    const session = JSON.parse(sessionRes.data);
-    if (!session?.user?.email) {
-      console.error('[WhatsApp Automation] Session check failed', session);
-      return null;
-    }
-    // eslint-disable-next-line no-console
-    console.log('[WhatsApp Automation] Authenticated as', session.user.email);
-  } catch (error) {
-    console.error('[WhatsApp Automation] Session check error', error);
-    return null;
-  }
-
-  // --- Step 4: Get existing API key ---
-  try {
-    const keyRes = await nodeRequest({
-      path: '/api/user/api-key',
-      headers: { Cookie: getCookieHeader() },
-    });
-    if (keyRes.status === 200) {
-      const keyData = JSON.parse(keyRes.data);
-      if (keyData?.data?.apiKey) {
-        setApiKey(keyData.data.apiKey);
-        return keyData.data.apiKey;
+    // --- Step 1: Get CSRF token for NextAuth login ---
+    let csrfToken = '';
+    try {
+      const csrfRes = await nodeRequest({ path: '/api/auth/csrf' });
+      if (csrfRes.status >= 400) {
+        console.error(
+          `[WhatsApp Automation] CSRF endpoint returned ${csrfRes.status}`,
+        );
+        return null;
       }
+      const csrfData = JSON.parse(csrfRes.data);
+      csrfToken = csrfData.csrfToken ?? csrfData.csrf ?? '';
+    } catch (error) {
+      console.error('[WhatsApp Automation] Failed to get CSRF token', error);
+      return null;
     }
-  } catch {
-    // fall through to generate
-  }
 
-  // --- Step 5: Generate a new API key if none exists ---
-  try {
-    const genRes = await nodeRequest({
-      path: '/api/user/api-key',
-      method: 'POST',
-      headers: { Cookie: getCookieHeader() },
-    });
-    if (genRes.status === 200) {
-      const genData = JSON.parse(genRes.data);
-      if (genData?.data?.apiKey) {
-        setApiKey(genData.data.apiKey);
-        return genData.data.apiKey;
+    if (!csrfToken) {
+      console.error('[WhatsApp Automation] No CSRF token received');
+      return null;
+    }
+
+    // --- Step 2: Login via NextAuth credentials callback ---
+    const loginBody = new URLSearchParams({
+      csrfToken,
+      email,
+      password,
+      callbackUrl: WA_AKG_BASE,
+      json: 'true',
+    }).toString();
+
+    try {
+      const loginRes = await nodeRequest({
+        path: '/api/auth/callback/credentials',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Cookie: getCookieHeader(),
+        },
+        body: loginBody,
+      });
+
+      // NextAuth returns 302 on both success AND CSRF failure.
+      // Success: redirects to callbackUrl (/dashboard)
+      // Failure: redirects to /auth/login?error=Configuration
+      if (loginRes.status !== 302) {
+        console.error(
+          `[WhatsApp Automation] Login failed with status ${loginRes.status}`,
+        );
+        return null;
       }
+    } catch (error) {
+      console.error('[WhatsApp Automation] Login request failed', error);
+      return null;
     }
-  } catch (error) {
-    console.error('[WhatsApp Automation] Failed to generate API key', error);
-  }
 
-  return null;
+    // --- Step 3: Check session is active ---
+    try {
+      const sessionRes = await nodeRequest({
+        path: '/api/auth/session',
+        headers: { Cookie: getCookieHeader() },
+      });
+      const session = JSON.parse(sessionRes.data);
+      if (!session?.user?.email) {
+        console.error('[WhatsApp Automation] Session check failed', session);
+        return null;
+      }
+      // eslint-disable-next-line no-console
+      console.log('[WhatsApp Automation] Authenticated as', session.user.email);
+    } catch (error) {
+      console.error('[WhatsApp Automation] Session check error', error);
+      return null;
+    }
+
+    // --- Step 4: Get existing API key ---
+    try {
+      const keyRes = await nodeRequest({
+        path: '/api/user/api-key',
+        headers: { Cookie: getCookieHeader() },
+      });
+      if (keyRes.status === 200) {
+        const keyData = JSON.parse(keyRes.data);
+        if (keyData?.data?.apiKey) {
+          setApiKey(keyData.data.apiKey);
+          return keyData.data.apiKey;
+        }
+      }
+    } catch {
+      // fall through to generate
+    }
+
+    // --- Step 5: Generate a new API key if none exists ---
+    try {
+      const genRes = await nodeRequest({
+        path: '/api/user/api-key',
+        method: 'POST',
+        headers: { Cookie: getCookieHeader() },
+      });
+      if (genRes.status === 200) {
+        const genData = JSON.parse(genRes.data);
+        if (genData?.data?.apiKey) {
+          setApiKey(genData.data.apiKey);
+          return genData.data.apiKey;
+        }
+      }
+    } catch (error) {
+      console.error('[WhatsApp Automation] Failed to generate API key', error);
+    }
+
+    return null;
   } finally {
     authInProgress = false;
   }

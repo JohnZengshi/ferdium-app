@@ -5,6 +5,12 @@
  */
 
 // Set env vars before importing module
+import {
+  getApiKey,
+  setApiKey,
+  clearApiKey,
+} from '../../../src/whatsapp-automation/api/auth';
+
 process.env.API_KEY_STORAGE_KEY = 'whatsappAutomationApiKey';
 process.env.API_KEY_KEY = 'whatsapp-api-key';
 
@@ -36,20 +42,14 @@ if (typeof localStorage === 'undefined') {
       delete store[key];
     },
     clear: () => {
-      Object.keys(store).forEach((k) => delete store[k]);
+      Object.keys(store).forEach(k => delete store[k]);
     },
   };
 }
 
-import {
-  getApiKey,
-  setApiKey,
-  clearApiKey,
-} from '../../../src/whatsapp-automation/api/auth';
-
 beforeEach(() => {
   localStorage.clear();
-  Object.keys(mockSettingsApp).forEach((k) => delete mockSettingsApp[k]);
+  Object.keys(mockSettingsApp).forEach(k => delete mockSettingsApp[k]);
 });
 
 describe('getApiKey', () => {

@@ -50,7 +50,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _retryCounts = new Map<string, number>();
 
-  _socketConnectWaiters = new Map<string, Array<() => void>>();
+  _socketConnectWaiters = new Map<string, (() => void)[]>();
 
   _maxRetries = 10;
 
@@ -200,7 +200,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return true;
     }
 
-    debug('No authentication found — user must log in via NextAuthProvider first');
+    debug(
+      'No authentication found — user must log in via NextAuthProvider first',
+    );
     for (const sid of this._initializedServices) {
       this._injectOrUpdateStatusIndicator(sid, WA_SESSION_STATUS.SERVER_ERROR);
     }

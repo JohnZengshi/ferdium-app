@@ -52,6 +52,7 @@
     "git:submodules": "git submodule update --init --recursive --remote",
     "setup:recipes": "node scripts/setup-recipes.mjs",
     "debug": "cross-env-shell DEBUG_COLORS=1 DEBUG=Ferdium:* pnpm start:all-dev",
+    "build:e2e": "cp -R build build-e2e",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug"

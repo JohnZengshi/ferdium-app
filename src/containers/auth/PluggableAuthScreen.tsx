@@ -1,3 +1,4 @@
+import localStorage from 'mobx-localstorage';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import { type IntlShape, injectIntl } from 'react-intl';
@@ -56,6 +57,11 @@ class PluggableAuthScreen extends Component<IProps> {
     if (result.token) {
       stores.user._tokenLogin(result.token);
     } else {
+      // WA-AKG login: apiKey is already stored by initializeAuth() → setApiKey().
+      // Also set authToken so UserStore.isLoggedIn returns true after _logout() cleared it.
+      if (result.apiKey) {
+        localStorage.setItem('authToken', 'wa-akg');
+      }
       stores.router.push('/');
     }
   };

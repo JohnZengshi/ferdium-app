@@ -1,5 +1,19 @@
 import { defineConfig } from '@playwright/test';
+import fs from 'fs';
 import path from 'path';
+
+const projectRoot = __dirname;
+
+export function resolveBuildDir(): string {
+  if (process.env.E2E_BUILD_DIR) {
+    return path.resolve(process.env.E2E_BUILD_DIR);
+  }
+  const snapshotDir = path.join(projectRoot, 'build-e2e');
+  if (fs.existsSync(snapshotDir)) {
+    return snapshotDir;
+  }
+  return path.join(projectRoot, 'build');
+}
 
 export default defineConfig({
   testDir: './e2e',
@@ -25,8 +39,8 @@ export default defineConfig({
       use: {
         browserName: 'chromium',
         launchOptions: {
-          executablePath: path.join(__dirname, 'node_modules', '.pnpm', 'electron@37.6.0', 'node_modules', 'electron', 'dist', 'Electron.app', 'Contents', 'MacOS', 'Electron'),
-          args: [path.join(__dirname, 'build')],
+          executablePath: path.join(projectRoot, 'node_modules', '.pnpm', 'electron@37.6.0', 'node_modules', 'electron', 'dist', 'Electron.app', 'Contents', 'MacOS', 'Electron'),
+          args: [resolveBuildDir()],
         },
       },
     },

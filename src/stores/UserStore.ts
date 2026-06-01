@@ -158,6 +158,9 @@ export default class UserStore extends TypedStore {
 
   @computed get isTokenExpired(): boolean {
     if (!this.authToken) return false;
+    // Non-JWT tokens (e.g., WA-AKG placeholder authToken) don't expire
+    // _parseToken would call _logout() on parse failure which destroys state
+    if (!this.authToken.includes('.')) return false;
     const parsedToken = this._parseToken(this.authToken);
 
     return (
@@ -271,9 +274,14 @@ export default class UserStore extends TypedStore {
       debug('AuthManager.logout failed: %O', error);
     });
 
+    this.isLoggingOut = false;
+
     // workaround mobx issue
     localStorage.removeItem('authToken');
     window.localStorage.removeItem('authToken');
+
+    localStorage.removeItem(API_KEY_STORAGE_KEY);
+    window.localStorage.removeItem(API_KEY_STORAGE_KEY);
 
     this.getUserInfoRequest.invalidate().reset();
     this.authToken = null;
@@ -343,6 +351,8 @@ export default class UserStore extends TypedStore {
           this._tokenLogin(token);
         }, 1000);
       }
+    } else if (!this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
+      router.push('/auth/wa-akg/login');
     } else if (this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
       this.actions.user.logout();
       router.push(this.LOGIN_ROUTE);

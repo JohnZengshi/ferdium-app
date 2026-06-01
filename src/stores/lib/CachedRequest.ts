@@ -72,6 +72,7 @@ export default class CachedRequest extends Request {
                 this.isExecuting = false;
                 this.isError = true;
                 this.wasExecuted = true;
+                this._isInvalidated = false;
                 this.isWaitingForResponse = false;
                 this._triggerHooks();
                 // reject(error);

@@ -65,9 +65,6 @@ class SettingsNavigation extends Component<IProps> {
     const isUsingWithoutAccount =
       this.props.stores!.settings.app.server === LOCAL_SERVER;
 
-    // Remove current auth token
-    localStorage.removeItem('authToken');
-
     if (isUsingWithoutAccount) {
       // Reset server back to Ferdium API
       this.props.actions!.settings.update({
@@ -79,11 +76,8 @@ class SettingsNavigation extends Component<IProps> {
     }
     this.props.stores!.user.isLoggingOut = true;
 
-    this.props.stores!.router.push('/auth/welcome');
-
-    // Reload Ferdium, otherwise many settings won't sync correctly with the server
-    // after logging into another account
-    window.location.reload();
+    this.props.actions!.user.logout();
+    this.props.stores!.router.push('/auth/wa-akg/login');
   }
 
   render() {

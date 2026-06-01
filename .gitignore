@@ -365,6 +365,7 @@ tags
 flow-typed
 out
 build
+build-e2e/
 .tmp
 .stage
 server*.log
@@ -400,3 +401,6 @@ server*.log
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Understand-anything knowledge graph
+.understand-anything/

@@ -15,8 +15,12 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     try {
       await waitForWaAkgLogin(window);
 
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
+      const passwordInput = window.locator(
+        'input[type="password"], input[name="password"]',
+      );
       const submitButton = window.locator('button[type="submit"]');
 
       await expect(emailInput).toBeVisible({ timeout: 10_000 });
@@ -65,7 +69,9 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
       const currentUrl = window.url();
       expect(currentUrl).toContain('/auth/wa-akg/login');
 
-      const apiKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
+      const apiKey = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
       expect(apiKey).toBeNull();
     } finally {
       await cleanup(app, appDataDir);
@@ -85,7 +91,9 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
 
       await window.waitForTimeout(3000);
 
-      const errorElements = await window.locator('.error-message, [class*="error"]').all();
+      const errorElements = await window
+        .locator('.error-message, [class*="error"]')
+        .all();
       const errorTexts: string[] = [];
       for (const el of errorElements) {
         const text = await el.textContent();
@@ -93,7 +101,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
       }
       console.log('Actual error messages:', errorTexts);
 
-      const hasError = errorTexts.length > 0 && errorTexts.some(text => text.length > 0);
+      const hasError = errorTexts.some(text => text.length > 0);
       expect(hasError).toBe(true);
     } finally {
       await cleanup(app, appDataDir);
@@ -118,15 +126,15 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
       expect(errorText).toBeTruthy();
 
       const rawJsPatterns = [
-        /Cannot read properties/i,
+        /cannot read properties/i,
         /is not a function/i,
         /is not defined/i,
         /undefined is not/i,
         /null is not/i,
-        /Unexpected token/i,
-        /SyntaxError/i,
-        /TypeError/i,
-        /ReferenceError/i,
+        /unexpected token/i,
+        /syntaxerror/i,
+        /typeerror/i,
+        /referenceerror/i,
       ];
       for (const pattern of rawJsPatterns) {
         expect(errorText!).not.toMatch(pattern);
@@ -146,24 +154,30 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     try {
       await waitForWaAkgLogin(window);
 
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
+      const passwordInput = window.locator(
+        'input[type="password"], input[name="password"]',
+      );
       const submitButton = window.locator('button[type="submit"]');
 
-      await expect(submitButton).toBeEnabled({ timeout: 5_000 });
+      await expect(submitButton).toBeEnabled({ timeout: 5000 });
 
       await emailInput.fill('test@example.com');
       await passwordInput.fill('password123');
 
       await submitButton.click();
-      await expect(submitButton).toBeDisabled({ timeout: 5_000 });
+      await expect(submitButton).toBeDisabled({ timeout: 5000 });
 
       const error = window.locator('.error-message, [class*="error"]');
       await expect(error).toBeVisible({ timeout: 30_000 });
 
       const buttonEnabled = await submitButton.isEnabled();
       if (!buttonEnabled) {
-        console.log('Button still disabled after auth (node:http may hang in renderer without backend)');
+        console.log(
+          'Button still disabled after auth (node:http may hang in renderer without backend)',
+        );
       }
     } finally {
       await cleanup(app, appDataDir);
@@ -177,8 +191,12 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     try {
       await waitForWaAkgLogin(window);
 
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
+      const passwordInput = window.locator(
+        'input[type="password"], input[name="password"]',
+      );
 
       await emailInput.fill('test@example.com');
       await passwordInput.fill('wrongpassword');
@@ -190,7 +208,9 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
 
       const errorText = await error.textContent();
       expect(errorText).toBeTruthy();
-      expect(errorText!).not.toMatch(/(TypeError|ReferenceError|SyntaxError|undefined is not)/i);
+      expect(errorText!).not.toMatch(
+        /(typeerror|referenceerror|syntaxerror|undefined is not)/i,
+      );
     } finally {
       await cleanup(app, appDataDir);
     }

@@ -15,8 +15,12 @@ test.describe('WA-AKG 登录页面 - 基础表单', () => {
     try {
       await waitForWaAkgLogin(window);
 
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
+      const passwordInput = window.locator(
+        'input[type="password"], input[name="password"]',
+      );
 
       await expect(emailInput).toBeVisible({ timeout: 10_000 });
       await expect(passwordInput).toBeVisible();
@@ -55,7 +59,10 @@ test.describe('WA-AKG 登录页面 - 基础表单', () => {
 
       await window.waitForTimeout(2000);
       const pageContent = await window.content();
-      const hasError = pageContent.includes('error') || pageContent.includes('required') || pageContent.includes('invalid');
+      const hasError =
+        pageContent.includes('error') ||
+        pageContent.includes('required') ||
+        pageContent.includes('invalid');
       expect(hasError).toBe(true);
     } finally {
       await cleanup(app, appDataDir);
@@ -69,8 +76,12 @@ test.describe('WA-AKG 登录页面 - 基础表单', () => {
     try {
       await waitForWaAkgLogin(window);
 
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
+      const passwordInput = window.locator(
+        'input[type="password"], input[name="password"]',
+      );
       const submitButton = window.locator('button[type="submit"]');
 
       await expect(emailInput).toBeVisible({ timeout: 10_000 });

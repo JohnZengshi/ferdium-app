@@ -22,37 +22,58 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       console.log('Current URL after login:', currentUrl);
 
       const pageContent = await window.content();
-      console.log('Page content includes sidebar:', pageContent.includes('sidebar'));
-      console.log('Page content includes service:', pageContent.includes('service'));
-      console.log('Page content includes workspace:', pageContent.includes('workspace'));
+      console.log(
+        'Page content includes sidebar:',
+        pageContent.includes('sidebar'),
+      );
+      console.log(
+        'Page content includes service:',
+        pageContent.includes('service'),
+      );
+      console.log(
+        'Page content includes workspace:',
+        pageContent.includes('workspace'),
+      );
 
-      const errorElements = await window.locator('.error-message, [class*="error"]').all();
+      const errorElements = await window
+        .locator('.error-message, [class*="error"]')
+        .all();
       console.log('Error elements found:', errorElements.length);
       for (const element of errorElements) {
         const text = await element.textContent();
         console.log('Error text:', text);
       }
 
-      const apiKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
+      const apiKey = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
       console.log('API Key in localStorage:', apiKey);
       expect(apiKey).toBeTruthy();
 
-      const apiKeyViaGet = await window.evaluate(() => {
+      const apiKeyViaGet = (await window.evaluate(() => {
         try {
-          return (window as any).ferdium?.stores?.settings?.all?.app?.['whatsapp-api-key'];
-        } catch { return null; }
-      }) as string | null;
+          return (window as any).ferdium?.stores?.settings?.all?.app?.[
+            'whatsapp-api-key'
+          ];
+        } catch {
+          return null;
+        }
+      })) as string | null;
       expect(apiKeyViaGet || apiKey).toBeTruthy();
 
-      const parsedApiKey = typeof apiKey === 'string' && apiKey.startsWith('"')
-        ? JSON.parse(apiKey)
-        : apiKey;
+      const parsedApiKey =
+        typeof apiKey === 'string' && apiKey.startsWith('"')
+          ? JSON.parse(apiKey)
+          : apiKey;
       expect(parsedApiKey).toBeTruthy();
       expect(typeof parsedApiKey).toBe('string');
 
       await window.waitForURL(/\/$/, { timeout: 30_000 });
 
-      const isMainPage = pageContent.includes('sidebar') || pageContent.includes('service') || pageContent.includes('workspace');
+      const isMainPage =
+        pageContent.includes('sidebar') ||
+        pageContent.includes('service') ||
+        pageContent.includes('workspace');
       expect(isMainPage).toBe(true);
     } finally {
       await cleanup(app, appDataDir);
@@ -67,7 +88,9 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       await waitForWaAkgLogin(window);
       await doLogin(window);
 
-      let apiKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
+      let apiKey = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
       expect(apiKey).toBeTruthy();
 
       await window.evaluate(() => {
@@ -75,7 +98,9 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       });
       await window.waitForTimeout(3000);
 
-      apiKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
+      apiKey = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
       expect(apiKey).toBeNull();
     } finally {
       await cleanup(app, appDataDir);
@@ -95,7 +120,9 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       });
       await window.waitForTimeout(3000);
 
-      const lsKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
+      const lsKey = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
       expect(lsKey).toBeNull();
 
       const settingsKey = await window.evaluate(() => {
@@ -117,7 +144,9 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       await waitForWaAkgLogin(window);
       await doLogin(window);
 
-      let apiKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
+      let apiKey = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
       expect(apiKey).toBeTruthy();
 
       // --- Reload ---
@@ -127,17 +156,21 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
 
       // Case 1: authToken persisted (non-JWT guard) → user is already logged in on main page
       let url = window.url();
-      if (!url.includes('/auth/')) {
-        // Already on main app — verify session is intact
-        const authToken = await window.evaluate(() => localStorage.getItem('authToken'));
-        expect(authToken).toBeTruthy();
-        apiKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
-        expect(apiKey).toBeTruthy();
-      } else {
+      if (url.includes('/auth/')) {
         // Case 2: Session lost after reload — need to re-login
         await window.waitForURL(/\/auth\/wa-akg\/login/, { timeout: 15_000 });
         await waitForWaAkgLogin(window);
         await doLogin(window);
+      } else {
+        // Already on main app — verify session is intact
+        const authToken = await window.evaluate(() =>
+          localStorage.getItem('authToken'),
+        );
+        expect(authToken).toBeTruthy();
+        apiKey = await window.evaluate(() =>
+          localStorage.getItem('whatsappAutomationApiKey'),
+        );
+        expect(apiKey).toBeTruthy();
       }
 
       // --- Verify logged in on main app ---
@@ -145,15 +178,19 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       url = window.url();
       expect(url).not.toContain('/auth/');
       const pageContent = await window.content();
-      expect(pageContent.includes('sidebar') || pageContent.includes('app')).toBe(true);
+      expect(
+        pageContent.includes('sidebar') || pageContent.includes('app'),
+      ).toBe(true);
 
-      const authToken = await window.evaluate(() => localStorage.getItem('authToken'));
+      const authToken = await window.evaluate(() =>
+        localStorage.getItem('authToken'),
+      );
       expect(authToken).toBeTruthy();
 
-      apiKey = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
-      const parsedKey = apiKey && apiKey.startsWith('"')
-        ? JSON.parse(apiKey)
-        : apiKey;
+      apiKey = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
+      const parsedKey = apiKey?.startsWith('"') ? JSON.parse(apiKey) : apiKey;
       expect(parsedKey).toBeTruthy();
       expect(typeof parsedKey).toBe('string');
     } finally {
@@ -171,8 +208,10 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
 
       await navigateToSettings(window);
 
-      const logoutButton = window.locator('.settings-navigation__expander + button.settings-navigation__link');
-      await expect(logoutButton).toBeVisible({ timeout: 5_000 });
+      const logoutButton = window.locator(
+        '.settings-navigation__expander + button.settings-navigation__link',
+      );
+      await expect(logoutButton).toBeVisible({ timeout: 5000 });
       await logoutButton.click();
 
       // URL must leave settings and go to /auth/*
@@ -194,8 +233,10 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       await navigateToSettings(window);
 
       // Click logout button
-      const logoutButton = window.locator('.settings-navigation__expander + button.settings-navigation__link');
-      await expect(logoutButton).toBeVisible({ timeout: 5_000 });
+      const logoutButton = window.locator(
+        '.settings-navigation__expander + button.settings-navigation__link',
+      );
+      await expect(logoutButton).toBeVisible({ timeout: 5000 });
       await logoutButton.click();
 
       // Wait for /auth/* route
@@ -206,8 +247,12 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       await expect(loggingOutLabel).not.toBeVisible({ timeout: 20_000 });
 
       // Verify the login form appears after logout
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
+      const passwordInput = window.locator(
+        'input[type="password"], input[name="password"]',
+      );
       const submitButton = window.locator('button[type="submit"]');
 
       await expect(emailInput).toBeVisible({ timeout: 10_000 });
@@ -230,22 +275,30 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       // Verify on main page
       await window.waitForURL(/\/$/, { timeout: 30_000 });
       let pageContent = await window.content();
-      expect(pageContent.includes('sidebar') || pageContent.includes('app')).toBe(true);
+      expect(
+        pageContent.includes('sidebar') || pageContent.includes('app'),
+      ).toBe(true);
 
       // --- Logout ---
       await navigateToSettings(window);
 
-      const logoutButton = window.locator('.settings-navigation__expander + button.settings-navigation__link');
-      await expect(logoutButton).toBeVisible({ timeout: 5_000 });
+      const logoutButton = window.locator(
+        '.settings-navigation__expander + button.settings-navigation__link',
+      );
+      await expect(logoutButton).toBeVisible({ timeout: 5000 });
       await logoutButton.click();
 
       // Wait for login form to reappear
       await expect(window).toHaveURL(/\/auth\//, { timeout: 15_000 });
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
       await expect(emailInput).toBeVisible({ timeout: 20_000 });
 
       // Verify authToken is cleared after logout
-      const authTokenAfterLogout = await window.evaluate(() => localStorage.getItem('authToken'));
+      const authTokenAfterLogout = await window.evaluate(() =>
+        localStorage.getItem('authToken'),
+      );
       expect(authTokenAfterLogout).toBeNull();
 
       // --- Second login (re-login) — auto-redirects to WA-AKG login ---
@@ -254,16 +307,22 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       await doLogin(window);
 
       // Verify authToken is set again
-      const authTokenAfterRelogin = await window.evaluate(() => localStorage.getItem('authToken'));
+      const authTokenAfterRelogin = await window.evaluate(() =>
+        localStorage.getItem('authToken'),
+      );
       expect(authTokenAfterRelogin).toBeTruthy();
 
       // Verify API key still present
-      const apiKeyAfterRelogin = await window.evaluate(() => localStorage.getItem('whatsappAutomationApiKey'));
+      const apiKeyAfterRelogin = await window.evaluate(() =>
+        localStorage.getItem('whatsappAutomationApiKey'),
+      );
       expect(apiKeyAfterRelogin).toBeTruthy();
 
       // Verify we are on main app (not welcome page)
       pageContent = await window.content();
-      expect(pageContent.includes('sidebar') || pageContent.includes('app')).toBe(true);
+      expect(
+        pageContent.includes('sidebar') || pageContent.includes('app'),
+      ).toBe(true);
 
       const url = window.url();
       expect(url).not.toContain('/auth/');
@@ -279,8 +338,12 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
     try {
       await waitForWaAkgLogin(window);
 
-      const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
+      const emailInput = window.locator(
+        'input[type="email"], input[name="email"]',
+      );
+      const passwordInput = window.locator(
+        'input[type="password"], input[name="password"]',
+      );
       const submitButton = window.locator('button[type="submit"]');
 
       await emailInput.fill('test@example.com');

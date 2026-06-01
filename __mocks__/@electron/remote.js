@@ -70,7 +70,7 @@ const mockRemote = {
   app: {
     getVersion: jest.fn(() => '0.0.0-test'),
     getName: jest.fn(() => 'Ferdium'),
-    getPath: jest.fn((name) => `/mock/${name}`),
+    getPath: jest.fn(name => `/mock/${name}`),
   },
   dialog: {
     showOpenDialog: jest.fn(),

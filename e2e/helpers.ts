@@ -1,7 +1,11 @@
-import { expect, _electron as electron, ElectronApplication } from '@playwright/test';
-import path from 'path';
-import os from 'os';
-import fs from 'fs';
+import {
+  expect,
+  _electron as electron,
+  ElectronApplication,
+} from '@playwright/test';
+import path from 'node:path';
+import os from 'node:os';
+import fs from 'node:fs';
 import { resolveBuildDir } from '../playwright.config';
 
 export const buildPath = resolveBuildDir();
@@ -69,15 +73,25 @@ export async function waitForWaAkgLogin(window: any) {
   await window.waitForLoadState('networkidle');
 }
 
-export async function fillLoginForm(window: any, email: string, password: string) {
+export async function fillLoginForm(
+  window: any,
+  email: string,
+  password: string,
+) {
   const emailInput = window.locator('input[type="email"], input[name="email"]');
-  const passwordInput = window.locator('input[type="password"], input[name="password"]');
+  const passwordInput = window.locator(
+    'input[type="password"], input[name="password"]',
+  );
   await emailInput.fill(email);
   await passwordInput.fill(password);
   return { emailInput, passwordInput };
 }
 
-export async function doLogin(window: any, email = 'ferdium@ferdium.com', password = 'ferdium') {
+export async function doLogin(
+  window: any,
+  email = 'ferdium@ferdium.com',
+  password = 'ferdium',
+) {
   await fillLoginForm(window, email, password);
   const submitButton = window.locator('button[type="submit"]');
   await submitButton.click();
@@ -92,5 +106,7 @@ export async function navigateToSettings(window: any) {
   await expect(settingsButton).toBeVisible({ timeout: 10_000 });
   await settingsButton.click();
   // Wait for settings page to load
-  await expect(window.locator('.settings-wrapper')).toBeVisible({ timeout: 10_000 });
+  await expect(window.locator('.settings-wrapper')).toBeVisible({
+    timeout: 10_000,
+  });
 }

@@ -77,7 +77,7 @@ class SettingsNavigation extends Component<IProps> {
     this.props.stores!.user.isLoggingOut = true;
 
     this.props.actions!.user.logout();
-    this.props.stores!.router.push('/auth/wa-akg/login');
+    this.props.stores!.router.push(this.props.stores!.user.WA_AKG_LOGIN_ROUTE);
   }
 
   render() {

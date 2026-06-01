@@ -62,7 +62,7 @@ class PluggableAuthScreen extends Component<IProps> {
       if (result.apiKey) {
         localStorage.setItem('authToken', 'wa-akg');
       }
-      stores.router.push('/');
+      stores.router.push(stores.user.HOME_ROUTE);
     }
   };
 

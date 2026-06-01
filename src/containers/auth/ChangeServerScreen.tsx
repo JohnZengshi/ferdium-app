@@ -26,7 +26,7 @@ class ChangeServerScreen extends Component<IProps> {
       type: 'app',
       data: { server },
     });
-    this.props.stores!.router.push('/auth');
+    this.props.stores!.router.push(this.props.stores!.user.BASE_ROUTE);
   }
 
   render(): ReactElement {

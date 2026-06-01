@@ -32,7 +32,7 @@ class AppLayoutContainer extends Component<IProps> {
       at UserStore._requireAuthenticatedUser
     */
     if (!user.isLoggedIn) {
-      router.push('/auth/welcome');
+      router.push(user.WELCOME_ROUTE);
     }
 
     const {

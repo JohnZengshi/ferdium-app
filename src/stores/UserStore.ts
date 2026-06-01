@@ -370,15 +370,12 @@ export default class UserStore extends TypedStore {
           router.push(this.WA_AKG_LOGIN_ROUTE);
         }
       } else {
+        // Only redirect to home if we have an API key
         this.stores.router.push(this.HOME_ROUTE);
       }
-    } else if (this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE) && !isWaAkgLoginRoute) {
-      // Already logged in and on main app - check WA-AKG apiKey
-      const waAkgApiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
-      if (!waAkgApiKey) {
-        router.push(this.WA_AKG_LOGIN_ROUTE);
-      }
     }
+    // Removed the forced WA-AKG login check for main app routes
+    // to prevent infinite loop when user is on home page without WA-AKG API key
   };
 
   // Reactions

@@ -6,6 +6,7 @@ import autoUpdate from './autoUpdate';
 import dnd from './dnd';
 import download from './download';
 import focusState from './focusState';
+import httpRequest from './httpRequest';
 import languageDetect from './languageDetect';
 import localServer from './localServer';
 import processManager from './processManager';
@@ -29,4 +30,5 @@ export default (params: {
   dnd();
   focusState(params);
   whatsappWebhook(params);
+  httpRequest();
 };

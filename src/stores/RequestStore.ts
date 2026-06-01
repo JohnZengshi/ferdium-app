@@ -81,16 +81,19 @@ export default class RequestStore extends TypedStore {
   _autoRetry(): void {
     const delay = (this.retries <= 10 ? this.retries : 10) * this.retryDelay;
     if (!this.areRequiredRequestsSuccessful && this.stores.user.isLoggedIn) {
-      setTimeout(() => {
-        this.retries += 1;
-        this._retryRequiredRequests();
-        if (this.retries === 4) {
-          this.showRequiredRequestsError = true;
-        }
+      setTimeout(
+        action(() => {
+          this.retries += 1;
+          this._retryRequiredRequests();
+          if (this.retries === 4) {
+            this.showRequiredRequestsError = true;
+          }
 
-        this._autoRetry();
-        debug(`Retry required requests delayed in ${delay / 1000}s`);
-      }, delay);
+          this._autoRetry();
+          debug(`Retry required requests delayed in ${delay / 1000}s`);
+        }),
+        delay,
+      );
     }
   }
 }

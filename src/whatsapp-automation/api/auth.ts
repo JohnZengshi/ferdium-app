@@ -4,13 +4,13 @@
  * Backend uses NextAuth.js — we log in via credentials callback to get a session,
  * then retrieve/generate an API key for all subsequent requests.
  *
- * NOTE: Uses Node.js `http` module instead of `fetch` for CSRF-sensitive calls
- * because Electron's renderer fetch enforces SameSite cookie restrictions
- * (cross-origin POSTs don't include SameSite=Lax cookies), while Node.js
- * http module handles cookies manually with no such restriction.
+ * NOTE: Uses IPC to call the main process for HTTP requests because
+ * Electron's renderer fetch enforces SameSite cookie restrictions
+ * (cross-origin POSTs don't include SameSite=Lax cookies), while the
+ * main process's Node.js http module handles cookies manually with no such restriction.
  */
 
-import * as http from 'node:http';
+import { ipcRenderer } from 'electron';
 
 const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
 const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
@@ -67,10 +67,10 @@ function collectCookies(setCookieHeader: string | string[] | undefined): void {
 }
 
 /**
- * Make an HTTP request using Node.js http module.
+ * Make an HTTP request using IPC to the main process.
  * Supports manual cookie management.
  */
-function nodeRequest(options: {
+async function nodeRequest(options: {
   path: string;
   method?: string;
   headers?: Record<string, string>;
@@ -80,50 +80,27 @@ function nodeRequest(options: {
   statusText: string;
   data: string;
 }> {
-  const { hostname, port } = new URL(WA_AKG_BASE);
-  return new Promise((resolve, reject) => {
-    const req = http.request(
-      {
-        hostname,
-        port: Number(port) || 3000,
-        path: options.path,
-        method: options.method || 'GET',
-        headers: {
-          ...(options.body
-            ? { 'Content-Length': Buffer.byteLength(options.body).toString() }
-            : {}),
-          ...options.headers,
-        },
-      },
-      res => {
-        // Collect cookies from response
-        const { rawHeaders } = res;
-        for (let i = 0; i < rawHeaders.length - 1; i += 2) {
-          if (rawHeaders[i]?.toLowerCase() === 'set-cookie') {
-            collectCookies(rawHeaders[i + 1]);
-          }
-        }
-
-        let body = '';
-        res.on('data', (chunk: Buffer) => {
-          body += chunk.toString('utf8');
-        });
-        res.on('end', () => {
-          resolve({
-            status: res.statusCode || 0,
-            statusText: res.statusMessage || '',
-            data: body,
-          });
-        });
-      },
-    );
-    req.on('error', reject);
-    req.setTimeout(15_000, () => {
-      req.destroy(new Error('Request timeout'));
-    });
-    if (options.body) req.write(options.body);
-    req.end();
+  const url = `${WA_AKG_BASE}${options.path}`;
+  
+  const response = await ipcRenderer.invoke('http-request', {
+    url,
+    method: options.method || 'GET',
+    headers: options.headers || {},
+    body: options.body,
+    timeout: 15000,
   });
+
+  // Collect cookies from response headers
+  const setCookieHeader = response.headers['set-cookie'];
+  if (setCookieHeader) {
+    collectCookies(setCookieHeader);
+  }
+
+  return {
+    status: response.status,
+    statusText: response.statusText,
+    data: response.data,
+  };
 }
 
 /**

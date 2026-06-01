@@ -67,7 +67,13 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="/auth/login"
-              element={<PluggableAuthScreen providerType="ferdium" {...routeProps} {...errorProps} />}
+              element={
+                <PluggableAuthScreen
+                  providerType="ferdium"
+                  {...routeProps}
+                  {...errorProps}
+                />
+              }
             />
             <Route
               path="/auth/server"
@@ -97,7 +103,13 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="/auth/logout"
-              element={<PluggableAuthScreen providerType="ferdium" {...routeProps} {...errorProps} />}
+              element={
+                <PluggableAuthScreen
+                  providerType="ferdium"
+                  {...routeProps}
+                  {...errorProps}
+                />
+              }
             />
             <Route
               path="/auth/releasenotes"
@@ -107,7 +119,13 @@ class FerdiumRoutes extends Component<IProps> {
             />
             <Route
               path="wa-akg/login"
-              element={<PluggableAuthScreen providerType="nextauth" {...routeProps} {...errorProps} />}
+              element={
+                <PluggableAuthScreen
+                  providerType="nextauth"
+                  {...routeProps}
+                  {...errorProps}
+                />
+              }
             />
           </Route>
 

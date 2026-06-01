@@ -8,7 +8,9 @@ import DynamicLogin from '../../components/auth/DynamicLogin';
 import authManager from '../../lib/auth/AuthManager';
 import FerdiumProvider from '../../lib/auth/providers/FerdiumProvider';
 
-const debug = require('../../preload-safe-debug')('Ferdium:auth:PluggableAuthScreen');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:auth:PluggableAuthScreen',
+);
 
 interface IProps extends StoresProps {
   intl: IntlShape;
@@ -45,10 +47,7 @@ class PluggableAuthScreen extends Component<IProps> {
     return authManager.getActiveProvider();
   }
 
-  handleAuthenticated = (result: {
-    token?: string;
-    apiKey?: string;
-  }): void => {
+  handleAuthenticated = (result: { token?: string; apiKey?: string }): void => {
     const { stores } = this.props;
     if (!stores?.user) {
       debug('Stores not available');
@@ -72,9 +71,7 @@ class PluggableAuthScreen extends Component<IProps> {
       return <div>Loading...</div>;
     }
     const { isTokenExpired } = stores.user;
-    const logoutReason = (
-      stores.user as { logoutReason: string | null }
-    ).logoutReason;
+    const { logoutReason } = stores.user as { logoutReason: string | null };
     const isServerLogout = logoutReason === 'SERVER';
 
     const activeProvider = this.provider;

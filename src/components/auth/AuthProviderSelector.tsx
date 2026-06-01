@@ -2,7 +2,10 @@ import { observer } from 'mobx-react';
 import type { FC } from 'react';
 import type { AuthProvider } from '../../@types/auth';
 
-const debug = require('../../preload-safe-debug')('Ferdium:auth:AuthProviderSelector');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:auth:AuthProviderSelector',
+);
+
 const MAX_TAB_PROVIDERS = 3;
 
 interface AuthProviderSelectorProps {
@@ -16,14 +19,19 @@ const AuthProviderSelector: FC<AuthProviderSelectorProps> = ({
   activeProviderName,
   onProviderChange,
 }) => {
-  debug(`Rendering with ${providers.length} providers, active: ${activeProviderName}`);
+  debug(
+    `Rendering with ${providers.length} providers, active: ${activeProviderName}`,
+  );
 
   if (providers.length <= 1) return null;
 
   // ≤3 providers: horizontal tab bar
   if (providers.length <= MAX_TAB_PROVIDERS) {
     return (
-      <div className="flex items-center justify-center gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800" role="tablist">
+      <div
+        className="flex items-center justify-center gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800"
+        role="tablist"
+      >
         {providers.map(provider => {
           const isActive = provider.name === activeProviderName;
           return (
@@ -68,7 +76,10 @@ const AuthProviderSelector: FC<AuthProviderSelectorProps> = ({
         ))}
       </select>
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-        <svg className="h-4 w-4 fill-current text-neutral-500" viewBox="0 0 20 20">
+        <svg
+          className="h-4 w-4 fill-current text-neutral-500"
+          viewBox="0 0 20 20"
+        >
           <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
         </svg>
       </div>

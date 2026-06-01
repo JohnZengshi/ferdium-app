@@ -297,6 +297,7 @@ interface UIStore extends TypedStore {
 interface UserStore extends TypedStore {
   BASE_ROUTE: '/auth';
   CHANGE_SERVER_ROUTE: '/auth/server';
+  HOME_ROUTE: '/';
   IMPORT_ROUTE: '/auth/signup/import';
   INVITE_ROUTE: '/auth/signup/invite';
   LOGIN_ROUTE: '/auth/login';
@@ -304,6 +305,7 @@ interface UserStore extends TypedStore {
   PASSWORD_ROUTE: '/auth/password';
   SETUP_ROUTE: '/auth/signup/setup';
   SIGNUP_ROUTE: '/auth/signup';
+  WA_AKG_LOGIN_ROUTE: '/auth/wa-akg/login';
   WELCOME_ROUTE: '/auth/welcome';
   accountType: () => void;
   authToken: () => void;

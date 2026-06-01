@@ -41,6 +41,10 @@ export default class UserStore extends TypedStore {
 
   CHANGE_SERVER_ROUTE: string = `${this.BASE_ROUTE}/server`;
 
+  HOME_ROUTE: string = '/';
+
+  WA_AKG_LOGIN_ROUTE: string = `${this.BASE_ROUTE}/wa-akg/login`;
+
   @observable loginRequest: Request = new Request(this.api.user, 'login');
 
   @observable signupRequest: Request = new Request(this.api.user, 'signup');
@@ -252,7 +256,7 @@ export default class UserStore extends TypedStore {
 
     // we do not wait for a server response before redirecting the user ONLY DURING SIGNUP
     if (this.stores.router.location.pathname.includes(this.INVITE_ROUTE)) {
-      this.stores.router.push('/');
+      this.stores.router.push(this.HOME_ROUTE);
     }
   }
 
@@ -335,7 +339,7 @@ export default class UserStore extends TypedStore {
     if (!this.stores?.router) return;
     const { router } = this.stores;
     const currentRoute = router.location.pathname;
-    const isWaAkgLoginRoute = currentRoute.includes('/auth/wa-akg/login');
+    const isWaAkgLoginRoute = currentRoute.includes(this.WA_AKG_LOGIN_ROUTE);
 
     // Allow unauthenticated access to WA-AKG login route
     if (!this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE) && !isWaAkgLoginRoute) {
@@ -352,7 +356,7 @@ export default class UserStore extends TypedStore {
         }, 1000);
       }
     } else if (!this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
-      router.push('/auth/wa-akg/login');
+      router.push(this.WA_AKG_LOGIN_ROUTE);
     } else if (this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
       this.actions.user.logout();
       router.push(this.LOGIN_ROUTE);
@@ -360,17 +364,19 @@ export default class UserStore extends TypedStore {
       this.isLoggedIn &&
       currentRoute.includes(this.BASE_ROUTE)
     ) {
-      const waAkgApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
-      if (!waAkgApiKey && !isWaAkgLoginRoute) {
-        router.push('/auth/wa-akg/login');
+      const waAkgApiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
+      if (!waAkgApiKey) {
+        if (!isWaAkgLoginRoute) {
+          router.push(this.WA_AKG_LOGIN_ROUTE);
+        }
       } else {
-        this.stores.router.push('/');
+        this.stores.router.push(this.HOME_ROUTE);
       }
     } else if (this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE) && !isWaAkgLoginRoute) {
       // Already logged in and on main app - check WA-AKG apiKey
-      const waAkgApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
+      const waAkgApiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
       if (!waAkgApiKey) {
-        router.push('/auth/wa-akg/login');
+        router.push(this.WA_AKG_LOGIN_ROUTE);
       }
     }
   };

@@ -10,14 +10,12 @@ import {
 } from 'react';
 import { type WrappedComponentProps, injectIntl } from 'react-intl';
 import { serverName } from '../../api/apiBase';
-import { GITHUB_FERDIUM_URL } from '../../config';
 import { isSnap, isWindows } from '../../environment';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import { updateVersionParse } from '../../helpers/update-helpers';
 import globalMessages from '../../i18n/globalMessages';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import InfoBar from '../ui/InfoBar';
-import Link from '../ui/Link';
 import Icon from '../ui/icon';
 
 export interface IProps extends WrappedComponentProps {
@@ -113,13 +111,13 @@ class AuthLayout extends Component<IProps, IState> {
             {cloneElement(children, { error })}
           </div>
           {/* </div> */}
-          <Link
+          {/* <Link
             to={`${GITHUB_FERDIUM_URL}/ferdium-app`}
             className="auth__adlk"
             target="_blank"
           >
             <img src="./assets/images/adlk.svg" alt="" />
-          </Link>
+          </Link> */}
         </div>
         <PublishDebugInfo />
       </>

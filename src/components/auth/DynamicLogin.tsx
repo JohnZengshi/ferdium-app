@@ -1,4 +1,3 @@
-import { mdiArrowLeftCircle } from '@mdi/js';
 import classnames from 'classnames';
 import { makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -11,17 +10,19 @@ import { AuthFieldType } from '../../@types/auth';
 import type { Field } from '../../@types/mobx-form.types';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
-import Icon from '../ui/icon';
 import Input from '../ui/input/index';
 
 const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 
-const USER_FRIENDLY_ERROR =
-  '登录失败，请检查网络连接或稍后重试';
+const USER_FRIENDLY_ERROR = '登录失败，请检查网络连接或稍后重试';
 
 interface DynamicLoginProps extends WrappedComponentProps {
   provider: AuthProvider;
-  onAuthenticated: (result: { success: boolean; token?: string; apiKey?: string }) => void;
+  onAuthenticated: (result: {
+    success: boolean;
+    token?: string;
+    apiKey?: string;
+  }) => void;
 }
 
 function buildFormFields(fields: AuthField[]): { [key: string]: Field } {
@@ -44,14 +45,18 @@ function buildFormFields(fields: AuthField[]): { [key: string]: Field } {
 
 function getFieldInputType(fieldType: AuthFieldType): string {
   switch (fieldType) {
-    case AuthFieldType.EMAIL:
+    case AuthFieldType.EMAIL: {
       return 'email';
-    case AuthFieldType.PASSWORD:
+    }
+    case AuthFieldType.PASSWORD: {
       return 'password';
-    case AuthFieldType.TEL:
+    }
+    case AuthFieldType.TEL: {
       return 'tel';
-    default:
+    }
+    default: {
       return 'text';
+    }
   }
 }
 
@@ -60,6 +65,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
   form: Form;
 
   @observable authError: string | null = null;
+
   @observable isAuthenticating = false;
 
   constructor(props: DynamicLoginProps) {
@@ -77,7 +83,9 @@ class DynamicLogin extends Component<DynamicLoginProps> {
     debug(`submitForm called, form has errors: ${this.form.hasError}`);
     this.form.submit({
       onSuccess: async () => {
-        debug(`onSuccess callback called, authenticating with ${provider.name}...`);
+        debug(
+          `onSuccess callback called, authenticating with ${provider.name}...`,
+        );
         runInAction(() => {
           this.authError = null;
           this.isAuthenticating = true;
@@ -100,8 +108,9 @@ class DynamicLogin extends Component<DynamicLoginProps> {
               this.authError = result.error || USER_FRIENDLY_ERROR;
             });
           }
-        } catch (err) {
-          const message = err instanceof Error ? err.message : String(err);
+        } catch (error) {
+          const message =
+            error instanceof Error ? error.message : String(error);
           debug(`Authentication error caught: ${message}`);
           runInAction(() => {
             this.authError = message || USER_FRIENDLY_ERROR;
@@ -125,15 +134,17 @@ class DynamicLogin extends Component<DynamicLoginProps> {
     return (
       <div className="auth__container">
         <Link to="/auth/welcome">
-          <img
-            className="auth__logo"
-            src="./assets/images/logo.svg"
-            alt=""
-          />
+          <img className="auth__logo" src="./assets/images/logo.svg" alt="" />
         </Link>
         {/* <H1>{intl.formatMessage({ id: 'dynamicLogin.title', defaultMessage: 'Sign in' })}</H1> */}
 
-        <form className="franz-form auth__form" onSubmit={e => { e.preventDefault(); this.submitForm(); }}>
+        <form
+          className="franz-form auth__form"
+          onSubmit={e => {
+            e.preventDefault();
+            this.submitForm();
+          }}
+        >
           {provider.config.fields
             .filter(f => f.type !== AuthFieldType.HIDDEN)
             .map(field => {
@@ -188,26 +199,36 @@ class DynamicLogin extends Component<DynamicLoginProps> {
         <div className="auth__links">
           {config.showSignup && (
             <Link to="/auth/signup">
-              {intl.formatMessage({ id: 'dynamicLogin.link.signup', defaultMessage: 'Create a free account' })}
+              {intl.formatMessage({
+                id: 'dynamicLogin.link.signup',
+                defaultMessage: 'Create a free account',
+              })}
             </Link>
           )}
           {config.showForgotPassword && (
             <Link to="/auth/password">
-              {intl.formatMessage({ id: 'dynamicLogin.link.forgotPassword', defaultMessage: 'Forgot password?' })}
+              {intl.formatMessage({
+                id: 'dynamicLogin.link.forgotPassword',
+                defaultMessage: 'Forgot password?',
+              })}
             </Link>
           )}
           {config.extraLinks?.map(link => (
-            <Link key={link.href} to={link.href} className={classnames('extra-link', link.variant)}>
+            <Link
+              key={link.href}
+              to={link.href}
+              className={classnames('extra-link', link.variant)}
+            >
               {link.label}
             </Link>
           ))}
         </div>
 
-        <div className="auth__help">
+        {/* <div className="auth__help">
           <Link to="/auth/welcome">
             <Icon icon={mdiArrowLeftCircle} size={1.5} />
           </Link>
-        </div>
+        </div> */}
       </div>
     );
   }

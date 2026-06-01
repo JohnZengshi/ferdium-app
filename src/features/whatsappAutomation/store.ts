@@ -50,9 +50,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _retryCounts = new Map<string, number>();
 
+  _socketConnectWaiters = new Map<string, Array<() => void>>();
+
   _maxRetries = 10;
 
   _retryIntervalMs = 5000;
+
+  _qrFetchRetryDelayMs = 800;
+
+  _qrFetchMaxAttempts = 6;
 
   @observable sessionStatuses = new Map<string, SessionStatus | undefined>();
 
@@ -121,6 +127,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     }
     this._sockets.clear();
     this._retryCounts.clear();
+    this._socketConnectWaiters.clear();
     this._initializedServices.clear();
     this.sessionStatuses.clear();
     this.qrCodes.clear();
@@ -261,6 +268,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
               this.isLoadingQr.set(serviceId, true);
             });
             try {
+              await this._waitForSocketConnected(serviceId);
               await postSessionsIdAction(serviceId, 'start');
             } catch (startError) {
               debug(
@@ -442,6 +450,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         // Ensure Socket.IO is connected and join room BEFORE starting
         // (so we don't miss early connection.update events)
         this._startSocketIoForSession(serviceId);
+        await this._waitForSocketConnected(serviceId);
 
         // Start the session to get QR
         await postSessionsIdAction(serviceId, 'start');
@@ -510,7 +519,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   };
 
   /** Fetch fresh QR from REST, then inject or update the modal image. */
-  _fetchAndUpdateQr = async (serviceId: string) => {
+  _fetchAndUpdateQr = async (serviceId: string, attempt = 1) => {
     try {
       const qrResponse = await getSessionsIdQr(serviceId);
       if (qrResponse.status !== 200) return;
@@ -542,6 +551,20 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           this._injectQrModal({ serviceId, base64 });
         });
     } catch (error) {
+      const status =
+        error && typeof error === 'object' && 'status' in error
+          ? (error as { status?: number }).status
+          : undefined;
+      if (status === 404 && attempt < this._qrFetchMaxAttempts) {
+        debug(
+          `QR not ready yet for ${serviceId} (attempt ${attempt}/${this._qrFetchMaxAttempts}), retrying...`,
+        );
+        await new Promise(resolve => {
+          setTimeout(resolve, this._qrFetchRetryDelayMs);
+        });
+        await this._fetchAndUpdateQr(serviceId, attempt + 1);
+        return;
+      }
       debug('Error updating QR:', error);
     }
   };
@@ -574,6 +597,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         `[WA-AKG] Socket.IO connected for ${serviceId}, joining room`,
       );
       socket.emit('join-session', serviceId);
+      this._resolveSocketConnectWaiters(serviceId);
     });
 
     socket.on(
@@ -609,6 +633,37 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     });
 
     this._sockets.set(serviceId, socket);
+  };
+
+  _waitForSocketConnected = (
+    serviceId: string,
+    timeoutMs = 10_000,
+  ): Promise<void> => {
+    const socket = this._sockets.get(serviceId);
+    if (!socket) return Promise.resolve();
+    if (socket.connected) return Promise.resolve();
+
+    return new Promise(resolve => {
+      const timer = setTimeout(() => {
+        resolve();
+      }, timeoutMs);
+
+      const resolveOnce = () => {
+        clearTimeout(timer);
+        resolve();
+      };
+
+      const waiters = this._socketConnectWaiters.get(serviceId) || [];
+      waiters.push(resolveOnce);
+      this._socketConnectWaiters.set(serviceId, waiters);
+    });
+  };
+
+  _resolveSocketConnectWaiters = (serviceId: string) => {
+    const waiters = this._socketConnectWaiters.get(serviceId);
+    if (!waiters || waiters.length === 0) return;
+    this._socketConnectWaiters.delete(serviceId);
+    for (const resolve of waiters) resolve();
   };
 
   /** Handle real-time connection.update events from Socket.IO. */

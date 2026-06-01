@@ -1,4 +1,4 @@
-import { test, expect, _electron as electron, ElectronApplication } from '@playwright/test';
+import { expect, _electron as electron, ElectronApplication } from '@playwright/test';
 import path from 'path';
 import os from 'os';
 import fs from 'fs';

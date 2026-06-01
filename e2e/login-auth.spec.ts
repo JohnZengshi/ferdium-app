@@ -6,7 +6,6 @@ import {
   getMainWindow,
   waitForWaAkgLogin,
   doLogin,
-  fillLoginForm,
   navigateToSettings,
 } from './helpers';
 
@@ -243,7 +242,6 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       // Wait for login form to reappear
       await expect(window).toHaveURL(/\/auth\//, { timeout: 15_000 });
       const emailInput = window.locator('input[type="email"], input[name="email"]');
-      const passwordInput = window.locator('input[type="password"], input[name="password"]');
       await expect(emailInput).toBeVisible({ timeout: 20_000 });
 
       // Verify authToken is cleared after logout

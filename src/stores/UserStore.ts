@@ -342,7 +342,11 @@ export default class UserStore extends TypedStore {
     const isWaAkgLoginRoute = currentRoute.includes(this.WA_AKG_LOGIN_ROUTE);
 
     // Allow unauthenticated access to WA-AKG login route
-    if (!this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE) && !isWaAkgLoginRoute) {
+    if (
+      !this.isLoggedIn &&
+      !currentRoute.includes(this.BASE_ROUTE) &&
+      !isWaAkgLoginRoute
+    ) {
       router.push(this.WELCOME_ROUTE);
     } else if (!this.isLoggedIn && currentRoute.includes('token=')) {
       router.push(this.WELCOME_ROUTE);
@@ -360,9 +364,17 @@ export default class UserStore extends TypedStore {
     } else if (this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
       this.actions.user.logout();
       router.push(this.LOGIN_ROUTE);
+    } else if (this.isLoggedIn && currentRoute.includes(this.BASE_ROUTE)) {
+      const waAkgApiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
+      if (waAkgApiKey) {
+        this.stores.router.push(this.HOME_ROUTE);
+      } else if (!isWaAkgLoginRoute) {
+        router.push(this.WA_AKG_LOGIN_ROUTE);
+      }
     } else if (
       this.isLoggedIn &&
-      currentRoute.includes(this.BASE_ROUTE)
+      !currentRoute.includes(this.BASE_ROUTE) &&
+      !isWaAkgLoginRoute
     ) {
       const waAkgApiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
       if (!waAkgApiKey) {

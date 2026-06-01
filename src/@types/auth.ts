@@ -61,7 +61,7 @@ export interface AuthField {
   /** Default value for hidden fields */
   defaultValue?: string;
   /** Options for SELECT fields */
-  options?: Array<{ label: string; value: string }>;
+  options?: { label: string; value: string }[];
 }
 
 /** A link shown below the login form (signup, forgot password, OAuth, etc.) */

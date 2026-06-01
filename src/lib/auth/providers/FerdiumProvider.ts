@@ -1,11 +1,18 @@
 import localStorage from 'mobx-localstorage';
-import type { AuthConfig, AuthProvider, AuthResult, AuthResultStatus } from '../../../@types/auth';
+import type {
+  AuthConfig,
+  AuthProvider,
+  AuthResult,
+  AuthResultStatus,
+} from '../../../@types/auth';
 import { AuthFieldType, AuthProviderType } from '../../../@types/auth';
 import apiBase from '../../../api/apiBase';
 import { sendAuthRequest } from '../../../api/utils/auth';
 import { hash } from '../../../helpers/password-helpers';
 
-const debug = require('../../../preload-safe-debug')('Ferdium:auth:FerdiumProvider');
+const debug = require('../../../preload-safe-debug')(
+  'Ferdium:auth:FerdiumProvider',
+);
 
 /**
  * Ferdium JWT Authentication Provider
@@ -56,10 +63,11 @@ export default class FerdiumProvider implements AuthProvider {
       const hashedPassword = await hash(password);
       const authHeader = `Basic ${btoa(`${email}:${hashedPassword}`)}`;
 
-      const response = await sendAuthRequest(
-        `${apiBase()}/auth/login`,
-        { method: 'POST', headers: { Authorization: authHeader }, body: {} },
-      );
+      const response = await sendAuthRequest(`${apiBase()}/auth/login`, {
+        method: 'POST',
+        headers: { Authorization: authHeader },
+        body: {},
+      });
 
       if (response.ok) {
         const data = await response.json();

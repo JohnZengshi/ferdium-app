@@ -1,5 +1,10 @@
 import localStorage from 'mobx-localstorage';
-import type { AuthConfig, AuthProvider, AuthResult, AuthResultStatus } from '../../../@types/auth';
+import type {
+  AuthConfig,
+  AuthProvider,
+  AuthResult,
+  AuthResultStatus,
+} from '../../../@types/auth';
 import { AuthFieldType, AuthProviderType } from '../../../@types/auth';
 import {
   initializeAuth,
@@ -7,13 +12,17 @@ import {
   clearApiKey,
 } from '../../../whatsapp-automation/api/auth';
 
-const debug = require('../../../preload-safe-debug')('Ferdium:auth:NextAuthProvider');
+const debug = require('../../../preload-safe-debug')(
+  'Ferdium:auth:NextAuthProvider',
+);
 
 const API_KEY_STORAGE_KEY = 'whatsappAutomationApiKey';
 
 export default class NextAuthProvider implements AuthProvider {
   name = 'nextauth';
+
   type = AuthProviderType.NEXTAUTH;
+
   private baseUrl: string;
 
   config: AuthConfig = {
@@ -40,7 +49,8 @@ export default class NextAuthProvider implements AuthProvider {
   };
 
   constructor(baseUrl?: string) {
-    this.baseUrl = baseUrl ?? process.env.WA_AKG_BASE ?? 'http://localhost:3000';
+    this.baseUrl =
+      baseUrl ?? process.env.WA_AKG_BASE ?? 'http://localhost:3000';
     debug(`NextAuthProvider initialized with baseUrl: ${this.baseUrl}`);
   }
 
@@ -55,7 +65,9 @@ export default class NextAuthProvider implements AuthProvider {
       };
     }
 
-    debug('Starting NextAuth authentication via whatsapp-automation/api/auth...');
+    debug(
+      'Starting NextAuth authentication via whatsapp-automation/api/auth...',
+    );
 
     try {
       const apiKey = await initializeAuth({ email, password });
@@ -81,7 +93,9 @@ export default class NextAuthProvider implements AuthProvider {
       };
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      const message = err.message || 'Network error: unable to connect to authentication server';
+      const message =
+        err.message ||
+        'Network error: unable to connect to authentication server';
       debug('Authentication failed:', message);
       return {
         success: false,

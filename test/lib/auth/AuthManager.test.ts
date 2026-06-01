@@ -1,3 +1,7 @@
+import { AuthManager } from '../../../src/lib/auth/AuthManager';
+import type { AuthProvider } from '../../../src/@types/auth';
+import { AuthEventType } from '../../../src/@types/auth';
+
 jest.mock('../../../src/preload-safe-debug', () => {
   return jest.fn(() => jest.fn());
 });
@@ -20,10 +24,6 @@ jest.mock('mobx-localstorage', () => {
   };
 });
 
-import { AuthManager } from '../../../src/lib/auth/AuthManager';
-import type { AuthProvider } from '../../../src/@types/auth';
-import { AuthEventType } from '../../../src/@types/auth';
-
 function createMockProvider(
   name: string,
   overrides: Partial<AuthProvider> = {},
@@ -42,7 +42,7 @@ function createMockProvider(
       token: 'test-token',
       status: 'success',
     }),
-    logout: jest.fn().mockResolvedValue(undefined),
+    logout: jest.fn().mockResolvedValue(),
     getAuthHeader: jest.fn().mockReturnValue('Bearer test-token'),
     isAuthenticated: jest.fn().mockReturnValue(true),
     ...overrides,
@@ -171,7 +171,9 @@ describe('AuthManager', () => {
     it('returns error if no active provider', async () => {
       const result = await manager.authenticate({ email: 'test@test.com' });
       expect(result.success).toBe(false);
-      expect(result.error).toBe('No active auth provider. Call setActiveProvider() first.');
+      expect(result.error).toBe(
+        'No active auth provider. Call setActiveProvider() first.',
+      );
     });
 
     it('calls provider authenticate', async () => {
@@ -193,7 +195,10 @@ describe('AuthManager', () => {
       manager.setActiveProvider('test');
       await manager.authenticate({ email: 'test@test.com', password: 'pass' });
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: AuthEventType.LOGIN_START, provider: 'test' }),
+        expect.objectContaining({
+          type: AuthEventType.LOGIN_START,
+          provider: 'test',
+        }),
       );
     });
 
@@ -205,7 +210,10 @@ describe('AuthManager', () => {
       manager.setActiveProvider('test');
       await manager.authenticate({ email: 'test@test.com', password: 'pass' });
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: AuthEventType.LOGIN_SUCCESS, provider: 'test' }),
+        expect.objectContaining({
+          type: AuthEventType.LOGIN_SUCCESS,
+          provider: 'test',
+        }),
       );
     });
 
@@ -223,7 +231,10 @@ describe('AuthManager', () => {
       manager.setActiveProvider('test');
       await manager.authenticate({ email: 'test@test.com', password: 'pass' });
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: AuthEventType.LOGIN_FAILURE, provider: 'test' }),
+        expect.objectContaining({
+          type: AuthEventType.LOGIN_FAILURE,
+          provider: 'test',
+        }),
       );
     });
 
@@ -239,7 +250,10 @@ describe('AuthManager', () => {
         manager.authenticate({ email: 'test@test.com', password: 'pass' }),
       ).rejects.toThrow('Network error');
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: AuthEventType.LOGIN_FAILURE, provider: 'test' }),
+        expect.objectContaining({
+          type: AuthEventType.LOGIN_FAILURE,
+          provider: 'test',
+        }),
       );
     });
   });
@@ -261,7 +275,10 @@ describe('AuthManager', () => {
       manager.setActiveProvider('test');
       await manager.logout();
       expect(listener).toHaveBeenCalledWith(
-        expect.objectContaining({ type: AuthEventType.LOGOUT, provider: 'test' }),
+        expect.objectContaining({
+          type: AuthEventType.LOGOUT,
+          provider: 'test',
+        }),
       );
     });
 

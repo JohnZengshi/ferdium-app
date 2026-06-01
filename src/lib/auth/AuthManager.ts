@@ -83,7 +83,7 @@ export class AuthManager implements IAuthManager {
   }
 
   getProviders(): AuthProvider[] {
-    return Array.from(this.providers.values());
+    return [...this.providers.values()];
   }
 
   getProvider(name: string): AuthProvider | undefined {

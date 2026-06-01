@@ -1,3 +1,5 @@
+import type NextAuthProviderType from '../../../../src/lib/auth/providers/NextAuthProvider';
+
 jest.mock('../../../../src/preload-safe-debug', () => {
   return jest.fn(() => jest.fn());
 });
@@ -25,11 +27,14 @@ jest.mock('../../../../src/whatsapp-automation/api/auth', () => ({
   clearApiKey: jest.fn(),
 }));
 
-import type NextAuthProviderType from '../../../../src/lib/auth/providers/NextAuthProvider';
-
-const NextAuthProvider = require('../../../../src/lib/auth/providers/NextAuthProvider').default;
-const localStorage = require('mobx-localstorage').default ?? require('mobx-localstorage');
-const { initializeAuth, getApiKey } = require('../../../../src/whatsapp-automation/api/auth');
+const NextAuthProvider =
+  require('../../../../src/lib/auth/providers/NextAuthProvider').default;
+const localStorage =
+  require('mobx-localstorage').default ?? require('mobx-localstorage');
+const {
+  initializeAuth,
+  getApiKey,
+} = require('../../../../src/whatsapp-automation/api/auth');
 
 describe('NextAuthProvider', () => {
   let provider: NextAuthProviderType;
@@ -87,7 +92,10 @@ describe('NextAuthProvider', () => {
     it('returns error if authentication fails', async () => {
       (initializeAuth as jest.Mock).mockResolvedValue(null);
 
-      const result = await provider.authenticate({ email: 'test@test.com', password: 'wrong' });
+      const result = await provider.authenticate({
+        email: 'test@test.com',
+        password: 'wrong',
+      });
       expect(result.success).toBe(false);
       expect(result.status).toBe('invalid_credentials');
     });
@@ -95,7 +103,10 @@ describe('NextAuthProvider', () => {
     it('returns apiKey on success', async () => {
       (initializeAuth as jest.Mock).mockResolvedValue('api-key-123');
 
-      const result = await provider.authenticate({ email: 'test@test.com', password: 'correct' });
+      const result = await provider.authenticate({
+        email: 'test@test.com',
+        password: 'correct',
+      });
       expect(result.success).toBe(true);
       expect(result.apiKey).toBe('api-key-123');
     });
@@ -103,7 +114,10 @@ describe('NextAuthProvider', () => {
     it('does not double-store apiKey in mobx-localstorage', async () => {
       (initializeAuth as jest.Mock).mockResolvedValue('api-key-123');
 
-      await provider.authenticate({ email: 'test@test.com', password: 'correct' });
+      await provider.authenticate({
+        email: 'test@test.com',
+        password: 'correct',
+      });
       // initializeAuth() already stores the raw key via setApiKey().
       // The provider must NOT also write via mobx-localstorage, which
       // JSON.stringifies values and corrupts the header.
@@ -111,9 +125,14 @@ describe('NextAuthProvider', () => {
     });
 
     it('handles network errors gracefully', async () => {
-      (initializeAuth as jest.Mock).mockRejectedValue(new Error('Network timeout'));
+      (initializeAuth as jest.Mock).mockRejectedValue(
+        new Error('Network timeout'),
+      );
 
-      const result = await provider.authenticate({ email: 'test@test.com', password: 'correct' });
+      const result = await provider.authenticate({
+        email: 'test@test.com',
+        password: 'correct',
+      });
       expect(result.success).toBe(false);
       expect(result.status).toBe('network_error');
       expect(result.error).toBe('Network timeout');
@@ -123,7 +142,9 @@ describe('NextAuthProvider', () => {
   describe('logout', () => {
     it('removes apiKey from localStorage', async () => {
       await provider.logout();
-      const { clearApiKey } = require('../../../../src/whatsapp-automation/api/auth');
+      const {
+        clearApiKey,
+      } = require('../../../../src/whatsapp-automation/api/auth');
       expect(clearApiKey).toHaveBeenCalled();
     });
   });

@@ -42,7 +42,7 @@ function createMockProvider(
       token: 'test-token',
       status: 'success',
     }),
-    logout: jest.fn().mockResolvedValue(),
+    logout: jest.fn().mockResolvedValue(undefined),
     getAuthHeader: jest.fn().mockReturnValue('Bearer test-token'),
     isAuthenticated: jest.fn().mockReturnValue(true),
     ...overrides,

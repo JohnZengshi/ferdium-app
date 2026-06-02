@@ -2,15 +2,15 @@ import PropTypes from 'prop-types';
 import { createActionsFromDefinitions } from '../../actions/lib/actions';
 
 export interface WhatsAppAutomationActionsType {
-  setServiceWebview: (serviceId: string) => void;
-  checkSessionStatus: (serviceId: string) => void;
-  handleHostMessage: (action: string, data: object) => void;
-  handleClientMessage: (
-    channel: string,
-    message: { action: string; data: object },
-  ) => void;
-  injectQrModal: (serviceId: string) => void;
-  removeQrModal: (serviceId: string) => void;
+  setServiceWebview: (payload: { serviceId: string }) => void;
+  checkSessionStatus: (payload: { serviceId: string }) => void;
+  handleHostMessage: (payload: { action: string; data?: object }) => void;
+  handleClientMessage: (payload: {
+    channel: string;
+    message: { action: string; data: object };
+  }) => void;
+  injectQrModal: (payload: { serviceId: string }) => void;
+  removeQrModal: (payload: { serviceId: string }) => void;
 }
 
 export const whatsappAutomationActions =

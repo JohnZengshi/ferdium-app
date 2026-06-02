@@ -330,64 +330,64 @@ export default class UserStore extends TypedStore {
     this.deleteAccountRequest.execute();
   }
 
-  // This is a mobx autorun which forces the user to login if not authenticated
   _requireAuthenticatedUser = (): void => {
-    if (this.isTokenExpired) {
-      this._logout();
-    }
-
     if (!this.stores?.router) return;
+
     const { router } = this.stores;
-    const currentRoute = router.location.pathname;
-    const isWaAkgLoginRoute = currentRoute.includes(this.WA_AKG_LOGIN_ROUTE);
+    const route = router.location.pathname;
 
-    // Allow unauthenticated access to WA-AKG login route
-    if (
-      !this.isLoggedIn &&
-      !currentRoute.includes(this.BASE_ROUTE) &&
-      !isWaAkgLoginRoute
-    ) {
-      router.push(this.WELCOME_ROUTE);
-    } else if (!this.isLoggedIn && currentRoute.includes('token=')) {
-      router.push(this.WELCOME_ROUTE);
-      const token = currentRoute.split('=')[1];
+    // 本地模式下 Ferdium 内部 auth 是基础设施，不依赖用户操作
+    // 这里只关心 WA-AKG key 是否就绪
+    if (process.env.FERDIUM_SERVER === 'local') {
+      const hasWaAkgKey = Boolean(window.localStorage.getItem(API_KEY_STORAGE_KEY));
 
-      const data = this._parseToken(token);
-      if (data) {
-        // Give this some time to sink
-        setTimeout(() => {
-          this._tokenLogin(token);
-        }, 1000);
-      }
-    } else if (!this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
-      router.push(this.WA_AKG_LOGIN_ROUTE);
-    } else if (this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
-      this.actions.user.logout();
-      router.push(this.LOGIN_ROUTE);
-    } else if (this.isLoggedIn && currentRoute.includes(this.BASE_ROUTE)) {
-      const waAkgApiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
-      if (waAkgApiKey) {
-        this.stores.router.push(this.HOME_ROUTE);
-      } else if (!isWaAkgLoginRoute) {
-        router.push(this.WA_AKG_LOGIN_ROUTE);
-      }
-    } else if (
-      this.isLoggedIn &&
-      !currentRoute.includes(this.BASE_ROUTE) &&
-      !isWaAkgLoginRoute
-    ) {
-      const waAkgApiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
-      if (!waAkgApiKey) {
-        if (!isWaAkgLoginRoute) {
+      if (!hasWaAkgKey) {
+        if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {
           router.push(this.WA_AKG_LOGIN_ROUTE);
         }
-      } else {
-        // Only redirect to home if we have an API key
-        this.stores.router.push(this.HOME_ROUTE);
+      } else if (route !== this.HOME_ROUTE) {
+        router.push(this.HOME_ROUTE);
       }
+      return;
     }
-    // Removed the forced WA-AKG login check for main app routes
-    // to prevent infinite loop when user is on home page without WA-AKG API key
+
+    // ── 以下仅在云端模式执行 ──
+    const onLogout = route === this.LOGOUT_ROUTE;
+
+    if (this.isTokenExpired) {
+      this._logout();
+      return;
+    }
+
+    if (onLogout) {
+      if (this.isLoggedIn) {
+        this.actions.user.logout();
+      }
+      if (route !== this.WA_AKG_LOGIN_ROUTE) {
+        router.push(this.WA_AKG_LOGIN_ROUTE);
+      }
+      return;
+    }
+
+    if (!this.isLoggedIn) {
+      if (route !== this.WELCOME_ROUTE) {
+        router.push(this.WELCOME_ROUTE);
+      }
+      return;
+    }
+
+    const hasWaAkgKey = Boolean(window.localStorage.getItem(API_KEY_STORAGE_KEY));
+
+    if (!hasWaAkgKey) {
+      if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {
+        router.push(this.WA_AKG_LOGIN_ROUTE);
+      }
+      return;
+    }
+
+    if (route !== this.HOME_ROUTE) {
+      router.push(this.HOME_ROUTE);
+    }
   };
 
   // Reactions

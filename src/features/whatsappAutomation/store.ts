@@ -3,10 +3,10 @@ import {
   computed,
   makeObservable,
   observable,
+  reaction,
   runInAction,
 } from 'mobx';
 import { io, Socket } from 'socket.io-client';
-import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 import FeatureStore from '../utils/FeatureStore';
 import { whatsappAutomationActions } from './actions';
@@ -50,6 +50,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _retryCounts = new Map<string, number>();
 
+  _waReactionDisposer: (() => void) | undefined;
+
   _socketConnectWaiters = new Map<string, (() => void)[]>();
 
   _maxRetries = 10;
@@ -90,9 +92,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   // ========== PUBLIC API ========= //
 
   @action start(stores: any, actions: any) {
-    console.log('[WA-AKG] WhatsAppAutomationStore::start');
     this.stores = stores;
     this.actions = actions;
+    debug('WhatsAppAutomationStore::start');
 
     this._registerActions(
       createActionBindings([
@@ -111,12 +113,26 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       ]),
     );
 
-    this._registerReactions(createReactions([this._detectWhatsAppServices]));
+    this._waReactionDisposer = reaction(
+      () =>
+        this.whatsAppServices
+          .map(s => `${s.id}:${s.isAttached}:${!!s.webview}`)
+          .join('|'),
+      () => {
+        this._detectWhatsAppServices();
+      },
+      { fireImmediately: true },
+    );
 
     this.isFeatureActive = true;
   }
 
   @action stop() {
+    if (this._waReactionDisposer) {
+      this._waReactionDisposer();
+      this._waReactionDisposer = undefined;
+    }
+
     super.stop();
     debug('WhatsAppAutomationStore::stop');
 
@@ -141,21 +157,18 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   _detectWhatsAppServices = (): void => {
     const services = this.whatsAppServices;
     if (services.length === 0) {
-      console.log('[WA-AKG] No WhatsApp services found via recipe filter');
+      debug('No WhatsApp services found via recipe filter');
       return;
     }
 
-    console.log('[WA-AKG] WhatsApp services found:', services.length);
+    debug('WhatsApp services found:', services.length);
     for (const service of services) {
-      console.log(
-        `[WA-AKG] Service ${service.id}: isAttached=${service.isAttached}, hasWebview=${!!service.webview}`,
-      );
       if (
         !this._initializedServices.has(service.id) &&
         service.isAttached &&
         service.webview
       ) {
-        console.log(`[WA-AKG] Initializing session for service: ${service.id}`);
+        debug('Initializing session for service:', service.id);
         this._initializedServices.add(service.id);
         this._checkSessionStatus({ serviceId: service.id });
       }
@@ -529,7 +542,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       if (!base64) return;
 
       const service = this._getService(serviceId);
-      if (!service?.webview) return;
+      if (!service?.webview) {
+        return;
+      }
 
       // Check if modal exists, update or inject
       service.webview

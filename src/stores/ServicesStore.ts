@@ -22,6 +22,7 @@ import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { cleanseJSObject } from '../jsUtils';
 import type { UnreadServices } from '../lib/dbus/Ferdium';
 import type Service from '../models/Service';
+import { whatsappAutomationActions } from '../features/whatsappAutomation/actions';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
@@ -743,6 +744,9 @@ export default class ServicesStore extends TypedStore {
         service.initializeWebViewListener();
       }
       service.isAttached = true;
+
+      // Bridge webview lifecycle to WA-AKG feature store
+      whatsappAutomationActions.setServiceWebview({ serviceId });
     }
   }
 

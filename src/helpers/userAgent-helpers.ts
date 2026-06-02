@@ -115,7 +115,7 @@ function buildPool(generator: () => string, size: number): string[] {
   let attempts = 0;
   while (pool.size < size && attempts < maxAttempts) {
     pool.add(generator());
-    attempts++;
+    attempts += 1;
   }
   return [...pool];
 }
@@ -127,27 +127,35 @@ let windowsPool: string[] | null = null;
 let macIndex = 0;
 let windowsIndex = 0;
 
-/**
- * Returns the next User-Agent string using round-robin from a large dynamic pool.
- * Guarantees no collisions within the same client session.
- *
- * - macOS → dynamic UA (Chrome / Safari / Edge / Firefox, random versions)
- * - Windows → dynamic UA (Chrome / Edge / Firefox, random versions)
- * - Linux → falls back to the real platform-aware UA
- *
- * The 100-entry pool is generated lazily at first call.
- */
 export function getNextPlatformUserAgent(): string {
   if (isMac) {
     if (!macPool) macPool = buildPool(generateMacUA, UA_POOL_SIZE);
-    return macPool[macIndex++ % macPool.length];
+    const ua = macPool[macIndex % macPool.length];
+    macIndex += 1;
+    return ua;
   }
   if (isWindows) {
     if (!windowsPool) windowsPool = buildPool(generateWindowsUA, UA_POOL_SIZE);
-    return windowsPool[windowsIndex++ % windowsPool.length];
+    const ua = windowsPool[windowsIndex % windowsPool.length];
+    windowsIndex += 1;
+    return ua;
   }
   // For Linux or unknown, fall back to auto-generated real UA
   return userAgent();
+}
+
+export default function userAgent() {
+  let platformString;
+
+  if (isMac) {
+    platformString = macOS();
+  } else if (isWindows) {
+    platformString = windows();
+  } else {
+    platformString = linux();
+  }
+
+  return `Mozilla/5.0 (${platformString}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
 }
 
 /**
@@ -167,18 +175,4 @@ export function getRandomPlatformUserAgent(): string {
     return windowsPool[Math.floor(Math.random() * windowsPool.length)];
   }
   return userAgent();
-}
-
-export default function userAgent() {
-  let platformString;
-
-  if (isMac) {
-    platformString = macOS();
-  } else if (isWindows) {
-    platformString = windows();
-  } else {
-    platformString = linux();
-  }
-
-  return `Mozilla/5.0 (${platformString}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
 }

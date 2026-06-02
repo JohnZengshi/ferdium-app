@@ -9,8 +9,8 @@ import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
-import { getNextPlatformUserAgent } from '../helpers/userAgent-helpers';
 import { ferdiumVersion } from '../environment-remote';
+import { whatsappAutomationActions } from '../features/whatsappAutomation/actions';
 import { workspaceStore } from '../features/workspaces';
 import {
   getDevRecipeDirectory,
@@ -18,11 +18,11 @@ import {
 } from '../helpers/recipe-helpers';
 import matchRoute from '../helpers/routing-helpers';
 import { isInTimeframe } from '../helpers/schedule-helpers';
+import { getNextPlatformUserAgent } from '../helpers/userAgent-helpers';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { cleanseJSObject } from '../jsUtils';
 import type { UnreadServices } from '../lib/dbus/Ferdium';
 import type Service from '../models/Service';
-import { whatsappAutomationActions } from '../features/whatsappAutomation/actions';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';

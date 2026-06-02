@@ -7,9 +7,9 @@ import type {
 } from '../../../@types/auth';
 import { AuthFieldType, AuthProviderType } from '../../../@types/auth';
 import {
-  initializeAuth,
-  getApiKey,
   clearApiKey,
+  getApiKey,
+  initializeAuth,
 } from '../../../whatsapp-automation/api/auth';
 
 const debug = require('../../../preload-safe-debug')(

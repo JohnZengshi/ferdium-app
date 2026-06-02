@@ -9,9 +9,9 @@
  * certain local network addresses.
  */
 
-import { ipcMain } from 'electron';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { ipcMain } from 'electron';
 
 const execFileAsync = promisify(execFile);
 
@@ -84,7 +84,7 @@ export default () => {
         // Parse headers
         const responseHeaders: Record<string, string | string[]> = {};
         let bodyStartIndex = 0;
-        for (let i = 1; i < lines.length; i++) {
+        for (let i = 1; i < lines.length; i += 1) {
           const line = lines[i];
           if (line === '\r' || line === '') {
             bodyStartIndex = i + 1;

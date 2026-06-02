@@ -12,10 +12,10 @@ import serverlessLogin from '../helpers/serverless-helpers';
 import authManager from '../lib/auth/AuthManager';
 import FerdiumProvider from '../lib/auth/providers/FerdiumProvider';
 import NextAuthProvider from '../lib/auth/providers/NextAuthProvider';
+import { API_KEY_STORAGE_KEY } from '../whatsapp-automation/api/auth';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
-import { API_KEY_STORAGE_KEY } from '../whatsapp-automation/api/auth';
 
 const debug = require('../preload-safe-debug')('Ferdium:UserStore');
 

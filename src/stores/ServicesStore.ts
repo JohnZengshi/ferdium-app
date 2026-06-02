@@ -742,6 +742,30 @@ export default class ServicesStore extends TypedStore {
           stores: this.stores,
         });
         service.initializeWebViewListener();
+
+        // Fix: onDidAttach → setTimeout(0) → setWebviewReference means the webview's
+        // initial loading events (did-start-loading, did-stop-loading, did-frame-finish-load)
+        // may have already fired before we registered event listeners above.
+        // Check if the webview has already finished loading and catch up state if so.
+        // See: https://github.com/electron/electron/issues/31918
+        if (webview && typeof webview.isLoading === 'function') {
+          try {
+            if (!webview.isLoading()) {
+              const url = webview.getURL();
+              if (url && url !== 'about:blank') {
+                debug(
+                  `Webview for service ${service.id} already finished loading before listeners attached, catching up state`,
+                );
+                service._didLoad();
+              }
+            }
+          } catch (error) {
+            debug(
+              'Could not check webview loading state after attachment',
+              error,
+            );
+          }
+        }
       }
       service.isAttached = true;
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import type Workspace from '../features/workspaces/models/Workspace';
 import type Recipe from '../models/Recipe';
 import type Service from '../models/Service';

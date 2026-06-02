@@ -96,7 +96,9 @@ class Password extends Component<IProps> {
               alt=""
             />
           </Link>
-          <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
+          <H1 className="auth__title">
+            {intl.formatMessage(messages.headline)}
+          </H1>
           {status.length > 0 && status.includes('sent') && (
             <Infobox type="success" icon="checkbox-marked-circle-outline">
               {intl.formatMessage(messages.successInfo)}

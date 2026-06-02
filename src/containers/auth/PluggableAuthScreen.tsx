@@ -2,8 +2,8 @@ import localStorage from 'mobx-localstorage';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import { type IntlShape, injectIntl } from 'react-intl';
-import type { StoresProps } from '../../@types/ferdium-components.types';
 import type { AuthProvider } from '../../@types/auth';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import DynamicLogin from '../../components/auth/DynamicLogin';
 import authManager from '../../lib/auth/AuthManager';
 import FerdiumProvider from '../../lib/auth/providers/FerdiumProvider';
@@ -14,7 +14,6 @@ const debug = require('../../preload-safe-debug')(
 
 interface IProps extends StoresProps {
   intl: IntlShape;
-  error?: { status?: number; message?: string };
   providerType: 'ferdium' | 'nextauth';
 }
 

@@ -147,6 +147,9 @@ export interface AuthProvider {
   isAuthenticated(): boolean;
 }
 
+/** Event listener function type */
+export type AuthEventListener = (event: AuthEvent) => void;
+
 /** Manager interface for the singleton AuthManager */
 export interface IAuthManager {
   /** Register a new auth provider */
@@ -192,6 +195,3 @@ export interface AuthManagerConfig {
   /** localStorage key for persisting the active provider */
   storageKey?: string;
 }
-
-/** Event listener function type */
-export type AuthEventListener = (event: AuthEvent) => void;

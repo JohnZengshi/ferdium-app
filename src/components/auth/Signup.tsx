@@ -141,7 +141,9 @@ class Signup extends Component<IProps> {
                 alt=""
               />
             </Link>
-            <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
+            <H1 className="auth__title">
+              {intl.formatMessage(messages.headline)}
+            </H1>
             <div className="grid__row">
               <Input {...form.$('firstname').bind()} focus />
               <Input {...form.$('lastname').bind()} />

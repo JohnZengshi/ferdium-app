@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import type { Property } from 'csstype';

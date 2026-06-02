@@ -99,13 +99,18 @@ class Locked extends Component<IProps> {
 
     return (
       <div className="auth__container relative w-full max-w-[496px] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
-        <form className="auth__form franz-form flex w-full flex-col gap-5" onSubmit={e => this.submit(e)}>
+        <form
+          className="auth__form franz-form flex w-full flex-col gap-5"
+          onSubmit={e => this.submit(e)}
+        >
           <img
             src="./assets/images/logo.svg"
             className="auth__logo -mt-[105px] mb-5 block h-auto w-[150px] rounded-[var(--theme-border-radius)]"
             alt=""
           />
-          <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
+          <H1 className="auth__title">
+            {intl.formatMessage(messages.headline)}
+          </H1>
 
           {touchIdEnabled && (
             <>
@@ -119,7 +124,12 @@ class Locked extends Component<IProps> {
             </>
           )}
 
-          <Input className="auth__field" {...form.$('password').bind()} showPasswordToggle focus />
+          <Input
+            className="auth__field"
+            {...form.$('password').bind()}
+            showPasswordToggle
+            focus
+          />
           {error && (
             <p className="auth__error-message center mt-2.5 text-center text-[14px] text-[#d4183d]">
               {intl.formatMessage(messages.invalidCredentials)}

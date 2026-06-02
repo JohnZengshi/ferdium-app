@@ -4,12 +4,12 @@ import { observer } from 'mobx-react';
 import { Component } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import Link from '../ui/Link';
 import type { AuthField, AuthProvider } from '../../@types/auth';
 import { AuthFieldType } from '../../@types/auth';
 import type { Field } from '../../@types/mobx-form.types';
+import { email, required } from '../../helpers/validation-helpers';
 import Form from '../../lib/Form';
-import { required, email } from '../../helpers/validation-helpers';
+import Link from '../ui/Link';
 
 const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 
@@ -57,17 +57,18 @@ function getFieldInputType(fieldType: AuthFieldType): string {
 function buildFormFields(fields: AuthField[]): { [key: string]: Field } {
   const result: { [key: string]: Field } = {};
   for (const field of fields) {
-    if (field.type === AuthFieldType.HIDDEN) continue;
-    const validators = field.required ? [required] : [];
-    if (field.type === AuthFieldType.EMAIL) {
-      validators.push(email);
+    if (field.type !== AuthFieldType.HIDDEN) {
+      const validators = field.required ? [required] : [];
+      if (field.type === AuthFieldType.EMAIL) {
+        validators.push(email);
+      }
+      result[field.id] = {
+        label: field.label,
+        value: field.defaultValue ?? '',
+        validators,
+        type: field.type,
+      };
     }
-    result[field.id] = {
-      label: field.label,
-      value: field.defaultValue ?? '',
-      validators,
-      type: field.type,
-    };
   }
   return result;
 }
@@ -168,7 +169,10 @@ class DynamicLogin extends Component<DynamicLoginProps> {
     const renderField = (field: AuthField) => {
       if (field.type === AuthFieldType.SELECT) {
         return (
-          <div key={field.id} className="auth__field w-full rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]">
+          <div
+            key={field.id}
+            className="auth__field w-full rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]"
+          >
             <label htmlFor={field.id}>{field.label}</label>
             <select
               id={field.id}
@@ -190,7 +194,10 @@ class DynamicLogin extends Component<DynamicLoginProps> {
       const iconPath = getFieldIconPath(field.type);
 
       return (
-        <div key={field.id} className="auth__field flex w-full items-center gap-2 rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]">
+        <div
+          key={field.id}
+          className="auth__field flex w-full items-center gap-2 rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]"
+        >
           <div className="auth__field-icon flex h-[18px] w-[18px] shrink-0 items-center justify-center">
             <svg
               fill="none"
@@ -228,7 +235,10 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                       defaultMessage: '没有账号吗 ? ',
                     })}
                   </span>
-                  <Link to="/auth/signup" className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline">
+                  <Link
+                    to="/auth/signup"
+                    className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
+                  >
                     {intl.formatMessage({
                       id: 'dynamicLogin.link.signup',
                       defaultMessage: '注册新账号',
@@ -237,7 +247,10 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                 </div>
               )}
               {config.showForgotPassword && (
-                <Link to="/auth/password" className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline">
+                <Link
+                  to="/auth/password"
+                  className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
+                >
                   {intl.formatMessage({
                     id: 'dynamicLogin.link.forgotPassword',
                     defaultMessage: 'Forgot password?',
@@ -258,7 +271,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
               this.submitForm();
             }}
           >
-            {nonPasswordFields.map(renderField)}
+            {nonPasswordFields.map(field => renderField(field))}
 
             {passwordField && (
               <div className="auth__password-section flex flex-col gap-6">

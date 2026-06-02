@@ -82,8 +82,14 @@ class AuthLayout extends Component<IProps, IState> {
               src="./assets/images/login-background.png"
             />
           </div>
-          <div className={`auth__header-bar absolute inset-x-0 top-0 z-2 flex h-auto items-center bg-white/[0.05] px-[24px] backdrop-blur-[10px] ${!isFullScreen ? 'pt-[30px] pb-[12px]' : 'py-[12px]'}`}>
-            <img className="auth__logo h-[56px]" src="./assets/images/login-logo.png" alt="" />
+          <div
+            className={`auth__header-bar absolute inset-x-0 top-0 z-2 flex h-auto items-center bg-white/[0.05] px-[24px] backdrop-blur-[10px] ${isFullScreen ? 'py-[12px]' : 'pt-[30px] pb-[12px]'}`}
+          >
+            <img
+              className="auth__logo h-[56px]"
+              src="./assets/images/login-logo.png"
+              alt=""
+            />
           </div>
           {!isOnline && (
             <InfoBar type="warning">
@@ -116,6 +122,7 @@ class AuthLayout extends Component<IProps, IState> {
             </InfoBar>
           )}
           <div className="auth__layout relative z-1 flex min-h-screen w-full items-center justify-center overflow-auto p-6">
+            {/* eslint-disable-next-line @eslint-react/no-clone-element */}
             {cloneElement(children, { error })}
           </div>
         </div>

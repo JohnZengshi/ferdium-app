@@ -55,7 +55,9 @@ export const prepareLocalToken = async (requestData: {
       requestData.headers['X-Ferdium-Local-Token'] = result.token;
       return;
     }
-  } catch {}
+  } catch {
+    // Token retrieval failed; will try fallback
+  }
 
   // Fallback 2: wait for observable (handles slow first-time server startup)
   await when(() => !!localServerToken(), { timeout: 15_000 });

@@ -139,7 +139,7 @@ class Invite extends Component<IProps, IState> {
 
     const sendButtonClassName = `${[
       'mt-2 w-full rounded-[3px] border-none bg-[#0052d9]',
-      'px-6 py-2 font-[\'PingFang_SC\',-apple-system,BlinkMacSystemFont,\'Segoe_UI\',sans-serif]',
+      "px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif]",
       'text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)]',
       'cursor-pointer transition-colors duration-200',
       'hover:bg-[#0046b8] active:bg-[#003a9e]',
@@ -160,9 +160,16 @@ class Invite extends Component<IProps, IState> {
           </Appear>
         )}
 
-        <form className="auth__form franz-form flex w-full flex-col gap-5" onSubmit={e => this.submit(e)}>
+        <form
+          className="auth__form franz-form flex w-full flex-col gap-5"
+          onSubmit={e => this.submit(e)}
+        >
           {!embed && (
-            <img src="./assets/images/logo.svg" className="auth__logo block h-auto w-[150px] -mt-[105px] mx-auto mb-5 rounded-[var(--theme-border-radius)]" alt="" />
+            <img
+              src="./assets/images/logo.svg"
+              className="auth__logo block h-auto w-[150px] -mt-[105px] mx-auto mb-5 rounded-[var(--theme-border-radius)]"
+              alt=""
+            />
           )}
           <H1 className={`${embed ? 'invite__embed' : 'auth__title'}`}>
             {intl.formatMessage(messages.headline)}
@@ -198,7 +205,9 @@ class Invite extends Component<IProps, IState> {
     return (
       <div
         className={
-          embed ? 'settings__main' : 'auth__container mx-auto my-0 w-[496px] max-w-full rounded-[12px] bg-white px-12 py-[52px] relative shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]'
+          embed
+            ? 'settings__main'
+            : 'auth__container mx-auto my-0 w-[496px] max-w-full rounded-[12px] bg-white px-12 py-[52px] relative shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]'
         }
       >
         {embed && (

@@ -6,15 +6,15 @@ import {
   reaction,
   runInAction,
 } from 'mobx';
-import { io, Socket } from 'socket.io-client';
+import { type Socket, io } from 'socket.io-client';
 import { createActionBindings } from '../utils/ActionBinding';
 import FeatureStore from '../utils/FeatureStore';
 import { whatsappAutomationActions } from './actions';
 import {
-  WHATSAPP_RECIPE_ID,
   WA_AKG_BASE_URL,
   WA_AKG_SOCKET_PATH,
   WA_SESSION_STATUS,
+  WHATSAPP_RECIPE_ID,
 } from './constants';
 
 import {
@@ -24,8 +24,8 @@ import {
   postSessionsIdAction,
 } from '../../whatsapp-automation/api/generated/sessions/sessions';
 
-import { getApiKey, clearApiKey } from '../../whatsapp-automation/api/auth';
 import authManager from '../../lib/auth/AuthManager';
+import { clearApiKey, getApiKey } from '../../whatsapp-automation/api/auth';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
 import { SessionStatus } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
@@ -596,12 +596,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   _startSocketIoForSession = (serviceId: string) => {
     // Don't create duplicate connections
     if (this._sockets.has(serviceId)) {
-      console.log(`[WA-AKG] Socket already exists for ${serviceId}, skipping`);
+      debug(`Socket already exists for ${serviceId}, skipping`);
       return;
     }
 
-    console.log(
-      `[WA-AKG] Starting Socket.IO connection to ${WA_AKG_BASE_URL}${WA_AKG_SOCKET_PATH} for ${serviceId}`,
+    debug(
+      `Starting Socket.IO connection to ${WA_AKG_BASE_URL}${WA_AKG_SOCKET_PATH} for ${serviceId}`,
     );
 
     const socket: Socket = io(WA_AKG_BASE_URL, {
@@ -614,9 +614,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     });
 
     socket.on('connect', () => {
-      console.log(
-        `[WA-AKG] Socket.IO connected for ${serviceId}, joining room`,
-      );
+      debug(`Socket.IO connected for ${serviceId}, joining room`);
       socket.emit('join-session', serviceId);
       this._resolveSocketConnectWaiters(serviceId);
     });
@@ -624,16 +622,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     socket.on(
       'connection.update',
       (update: { status: string; qr?: string; pairingCode?: string }) => {
-        console.log(
-          `[WA-AKG] Socket.IO connection.update for ${serviceId}:`,
-          update.status,
-        );
+        debug(`Socket.IO connection.update for ${serviceId}:`, update.status);
         this._handleSocketConnectionUpdate(serviceId, update);
       },
     );
 
     socket.on('disconnect', reason => {
-      console.log(`[WA-AKG] Socket.IO disconnected for ${serviceId}:`, reason);
+      debug(`Socket.IO disconnected for ${serviceId}:`, reason);
       debug('Socket.IO disconnected for session', serviceId, reason);
       if (reason === 'io server disconnect' || reason === 'transport close') {
         this._handleSocketConnectionUpdate(serviceId, {
@@ -949,7 +944,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       bodyEl.innerHTML = '<img src="' + BASE64_QR + '" alt="QR Code" class="waa-qrimg"/><p class="waa-subtitle">Scan this QR code with your WhatsApp mobile app</p>';
     }
 
-    console.log('[WA-AKG] QR auth modal injected for service', SERVICE_ID);
+    debug('QR auth modal injected for service', SERVICE_ID);
   } catch(e) {
     console.error('[WA-AKG] QR modal injection error:', e);
   }

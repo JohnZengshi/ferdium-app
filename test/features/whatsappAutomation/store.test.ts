@@ -50,7 +50,9 @@ jest.mock('../../../src/lib/auth/AuthManager', () => ({
   getProvider: jest.fn(),
 }));
 
-jest.mock('../../../src/preload-safe-debug', () => () => jest.fn());
+const mockDebug = jest.fn();
+
+jest.mock('../../../src/preload-safe-debug', () => () => mockDebug);
 
 jest.mock('socket.io-client', () => ({
   io: jest.fn(() => ({

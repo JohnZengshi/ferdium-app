@@ -6,9 +6,9 @@
 
 // Set env vars before importing module
 import {
+  clearApiKey,
   getApiKey,
   setApiKey,
-  clearApiKey,
 } from '../../../src/whatsapp-automation/api/auth';
 
 process.env.API_KEY_STORAGE_KEY = 'whatsappAutomationApiKey';

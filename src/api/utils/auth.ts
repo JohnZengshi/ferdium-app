@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import { when } from 'mobx';
 import localStorage from 'mobx-localstorage';
 import { ferdiumLocale, ferdiumVersion } from '../../environment-remote';
@@ -36,11 +37,32 @@ export const prepareLocalToken = async (requestData: {
   headers?: any;
   body?: any;
 }) => {
-  await when(() => !needsToken() || !!localServerToken(), { timeout: 2000 });
-  const token = localServerToken();
-  if (token) {
+  if (!needsToken()) return;
+
+  const existingToken = localServerToken();
+  if (existingToken) {
     // eslint-disable-next-line no-param-reassign
-    requestData.headers['X-Ferdium-Local-Token'] = token;
+    requestData.headers['X-Ferdium-Local-Token'] = existingToken;
+    return;
+  }
+
+  // Fallback 1: actively request token from main process via ipc handle
+  // This works on page refresh where the 'localServerPort' event was lost
+  try {
+    const result = await ipcRenderer.invoke('getLocalServerToken');
+    if (result?.token) {
+      // eslint-disable-next-line no-param-reassign
+      requestData.headers['X-Ferdium-Local-Token'] = result.token;
+      return;
+    }
+  } catch {}
+
+  // Fallback 2: wait for observable (handles slow first-time server startup)
+  await when(() => !!localServerToken(), { timeout: 15000 });
+  const delayedToken = localServerToken();
+  if (delayedToken) {
+    // eslint-disable-next-line no-param-reassign
+    requestData.headers['X-Ferdium-Local-Token'] = delayedToken;
   }
 };
 

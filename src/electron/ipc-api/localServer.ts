@@ -5,8 +5,6 @@ import { LOCAL_HOSTNAME, LOCAL_PORT } from '../../config';
 import { userDataPath } from '../../environment-remote';
 import { server } from '../../internal-server/start';
 
-const debug = require('../../preload-safe-debug')('Ferdium:LocalServer');
-
 const portInUse = (port: number): Promise<boolean> =>
   new Promise(resolve => {
     const server = createServer(socket => {
@@ -28,6 +26,11 @@ let localServerStarted = false;
 let port = LOCAL_PORT;
 let token = '';
 
+ipcMain.handle('getLocalServerToken', () => {
+  if (!token) return null;
+  return { port, token };
+});
+
 export default (params: { mainWindow: BrowserWindow }) => {
   ipcMain.on('startLocalServer', () => {
     (async () => {
@@ -39,10 +42,6 @@ export default (params: { mainWindow: BrowserWindow }) => {
           port += 1;
         }
         token = randomBytes(256 / 8).toString('base64url');
-        debug(
-          'Starting local server at',
-          `http://localhost:${port}/token/${token}`,
-        );
         await server(userDataPath(), port, token);
         localServerStarted = true;
       }

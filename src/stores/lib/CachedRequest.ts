@@ -89,6 +89,13 @@ export default class CachedRequest extends Request {
 
   static defaultOptions = { immediately: false };
 
+  reload(): this {
+    this._isInvalidated = true;
+    const args = this.currentApiCall ? this.currentApiCall.args : [];
+    this.error = null;
+    return this.execute(...args);
+  }
+
   invalidate(options = CachedRequest.defaultOptions): this {
     this._isInvalidated = true;
     if (options.immediately && this.currentApiCall) {

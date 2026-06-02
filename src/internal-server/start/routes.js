@@ -86,6 +86,10 @@ Route.group(() => {
   Route.get('recipes/download/:recipe', 'RecipeController.download');
   Route.post('recipes/update', 'RecipeController.update');
 
+  // Features
+  Route.get('features/default', 'FeaturesController.default');
+  Route.get('features', 'FeaturesController.features');
+
   // Workspaces
   Route.put('workspace/:id', 'WorkspaceController.edit');
   Route.delete('workspace/:id', 'WorkspaceController.delete');

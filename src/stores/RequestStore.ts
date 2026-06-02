@@ -10,8 +10,6 @@ import type CachedRequest from './lib/CachedRequest';
 
 import TypedStore from './lib/TypedStore';
 
-const debug = require('../preload-safe-debug')('Ferdium:RequestsStore');
-
 export default class RequestStore extends TypedStore {
   @observable userInfoRequest: CachedRequest;
 
@@ -79,21 +77,26 @@ export default class RequestStore extends TypedStore {
 
   // Reactions
   _autoRetry(): void {
-    const delay = (this.retries <= 10 ? this.retries : 10) * this.retryDelay;
-    if (!this.areRequiredRequestsSuccessful && this.stores.user.isLoggedIn) {
-      setTimeout(
-        action(() => {
-          this.retries += 1;
-          this._retryRequiredRequests();
-          if (this.retries === 4) {
-            this.showRequiredRequestsError = true;
-          }
-
-          this._autoRetry();
-          debug(`Retry required requests delayed in ${delay / 1000}s`);
-        }),
-        delay,
-      );
+    if (this.areRequiredRequestsSuccessful) {
+      this.showRequiredRequestsError = false;
+      this.retries = 0;
+      return;
     }
+
+    if (!this.stores.user.isLoggedIn) return;
+
+    const delay = (this.retries <= 10 ? this.retries : 10) * this.retryDelay;
+    setTimeout(
+      action(() => {
+        this.retries += 1;
+        this._retryRequiredRequests();
+        if (this.retries === 4) {
+          this.showRequiredRequestsError = true;
+        }
+
+        this._autoRetry();
+      }),
+      delay,
+    );
   }
 }

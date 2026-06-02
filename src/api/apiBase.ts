@@ -33,14 +33,17 @@ export default function apiBase(withVersion = true) {
     return SERVER_NOT_LOADED;
   }
 
-  const url =
-    server === LOCAL_SERVER
-      ? `http://${LOCAL_HOSTNAME}:${
-          (window as any).ferdium.stores.requests.localServerPort
-        }`
-      : server;
+  if (server === LOCAL_SERVER) {
+    if (!(window as any).ferdium?.stores?.requests?.localServerPort) {
+      return SERVER_NOT_LOADED;
+    }
+    const url = `http://${LOCAL_HOSTNAME}:${
+      (window as any).ferdium.stores.requests.localServerPort
+    }`;
+    return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
+  }
 
-  return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
+  return fixUrl(withVersion ? `${server}/${API_VERSION}` : server);
 }
 
 export const needsToken = (): boolean => {
@@ -49,7 +52,7 @@ export const needsToken = (): boolean => {
 
 export const localServerToken = (): string | undefined => {
   return needsToken()
-    ? (window as any).ferdium.stores.requests.localServerToken
+    ? (window as any).ferdium?.stores?.requests?.localServerToken
     : undefined;
 };
 

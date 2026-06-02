@@ -37,8 +37,8 @@ export default class SettingsStore extends TypedStore {
     this.actions.settings.remove.listen(this._remove.bind(this));
   }
 
-  async setup(): Promise<void> {
-    await this._migrate();
+  setup(): void {
+    this._migrate();
 
     reaction(
       () => this.all.app.autohideMenuBar,
@@ -212,7 +212,7 @@ export default class SettingsStore extends TypedStore {
   }
 
   // Helper
-  async _migrate(): Promise<void> {
+  _migrate(): void {
     this._ensureMigrationAndMarkDone('password-hashing', () => {
       if (this.stores.settings.app.lockedPassword !== '') {
         const legacySettings = localStorage.getItem('app') || {};

@@ -339,7 +339,9 @@ export default class UserStore extends TypedStore {
     // 本地模式下 Ferdium 内部 auth 是基础设施，不依赖用户操作
     // 这里只关心 WA-AKG key 是否就绪
     if (process.env.FERDIUM_SERVER === 'local') {
-      const hasWaAkgKey = Boolean(window.localStorage.getItem(API_KEY_STORAGE_KEY));
+      const hasWaAkgKey = Boolean(
+        window.localStorage.getItem(API_KEY_STORAGE_KEY),
+      );
 
       if (!hasWaAkgKey) {
         if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {
@@ -376,7 +378,9 @@ export default class UserStore extends TypedStore {
       return;
     }
 
-    const hasWaAkgKey = Boolean(window.localStorage.getItem(API_KEY_STORAGE_KEY));
+    const hasWaAkgKey = Boolean(
+      window.localStorage.getItem(API_KEY_STORAGE_KEY),
+    );
 
     if (!hasWaAkgKey) {
       if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {

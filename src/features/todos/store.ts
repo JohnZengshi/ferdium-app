@@ -158,7 +158,9 @@ export default class TodoStore extends FeatureStore {
 
   _updateSettings = changes => {
     const current = this.settings;
-    const hasChanges = Object.keys(changes).some(k => current[k] !== changes[k]);
+    const hasChanges = Object.keys(changes).some(
+      k => current[k] !== changes[k],
+    );
     if (!hasChanges) return;
     localStorage.setItem('todos', {
       ...current,

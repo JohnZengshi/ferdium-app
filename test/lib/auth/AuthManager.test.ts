@@ -42,8 +42,7 @@ function createMockProvider(
       token: 'test-token',
       status: 'success',
     }),
-    // eslint-disable-next-line no-void
-    logout: jest.fn().mockResolvedValue(undefined),
+    logout: jest.fn(async () => {}),
     getAuthHeader: jest.fn().mockReturnValue('Bearer test-token'),
     isAuthenticated: jest.fn().mockReturnValue(true),
   };

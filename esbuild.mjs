@@ -156,7 +156,7 @@ sassPlugin(),
       ...(isDev ? [codeInspectorPlugin({ 
         bundler: 'esbuild', 
         dev: () => true,
-escapeTags: ['webview'],
+escapeTags: ['webview', 'MUIThemeProvider'],
       })] : []),
     ],
   });

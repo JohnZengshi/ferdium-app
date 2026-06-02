@@ -29,90 +29,86 @@ import type {
   PostChatSendBody,
   PostChatSessionIdSendBody,
   SessionNotReadyResponse,
-  Success
+  Success,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postChatSendResponse200 = {
-  data: Success
-  status: 200
-}
+  data: Success;
+  status: 200;
+};
 
 export type postChatSendResponse503 = {
-  data: SessionNotReadyResponse
-  status: 503
-}
-
-export type postChatSendResponseSuccess = (postChatSendResponse200) & {
-  headers: Headers;
-};
-export type postChatSendResponseError = (postChatSendResponse503) & {
-  headers: Headers;
+  data: SessionNotReadyResponse;
+  status: 503;
 };
 
-export type postChatSendResponse = (postChatSendResponseSuccess | postChatSendResponseError)
+export type postChatSendResponseSuccess = postChatSendResponse200 & {
+  headers: Headers;
+};
+export type postChatSendResponseError = postChatSendResponse503 & {
+  headers: Headers;
+};
+
+export type postChatSendResponse =
+  | postChatSendResponseSuccess
+  | postChatSendResponseError;
 
 export const getPostChatSendUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/chat/send`
-}
+  return `http://localhost:3000/api/chat/send`;
+};
 
 /**
  * ⚠️ **DEPRECATED**: Use POST /messages/{sessionId}/{jid}/send instead. This endpoint will be removed in a future version.\n\nUniversal endpoint for sending text, images, videos, documents, and stickers
  * @deprecated
  * @summary [DEPRECATED] Send message (text/media/sticker)
  */
-export const postChatSend = async (postChatSendBody: PostChatSendBody, options?: RequestInit): Promise<postChatSendResponse> => {
-
-  return useCustomInstance<postChatSendResponse>(getPostChatSendUrl(),
-  {
+export const postChatSend = async (
+  postChatSendBody: PostChatSendBody,
+  options?: RequestInit,
+): Promise<postChatSendResponse> => {
+  return useCustomInstance<postChatSendResponse>(getPostChatSendUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postChatSendBody)
-  }
-);}
-
+    body: JSON.stringify(postChatSendBody),
+  });
+};
 
 export type postChatSessionIdSendResponse200 = {
-  data: void
-  status: 200
-}
-
-export type postChatSessionIdSendResponseSuccess = (postChatSessionIdSendResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type postChatSessionIdSendResponse = (postChatSessionIdSendResponseSuccess)
+export type postChatSessionIdSendResponseSuccess =
+  postChatSessionIdSendResponse200 & {
+    headers: Headers;
+  };
+export type postChatSessionIdSendResponse =
+  postChatSessionIdSendResponseSuccess;
 
-export const getPostChatSessionIdSendUrl = (sessionId: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/chat/${sessionId}/send`
-}
+export const getPostChatSessionIdSendUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/chat/${sessionId}/send`;
+};
 
 /**
  * ⚠️ **DEPRECATED**: Use POST /messages/{sessionId}/{jid}/send instead.
  * @deprecated
  * @summary [DEPRECATED] Send message
  */
-export const postChatSessionIdSend = async (sessionId: string,
-    postChatSessionIdSendBody: PostChatSessionIdSendBody, options?: RequestInit): Promise<postChatSessionIdSendResponse> => {
-
-  return useCustomInstance<postChatSessionIdSendResponse>(getPostChatSessionIdSendUrl(sessionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postChatSessionIdSendBody)
-  }
-);}
-
-
+export const postChatSessionIdSend = async (
+  sessionId: string,
+  postChatSessionIdSendBody: PostChatSessionIdSendBody,
+  options?: RequestInit,
+): Promise<postChatSessionIdSendResponse> => {
+  return useCustomInstance<postChatSessionIdSendResponse>(
+    getPostChatSessionIdSendUrl(sessionId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postChatSessionIdSendBody),
+    },
+  );
+};

@@ -33,221 +33,240 @@ import type {
   PostNotifications200,
   PostNotificationsBody,
   Success,
-  UnauthorizedResponse
+  UnauthorizedResponse,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postNotificationsResponse200 = {
-  data: PostNotifications200
-  status: 200
-}
+  data: PostNotifications200;
+  status: 200;
+};
 
 export type postNotificationsResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type postNotificationsResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postNotificationsResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type postNotificationsResponse500 = {
-  data: void
-  status: 500
-}
-
-export type postNotificationsResponseSuccess = (postNotificationsResponse200) & {
-  headers: Headers;
-};
-export type postNotificationsResponseError = (postNotificationsResponse400 | postNotificationsResponse401 | postNotificationsResponse403 | postNotificationsResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type postNotificationsResponse = (postNotificationsResponseSuccess | postNotificationsResponseError)
+export type postNotificationsResponseSuccess = postNotificationsResponse200 & {
+  headers: Headers;
+};
+export type postNotificationsResponseError = (
+  | postNotificationsResponse400
+  | postNotificationsResponse401
+  | postNotificationsResponse403
+  | postNotificationsResponse500
+) & {
+  headers: Headers;
+};
+
+export type postNotificationsResponse =
+  | postNotificationsResponseSuccess
+  | postNotificationsResponseError;
 
 export const getPostNotificationsUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/notifications`
-}
+  return `http://localhost:3000/api/notifications`;
+};
 
 /**
  * Send a notification to a specific user or broadcast to all (Superadmin only)
  * @summary Create notification
  */
-export const postNotifications = async (postNotificationsBody?: PostNotificationsBody, options?: RequestInit): Promise<postNotificationsResponse> => {
-
-  return useCustomInstance<postNotificationsResponse>(getPostNotificationsUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postNotificationsBody)
-  }
-);}
-
+export const postNotifications = async (
+  postNotificationsBody?: PostNotificationsBody,
+  options?: RequestInit,
+): Promise<postNotificationsResponse> => {
+  return useCustomInstance<postNotificationsResponse>(
+    getPostNotificationsUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postNotificationsBody),
+    },
+  );
+};
 
 export type getNotificationsResponse200 = {
-  data: GetNotifications200Item[]
-  status: 200
-}
+  data: GetNotifications200Item[];
+  status: 200;
+};
 
 export type getNotificationsResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getNotificationsResponse500 = {
-  data: void
-  status: 500
-}
-
-export type getNotificationsResponseSuccess = (getNotificationsResponse200) & {
-  headers: Headers;
-};
-export type getNotificationsResponseError = (getNotificationsResponse401 | getNotificationsResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type getNotificationsResponse = (getNotificationsResponseSuccess | getNotificationsResponseError)
+export type getNotificationsResponseSuccess = getNotificationsResponse200 & {
+  headers: Headers;
+};
+export type getNotificationsResponseError = (
+  | getNotificationsResponse401
+  | getNotificationsResponse500
+) & {
+  headers: Headers;
+};
+
+export type getNotificationsResponse =
+  | getNotificationsResponseSuccess
+  | getNotificationsResponseError;
 
 export const getGetNotificationsUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/notifications`
-}
+  return `http://localhost:3000/api/notifications`;
+};
 
 /**
  * Get the last 50 notifications for the authenticated user
  * @summary List notifications
  */
-export const getNotifications = async ( options?: RequestInit): Promise<getNotificationsResponse> => {
-
-  return useCustomInstance<getNotificationsResponse>(getGetNotificationsUrl(),
-  {
+export const getNotifications = async (
+  options?: RequestInit,
+): Promise<getNotificationsResponse> => {
+  return useCustomInstance<getNotificationsResponse>(getGetNotificationsUrl(), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+    method: 'GET',
+  });
+};
 
 export type patchNotificationsReadResponse200 = {
-  data: Success
-  status: 200
-}
+  data: Success;
+  status: 200;
+};
 
 export type patchNotificationsReadResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type patchNotificationsReadResponse500 = {
-  data: void
-  status: 500
-}
-
-export type patchNotificationsReadResponseSuccess = (patchNotificationsReadResponse200) & {
-  headers: Headers;
-};
-export type patchNotificationsReadResponseError = (patchNotificationsReadResponse401 | patchNotificationsReadResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type patchNotificationsReadResponse = (patchNotificationsReadResponseSuccess | patchNotificationsReadResponseError)
+export type patchNotificationsReadResponseSuccess =
+  patchNotificationsReadResponse200 & {
+    headers: Headers;
+  };
+export type patchNotificationsReadResponseError = (
+  | patchNotificationsReadResponse401
+  | patchNotificationsReadResponse500
+) & {
+  headers: Headers;
+};
+
+export type patchNotificationsReadResponse =
+  | patchNotificationsReadResponseSuccess
+  | patchNotificationsReadResponseError;
 
 export const getPatchNotificationsReadUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/notifications/read`
-}
+  return `http://localhost:3000/api/notifications/read`;
+};
 
 /**
  * Mark specific or all notifications as read for the authenticated user
  * @summary Mark notifications as read
  */
-export const patchNotificationsRead = async (patchNotificationsReadBody?: PatchNotificationsReadBody, options?: RequestInit): Promise<patchNotificationsReadResponse> => {
-
-  return useCustomInstance<patchNotificationsReadResponse>(getPatchNotificationsReadUrl(),
-  {
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(patchNotificationsReadBody)
-  }
-);}
-
+export const patchNotificationsRead = async (
+  patchNotificationsReadBody?: PatchNotificationsReadBody,
+  options?: RequestInit,
+): Promise<patchNotificationsReadResponse> => {
+  return useCustomInstance<patchNotificationsReadResponse>(
+    getPatchNotificationsReadUrl(),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(patchNotificationsReadBody),
+    },
+  );
+};
 
 export type deleteNotificationsDeleteResponse200 = {
-  data: Success
-  status: 200
-}
+  data: Success;
+  status: 200;
+};
 
 export type deleteNotificationsDeleteResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type deleteNotificationsDeleteResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type deleteNotificationsDeleteResponse500 = {
-  data: void
-  status: 500
-}
-
-export type deleteNotificationsDeleteResponseSuccess = (deleteNotificationsDeleteResponse200) & {
-  headers: Headers;
-};
-export type deleteNotificationsDeleteResponseError = (deleteNotificationsDeleteResponse400 | deleteNotificationsDeleteResponse401 | deleteNotificationsDeleteResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type deleteNotificationsDeleteResponse = (deleteNotificationsDeleteResponseSuccess | deleteNotificationsDeleteResponseError)
+export type deleteNotificationsDeleteResponseSuccess =
+  deleteNotificationsDeleteResponse200 & {
+    headers: Headers;
+  };
+export type deleteNotificationsDeleteResponseError = (
+  | deleteNotificationsDeleteResponse400
+  | deleteNotificationsDeleteResponse401
+  | deleteNotificationsDeleteResponse500
+) & {
+  headers: Headers;
+};
 
-export const getDeleteNotificationsDeleteUrl = (params: DeleteNotificationsDeleteParams,) => {
+export type deleteNotificationsDeleteResponse =
+  | deleteNotificationsDeleteResponseSuccess
+  | deleteNotificationsDeleteResponseError;
+
+export const getDeleteNotificationsDeleteUrl = (
+  params: DeleteNotificationsDeleteParams,
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/notifications/delete?${stringifiedParams}` : `http://localhost:3000/api/notifications/delete`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/notifications/delete?${stringifiedParams}`
+    : `http://localhost:3000/api/notifications/delete`;
+};
 
 /**
  * @summary Delete specific notification
  */
-export const deleteNotificationsDelete = async (params: DeleteNotificationsDeleteParams, options?: RequestInit): Promise<deleteNotificationsDeleteResponse> => {
-
-  return useCustomInstance<deleteNotificationsDeleteResponse>(getDeleteNotificationsDeleteUrl(params),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
+export const deleteNotificationsDelete = async (
+  params: DeleteNotificationsDeleteParams,
+  options?: RequestInit,
+): Promise<deleteNotificationsDeleteResponse> => {
+  return useCustomInstance<deleteNotificationsDeleteResponse>(
+    getDeleteNotificationsDeleteUrl(params),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};

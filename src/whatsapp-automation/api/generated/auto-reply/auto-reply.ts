@@ -32,415 +32,420 @@ import type {
   PostAutorepliesSessionIdBody,
   PutAutorepliesIdBody,
   PutAutorepliesSessionIdReplyIdBody,
-  UnauthorizedResponse
+  UnauthorizedResponse,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getAutorepliesSessionIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type getAutorepliesSessionIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getAutorepliesSessionIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type getAutorepliesSessionIdResponse404 = {
-  data: void
-  status: 404
-}
-
-export type getAutorepliesSessionIdResponseSuccess = (getAutorepliesSessionIdResponse200) & {
-  headers: Headers;
-};
-export type getAutorepliesSessionIdResponseError = (getAutorepliesSessionIdResponse401 | getAutorepliesSessionIdResponse403 | getAutorepliesSessionIdResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type getAutorepliesSessionIdResponse = (getAutorepliesSessionIdResponseSuccess | getAutorepliesSessionIdResponseError)
+export type getAutorepliesSessionIdResponseSuccess =
+  getAutorepliesSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type getAutorepliesSessionIdResponseError = (
+  | getAutorepliesSessionIdResponse401
+  | getAutorepliesSessionIdResponse403
+  | getAutorepliesSessionIdResponse404
+) & {
+  headers: Headers;
+};
 
-export const getGetAutorepliesSessionIdUrl = (sessionId: string,) => {
+export type getAutorepliesSessionIdResponse =
+  | getAutorepliesSessionIdResponseSuccess
+  | getAutorepliesSessionIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/autoreplies/${sessionId}`
-}
+export const getGetAutorepliesSessionIdUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/autoreplies/${sessionId}`;
+};
 
 /**
  * @summary List auto-reply rules
  */
-export const getAutorepliesSessionId = async (sessionId: string, options?: RequestInit): Promise<getAutorepliesSessionIdResponse> => {
-
-  return useCustomInstance<getAutorepliesSessionIdResponse>(getGetAutorepliesSessionIdUrl(sessionId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getAutorepliesSessionId = async (
+  sessionId: string,
+  options?: RequestInit,
+): Promise<getAutorepliesSessionIdResponse> => {
+  return useCustomInstance<getAutorepliesSessionIdResponse>(
+    getGetAutorepliesSessionIdUrl(sessionId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type postAutorepliesSessionIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type postAutorepliesSessionIdResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type postAutorepliesSessionIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postAutorepliesSessionIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
-
-export type postAutorepliesSessionIdResponseSuccess = (postAutorepliesSessionIdResponse200) & {
-  headers: Headers;
-};
-export type postAutorepliesSessionIdResponseError = (postAutorepliesSessionIdResponse400 | postAutorepliesSessionIdResponse401 | postAutorepliesSessionIdResponse403) & {
-  headers: Headers;
+  data: ForbiddenResponse;
+  status: 403;
 };
 
-export type postAutorepliesSessionIdResponse = (postAutorepliesSessionIdResponseSuccess | postAutorepliesSessionIdResponseError)
+export type postAutorepliesSessionIdResponseSuccess =
+  postAutorepliesSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type postAutorepliesSessionIdResponseError = (
+  | postAutorepliesSessionIdResponse400
+  | postAutorepliesSessionIdResponse401
+  | postAutorepliesSessionIdResponse403
+) & {
+  headers: Headers;
+};
 
-export const getPostAutorepliesSessionIdUrl = (sessionId: string,) => {
+export type postAutorepliesSessionIdResponse =
+  | postAutorepliesSessionIdResponseSuccess
+  | postAutorepliesSessionIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/autoreplies/${sessionId}`
-}
+export const getPostAutorepliesSessionIdUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/autoreplies/${sessionId}`;
+};
 
 /**
  * @summary Create auto-reply rule
  */
-export const postAutorepliesSessionId = async (sessionId: string,
-    postAutorepliesSessionIdBody?: PostAutorepliesSessionIdBody, options?: RequestInit): Promise<postAutorepliesSessionIdResponse> => {
-
-  return useCustomInstance<postAutorepliesSessionIdResponse>(getPostAutorepliesSessionIdUrl(sessionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postAutorepliesSessionIdBody)
-  }
-);}
-
+export const postAutorepliesSessionId = async (
+  sessionId: string,
+  postAutorepliesSessionIdBody?: PostAutorepliesSessionIdBody,
+  options?: RequestInit,
+): Promise<postAutorepliesSessionIdResponse> => {
+  return useCustomInstance<postAutorepliesSessionIdResponse>(
+    getPostAutorepliesSessionIdUrl(sessionId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postAutorepliesSessionIdBody),
+    },
+  );
+};
 
 export type deleteAutorepliesSessionIdReplyIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type deleteAutorepliesSessionIdReplyIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type deleteAutorepliesSessionIdReplyIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type deleteAutorepliesSessionIdReplyIdResponse404 = {
-  data: void
-  status: 404
-}
-
-export type deleteAutorepliesSessionIdReplyIdResponseSuccess = (deleteAutorepliesSessionIdReplyIdResponse200) & {
-  headers: Headers;
-};
-export type deleteAutorepliesSessionIdReplyIdResponseError = (deleteAutorepliesSessionIdReplyIdResponse401 | deleteAutorepliesSessionIdReplyIdResponse403 | deleteAutorepliesSessionIdReplyIdResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type deleteAutorepliesSessionIdReplyIdResponse = (deleteAutorepliesSessionIdReplyIdResponseSuccess | deleteAutorepliesSessionIdReplyIdResponseError)
+export type deleteAutorepliesSessionIdReplyIdResponseSuccess =
+  deleteAutorepliesSessionIdReplyIdResponse200 & {
+    headers: Headers;
+  };
+export type deleteAutorepliesSessionIdReplyIdResponseError = (
+  | deleteAutorepliesSessionIdReplyIdResponse401
+  | deleteAutorepliesSessionIdReplyIdResponse403
+  | deleteAutorepliesSessionIdReplyIdResponse404
+) & {
+  headers: Headers;
+};
 
-export const getDeleteAutorepliesSessionIdReplyIdUrl = (sessionId: string,
-    replyId: string,) => {
+export type deleteAutorepliesSessionIdReplyIdResponse =
+  | deleteAutorepliesSessionIdReplyIdResponseSuccess
+  | deleteAutorepliesSessionIdReplyIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/autoreplies/${sessionId}/${replyId}`
-}
+export const getDeleteAutorepliesSessionIdReplyIdUrl = (
+  sessionId: string,
+  replyId: string,
+) => {
+  return `http://localhost:3000/api/autoreplies/${sessionId}/${replyId}`;
+};
 
 /**
  * @summary Delete auto-reply rule
  */
-export const deleteAutorepliesSessionIdReplyId = async (sessionId: string,
-    replyId: string, options?: RequestInit): Promise<deleteAutorepliesSessionIdReplyIdResponse> => {
-
-  return useCustomInstance<deleteAutorepliesSessionIdReplyIdResponse>(getDeleteAutorepliesSessionIdReplyIdUrl(sessionId,replyId),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
+export const deleteAutorepliesSessionIdReplyId = async (
+  sessionId: string,
+  replyId: string,
+  options?: RequestInit,
+): Promise<deleteAutorepliesSessionIdReplyIdResponse> => {
+  return useCustomInstance<deleteAutorepliesSessionIdReplyIdResponse>(
+    getDeleteAutorepliesSessionIdReplyIdUrl(sessionId, replyId),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};
 
 export type putAutorepliesSessionIdReplyIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type putAutorepliesSessionIdReplyIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putAutorepliesSessionIdReplyIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putAutorepliesSessionIdReplyIdResponse404 = {
-  data: void
-  status: 404
-}
-
-export type putAutorepliesSessionIdReplyIdResponseSuccess = (putAutorepliesSessionIdReplyIdResponse200) & {
-  headers: Headers;
-};
-export type putAutorepliesSessionIdReplyIdResponseError = (putAutorepliesSessionIdReplyIdResponse401 | putAutorepliesSessionIdReplyIdResponse403 | putAutorepliesSessionIdReplyIdResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type putAutorepliesSessionIdReplyIdResponse = (putAutorepliesSessionIdReplyIdResponseSuccess | putAutorepliesSessionIdReplyIdResponseError)
+export type putAutorepliesSessionIdReplyIdResponseSuccess =
+  putAutorepliesSessionIdReplyIdResponse200 & {
+    headers: Headers;
+  };
+export type putAutorepliesSessionIdReplyIdResponseError = (
+  | putAutorepliesSessionIdReplyIdResponse401
+  | putAutorepliesSessionIdReplyIdResponse403
+  | putAutorepliesSessionIdReplyIdResponse404
+) & {
+  headers: Headers;
+};
 
-export const getPutAutorepliesSessionIdReplyIdUrl = (sessionId: string,
-    replyId: string,) => {
+export type putAutorepliesSessionIdReplyIdResponse =
+  | putAutorepliesSessionIdReplyIdResponseSuccess
+  | putAutorepliesSessionIdReplyIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/autoreplies/${sessionId}/${replyId}`
-}
+export const getPutAutorepliesSessionIdReplyIdUrl = (
+  sessionId: string,
+  replyId: string,
+) => {
+  return `http://localhost:3000/api/autoreplies/${sessionId}/${replyId}`;
+};
 
 /**
  * @summary Update auto-reply rule
  */
-export const putAutorepliesSessionIdReplyId = async (sessionId: string,
-    replyId: string,
-    putAutorepliesSessionIdReplyIdBody?: PutAutorepliesSessionIdReplyIdBody, options?: RequestInit): Promise<putAutorepliesSessionIdReplyIdResponse> => {
-
-  return useCustomInstance<putAutorepliesSessionIdReplyIdResponse>(getPutAutorepliesSessionIdReplyIdUrl(sessionId,replyId),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putAutorepliesSessionIdReplyIdBody)
-  }
-);}
-
+export const putAutorepliesSessionIdReplyId = async (
+  sessionId: string,
+  replyId: string,
+  putAutorepliesSessionIdReplyIdBody?: PutAutorepliesSessionIdReplyIdBody,
+  options?: RequestInit,
+): Promise<putAutorepliesSessionIdReplyIdResponse> => {
+  return useCustomInstance<putAutorepliesSessionIdReplyIdResponse>(
+    getPutAutorepliesSessionIdReplyIdUrl(sessionId, replyId),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putAutorepliesSessionIdReplyIdBody),
+    },
+  );
+};
 
 export type getAutorepliesResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type getAutorepliesResponseSuccess = (getAutorepliesResponse200) & {
+export type getAutorepliesResponseSuccess = getAutorepliesResponse200 & {
   headers: Headers;
 };
-;
+export type getAutorepliesResponse = getAutorepliesResponseSuccess;
 
-export type getAutorepliesResponse = (getAutorepliesResponseSuccess)
-
-export const getGetAutorepliesUrl = (params: GetAutorepliesParams,) => {
+export const getGetAutorepliesUrl = (params: GetAutorepliesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/autoreplies?${stringifiedParams}` : `http://localhost:3000/api/autoreplies`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/autoreplies?${stringifiedParams}`
+    : `http://localhost:3000/api/autoreplies`;
+};
 
 /**
  * **DEPRECATED:** Use GET /autoreplies/{sessionId} instead.
  * @deprecated
  * @summary List auto-reply rules (DEPRECATED)
  */
-export const getAutoreplies = async (params: GetAutorepliesParams, options?: RequestInit): Promise<getAutorepliesResponse> => {
-
-  return useCustomInstance<getAutorepliesResponse>(getGetAutorepliesUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getAutoreplies = async (
+  params: GetAutorepliesParams,
+  options?: RequestInit,
+): Promise<getAutorepliesResponse> => {
+  return useCustomInstance<getAutorepliesResponse>(
+    getGetAutorepliesUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type postAutorepliesResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type postAutorepliesResponseSuccess = (postAutorepliesResponse200) & {
+export type postAutorepliesResponseSuccess = postAutorepliesResponse200 & {
   headers: Headers;
 };
-;
-
-export type postAutorepliesResponse = (postAutorepliesResponseSuccess)
+export type postAutorepliesResponse = postAutorepliesResponseSuccess;
 
 export const getPostAutorepliesUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/autoreplies`
-}
+  return `http://localhost:3000/api/autoreplies`;
+};
 
 /**
  * **DEPRECATED:** Use POST /autoreplies/{sessionId} instead.
  * @deprecated
  * @summary Create auto-reply rule (DEPRECATED)
  */
-export const postAutoreplies = async (postAutorepliesBody?: PostAutorepliesBody, options?: RequestInit): Promise<postAutorepliesResponse> => {
-
-  return useCustomInstance<postAutorepliesResponse>(getPostAutorepliesUrl(),
-  {
+export const postAutoreplies = async (
+  postAutorepliesBody?: PostAutorepliesBody,
+  options?: RequestInit,
+): Promise<postAutorepliesResponse> => {
+  return useCustomInstance<postAutorepliesResponse>(getPostAutorepliesUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postAutorepliesBody)
-  }
-);}
-
+    body: JSON.stringify(postAutorepliesBody),
+  });
+};
 
 export type getAutorepliesIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type getAutorepliesIdResponseSuccess = (getAutorepliesIdResponse200) & {
+export type getAutorepliesIdResponseSuccess = getAutorepliesIdResponse200 & {
   headers: Headers;
 };
-;
+export type getAutorepliesIdResponse = getAutorepliesIdResponseSuccess;
 
-export type getAutorepliesIdResponse = (getAutorepliesIdResponseSuccess)
-
-export const getGetAutorepliesIdUrl = (id: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/autoreplies/${id}`
-}
+export const getGetAutorepliesIdUrl = (id: string) => {
+  return `http://localhost:3000/api/autoreplies/${id}`;
+};
 
 /**
  * **DEPRECATED:** Use GET /autoreplies/{sessionId}/{replyId} instead.
  * @deprecated
  * @summary Get auto-reply rule (DEPRECATED)
  */
-export const getAutorepliesId = async (id: string, options?: RequestInit): Promise<getAutorepliesIdResponse> => {
-
-  return useCustomInstance<getAutorepliesIdResponse>(getGetAutorepliesIdUrl(id),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getAutorepliesId = async (
+  id: string,
+  options?: RequestInit,
+): Promise<getAutorepliesIdResponse> => {
+  return useCustomInstance<getAutorepliesIdResponse>(
+    getGetAutorepliesIdUrl(id),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type putAutorepliesIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type putAutorepliesIdResponseSuccess = (putAutorepliesIdResponse200) & {
+export type putAutorepliesIdResponseSuccess = putAutorepliesIdResponse200 & {
   headers: Headers;
 };
-;
+export type putAutorepliesIdResponse = putAutorepliesIdResponseSuccess;
 
-export type putAutorepliesIdResponse = (putAutorepliesIdResponseSuccess)
-
-export const getPutAutorepliesIdUrl = (id: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/autoreplies/${id}`
-}
+export const getPutAutorepliesIdUrl = (id: string) => {
+  return `http://localhost:3000/api/autoreplies/${id}`;
+};
 
 /**
  * **DEPRECATED:** No direct replacement yet, delete and recreate.
  * @deprecated
  * @summary Update auto-reply rule (DEPRECATED)
  */
-export const putAutorepliesId = async (id: string,
-    putAutorepliesIdBody?: PutAutorepliesIdBody, options?: RequestInit): Promise<putAutorepliesIdResponse> => {
-
-  return useCustomInstance<putAutorepliesIdResponse>(getPutAutorepliesIdUrl(id),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putAutorepliesIdBody)
-  }
-);}
-
+export const putAutorepliesId = async (
+  id: string,
+  putAutorepliesIdBody?: PutAutorepliesIdBody,
+  options?: RequestInit,
+): Promise<putAutorepliesIdResponse> => {
+  return useCustomInstance<putAutorepliesIdResponse>(
+    getPutAutorepliesIdUrl(id),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putAutorepliesIdBody),
+    },
+  );
+};
 
 export type deleteAutorepliesIdResponse200 = {
-  data: void
-  status: 200
-}
-
-export type deleteAutorepliesIdResponseSuccess = (deleteAutorepliesIdResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type deleteAutorepliesIdResponse = (deleteAutorepliesIdResponseSuccess)
+export type deleteAutorepliesIdResponseSuccess =
+  deleteAutorepliesIdResponse200 & {
+    headers: Headers;
+  };
+export type deleteAutorepliesIdResponse = deleteAutorepliesIdResponseSuccess;
 
-export const getDeleteAutorepliesIdUrl = (id: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/autoreplies/${id}`
-}
+export const getDeleteAutorepliesIdUrl = (id: string) => {
+  return `http://localhost:3000/api/autoreplies/${id}`;
+};
 
 /**
  * **DEPRECATED:** Use DELETE /autoreplies/{sessionId}/{replyId} instead.
  * @deprecated
  * @summary Delete auto-reply rule (DEPRECATED)
  */
-export const deleteAutorepliesId = async (id: string, options?: RequestInit): Promise<deleteAutorepliesIdResponse> => {
-
-  return useCustomInstance<deleteAutorepliesIdResponse>(getDeleteAutorepliesIdUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
+export const deleteAutorepliesId = async (
+  id: string,
+  options?: RequestInit,
+): Promise<deleteAutorepliesIdResponse> => {
+  return useCustomInstance<deleteAutorepliesIdResponse>(
+    getDeleteAutorepliesIdUrl(id),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};

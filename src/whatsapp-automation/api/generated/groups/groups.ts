@@ -65,1364 +65,1436 @@ import type {
   PutGroupsSessionIdJidSubjectBody,
   ServerErrorResponse,
   SessionNotReadyResponse,
-  UnauthorizedResponse
+  UnauthorizedResponse,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postGroupsSessionIdJidLeaveResponse200 = {
-  data: void
-  status: 200
-}
-
-export type postGroupsSessionIdJidLeaveResponseSuccess = (postGroupsSessionIdJidLeaveResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type postGroupsSessionIdJidLeaveResponse = (postGroupsSessionIdJidLeaveResponseSuccess)
+export type postGroupsSessionIdJidLeaveResponseSuccess =
+  postGroupsSessionIdJidLeaveResponse200 & {
+    headers: Headers;
+  };
+export type postGroupsSessionIdJidLeaveResponse =
+  postGroupsSessionIdJidLeaveResponseSuccess;
 
-export const getPostGroupsSessionIdJidLeaveUrl = (sessionId: string,
-    jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/leave`
-}
+export const getPostGroupsSessionIdJidLeaveUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/leave`;
+};
 
 /**
  * @summary Leave a group
  */
-export const postGroupsSessionIdJidLeave = async (sessionId: string,
-    jid: string, options?: RequestInit): Promise<postGroupsSessionIdJidLeaveResponse> => {
-
-  return useCustomInstance<postGroupsSessionIdJidLeaveResponse>(getPostGroupsSessionIdJidLeaveUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'POST'
-
-
-  }
-);}
-
+export const postGroupsSessionIdJidLeave = async (
+  sessionId: string,
+  jid: string,
+  options?: RequestInit,
+): Promise<postGroupsSessionIdJidLeaveResponse> => {
+  return useCustomInstance<postGroupsSessionIdJidLeaveResponse>(
+    getPostGroupsSessionIdJidLeaveUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'POST',
+    },
+  );
+};
 
 export type getGroupsSessionIdResponse200 = {
-  data: Group[]
-  status: 200
-}
+  data: Group[];
+  status: 200;
+};
 
 export type getGroupsSessionIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getGroupsSessionIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type getGroupsSessionIdResponse404 = {
-  data: NotFoundResponse
-  status: 404
-}
+  data: NotFoundResponse;
+  status: 404;
+};
 
 export type getGroupsSessionIdResponse500 = {
-  data: void
-  status: 500
-}
-
-export type getGroupsSessionIdResponseSuccess = (getGroupsSessionIdResponse200) & {
-  headers: Headers;
-};
-export type getGroupsSessionIdResponseError = (getGroupsSessionIdResponse401 | getGroupsSessionIdResponse403 | getGroupsSessionIdResponse404 | getGroupsSessionIdResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type getGroupsSessionIdResponse = (getGroupsSessionIdResponseSuccess | getGroupsSessionIdResponseError)
+export type getGroupsSessionIdResponseSuccess =
+  getGroupsSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type getGroupsSessionIdResponseError = (
+  | getGroupsSessionIdResponse401
+  | getGroupsSessionIdResponse403
+  | getGroupsSessionIdResponse404
+  | getGroupsSessionIdResponse500
+) & {
+  headers: Headers;
+};
 
-export const getGetGroupsSessionIdUrl = (sessionId: string,) => {
+export type getGroupsSessionIdResponse =
+  | getGroupsSessionIdResponseSuccess
+  | getGroupsSessionIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}`
-}
+export const getGetGroupsSessionIdUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/groups/${sessionId}`;
+};
 
 /**
  * Get all groups associated with the session
  * @summary List all groups
  */
-export const getGroupsSessionId = async (sessionId: string, options?: RequestInit): Promise<getGroupsSessionIdResponse> => {
-
-  return useCustomInstance<getGroupsSessionIdResponse>(getGetGroupsSessionIdUrl(sessionId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getGroupsSessionId = async (
+  sessionId: string,
+  options?: RequestInit,
+): Promise<getGroupsSessionIdResponse> => {
+  return useCustomInstance<getGroupsSessionIdResponse>(
+    getGetGroupsSessionIdUrl(sessionId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type getGroupsResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type getGroupsResponseSuccess = (getGroupsResponse200) & {
+export type getGroupsResponseSuccess = getGroupsResponse200 & {
   headers: Headers;
 };
-;
+export type getGroupsResponse = getGroupsResponseSuccess;
 
-export type getGroupsResponse = (getGroupsResponseSuccess)
-
-export const getGetGroupsUrl = (params: GetGroupsParams,) => {
+export const getGetGroupsUrl = (params: GetGroupsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/groups?${stringifiedParams}` : `http://localhost:3000/api/groups`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/groups?${stringifiedParams}`
+    : `http://localhost:3000/api/groups`;
+};
 
 /**
  * **DEPRECATED:** Use GET /groups/{sessionId} instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary List all groups (DEPRECATED)
  */
-export const getGroups = async (params: GetGroupsParams, options?: RequestInit): Promise<getGroupsResponse> => {
-
-  return useCustomInstance<getGroupsResponse>(getGetGroupsUrl(params),
-  {
+export const getGroups = async (
+  params: GetGroupsParams,
+  options?: RequestInit,
+): Promise<getGroupsResponse> => {
+  return useCustomInstance<getGroupsResponse>(getGetGroupsUrl(params), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+    method: 'GET',
+  });
+};
 
 export type postGroupsSessionIdCreateResponse200 = {
-  data: PostGroupsSessionIdCreate200
-  status: 200
-}
+  data: PostGroupsSessionIdCreate200;
+  status: 200;
+};
 
 export type postGroupsSessionIdCreateResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postGroupsSessionIdCreateResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type postGroupsSessionIdCreateResponse500 = {
-  data: void
-  status: 500
-}
+  data: void;
+  status: 500;
+};
 
 export type postGroupsSessionIdCreateResponse503 = {
-  data: SessionNotReadyResponse
-  status: 503
-}
-
-export type postGroupsSessionIdCreateResponseSuccess = (postGroupsSessionIdCreateResponse200) & {
-  headers: Headers;
-};
-export type postGroupsSessionIdCreateResponseError = (postGroupsSessionIdCreateResponse401 | postGroupsSessionIdCreateResponse403 | postGroupsSessionIdCreateResponse500 | postGroupsSessionIdCreateResponse503) & {
-  headers: Headers;
+  data: SessionNotReadyResponse;
+  status: 503;
 };
 
-export type postGroupsSessionIdCreateResponse = (postGroupsSessionIdCreateResponseSuccess | postGroupsSessionIdCreateResponseError)
+export type postGroupsSessionIdCreateResponseSuccess =
+  postGroupsSessionIdCreateResponse200 & {
+    headers: Headers;
+  };
+export type postGroupsSessionIdCreateResponseError = (
+  | postGroupsSessionIdCreateResponse401
+  | postGroupsSessionIdCreateResponse403
+  | postGroupsSessionIdCreateResponse500
+  | postGroupsSessionIdCreateResponse503
+) & {
+  headers: Headers;
+};
 
-export const getPostGroupsSessionIdCreateUrl = (sessionId: string,) => {
+export type postGroupsSessionIdCreateResponse =
+  | postGroupsSessionIdCreateResponseSuccess
+  | postGroupsSessionIdCreateResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/create`
-}
+export const getPostGroupsSessionIdCreateUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/groups/${sessionId}/create`;
+};
 
 /**
  * Create a new group with specified participants
  * @summary Create new group
  */
-export const postGroupsSessionIdCreate = async (sessionId: string,
-    postGroupsSessionIdCreateBody?: PostGroupsSessionIdCreateBody, options?: RequestInit): Promise<postGroupsSessionIdCreateResponse> => {
-
-  return useCustomInstance<postGroupsSessionIdCreateResponse>(getPostGroupsSessionIdCreateUrl(sessionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postGroupsSessionIdCreateBody)
-  }
-);}
-
+export const postGroupsSessionIdCreate = async (
+  sessionId: string,
+  postGroupsSessionIdCreateBody?: PostGroupsSessionIdCreateBody,
+  options?: RequestInit,
+): Promise<postGroupsSessionIdCreateResponse> => {
+  return useCustomInstance<postGroupsSessionIdCreateResponse>(
+    getPostGroupsSessionIdCreateUrl(sessionId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postGroupsSessionIdCreateBody),
+    },
+  );
+};
 
 export type postGroupsCreateResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type postGroupsCreateResponseSuccess = (postGroupsCreateResponse200) & {
+export type postGroupsCreateResponseSuccess = postGroupsCreateResponse200 & {
   headers: Headers;
 };
-;
-
-export type postGroupsCreateResponse = (postGroupsCreateResponseSuccess)
+export type postGroupsCreateResponse = postGroupsCreateResponseSuccess;
 
 export const getPostGroupsCreateUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/groups/create`
-}
+  return `http://localhost:3000/api/groups/create`;
+};
 
 /**
  * **DEPRECATED:** Use POST /groups/{sessionId}/create instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Create new group (DEPRECATED)
  */
-export const postGroupsCreate = async (postGroupsCreateBody?: PostGroupsCreateBody, options?: RequestInit): Promise<postGroupsCreateResponse> => {
-
-  return useCustomInstance<postGroupsCreateResponse>(getPostGroupsCreateUrl(),
-  {
+export const postGroupsCreate = async (
+  postGroupsCreateBody?: PostGroupsCreateBody,
+  options?: RequestInit,
+): Promise<postGroupsCreateResponse> => {
+  return useCustomInstance<postGroupsCreateResponse>(getPostGroupsCreateUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postGroupsCreateBody)
-  }
-);}
-
+    body: JSON.stringify(postGroupsCreateBody),
+  });
+};
 
 export type putGroupsSessionIdJidSubjectResponse200 = {
-  data: PutGroupsSessionIdJidSubject200
-  status: 200
-}
+  data: PutGroupsSessionIdJidSubject200;
+  status: 200;
+};
 
 export type putGroupsSessionIdJidSubjectResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type putGroupsSessionIdJidSubjectResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putGroupsSessionIdJidSubjectResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putGroupsSessionIdJidSubjectResponse500 = {
-  data: void
-  status: 500
-}
-
-export type putGroupsSessionIdJidSubjectResponseSuccess = (putGroupsSessionIdJidSubjectResponse200) & {
-  headers: Headers;
-};
-export type putGroupsSessionIdJidSubjectResponseError = (putGroupsSessionIdJidSubjectResponse400 | putGroupsSessionIdJidSubjectResponse401 | putGroupsSessionIdJidSubjectResponse403 | putGroupsSessionIdJidSubjectResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type putGroupsSessionIdJidSubjectResponse = (putGroupsSessionIdJidSubjectResponseSuccess | putGroupsSessionIdJidSubjectResponseError)
+export type putGroupsSessionIdJidSubjectResponseSuccess =
+  putGroupsSessionIdJidSubjectResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsSessionIdJidSubjectResponseError = (
+  | putGroupsSessionIdJidSubjectResponse400
+  | putGroupsSessionIdJidSubjectResponse401
+  | putGroupsSessionIdJidSubjectResponse403
+  | putGroupsSessionIdJidSubjectResponse500
+) & {
+  headers: Headers;
+};
 
-export const getPutGroupsSessionIdJidSubjectUrl = (sessionId: string,
-    jid: string,) => {
+export type putGroupsSessionIdJidSubjectResponse =
+  | putGroupsSessionIdJidSubjectResponseSuccess
+  | putGroupsSessionIdJidSubjectResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/subject`
-}
+export const getPutGroupsSessionIdJidSubjectUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/subject`;
+};
 
 /**
  * @summary Update group subject
  */
-export const putGroupsSessionIdJidSubject = async (sessionId: string,
-    jid: string,
-    putGroupsSessionIdJidSubjectBody?: PutGroupsSessionIdJidSubjectBody, options?: RequestInit): Promise<putGroupsSessionIdJidSubjectResponse> => {
-
-  return useCustomInstance<putGroupsSessionIdJidSubjectResponse>(getPutGroupsSessionIdJidSubjectUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsSessionIdJidSubjectBody)
-  }
-);}
-
+export const putGroupsSessionIdJidSubject = async (
+  sessionId: string,
+  jid: string,
+  putGroupsSessionIdJidSubjectBody?: PutGroupsSessionIdJidSubjectBody,
+  options?: RequestInit,
+): Promise<putGroupsSessionIdJidSubjectResponse> => {
+  return useCustomInstance<putGroupsSessionIdJidSubjectResponse>(
+    getPutGroupsSessionIdJidSubjectUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsSessionIdJidSubjectBody),
+    },
+  );
+};
 
 export type putGroupsJidSubjectResponse200 = {
-  data: PutGroupsJidSubject200
-  status: 200
-}
+  data: PutGroupsJidSubject200;
+  status: 200;
+};
 
 export type putGroupsJidSubjectResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type putGroupsJidSubjectResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putGroupsJidSubjectResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putGroupsJidSubjectResponse500 = {
-  data: void
-  status: 500
-}
+  data: void;
+  status: 500;
+};
 
 export type putGroupsJidSubjectResponse503 = {
-  data: SessionNotReadyResponse
-  status: 503
-}
-
-export type putGroupsJidSubjectResponseSuccess = (putGroupsJidSubjectResponse200) & {
-  headers: Headers;
-};
-export type putGroupsJidSubjectResponseError = (putGroupsJidSubjectResponse400 | putGroupsJidSubjectResponse401 | putGroupsJidSubjectResponse403 | putGroupsJidSubjectResponse500 | putGroupsJidSubjectResponse503) & {
-  headers: Headers;
+  data: SessionNotReadyResponse;
+  status: 503;
 };
 
-export type putGroupsJidSubjectResponse = (putGroupsJidSubjectResponseSuccess | putGroupsJidSubjectResponseError)
+export type putGroupsJidSubjectResponseSuccess =
+  putGroupsJidSubjectResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsJidSubjectResponseError = (
+  | putGroupsJidSubjectResponse400
+  | putGroupsJidSubjectResponse401
+  | putGroupsJidSubjectResponse403
+  | putGroupsJidSubjectResponse500
+  | putGroupsJidSubjectResponse503
+) & {
+  headers: Headers;
+};
 
-export const getPutGroupsJidSubjectUrl = (jid: string,) => {
+export type putGroupsJidSubjectResponse =
+  | putGroupsJidSubjectResponseSuccess
+  | putGroupsJidSubjectResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/subject`
-}
+export const getPutGroupsJidSubjectUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/subject`;
+};
 
 /**
  * Update group subject (max 100 characters, requires admin)
  * @summary Update group name
  */
-export const putGroupsJidSubject = async (jid: string,
-    putGroupsJidSubjectBody?: PutGroupsJidSubjectBody, options?: RequestInit): Promise<putGroupsJidSubjectResponse> => {
-
-  return useCustomInstance<putGroupsJidSubjectResponse>(getPutGroupsJidSubjectUrl(jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsJidSubjectBody)
-  }
-);}
-
+export const putGroupsJidSubject = async (
+  jid: string,
+  putGroupsJidSubjectBody?: PutGroupsJidSubjectBody,
+  options?: RequestInit,
+): Promise<putGroupsJidSubjectResponse> => {
+  return useCustomInstance<putGroupsJidSubjectResponse>(
+    getPutGroupsJidSubjectUrl(jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsJidSubjectBody),
+    },
+  );
+};
 
 export type putGroupsSessionIdJidMembersResponse200 = {
-  data: PutGroupsSessionIdJidMembers200
-  status: 200
-}
+  data: PutGroupsSessionIdJidMembers200;
+  status: 200;
+};
 
 export type putGroupsSessionIdJidMembersResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type putGroupsSessionIdJidMembersResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putGroupsSessionIdJidMembersResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putGroupsSessionIdJidMembersResponse500 = {
-  data: void
-  status: 500
-}
-
-export type putGroupsSessionIdJidMembersResponseSuccess = (putGroupsSessionIdJidMembersResponse200) & {
-  headers: Headers;
-};
-export type putGroupsSessionIdJidMembersResponseError = (putGroupsSessionIdJidMembersResponse400 | putGroupsSessionIdJidMembersResponse401 | putGroupsSessionIdJidMembersResponse403 | putGroupsSessionIdJidMembersResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type putGroupsSessionIdJidMembersResponse = (putGroupsSessionIdJidMembersResponseSuccess | putGroupsSessionIdJidMembersResponseError)
+export type putGroupsSessionIdJidMembersResponseSuccess =
+  putGroupsSessionIdJidMembersResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsSessionIdJidMembersResponseError = (
+  | putGroupsSessionIdJidMembersResponse400
+  | putGroupsSessionIdJidMembersResponse401
+  | putGroupsSessionIdJidMembersResponse403
+  | putGroupsSessionIdJidMembersResponse500
+) & {
+  headers: Headers;
+};
 
-export const getPutGroupsSessionIdJidMembersUrl = (sessionId: string,
-    jid: string,) => {
+export type putGroupsSessionIdJidMembersResponse =
+  | putGroupsSessionIdJidMembersResponseSuccess
+  | putGroupsSessionIdJidMembersResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/members`
-}
+export const getPutGroupsSessionIdJidMembersUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/members`;
+};
 
 /**
  * @summary Manage group members
  */
-export const putGroupsSessionIdJidMembers = async (sessionId: string,
-    jid: string,
-    putGroupsSessionIdJidMembersBody?: PutGroupsSessionIdJidMembersBody, options?: RequestInit): Promise<putGroupsSessionIdJidMembersResponse> => {
-
-  return useCustomInstance<putGroupsSessionIdJidMembersResponse>(getPutGroupsSessionIdJidMembersUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsSessionIdJidMembersBody)
-  }
-);}
-
+export const putGroupsSessionIdJidMembers = async (
+  sessionId: string,
+  jid: string,
+  putGroupsSessionIdJidMembersBody?: PutGroupsSessionIdJidMembersBody,
+  options?: RequestInit,
+): Promise<putGroupsSessionIdJidMembersResponse> => {
+  return useCustomInstance<putGroupsSessionIdJidMembersResponse>(
+    getPutGroupsSessionIdJidMembersUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsSessionIdJidMembersBody),
+    },
+  );
+};
 
 export type putGroupsJidMembersResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsJidMembersResponseSuccess = (putGroupsJidMembersResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsJidMembersResponse = (putGroupsJidMembersResponseSuccess)
+export type putGroupsJidMembersResponseSuccess =
+  putGroupsJidMembersResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsJidMembersResponse = putGroupsJidMembersResponseSuccess;
 
-export const getPutGroupsJidMembersUrl = (jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/members`
-}
+export const getPutGroupsJidMembersUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/members`;
+};
 
 /**
  * **DEPRECATED:** Use PUT /groups/{sessionId}/{jid}/members instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Manage group members (DEPRECATED)
  */
-export const putGroupsJidMembers = async (jid: string,
-    putGroupsJidMembersBody?: PutGroupsJidMembersBody, options?: RequestInit): Promise<putGroupsJidMembersResponse> => {
-
-  return useCustomInstance<putGroupsJidMembersResponse>(getPutGroupsJidMembersUrl(jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsJidMembersBody)
-  }
-);}
-
+export const putGroupsJidMembers = async (
+  jid: string,
+  putGroupsJidMembersBody?: PutGroupsJidMembersBody,
+  options?: RequestInit,
+): Promise<putGroupsJidMembersResponse> => {
+  return useCustomInstance<putGroupsJidMembersResponse>(
+    getPutGroupsJidMembersUrl(jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsJidMembersBody),
+    },
+  );
+};
 
 export type putGroupsSessionIdJidInviteResponse200 = {
-  data: PutGroupsSessionIdJidInvite200
-  status: 200
-}
+  data: PutGroupsSessionIdJidInvite200;
+  status: 200;
+};
 
 export type putGroupsSessionIdJidInviteResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putGroupsSessionIdJidInviteResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putGroupsSessionIdJidInviteResponse500 = {
-  data: void
-  status: 500
-}
-
-export type putGroupsSessionIdJidInviteResponseSuccess = (putGroupsSessionIdJidInviteResponse200) & {
-  headers: Headers;
-};
-export type putGroupsSessionIdJidInviteResponseError = (putGroupsSessionIdJidInviteResponse401 | putGroupsSessionIdJidInviteResponse403 | putGroupsSessionIdJidInviteResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type putGroupsSessionIdJidInviteResponse = (putGroupsSessionIdJidInviteResponseSuccess | putGroupsSessionIdJidInviteResponseError)
+export type putGroupsSessionIdJidInviteResponseSuccess =
+  putGroupsSessionIdJidInviteResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsSessionIdJidInviteResponseError = (
+  | putGroupsSessionIdJidInviteResponse401
+  | putGroupsSessionIdJidInviteResponse403
+  | putGroupsSessionIdJidInviteResponse500
+) & {
+  headers: Headers;
+};
 
-export const getPutGroupsSessionIdJidInviteUrl = (sessionId: string,
-    jid: string,) => {
+export type putGroupsSessionIdJidInviteResponse =
+  | putGroupsSessionIdJidInviteResponseSuccess
+  | putGroupsSessionIdJidInviteResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/invite`
-}
+export const getPutGroupsSessionIdJidInviteUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/invite`;
+};
 
 /**
  * @summary Revoke invite code
  */
-export const putGroupsSessionIdJidInvite = async (sessionId: string,
-    jid: string, options?: RequestInit): Promise<putGroupsSessionIdJidInviteResponse> => {
-
-  return useCustomInstance<putGroupsSessionIdJidInviteResponse>(getPutGroupsSessionIdJidInviteUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'PUT'
-
-
-  }
-);}
-
+export const putGroupsSessionIdJidInvite = async (
+  sessionId: string,
+  jid: string,
+  options?: RequestInit,
+): Promise<putGroupsSessionIdJidInviteResponse> => {
+  return useCustomInstance<putGroupsSessionIdJidInviteResponse>(
+    getPutGroupsSessionIdJidInviteUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'PUT',
+    },
+  );
+};
 
 export type getGroupsSessionIdJidInviteResponse200 = {
-  data: GetGroupsSessionIdJidInvite200
-  status: 200
-}
+  data: GetGroupsSessionIdJidInvite200;
+  status: 200;
+};
 
 export type getGroupsSessionIdJidInviteResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getGroupsSessionIdJidInviteResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type getGroupsSessionIdJidInviteResponse500 = {
-  data: void
-  status: 500
-}
-
-export type getGroupsSessionIdJidInviteResponseSuccess = (getGroupsSessionIdJidInviteResponse200) & {
-  headers: Headers;
-};
-export type getGroupsSessionIdJidInviteResponseError = (getGroupsSessionIdJidInviteResponse401 | getGroupsSessionIdJidInviteResponse403 | getGroupsSessionIdJidInviteResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type getGroupsSessionIdJidInviteResponse = (getGroupsSessionIdJidInviteResponseSuccess | getGroupsSessionIdJidInviteResponseError)
+export type getGroupsSessionIdJidInviteResponseSuccess =
+  getGroupsSessionIdJidInviteResponse200 & {
+    headers: Headers;
+  };
+export type getGroupsSessionIdJidInviteResponseError = (
+  | getGroupsSessionIdJidInviteResponse401
+  | getGroupsSessionIdJidInviteResponse403
+  | getGroupsSessionIdJidInviteResponse500
+) & {
+  headers: Headers;
+};
 
-export const getGetGroupsSessionIdJidInviteUrl = (sessionId: string,
-    jid: string,) => {
+export type getGroupsSessionIdJidInviteResponse =
+  | getGroupsSessionIdJidInviteResponseSuccess
+  | getGroupsSessionIdJidInviteResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/invite`
-}
+export const getGetGroupsSessionIdJidInviteUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/invite`;
+};
 
 /**
  * @summary Get invite code
  */
-export const getGroupsSessionIdJidInvite = async (sessionId: string,
-    jid: string, options?: RequestInit): Promise<getGroupsSessionIdJidInviteResponse> => {
-
-  return useCustomInstance<getGroupsSessionIdJidInviteResponse>(getGetGroupsSessionIdJidInviteUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getGroupsSessionIdJidInvite = async (
+  sessionId: string,
+  jid: string,
+  options?: RequestInit,
+): Promise<getGroupsSessionIdJidInviteResponse> => {
+  return useCustomInstance<getGroupsSessionIdJidInviteResponse>(
+    getGetGroupsSessionIdJidInviteUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type getGroupsJidInviteResponse200 = {
-  data: GetGroupsJidInvite200
-  status: 200
-}
-
-export type getGroupsJidInviteResponseSuccess = (getGroupsJidInviteResponse200) & {
-  headers: Headers;
+  data: GetGroupsJidInvite200;
+  status: 200;
 };
-;
 
-export type getGroupsJidInviteResponse = (getGroupsJidInviteResponseSuccess)
+export type getGroupsJidInviteResponseSuccess =
+  getGroupsJidInviteResponse200 & {
+    headers: Headers;
+  };
+export type getGroupsJidInviteResponse = getGroupsJidInviteResponseSuccess;
 
-export const getGetGroupsJidInviteUrl = (jid: string,
-    params: GetGroupsJidInviteParams,) => {
+export const getGetGroupsJidInviteUrl = (
+  jid: string,
+  params: GetGroupsJidInviteParams,
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/groups/${jid}/invite?${stringifiedParams}` : `http://localhost:3000/api/groups/${jid}/invite`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/groups/${jid}/invite?${stringifiedParams}`
+    : `http://localhost:3000/api/groups/${jid}/invite`;
+};
 
 /**
  * **DEPRECATED:** Use GET /groups/{sessionId}/{jid}/invite instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Get invite code (DEPRECATED)
  */
-export const getGroupsJidInvite = async (jid: string,
-    params: GetGroupsJidInviteParams, options?: RequestInit): Promise<getGroupsJidInviteResponse> => {
-
-  return useCustomInstance<getGroupsJidInviteResponse>(getGetGroupsJidInviteUrl(jid,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getGroupsJidInvite = async (
+  jid: string,
+  params: GetGroupsJidInviteParams,
+  options?: RequestInit,
+): Promise<getGroupsJidInviteResponse> => {
+  return useCustomInstance<getGroupsJidInviteResponse>(
+    getGetGroupsJidInviteUrl(jid, params),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type putGroupsJidInviteResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsJidInviteResponseSuccess = (putGroupsJidInviteResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsJidInviteResponse = (putGroupsJidInviteResponseSuccess)
+export type putGroupsJidInviteResponseSuccess =
+  putGroupsJidInviteResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsJidInviteResponse = putGroupsJidInviteResponseSuccess;
 
-export const getPutGroupsJidInviteUrl = (jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/invite`
-}
+export const getPutGroupsJidInviteUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/invite`;
+};
 
 /**
  * **DEPRECATED:** Use PUT /groups/{sessionId}/{jid}/invite instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Revoke invite code (DEPRECATED)
  */
-export const putGroupsJidInvite = async (jid: string,
-    putGroupsJidInviteBody?: PutGroupsJidInviteBody, options?: RequestInit): Promise<putGroupsJidInviteResponse> => {
-
-  return useCustomInstance<putGroupsJidInviteResponse>(getPutGroupsJidInviteUrl(jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsJidInviteBody)
-  }
-);}
-
+export const putGroupsJidInvite = async (
+  jid: string,
+  putGroupsJidInviteBody?: PutGroupsJidInviteBody,
+  options?: RequestInit,
+): Promise<putGroupsJidInviteResponse> => {
+  return useCustomInstance<putGroupsJidInviteResponse>(
+    getPutGroupsJidInviteUrl(jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsJidInviteBody),
+    },
+  );
+};
 
 export type getGroupsSessionIdJidResponse200 = {
-  data: GroupDetails
-  status: 200
-}
+  data: GroupDetails;
+  status: 200;
+};
 
 export type getGroupsSessionIdJidResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getGroupsSessionIdJidResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type getGroupsSessionIdJidResponse404 = {
-  data: NotFoundResponse
-  status: 404
-}
+  data: NotFoundResponse;
+  status: 404;
+};
 
 export type getGroupsSessionIdJidResponse500 = {
-  data: void
-  status: 500
-}
-
-export type getGroupsSessionIdJidResponseSuccess = (getGroupsSessionIdJidResponse200) & {
-  headers: Headers;
-};
-export type getGroupsSessionIdJidResponseError = (getGroupsSessionIdJidResponse401 | getGroupsSessionIdJidResponse403 | getGroupsSessionIdJidResponse404 | getGroupsSessionIdJidResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type getGroupsSessionIdJidResponse = (getGroupsSessionIdJidResponseSuccess | getGroupsSessionIdJidResponseError)
+export type getGroupsSessionIdJidResponseSuccess =
+  getGroupsSessionIdJidResponse200 & {
+    headers: Headers;
+  };
+export type getGroupsSessionIdJidResponseError = (
+  | getGroupsSessionIdJidResponse401
+  | getGroupsSessionIdJidResponse403
+  | getGroupsSessionIdJidResponse404
+  | getGroupsSessionIdJidResponse500
+) & {
+  headers: Headers;
+};
 
-export const getGetGroupsSessionIdJidUrl = (sessionId: string,
-    jid: string,) => {
+export type getGroupsSessionIdJidResponse =
+  | getGroupsSessionIdJidResponseSuccess
+  | getGroupsSessionIdJidResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}`
-}
+export const getGetGroupsSessionIdJidUrl = (sessionId: string, jid: string) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}`;
+};
 
 /**
  * Get detailed group information
  * @summary Get group details
  */
-export const getGroupsSessionIdJid = async (sessionId: string,
-    jid: string, options?: RequestInit): Promise<getGroupsSessionIdJidResponse> => {
-
-  return useCustomInstance<getGroupsSessionIdJidResponse>(getGetGroupsSessionIdJidUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getGroupsSessionIdJid = async (
+  sessionId: string,
+  jid: string,
+  options?: RequestInit,
+): Promise<getGroupsSessionIdJidResponse> => {
+  return useCustomInstance<getGroupsSessionIdJidResponse>(
+    getGetGroupsSessionIdJidUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type getGroupsJidResponse200 = {
-  data: GetGroupsJid200
-  status: 200
-}
+  data: GetGroupsJid200;
+  status: 200;
+};
 
 export type getGroupsJidResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getGroupsJidResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type getGroupsJidResponse404 = {
-  data: void
-  status: 404
-}
+  data: void;
+  status: 404;
+};
 
 export type getGroupsJidResponse500 = {
-  data: ServerErrorResponse
-  status: 500
-}
-
-export type getGroupsJidResponseSuccess = (getGroupsJidResponse200) & {
-  headers: Headers;
-};
-export type getGroupsJidResponseError = (getGroupsJidResponse401 | getGroupsJidResponse403 | getGroupsJidResponse404 | getGroupsJidResponse500) & {
-  headers: Headers;
+  data: ServerErrorResponse;
+  status: 500;
 };
 
-export type getGroupsJidResponse = (getGroupsJidResponseSuccess | getGroupsJidResponseError)
+export type getGroupsJidResponseSuccess = getGroupsJidResponse200 & {
+  headers: Headers;
+};
+export type getGroupsJidResponseError = (
+  | getGroupsJidResponse401
+  | getGroupsJidResponse403
+  | getGroupsJidResponse404
+  | getGroupsJidResponse500
+) & {
+  headers: Headers;
+};
 
-export const getGetGroupsJidUrl = (jid: string,
-    params: GetGroupsJidParams,) => {
+export type getGroupsJidResponse =
+  | getGroupsJidResponseSuccess
+  | getGroupsJidResponseError;
+
+export const getGetGroupsJidUrl = (jid: string, params: GetGroupsJidParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/groups/${jid}?${stringifiedParams}` : `http://localhost:3000/api/groups/${jid}`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/groups/${jid}?${stringifiedParams}`
+    : `http://localhost:3000/api/groups/${jid}`;
+};
 
 /**
  * **DEPRECATED:** Use GET /groups/{sessionId}/{jid} instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Get group details (DEPRECATED)
  */
-export const getGroupsJid = async (jid: string,
-    params: GetGroupsJidParams, options?: RequestInit): Promise<getGroupsJidResponse> => {
-
-  return useCustomInstance<getGroupsJidResponse>(getGetGroupsJidUrl(jid,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getGroupsJid = async (
+  jid: string,
+  params: GetGroupsJidParams,
+  options?: RequestInit,
+): Promise<getGroupsJidResponse> => {
+  return useCustomInstance<getGroupsJidResponse>(
+    getGetGroupsJidUrl(jid, params),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type postGroupsJidLeaveResponse200 = {
-  data: void
-  status: 200
-}
-
-export type postGroupsJidLeaveResponseSuccess = (postGroupsJidLeaveResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type postGroupsJidLeaveResponse = (postGroupsJidLeaveResponseSuccess)
+export type postGroupsJidLeaveResponseSuccess =
+  postGroupsJidLeaveResponse200 & {
+    headers: Headers;
+  };
+export type postGroupsJidLeaveResponse = postGroupsJidLeaveResponseSuccess;
 
-export const getPostGroupsJidLeaveUrl = (jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/leave`
-}
+export const getPostGroupsJidLeaveUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/leave`;
+};
 
 /**
  * @summary Leave group
  */
-export const postGroupsJidLeave = async (jid: string,
-    postGroupsJidLeaveBody?: PostGroupsJidLeaveBody, options?: RequestInit): Promise<postGroupsJidLeaveResponse> => {
-
-  return useCustomInstance<postGroupsJidLeaveResponse>(getPostGroupsJidLeaveUrl(jid),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postGroupsJidLeaveBody)
-  }
-);}
-
+export const postGroupsJidLeave = async (
+  jid: string,
+  postGroupsJidLeaveBody?: PostGroupsJidLeaveBody,
+  options?: RequestInit,
+): Promise<postGroupsJidLeaveResponse> => {
+  return useCustomInstance<postGroupsJidLeaveResponse>(
+    getPostGroupsJidLeaveUrl(jid),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postGroupsJidLeaveBody),
+    },
+  );
+};
 
 export type postGroupsSessionIdInviteAcceptResponse200 = {
-  data: PostGroupsSessionIdInviteAccept200
-  status: 200
-}
+  data: PostGroupsSessionIdInviteAccept200;
+  status: 200;
+};
 
 export type postGroupsSessionIdInviteAcceptResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type postGroupsSessionIdInviteAcceptResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postGroupsSessionIdInviteAcceptResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type postGroupsSessionIdInviteAcceptResponse500 = {
-  data: void
-  status: 500
-}
+  data: void;
+  status: 500;
+};
 
 export type postGroupsSessionIdInviteAcceptResponse503 = {
-  data: SessionNotReadyResponse
-  status: 503
-}
-
-export type postGroupsSessionIdInviteAcceptResponseSuccess = (postGroupsSessionIdInviteAcceptResponse200) & {
-  headers: Headers;
-};
-export type postGroupsSessionIdInviteAcceptResponseError = (postGroupsSessionIdInviteAcceptResponse400 | postGroupsSessionIdInviteAcceptResponse401 | postGroupsSessionIdInviteAcceptResponse403 | postGroupsSessionIdInviteAcceptResponse500 | postGroupsSessionIdInviteAcceptResponse503) & {
-  headers: Headers;
+  data: SessionNotReadyResponse;
+  status: 503;
 };
 
-export type postGroupsSessionIdInviteAcceptResponse = (postGroupsSessionIdInviteAcceptResponseSuccess | postGroupsSessionIdInviteAcceptResponseError)
+export type postGroupsSessionIdInviteAcceptResponseSuccess =
+  postGroupsSessionIdInviteAcceptResponse200 & {
+    headers: Headers;
+  };
+export type postGroupsSessionIdInviteAcceptResponseError = (
+  | postGroupsSessionIdInviteAcceptResponse400
+  | postGroupsSessionIdInviteAcceptResponse401
+  | postGroupsSessionIdInviteAcceptResponse403
+  | postGroupsSessionIdInviteAcceptResponse500
+  | postGroupsSessionIdInviteAcceptResponse503
+) & {
+  headers: Headers;
+};
 
-export const getPostGroupsSessionIdInviteAcceptUrl = (sessionId: string,) => {
+export type postGroupsSessionIdInviteAcceptResponse =
+  | postGroupsSessionIdInviteAcceptResponseSuccess
+  | postGroupsSessionIdInviteAcceptResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/invite/accept`
-}
+export const getPostGroupsSessionIdInviteAcceptUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/groups/${sessionId}/invite/accept`;
+};
 
 /**
  * Join a group using an invite code
  * @summary Accept group invite
  */
-export const postGroupsSessionIdInviteAccept = async (sessionId: string,
-    postGroupsSessionIdInviteAcceptBody?: PostGroupsSessionIdInviteAcceptBody, options?: RequestInit): Promise<postGroupsSessionIdInviteAcceptResponse> => {
-
-  return useCustomInstance<postGroupsSessionIdInviteAcceptResponse>(getPostGroupsSessionIdInviteAcceptUrl(sessionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postGroupsSessionIdInviteAcceptBody)
-  }
-);}
-
+export const postGroupsSessionIdInviteAccept = async (
+  sessionId: string,
+  postGroupsSessionIdInviteAcceptBody?: PostGroupsSessionIdInviteAcceptBody,
+  options?: RequestInit,
+): Promise<postGroupsSessionIdInviteAcceptResponse> => {
+  return useCustomInstance<postGroupsSessionIdInviteAcceptResponse>(
+    getPostGroupsSessionIdInviteAcceptUrl(sessionId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postGroupsSessionIdInviteAcceptBody),
+    },
+  );
+};
 
 export type postGroupsInviteAcceptResponse200 = {
-  data: void
-  status: 200
-}
-
-export type postGroupsInviteAcceptResponseSuccess = (postGroupsInviteAcceptResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type postGroupsInviteAcceptResponse = (postGroupsInviteAcceptResponseSuccess)
+export type postGroupsInviteAcceptResponseSuccess =
+  postGroupsInviteAcceptResponse200 & {
+    headers: Headers;
+  };
+export type postGroupsInviteAcceptResponse =
+  postGroupsInviteAcceptResponseSuccess;
 
 export const getPostGroupsInviteAcceptUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/groups/invite/accept`
-}
+  return `http://localhost:3000/api/groups/invite/accept`;
+};
 
 /**
  * **DEPRECATED:** Use POST /groups/{sessionId}/invite/accept instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Accept group invite (DEPRECATED)
  */
-export const postGroupsInviteAccept = async (postGroupsInviteAcceptBody?: PostGroupsInviteAcceptBody, options?: RequestInit): Promise<postGroupsInviteAcceptResponse> => {
-
-  return useCustomInstance<postGroupsInviteAcceptResponse>(getPostGroupsInviteAcceptUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postGroupsInviteAcceptBody)
-  }
-);}
-
+export const postGroupsInviteAccept = async (
+  postGroupsInviteAcceptBody?: PostGroupsInviteAcceptBody,
+  options?: RequestInit,
+): Promise<postGroupsInviteAcceptResponse> => {
+  return useCustomInstance<postGroupsInviteAcceptResponse>(
+    getPostGroupsInviteAcceptUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postGroupsInviteAcceptBody),
+    },
+  );
+};
 
 export type deleteGroupsSessionIdJidPictureResponse200 = {
-  data: void
-  status: 200
-}
-
-export type deleteGroupsSessionIdJidPictureResponseSuccess = (deleteGroupsSessionIdJidPictureResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type deleteGroupsSessionIdJidPictureResponse = (deleteGroupsSessionIdJidPictureResponseSuccess)
+export type deleteGroupsSessionIdJidPictureResponseSuccess =
+  deleteGroupsSessionIdJidPictureResponse200 & {
+    headers: Headers;
+  };
+export type deleteGroupsSessionIdJidPictureResponse =
+  deleteGroupsSessionIdJidPictureResponseSuccess;
 
-export const getDeleteGroupsSessionIdJidPictureUrl = (sessionId: string,
-    jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/picture`
-}
+export const getDeleteGroupsSessionIdJidPictureUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/picture`;
+};
 
 /**
  * @summary Remove group picture
  */
-export const deleteGroupsSessionIdJidPicture = async (sessionId: string,
-    jid: string, options?: RequestInit): Promise<deleteGroupsSessionIdJidPictureResponse> => {
-
-  return useCustomInstance<deleteGroupsSessionIdJidPictureResponse>(getDeleteGroupsSessionIdJidPictureUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
+export const deleteGroupsSessionIdJidPicture = async (
+  sessionId: string,
+  jid: string,
+  options?: RequestInit,
+): Promise<deleteGroupsSessionIdJidPictureResponse> => {
+  return useCustomInstance<deleteGroupsSessionIdJidPictureResponse>(
+    getDeleteGroupsSessionIdJidPictureUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};
 
 export type putGroupsSessionIdJidPictureResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsSessionIdJidPictureResponseSuccess = (putGroupsSessionIdJidPictureResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsSessionIdJidPictureResponse = (putGroupsSessionIdJidPictureResponseSuccess)
+export type putGroupsSessionIdJidPictureResponseSuccess =
+  putGroupsSessionIdJidPictureResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsSessionIdJidPictureResponse =
+  putGroupsSessionIdJidPictureResponseSuccess;
 
-export const getPutGroupsSessionIdJidPictureUrl = (sessionId: string,
-    jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/picture`
-}
+export const getPutGroupsSessionIdJidPictureUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/picture`;
+};
 
 /**
  * @summary Update group picture
  */
-export const putGroupsSessionIdJidPicture = async (sessionId: string,
-    jid: string,
-    putGroupsSessionIdJidPictureBody?: PutGroupsSessionIdJidPictureBody, options?: RequestInit): Promise<putGroupsSessionIdJidPictureResponse> => {
-    const formData = new FormData();
-if(putGroupsSessionIdJidPictureBody?.file !== undefined) {
- formData.append(`file`, putGroupsSessionIdJidPictureBody.file);
- }
-
-  return useCustomInstance<putGroupsSessionIdJidPictureResponse>(getPutGroupsSessionIdJidPictureUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'PUT'
-    ,
-    body: formData
+export const putGroupsSessionIdJidPicture = async (
+  sessionId: string,
+  jid: string,
+  putGroupsSessionIdJidPictureBody?: PutGroupsSessionIdJidPictureBody,
+  options?: RequestInit,
+): Promise<putGroupsSessionIdJidPictureResponse> => {
+  const formData = new FormData();
+  if (putGroupsSessionIdJidPictureBody?.file !== undefined) {
+    formData.append(`file`, putGroupsSessionIdJidPictureBody.file);
   }
-);}
 
+  return useCustomInstance<putGroupsSessionIdJidPictureResponse>(
+    getPutGroupsSessionIdJidPictureUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'PUT',
+      body: formData,
+    },
+  );
+};
 
 export type putGroupsJidPictureResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsJidPictureResponseSuccess = (putGroupsJidPictureResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsJidPictureResponse = (putGroupsJidPictureResponseSuccess)
+export type putGroupsJidPictureResponseSuccess =
+  putGroupsJidPictureResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsJidPictureResponse = putGroupsJidPictureResponseSuccess;
 
-export const getPutGroupsJidPictureUrl = (jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/picture`
-}
+export const getPutGroupsJidPictureUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/picture`;
+};
 
 /**
  * **DEPRECATED:** Use PUT /groups/{sessionId}/{jid}/picture instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Update group picture (DEPRECATED)
  */
-export const putGroupsJidPicture = async (jid: string,
-    putGroupsJidPictureBody?: PutGroupsJidPictureBody, options?: RequestInit): Promise<putGroupsJidPictureResponse> => {
-    const formData = new FormData();
-if(putGroupsJidPictureBody?.sessionId !== undefined) {
- formData.append(`sessionId`, putGroupsJidPictureBody.sessionId);
- }
-if(putGroupsJidPictureBody?.file !== undefined) {
- formData.append(`file`, putGroupsJidPictureBody.file);
- }
-
-  return useCustomInstance<putGroupsJidPictureResponse>(getPutGroupsJidPictureUrl(jid),
-  {
-    ...options,
-    method: 'PUT'
-    ,
-    body: formData
+export const putGroupsJidPicture = async (
+  jid: string,
+  putGroupsJidPictureBody?: PutGroupsJidPictureBody,
+  options?: RequestInit,
+): Promise<putGroupsJidPictureResponse> => {
+  const formData = new FormData();
+  if (putGroupsJidPictureBody?.sessionId !== undefined) {
+    formData.append(`sessionId`, putGroupsJidPictureBody.sessionId);
   }
-);}
+  if (putGroupsJidPictureBody?.file !== undefined) {
+    formData.append(`file`, putGroupsJidPictureBody.file);
+  }
 
+  return useCustomInstance<putGroupsJidPictureResponse>(
+    getPutGroupsJidPictureUrl(jid),
+    {
+      ...options,
+      method: 'PUT',
+      body: formData,
+    },
+  );
+};
 
 export type deleteGroupsJidPictureResponse200 = {
-  data: void
-  status: 200
-}
-
-export type deleteGroupsJidPictureResponseSuccess = (deleteGroupsJidPictureResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type deleteGroupsJidPictureResponse = (deleteGroupsJidPictureResponseSuccess)
+export type deleteGroupsJidPictureResponseSuccess =
+  deleteGroupsJidPictureResponse200 & {
+    headers: Headers;
+  };
+export type deleteGroupsJidPictureResponse =
+  deleteGroupsJidPictureResponseSuccess;
 
-export const getDeleteGroupsJidPictureUrl = (jid: string,
-    params: DeleteGroupsJidPictureParams,) => {
+export const getDeleteGroupsJidPictureUrl = (
+  jid: string,
+  params: DeleteGroupsJidPictureParams,
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/groups/${jid}/picture?${stringifiedParams}` : `http://localhost:3000/api/groups/${jid}/picture`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/groups/${jid}/picture?${stringifiedParams}`
+    : `http://localhost:3000/api/groups/${jid}/picture`;
+};
 
 /**
  * **DEPRECATED:** Use DELETE /groups/{sessionId}/{jid}/picture instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Remove group picture (DEPRECATED)
  */
-export const deleteGroupsJidPicture = async (jid: string,
-    params: DeleteGroupsJidPictureParams, options?: RequestInit): Promise<deleteGroupsJidPictureResponse> => {
-
-  return useCustomInstance<deleteGroupsJidPictureResponse>(getDeleteGroupsJidPictureUrl(jid,params),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
+export const deleteGroupsJidPicture = async (
+  jid: string,
+  params: DeleteGroupsJidPictureParams,
+  options?: RequestInit,
+): Promise<deleteGroupsJidPictureResponse> => {
+  return useCustomInstance<deleteGroupsJidPictureResponse>(
+    getDeleteGroupsJidPictureUrl(jid, params),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};
 
 export type putGroupsSessionIdJidSettingsResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsSessionIdJidSettingsResponseSuccess = (putGroupsSessionIdJidSettingsResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsSessionIdJidSettingsResponse = (putGroupsSessionIdJidSettingsResponseSuccess)
+export type putGroupsSessionIdJidSettingsResponseSuccess =
+  putGroupsSessionIdJidSettingsResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsSessionIdJidSettingsResponse =
+  putGroupsSessionIdJidSettingsResponseSuccess;
 
-export const getPutGroupsSessionIdJidSettingsUrl = (sessionId: string,
-    jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/settings`
-}
+export const getPutGroupsSessionIdJidSettingsUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/settings`;
+};
 
 /**
  * @summary Update group settings
  */
-export const putGroupsSessionIdJidSettings = async (sessionId: string,
-    jid: string,
-    putGroupsSessionIdJidSettingsBody?: PutGroupsSessionIdJidSettingsBody, options?: RequestInit): Promise<putGroupsSessionIdJidSettingsResponse> => {
-
-  return useCustomInstance<putGroupsSessionIdJidSettingsResponse>(getPutGroupsSessionIdJidSettingsUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsSessionIdJidSettingsBody)
-  }
-);}
-
+export const putGroupsSessionIdJidSettings = async (
+  sessionId: string,
+  jid: string,
+  putGroupsSessionIdJidSettingsBody?: PutGroupsSessionIdJidSettingsBody,
+  options?: RequestInit,
+): Promise<putGroupsSessionIdJidSettingsResponse> => {
+  return useCustomInstance<putGroupsSessionIdJidSettingsResponse>(
+    getPutGroupsSessionIdJidSettingsUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsSessionIdJidSettingsBody),
+    },
+  );
+};
 
 export type putGroupsJidSettingsResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsJidSettingsResponseSuccess = (putGroupsJidSettingsResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsJidSettingsResponse = (putGroupsJidSettingsResponseSuccess)
+export type putGroupsJidSettingsResponseSuccess =
+  putGroupsJidSettingsResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsJidSettingsResponse = putGroupsJidSettingsResponseSuccess;
 
-export const getPutGroupsJidSettingsUrl = (jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/settings`
-}
+export const getPutGroupsJidSettingsUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/settings`;
+};
 
 /**
  * **DEPRECATED:** Use PUT /groups/{sessionId}/{jid}/settings instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Update group settings (DEPRECATED)
  */
-export const putGroupsJidSettings = async (jid: string,
-    putGroupsJidSettingsBody?: PutGroupsJidSettingsBody, options?: RequestInit): Promise<putGroupsJidSettingsResponse> => {
-
-  return useCustomInstance<putGroupsJidSettingsResponse>(getPutGroupsJidSettingsUrl(jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsJidSettingsBody)
-  }
-);}
-
+export const putGroupsJidSettings = async (
+  jid: string,
+  putGroupsJidSettingsBody?: PutGroupsJidSettingsBody,
+  options?: RequestInit,
+): Promise<putGroupsJidSettingsResponse> => {
+  return useCustomInstance<putGroupsJidSettingsResponse>(
+    getPutGroupsJidSettingsUrl(jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsJidSettingsBody),
+    },
+  );
+};
 
 export type putGroupsSessionIdJidDescriptionResponse200 = {
-  data: PutGroupsSessionIdJidDescription200
-  status: 200
-}
+  data: PutGroupsSessionIdJidDescription200;
+  status: 200;
+};
 
 export type putGroupsSessionIdJidDescriptionResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type putGroupsSessionIdJidDescriptionResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putGroupsSessionIdJidDescriptionResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putGroupsSessionIdJidDescriptionResponse500 = {
-  data: void
-  status: 500
-}
-
-export type putGroupsSessionIdJidDescriptionResponseSuccess = (putGroupsSessionIdJidDescriptionResponse200) & {
-  headers: Headers;
-};
-export type putGroupsSessionIdJidDescriptionResponseError = (putGroupsSessionIdJidDescriptionResponse400 | putGroupsSessionIdJidDescriptionResponse401 | putGroupsSessionIdJidDescriptionResponse403 | putGroupsSessionIdJidDescriptionResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type putGroupsSessionIdJidDescriptionResponse = (putGroupsSessionIdJidDescriptionResponseSuccess | putGroupsSessionIdJidDescriptionResponseError)
+export type putGroupsSessionIdJidDescriptionResponseSuccess =
+  putGroupsSessionIdJidDescriptionResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsSessionIdJidDescriptionResponseError = (
+  | putGroupsSessionIdJidDescriptionResponse400
+  | putGroupsSessionIdJidDescriptionResponse401
+  | putGroupsSessionIdJidDescriptionResponse403
+  | putGroupsSessionIdJidDescriptionResponse500
+) & {
+  headers: Headers;
+};
 
-export const getPutGroupsSessionIdJidDescriptionUrl = (sessionId: string,
-    jid: string,) => {
+export type putGroupsSessionIdJidDescriptionResponse =
+  | putGroupsSessionIdJidDescriptionResponseSuccess
+  | putGroupsSessionIdJidDescriptionResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/description`
-}
+export const getPutGroupsSessionIdJidDescriptionUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/description`;
+};
 
 /**
  * @summary Update group description
  */
-export const putGroupsSessionIdJidDescription = async (sessionId: string,
-    jid: string,
-    putGroupsSessionIdJidDescriptionBody?: PutGroupsSessionIdJidDescriptionBody, options?: RequestInit): Promise<putGroupsSessionIdJidDescriptionResponse> => {
-
-  return useCustomInstance<putGroupsSessionIdJidDescriptionResponse>(getPutGroupsSessionIdJidDescriptionUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsSessionIdJidDescriptionBody)
-  }
-);}
-
+export const putGroupsSessionIdJidDescription = async (
+  sessionId: string,
+  jid: string,
+  putGroupsSessionIdJidDescriptionBody?: PutGroupsSessionIdJidDescriptionBody,
+  options?: RequestInit,
+): Promise<putGroupsSessionIdJidDescriptionResponse> => {
+  return useCustomInstance<putGroupsSessionIdJidDescriptionResponse>(
+    getPutGroupsSessionIdJidDescriptionUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsSessionIdJidDescriptionBody),
+    },
+  );
+};
 
 export type putGroupsJidDescriptionResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsJidDescriptionResponseSuccess = (putGroupsJidDescriptionResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsJidDescriptionResponse = (putGroupsJidDescriptionResponseSuccess)
+export type putGroupsJidDescriptionResponseSuccess =
+  putGroupsJidDescriptionResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsJidDescriptionResponse =
+  putGroupsJidDescriptionResponseSuccess;
 
-export const getPutGroupsJidDescriptionUrl = (jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/description`
-}
+export const getPutGroupsJidDescriptionUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/description`;
+};
 
 /**
  * **DEPRECATED:** Use PUT /groups/{sessionId}/{jid}/description instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Update group description (DEPRECATED)
  */
-export const putGroupsJidDescription = async (jid: string,
-    putGroupsJidDescriptionBody?: PutGroupsJidDescriptionBody, options?: RequestInit): Promise<putGroupsJidDescriptionResponse> => {
-
-  return useCustomInstance<putGroupsJidDescriptionResponse>(getPutGroupsJidDescriptionUrl(jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsJidDescriptionBody)
-  }
-);}
-
+export const putGroupsJidDescription = async (
+  jid: string,
+  putGroupsJidDescriptionBody?: PutGroupsJidDescriptionBody,
+  options?: RequestInit,
+): Promise<putGroupsJidDescriptionResponse> => {
+  return useCustomInstance<putGroupsJidDescriptionResponse>(
+    getPutGroupsJidDescriptionUrl(jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsJidDescriptionBody),
+    },
+  );
+};
 
 export type putGroupsSessionIdJidEphemeralResponse200 = {
-  data: PutGroupsSessionIdJidEphemeral200
-  status: 200
-}
+  data: PutGroupsSessionIdJidEphemeral200;
+  status: 200;
+};
 
 export type putGroupsSessionIdJidEphemeralResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type putGroupsSessionIdJidEphemeralResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putGroupsSessionIdJidEphemeralResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putGroupsSessionIdJidEphemeralResponse500 = {
-  data: void
-  status: 500
-}
-
-export type putGroupsSessionIdJidEphemeralResponseSuccess = (putGroupsSessionIdJidEphemeralResponse200) & {
-  headers: Headers;
-};
-export type putGroupsSessionIdJidEphemeralResponseError = (putGroupsSessionIdJidEphemeralResponse400 | putGroupsSessionIdJidEphemeralResponse401 | putGroupsSessionIdJidEphemeralResponse403 | putGroupsSessionIdJidEphemeralResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type putGroupsSessionIdJidEphemeralResponse = (putGroupsSessionIdJidEphemeralResponseSuccess | putGroupsSessionIdJidEphemeralResponseError)
+export type putGroupsSessionIdJidEphemeralResponseSuccess =
+  putGroupsSessionIdJidEphemeralResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsSessionIdJidEphemeralResponseError = (
+  | putGroupsSessionIdJidEphemeralResponse400
+  | putGroupsSessionIdJidEphemeralResponse401
+  | putGroupsSessionIdJidEphemeralResponse403
+  | putGroupsSessionIdJidEphemeralResponse500
+) & {
+  headers: Headers;
+};
 
-export const getPutGroupsSessionIdJidEphemeralUrl = (sessionId: string,
-    jid: string,) => {
+export type putGroupsSessionIdJidEphemeralResponse =
+  | putGroupsSessionIdJidEphemeralResponseSuccess
+  | putGroupsSessionIdJidEphemeralResponseError;
 
-
-
-
-  return `http://localhost:3000/api/groups/${sessionId}/${jid}/ephemeral`
-}
+export const getPutGroupsSessionIdJidEphemeralUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/groups/${sessionId}/${jid}/ephemeral`;
+};
 
 /**
  * @summary Toggle disappearing messages
  */
-export const putGroupsSessionIdJidEphemeral = async (sessionId: string,
-    jid: string,
-    putGroupsSessionIdJidEphemeralBody?: PutGroupsSessionIdJidEphemeralBody, options?: RequestInit): Promise<putGroupsSessionIdJidEphemeralResponse> => {
-
-  return useCustomInstance<putGroupsSessionIdJidEphemeralResponse>(getPutGroupsSessionIdJidEphemeralUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsSessionIdJidEphemeralBody)
-  }
-);}
-
+export const putGroupsSessionIdJidEphemeral = async (
+  sessionId: string,
+  jid: string,
+  putGroupsSessionIdJidEphemeralBody?: PutGroupsSessionIdJidEphemeralBody,
+  options?: RequestInit,
+): Promise<putGroupsSessionIdJidEphemeralResponse> => {
+  return useCustomInstance<putGroupsSessionIdJidEphemeralResponse>(
+    getPutGroupsSessionIdJidEphemeralUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsSessionIdJidEphemeralBody),
+    },
+  );
+};
 
 export type putGroupsJidEphemeralResponse200 = {
-  data: void
-  status: 200
-}
-
-export type putGroupsJidEphemeralResponseSuccess = (putGroupsJidEphemeralResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type putGroupsJidEphemeralResponse = (putGroupsJidEphemeralResponseSuccess)
+export type putGroupsJidEphemeralResponseSuccess =
+  putGroupsJidEphemeralResponse200 & {
+    headers: Headers;
+  };
+export type putGroupsJidEphemeralResponse =
+  putGroupsJidEphemeralResponseSuccess;
 
-export const getPutGroupsJidEphemeralUrl = (jid: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/groups/${jid}/ephemeral`
-}
+export const getPutGroupsJidEphemeralUrl = (jid: string) => {
+  return `http://localhost:3000/api/groups/${jid}/ephemeral`;
+};
 
 /**
  * **DEPRECATED:** Use PUT /groups/{sessionId}/{jid}/ephemeral instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Toggle disappearing messages (DEPRECATED)
  */
-export const putGroupsJidEphemeral = async (jid: string,
-    putGroupsJidEphemeralBody?: PutGroupsJidEphemeralBody, options?: RequestInit): Promise<putGroupsJidEphemeralResponse> => {
-
-  return useCustomInstance<putGroupsJidEphemeralResponse>(getPutGroupsJidEphemeralUrl(jid),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putGroupsJidEphemeralBody)
-  }
-);}
-
-
+export const putGroupsJidEphemeral = async (
+  jid: string,
+  putGroupsJidEphemeralBody?: PutGroupsJidEphemeralBody,
+  options?: RequestInit,
+): Promise<putGroupsJidEphemeralResponse> => {
+  return useCustomInstance<putGroupsJidEphemeralResponse>(
+    getPutGroupsJidEphemeralUrl(jid),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putGroupsJidEphemeralBody),
+    },
+  );
+};

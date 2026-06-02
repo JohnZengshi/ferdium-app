@@ -28,116 +28,91 @@
 import type {
   GetAuthCsrf200,
   GetAuthSession200,
-  PostAuthRegisterBody
+  PostAuthRegisterBody,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postAuthRegisterResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type postAuthRegisterResponseSuccess = (postAuthRegisterResponse200) & {
+export type postAuthRegisterResponseSuccess = postAuthRegisterResponse200 & {
   headers: Headers;
 };
-;
-
-export type postAuthRegisterResponse = (postAuthRegisterResponseSuccess)
+export type postAuthRegisterResponse = postAuthRegisterResponseSuccess;
 
 export const getPostAuthRegisterUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/auth/register`
-}
+  return `http://localhost:3000/api/auth/register`;
+};
 
 /**
  * Register a user via web.
  * @summary Register a new user
  */
-export const postAuthRegister = async (postAuthRegisterBody: PostAuthRegisterBody, options?: RequestInit): Promise<postAuthRegisterResponse> => {
-
-  return useCustomInstance<postAuthRegisterResponse>(getPostAuthRegisterUrl(),
-  {
+export const postAuthRegister = async (
+  postAuthRegisterBody: PostAuthRegisterBody,
+  options?: RequestInit,
+): Promise<postAuthRegisterResponse> => {
+  return useCustomInstance<postAuthRegisterResponse>(getPostAuthRegisterUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postAuthRegisterBody)
-  }
-);}
-
+    body: JSON.stringify(postAuthRegisterBody),
+  });
+};
 
 export type getAuthSessionResponse200 = {
-  data: GetAuthSession200
-  status: 200
-}
+  data: GetAuthSession200;
+  status: 200;
+};
 
-export type getAuthSessionResponseSuccess = (getAuthSessionResponse200) & {
+export type getAuthSessionResponseSuccess = getAuthSessionResponse200 & {
   headers: Headers;
 };
-;
-
-export type getAuthSessionResponse = (getAuthSessionResponseSuccess)
+export type getAuthSessionResponse = getAuthSessionResponseSuccess;
 
 export const getGetAuthSessionUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/auth/session`
-}
+  return `http://localhost:3000/api/auth/session`;
+};
 
 /**
  * Check if the user is authenticated in the web dashboard
  * @summary Get current web session
  */
-export const getAuthSession = async ( options?: RequestInit): Promise<getAuthSessionResponse> => {
-
-  return useCustomInstance<getAuthSessionResponse>(getGetAuthSessionUrl(),
-  {
+export const getAuthSession = async (
+  options?: RequestInit,
+): Promise<getAuthSessionResponse> => {
+  return useCustomInstance<getAuthSessionResponse>(getGetAuthSessionUrl(), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+    method: 'GET',
+  });
+};
 
 export type getAuthCsrfResponse200 = {
-  data: GetAuthCsrf200
-  status: 200
-}
+  data: GetAuthCsrf200;
+  status: 200;
+};
 
-export type getAuthCsrfResponseSuccess = (getAuthCsrfResponse200) & {
+export type getAuthCsrfResponseSuccess = getAuthCsrfResponse200 & {
   headers: Headers;
 };
-;
-
-export type getAuthCsrfResponse = (getAuthCsrfResponseSuccess)
+export type getAuthCsrfResponse = getAuthCsrfResponseSuccess;
 
 export const getGetAuthCsrfUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/auth/csrf`
-}
+  return `http://localhost:3000/api/auth/csrf`;
+};
 
 /**
  * Retrieve CSRF token for form submissions
  * @summary Get CSRF token
  */
-export const getAuthCsrf = async ( options?: RequestInit): Promise<getAuthCsrfResponse> => {
-
-  return useCustomInstance<getAuthCsrfResponse>(getGetAuthCsrfUrl(),
-  {
+export const getAuthCsrf = async (
+  options?: RequestInit,
+): Promise<getAuthCsrfResponse> => {
+  return useCustomInstance<getAuthCsrfResponse>(getGetAuthCsrfUrl(), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
+    method: 'GET',
+  });
+};

@@ -28,37 +28,27 @@
 import { useCustomInstance } from '../../customInstance';
 
 export type getDocsResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type getDocsResponseSuccess = (getDocsResponse200) & {
+export type getDocsResponseSuccess = getDocsResponse200 & {
   headers: Headers;
 };
-;
-
-export type getDocsResponse = (getDocsResponseSuccess)
+export type getDocsResponse = getDocsResponseSuccess;
 
 export const getGetDocsUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/docs`
-}
+  return `http://localhost:3000/api/docs`;
+};
 
 /**
  * @summary Get Swagger JSON specification
  */
-export const getDocs = async ( options?: RequestInit): Promise<getDocsResponse> => {
-
-  return useCustomInstance<getDocsResponse>(getGetDocsUrl(),
-  {
+export const getDocs = async (
+  options?: RequestInit,
+): Promise<getDocsResponse> => {
+  return useCustomInstance<getDocsResponse>(getGetDocsUrl(), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
+    method: 'GET',
+  });
+};

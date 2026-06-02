@@ -28,37 +28,33 @@
 import { useCustomInstance } from '../../customInstance';
 
 export type deleteAutorepliesSessionIdResponse200 = {
-  data: void
-  status: 200
-}
-
-export type deleteAutorepliesSessionIdResponseSuccess = (deleteAutorepliesSessionIdResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type deleteAutorepliesSessionIdResponse = (deleteAutorepliesSessionIdResponseSuccess)
+export type deleteAutorepliesSessionIdResponseSuccess =
+  deleteAutorepliesSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type deleteAutorepliesSessionIdResponse =
+  deleteAutorepliesSessionIdResponseSuccess;
 
-export const getDeleteAutorepliesSessionIdUrl = (sessionId: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/autoreplies/${sessionId}`
-}
+export const getDeleteAutorepliesSessionIdUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/autoreplies/${sessionId}`;
+};
 
 /**
  * @summary Delete all autoreplies
  */
-export const deleteAutorepliesSessionId = async (sessionId: string, options?: RequestInit): Promise<deleteAutorepliesSessionIdResponse> => {
-
-  return useCustomInstance<deleteAutorepliesSessionIdResponse>(getDeleteAutorepliesSessionIdUrl(sessionId),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
+export const deleteAutorepliesSessionId = async (
+  sessionId: string,
+  options?: RequestInit,
+): Promise<deleteAutorepliesSessionIdResponse> => {
+  return useCustomInstance<deleteAutorepliesSessionIdResponse>(
+    getDeleteAutorepliesSessionIdUrl(sessionId),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};

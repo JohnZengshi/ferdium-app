@@ -31,184 +31,202 @@ import type {
   PostSessionsSessionIdAccess201,
   PostSessionsSessionIdAccessBody,
   Success,
-  UnauthorizedResponse
+  UnauthorizedResponse,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getSessionsSessionIdAccessResponse200 = {
-  data: GetSessionsSessionIdAccess200
-  status: 200
-}
+  data: GetSessionsSessionIdAccess200;
+  status: 200;
+};
 
 export type getSessionsSessionIdAccessResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getSessionsSessionIdAccessResponse403 = {
-  data: void
-  status: 403
-}
+  data: void;
+  status: 403;
+};
 
 export type getSessionsSessionIdAccessResponse404 = {
-  data: void
-  status: 404
-}
-
-export type getSessionsSessionIdAccessResponseSuccess = (getSessionsSessionIdAccessResponse200) & {
-  headers: Headers;
-};
-export type getSessionsSessionIdAccessResponseError = (getSessionsSessionIdAccessResponse401 | getSessionsSessionIdAccessResponse403 | getSessionsSessionIdAccessResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type getSessionsSessionIdAccessResponse = (getSessionsSessionIdAccessResponseSuccess | getSessionsSessionIdAccessResponseError)
+export type getSessionsSessionIdAccessResponseSuccess =
+  getSessionsSessionIdAccessResponse200 & {
+    headers: Headers;
+  };
+export type getSessionsSessionIdAccessResponseError = (
+  | getSessionsSessionIdAccessResponse401
+  | getSessionsSessionIdAccessResponse403
+  | getSessionsSessionIdAccessResponse404
+) & {
+  headers: Headers;
+};
 
-export const getGetSessionsSessionIdAccessUrl = (sessionId: string,) => {
+export type getSessionsSessionIdAccessResponse =
+  | getSessionsSessionIdAccessResponseSuccess
+  | getSessionsSessionIdAccessResponseError;
 
-
-
-
-  return `http://localhost:3000/api/sessions/${sessionId}/access`
-}
+export const getGetSessionsSessionIdAccessUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/sessions/${sessionId}/access`;
+};
 
 /**
  * Get all users who have been granted access to the specified session. Only the session owner or SUPERADMIN can use this endpoint.
  * @summary List users with shared access
  */
-export const getSessionsSessionIdAccess = async (sessionId: string, options?: RequestInit): Promise<getSessionsSessionIdAccessResponse> => {
-
-  return useCustomInstance<getSessionsSessionIdAccessResponse>(getGetSessionsSessionIdAccessUrl(sessionId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getSessionsSessionIdAccess = async (
+  sessionId: string,
+  options?: RequestInit,
+): Promise<getSessionsSessionIdAccessResponse> => {
+  return useCustomInstance<getSessionsSessionIdAccessResponse>(
+    getGetSessionsSessionIdAccessUrl(sessionId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type postSessionsSessionIdAccessResponse201 = {
-  data: PostSessionsSessionIdAccess201
-  status: 201
-}
+  data: PostSessionsSessionIdAccess201;
+  status: 201;
+};
 
 export type postSessionsSessionIdAccessResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type postSessionsSessionIdAccessResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postSessionsSessionIdAccessResponse403 = {
-  data: void
-  status: 403
-}
+  data: void;
+  status: 403;
+};
 
 export type postSessionsSessionIdAccessResponse404 = {
-  data: void
-  status: 404
-}
+  data: void;
+  status: 404;
+};
 
 export type postSessionsSessionIdAccessResponse409 = {
-  data: void
-  status: 409
-}
-
-export type postSessionsSessionIdAccessResponseSuccess = (postSessionsSessionIdAccessResponse201) & {
-  headers: Headers;
-};
-export type postSessionsSessionIdAccessResponseError = (postSessionsSessionIdAccessResponse400 | postSessionsSessionIdAccessResponse401 | postSessionsSessionIdAccessResponse403 | postSessionsSessionIdAccessResponse404 | postSessionsSessionIdAccessResponse409) & {
-  headers: Headers;
+  data: void;
+  status: 409;
 };
 
-export type postSessionsSessionIdAccessResponse = (postSessionsSessionIdAccessResponseSuccess | postSessionsSessionIdAccessResponseError)
+export type postSessionsSessionIdAccessResponseSuccess =
+  postSessionsSessionIdAccessResponse201 & {
+    headers: Headers;
+  };
+export type postSessionsSessionIdAccessResponseError = (
+  | postSessionsSessionIdAccessResponse400
+  | postSessionsSessionIdAccessResponse401
+  | postSessionsSessionIdAccessResponse403
+  | postSessionsSessionIdAccessResponse404
+  | postSessionsSessionIdAccessResponse409
+) & {
+  headers: Headers;
+};
 
-export const getPostSessionsSessionIdAccessUrl = (sessionId: string,) => {
+export type postSessionsSessionIdAccessResponse =
+  | postSessionsSessionIdAccessResponseSuccess
+  | postSessionsSessionIdAccessResponseError;
 
-
-
-
-  return `http://localhost:3000/api/sessions/${sessionId}/access`
-}
+export const getPostSessionsSessionIdAccessUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/sessions/${sessionId}/access`;
+};
 
 /**
  * Grant session access to another registered user by email. Only the session owner or SUPERADMIN can use this endpoint. Cannot grant access to the session owner or SUPERADMINs.
  * @summary Grant access to another user
  */
-export const postSessionsSessionIdAccess = async (sessionId: string,
-    postSessionsSessionIdAccessBody: PostSessionsSessionIdAccessBody, options?: RequestInit): Promise<postSessionsSessionIdAccessResponse> => {
-
-  return useCustomInstance<postSessionsSessionIdAccessResponse>(getPostSessionsSessionIdAccessUrl(sessionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postSessionsSessionIdAccessBody)
-  }
-);}
-
+export const postSessionsSessionIdAccess = async (
+  sessionId: string,
+  postSessionsSessionIdAccessBody: PostSessionsSessionIdAccessBody,
+  options?: RequestInit,
+): Promise<postSessionsSessionIdAccessResponse> => {
+  return useCustomInstance<postSessionsSessionIdAccessResponse>(
+    getPostSessionsSessionIdAccessUrl(sessionId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postSessionsSessionIdAccessBody),
+    },
+  );
+};
 
 export type deleteSessionsSessionIdAccessResponse200 = {
-  data: Success
-  status: 200
-}
+  data: Success;
+  status: 200;
+};
 
 export type deleteSessionsSessionIdAccessResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type deleteSessionsSessionIdAccessResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type deleteSessionsSessionIdAccessResponse403 = {
-  data: void
-  status: 403
-}
+  data: void;
+  status: 403;
+};
 
 export type deleteSessionsSessionIdAccessResponse404 = {
-  data: void
-  status: 404
-}
-
-export type deleteSessionsSessionIdAccessResponseSuccess = (deleteSessionsSessionIdAccessResponse200) & {
-  headers: Headers;
-};
-export type deleteSessionsSessionIdAccessResponseError = (deleteSessionsSessionIdAccessResponse400 | deleteSessionsSessionIdAccessResponse401 | deleteSessionsSessionIdAccessResponse403 | deleteSessionsSessionIdAccessResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type deleteSessionsSessionIdAccessResponse = (deleteSessionsSessionIdAccessResponseSuccess | deleteSessionsSessionIdAccessResponseError)
+export type deleteSessionsSessionIdAccessResponseSuccess =
+  deleteSessionsSessionIdAccessResponse200 & {
+    headers: Headers;
+  };
+export type deleteSessionsSessionIdAccessResponseError = (
+  | deleteSessionsSessionIdAccessResponse400
+  | deleteSessionsSessionIdAccessResponse401
+  | deleteSessionsSessionIdAccessResponse403
+  | deleteSessionsSessionIdAccessResponse404
+) & {
+  headers: Headers;
+};
 
-export const getDeleteSessionsSessionIdAccessUrl = (sessionId: string,) => {
+export type deleteSessionsSessionIdAccessResponse =
+  | deleteSessionsSessionIdAccessResponseSuccess
+  | deleteSessionsSessionIdAccessResponseError;
 
-
-
-
-  return `http://localhost:3000/api/sessions/${sessionId}/access`
-}
+export const getDeleteSessionsSessionIdAccessUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/sessions/${sessionId}/access`;
+};
 
 /**
  * Remove shared access for a user from the specified session. Only the session owner or SUPERADMIN can use this endpoint.
  * @summary Revoke user access
  */
-export const deleteSessionsSessionIdAccess = async (sessionId: string,
-    deleteSessionsSessionIdAccessBody: DeleteSessionsSessionIdAccessBody, options?: RequestInit): Promise<deleteSessionsSessionIdAccessResponse> => {
-
-  return useCustomInstance<deleteSessionsSessionIdAccessResponse>(getDeleteSessionsSessionIdAccessUrl(sessionId),
-  {
-    ...options,
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(deleteSessionsSessionIdAccessBody)
-  }
-);}
-
-
+export const deleteSessionsSessionIdAccess = async (
+  sessionId: string,
+  deleteSessionsSessionIdAccessBody: DeleteSessionsSessionIdAccessBody,
+  options?: RequestInit,
+): Promise<deleteSessionsSessionIdAccessResponse> => {
+  return useCustomInstance<deleteSessionsSessionIdAccessResponse>(
+    getDeleteSessionsSessionIdAccessUrl(sessionId),
+    {
+      ...options,
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(deleteSessionsSessionIdAccessBody),
+    },
+  );
+};

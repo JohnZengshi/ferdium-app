@@ -28,37 +28,33 @@
 import { useCustomInstance } from '../../customInstance';
 
 export type getChatsByLabelLabelIdResponse200 = {
-  data: void
-  status: 200
-}
-
-export type getChatsByLabelLabelIdResponseSuccess = (getChatsByLabelLabelIdResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type getChatsByLabelLabelIdResponse = (getChatsByLabelLabelIdResponseSuccess)
+export type getChatsByLabelLabelIdResponseSuccess =
+  getChatsByLabelLabelIdResponse200 & {
+    headers: Headers;
+  };
+export type getChatsByLabelLabelIdResponse =
+  getChatsByLabelLabelIdResponseSuccess;
 
-export const getGetChatsByLabelLabelIdUrl = (labelId: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/chats/by-label/${labelId}`
-}
+export const getGetChatsByLabelLabelIdUrl = (labelId: string) => {
+  return `http://localhost:3000/api/chats/by-label/${labelId}`;
+};
 
 /**
  * @summary Get chats by label ID
  */
-export const getChatsByLabelLabelId = async (labelId: string, options?: RequestInit): Promise<getChatsByLabelLabelIdResponse> => {
-
-  return useCustomInstance<getChatsByLabelLabelIdResponse>(getGetChatsByLabelLabelIdUrl(labelId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
+export const getChatsByLabelLabelId = async (
+  labelId: string,
+  options?: RequestInit,
+): Promise<getChatsByLabelLabelIdResponse> => {
+  return useCustomInstance<getChatsByLabelLabelIdResponse>(
+    getGetChatsByLabelLabelIdUrl(labelId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};

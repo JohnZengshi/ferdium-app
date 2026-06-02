@@ -28,37 +28,31 @@
 import { useCustomInstance } from '../../customInstance';
 
 export type getMediaFilenameResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type getMediaFilenameResponseSuccess = (getMediaFilenameResponse200) & {
+export type getMediaFilenameResponseSuccess = getMediaFilenameResponse200 & {
   headers: Headers;
 };
-;
+export type getMediaFilenameResponse = getMediaFilenameResponseSuccess;
 
-export type getMediaFilenameResponse = (getMediaFilenameResponseSuccess)
-
-export const getGetMediaFilenameUrl = (filename: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/media/${filename}`
-}
+export const getGetMediaFilenameUrl = (filename: string) => {
+  return `http://localhost:3000/api/media/${filename}`;
+};
 
 /**
  * @summary Get uploaded media file
  */
-export const getMediaFilename = async (filename: string, options?: RequestInit): Promise<getMediaFilenameResponse> => {
-
-  return useCustomInstance<getMediaFilenameResponse>(getGetMediaFilenameUrl(filename),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
+export const getMediaFilename = async (
+  filename: string,
+  options?: RequestInit,
+): Promise<getMediaFilenameResponse> => {
+  return useCustomInstance<getMediaFilenameResponse>(
+    getGetMediaFilenameUrl(filename),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};

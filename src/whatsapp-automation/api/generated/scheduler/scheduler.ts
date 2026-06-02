@@ -33,446 +33,480 @@ import type {
   PutSchedulerSessionIdScheduleIdBody,
   ScheduledMessage,
   Success,
-  UnauthorizedResponse
+  UnauthorizedResponse,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type deleteSchedulerSessionIdResponse200 = {
-  data: void
-  status: 200
-}
-
-export type deleteSchedulerSessionIdResponseSuccess = (deleteSchedulerSessionIdResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type deleteSchedulerSessionIdResponse = (deleteSchedulerSessionIdResponseSuccess)
+export type deleteSchedulerSessionIdResponseSuccess =
+  deleteSchedulerSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type deleteSchedulerSessionIdResponse =
+  deleteSchedulerSessionIdResponseSuccess;
 
-export const getDeleteSchedulerSessionIdUrl = (sessionId: string,) => {
-
-
-
-
-  return `http://localhost:3000/api/scheduler/${sessionId}`
-}
+export const getDeleteSchedulerSessionIdUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/scheduler/${sessionId}`;
+};
 
 /**
  * @summary Delete all scheduled messages for a session
  */
-export const deleteSchedulerSessionId = async (sessionId: string, options?: RequestInit): Promise<deleteSchedulerSessionIdResponse> => {
-
-  return useCustomInstance<deleteSchedulerSessionIdResponse>(getDeleteSchedulerSessionIdUrl(sessionId),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
+export const deleteSchedulerSessionId = async (
+  sessionId: string,
+  options?: RequestInit,
+): Promise<deleteSchedulerSessionIdResponse> => {
+  return useCustomInstance<deleteSchedulerSessionIdResponse>(
+    getDeleteSchedulerSessionIdUrl(sessionId),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};
 
 export type getSchedulerSessionIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type getSchedulerSessionIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getSchedulerSessionIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type getSchedulerSessionIdResponse404 = {
-  data: void
-  status: 404
-}
-
-export type getSchedulerSessionIdResponseSuccess = (getSchedulerSessionIdResponse200) & {
-  headers: Headers;
-};
-export type getSchedulerSessionIdResponseError = (getSchedulerSessionIdResponse401 | getSchedulerSessionIdResponse403 | getSchedulerSessionIdResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type getSchedulerSessionIdResponse = (getSchedulerSessionIdResponseSuccess | getSchedulerSessionIdResponseError)
+export type getSchedulerSessionIdResponseSuccess =
+  getSchedulerSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type getSchedulerSessionIdResponseError = (
+  | getSchedulerSessionIdResponse401
+  | getSchedulerSessionIdResponse403
+  | getSchedulerSessionIdResponse404
+) & {
+  headers: Headers;
+};
 
-export const getGetSchedulerSessionIdUrl = (sessionId: string,) => {
+export type getSchedulerSessionIdResponse =
+  | getSchedulerSessionIdResponseSuccess
+  | getSchedulerSessionIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/scheduler/${sessionId}`
-}
+export const getGetSchedulerSessionIdUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/scheduler/${sessionId}`;
+};
 
 /**
  * @summary List scheduled messages
  */
-export const getSchedulerSessionId = async (sessionId: string, options?: RequestInit): Promise<getSchedulerSessionIdResponse> => {
-
-  return useCustomInstance<getSchedulerSessionIdResponse>(getGetSchedulerSessionIdUrl(sessionId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getSchedulerSessionId = async (
+  sessionId: string,
+  options?: RequestInit,
+): Promise<getSchedulerSessionIdResponse> => {
+  return useCustomInstance<getSchedulerSessionIdResponse>(
+    getGetSchedulerSessionIdUrl(sessionId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type postSchedulerSessionIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type postSchedulerSessionIdResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type postSchedulerSessionIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postSchedulerSessionIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
-
-export type postSchedulerSessionIdResponseSuccess = (postSchedulerSessionIdResponse200) & {
-  headers: Headers;
-};
-export type postSchedulerSessionIdResponseError = (postSchedulerSessionIdResponse400 | postSchedulerSessionIdResponse401 | postSchedulerSessionIdResponse403) & {
-  headers: Headers;
+  data: ForbiddenResponse;
+  status: 403;
 };
 
-export type postSchedulerSessionIdResponse = (postSchedulerSessionIdResponseSuccess | postSchedulerSessionIdResponseError)
+export type postSchedulerSessionIdResponseSuccess =
+  postSchedulerSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type postSchedulerSessionIdResponseError = (
+  | postSchedulerSessionIdResponse400
+  | postSchedulerSessionIdResponse401
+  | postSchedulerSessionIdResponse403
+) & {
+  headers: Headers;
+};
 
-export const getPostSchedulerSessionIdUrl = (sessionId: string,) => {
+export type postSchedulerSessionIdResponse =
+  | postSchedulerSessionIdResponseSuccess
+  | postSchedulerSessionIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/scheduler/${sessionId}`
-}
+export const getPostSchedulerSessionIdUrl = (sessionId: string) => {
+  return `http://localhost:3000/api/scheduler/${sessionId}`;
+};
 
 /**
  * @summary Create scheduled message
  */
-export const postSchedulerSessionId = async (sessionId: string,
-    postSchedulerSessionIdBody?: PostSchedulerSessionIdBody, options?: RequestInit): Promise<postSchedulerSessionIdResponse> => {
-
-  return useCustomInstance<postSchedulerSessionIdResponse>(getPostSchedulerSessionIdUrl(sessionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postSchedulerSessionIdBody)
-  }
-);}
-
+export const postSchedulerSessionId = async (
+  sessionId: string,
+  postSchedulerSessionIdBody?: PostSchedulerSessionIdBody,
+  options?: RequestInit,
+): Promise<postSchedulerSessionIdResponse> => {
+  return useCustomInstance<postSchedulerSessionIdResponse>(
+    getPostSchedulerSessionIdUrl(sessionId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postSchedulerSessionIdBody),
+    },
+  );
+};
 
 export type deleteSchedulerSessionIdScheduleIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type deleteSchedulerSessionIdScheduleIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type deleteSchedulerSessionIdScheduleIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type deleteSchedulerSessionIdScheduleIdResponse404 = {
-  data: void
-  status: 404
-}
-
-export type deleteSchedulerSessionIdScheduleIdResponseSuccess = (deleteSchedulerSessionIdScheduleIdResponse200) & {
-  headers: Headers;
-};
-export type deleteSchedulerSessionIdScheduleIdResponseError = (deleteSchedulerSessionIdScheduleIdResponse401 | deleteSchedulerSessionIdScheduleIdResponse403 | deleteSchedulerSessionIdScheduleIdResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type deleteSchedulerSessionIdScheduleIdResponse = (deleteSchedulerSessionIdScheduleIdResponseSuccess | deleteSchedulerSessionIdScheduleIdResponseError)
+export type deleteSchedulerSessionIdScheduleIdResponseSuccess =
+  deleteSchedulerSessionIdScheduleIdResponse200 & {
+    headers: Headers;
+  };
+export type deleteSchedulerSessionIdScheduleIdResponseError = (
+  | deleteSchedulerSessionIdScheduleIdResponse401
+  | deleteSchedulerSessionIdScheduleIdResponse403
+  | deleteSchedulerSessionIdScheduleIdResponse404
+) & {
+  headers: Headers;
+};
 
-export const getDeleteSchedulerSessionIdScheduleIdUrl = (sessionId: string,
-    scheduleId: string,) => {
+export type deleteSchedulerSessionIdScheduleIdResponse =
+  | deleteSchedulerSessionIdScheduleIdResponseSuccess
+  | deleteSchedulerSessionIdScheduleIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/scheduler/${sessionId}/${scheduleId}`
-}
+export const getDeleteSchedulerSessionIdScheduleIdUrl = (
+  sessionId: string,
+  scheduleId: string,
+) => {
+  return `http://localhost:3000/api/scheduler/${sessionId}/${scheduleId}`;
+};
 
 /**
  * @summary Delete scheduled message
  */
-export const deleteSchedulerSessionIdScheduleId = async (sessionId: string,
-    scheduleId: string, options?: RequestInit): Promise<deleteSchedulerSessionIdScheduleIdResponse> => {
-
-  return useCustomInstance<deleteSchedulerSessionIdScheduleIdResponse>(getDeleteSchedulerSessionIdScheduleIdUrl(sessionId,scheduleId),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
+export const deleteSchedulerSessionIdScheduleId = async (
+  sessionId: string,
+  scheduleId: string,
+  options?: RequestInit,
+): Promise<deleteSchedulerSessionIdScheduleIdResponse> => {
+  return useCustomInstance<deleteSchedulerSessionIdScheduleIdResponse>(
+    getDeleteSchedulerSessionIdScheduleIdUrl(sessionId, scheduleId),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};
 
 export type putSchedulerSessionIdScheduleIdResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
 export type putSchedulerSessionIdScheduleIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type putSchedulerSessionIdScheduleIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type putSchedulerSessionIdScheduleIdResponse404 = {
-  data: void
-  status: 404
-}
-
-export type putSchedulerSessionIdScheduleIdResponseSuccess = (putSchedulerSessionIdScheduleIdResponse200) & {
-  headers: Headers;
-};
-export type putSchedulerSessionIdScheduleIdResponseError = (putSchedulerSessionIdScheduleIdResponse401 | putSchedulerSessionIdScheduleIdResponse403 | putSchedulerSessionIdScheduleIdResponse404) & {
-  headers: Headers;
+  data: void;
+  status: 404;
 };
 
-export type putSchedulerSessionIdScheduleIdResponse = (putSchedulerSessionIdScheduleIdResponseSuccess | putSchedulerSessionIdScheduleIdResponseError)
+export type putSchedulerSessionIdScheduleIdResponseSuccess =
+  putSchedulerSessionIdScheduleIdResponse200 & {
+    headers: Headers;
+  };
+export type putSchedulerSessionIdScheduleIdResponseError = (
+  | putSchedulerSessionIdScheduleIdResponse401
+  | putSchedulerSessionIdScheduleIdResponse403
+  | putSchedulerSessionIdScheduleIdResponse404
+) & {
+  headers: Headers;
+};
 
-export const getPutSchedulerSessionIdScheduleIdUrl = (sessionId: string,
-    scheduleId: string,) => {
+export type putSchedulerSessionIdScheduleIdResponse =
+  | putSchedulerSessionIdScheduleIdResponseSuccess
+  | putSchedulerSessionIdScheduleIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/scheduler/${sessionId}/${scheduleId}`
-}
+export const getPutSchedulerSessionIdScheduleIdUrl = (
+  sessionId: string,
+  scheduleId: string,
+) => {
+  return `http://localhost:3000/api/scheduler/${sessionId}/${scheduleId}`;
+};
 
 /**
  * @summary Update scheduled message
  */
-export const putSchedulerSessionIdScheduleId = async (sessionId: string,
-    scheduleId: string,
-    putSchedulerSessionIdScheduleIdBody?: PutSchedulerSessionIdScheduleIdBody, options?: RequestInit): Promise<putSchedulerSessionIdScheduleIdResponse> => {
-
-  return useCustomInstance<putSchedulerSessionIdScheduleIdResponse>(getPutSchedulerSessionIdScheduleIdUrl(sessionId,scheduleId),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putSchedulerSessionIdScheduleIdBody)
-  }
-);}
-
+export const putSchedulerSessionIdScheduleId = async (
+  sessionId: string,
+  scheduleId: string,
+  putSchedulerSessionIdScheduleIdBody?: PutSchedulerSessionIdScheduleIdBody,
+  options?: RequestInit,
+): Promise<putSchedulerSessionIdScheduleIdResponse> => {
+  return useCustomInstance<putSchedulerSessionIdScheduleIdResponse>(
+    getPutSchedulerSessionIdScheduleIdUrl(sessionId, scheduleId),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(putSchedulerSessionIdScheduleIdBody),
+    },
+  );
+};
 
 export type postSchedulerResponse200 = {
-  data: ScheduledMessage
-  status: 200
-}
+  data: ScheduledMessage;
+  status: 200;
+};
 
 export type postSchedulerResponse400 = {
-  data: void
-  status: 400
-}
+  data: void;
+  status: 400;
+};
 
 export type postSchedulerResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postSchedulerResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type postSchedulerResponse404 = {
-  data: void
-  status: 404
-}
+  data: void;
+  status: 404;
+};
 
 export type postSchedulerResponse500 = {
-  data: void
-  status: 500
-}
-
-export type postSchedulerResponseSuccess = (postSchedulerResponse200) & {
-  headers: Headers;
-};
-export type postSchedulerResponseError = (postSchedulerResponse400 | postSchedulerResponse401 | postSchedulerResponse403 | postSchedulerResponse404 | postSchedulerResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type postSchedulerResponse = (postSchedulerResponseSuccess | postSchedulerResponseError)
+export type postSchedulerResponseSuccess = postSchedulerResponse200 & {
+  headers: Headers;
+};
+export type postSchedulerResponseError = (
+  | postSchedulerResponse400
+  | postSchedulerResponse401
+  | postSchedulerResponse403
+  | postSchedulerResponse404
+  | postSchedulerResponse500
+) & {
+  headers: Headers;
+};
+
+export type postSchedulerResponse =
+  | postSchedulerResponseSuccess
+  | postSchedulerResponseError;
 
 export const getPostSchedulerUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/scheduler`
-}
+  return `http://localhost:3000/api/scheduler`;
+};
 
 /**
  * **DEPRECATED:** Use POST /scheduler/{sessionId} instead.
  * @deprecated
  * @summary Schedule message (DEPRECATED)
  */
-export const postScheduler = async (postSchedulerBody?: PostSchedulerBody, options?: RequestInit): Promise<postSchedulerResponse> => {
-
-  return useCustomInstance<postSchedulerResponse>(getPostSchedulerUrl(),
-  {
+export const postScheduler = async (
+  postSchedulerBody?: PostSchedulerBody,
+  options?: RequestInit,
+): Promise<postSchedulerResponse> => {
+  return useCustomInstance<postSchedulerResponse>(getPostSchedulerUrl(), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postSchedulerBody)
-  }
-);}
-
+    body: JSON.stringify(postSchedulerBody),
+  });
+};
 
 export type getSchedulerResponse200 = {
-  data: ScheduledMessage[]
-  status: 200
-}
+  data: ScheduledMessage[];
+  status: 200;
+};
 
 export type getSchedulerResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type getSchedulerResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type getSchedulerResponse404 = {
-  data: void
-  status: 404
-}
+  data: void;
+  status: 404;
+};
 
 export type getSchedulerResponse500 = {
-  data: void
-  status: 500
-}
-
-export type getSchedulerResponseSuccess = (getSchedulerResponse200) & {
-  headers: Headers;
-};
-export type getSchedulerResponseError = (getSchedulerResponse401 | getSchedulerResponse403 | getSchedulerResponse404 | getSchedulerResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type getSchedulerResponse = (getSchedulerResponseSuccess | getSchedulerResponseError)
+export type getSchedulerResponseSuccess = getSchedulerResponse200 & {
+  headers: Headers;
+};
+export type getSchedulerResponseError = (
+  | getSchedulerResponse401
+  | getSchedulerResponse403
+  | getSchedulerResponse404
+  | getSchedulerResponse500
+) & {
+  headers: Headers;
+};
 
-export const getGetSchedulerUrl = (params: GetSchedulerParams,) => {
+export type getSchedulerResponse =
+  | getSchedulerResponseSuccess
+  | getSchedulerResponseError;
+
+export const getGetSchedulerUrl = (params: GetSchedulerParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/scheduler?${stringifiedParams}` : `http://localhost:3000/api/scheduler`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/scheduler?${stringifiedParams}`
+    : `http://localhost:3000/api/scheduler`;
+};
 
 /**
  * **DEPRECATED:** Use GET /scheduler/{sessionId} instead.
  * @deprecated
  * @summary List scheduled messages (DEPRECATED)
  */
-export const getScheduler = async (params: GetSchedulerParams, options?: RequestInit): Promise<getSchedulerResponse> => {
-
-  return useCustomInstance<getSchedulerResponse>(getGetSchedulerUrl(params),
-  {
+export const getScheduler = async (
+  params: GetSchedulerParams,
+  options?: RequestInit,
+): Promise<getSchedulerResponse> => {
+  return useCustomInstance<getSchedulerResponse>(getGetSchedulerUrl(params), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+    method: 'GET',
+  });
+};
 
 export type deleteSchedulerIdResponse200 = {
-  data: Success
-  status: 200
-}
+  data: Success;
+  status: 200;
+};
 
 export type deleteSchedulerIdResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type deleteSchedulerIdResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type deleteSchedulerIdResponse404 = {
-  data: void
-  status: 404
-}
+  data: void;
+  status: 404;
+};
 
 export type deleteSchedulerIdResponse500 = {
-  data: void
-  status: 500
-}
-
-export type deleteSchedulerIdResponseSuccess = (deleteSchedulerIdResponse200) & {
-  headers: Headers;
-};
-export type deleteSchedulerIdResponseError = (deleteSchedulerIdResponse401 | deleteSchedulerIdResponse403 | deleteSchedulerIdResponse404 | deleteSchedulerIdResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type deleteSchedulerIdResponse = (deleteSchedulerIdResponseSuccess | deleteSchedulerIdResponseError)
+export type deleteSchedulerIdResponseSuccess = deleteSchedulerIdResponse200 & {
+  headers: Headers;
+};
+export type deleteSchedulerIdResponseError = (
+  | deleteSchedulerIdResponse401
+  | deleteSchedulerIdResponse403
+  | deleteSchedulerIdResponse404
+  | deleteSchedulerIdResponse500
+) & {
+  headers: Headers;
+};
 
-export const getDeleteSchedulerIdUrl = (id: string,) => {
+export type deleteSchedulerIdResponse =
+  | deleteSchedulerIdResponseSuccess
+  | deleteSchedulerIdResponseError;
 
-
-
-
-  return `http://localhost:3000/api/scheduler/${id}`
-}
+export const getDeleteSchedulerIdUrl = (id: string) => {
+  return `http://localhost:3000/api/scheduler/${id}`;
+};
 
 /**
  * **DEPRECATED:** Use DELETE /scheduler/{sessionId}/{scheduleId} instead.
  * @deprecated
  * @summary Delete scheduled message (DEPRECATED)
  */
-export const deleteSchedulerId = async (id: string, options?: RequestInit): Promise<deleteSchedulerIdResponse> => {
-
-  return useCustomInstance<deleteSchedulerIdResponse>(getDeleteSchedulerIdUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
+export const deleteSchedulerId = async (
+  id: string,
+  options?: RequestInit,
+): Promise<deleteSchedulerIdResponse> => {
+  return useCustomInstance<deleteSchedulerIdResponse>(
+    getDeleteSchedulerIdUrl(id),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};

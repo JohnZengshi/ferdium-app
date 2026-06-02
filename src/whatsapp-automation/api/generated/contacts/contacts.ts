@@ -35,279 +35,285 @@ import type {
   PostContactsSessionIdJidBlock200,
   PostContactsSessionIdJidUnblock200,
   PostContactsUnblockBody,
-  UnauthorizedResponse
+  UnauthorizedResponse,
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getContactsSessionIdResponse200 = {
-  data: GetContactsSessionId200
-  status: 200
-}
-
-export type getContactsSessionIdResponseSuccess = (getContactsSessionIdResponse200) & {
-  headers: Headers;
+  data: GetContactsSessionId200;
+  status: 200;
 };
-;
 
-export type getContactsSessionIdResponse = (getContactsSessionIdResponseSuccess)
+export type getContactsSessionIdResponseSuccess =
+  getContactsSessionIdResponse200 & {
+    headers: Headers;
+  };
+export type getContactsSessionIdResponse = getContactsSessionIdResponseSuccess;
 
-export const getGetContactsSessionIdUrl = (sessionId: string,
-    params?: GetContactsSessionIdParams,) => {
+export const getGetContactsSessionIdUrl = (
+  sessionId: string,
+  params?: GetContactsSessionIdParams,
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/contacts/${sessionId}?${stringifiedParams}` : `http://localhost:3000/api/contacts/${sessionId}`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/contacts/${sessionId}?${stringifiedParams}`
+    : `http://localhost:3000/api/contacts/${sessionId}`;
+};
 
 /**
  * Get all contacts with search and pagination
  * @summary List contacts
  */
-export const getContactsSessionId = async (sessionId: string,
-    params?: GetContactsSessionIdParams, options?: RequestInit): Promise<getContactsSessionIdResponse> => {
-
-  return useCustomInstance<getContactsSessionIdResponse>(getGetContactsSessionIdUrl(sessionId,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getContactsSessionId = async (
+  sessionId: string,
+  params?: GetContactsSessionIdParams,
+  options?: RequestInit,
+): Promise<getContactsSessionIdResponse> => {
+  return useCustomInstance<getContactsSessionIdResponse>(
+    getGetContactsSessionIdUrl(sessionId, params),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type getContactsResponse200 = {
-  data: GetContacts200
-  status: 200
-}
+  data: GetContacts200;
+  status: 200;
+};
 
-export type getContactsResponseSuccess = (getContactsResponse200) & {
+export type getContactsResponseSuccess = getContactsResponse200 & {
   headers: Headers;
 };
-;
+export type getContactsResponse = getContactsResponseSuccess;
 
-export type getContactsResponse = (getContactsResponseSuccess)
-
-export const getGetContactsUrl = (params: GetContactsParams,) => {
+export const getGetContactsUrl = (params: GetContactsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:3000/api/contacts?${stringifiedParams}` : `http://localhost:3000/api/contacts`
-}
+  return stringifiedParams.length > 0
+    ? `http://localhost:3000/api/contacts?${stringifiedParams}`
+    : `http://localhost:3000/api/contacts`;
+};
 
 /**
  * **DEPRECATED:** Use GET /contacts/{sessionId} instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary List contacts (DEPRECATED)
  */
-export const getContacts = async (params: GetContactsParams, options?: RequestInit): Promise<getContactsResponse> => {
-
-  return useCustomInstance<getContactsResponse>(getGetContactsUrl(params),
-  {
+export const getContacts = async (
+  params: GetContactsParams,
+  options?: RequestInit,
+): Promise<getContactsResponse> => {
+  return useCustomInstance<getContactsResponse>(getGetContactsUrl(params), {
     ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+    method: 'GET',
+  });
+};
 
 export type postContactsSessionIdJidBlockResponse200 = {
-  data: PostContactsSessionIdJidBlock200
-  status: 200
-}
+  data: PostContactsSessionIdJidBlock200;
+  status: 200;
+};
 
 export type postContactsSessionIdJidBlockResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postContactsSessionIdJidBlockResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type postContactsSessionIdJidBlockResponse500 = {
-  data: void
-  status: 500
-}
-
-export type postContactsSessionIdJidBlockResponseSuccess = (postContactsSessionIdJidBlockResponse200) & {
-  headers: Headers;
-};
-export type postContactsSessionIdJidBlockResponseError = (postContactsSessionIdJidBlockResponse401 | postContactsSessionIdJidBlockResponse403 | postContactsSessionIdJidBlockResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type postContactsSessionIdJidBlockResponse = (postContactsSessionIdJidBlockResponseSuccess | postContactsSessionIdJidBlockResponseError)
+export type postContactsSessionIdJidBlockResponseSuccess =
+  postContactsSessionIdJidBlockResponse200 & {
+    headers: Headers;
+  };
+export type postContactsSessionIdJidBlockResponseError = (
+  | postContactsSessionIdJidBlockResponse401
+  | postContactsSessionIdJidBlockResponse403
+  | postContactsSessionIdJidBlockResponse500
+) & {
+  headers: Headers;
+};
 
-export const getPostContactsSessionIdJidBlockUrl = (sessionId: string,
-    jid: string,) => {
+export type postContactsSessionIdJidBlockResponse =
+  | postContactsSessionIdJidBlockResponseSuccess
+  | postContactsSessionIdJidBlockResponseError;
 
-
-
-
-  return `http://localhost:3000/api/contacts/${sessionId}/${jid}/block`
-}
+export const getPostContactsSessionIdJidBlockUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/contacts/${sessionId}/${jid}/block`;
+};
 
 /**
  * @summary Block contact
  */
-export const postContactsSessionIdJidBlock = async (sessionId: string,
-    jid: string, options?: RequestInit): Promise<postContactsSessionIdJidBlockResponse> => {
-
-  return useCustomInstance<postContactsSessionIdJidBlockResponse>(getPostContactsSessionIdJidBlockUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'POST'
-
-
-  }
-);}
-
+export const postContactsSessionIdJidBlock = async (
+  sessionId: string,
+  jid: string,
+  options?: RequestInit,
+): Promise<postContactsSessionIdJidBlockResponse> => {
+  return useCustomInstance<postContactsSessionIdJidBlockResponse>(
+    getPostContactsSessionIdJidBlockUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'POST',
+    },
+  );
+};
 
 export type postContactsBlockResponse200 = {
-  data: void
-  status: 200
-}
+  data: void;
+  status: 200;
+};
 
-export type postContactsBlockResponseSuccess = (postContactsBlockResponse200) & {
+export type postContactsBlockResponseSuccess = postContactsBlockResponse200 & {
   headers: Headers;
 };
-;
-
-export type postContactsBlockResponse = (postContactsBlockResponseSuccess)
+export type postContactsBlockResponse = postContactsBlockResponseSuccess;
 
 export const getPostContactsBlockUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/contacts/block`
-}
+  return `http://localhost:3000/api/contacts/block`;
+};
 
 /**
  * **DEPRECATED:** Use POST /contacts/{sessionId}/{jid}/block instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Block contact (DEPRECATED)
  */
-export const postContactsBlock = async (postContactsBlockBody?: PostContactsBlockBody, options?: RequestInit): Promise<postContactsBlockResponse> => {
-
-  return useCustomInstance<postContactsBlockResponse>(getPostContactsBlockUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postContactsBlockBody)
-  }
-);}
-
+export const postContactsBlock = async (
+  postContactsBlockBody?: PostContactsBlockBody,
+  options?: RequestInit,
+): Promise<postContactsBlockResponse> => {
+  return useCustomInstance<postContactsBlockResponse>(
+    getPostContactsBlockUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postContactsBlockBody),
+    },
+  );
+};
 
 export type postContactsSessionIdJidUnblockResponse200 = {
-  data: PostContactsSessionIdJidUnblock200
-  status: 200
-}
+  data: PostContactsSessionIdJidUnblock200;
+  status: 200;
+};
 
 export type postContactsSessionIdJidUnblockResponse401 = {
-  data: UnauthorizedResponse
-  status: 401
-}
+  data: UnauthorizedResponse;
+  status: 401;
+};
 
 export type postContactsSessionIdJidUnblockResponse403 = {
-  data: ForbiddenResponse
-  status: 403
-}
+  data: ForbiddenResponse;
+  status: 403;
+};
 
 export type postContactsSessionIdJidUnblockResponse500 = {
-  data: void
-  status: 500
-}
-
-export type postContactsSessionIdJidUnblockResponseSuccess = (postContactsSessionIdJidUnblockResponse200) & {
-  headers: Headers;
-};
-export type postContactsSessionIdJidUnblockResponseError = (postContactsSessionIdJidUnblockResponse401 | postContactsSessionIdJidUnblockResponse403 | postContactsSessionIdJidUnblockResponse500) & {
-  headers: Headers;
+  data: void;
+  status: 500;
 };
 
-export type postContactsSessionIdJidUnblockResponse = (postContactsSessionIdJidUnblockResponseSuccess | postContactsSessionIdJidUnblockResponseError)
+export type postContactsSessionIdJidUnblockResponseSuccess =
+  postContactsSessionIdJidUnblockResponse200 & {
+    headers: Headers;
+  };
+export type postContactsSessionIdJidUnblockResponseError = (
+  | postContactsSessionIdJidUnblockResponse401
+  | postContactsSessionIdJidUnblockResponse403
+  | postContactsSessionIdJidUnblockResponse500
+) & {
+  headers: Headers;
+};
 
-export const getPostContactsSessionIdJidUnblockUrl = (sessionId: string,
-    jid: string,) => {
+export type postContactsSessionIdJidUnblockResponse =
+  | postContactsSessionIdJidUnblockResponseSuccess
+  | postContactsSessionIdJidUnblockResponseError;
 
-
-
-
-  return `http://localhost:3000/api/contacts/${sessionId}/${jid}/unblock`
-}
+export const getPostContactsSessionIdJidUnblockUrl = (
+  sessionId: string,
+  jid: string,
+) => {
+  return `http://localhost:3000/api/contacts/${sessionId}/${jid}/unblock`;
+};
 
 /**
  * @summary Unblock contact
  */
-export const postContactsSessionIdJidUnblock = async (sessionId: string,
-    jid: string, options?: RequestInit): Promise<postContactsSessionIdJidUnblockResponse> => {
-
-  return useCustomInstance<postContactsSessionIdJidUnblockResponse>(getPostContactsSessionIdJidUnblockUrl(sessionId,jid),
-  {
-    ...options,
-    method: 'POST'
-
-
-  }
-);}
-
+export const postContactsSessionIdJidUnblock = async (
+  sessionId: string,
+  jid: string,
+  options?: RequestInit,
+): Promise<postContactsSessionIdJidUnblockResponse> => {
+  return useCustomInstance<postContactsSessionIdJidUnblockResponse>(
+    getPostContactsSessionIdJidUnblockUrl(sessionId, jid),
+    {
+      ...options,
+      method: 'POST',
+    },
+  );
+};
 
 export type postContactsUnblockResponse200 = {
-  data: void
-  status: 200
-}
-
-export type postContactsUnblockResponseSuccess = (postContactsUnblockResponse200) & {
-  headers: Headers;
+  data: void;
+  status: 200;
 };
-;
 
-export type postContactsUnblockResponse = (postContactsUnblockResponseSuccess)
+export type postContactsUnblockResponseSuccess =
+  postContactsUnblockResponse200 & {
+    headers: Headers;
+  };
+export type postContactsUnblockResponse = postContactsUnblockResponseSuccess;
 
 export const getPostContactsUnblockUrl = () => {
-
-
-
-
-  return `http://localhost:3000/api/contacts/unblock`
-}
+  return `http://localhost:3000/api/contacts/unblock`;
+};
 
 /**
  * **DEPRECATED:** Use POST /contacts/{sessionId}/{jid}/unblock instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Unblock contact (DEPRECATED)
  */
-export const postContactsUnblock = async (postContactsUnblockBody?: PostContactsUnblockBody, options?: RequestInit): Promise<postContactsUnblockResponse> => {
-
-  return useCustomInstance<postContactsUnblockResponse>(getPostContactsUnblockUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postContactsUnblockBody)
-  }
-);}
-
-
+export const postContactsUnblock = async (
+  postContactsUnblockBody?: PostContactsUnblockBody,
+  options?: RequestInit,
+): Promise<postContactsUnblockResponse> => {
+  return useCustomInstance<postContactsUnblockResponse>(
+    getPostContactsUnblockUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(postContactsUnblockBody),
+    },
+  );
+};

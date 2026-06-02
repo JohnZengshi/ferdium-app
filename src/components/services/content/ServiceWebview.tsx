@@ -52,6 +52,16 @@ class ServiceWebview extends Component<IProps> {
     );
   }
 
+  componentDidUpdate(prevProps: IProps): void {
+    // 服务重建后新的 Service 实例丢失 webview 引用
+    if (prevProps.service !== this.props.service && this.webview?.view) {
+      this.props.setWebviewReference({
+        serviceId: this.props.service.id,
+        webview: this.webview.view,
+      });
+    }
+  }
+
   componentWillUnmount(): void {
     const { service, detachService } = this.props;
     detachService({ service });

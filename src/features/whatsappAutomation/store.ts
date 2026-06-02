@@ -45,6 +45,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _initializedServices = new Set<string>();
 
+  /** Track which Service instances have been initialized (survives reconstruction) */
+  _initializedServiceInstances = new WeakSet<any>();
+
   /** One Socket.IO connection per WhatsApp session for real-time status updates */
   _sockets = new Map<string, Socket>();
 
@@ -164,12 +167,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     debug('WhatsApp services found:', services.length);
     for (const service of services) {
       if (
-        !this._initializedServices.has(service.id) &&
+        !this._initializedServiceInstances.has(service) &&
         service.isAttached &&
         service.webview
       ) {
         debug('Initializing session for service:', service.id);
         this._initializedServices.add(service.id);
+        this._initializedServiceInstances.add(service);
         this._checkSessionStatus({ serviceId: service.id });
       }
     }

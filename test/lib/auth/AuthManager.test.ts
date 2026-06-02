@@ -28,7 +28,7 @@ function createMockProvider(
   name: string,
   overrides: Partial<AuthProvider> = {},
 ): AuthProvider {
-  return {
+  const defaultProvider: AuthProvider = {
     name,
     type: 'ferdium' as AuthProvider['type'],
     config: {
@@ -42,10 +42,16 @@ function createMockProvider(
       token: 'test-token',
       status: 'success',
     }),
+    // eslint-disable-next-line no-void
     logout: jest.fn().mockResolvedValue(undefined),
     getAuthHeader: jest.fn().mockReturnValue('Bearer test-token'),
     isAuthenticated: jest.fn().mockReturnValue(true),
+  };
+
+  return {
+    ...defaultProvider,
     ...overrides,
+    logout: overrides.logout ?? defaultProvider.logout,
   };
 }
 

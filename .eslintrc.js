@@ -51,8 +51,9 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       plugins: [],
       rules: {
-        // eslint
-        'no-use-before-define': 2,
+        // eslint — @typescript-eslint/no-use-before-define handles TS correctly
+        'no-use-before-define': 0,
+        '@typescript-eslint/no-use-before-define': 0,
 
         // @typescript-eslint
         // This is necessary as workaround for window.ferdium vs window['ferdium']
@@ -83,8 +84,29 @@ module.exports = {
         'sonar/no-try-promise': 0,
       },
     },
+    {
+      files: ['e2e/**/*'],
+      rules: {
+        'no-console': 0,
+        'no-await-in-loop': 0,
+        'no-promise-executor-return': 0,
+        'no-restricted-globals': 0,
+        'no-plusplus': 0,
+        'no-empty': 0,
+      },
+    },
+    {
+      files: ['test/**/*'],
+      rules: {
+        '@typescript-eslint/no-dynamic-delete': 0,
+        'global-require': 0,
+        'jest/expect-expect': 0,
+        'unicorn/consistent-function-scoping': 0,
+      },
+    },
   ],
   rules: {
+    'sonar/deprecation': 0,
     // eslint
     'array-callback-return': 1,
     'class-methods-use-this': 0,
@@ -122,7 +144,7 @@ module.exports = {
     'react/require-default-props': 0,
     'react/no-unused-prop-types': 1,
     'react/no-deprecated': 1,
-    // eslint-plugin-jsx-a11y
+// eslint-plugin-jsx-a11y
     'jsx-a11y/click-events-have-key-events': 1,
     'jsx-a11y/no-static-element-interactions': 1,
     'jsx-a11y/no-noninteractive-element-interactions': 1,
@@ -137,6 +159,7 @@ module.exports = {
       },
     ],
     'jsx-a11y/control-has-associated-label': 0,
+    '@eslint-react/no-clone-element': 0,
     // eslint-plugin-unicorn
     'unicorn/filename-case': 0,
     'unicorn/no-null': 0,

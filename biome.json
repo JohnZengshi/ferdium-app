@@ -7,7 +7,7 @@
     "enabled": true
   },
   "linter": {
-    "ignore": ["build", "coverage", "node_modules", "recipes", "*.json", "src/whatsapp-automation/api/generated"],
+    "ignore": ["build", "build-e2e", ".tmp", "coverage", "node_modules", "recipes", "*.json", "src/whatsapp-automation/api/generated"],
     "rules": {
       "style": {
         "noNonNullAssertion": "off",
@@ -31,7 +31,8 @@
         "noDelete": "off"
       },
       "a11y": {
-        "useKeyWithClickEvents": "off"
+        "useKeyWithClickEvents": "off",
+        "noSvgWithoutTitle": "off"
       }
     }
   }

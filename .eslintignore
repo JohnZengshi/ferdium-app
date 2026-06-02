@@ -26,6 +26,7 @@ node_modules
 *.scss.d.ts
 
 /build/
+/build-e2e/
 /out/
 /recipes/
 

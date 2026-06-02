@@ -1,6 +1,6 @@
-import { AuthManager } from '../../../src/lib/auth/AuthManager';
 import type { AuthProvider } from '../../../src/@types/auth';
 import { AuthEventType } from '../../../src/@types/auth';
+import { AuthManager } from '../../../src/lib/auth/AuthManager';
 
 jest.mock('../../../src/preload-safe-debug', () => {
   return jest.fn(() => jest.fn());

@@ -81,13 +81,13 @@ async function nodeRequest(options: {
   data: string;
 }> {
   const url = `${WA_AKG_BASE}${options.path}`;
-  
+
   const response = await ipcRenderer.invoke('http-request', {
     url,
     method: options.method || 'GET',
     headers: options.headers || {},
     body: options.body,
-    timeout: 15000,
+    timeout: 15_000,
   });
 
   // Collect cookies from response headers

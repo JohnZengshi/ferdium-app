@@ -33,16 +33,13 @@ export interface HttpResponse {
 export default () => {
   ipcMain.handle(
     'http-request',
-    async (
-      _event,
-      options: HttpRequestOptions,
-    ): Promise<HttpResponse> => {
+    async (_event, options: HttpRequestOptions): Promise<HttpResponse> => {
       const {
         url,
         method = 'GET',
         headers = {},
         body,
-        timeout = 15000,
+        timeout = 15_000,
       } = options;
 
       // Build curl arguments (no shell quoting — passed as array to execFile)

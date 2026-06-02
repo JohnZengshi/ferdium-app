@@ -99,7 +99,15 @@ Uses **esbuild** (`esbuild.mjs`) for bundling. Compiles TS/TSX to CommonJS, proc
 
 ### Styling
 
-SCSS files in `src/styles/`. MUI (Material-UI) 5 for component library. Emotion for CSS-in-JS. Themes defined in `src/themes/`.
+**Style priority**: TailwindCSS > SCSS > MUI theme.
+
+- **TailwindCSS** (`src/styles/tailwind.css`): Primary styling tool for page/component layout and utility classes. Prefer Tailwind utility classes over SCSS or manual CSS for all new UI work.
+  - Preflight (CSS reset) is disabled to avoid conflicts with existing SCSS globals.
+  - Only `@tailwind utilities;` is used — no base or components resets.
+  - Config in `tailwind.config.js`.
+- **SCSS** (`src/styles/`): Legacy static layout and structural styles. Do NOT add new SCSS files for component styling — use TailwindCSS instead.
+- **MUI 5 + Emotion**: Component library and CSS-in-JS for MUI component customization. Themes defined in `src/themes/`.
+- **User customization**: `USER_DATA/Ferdium/config/custom.css` for end-user CSS overrides.
 
 ## Testing
 

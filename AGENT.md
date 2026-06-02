@@ -93,7 +93,8 @@ src/components/
 
 **组件编写规则**：
 - 使用 `inject` + `observer`（mobx-react）连接 MobX store
-- JSS（react-jss）或 SCSS 文件管理样式
+- **TailwindCSS 优先**：新 UI 组件优先使用 Tailwind utility classes（`src/styles/tailwind.css`，无 preflight 冲突）
+- 传统组件可用 SCSS 或 MUI theme（Emotion）管理样式
 - 支持主题变量（theme.xxx），避免硬编码颜色值
 - 用 `@mdi/js` 图标库
 
@@ -226,6 +227,18 @@ internal-server/
 
 ### 2.9 表现层 — Presentation Assets
 
+**样式体系**（三层混合架构）：
+
+```
+样式优先级：TailwindCSS > SCSS > MUI theme
+```
+
+| 层次 | 技术 | 职责 | 入口 |
+|------|------|------|------|
+| 1️⃣ 新 UI 工具层 | **TailwindCSS** | 新增组件的布局、间距、排版等 utility 类 | `src/styles/tailwind.css`（仅 `@tailwind utilities`，禁用 preflight） |
+| 2️⃣ 历史全局层 | **SCSS** | 传统页面结构、全局样式、表单/布局等静态样式 | `src/styles/main.scss`（聚合 30+ 模块） |
+| 3️⃣ 主题/组件层 | **MUI Theme + Emotion** | 组件视觉规则、设计 token、暗色/默认双主题 | `src/themes/` 下的 JS 配置 |
+
 **SCSS 样式系统**（`src/styles/`）：
 
 ```
@@ -241,6 +254,15 @@ main.scss (入口，扇出 21)
 ├── *.scss             # 各组件样式（badge、button、input、tabs…）
 └── title-bar.scss     # Electron 自定义标题栏
 ```
+
+> **注意**：SCSS 仅用于遗留样式维护，不再新增 SCSS 文件。新 UI 一律使用 TailwindCSS。
+
+**TailwindCSS**（`tailwind.config.js`）：
+
+- `preflight: false` — 不重置全局样式，安全叠加在现有 SCSS 之上
+- 内容扫描范围：`src/**/*.{ts,tsx,js,jsx}`
+- 构建输出：`build/styles/tailwind.css`
+- 开发模式：通过 `esbuild.mjs` 中的 `runTailwind()` 以 spawn 方式监听文件变化
 
 **主题系统**（`src/themes/`）：
 
@@ -318,11 +340,14 @@ Components (src/components/) — React 自动响应
 
 ### 3.5 样式规范
 
-- **SCSS 变量**：使用 `config.scss` 中的设计 Token（`$brand-primary`、`$brand-danger`、`$dark-theme-*`）
-- **JSS 样式**：组件级样式使用 react-jss，接收 `theme` 参数
-- **MUI**：全局主题通过 MUI `ThemeProvider` 注入
-- **主题支持**：所有颜色值必须支持深色/浅色双主题，通过 `.theme__dark` CSS 类切换
-- **无障碍**：尊重 `prefers-reduced-motion` 媒体查询
+| 规则 | 说明 |
+|------|------|
+| **TailwindCSS 优先** | 新 UI 组件优先使用 Tailwind utility classes，不新增 SCSS 文件 |
+| **SCSS 遗产** | 不删除/重构现有 SCSS 文件，不作新增。全局结构样式继续有效 |
+| **主题支持** | 所有颜色值必须支持深色/浅色双主题，通过 MUI ThemeProvider 或 `.theme__dark` CSS 类切换 |
+| **设计 Token** | 使用 `config.scss` 中的 SCSS 变量（`$brand-primary`）或 themes 对象中的 JS token |
+| **无障碍** | 尊重 `prefers-reduced-motion` 媒体查询 |
+| **Preflight** | Tailwind 的 preflight 已禁用，可安全与 SCSS 共存 |
 
 ### 3.6 特性模块开发规范
 
@@ -416,7 +441,7 @@ ferdium-app/
 |----------|----------|
 | 查找代码/模式 | 优先使用 CodeGraph 工具（`codegraph_search`、`codegraph_context`） |
 | 架构理解 | `codegraph_context` 获取全景 → `codegraph_explore` 深入特定符号 |
-| 新增组件 | 放入 `src/components/<area>/`，遵循 MobX observer + JSS 模式 |
+| 新增组件 | 放入 `src/components/<area>/`，优先使用 TailwindCSS，避免新增 SCSS |
 | 新增 Store | 在 `src/stores/` 创建，在 `src/stores/index.ts` 注册 |
 | 新增特性 | 在 `src/features/` 创建完整的自包含模块 |
 | 修改 WebView | 在 `src/webview/` 中修改，注意 IPC 通信模式 |
@@ -424,6 +449,7 @@ ferdium-app/
 | 修复 Bug | 最小化修改，不重构。先定位再修复 |
 | 重构 | 先通过 `codegraph_impact` 分析影响范围 |
 | 新增依赖 | 优先使用已有库（MUI、@mdi/js、react-jss、lodash） |
+| **样式调整** | 新 UI 用 Tailwind；修改旧样式用 SCSS；主题色值用 `src/themes/` |
 
 ### 5.2 文件编辑规范
 

@@ -163,6 +163,12 @@ Please use the `src/preload-safe-debug` module instead until the bug gets fixed.
 - Reference issues and pull requests liberally after the first line
 - When only changing documentation, include `[ci skip]` in the commit description
 
+#### CSS/Styling
+
+- **TailwindCSS First**: For all new UI work, page layouts, and component styling, prefer using **TailwindCSS** utility classes.
+- **SCSS Usage**: SCSS should be reserved only for legacy structural layouts or deep overrides where utility classes fall short. Do NOT add new global SCSS files.
+- **No Preflight Conflicts**: We have disabled Tailwind's preflight (reset) to avoid conflicting with existing SCSS globals. Use Tailwind utilities on top of the existing layout safely.
+
 #### Javascript Coding style-checker
 
 - Please use `prettier` and the defined rules to maintain a consistent style

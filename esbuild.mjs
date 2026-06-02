@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as fs from 'node:fs';
 import { createRequire } from 'node:module';
+import { execSync, spawn } from 'node:child_process';
 import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import chalk from 'chalk';
@@ -97,6 +98,29 @@ const copyManualAssets = ({ isDev = false } = {}) => {
   fsPkg.outputJsonSync(`${outDir}/buildInfo.json`, buildInfoData);
 };
 
+const runTailwind = (isDev = false) => {
+  const args = [
+    'tailwindcss',
+    '-i',
+    './src/styles/tailwind.css',
+    '-o',
+    './build/styles/tailwind.css',
+    '--config',
+    './tailwind.config.js',
+  ];
+
+  if (isDev) {
+    args.push('--watch');
+    return spawn('pnpm', args, {
+      stdio: 'inherit',
+      shell: true,
+    });
+  }
+
+  execSync(`pnpm ${args.join(' ')}`, { stdio: 'inherit' });
+  return null;
+};
+
 const runEsbuild = async () => {
   const startTime = performance.now();
 
@@ -109,6 +133,14 @@ const runEsbuild = async () => {
     log(chalk.blue('Cleaning'), outDir);
   }
   copyManualAssets({ isDev });
+
+  // Generate Tailwind CSS after build dir exists (utilities only, no preflight)
+  const tailwindWatcher = runTailwind(isDev);
+  void tailwindWatcher;
+
+  process.on('exit', () => {
+    tailwindWatcher?.kill();
+  });
 
   // Source files
   const entryPoints = await glob('./src/**/*.{ts,tsx,js,jsx}');

@@ -10,10 +10,10 @@
  */
 
 import { ipcMain } from 'electron';
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 export interface HttpRequestOptions {
   url: string;
@@ -45,32 +45,30 @@ export default () => {
         timeout = 15000,
       } = options;
 
-      // Build curl command
+      // Build curl arguments (no shell quoting — passed as array to execFile)
       const curlArgs: string[] = [
-        'curl',
         '-s', // Silent mode
         '-i', // Include headers in output
         '-X',
         method,
-        `--connect-timeout ${Math.ceil(timeout / 1000)}`,
+        '--connect-timeout',
+        String(Math.ceil(timeout / 1000)),
       ];
 
       // Add headers
       Object.entries(headers).forEach(([key, value]) => {
-        curlArgs.push('-H', `"${key}: ${value}"`);
+        curlArgs.push('-H', `${key}: ${value}`);
       });
 
       // Add body if present
       if (body) {
-        curlArgs.push('-d', `'${body.replace(/'/g, "'\\''")}'`);
+        curlArgs.push('-d', body);
       }
 
-      curlArgs.push(`"${url}"`);
-
-      const curlCommand = curlArgs.join(' ');
+      curlArgs.push(url);
 
       try {
-        const { stdout, stderr } = await execAsync(curlCommand, {
+        const { stdout, stderr } = await execFileAsync('curl', curlArgs, {
           timeout,
           maxBuffer: 10 * 1024 * 1024, // 10MB
         });

@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import {
-  launchApp,
   cleanup,
-  getMainWindow,
-  waitForWaAkgLogin,
   fillLoginForm,
+  getMainWindow,
+  launchApp,
+  waitForWaAkgLogin,
 } from './helpers';
 
 test.describe('WA-AKG 登录页面 - 基础表单', () => {

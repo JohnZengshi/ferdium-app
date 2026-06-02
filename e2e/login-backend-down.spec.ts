@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import {
-  launchAppWithoutBackend,
   cleanup,
-  getMainWindow,
-  waitForWaAkgLogin,
   fillLoginForm,
+  getMainWindow,
+  launchAppWithoutBackend,
+  waitForWaAkgLogin,
 } from './helpers';
 
 test.describe('WA-AKG 登录页面 - 后端不可用', () => {

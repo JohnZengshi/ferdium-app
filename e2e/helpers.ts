@@ -1,11 +1,11 @@
-import {
-  expect,
-  _electron as electron,
-  ElectronApplication,
-} from '@playwright/test';
-import path from 'node:path';
-import os from 'node:os';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {
+  type ElectronApplication,
+  _electron as electron,
+  expect,
+} from '@playwright/test';
 import { resolveBuildDir } from '../playwright.config';
 
 export const buildPath = resolveBuildDir();

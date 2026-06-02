@@ -1,13 +1,13 @@
 #!/usr/bin/env node
+import { execSync, spawn } from 'node:child_process';
 import * as fs from 'node:fs';
 import { createRequire } from 'node:module';
-import { execSync, spawn } from 'node:child_process';
 import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import chalk from 'chalk';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 import * as dotenv from 'dotenv';
 import * as esbuild from 'esbuild';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import fsPkg from 'fs-extra';
@@ -90,16 +90,28 @@ const copyManualAssets = ({ isDev = false } = {}) => {
       // through pnpm's virtual store without hardcoding version strings
       const pluginRequire = createRequire(pluginPath);
       const coreEntryPath = pluginRequire.resolve('@code-inspector/core');
-      const inspectorClientPath = path.resolve(coreEntryPath, '..', 'client.iife.js');
+      const inspectorClientPath = path.resolve(
+        coreEntryPath,
+        '..',
+        'client.iife.js',
+      );
 
       if (fs.existsSync(inspectorClientPath)) {
         fs.copyFileSync(inspectorClientPath, `${outDir}/client.iife.js`);
         log(chalk.blue('Copied code-inspector client runtime'));
       } else {
-        log(chalk.yellow(`code-inspector client runtime not found at ${inspectorClientPath}`));
+        log(
+          chalk.yellow(
+            `code-inspector client runtime not found at ${inspectorClientPath}`,
+          ),
+        );
       }
     } catch (err) {
-      log(chalk.yellow(`Failed to copy code-inspector client runtime: ${err.message}`));
+      log(
+        chalk.yellow(
+          `Failed to copy code-inspector client runtime: ${err.message}`,
+        ),
+      );
     }
   }
 
@@ -195,7 +207,7 @@ const runEsbuild = async () => {
     minifyWhitespace: true,
     minifyIdentifiers: true,
     keepNames: true,
-    sourcemap: isDev,  // Enable source maps in dev mode for UI-to-code navigation
+    sourcemap: isDev, // Enable source maps in dev mode for UI-to-code navigation
     outdir: outDir,
     watch: isDev && {
       onRebuild(error, result) {
@@ -210,14 +222,18 @@ const runEsbuild = async () => {
     incremental: isDev,
     define: envDefines,
     plugins: [
-sassPlugin(),
+      sassPlugin(),
       ...staticAssets(),
-      ...(isDev ? [codeInspectorPlugin({ 
-        bundler: 'esbuild', 
-        dev: () => true,
-        escapeTags: ['webview', 'MUIThemeProvider'],
-        injectTo: [path.resolve('src/app.tsx')],
-      })] : []),
+      ...(isDev
+        ? [
+            codeInspectorPlugin({
+              bundler: 'esbuild',
+              dev: () => true,
+              escapeTags: ['webview', 'MUIThemeProvider'],
+              injectTo: [path.resolve('src/app.tsx')],
+            }),
+          ]
+        : []),
     ],
   });
 

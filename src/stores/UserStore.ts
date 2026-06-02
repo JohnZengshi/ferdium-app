@@ -345,7 +345,7 @@ export default class UserStore extends TypedStore {
         if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {
           router.push(this.WA_AKG_LOGIN_ROUTE);
         }
-      } else if (route !== this.HOME_ROUTE) {
+      } else if (route.includes(this.WA_AKG_LOGIN_ROUTE)) {
         router.push(this.HOME_ROUTE);
       }
       return;

@@ -10,19 +10,48 @@ import { AuthFieldType } from '../../@types/auth';
 import type { Field } from '../../@types/mobx-form.types';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
-import Input from '../ui/input/index';
 
 const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 
 const USER_FRIENDLY_ERROR = '登录失败，请检查网络连接或稍后重试';
 
-interface DynamicLoginProps extends WrappedComponentProps {
-  provider: AuthProvider;
-  onAuthenticated: (result: {
-    success: boolean;
-    token?: string;
-    apiKey?: string;
-  }) => void;
+const USER_ICON_PATH =
+  'M6.75 1.5C5.30025 1.5 4.125 2.67525 4.125 4.125C4.125 5.57475 5.30025 6.75 6.75 6.75C8.19975 6.75 9.375 5.57475 9.375 4.125C9.375 2.67525 8.19975 1.5 6.75 1.5ZM2.625 4.125C2.625 1.84683 4.47183 0 6.75 0C9.02817 0 10.875 1.84683 10.875 4.125C10.875 6.40317 9.02817 8.25 6.75 8.25C4.47183 8.25 2.625 6.40317 2.625 4.125ZM0 12.75C0 10.6789 1.67893 9 3.75 9H9.75C11.8211 9 13.5 10.6789 13.5 12.75V15H0V12.75ZM3.75 10.5C2.50736 10.5 1.5 11.5074 1.5 12.75V13.5H12V12.75C12 11.5074 10.9926 10.5 9.75 10.5H3.75Z';
+
+const LOCK_ICON_PATH =
+  'M6.375 1.5C4.71815 1.5 3.375 2.84315 3.375 4.5V6.75001H9.375V4.5C9.375 2.84315 8.03185 1.5 6.375 1.5ZM10.875 6.75001H12.75V15.75H0V6.75001H1.875V4.5C1.875 2.01472 3.88972 0 6.375 0C8.86028 0 10.875 2.01472 10.875 4.5V6.75001ZM1.5 8.25001V14.25H11.25V8.25001H1.5ZM4.125 10.5H8.625V12H4.125V10.5Z';
+
+function getFieldIconPath(fieldType: AuthFieldType): string {
+  switch (fieldType) {
+    case AuthFieldType.EMAIL:
+    case AuthFieldType.TEXT:
+    case AuthFieldType.TEL: {
+      return USER_ICON_PATH;
+    }
+    case AuthFieldType.PASSWORD: {
+      return LOCK_ICON_PATH;
+    }
+    default: {
+      return USER_ICON_PATH;
+    }
+  }
+}
+
+function getFieldInputType(fieldType: AuthFieldType): string {
+  switch (fieldType) {
+    case AuthFieldType.EMAIL: {
+      return 'email';
+    }
+    case AuthFieldType.PASSWORD: {
+      return 'password';
+    }
+    case AuthFieldType.TEL: {
+      return 'tel';
+    }
+    default: {
+      return 'text';
+    }
+  }
 }
 
 function buildFormFields(fields: AuthField[]): { [key: string]: Field } {
@@ -43,21 +72,13 @@ function buildFormFields(fields: AuthField[]): { [key: string]: Field } {
   return result;
 }
 
-function getFieldInputType(fieldType: AuthFieldType): string {
-  switch (fieldType) {
-    case AuthFieldType.EMAIL: {
-      return 'email';
-    }
-    case AuthFieldType.PASSWORD: {
-      return 'password';
-    }
-    case AuthFieldType.TEL: {
-      return 'tel';
-    }
-    default: {
-      return 'text';
-    }
-  }
+interface DynamicLoginProps extends WrappedComponentProps {
+  provider: AuthProvider;
+  onAuthenticated: (result: {
+    success: boolean;
+    token?: string;
+    apiKey?: string;
+  }) => void;
 }
 
 @observer
@@ -67,6 +88,8 @@ class DynamicLogin extends Component<DynamicLoginProps> {
   @observable authError: string | null = null;
 
   @observable isAuthenticating = false;
+
+  @observable rememberPassword = false;
 
   constructor(props: DynamicLoginProps) {
     super(props);
@@ -131,104 +154,197 @@ class DynamicLogin extends Component<DynamicLoginProps> {
     const { provider, intl } = this.props;
     const { config } = provider;
 
-    return (
-      <div className="auth__container">
-        <Link to="/auth/welcome">
-          <img className="auth__logo" src="./assets/images/logo.svg" alt="" />
-        </Link>
-        {/* <H1>{intl.formatMessage({ id: 'dynamicLogin.title', defaultMessage: 'Sign in' })}</H1> */}
+    const visibleFields = config.fields.filter(
+      f => f.type !== AuthFieldType.HIDDEN,
+    );
 
-        <form
-          className="franz-form auth__form"
-          onSubmit={e => {
-            e.preventDefault();
-            this.submitForm();
-          }}
-        >
-          {provider.config.fields
-            .filter(f => f.type !== AuthFieldType.HIDDEN)
-            .map(field => {
-              if (field.type === AuthFieldType.SELECT) {
-                return (
-                  <div key={field.id} className="franz-form__field">
-                    <label htmlFor={field.id}>{field.label}</label>
-                    <select
-                      id={field.id}
-                      className="w-full rounded border border-gray-300 p-2 dark:border-neutral-600 dark:bg-neutral-800"
-                      value={this.form.$(field.id).value}
-                      onChange={e => this.form.$(field.id).set(e.target.value)}
-                    >
-                      {field.options?.map(opt => (
-                        <option key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                );
-              }
+    const nonPasswordFields = visibleFields.filter(
+      f => f.type !== AuthFieldType.PASSWORD,
+    );
+    const passwordField = visibleFields.find(
+      f => f.type === AuthFieldType.PASSWORD,
+    );
 
-              const inputType = getFieldInputType(field.type);
-              return (
-                <Input
-                  key={field.id}
-                  {...this.form.$(field.id).bind()}
-                  ref={undefined}
-                  type={inputType}
-                  placeholder={field.placeholder}
-                  showPasswordToggle={field.type === AuthFieldType.PASSWORD}
-                />
-              );
-            })}
-
-          <button
-            type="submit"
-            className="auth__button"
-            disabled={this.isAuthenticating}
-          >
-            {this.isAuthenticating ? '...' : config.submitLabel}
-          </button>
-        </form>
-
-        {this.authError && (
-          <p className="error-message center" style={{ marginTop: '10px' }}>
-            {this.authError}
-          </p>
-        )}
-
-        <div className="auth__links">
-          {config.showSignup && (
-            <Link to="/auth/signup">
-              {intl.formatMessage({
-                id: 'dynamicLogin.link.signup',
-                defaultMessage: 'Create a free account',
-              })}
-            </Link>
-          )}
-          {config.showForgotPassword && (
-            <Link to="/auth/password">
-              {intl.formatMessage({
-                id: 'dynamicLogin.link.forgotPassword',
-                defaultMessage: 'Forgot password?',
-              })}
-            </Link>
-          )}
-          {config.extraLinks?.map(link => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className={classnames('extra-link', link.variant)}
+    const renderField = (field: AuthField) => {
+      if (field.type === AuthFieldType.SELECT) {
+        return (
+          <div key={field.id} className="auth__field w-full rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]">
+            <label htmlFor={field.id}>{field.label}</label>
+            <select
+              id={field.id}
+              className="w-full rounded border border-gray-300 p-2"
+              value={this.form.$(field.id).value}
+              onChange={e => this.form.$(field.id).set(e.target.value)}
             >
-              {link.label}
-            </Link>
-          ))}
+              {field.options?.map(opt => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        );
+      }
+
+      const inputType = getFieldInputType(field.type);
+      const iconPath = getFieldIconPath(field.type);
+
+      return (
+        <div key={field.id} className="auth__field flex w-full items-center gap-2 rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]">
+          <div className="auth__field-icon flex h-[18px] w-[18px] shrink-0 items-center justify-center">
+            <svg
+              fill="none"
+              preserveAspectRatio="none"
+              viewBox={
+                field.type === AuthFieldType.PASSWORD
+                  ? '0 0 12.75 15.75'
+                  : '0 0 13.5 15'
+              }
+            >
+              <path d={iconPath} fill="black" fillOpacity="0.4" />
+            </svg>
+          </div>
+          <input
+            {...this.form.$(field.id).bind()}
+            ref={undefined}
+            type={inputType}
+            placeholder={field.placeholder || field.label}
+            className="h-6 min-w-0 flex-1 border-none bg-transparent text-[16px] leading-[24px] text-[rgba(0,0,0,.9)] outline-none placeholder:text-[rgba(0,0,0,.4)]"
+          />
+        </div>
+      );
+    };
+
+    return (
+      <div className="auth__container w-full max-w-[496px] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
+        <div className="auth__form-wrapper flex flex-col gap-8">
+          {(config.showSignup || config.showForgotPassword) && (
+            <div className="auth__links--top flex flex-row gap-4 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
+              {config.showSignup && (
+                <div className="auth__signup-row inline-flex items-start gap-2">
+                  <span className="auth__link-secondary leading-[22px] text-[rgba(0,0,0,.6)]">
+                    {intl.formatMessage({
+                      id: 'dynamicLogin.link.signup.prefix',
+                      defaultMessage: '没有账号吗 ? ',
+                    })}
+                  </span>
+                  <Link to="/auth/signup" className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline">
+                    {intl.formatMessage({
+                      id: 'dynamicLogin.link.signup',
+                      defaultMessage: '注册新账号',
+                    })}
+                  </Link>
+                </div>
+              )}
+              {config.showForgotPassword && (
+                <Link to="/auth/password" className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline">
+                  {intl.formatMessage({
+                    id: 'dynamicLogin.link.forgotPassword',
+                    defaultMessage: 'Forgot password?',
+                  })}
+                </Link>
+              )}
+            </div>
+          )}
+
+          <div className="auth__title mb-7 break-words font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[36px] font-semibold leading-[44px] text-[#0052d9]">
+            {config.headerText || 'AI Chat 拓客销售系统'}
+          </div>
+
+          <form
+            className="auth__form flex w-full flex-col gap-10"
+            onSubmit={e => {
+              e.preventDefault();
+              this.submitForm();
+            }}
+          >
+            {nonPasswordFields.map(renderField)}
+
+            {passwordField && (
+              <div className="auth__password-section flex flex-col gap-6">
+                {renderField(passwordField)}
+                <div className="auth__remember -mt-2 flex items-center gap-2">
+                  <div
+                    role="checkbox"
+                    aria-checked={this.rememberPassword}
+                    tabIndex={0}
+                    className={classnames(
+                      'auth__remember-checkbox mt-[3px] flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-[3px] border border-solid border-[#bbb] bg-white transition-colors',
+                      {
+                        'auth__remember-checkbox--checked border-[#0052d9] bg-[#0052d9]':
+                          this.rememberPassword,
+                      },
+                    )}
+                    onClick={() =>
+                      runInAction(() => {
+                        this.rememberPassword = !this.rememberPassword;
+                      })
+                    }
+                    onKeyDown={event => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        runInAction(() => {
+                          this.rememberPassword = !this.rememberPassword;
+                        });
+                      }
+                    }}
+                  >
+                    {this.rememberPassword && (
+                      <svg fill="none" height="8" viewBox="0 0 10 8" width="10">
+                        <path
+                          d="M1 4L3.5 6.5L9 1"
+                          stroke="white"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.5"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    className="auth__remember-label cursor-pointer select-none border-none bg-transparent p-0 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px] leading-[22px] text-[rgba(0,0,0,.9)]"
+                    onClick={() =>
+                      runInAction(() => {
+                        this.rememberPassword = !this.rememberPassword;
+                      })
+                    }
+                  >
+                    记住密码
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {this.authError && (
+              <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+                {this.authError}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="auth__button mt-2 w-full cursor-pointer rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
+              disabled={this.isAuthenticating}
+            >
+              {this.isAuthenticating ? '登录中...' : config.submitLabel}
+            </button>
+          </form>
         </div>
 
-        {/* <div className="auth__help">
-          <Link to="/auth/welcome">
-            <Icon icon={mdiArrowLeftCircle} size={1.5} />
-          </Link>
-        </div> */}
+        {config.extraLinks && config.extraLinks.length > 0 && (
+          <div className="auth__links mt-4 flex flex-col gap-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
+            {config.extraLinks.map(link => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={classnames('extra-link', link.variant)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     );
   }

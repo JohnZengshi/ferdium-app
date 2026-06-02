@@ -128,20 +128,20 @@ class Signup extends Component<IProps> {
     const { isSubmitting, loginRoute, error } = this.props;
 
     return (
-      <div className="auth__scroll-container">
-        <div className="auth__container auth__container--signup">
+      <div className="auth__scroll-container w-full h-fit">
+        <div className="auth__container auth__container--signup mx-auto my-0 w-full max-w-[450px] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
           <form
-            className="franz-form auth__form"
+            className="auth__form franz-form flex w-full flex-col gap-5"
             onSubmit={e => this.submit(e)}
           >
             <Link to="/auth/welcome">
               <img
                 src="./assets/images/logo.svg"
-                className="auth__logo"
+                className="auth__logo -mt-[105px] mb-5 block h-auto w-[150px] rounded-[var(--theme-border-radius)]"
                 alt=""
               />
             </Link>
-            <H1>{intl.formatMessage(messages.headline)}</H1>
+            <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
             <div className="grid__row">
               <Input {...form.$('firstname').bind()} focus />
               <Input {...form.$('lastname').bind()} />
@@ -153,13 +153,13 @@ class Signup extends Component<IProps> {
               scorePassword
             />
             {error.status === 401 && (
-              <h2 className="error-message center">
+              <h2 className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
                 {intl.formatMessage(messages.emailDuplicate)}
               </h2>
             )}
             {isSubmitting ? (
               <Button
-                className="auth__button is-loading"
+                className="auth__button is-loading mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
                 label={`${intl.formatMessage(messages.submitButtonLabel)} ...`}
                 loaded={false}
                 disabled
@@ -168,12 +168,12 @@ class Signup extends Component<IProps> {
             ) : (
               <Button
                 type="submit"
-                className="auth__button"
+                className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
                 label={intl.formatMessage(messages.submitButtonLabel)}
                 onClick={noop}
               />
             )}
-            <p className="legal">
+            <p className="legal mt-5 text-center text-[#9b9b9b]">
               {intl.formatMessage(messages.legalInfo)}
               <br />
               <Link
@@ -194,12 +194,12 @@ class Signup extends Component<IProps> {
               .
             </p>
           </form>
-          <div className="auth__links">
+          <div className="auth__links mt-4 flex flex-col gap-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
             <Link to={loginRoute}>
               {intl.formatMessage(messages.loginLink)}
             </Link>
           </div>
-          <div className="auth__help">
+          <div className="auth__help flex h-fit justify-center pt-[2%] pb-[2%]">
             <Link to="/auth/welcome">
               <Icon icon={mdiArrowLeftCircle} size={1.5} />
             </Link>

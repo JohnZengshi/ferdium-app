@@ -69,8 +69,14 @@ const staticAssets = () => [
 
 const copyManualAssets = ({ isDev = false } = {}) => {
   if (!fs.existsSync(outDir)) {
-    fs.mkdirSync(outDir);
+    fs.mkdirSync(outDir, { recursive: true });
   }
+  // Ensure styles directory exists for Tailwind output
+  const stylesDir = path.join(outDir, 'styles');
+  if (!fs.existsSync(stylesDir)) {
+    fs.mkdirSync(stylesDir, { recursive: true });
+  }
+
   fs.copyFileSync('package.json', `${outDir}/package.json`);
   fs.copyFileSync('electron-builder.npmrc', `${outDir}/.npmrc`);
 
@@ -78,15 +84,22 @@ const copyManualAssets = ({ isDev = false } = {}) => {
   if (isDev) {
     try {
       const require = createRequire(import.meta.url);
+      // Resolve the plugin's path to access its transitive deps
       const pluginPath = require.resolve('code-inspector-plugin');
-      const pnpmRoot = path.resolve(path.dirname(pluginPath), '..', '..', '..', '..');
-      const inspectorClientPath = path.join(pnpmRoot, '@code-inspector+core@1.5.1', 'node_modules', '@code-inspector', 'core', 'dist', 'client.iife.js');
+      // Create a require scoped to the plugin directory so we can resolve @code-inspector/core
+      // through pnpm's virtual store without hardcoding version strings
+      const pluginRequire = createRequire(pluginPath);
+      const coreEntryPath = pluginRequire.resolve('@code-inspector/core');
+      const inspectorClientPath = path.resolve(coreEntryPath, '..', 'client.iife.js');
+
       if (fs.existsSync(inspectorClientPath)) {
         fs.copyFileSync(inspectorClientPath, `${outDir}/client.iife.js`);
         log(chalk.blue('Copied code-inspector client runtime'));
+      } else {
+        log(chalk.yellow(`code-inspector client runtime not found at ${inspectorClientPath}`));
       }
-    } catch {
-      log(chalk.yellow('code-inspector client runtime not found, skipping'));
+    } catch (err) {
+      log(chalk.yellow(`Failed to copy code-inspector client runtime: ${err.message}`));
     }
   }
 
@@ -98,7 +111,7 @@ const copyManualAssets = ({ isDev = false } = {}) => {
   fsPkg.outputJsonSync(`${outDir}/buildInfo.json`, buildInfoData);
 };
 
-const runTailwind = (isDev = false) => {
+const runTailwind = (watch = false) => {
   const args = [
     'tailwindcss',
     '-i',
@@ -109,7 +122,7 @@ const runTailwind = (isDev = false) => {
     './tailwind.config.js',
   ];
 
-  if (isDev) {
+  if (watch) {
     args.push('--watch');
     return spawn('pnpm', args, {
       stdio: 'inherit',
@@ -117,6 +130,7 @@ const runTailwind = (isDev = false) => {
     });
   }
 
+  // Synchronous initial build
   execSync(`pnpm ${args.join(' ')}`, { stdio: 'inherit' });
   return null;
 };
@@ -134,9 +148,22 @@ const runEsbuild = async () => {
   }
   copyManualAssets({ isDev });
 
-  // Generate Tailwind CSS after build dir exists (utilities only, no preflight)
-  const tailwindWatcher = runTailwind(isDev);
-  void tailwindWatcher;
+  // Ensure styles directory exists for Tailwind output
+  const stylesDir = path.join(outDir, 'styles');
+  if (!fs.existsSync(stylesDir)) {
+    fs.mkdirSync(stylesDir, { recursive: true });
+  }
+
+  // First, run a synchronous Tailwind build to ensure the file exists for esbuild/HTML
+  log(chalk.blue('Running initial Tailwind CSS build...'));
+  runTailwind(false); // This will call execSync and block until done
+
+  let tailwindWatcher = null;
+  if (isDev) {
+    // If in dev mode, then spawn a watcher
+    log(chalk.blue('Spawning Tailwind CSS watcher...'));
+    tailwindWatcher = runTailwind(true);
+  }
 
   process.on('exit', () => {
     tailwindWatcher?.kill();
@@ -188,7 +215,8 @@ sassPlugin(),
       ...(isDev ? [codeInspectorPlugin({ 
         bundler: 'esbuild', 
         dev: () => true,
-escapeTags: ['webview', 'MUIThemeProvider'],
+        escapeTags: ['webview', 'MUIThemeProvider'],
+        injectTo: [path.resolve('src/app.tsx')],
       })] : []),
     ],
   });

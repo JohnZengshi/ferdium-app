@@ -84,26 +84,33 @@ class Password extends Component<IProps> {
     const { isSubmitting, signupRoute, loginRoute, status, intl } = this.props;
 
     return (
-      <div className="auth__container">
-        <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <Link to="/auth/welcome">
-            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+      <div className="auth__container mx-auto my-0 w-full max-w-[400px]">
+        <form
+          className="auth__form franz-form flex w-full flex-col gap-5"
+          onSubmit={e => this.submit(e)}
+        >
+          <Link className="auth__logo" to="/auth/welcome">
+            <img
+              src="./assets/images/logo.svg"
+              className="block h-auto w-[150px]"
+              alt=""
+            />
           </Link>
-          <H1>{intl.formatMessage(messages.headline)}</H1>
+          <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
           {status.length > 0 && status.includes('sent') && (
             <Infobox type="success" icon="checkbox-marked-circle-outline">
               {intl.formatMessage(messages.successInfo)}
             </Infobox>
           )}
-          <Input {...form.$('email').bind()} focus />
+          <Input className="auth__field" {...form.$('email').bind()} focus />
           {status.length > 0 && status.includes('no-user') && (
-            <p className="error-message center">
+            <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
               {intl.formatMessage(messages.noUser)}
             </p>
           )}
           {isSubmitting ? (
             <Button
-              className="auth__button is-loading"
+              className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 is-loading disabled:cursor-not-allowed disabled:bg-[#6b89d6] hover:not(:disabled):bg-[#0046b8] active:not(:disabled):bg-[#003a9e]"
               buttonType="secondary"
               label={`${intl.formatMessage(globalMessages.submit)} ...`}
               loaded={false}
@@ -113,16 +120,26 @@ class Password extends Component<IProps> {
           ) : (
             <Button
               type="submit"
-              className="auth__button"
+              className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:not(:disabled):bg-[#0046b8] active:not(:disabled):bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
+              buttonType="secondary"
               label={intl.formatMessage(globalMessages.submit)}
+              loaded={false}
               onClick={noop}
             />
           )}
         </form>
-        <div className="auth__links">
-          <Link to={loginRoute}>{intl.formatMessage(messages.loginLink)}</Link>
-          <Link to={signupRoute}>
+        <div className="auth__links mt-4 flex flex-col gap-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
+          <Link
+            to={signupRoute}
+            className="block text-center text-[#9b9b9b] no-underline transition-colors duration-200 hover:text-[#366ef4] hover:underline"
+          >
             {intl.formatMessage(messages.signupLink)}
+          </Link>
+          <Link
+            to={loginRoute}
+            className="block text-center text-[#9b9b9b] no-underline transition-colors duration-200 hover:text-[#366ef4] hover:underline"
+          >
+            {intl.formatMessage(messages.loginLink)}
           </Link>
         </div>
       </div>

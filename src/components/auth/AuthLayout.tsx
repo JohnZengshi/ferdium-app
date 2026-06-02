@@ -74,7 +74,17 @@ class AuthLayout extends Component<IProps, IState> {
             icon="assets/images/logo.svg"
           />
         )}
-        <div className="auth">
+        <div className="auth relative flex min-h-screen h-auto flex-col justify-center overflow-hidden bg-[#f5f6fe]">
+          <div className="auth__background pointer-events-none absolute inset-0 z-0 overflow-hidden">
+            <img
+              alt=""
+              className="auth__background-image h-full w-full object-cover"
+              src="./assets/images/login-background.png"
+            />
+          </div>
+          <div className={`auth__header-bar absolute inset-x-0 top-0 z-2 flex h-auto items-center bg-white/[0.05] px-[24px] backdrop-blur-[10px] ${!isFullScreen ? 'pt-[30px] pb-[12px]' : 'py-[12px]'}`}>
+            <img className="auth__logo h-[56px]" src="./assets/images/login-logo.png" alt="" />
+          </div>
           {!isOnline && (
             <InfoBar type="warning">
               <Icon icon={mdiFlash} />
@@ -105,19 +115,9 @@ class AuthLayout extends Component<IProps, IState> {
               })}
             </InfoBar>
           )}
-          <div className="auth__layout">
-            {/* Inject globalError into children  */}
-            {/* eslint-disable-next-line @eslint-react/no-clone-element */}
+          <div className="auth__layout relative z-1 flex min-h-screen w-full items-center justify-center overflow-auto p-6">
             {cloneElement(children, { error })}
           </div>
-          {/* </div> */}
-          {/* <Link
-            to={`${GITHUB_FERDIUM_URL}/ferdium-app`}
-            className="auth__adlk"
-            target="_blank"
-          >
-            <img src="./assets/images/adlk.svg" alt="" />
-          </Link> */}
         </div>
         <PublishDebugInfo />
       </>

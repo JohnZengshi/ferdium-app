@@ -66,7 +66,7 @@ class LockedScreen extends Component<IProps, IState> {
 
     return (
       <div className="auth">
-        <div className="auth__layout">
+        <div className="auth auth--locked relative z-[1] flex min-h-screen w-full items-center justify-center overflow-auto p-6">
           <Locked
             onSubmit={this.onSubmit}
             unlock={this.unlock}

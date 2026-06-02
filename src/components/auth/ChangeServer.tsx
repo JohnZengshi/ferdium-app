@@ -119,12 +119,12 @@ class ChangeServer extends Component<IProps> {
     const { intl } = this.props;
 
     return (
-      <div className="auth__container">
-        <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <Link to="/auth/welcome">
-            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+      <div className="auth__container mx-auto my-0 w-full max-w-[496px] rounded-[12px] bg-white p-[52px_48px] shadow-[0_0_0_1px_rgba(0,0,0,0.02),0_0_20px_0_rgba(0,0,0,0.05),0_10px_40px_-4px_rgba(0,0,0,0.1)]">
+        <form className="auth__form franz-form flex w-full flex-col gap-5" onSubmit={e => this.submit(e)}>
+          <Link className="auth__logo" to="/auth/welcome">
+            <img src="./assets/images/logo.svg" className="block h-auto w-[150px]" alt="" />
           </Link>
-          <H1>{intl.formatMessage(messages.headline)}</H1>
+          <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
           {form.$('server').value === this.franzServer && (
             <Infobox type="warning">
               {intl.formatMessage(messages.warning)}
@@ -139,12 +139,12 @@ class ChangeServer extends Component<IProps> {
           )}
           <Button
             type="submit"
-            className="auth__button"
+            className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
             label={intl.formatMessage(globalMessages.submit)}
             onClick={noop}
           />
         </form>
-        <div className="auth__help">
+        <div className="auth__help flex justify-center py-[2%]">
           <Link to="/auth/welcome">
             <Icon icon={mdiArrowLeftCircle} size={1.5} />
           </Link>

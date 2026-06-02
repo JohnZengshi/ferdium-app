@@ -199,7 +199,7 @@ class SetupAssistant extends Component<IProps, IState> {
     } = this.state;
 
     return (
-      <div className={`auth__container ${classes.root}`}>
+      <div className={`auth__container ${classes.root} relative max-w-full rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]`}>
         {this.state.showSuccessInfo && isInviteSuccessful && (
           <Appear>
             <Infobox
@@ -212,8 +212,8 @@ class SetupAssistant extends Component<IProps, IState> {
           </Appear>
         )}
 
-        <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
-        <H1>{intl.formatMessage(messages.headline)}</H1>
+        <img src="./assets/images/logo.svg" className="auth__logo block h-auto w-[150px] -mt-[105px] mx-auto mb-5 rounded-[var(--theme-border-radius)]" alt="" />
+        <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
         <H2>{intl.formatMessage(messages.subHeadline)}</H2>
         <div className={classnames('grid', classes.servicesGrid)}>
           {Object.keys(services).map(id => {
@@ -316,7 +316,7 @@ class SetupAssistant extends Component<IProps, IState> {
         </Modal>
         <Button
           type="button"
-          className="auth__button"
+          className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
           // disabled={!atLeastOneEmailAddress}
           label={intl.formatMessage(messages.submitButtonLabel)}
           onClick={() => onSubmit(this.state.services)}
@@ -325,7 +325,7 @@ class SetupAssistant extends Component<IProps, IState> {
         />
         <Button
           type="button"
-          className="auth__button auth__button--skip"
+          className="auth__button auth__button--skip mt-2 rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6] w-[20%]"
           label={intl.formatMessage(messages.skipButtonLabel)}
           onClick={() => onSubmit([])}
           buttonType="secondary"

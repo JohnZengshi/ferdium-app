@@ -39,14 +39,6 @@
 
         document.querySelector('body').classList.add('isDevMode');
 
-        // Load code-inspector-plugin client runtime after app is fully ready
-        // (avoids body/style crash from early mousemove/mouseleave handlers)
-        window.addEventListener('load', function loadInspector() {
-          const s = document.createElement('script');
-          s.src = './client.iife.js';
-          document.body.appendChild(s);
-        });
-
         (function () {
           const lrHost = 'http://localhost:35729';
           const s = document.createElement('script');

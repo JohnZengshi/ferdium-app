@@ -43,8 +43,9 @@ export default class FerdiumProvider implements AuthProvider {
     ],
     showSignup: true,
     showForgotPassword: true,
-    submitLabel: 'Login',
+    submitLabel: '登录',
     extraLinks: [],
+    headerText: 'AI Chat 拓客销售系统',
   };
 
   async authenticate(credentials: Record<string, string>): Promise<AuthResult> {

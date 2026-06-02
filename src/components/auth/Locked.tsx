@@ -98,32 +98,36 @@ class Locked extends Component<IProps> {
       : intl.formatMessage(messages.submitButtonLabel);
 
     return (
-      <div className="auth__container">
-        <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
-          <H1>{intl.formatMessage(messages.headline)}</H1>
+      <div className="auth__container relative w-full max-w-[496px] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
+        <form className="auth__form franz-form flex w-full flex-col gap-5" onSubmit={e => this.submit(e)}>
+          <img
+            src="./assets/images/logo.svg"
+            className="auth__logo -mt-[105px] mb-5 block h-auto w-[150px] rounded-[var(--theme-border-radius)]"
+            alt=""
+          />
+          <H1 className="auth__title">{intl.formatMessage(messages.headline)}</H1>
 
           {touchIdEnabled && (
             <>
               <Button
-                className="auth__button touchid__button"
+                className="auth__button touchid__button mt-2 mb-[25px] w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
                 label={intl.formatMessage(messages.touchId)}
                 onClick={() => this.touchIdUnlock()}
                 type="button"
               />
-              <hr className="locked__or_line" />
+              <hr className="locked__or_line mb-5 h-[5px] overflow-visible border-0 border-t-2 border-solid border-[#9b9b9b] text-center text-[#9b9b9b]" />
             </>
           )}
 
-          <Input {...form.$('password').bind()} showPasswordToggle focus />
+          <Input className="auth__field" {...form.$('password').bind()} showPasswordToggle focus />
           {error && (
-            <p className="error-message center">
+            <p className="auth__error-message center mt-2.5 text-center text-[14px] text-[#d4183d]">
               {intl.formatMessage(messages.invalidCredentials)}
             </p>
           )}
           {isSubmitting ? (
             <Button
-              className="auth__button is-loading"
+              className="auth__button is-loading mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
               buttonType="secondary"
               label={`${submitButtonLabel} ...`}
               loaded={false}
@@ -133,7 +137,7 @@ class Locked extends Component<IProps> {
           ) : (
             <Button
               type="submit"
-              className="auth__button"
+              className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
               label={submitButtonLabel}
               onClick={noop}
             />

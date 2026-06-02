@@ -82,7 +82,7 @@ class PluggableAuthScreen extends Component<IProps> {
     return (
       <>
         {isTokenExpired && (
-          <p className="error-message center">
+          <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
             {intl.formatMessage({
               id: 'login.tokenExpired',
               defaultMessage: 'Your session expired, please login again.',
@@ -90,7 +90,7 @@ class PluggableAuthScreen extends Component<IProps> {
           </p>
         )}
         {isServerLogout && (
-          <p className="error-message center">
+          <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
             {intl.formatMessage({
               id: 'login.serverLogout',
               defaultMessage: 'Your session expired, please login again.',
@@ -98,10 +98,12 @@ class PluggableAuthScreen extends Component<IProps> {
           </p>
         )}
 
-        <DynamicLogin
-          provider={activeProvider}
-          onAuthenticated={this.handleAuthenticated}
-        />
+        <div className="mr-auto ml-[140px] max-h-[462px]">
+          <DynamicLogin
+            provider={activeProvider}
+            onAuthenticated={this.handleAuthenticated}
+          />
+        </div>
       </>
     );
   }

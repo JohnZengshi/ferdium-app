@@ -732,6 +732,12 @@ export default class ServicesStore extends TypedStore {
   @action _setWebviewReference({ serviceId, webview }) {
     const service = this.one(serviceId);
     if (service) {
+      if (service.webview !== null && service.timer !== null) {
+        clearTimeout(service.timer);
+
+        service.timer = null;
+      }
+
       service.webview = webview;
 
       if (!service.isAttached) {
@@ -775,6 +781,12 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action _detachService({ service }) {
+    if (service.timer !== null) {
+      clearTimeout(service.timer);
+      // eslint-disable-next-line no-param-reassign
+      service.timer = null;
+    }
+
     // eslint-disable-next-line no-param-reassign
     service.webview = null;
     // eslint-disable-next-line no-param-reassign
@@ -1477,9 +1489,17 @@ export default class ServicesStore extends TypedStore {
       }
 
       const loop = () => {
-        if (!service.webview) return;
+        if (!service.webview || !service.isAttached) return;
 
-        service.webview.send('poll');
+        try {
+          service.webview.send('poll');
+        } catch (error) {
+          console.warn(
+            `RecipePolling: failed to poll service ${service.id} — webview detached`,
+            error,
+          );
+          return;
+        }
 
         service.timer = setTimeout(loop, delay);
         service.lastPoll = Date.now();

@@ -1,13 +1,6 @@
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-// import Paper from '@mui/material/Paper';
 import { inject, observer } from 'mobx-react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { Button, Checkbox, Col, Row } from 'tdesign-react';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 
 function not(a: readonly string[], b: readonly string[]) {
@@ -55,12 +48,12 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
   const notSelected = [...notSelectedSet];
 
   const [checked, setChecked] = useState<readonly string[]>([]);
-  const handleToggle = (value: string) => () => {
-    const currentIndex = checked.indexOf(value);
+  const handleToggle = (itemValue: string) => () => {
+    const currentIndex = checked.indexOf(itemValue);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(itemValue);
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -82,134 +75,132 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
   };
 
   const customList = (items: readonly string[]) => (
-    // <Paper sx={{ width: 200, height: 230, overflow: 'auto' }}>
-    <List
-      dense
-      component="div"
-      role="list"
-      key={`${sandboxId}-${value}-transferlist`}
+    <div
+      style={{
+        maxHeight: 300,
+        overflow: 'auto',
+        border: '1px solid var(--td-component-border, #dcdcdc)',
+        borderRadius: 'var(--td-radius-default, 4px)',
+      }}
     >
-      {items.map((value: string) => {
-        const labelId = `transfer-list-item-${value}-label`;
+      {items.map((itemValue: string) => {
+        const labelId = `transfer-list-item-${itemValue}-label`;
 
         return (
-          <ListItemButton
-            key={`${sandboxId}-${value}-li`}
-            role="listitem"
-            onClick={handleToggle(value)}
+          <div
+            key={`${sandboxId}-${itemValue}-li`}
+            role="button"
+            onClick={handleToggle(itemValue)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                handleToggle(itemValue)();
+              }
+            }}
+            tabIndex={0}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '6px 12px',
+              cursor: 'pointer',
+            }}
           >
-            <ListItemIcon
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Checkbox
-                checked={checked.includes(value)}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{
-                  'aria-labelledby': labelId,
-                }}
-              />
-              <img
-                src={getServiceInfo(value)?.icon}
-                alt={getServiceInfo(value)?.name}
-                width={15}
-                height={15}
-              />
-            </ListItemIcon>
-            <ListItemText id={labelId} primary={getServiceInfo(value)?.name} />
-          </ListItemButton>
+            <span style={{ pointerEvents: 'none' }}>
+              <Checkbox checked={checked.includes(itemValue)} />
+            </span>
+            <img
+              src={getServiceInfo(itemValue)?.icon}
+              alt={getServiceInfo(itemValue)?.name}
+              width={15}
+              height={15}
+              style={{ marginLeft: 8, marginRight: 8, flexShrink: 0 }}
+            />
+            <span id={labelId}>{getServiceInfo(itemValue)?.name}</span>
+          </div>
         );
       })}
-    </List>
-    // </Paper>
+    </div>
   );
 
-  function handleAllRight() {
+  const handleAllRight = useCallback(() => {
     editSandboxService({
       id: sandboxId,
       services: [],
     });
     setChecked([]);
-  }
+  }, [editSandboxService, sandboxId]);
 
-  function handleCheckedRight() {
+  const handleCheckedRight = useCallback(() => {
     editSandboxService({
       id: sandboxId,
       services: not(selectedServices, leftChecked),
     });
     setChecked(not(checked, leftChecked));
-  }
+  }, [editSandboxService, sandboxId, selectedServices, leftChecked, checked]);
 
-  function handleCheckedLeft() {
+  const handleCheckedLeft = useCallback(() => {
     editSandboxService({
       id: sandboxId,
       services: [...selectedServices, ...rightChecked],
     });
     setChecked(not(checked, rightChecked));
-  }
+  }, [editSandboxService, sandboxId, selectedServices, rightChecked, checked]);
 
-  function handleAllLeft() {
+  const handleAllLeft = useCallback(() => {
     editSandboxService({
       id: sandboxId,
       services: [...selectedServices, ...notSelected],
     });
     setChecked([]);
-  }
+  }, [editSandboxService, sandboxId, selectedServices, notSelected]);
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item>{customList(selectedServices)}</Grid>
-      <Grid item>
-        <Grid container direction="column" alignItems="center">
+    <Row gutter={16} justify="center" align="middle">
+      <Col>{customList(selectedServices)}</Col>
+      <Col style={{ flex: '0 0 auto' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 4,
+          }}
+        >
           <Button
-            sx={{ my: 0.5 }}
-            variant="outlined"
+            variant="outline"
             size="small"
-            onClick={() => handleAllLeft()}
+            onClick={handleAllLeft}
             disabled={notSelected.length === 0}
-            aria-label="move all left"
           >
             ≪
           </Button>
           <Button
-            sx={{ my: 0.5 }}
-            variant="outlined"
+            variant="outline"
             size="small"
-            onClick={() => handleCheckedLeft()}
+            onClick={handleCheckedLeft}
             disabled={rightChecked.length === 0}
-            aria-label="move selected left"
           >
             &lt;
           </Button>
-
           <Button
-            sx={{ my: 0.5 }}
-            variant="outlined"
+            variant="outline"
             size="small"
-            onClick={() => handleCheckedRight()}
+            onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
-            aria-label="move selected right"
           >
             &gt;
           </Button>
           <Button
-            sx={{ my: 0.5 }}
-            variant="outlined"
+            variant="outline"
             size="small"
-            onClick={() => handleAllRight()}
+            onClick={handleAllRight}
             disabled={selectedServices.length === 0}
-            aria-label="move all right"
           >
             ≫
           </Button>
-        </Grid>
-      </Grid>
-      <Grid item>{customList(notSelected)}</Grid>
-    </Grid>
+        </div>
+      </Col>
+      <Col>{customList(notSelected)}</Col>
+    </Row>
   );
 }
 

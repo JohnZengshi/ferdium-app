@@ -3,10 +3,6 @@ import { Component, type ReactElement } from 'react';
 import { ThemeProvider } from 'react-jss';
 import { Outlet } from 'react-router-dom';
 
-import {
-  ThemeProvider as MUIThemeProvider,
-  createTheme,
-} from '@mui/material/styles';
 import tinycolor from 'tinycolor2';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
@@ -53,31 +49,16 @@ class AppLayoutContainer extends Component<IProps> {
       awake,
     } = this.props.actions.service;
 
-    // This is a workaround to fix theming on MUI components when the settings are poorly set
     let { accentColor } = settings.app;
     accentColor = tinycolor(accentColor).isValid()
       ? accentColor
       : DEFAULT_ACCENT_COLOR;
-    // ---
-
-    // This is a workaround to fix theming on MUI components
-    const themeMUIDark = createTheme({
-      palette: {
-        mode: 'dark',
-        primary: {
-          main: accentColor,
-        },
-      },
-    });
-
-    const themeMUILight = createTheme({
-      palette: {
-        mode: 'light',
-        primary: {
-          main: accentColor,
-        },
-      },
-    });
+    document.documentElement.style.setProperty('--td-brand-color', accentColor);
+    if (settings.app.darkMode) {
+      document.documentElement.setAttribute('theme-mode', 'dark');
+    } else {
+      document.documentElement.removeAttribute('theme-mode');
+    }
     // ---
 
     const { retryRequiredRequests } = this.props.actions.requests;
@@ -169,38 +150,31 @@ class AppLayoutContainer extends Component<IProps> {
     );
 
     return (
-      // TODO: Using 2 ThemeProviders is not ideal, but it's a workaround for now
-      <MUIThemeProvider
-        theme={settings.app.darkMode ? themeMUIDark : themeMUILight}
-      >
-        <ThemeProvider theme={ui.theme}>
-          <AppLayout
-            settings={settings}
-            isFullScreen={app.isFullScreen}
-            showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
-            appUpdateIsDownloaded={
-              app.updateStatus === app.updateStatusTypes.DOWNLOADED
-            }
-            authRequestFailed={app.authRequestFailed}
-            sidebar={sidebar}
-            workspacesDrawer={workspacesDrawer}
-            services={servicesContainer}
-            installAppUpdate={installUpdate}
-            showRequiredRequestsError={requests.showRequiredRequestsError}
-            areRequiredRequestsSuccessful={
-              requests.areRequiredRequestsSuccessful
-            }
-            retryRequiredRequests={retryRequiredRequests}
-            areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
-            updateVersion={app.updateVersion}
-            isUpdateAvailable={
-              app.updateStatus === app.updateStatusTypes.AVAILABLE
-            }
-          >
-            <Outlet />
-          </AppLayout>
-        </ThemeProvider>
-      </MUIThemeProvider>
+      <ThemeProvider theme={ui.theme}>
+        <AppLayout
+          settings={settings}
+          isFullScreen={app.isFullScreen}
+          showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
+          appUpdateIsDownloaded={
+            app.updateStatus === app.updateStatusTypes.DOWNLOADED
+          }
+          authRequestFailed={app.authRequestFailed}
+          sidebar={sidebar}
+          workspacesDrawer={workspacesDrawer}
+          services={servicesContainer}
+          installAppUpdate={installUpdate}
+          showRequiredRequestsError={requests.showRequiredRequestsError}
+          areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}
+          retryRequiredRequests={retryRequiredRequests}
+          areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
+          updateVersion={app.updateVersion}
+          isUpdateAvailable={
+            app.updateStatus === app.updateStatusTypes.AVAILABLE
+          }
+        >
+          <Outlet />
+        </AppLayout>
+      </ThemeProvider>
     );
   }
 }

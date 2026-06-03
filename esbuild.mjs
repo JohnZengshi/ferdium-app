@@ -229,7 +229,7 @@ const runEsbuild = async () => {
             codeInspectorPlugin({
               bundler: 'esbuild',
               dev: () => true,
-              escapeTags: ['webview', 'MUIThemeProvider'],
+              escapeTags: ['webview'],
               injectTo: [path.resolve('src/app.tsx')],
             }),
           ]

@@ -69,12 +69,8 @@
     "@adonisjs/shield": "1.1.0",
     "@adonisjs/validator": "5.1.0",
     "@electron/remote": "2.1.2",
-    "@emotion/react": "11.13.3",
-    "@emotion/styled": "11.13.0",
     "@mdi/js": "7.4.47",
     "@mdi/react": "1.6.1",
-    "@mui/icons-material": "5.16.7",
-    "@mui/material": "5.16.7",
     "@octokit/core": "5.1.0",
     "@sentry/electron": "4.14.0",
     "@superwf/mobx-react-router": "7.4.0",
@@ -136,6 +132,8 @@
     "socket.io-client": "4.8.3",
     "sqlite3": "5.1.6",
     "tar": "6.2.1",
+    "tdesign-icons-react": "0.6.4",
+    "tdesign-react": "1.17.0",
     "tinycolor2": "1.6.0",
     "tslib": "2.7.0",
     "useragent-generator": "1.1.1-amkt-22079-finish.0",
@@ -251,7 +249,10 @@
       "node-mac-permissions",
       "preval-build-info",
       "sqlite3"
-    ]
+    ],
+    "patchedDependencies": {
+      "tdesign-react@1.17.0": "patches/tdesign-react@1.17.0.patch"
+    }
   },
   "overrides": {
     "usocket": "_EXCLUDED_"

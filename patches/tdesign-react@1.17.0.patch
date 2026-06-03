@@ -1,0 +1,13 @@
+diff --git a/package.json b/package.json
+index d5518ffcd2c6911a9ca067b66fd8e10df2e50e4b..2082c9280e2536cd60a76182f3104ea53d97a326 100644
+--- a/package.json
++++ b/package.json
+@@ -3,7 +3,7 @@
+   "version": "1.17.0",
+   "title": "tdesign-react",
+   "description": "TDesign Component for React",
+-  "main": "lib/index.js",
++  "main": "cjs/index.js",
+   "module": "es/index.js",
+   "typings": "es/index.d.ts",
+   "unpkg": "dist/tdesign.min.js",

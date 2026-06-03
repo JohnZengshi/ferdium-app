@@ -21,13 +21,20 @@ import ErrorBoundary from '../util/ErrorBoundary';
 
 import { isMac, isSnap, isWindows } from '../../environment';
 import Todos from '../../features/todos/containers/TodosScreen';
-import { workspaceStore } from '../../features/workspaces';
 import WorkspaceSwitchingIndicator from '../../features/workspaces/components/WorkspaceSwitchingIndicator';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Icon from '../ui/icon';
 
 import LockedScreen from '../../containers/auth/LockedScreen';
 import type SettingsStore from '../../stores/SettingsStore';
+
+import HomeScreen from '../../containers/home/HomeScreen';
+import KnowledgeBaseScreen from '../../containers/knowledge-base/KnowledgeBaseScreen';
+import AccountManagementScreen from '../../containers/service-group/AccountManagementScreen';
+import UserProfileScreen from '../../containers/service-group/UserProfileScreen';
+import { navigationStore } from '../../stores/NavigationStore';
+import MainModuleTabs from './MainModuleTabs';
+import ServiceSubTabs from './ServiceSubTabs';
 
 const messages = defineMessages({
   servicesUpdated: {
@@ -53,27 +60,12 @@ const transition = window?.matchMedia('(prefers-reduced-motion: no-preference)')
   ? 'transform 0.5s ease'
   : 'none';
 
-const styles = (theme: {
-  workspaces: {
-    drawer: {
-      width: any;
-      compactWidth: any;
-    };
-  };
-}) => ({
+const styles = () => ({
   appContent: {
     width: '100%',
     transition,
     transform() {
-      const { settings } = workspaceStore.stores;
-
-      const drawerWidth = settings.all.app.useCompactWorkspaceDrawer
-        ? settings.all.app.serviceRibbonWidth
-        : theme.workspaces.drawer.width;
-
-      return workspaceStore.isWorkspaceDrawerOpen
-        ? 'translateX(0)'
-        : `translateX(-${drawerWidth}px)`;
+      return 'translateX(0)';
     },
   },
   titleBar: {
@@ -96,7 +88,6 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   updateVersion: string;
   isFullScreen: boolean;
   sidebar: React.ReactElement;
-  workspacesDrawer: React.ReactElement;
   services: React.ReactElement;
   showServicesUpdatedInfoBar: boolean;
   appUpdateIsDownloaded: boolean;
@@ -128,7 +119,6 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
     const {
       classes,
       isFullScreen,
-      workspacesDrawer,
       sidebar,
       services,
       showServicesUpdatedInfoBar,
@@ -152,6 +142,87 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       return <LockedScreen />;
     }
 
+    const { activeModule, activeServiceTab } = navigationStore;
+    const isServiceTypeMessagesMode =
+      activeModule === 'service-type' && activeServiceTab === 'messages';
+
+    const renderMainContent = () => {
+      if (activeModule === 'home') {
+        return <HomeScreen />;
+      }
+      if (activeModule === 'knowledge-base') {
+        return <KnowledgeBaseScreen />;
+      }
+      if (activeModule === 'service-type' && activeServiceTab === 'account') {
+        return <AccountManagementScreen />;
+      }
+      if (activeModule === 'service-type' && activeServiceTab === 'profile') {
+        return <UserProfileScreen />;
+      }
+      return (
+        <>
+          <WorkspaceSwitchingIndicator />
+          {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
+            <InfoBar
+              type="danger"
+              ctaLabel="Try again"
+              ctaLoading={areRequiredRequestsLoading}
+              sticky
+              onClick={retryRequiredRequests}
+            >
+              <Icon icon={mdiFlash} />
+              {intl.formatMessage(messages.requiredRequestsFailed)}
+            </InfoBar>
+          )}
+          {authRequestFailed && (
+            <InfoBar
+              type="danger"
+              ctaLabel="Try again"
+              ctaLoading={areRequiredRequestsLoading}
+              sticky
+              onClick={retryRequiredRequests}
+            >
+              <Icon icon={mdiFlash} />
+              {intl.formatMessage(messages.authRequestFailed)}
+            </InfoBar>
+          )}
+          {automaticUpdates &&
+            showServicesUpdatedInfoBar &&
+            this.state.shouldShowServicesUpdatedInfoBar && (
+              <InfoBar
+                type="primary"
+                ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
+                onClick={() => window.location.reload()}
+                onHide={() => {
+                  this.setState({
+                    shouldShowServicesUpdatedInfoBar: false,
+                  });
+                }}
+              >
+                <Icon icon={mdiPowerPlug} />
+                {intl.formatMessage(messages.servicesUpdated)}
+              </InfoBar>
+            )}
+          {automaticUpdates &&
+            (appUpdateIsDownloaded || (isSnap && isUpdateAvailable)) &&
+            this.state.shouldShowAppUpdateInfoBar && (
+              <AppUpdateInfoBar
+                onInstallUpdate={installAppUpdate}
+                updateVersionParsed={updateVersionParse(updateVersion)}
+                onHide={() => {
+                  this.setState({ shouldShowAppUpdateInfoBar: false });
+                }}
+              />
+            )}
+          <BasicAuth />
+          <QuickSwitch />
+          <PublishDebugInfo />
+          {services}
+          <Outlet />
+        </>
+      );
+    };
+
     return (
       <>
         {isMac && !isFullScreen && <div className="window-draggable" />}
@@ -172,72 +243,15 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               />
             )}
             <div className={`app__content ${classes.appContent}`}>
-              {workspacesDrawer}
-              {sidebar}
-              <div className="app__service">
-                <WorkspaceSwitchingIndicator />
-                {!areRequiredRequestsSuccessful &&
-                  showRequiredRequestsError && (
-                    <InfoBar
-                      type="danger"
-                      ctaLabel="Try again"
-                      ctaLoading={areRequiredRequestsLoading}
-                      sticky
-                      onClick={retryRequiredRequests}
-                    >
-                      <Icon icon={mdiFlash} />
-                      {intl.formatMessage(messages.requiredRequestsFailed)}
-                    </InfoBar>
-                  )}
-                {authRequestFailed && (
-                  <InfoBar
-                    type="danger"
-                    ctaLabel="Try again"
-                    ctaLoading={areRequiredRequestsLoading}
-                    sticky
-                    onClick={retryRequiredRequests}
-                  >
-                    <Icon icon={mdiFlash} />
-                    {intl.formatMessage(messages.authRequestFailed)}
-                  </InfoBar>
-                )}
-                {automaticUpdates &&
-                  showServicesUpdatedInfoBar &&
-                  this.state.shouldShowServicesUpdatedInfoBar && (
-                    <InfoBar
-                      type="primary"
-                      ctaLabel={intl.formatMessage(
-                        messages.buttonReloadServices,
-                      )}
-                      onClick={() => window.location.reload()}
-                      onHide={() => {
-                        this.setState({
-                          shouldShowServicesUpdatedInfoBar: false,
-                        });
-                      }}
-                    >
-                      <Icon icon={mdiPowerPlug} />
-                      {intl.formatMessage(messages.servicesUpdated)}
-                    </InfoBar>
-                  )}
-                {automaticUpdates &&
-                  (appUpdateIsDownloaded || (isSnap && isUpdateAvailable)) &&
-                  this.state.shouldShowAppUpdateInfoBar && (
-                    <AppUpdateInfoBar
-                      onInstallUpdate={installAppUpdate}
-                      updateVersionParsed={updateVersionParse(updateVersion)}
-                      onHide={() => {
-                        this.setState({ shouldShowAppUpdateInfoBar: false });
-                      }}
-                    />
-                  )}
-                <BasicAuth />
-                <QuickSwitch />
-                <PublishDebugInfo />
-                {services}
-                <Outlet />
-              </div>
-              <Todos />
+              <MainModuleTabs />
+
+              {activeModule === 'service-type' && <ServiceSubTabs />}
+
+              {isServiceTypeMessagesMode && sidebar}
+
+              <div className="app__service">{renderMainContent()}</div>
+
+              {isServiceTypeMessagesMode && <Todos />}
             </div>
           </div>
         </ErrorBoundary>

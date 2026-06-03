@@ -113,7 +113,7 @@ Run the following script to install all dependencies, and build Ferdium.
 .\scripts\build-windows.ps1
 ```
 
-Assets will be available in the `out` folder.
+After running the build script, the packaged installers will be available in the `out` folder (configured in `electron-builder.yml`). The compiled app bundle (esbuild output) lives in the `build/` directory.
 
 If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
 
@@ -141,17 +141,49 @@ mv /ferdium/ferdium /ferdium-out/Ferdium-$GIT_SHA
 mv /ferdium/latest-linux.yml /ferdium-out/latest-linux-$GIT_SHA.yml
 ```
 
-### Start development app
+### Development commands
 
-Run this command on the terminal:
+Ferdium uses **esbuild** for bundling and **Electron** for the app runtime. The following commands are available:
 
 ```bash
+# Start esbuild in watch mode (serves on http://127.0.0.1:8080)
+pnpm dev
+
+# Launch Electron with the built app (run after pnpm dev or pnpm build)
+pnpm start
+
+# Full dev setup: esbuild watch + Electron launch (waits for the dev server)
+pnpm start:all-dev
+
+# Same as start:all-dev but with DEBUG=Ferdium:* logging
 pnpm debug
+
+# Fresh start: rebuild recipes + kill stale port + esbuild + Electron
+pnpm start:fresh
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.
 However, due to an [Electron bug](https://github.com/electron/electron/issues/31689), using `require('debug')` directly is dangerous and can lead to data loss in services.
 Please use the `src/preload-safe-debug` module instead until the bug gets fixed.
+
+Other useful commands:
+
+```bash
+# Run tests
+pnpm test
+
+# TypeScript type checking
+pnpm typecheck
+
+# Lint check (zero warnings required)
+pnpm lint
+
+# Full pre-commit check: typecheck + lint:fix + biome + prettier + translations
+pnpm prepare-code
+
+# End-to-end tests (Playwright)
+pnpm test:e2e
+```
 
 ### Styleguide
 
@@ -185,26 +217,26 @@ codesign --deep --force --verbose --sign - node_modules/electron/dist/Electron.a
 ## Release
 
 ```bash
-git checkout nightly && git pull -r
-git checkout release
-git merge --no-ff nightly --no-verify
+git checkout dev && git pull -r
+git checkout main
+git merge --no-ff dev --no-verify
 # <manually resolve conflicts>
 # <manually bump version with 'beta' name (if beta) in `package.json`>
 # <run the build script for your OS from the `scripts` folder>
 # <add all pertinent changes to git>
 # <create commit>
-git push upstream release
-# Note: Do NOT allow the GHA release process to create the tag automatically, since that will be at the SHA in the develop branch and not on the release branch - which is logically incorrect
+git push upstream main
+# Note: Do NOT allow the GHA release process to create the tag automatically, since that will be at the SHA in the dev branch and not on the release branch - which is logically incorrect
 git tag v$(node -p 'require("./package.json").version')
 git push upstream --tags
-# Note: GHA will automatically build with publish since its the release branch
+# Note: GHA will automatically build with publish since its the main branch
 # Note: Once the GHA action is completed, verify the builds (there should be 32 assets before publishing)
-gco develop
-# <If its a public release, manually bump to next nightly.0 version in package.json>
+gco dev
+# <If its a public release, manually bump to version in package.json>
 # <If its a public release, manually fix homebrew-ferdium PR>
 ```
 
-This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/ferdium/ferdium-app/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
+This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/ferdium/ferdium-app/releases/). Once all the assets are uploaded (32 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `main` branch will be tagged.
 
 ### Nightly releases
 

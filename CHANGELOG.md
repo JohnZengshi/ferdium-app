@@ -1,3 +1,20 @@
+# [v7.1.x](https://github.com/ferdium/ferdium-app/releases) (current)
+
+### Notable changes since v6.2.0
+
+- **Platform upgrades**: Node.js 22.18.0, pnpm 10.14.0, Electron latest stable
+- **Build system**: Switched to esbuild from webpack (see `esbuild.mjs`)
+- **Testing**: Added Playwright for end-to-end tests (`pnpm test:e2e`)
+- **Code quality**: Added Biome as a secondary linter alongside ESLint
+- **TypeScript migration**: Continued conversion of JavaScript to TypeScript across the codebase
+- **Styling overhaul**: TailwindCSS adopted as the primary styling tool (SCSS reserved for legacy layouts)
+- **Internal server**: Rewritten as a modern AdonisJS 5 application with SQLite
+- **New features**: Workspaces, community recipes browser, per-service proxy, appearance customization, todos
+
+For detailed release history, see the [releases page](https://github.com/ferdium/ferdium-app/releases).
+
+---
+
 # [v6.2.0](https://github.com/ferdium/ferdium-app/compare/v6.1.0...v6.2.0) (2022-09-22)
 
 ### :warning: BREAKING CHANGES :warning:

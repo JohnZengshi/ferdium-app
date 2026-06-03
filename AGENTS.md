@@ -10,7 +10,7 @@
 
 | 属性 | 值 |
 |------|-----|
-| 技术栈 | Electron 34 + React 18 + MobX 6 + TypeScript 5 |
+| 技术栈 | Electron 37 + React 18 + MobX 6 + TypeScript 5 |
 | 构建工具 | esbuild + electron-builder |
 | 内嵌服务端 | AdonisJS 5 + SQLite |
 | 包管理 | pnpm 10.14.0 |
@@ -93,10 +93,10 @@ src/components/
 
 **组件编写规则**：
 - 使用 `inject` + `observer`（mobx-react）连接 MobX store
-- **TailwindCSS 优先**：新 UI 组件优先使用 Tailwind utility classes（`src/styles/tailwind.css`，无 preflight 冲突）
-- 传统组件可用 SCSS 或 MUI theme（Emotion）管理样式
+- **TDesign React 优先**：应用全量采用腾讯 `tdesign-react` 作为基础 UI 框架（配合 `tdesign-icons-react`）。
+- **TailwindCSS 配合**：新组件布局、间距优先使用 Tailwind utility classes（`src/styles/tailwind.css`）辅助。
+- 传统组件可用 SCSS 或 react-jss theme 管理样式，逐步向 TDesign 迁移
 - 支持主题变量（theme.xxx），避免硬编码颜色值
-- 用 `@mdi/js` 图标库
 
 ### 2.4 状态管理层 — State Management
 
@@ -227,17 +227,18 @@ internal-server/
 
 ### 2.9 表现层 — Presentation Assets
 
-**样式体系**（三层混合架构）：
+**样式体系**（四层混合架构）：
 
 ```
-样式优先级：TailwindCSS > SCSS > MUI theme
+样式优先级：TailwindCSS > SCSS > react-jss theme
 ```
 
 | 层次 | 技术 | 职责 | 入口 |
 |------|------|------|------|
-| 1️⃣ 新 UI 工具层 | **TailwindCSS** | 新增组件的布局、间距、排版等 utility 类 | `src/styles/tailwind.css`（仅 `@tailwind utilities`，禁用 preflight） |
-| 2️⃣ 历史全局层 | **SCSS** | 传统页面结构、全局样式、表单/布局等静态样式 | `src/styles/main.scss`（聚合 30+ 模块） |
-| 3️⃣ 主题/组件层 | **MUI Theme + Emotion** | 组件视觉规则、设计 token、暗色/默认双主题 | `src/themes/` 下的 JS 配置 |
+| 1️⃣ 组件框架层 | **TDesign React** | 全量基础 UI 组件（按钮、弹窗、Tab、输入框、选择器、徽标等），配合 `tdesign-icons-react` 图标库 | `tdesign-react` + `tdesign-icons-react` |
+| 2️⃣ 新 UI 工具层 | **TailwindCSS** | 新增组件的布局、间距、排版等 utility 类 | `src/styles/tailwind.css`（仅 `@tailwind utilities`，禁用 preflight） |
+| 3️⃣ 历史全局层 | **SCSS** | 传统页面结构、全局样式、表单/布局等静态样式 | `src/styles/main.scss`（聚合 30+ 模块） |
+| 4️⃣ 主题/组件层 | **react-jss 主题系统** | 组件视觉规则、设计 token、暗色/默认双主题 | `src/themes/` 下的 JS 配置 |
 
 **SCSS 样式系统**（`src/styles/`）：
 
@@ -345,7 +346,7 @@ Components (src/components/) — React 自动响应
 | **TailwindCSS 优先** | 新 UI 组件强制使用 Tailwind utility classes，禁止内联静态 `style={}`。仅动态运行时值（动画等）可用 `style={}` |
 | **Inline style 禁止** | `style={}` 中不得出现硬编码 CSS 值（如 `fontSize: '28px'`），统一用 Tailwind 任意值语法（`text-[28px]`）替代 |
 | **SCSS 遗产** | 不删除/重构现有 SCSS 文件，不作新增。全局结构样式继续有效 |
-| **主题支持** | 所有颜色值必须支持深色/浅色双主题，通过 MUI ThemeProvider 或 `.theme__dark` CSS 类切换 |
+| **主题支持** | 所有颜色值必须支持深色/浅色双主题，通过 react-jss ThemeProvider 或 `.theme__dark` CSS 类切换 |
 | **设计 Token** | 使用 `config.scss` 中的 SCSS 变量（`$brand-primary`）或 themes 对象中的 JS token |
 | **无障碍** | 尊重 `prefers-reduced-motion` 媒体查询 |
 | **Preflight** | Tailwind 的 preflight 已禁用，可安全与 SCSS 共存 |
@@ -380,7 +381,7 @@ src/features/<name>/
 测试：pnpm test → Jest → coverage
 构建：pnpm build → esbuild → build/
                     → electron-builder → macOS(.dmg,.zip)
-                                       → Windows(.exe,.msi)
+                                        → Windows(NSIS installer, portable)
                                        → Linux(.deb,.AppImage,.rpm)
 发布：GitHub CI → code sign → notarize → publish
 ```
@@ -449,7 +450,7 @@ ferdium-app/
 | 修改 API | 在 `src/api/` 中修改，注意双后端（Server + Local）同步 |
 | 修复 Bug | 最小化修改，不重构。先定位再修复 |
 | 重构 | 先通过 `codegraph_impact` 分析影响范围 |
-| 新增依赖 | 优先使用已有库（MUI、@mdi/js、react-jss、lodash） |
+| 新增依赖 | 优先使用已有库（@mdi/js、react-jss、lodash） |
 | **样式调整** | 新 UI 强制使用 Tailwind `className`，禁止内联静态 `style={}`；修改旧样式用 SCSS；主题色值用 `src/themes/` |
 
 ### 5.2 文件编辑规范

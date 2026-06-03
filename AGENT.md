@@ -342,7 +342,8 @@ Components (src/components/) — React 自动响应
 
 | 规则 | 说明 |
 |------|------|
-| **TailwindCSS 优先** | 新 UI 组件优先使用 Tailwind utility classes，不新增 SCSS 文件 |
+| **TailwindCSS 优先** | 新 UI 组件强制使用 Tailwind utility classes，禁止内联静态 `style={}`。仅动态运行时值（动画等）可用 `style={}` |
+| **Inline style 禁止** | `style={}` 中不得出现硬编码 CSS 值（如 `fontSize: '28px'`），统一用 Tailwind 任意值语法（`text-[28px]`）替代 |
 | **SCSS 遗产** | 不删除/重构现有 SCSS 文件，不作新增。全局结构样式继续有效 |
 | **主题支持** | 所有颜色值必须支持深色/浅色双主题，通过 MUI ThemeProvider 或 `.theme__dark` CSS 类切换 |
 | **设计 Token** | 使用 `config.scss` 中的 SCSS 变量（`$brand-primary`）或 themes 对象中的 JS token |
@@ -449,7 +450,7 @@ ferdium-app/
 | 修复 Bug | 最小化修改，不重构。先定位再修复 |
 | 重构 | 先通过 `codegraph_impact` 分析影响范围 |
 | 新增依赖 | 优先使用已有库（MUI、@mdi/js、react-jss、lodash） |
-| **样式调整** | 新 UI 用 Tailwind；修改旧样式用 SCSS；主题色值用 `src/themes/` |
+| **样式调整** | 新 UI 强制使用 Tailwind `className`，禁止内联静态 `style={}`；修改旧样式用 SCSS；主题色值用 `src/themes/` |
 
 ### 5.2 文件编辑规范
 

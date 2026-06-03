@@ -101,7 +101,7 @@ Uses **esbuild** (`esbuild.mjs`) for bundling. Compiles TS/TSX to CommonJS, proc
 
 **Style priority**: TailwindCSS > SCSS > MUI theme.
 
-- **TailwindCSS** (`src/styles/tailwind.css`): Primary styling tool for page/component layout and utility classes. Prefer Tailwind utility classes over SCSS or manual CSS for all new UI work.
+- **TailwindCSS** (`src/styles/tailwind.css`): Primary styling tool for page/component layout and utility classes. **MUST** use Tailwind utility classes (`className`) instead of inline `style={}` props for all layout and visual styling. Inline `style={}` is only acceptable for dynamic runtime values (e.g., animating transforms, computed positions). Hardcoded CSS values in `style={}` are forbidden — use Tailwind arbitrary values (`p-[40px]`, `text-[var(--x)]`) or theme tokens instead.
   - Preflight (CSS reset) is disabled to avoid conflicts with existing SCSS globals.
   - Only `@tailwind utilities;` is used — no base or components resets.
   - Config in `tailwind.config.js`.

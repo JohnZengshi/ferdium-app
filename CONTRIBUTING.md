@@ -165,7 +165,8 @@ Please use the `src/preload-safe-debug` module instead until the bug gets fixed.
 
 #### CSS/Styling
 
-- **TailwindCSS First**: For all new UI work, page layouts, and component styling, prefer using **TailwindCSS** utility classes.
+- **TailwindCSS First**: MUST use TailwindCSS utility classes (`className`) for all layout and visual styling. Inline `style={}` is forbidden for static/hardcoded CSS values.
+- **Inline Style Exception**: `style={}` is only acceptable for truly dynamic runtime values (animating transforms, computed positions). Hardcoded values like `fontSize: '28px'` must use Tailwind arbitrary values (`text-[28px]`).
 - **SCSS Usage**: SCSS should be reserved only for legacy structural layouts or deep overrides where utility classes fall short. Do NOT add new global SCSS files.
 - **No Preflight Conflicts**: We have disabled Tailwind's preflight (reset) to avoid conflicting with existing SCSS globals. Use Tailwind utilities on top of the existing layout safely.
 

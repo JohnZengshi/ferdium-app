@@ -525,10 +525,15 @@ class EditServiceScreen extends Component<IProps> {
     let isLoading = false;
 
     if (action === 'add') {
-      recipe = recipes.active;
-      // TODO: render error message when recipe is `null`
-      if (!recipe) {
-        return <ServiceError />;
+      // Check if recipes are still loading
+      isLoading = recipes.allRecipesRequest.isExecuting;
+      
+      if (!isLoading) {
+        recipe = recipes.active;
+        // TODO: render error message when recipe is `null`
+        if (!recipe) {
+          return <ServiceError />;
+        }
       }
     } else {
       service = services.activeSettings;

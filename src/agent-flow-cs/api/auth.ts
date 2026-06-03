@@ -1,0 +1,137 @@
+/**
+ * Agent Flow CS authentication.
+ * Uses Bearer token authentication (POST /api/v1/auth/login).
+ */
+
+const AGENT_FLOW_CS_BASE =
+  process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.179:8000';
+const TOKEN_STORAGE_KEY =
+  process.env.AGENT_FLOW_TOKEN_STORAGE_KEY ?? 'agentFlowCsAccessToken';
+
+export interface AuthCredentials {
+  username: string;
+  password: string;
+}
+
+/**
+ * Retrieve the stored access token.
+ */
+export const getAccessToken = (): string => {
+  // 1. Try Ferdium settings store
+  try {
+    const settings = (window as any).ferdium?.stores?.settings?.all?.app;
+    if (settings?.[TOKEN_STORAGE_KEY]) {
+      return settings[TOKEN_STORAGE_KEY];
+    }
+  } catch {
+    console.warn(
+      '[Agent Flow CS] Settings store not available in getAccessToken',
+    );
+  }
+
+  // 2. Try localStorage
+  try {
+    const stored = localStorage.getItem(TOKEN_STORAGE_KEY);
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return stored;
+      }
+    }
+  } catch {
+    console.warn(
+      '[Agent Flow CS] localStorage not available in getAccessToken',
+    );
+  }
+
+  return '';
+};
+
+/**
+ * Store the access token persistently.
+ */
+export const setAccessToken = (token: string): void => {
+  try {
+    localStorage.setItem(TOKEN_STORAGE_KEY, token);
+  } catch {
+    console.warn(
+      '[Agent Flow CS] Failed to write access token to localStorage',
+    );
+  }
+  try {
+    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
+    if (settingsApp && typeof settingsApp === 'object') {
+      settingsApp[TOKEN_STORAGE_KEY] = token;
+    }
+  } catch {
+    console.warn(
+      '[Agent Flow CS] Failed to sync access token to settings store',
+    );
+  }
+};
+
+/**
+ * Clear the access token from all storage locations.
+ */
+export const clearAccessToken = (): void => {
+  try {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+  } catch {
+    console.warn(
+      '[Agent Flow CS] Failed to remove access token from localStorage',
+    );
+  }
+  try {
+    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
+    if (settingsApp && typeof settingsApp === 'object') {
+      settingsApp[TOKEN_STORAGE_KEY] = '';
+    }
+  } catch {
+    console.warn(
+      '[Agent Flow CS] Failed to clear access token from settings store',
+    );
+  }
+};
+
+/**
+ * Login and obtain a Bearer access token.
+ * POST /api/v1/auth/login
+ */
+export const initializeAuth = async (
+  credentials: AuthCredentials,
+): Promise<string | null> => {
+  const { username, password } = credentials;
+
+  try {
+    const response = await fetch(`${AGENT_FLOW_CS_BASE}/api/v1/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({}));
+      console.error(
+        `[Agent Flow CS] Login failed: ${response.status} ${body.message || ''}`,
+      );
+      return null;
+    }
+
+    const data = await response.json();
+    const token = data.access_token;
+
+    if (!token) {
+      console.error('[Agent Flow CS] No access_token in login response');
+      return null;
+    }
+
+    setAccessToken(token);
+    // eslint-disable-next-line no-console
+    console.log('[Agent Flow CS] Authenticated as', username);
+    return token;
+  } catch (error) {
+    console.error('[Agent Flow CS] Login request failed', error);
+    return null;
+  }
+};

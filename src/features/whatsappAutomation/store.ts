@@ -922,15 +922,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       '.waa-qr-overlay{position:fixed;left:68px;top:0;width:calc(100% - 68px);height:100%;background:var(--waa-bg);z-index:2147483646;display:none;align-items:center;justify-content:center;transition:left 0.3s ease}',
       '.waa-panel.expanded ~ .waa-qr-overlay{left:220px;width:calc(100% - 220px)}',
       '.waa-qr-overlay.show{display:flex}',
-      // WhatsApp Web native: adjust for sidebar (only target web.whatsapp.com)
-      'body[data-wa-inject="true"] #app{position:fixed!important;left:68px!important;top:0!important;width:calc(100% - 68px)!important;height:100%!important;max-width:none!important;transition:all 0.3s ease!important}',
-      'body[data-wa-inject="true"] .waa-panel.expanded ~ #app{left:220px!important;width:calc(100% - 220px)!important}',
-      'body[data-wa-inject="true"] #app.hide{display:none!important}'
+      // WhatsApp Web native: adjust for sidebar
+      '#app{position:fixed!important;left:68px!important;top:0!important;width:calc(100% - 68px)!important;height:100%!important;max-width:none!important;transition:all 0.3s ease!important}',
+      '.waa-panel.expanded ~ #app{left:220px!important;width:calc(100% - 220px)!important}',
+      '#app.hide{display:none!important}'
     ].join('');
     document.head.appendChild(s);
-
-    // Mark body with data attribute for targeted styling
-    document.body.setAttribute('data-wa-inject', 'true');
 
     // Create left panel with collapsible tabs
     var panel = document.createElement('div');

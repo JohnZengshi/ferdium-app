@@ -47,7 +47,7 @@ export default class WorkspacesStore extends FeatureStore {
 
   @observable isSwitchingWorkspace = false;
 
-  @observable isWorkspaceDrawerOpen = false;
+  @observable isWorkspaceDrawerOpen = true;
 
   @observable isSettingsRouteActive = false;
 
@@ -135,7 +135,7 @@ export default class WorkspacesStore extends FeatureStore {
     this._setNextWorkspace(null);
     this.workspaceBeingEdited = null;
     this._setIsSwitchingWorkspace(false);
-    this.isWorkspaceDrawerOpen = false;
+    this.isWorkspaceDrawerOpen = true;
   }
 
   @action stop() {
@@ -267,7 +267,7 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _toggleWorkspaceDrawer = () => {
-    this.isWorkspaceDrawerOpen = !this.isWorkspaceDrawerOpen;
+    // Workspace drawer is always open; toggle is disabled
   };
 
   @action _openWorkspaceSettings = () => {

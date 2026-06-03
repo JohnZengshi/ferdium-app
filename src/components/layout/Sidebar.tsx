@@ -94,7 +94,6 @@ interface IProps extends WrappedComponentProps {
 
   toggleMuteApp: () => void;
   toggleCollapseMenu: () => void;
-  toggleWorkspaceDrawer: () => void;
   openSettings: (args: { path: string }) => void;
   openDownloads: (args: { path: string }) => void;
   // eslint-disable-next-line react/no-unused-prop-types
@@ -152,7 +151,6 @@ class Sidebar extends Component<IProps, IState> {
       toggleCollapseMenu,
       isAppMuted,
       isWorkspaceDrawerOpen,
-      toggleWorkspaceDrawer,
       stores,
       actions,
       isTodosServiceActive,
@@ -270,13 +268,7 @@ class Sidebar extends Component<IProps, IState> {
         {!hideWorkspacesButton && !isMenuCollapsed ? (
           <button
             type="button"
-            onClick={() => {
-              toggleWorkspaceDrawer();
-              this.updateToolTip();
-            }}
-            className={`sidebar__button sidebar__button--workspaces ${
-              isWorkspaceDrawerOpen ? 'is-active' : ''
-            }`}
+            className="sidebar__button sidebar__button--workspaces is-active"
             data-tooltip-id="tooltip-sidebar-button"
             data-tooltip-content={`${intl.formatMessage(
               workspaceToggleMessage,
@@ -347,7 +339,7 @@ class Sidebar extends Component<IProps, IState> {
             id="tooltip-sidebar-button"
             place="right"
             variant="dark"
-            style={{ height: 'auto', overflowY: 'unset' }}
+            className="h-auto overflow-y-[unset]"
           />
         )}
 

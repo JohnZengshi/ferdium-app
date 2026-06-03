@@ -198,7 +198,6 @@ class WorkspaceDrawer extends Component<IProps> {
                 name={intl.formatMessage(messages.allServices)}
                 onClick={() => {
                   workspaceActions.deactivate();
-                  workspaceActions.toggleWorkspaceDrawer();
                 }}
                 services={getServicesForWorkspace(null)}
                 isActive={actualWorkspace == null}
@@ -216,7 +215,6 @@ class WorkspaceDrawer extends Component<IProps> {
                     return;
                   }
                   workspaceActions.activate({ workspace });
-                  workspaceActions.toggleWorkspaceDrawer();
                 }}
                 onContextMenuEditClick={() =>
                   workspaceActions.edit({ workspace })
@@ -248,7 +246,7 @@ class WorkspaceDrawer extends Component<IProps> {
           id="tooltip-workspaces-drawer"
           place="right"
           variant="dark"
-          style={{ height: 'auto', zIndex: 210 }}
+          className="h-auto z-[210]"
         />
       </div>
     );

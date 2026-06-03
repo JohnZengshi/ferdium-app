@@ -4,6 +4,13 @@ import { observer } from 'mobx-react';
 import { Component } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
+import {
+  Button,
+  Checkbox,
+  Input,
+  Select,
+  type SelectValue,
+} from 'tdesign-react';
 import type { AuthField, AuthProvider } from '../../@types/auth';
 import { AuthFieldType } from '../../@types/auth';
 import type { Field } from '../../@types/mobx-form.types';
@@ -37,10 +44,21 @@ function getFieldIconPath(fieldType: AuthFieldType): string {
   }
 }
 
-function getFieldInputType(fieldType: AuthFieldType): string {
+type InputType =
+  | 'text'
+  | 'number'
+  | 'url'
+  | 'tel'
+  | 'password'
+  | 'search'
+  | 'submit'
+  | 'hidden';
+
+function getFieldInputType(fieldType: AuthFieldType): InputType {
   switch (fieldType) {
-    case AuthFieldType.EMAIL: {
-      return 'email';
+    case AuthFieldType.EMAIL:
+    case AuthFieldType.TEXT: {
+      return 'text';
     }
     case AuthFieldType.PASSWORD: {
       return 'password';
@@ -169,54 +187,43 @@ class DynamicLogin extends Component<DynamicLoginProps> {
     const renderField = (field: AuthField) => {
       if (field.type === AuthFieldType.SELECT) {
         return (
-          <div
-            key={field.id}
-            className="auth__field w-full rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]"
-          >
-            <label htmlFor={field.id}>{field.label}</label>
-            <select
-              id={field.id}
-              className="w-full rounded border border-gray-300 p-2"
+          <div key={field.id} className="auth__field w-full">
+            <span className="text-sm font-medium">{field.label}</span>
+            <Select
+              className="w-full"
               value={this.form.$(field.id).value}
-              onChange={e => this.form.$(field.id).set(e.target.value)}
-            >
-              {field.options?.map(opt => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+              onChange={(value: SelectValue) => {
+                if (typeof value === 'string' || typeof value === 'number') {
+                  this.form.$(field.id).set(String(value));
+                }
+              }}
+              options={field.options}
+            />
           </div>
         );
       }
 
       const inputType = getFieldInputType(field.type);
       const iconPath = getFieldIconPath(field.type);
+      const $field = this.form.$(field.id);
+
+      const viewBox =
+        field.type === AuthFieldType.PASSWORD
+          ? '0 0 12.75 15.75'
+          : '0 0 13.5 15';
 
       return (
-        <div
-          key={field.id}
-          className="auth__field flex w-full items-center gap-2 rounded-[3px] border border-solid border-[#dcdcdc] bg-white px-4 py-3 transition-colors duration-200 focus-within:border-[#0052d9]"
-        >
-          <div className="auth__field-icon flex h-[18px] w-[18px] shrink-0 items-center justify-center">
-            <svg
-              fill="none"
-              preserveAspectRatio="none"
-              viewBox={
-                field.type === AuthFieldType.PASSWORD
-                  ? '0 0 12.75 15.75'
-                  : '0 0 13.5 15'
-              }
-            >
-              <path d={iconPath} fill="black" fillOpacity="0.4" />
-            </svg>
-          </div>
-          <input
-            {...this.form.$(field.id).bind()}
-            ref={undefined}
-            type={inputType}
+        <div key={field.id} className="auth__field w-full">
+          <Input
+            value={$field.value}
+            onChange={(val: string) => $field.set(val)}
+            type={inputType as InputType}
             placeholder={field.placeholder || field.label}
-            className="h-6 min-w-0 flex-1 border-none bg-transparent text-[16px] leading-[24px] text-[rgba(0,0,0,.9)] outline-none placeholder:text-[rgba(0,0,0,.4)]"
+            prefixIcon={
+              <svg fill="none" preserveAspectRatio="none" viewBox={viewBox}>
+                <path d={iconPath} fill="currentColor" fillOpacity="0.4" />
+              </svg>
+            }
           />
         </div>
       );
@@ -265,7 +272,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
           </div>
 
           <form
-            className="auth__form flex w-full flex-col gap-10"
+            className="auth__form flex w-full flex-col gap-[20px]"
             onSubmit={e => {
               e.preventDefault();
               this.submitForm();
@@ -276,55 +283,17 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             {passwordField && (
               <div className="auth__password-section flex flex-col gap-6">
                 {renderField(passwordField)}
-                <div className="auth__remember -mt-2 flex items-center gap-2">
-                  <div
-                    role="checkbox"
-                    aria-checked={this.rememberPassword}
-                    tabIndex={0}
-                    className={classnames(
-                      'auth__remember-checkbox mt-[3px] flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-[3px] border border-solid border-[#bbb] bg-white transition-colors',
-                      {
-                        'auth__remember-checkbox--checked border-[#0052d9] bg-[#0052d9]':
-                          this.rememberPassword,
-                      },
-                    )}
-                    onClick={() =>
+                <div className="auth__remember -mt-2 flex items-center">
+                  <Checkbox
+                    checked={this.rememberPassword}
+                    onChange={(checked: boolean) =>
                       runInAction(() => {
-                        this.rememberPassword = !this.rememberPassword;
-                      })
-                    }
-                    onKeyDown={event => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        runInAction(() => {
-                          this.rememberPassword = !this.rememberPassword;
-                        });
-                      }
-                    }}
-                  >
-                    {this.rememberPassword && (
-                      <svg fill="none" height="8" viewBox="0 0 10 8" width="10">
-                        <path
-                          d="M1 4L3.5 6.5L9 1"
-                          stroke="white"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="1.5"
-                        />
-                      </svg>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    className="auth__remember-label cursor-pointer select-none border-none bg-transparent p-0 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px] leading-[22px] text-[rgba(0,0,0,.9)]"
-                    onClick={() =>
-                      runInAction(() => {
-                        this.rememberPassword = !this.rememberPassword;
+                        this.rememberPassword = checked;
                       })
                     }
                   >
                     记住密码
-                  </button>
+                  </Checkbox>
                 </div>
               </div>
             )}
@@ -335,13 +304,15 @@ class DynamicLogin extends Component<DynamicLoginProps> {
               </p>
             )}
 
-            <button
+            <Button
               type="submit"
-              className="auth__button mt-2 w-full cursor-pointer rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
-              disabled={this.isAuthenticating}
+              block
+              size="large"
+              loading={this.isAuthenticating}
+              className="auth__button mt-2 rounded-[6px] text-[16px] font-semibold"
             >
-              {this.isAuthenticating ? '登录中...' : config.submitLabel}
-            </button>
+              {config.submitLabel}
+            </Button>
           </form>
         </div>
 

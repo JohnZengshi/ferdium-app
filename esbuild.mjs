@@ -191,12 +191,11 @@ const runEsbuild = async () => {
     'src/styles/animations.scss',
   );
 
-  // Inject WhatsApp env vars from .env into bundle
+  // Inject env vars from .env into bundle
   const envDefines = {};
-  for (const key of ['WA_AKG_BASE', 'FERDIUM_SERVER']) {
-    if (process.env[key]) {
-      envDefines[`process.env.${key}`] = JSON.stringify(process.env[key]);
-    }
+  const envConfig = dotenv.config().parsed || {};
+  for (const key of Object.keys(envConfig)) {
+    envDefines[`process.env.${key}`] = JSON.stringify(process.env[key]);
   }
 
   // Run build

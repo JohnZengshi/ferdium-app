@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import {
   action,
   computed,
@@ -27,8 +28,6 @@ import {
 import authManager from '../../lib/auth/AuthManager';
 import { clearApiKey, getApiKey } from '../../whatsapp-automation/api/auth';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
-
-import { SessionStatus } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:whatsapp-automation:store',
@@ -65,9 +64,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _qrFetchMaxAttempts = 6;
 
-  @observable sessionStatuses = new Map<string, SessionStatus | undefined>();
+  @observable sessionStatuses = new Map<string, string | undefined>();
 
   @observable qrCodes = new Map<string, string | undefined>();
+
+  _sessionInfo = new Map<
+    string,
+    { sessionName?: string; sessionId?: string }
+  >();
 
   @observable isLoadingQr = new Map<string, boolean>();
 
@@ -231,8 +235,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   }: {
     serviceId: string;
   }) => {
-    debug('Checking session status for service', serviceId);
-
     // Ensure we're authenticated before making API calls
     const authenticated = await this._ensureAuthenticated();
     if (!authenticated) {
@@ -265,22 +267,29 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         );
 
         if (matchingSession) {
-          runInAction(() => {
-            this.sessionStatuses.set(serviceId, matchingSession.status);
+          const normalizedStatus: string = matchingSession.status?.toUpperCase() ?? '';
+          this._sessionInfo.set(serviceId, {
+            sessionName: matchingSession.name,
+            sessionId: matchingSession.sessionId,
           });
 
-          if (matchingSession.status === SessionStatus.Connected) {
-            debug(`Session ${serviceId} is already connected`);
+          runInAction(() => {
+            this.sessionStatuses.set(serviceId, normalizedStatus);
+          });
+
+          if (normalizedStatus === WA_SESSION_STATUS.CONNECTED) {
+            this._removeQrModal({ serviceId });
             // Update status indicator (Socket.IO won't emit for already-connected)
             this._injectOrUpdateStatusIndicator(
               serviceId,
               WA_SESSION_STATUS.CONNECTED,
             );
-            // Notify webview — session was already active
+
+            this._injectStatusWhenReady(serviceId, WA_SESSION_STATUS.CONNECTED);
             this._notifySessionConnected(serviceId);
           } else {
             debug(
-              `Session ${serviceId} status: ${matchingSession.status}, starting & fetching QR...`,
+              `Session ${serviceId} status: ${normalizedStatus}, starting & fetching QR...`,
             );
             // Session exists but needs QR — start it and show QR
             runInAction(() => {
@@ -295,7 +304,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
                 startError,
               );
             }
-            await this._fetchAndUpdateQr(serviceId);
+            this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.CONNECTING);
           }
         } else {
           debug(`No session found for service ${serviceId}, creating one`);
@@ -360,9 +369,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   @action _injectQrModal = ({
     serviceId,
     base64,
+    sessionName,
+    sessionId,
+    sessionStatus,
   }: {
     serviceId: string;
     base64: string;
+    sessionName?: string;
+    sessionId?: string;
+    sessionStatus?: string;
   }) => {
     const service = this._getService(serviceId);
     if (!service?.webview) {
@@ -370,7 +385,18 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
-    const script = this._buildQrModalScript(serviceId, base64);
+    if (this.sessionStatuses.get(serviceId) === WA_SESSION_STATUS.CONNECTED) {
+      debug('Skip QR modal injection for already-connected session', serviceId);
+      return;
+    }
+
+    const script = this._buildQrModalScript(
+      serviceId,
+      base64,
+      sessionName,
+      sessionId,
+      sessionStatus,
+    );
 
     // Inject via executeJavaScript (only working path from renderer to webview)
     service.webview
@@ -383,11 +409,17 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       .catch((error: Error) => {
         debug('QR modal injection failed:', error);
         // Retry if the webview hasn't loaded yet or hit a transient error
-        this._scheduleRetryInjection(serviceId, base64);
+        this._scheduleRetryInjection(serviceId, base64, sessionName, sessionId);
       });
   };
 
-  _scheduleRetryInjection = (serviceId: string, base64: string) => {
+  _scheduleRetryInjection = (
+    serviceId: string,
+    base64: string,
+    sessionName?: string,
+    sessionId?: string,
+    sessionStatus?: string,
+  ) => {
     const retryCount = this._retryCounts.get(serviceId) || 0;
     if (retryCount >= this._maxRetries) {
       debug(`Max retries (${this._maxRetries}) reached for service`, serviceId);
@@ -408,7 +440,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     );
 
     setTimeout(() => {
-      this._injectQrModal({ serviceId, base64 });
+      this._injectQrModal({
+        serviceId,
+        base64,
+        sessionName,
+        sessionId,
+        sessionStatus,
+      });
     }, this._retryIntervalMs);
   };
 
@@ -474,8 +512,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         // Start the session to get QR
         await postSessionsIdAction(serviceId, 'start');
 
-        // Fetch QR and inject/update modal (Socket.IO will refresh it on SCAN_QR)
-        await this._fetchAndUpdateQr(serviceId);
+        this._sessionInfo.set(serviceId, {
+          sessionName: createResponse.data?.name,
+          sessionId: createResponse.data?.sessionId,
+        });
+
+        this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.CONNECTING);
       } else {
         runInAction(() => {
           this.errorMessages.set(serviceId, 'Failed to create session');
@@ -538,7 +580,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   };
 
   /** Fetch fresh QR from REST, then inject or update the modal image. */
-  _fetchAndUpdateQr = async (serviceId: string, attempt = 1) => {
+  _fetchAndUpdateQr = async (
+    serviceId: string,
+    sessionName?: string,
+    sessionId?: string,
+    sessionStatus?: string,
+    attempt = 1,
+  ) => {
     try {
       const qrResponse = await getSessionsIdQr(serviceId);
       if (qrResponse.status !== 200) return;
@@ -565,11 +613,23 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         )
         .then((result: string) => {
           if (result === 'absent') {
-            this._injectQrModal({ serviceId, base64 });
+            this._injectQrModal({
+              serviceId,
+              base64,
+              sessionName,
+              sessionId,
+              sessionStatus,
+            });
           }
         })
         .catch(() => {
-          this._injectQrModal({ serviceId, base64 });
+          this._injectQrModal({
+            serviceId,
+            base64,
+            sessionName,
+            sessionId,
+            sessionStatus,
+          });
         });
     } catch (error) {
       const status =
@@ -583,7 +643,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         await new Promise(resolve => {
           setTimeout(resolve, this._qrFetchRetryDelayMs);
         });
-        await this._fetchAndUpdateQr(serviceId, attempt + 1);
+        await this._fetchAndUpdateQr(
+          serviceId,
+          sessionName,
+          sessionId,
+          sessionStatus,
+          attempt + 1,
+        );
         return;
       }
       debug('Error updating QR:', error);
@@ -691,11 +757,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     debug(`Socket.IO connection.update for ${serviceId}:`, status);
 
     runInAction(() => {
-      this.sessionStatuses.set(serviceId, status as SessionStatus);
+      this.sessionStatuses.set(serviceId, status);
     });
 
     // Update floating status indicator in webview
     this._injectOrUpdateStatusIndicator(serviceId, status);
+    this._updateQrModalStatus(serviceId, status);
 
     switch (status) {
       case WA_SESSION_STATUS.SCAN_QR: {
@@ -705,17 +772,27 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           this.errorMessages.set(serviceId, undefined);
         });
         // Fetch new QR and update the existing modal (if any)
-        this._fetchAndUpdateQr(serviceId);
+        const info = this._sessionInfo.get(serviceId);
+        this._fetchAndUpdateQr(
+          serviceId,
+          info?.sessionName,
+          info?.sessionId,
+          status,
+        );
         break;
       }
 
       case WA_SESSION_STATUS.CONNECTED: {
         debug(`Session ${serviceId} connected via Socket.IO!`);
-        // Remove QR modal if present
+        // Ensure QR modal is removed if present
         this._removeQrModal({ serviceId });
         // Notify the webview
         this._notifySessionConnected(serviceId);
         // Update status
+        this._injectOrUpdateStatusIndicator(
+          serviceId,
+          WA_SESSION_STATUS.CONNECTED,
+        );
         runInAction(() => {
           this.isLoadingQr.set(serviceId, false);
           this.errorMessages.set(serviceId, undefined);
@@ -769,6 +846,32 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       socket.disconnect();
       this._sockets.delete(serviceId);
     }
+  };
+
+  _updateQrModalStatus = (serviceId: string, status: string) => {
+    const service = this._getService(serviceId);
+    if (!service?.webview) return;
+
+    const { color, label } = this._statusStyle(status);
+    const escColor = color.replaceAll("'", "\\'");
+    const escLabel = label.replaceAll("'", "\\'");
+
+    const script = `
+(function() {
+  try {
+    var bar = document.querySelector('#wa-akg-qr-modal .waa-status-bar');
+    if (!bar) return;
+    bar.textContent = '${escLabel}';
+    bar.style.color = '${escColor}';
+    bar.style.display = 'block';
+  } catch(e) {
+    console.error('[WA-AKG] Error updating modal status:', e);
+  }
+})();
+`;
+    service.webview.executeJavaScript(script).catch(() => {
+      // Ignore - webview might already be navigating
+    });
   };
 
   /** Status indicator colors per state */
@@ -847,6 +950,19 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     service.webview.executeJavaScript(script).catch(() => {});
   };
 
+  private _injectStatusWhenReady = (
+    serviceId: string,
+    status: string,
+    attempt = 1,
+  ) => {
+    if (attempt > 5) return;
+    this._injectOrUpdateStatusIndicator(serviceId, status);
+    setTimeout(
+      () => this._injectStatusWhenReady(serviceId, status, attempt + 1),
+      1000,
+    );
+  };
+
   _notifySessionConnected = (serviceId: string) => {
     const service = this._getService(serviceId);
     if (!service?.webview) return;
@@ -868,7 +984,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   // ========== QR MODAL SCRIPT BUILDER ========= //
 
-  _buildQrModalScript = (serviceId: string, base64: string): string => {
+  _buildQrModalScript = (
+    serviceId: string,
+    base64: string,
+    sessionName?: string,
+    sessionId?: string,
+    sessionStatus?: string,
+  ): string => {
     // Uses template literal escaping specific to inject context
     const escapedServiceId = serviceId
       .replaceAll('\\', '\\\\')
@@ -876,6 +998,21 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const escapedBase64 = base64
       .replaceAll('\\', '\\\\')
       .replaceAll("'", "\\'");
+    const escapedSessionName = (sessionName || '')
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
+    const escapedSessionId = (sessionId || '')
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
+    const escapedSessionStatus = (sessionStatus || '')
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
+
+    const statusStyle = sessionStatus ? this._statusStyle(sessionStatus) : null;
+    const statusColor = statusStyle?.color ?? '#9E9E9E';
+    const statusLabel = statusStyle?.label ?? '';
+    const escapedStatusColor = statusColor.replaceAll("'", "\\'");
+    const escapedStatusLabel = statusLabel.replaceAll("'", "\\'");
 
     return `
 (function() {
@@ -884,6 +1021,24 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
     var SERVICE_ID = '${escapedServiceId}';
     var BASE64_QR = '${escapedBase64}';
+    var SESSION_NAME = '${escapedSessionName}';
+    var SESSION_ID = '${escapedSessionId}';
+    var SESSION_STATUS = '${escapedSessionStatus}';
+    var STATUS_COLOR = '${escapedStatusColor}';
+    var STATUS_LABEL = '${escapedStatusLabel}';
+    
+    var SESSION_DISPLAY = SESSION_NAME || SESSION_ID || SERVICE_ID;
+    var SESSION_META = [];
+    if (SESSION_NAME) SESSION_META.push('Name: ' + SESSION_NAME);
+    if (SESSION_ID) SESSION_META.push('Session ID: ' + SESSION_ID);
+    if (!SESSION_NAME && !SESSION_ID) SESSION_META.push('Service ID: ' + SERVICE_ID);
+    
+    var SESSION_META_HTML = SESSION_META.map(function(line) {
+      return '<div class=\"waa-session-line\">' + line + '</div>';
+    }).join('');
+    
+    var SESSION_INFO_HTML = '<div class=\"waa-session-info\"><div class=\"waa-session-label\">Session</div><div class=\"waa-session-value\">' + SESSION_DISPLAY + '</div>' + SESSION_META_HTML + '</div>';
+    var STATUS_HTML = SESSION_STATUS ? '<div class=\"waa-status-bar\" style=\"color:' + STATUS_COLOR + '\">' + STATUS_LABEL + '</div>' : '';
 
     // Inject styles
     var s = document.createElement('style');
@@ -893,6 +1048,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       '.waa-card{background:#1f2c33;border-radius:12px;padding:32px;text-align:center;max-width:400px;width:90%;color:#fff}',
       '.waa-logo{margin-bottom:12px}',
       '.waa-title{font-size:20px;font-weight:600;margin:0 0 8px;color:#e9edef}',
+      '.waa-session-info{margin:12px 0 16px;padding:12px;background:rgba(255,255,255,0.05);border-radius:8px;border:1px solid rgba(255,255,255,0.1);text-align:left}',
+      '.waa-session-label{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#00E676;margin-bottom:4px;font-weight:700}',
+      '.waa-session-value{font-size:15px;color:#fff;font-weight:600;margin-bottom:8px;word-break:break-all}',
+      '.waa-session-line{font-size:12px;color:#8696a0;font-family:monospace;word-break:break-all}',
+      '.waa-status-bar{margin:16px 0;font-size:14px;font-weight:600;padding:8px;background:rgba(255,255,255,0.05);border-radius:6px}',
       '.waa-body{margin:20px 0;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center}',
       '.waa-subtitle{font-size:14px;color:#8696a0;margin:8px 0 0}',
       '.waa-qrimg{width:264px;height:264px;border-radius:4px;image-rendering:pixelated}',
@@ -903,14 +1063,16 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     // Create modal
     var modal = document.createElement('div');
     modal.id = 'wa-akg-qr-modal';
-    modal.innerHTML = '<div class="waa-overlay"><div class="waa-card">' +
-      '<div class="waa-logo"><svg viewBox="0 0 39 39" width="26" height="26"><path fill="#00E676" d="M10.7 32.8l.6.3c2.5 1.5 5.3 2.2 8.1 2.2 8.8 0 16-7.2 16-16 0-4.2-1.7-8.3-4.7-11.3s-7-4.7-11.3-4.7c-8.8 0-16 7.2-15.9 16.1 0 3 .9 5.9 2.4 8.4l.4.6-1.6 5.9 6-1.5z"/><path fill="#fff" d="M32.4 6.4C29 2.9 24.3 1 19.5 1 9.3 1 1.1 9.3 1.2 19.4c0 3.2.9 6.3 2.4 9.1L1 38l9.7-2.5c2.7 1.5 5.7 2.2 8.7 2.2 10.1 0 18.3-8.3 18.3-18.4 0-4.9-1.9-9.5-5.3-12.9zM19.5 34.6c-2.7 0-5.4-.7-7.7-2.1l-.6-.3-5.8 1.5L6.9 28l-.4-.6c-1.5-2.4-2.3-5.2-2.3-8 0-8.4 6.8-15.2 15.2-15.2 4.1 0 7.9 1.6 10.8 4.5 2.9 2.9 4.5 6.8 4.5 10.9-.1 8.4-6.9 15.2-15.2 15.2zm8.4-11.4c-.5-.3-2.7-1.3-3.1-1.5-.4-.2-.7-.2-1 .2-.3.5-1.2 1.5-1.5 1.8-.3.3-.5.3-1 .1-.5-.3-2-1-3.8-2.3-1.4-1-2.3-2.2-2.6-2.6-.3-.3-.1-.5.2-.7.2-.2.5-.5.7-.8.2-.3.3-.5.5-.8.2-.3.1-.6 0-.8-.1-.3-1-2.4-1.4-3.3-.4-.9-.7-.8-1-.8-.3 0-.6 0-.9 0-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.8 0 2.2 1.6 4.4 1.9 4.7.2.3 3.2 4.9 7.8 6.8 1.1.5 1.9.7 2.6.9 1.1.3 2.1.2 2.9.2.9 0 2.6-.7 3-1.3.4-.7.4-1.2.3-1.3-.2-.3-.4-.5-.8-.7z"/></svg></div>' +
-      '<h2 class="waa-title">Link Your WhatsApp</h2>' +
-      '<div class="waa-body" id="waa-body">' +
-      '  <div class="waa-spinner"></div>' +
-      '  <p class="waa-subtitle">Loading QR code...</p>' +
+    modal.innerHTML = '<div class=\"waa-overlay\"><div class=\"waa-card\">' +
+      '<div class=\"waa-logo\"><svg viewBox=\"0 0 39 39\" width=\"26\" height=\"26\"><path fill=\"#00E676\" d=\"M10.7 32.8l.6.3c2.5 1.5 5.3 2.2 8.1 2.2 8.8 0 16-7.2 16-16 0-4.2-1.7-8.3-4.7-11.3s-7-4.7-11.3-4.7c-8.8 0-16 7.2-15.9 16.1 0 3 .9 5.9 2.4 8.4l.4.6-1.6 5.9 6-1.5z\"/><path fill=\"#fff\" d=\"M32.4 6.4C29 2.9 24.3 1 19.5 1 9.3 1 1.1 9.3 1.2 19.4c0 3.2.9 6.3 2.4 9.1L1 38l9.7-2.5c2.7 1.5 5.7 2.2 8.7 2.2 10.1 0 18.3-8.3 18.3-18.4 0-4.9-1.9-9.5-5.3-12.9zM19.5 34.6c-2.7 0-5.4-.7-7.7-2.1l-.6-.3-5.8 1.5L6.9 28l-.4-.6c-1.5-2.4-2.3-5.2-2.3-8 0-8.4 6.8-15.2 15.2-15.2 4.1 0 7.9 1.6 10.8 4.5 2.9 2.9 4.5 6.8 4.5 10.9-.1 8.4-6.9 15.2-15.2 15.2zm8.4-11.4c-.5-.3-2.7-1.3-3.1-1.5-.4-.2-.7-.2-1 .2-.3.5-1.2 1.5-1.5 1.8-.3.3-.5.3-1 .1-.5-.3-2-1-3.8-2.3-1.4-1-2.3-2.2-2.6-2.6-.3-.3-.1-.5.2-.7.2-.2.5-.5.7-.8.2-.3.3-.5.5-.8.2-.3.1-.6 0-.8-.1-.3-1-2.4-1.4-3.3-.4-.9-.7-.8-1-.8-.3 0-.6 0-.9 0-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.8 0 2.2 1.6 4.4 1.9 4.7.2.3 3.2 4.9 7.8 6.8 1.1.5 1.9.7 2.6.9 1.1.3 2.1.2 2.9.2.9 0 2.6-.7 3-1.3.4-.7.4-1.2.3-1.3-.2-.3-.4-.5-.8-.7z\"/></svg></div>' +
+      '<h2 class=\"waa-title\">Link Your WhatsApp</h2>' +
+      SESSION_INFO_HTML +
+      STATUS_HTML +
+      '<div class=\"waa-body\" id=\"waa-body\">' +
+      '  <div class=\"waa-spinner\"></div>' +
+      '  <p class=\"waa-subtitle\">Loading QR code...</p>' +
       '</div>' +
-      '<p class="waa-footer">Open WhatsApp on your phone to scan the QR code</p>' +
+      '<p class=\"waa-footer\">Open WhatsApp on your phone to scan the QR code</p>' +
       '</div></div>';
     document.body.appendChild(modal);
 
@@ -930,7 +1092,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       if (event.data && event.data.type === 'wa-akg:session-connected') {
         var body = document.getElementById('waa-body');
         if (!body) return;
-        body.innerHTML = '<div style="text-align:center;padding:20px;"><div style="font-size:48px;margin-bottom:12px;">&#10004;&#65039;</div><p style="color:#00a884;font-weight:600;font-size:16px;">Connected!</p></div>';
+        body.innerHTML = '<div style=\"text-align:center;padding:20px;\"><div style=\"font-size:48px;margin-bottom:12px;\">&#10004;&#65039;</div><p style=\"color:#00a884;font-weight:600;font-size:16px;\">Connected!</p></div>';
         setTimeout(function() {
           modal.style.opacity = '0';
           setTimeout(function() { modal.remove(); }, 500);
@@ -941,7 +1103,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     // Show QR code
     var bodyEl = document.getElementById('waa-body');
     if (bodyEl && BASE64_QR) {
-      bodyEl.innerHTML = '<img src="' + BASE64_QR + '" alt="QR Code" class="waa-qrimg"/><p class="waa-subtitle">Scan this QR code with your WhatsApp mobile app</p>';
+      bodyEl.innerHTML = '<img src=\"' + BASE64_QR + '\" alt=\"QR Code\" class=\"waa-qrimg\"/><p class=\"waa-subtitle\">Scan this QR code with your WhatsApp mobile app</p>';
     }
 
     debug('QR auth modal injected for service', SERVICE_ID);

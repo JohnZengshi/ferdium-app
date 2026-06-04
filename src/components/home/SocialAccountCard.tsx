@@ -1,9 +1,11 @@
 import { Card, Tag } from 'tdesign-react';
-import { CheckCircleFilledIcon, ErrorCircleFilledIcon } from 'tdesign-icons-react';
+import {
+  CheckCircleFilledIcon,
+  ErrorCircleFilledIcon,
+} from 'tdesign-icons-react';
 import type { ReactElement } from 'react';
 
 interface SocialAccountCardProps {
-  id: string;
   platform: string;
   accountName: string;
   avatar?: string;

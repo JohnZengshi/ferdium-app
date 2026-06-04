@@ -147,81 +147,88 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       activeModule === 'service-type' && activeServiceTab === 'messages';
 
     const renderMainContent = () => {
-      const isMessages = isServiceTypeMessagesMode;
-      return (
-        <>
-          <div className={`flex flex-1 flex-col${isMessages ? '' : ' hidden'}`}>
-            <WorkspaceSwitchingIndicator />
-            {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
-              <InfoBar
-                type="danger"
-                ctaLabel="Try again"
-                ctaLoading={areRequiredRequestsLoading}
-                sticky
-                onClick={retryRequiredRequests}
-              >
-                <Icon icon={mdiFlash} />
-                {intl.formatMessage(messages.requiredRequestsFailed)}
-              </InfoBar>
-            )}
-            {authRequestFailed && (
-              <InfoBar
-                type="danger"
-                ctaLabel="Try again"
-                ctaLoading={areRequiredRequestsLoading}
-                sticky
-                onClick={retryRequiredRequests}
-              >
-                <Icon icon={mdiFlash} />
-                {intl.formatMessage(messages.authRequestFailed)}
-              </InfoBar>
-            )}
-            {automaticUpdates &&
-              showServicesUpdatedInfoBar &&
-              this.state.shouldShowServicesUpdatedInfoBar && (
-                <InfoBar
-                  type="primary"
-                  ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
-                  onClick={() => window.location.reload()}
-                  onHide={() => {
-                    this.setState({
-                      shouldShowServicesUpdatedInfoBar: false,
-                    });
-                  }}
-                >
-                  <Icon icon={mdiPowerPlug} />
-                  {intl.formatMessage(messages.servicesUpdated)}
-                </InfoBar>
-              )}
-            {automaticUpdates &&
-              (appUpdateIsDownloaded || (isSnap && isUpdateAvailable)) &&
-              this.state.shouldShowAppUpdateInfoBar && (
-                <AppUpdateInfoBar
-                  onInstallUpdate={installAppUpdate}
-                  updateVersionParsed={updateVersionParse(updateVersion)}
-                  onHide={() => {
-                    this.setState({ shouldShowAppUpdateInfoBar: false });
-                  }}
-                />
-              )}
-            <BasicAuth />
-            <QuickSwitch />
-            <PublishDebugInfo />
-            {services}
-            <Outlet />
-          </div>
+      // 首页模块
+      if (activeModule === 'home') {
+        return <HomeScreen />;
+      }
 
-          {!isMessages && activeModule === 'home' && <HomeScreen />}
-          {!isMessages && activeModule === 'knowledge-base' && (
-            <KnowledgeBaseScreen />
+      // 资料库模块
+      if (activeModule === 'knowledge-base') {
+        return <KnowledgeBaseScreen />;
+      }
+
+      // 服务类型模块 - 账号管理
+      if (activeModule === 'service-type' && activeServiceTab === 'account') {
+        return <AccountManagementScreen />;
+      }
+
+      // 服务类型模块 - 用户资料
+      if (activeModule === 'service-type' && activeServiceTab === 'profile') {
+        return <UserProfileScreen />;
+      }
+
+      // 服务类型模块 - 消息页（默认）
+      return (
+        <div className="flex flex-1 flex-col">
+          <WorkspaceSwitchingIndicator />
+          {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
+            <InfoBar
+              type="danger"
+              ctaLabel="Try again"
+              ctaLoading={areRequiredRequestsLoading}
+              sticky
+              onClick={retryRequiredRequests}
+            >
+              <Icon icon={mdiFlash} />
+              {intl.formatMessage(messages.requiredRequestsFailed)}
+            </InfoBar>
           )}
-          {!isMessages &&
-            activeModule === 'service-type' &&
-            activeServiceTab === 'account' && <AccountManagementScreen />}
-          {!isMessages &&
-            activeModule === 'service-type' &&
-            activeServiceTab === 'profile' && <UserProfileScreen />}
-        </>
+          {authRequestFailed && (
+            <InfoBar
+              type="danger"
+              ctaLabel="Try again"
+              ctaLoading={areRequiredRequestsLoading}
+              sticky
+              onClick={retryRequiredRequests}
+            >
+              <Icon icon={mdiFlash} />
+              {intl.formatMessage(messages.authRequestFailed)}
+            </InfoBar>
+          )}
+          {automaticUpdates &&
+            showServicesUpdatedInfoBar &&
+            this.state.shouldShowServicesUpdatedInfoBar && (
+              <InfoBar
+                type="primary"
+                ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
+                onClick={() => window.location.reload()}
+                onHide={() => {
+                  this.setState({
+                    shouldShowServicesUpdatedInfoBar: false,
+                  });
+                }}
+              >
+                <Icon icon={mdiPowerPlug} />
+                {intl.formatMessage(messages.servicesUpdated)}
+              </InfoBar>
+            )}
+          {automaticUpdates &&
+            (appUpdateIsDownloaded || (isSnap && isUpdateAvailable)) &&
+            this.state.shouldShowAppUpdateInfoBar && (
+              <AppUpdateInfoBar
+                onInstallUpdate={installAppUpdate}
+                updateVersionParsed={updateVersionParse(updateVersion)}
+                onHide={() => {
+                  this.setState({ shouldShowAppUpdateInfoBar: false });
+                }}
+              />
+            )}
+          <BasicAuth />
+          <QuickSwitch />
+          <PublishDebugInfo />
+          {services}
+          <Outlet />
+        </div>
       );
     };
 

@@ -5,7 +5,7 @@ import { Component, type ReactElement } from 'react';
 class UserProfileScreen extends Component {
   render(): ReactElement {
     return (
-      <div className="flex flex-1 flex-col items-center justify-center bg-[var(--bg-primary,#111111)] text-[var(--text-primary,rgba(255,255,255,0.9))] p-[40px]">
+      <div className="user-profile-screen flex flex-1 flex-col items-center justify-center bg-[var(--bg-primary,#111111)] text-[var(--text-primary,rgba(255,255,255,0.9))] p-[40px]">
         <Icon
           path={mdiBadgeAccountOutline}
           size={4}

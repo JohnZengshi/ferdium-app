@@ -1,9 +1,12 @@
 import { Card } from 'tdesign-react';
-import { UserIcon, CheckCircleIcon, CloseCircleIcon } from 'tdesign-icons-react';
+import {
+  UserIcon,
+  CheckCircleIcon,
+  CloseCircleIcon,
+} from 'tdesign-icons-react';
 import type { ReactElement } from 'react';
 
 interface DigitalHumanCardProps {
-  id: string;
   name: string;
   description?: string;
   avatar?: string;

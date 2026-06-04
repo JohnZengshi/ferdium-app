@@ -1,8 +1,5 @@
 import { Card, Button, Progress } from 'tdesign-react';
-import {
-  CheckCircleFilledIcon,
-  CircleIcon,
-} from 'tdesign-icons-react';
+import { CheckCircleFilledIcon, CircleIcon } from 'tdesign-icons-react';
 import type { ReactElement } from 'react';
 
 interface OnboardingStep {
@@ -78,7 +75,9 @@ export default function OnboardingGuide({
             <div className="flex-1 min-w-0">
               <h4
                 className={`text-sm font-medium mb-1 ${
-                  step.completed ? 'line-through text-[var(--td-text-color-placeholder)]' : ''
+                  step.completed
+                    ? 'line-through text-[var(--td-text-color-placeholder)]'
+                    : ''
                 }`}
               >
                 {step.title}

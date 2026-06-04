@@ -7,22 +7,22 @@ import SocialAccountCard from '../../components/home/SocialAccountCard';
 
 interface HomeScreenState {
   loading: boolean;
-  digitalHumans: Array<{
+  digitalHumans: {
     id: string;
     name: string;
     description?: string;
     avatar?: string;
     status: 'online' | 'offline' | 'busy';
     lastActive?: string;
-  }>;
-  socialAccounts: Array<{
+  }[];
+  socialAccounts: {
     id: string;
     platform: string;
     accountName: string;
     avatar?: string;
     isConnected: boolean;
     unreadCount?: number;
-  }>;
+  }[];
   showOnboarding: boolean;
 }
 
@@ -103,27 +103,28 @@ class HomeScreen extends Component<Record<string, unknown>, HomeScreenState> {
 
   handleAddDigitalHuman = (): void => {
     // TODO: 打开创建数字员工对话框
-    console.log('Add digital human');
   };
 
   handleAddSocialAccount = (): void => {
     // TODO: 打开添加社交账号对话框
-    console.log('Add social account');
   };
 
+  // @ts-expect-error - TODO: 实现数字员工详情打开逻辑
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleDigitalHumanClick = (id: string): void => {
     // TODO: 打开数字员工详情
-    console.log('Digital human clicked:', id);
   };
 
+  // @ts-expect-error - TODO: 实现社交账号详情打开逻辑
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleSocialAccountClick = (id: string): void => {
     // TODO: 打开社交账号详情或跳转到对应服务
-    console.log('Social account clicked:', id);
   };
 
+  // @ts-expect-error - TODO: 实现新手引导操作逻辑
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleOnboardingAction = (stepId: string): void => {
     // TODO: 处理新手引导操作
-    console.log('Onboarding action:', stepId);
   };
 
   handleDismissOnboarding = (): void => {
@@ -168,11 +169,9 @@ class HomeScreen extends Component<Record<string, unknown>, HomeScreenState> {
     ];
 
     return (
-      <div className="flex flex-1 flex-col bg-[var(--td-bg-color-page)] overflow-auto">
-        {/* 顶部导航栏 - 预留给 AppLayout 处理 */}
-
+      <div className="home-screen flex-1 bg-[var(--td-bg-color-page)] overflow-auto">
         {/* 主体内容 */}
-        <div className="flex-1 p-6">
+        <div className="h-full p-6">
           <div className="max-w-[1400px] mx-auto">
             <div className="flex gap-6">
               {/* 左侧：我的数字员工 */}

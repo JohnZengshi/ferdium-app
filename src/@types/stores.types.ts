@@ -226,6 +226,7 @@ interface ServicesStore extends TypedStore {
   filtered: () => void;
   isTodosServiceActive: () => void;
   isTodosServiceAdded: () => void;
+  mainModuleBadge: number | '•' | null;
 }
 
 // TODO: Create actual type based on the default config in config.ts

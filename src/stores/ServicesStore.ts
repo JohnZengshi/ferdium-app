@@ -1342,6 +1342,41 @@ export default class ServicesStore extends TypedStore {
     }
   }
 
+  /**
+   * Returns the aggregated unread badge value for the main module tabs.
+   * Follows the same rules as `_getUnreadMessageCountReaction` and `AppStore._setBadge`.
+   *
+   * @returns {number} - direct unread count when any service has direct unreads
+   * @returns {'•'} - only when there are indirect unreads but no direct unreads
+   * @returns {null} - when badges are disabled via settings or there are no unreads
+   */
+  @computed get mainModuleBadge(): number | '•' | null {
+    const { showMessageBadgeWhenMuted } = this.stores.settings.all.app;
+    const { showMessageBadgesEvenWhenMuted } = this.stores.ui;
+
+    if (!showMessageBadgesEvenWhenMuted) return null;
+
+    let direct = 0;
+    let indirect = 0;
+
+    for (const s of this.allDisplayed) {
+      if (s.isBadgeEnabled) {
+        direct +=
+          showMessageBadgeWhenMuted || s.isNotificationEnabled
+            ? s.unreadDirectMessageCount
+            : 0;
+        indirect +=
+          showMessageBadgeWhenMuted && s.isIndirectMessageBadgeEnabled
+            ? s.unreadIndirectMessageCount
+            : 0;
+      }
+    }
+
+    if (direct > 0) return direct;
+    if (indirect > 0) return '•';
+    return null;
+  }
+
   _getUnreadMessageCountReaction() {
     const { showMessageBadgeWhenMuted } = this.stores.settings.all.app;
     const { showMessageBadgesEvenWhenMuted } = this.stores.ui;

@@ -267,7 +267,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         );
 
         if (matchingSession) {
-          const normalizedStatus: string = matchingSession.status?.toUpperCase() ?? '';
+          const normalizedStatus: string =
+            matchingSession.status?.toUpperCase() ?? '';
           this._sessionInfo.set(serviceId, {
             sessionName: matchingSession.name,
             sessionId: matchingSession.sessionId,

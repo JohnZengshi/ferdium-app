@@ -3,9 +3,9 @@ import Icon from '@mdi/react';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 
+import type { Stores } from '../../@types/stores.types';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
-import type { Stores } from '../../@types/stores.types';
 
 const MODULES: { id: FerdiumModule; label: string; icon: string }[] = [
   { id: 'home', label: '首页', icon: mdiHome },

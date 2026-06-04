@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import {
   action,
   computed,
@@ -27,8 +28,6 @@ import {
 import authManager from '../../lib/auth/AuthManager';
 import { clearApiKey, getApiKey } from '../../whatsapp-automation/api/auth';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
-
-import { SessionStatus } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:whatsapp-automation:store',
@@ -65,9 +64,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _qrFetchMaxAttempts = 6;
 
-  @observable sessionStatuses = new Map<string, SessionStatus | undefined>();
+  @observable sessionStatuses = new Map<string, string | undefined>();
 
   @observable qrCodes = new Map<string, string | undefined>();
+
+  _sessionInfo = new Map<
+    string,
+    { sessionName?: string; sessionId?: string }
+  >();
 
   @observable isLoadingQr = new Map<string, boolean>();
 
@@ -231,8 +235,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   }: {
     serviceId: string;
   }) => {
-    debug('Checking session status for service', serviceId);
-
     // Ensure we're authenticated before making API calls
     const authenticated = await this._ensureAuthenticated();
     if (!authenticated) {
@@ -265,22 +267,29 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         );
 
         if (matchingSession) {
-          runInAction(() => {
-            this.sessionStatuses.set(serviceId, matchingSession.status);
+          const normalizedStatus: string = matchingSession.status?.toUpperCase() ?? '';
+          this._sessionInfo.set(serviceId, {
+            sessionName: matchingSession.name,
+            sessionId: matchingSession.sessionId,
           });
 
-          if (matchingSession.status === SessionStatus.Connected) {
-            debug(`Session ${serviceId} is already connected`);
+          runInAction(() => {
+            this.sessionStatuses.set(serviceId, normalizedStatus);
+          });
+
+          if (normalizedStatus === WA_SESSION_STATUS.CONNECTED) {
+            this._removeQrModal({ serviceId });
             // Update status indicator (Socket.IO won't emit for already-connected)
             this._injectOrUpdateStatusIndicator(
               serviceId,
               WA_SESSION_STATUS.CONNECTED,
             );
-            // Notify webview — session was already active
+
+            this._injectStatusWhenReady(serviceId, WA_SESSION_STATUS.CONNECTED);
             this._notifySessionConnected(serviceId);
           } else {
             debug(
-              `Session ${serviceId} status: ${matchingSession.status}, starting & fetching QR...`,
+              `Session ${serviceId} status: ${normalizedStatus}, starting & fetching QR...`,
             );
             // Session exists but needs QR — start it and show QR
             runInAction(() => {
@@ -373,6 +382,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const service = this._getService(serviceId);
     if (!service?.webview) {
       debug('Cannot inject QR modal - no webview for service', serviceId);
+      return;
+    }
+
+    if (this.sessionStatuses.get(serviceId) === WA_SESSION_STATUS.CONNECTED) {
+      debug('Skip QR modal injection for already-connected session', serviceId);
       return;
     }
 
@@ -497,6 +511,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
         // Start the session to get QR
         await postSessionsIdAction(serviceId, 'start');
+
+        this._sessionInfo.set(serviceId, {
+          sessionName: createResponse.data?.name,
+          sessionId: createResponse.data?.sessionId,
+        });
 
         this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.CONNECTING);
       } else {
@@ -738,7 +757,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     debug(`Socket.IO connection.update for ${serviceId}:`, status);
 
     runInAction(() => {
-      this.sessionStatuses.set(serviceId, status as SessionStatus);
+      this.sessionStatuses.set(serviceId, status);
     });
 
     // Update floating status indicator in webview
@@ -753,17 +772,27 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           this.errorMessages.set(serviceId, undefined);
         });
         // Fetch new QR and update the existing modal (if any)
-        this._fetchAndUpdateQr(serviceId);
+        const info = this._sessionInfo.get(serviceId);
+        this._fetchAndUpdateQr(
+          serviceId,
+          info?.sessionName,
+          info?.sessionId,
+          status,
+        );
         break;
       }
 
       case WA_SESSION_STATUS.CONNECTED: {
         debug(`Session ${serviceId} connected via Socket.IO!`);
-        // Remove QR modal if present
+        // Ensure QR modal is removed if present
         this._removeQrModal({ serviceId });
         // Notify the webview
         this._notifySessionConnected(serviceId);
         // Update status
+        this._injectOrUpdateStatusIndicator(
+          serviceId,
+          WA_SESSION_STATUS.CONNECTED,
+        );
         runInAction(() => {
           this.isLoadingQr.set(serviceId, false);
           this.errorMessages.set(serviceId, undefined);
@@ -919,6 +948,19 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 })();
 `;
     service.webview.executeJavaScript(script).catch(() => {});
+  };
+
+  private _injectStatusWhenReady = (
+    serviceId: string,
+    status: string,
+    attempt = 1,
+  ) => {
+    if (attempt > 5) return;
+    this._injectOrUpdateStatusIndicator(serviceId, status);
+    setTimeout(
+      () => this._injectStatusWhenReady(serviceId, status, attempt + 1),
+      1000,
+    );
   };
 
   _notifySessionConnected = (serviceId: string) => {

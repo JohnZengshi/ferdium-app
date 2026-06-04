@@ -79,7 +79,7 @@ const copyManualAssets = ({ isDev = false } = {}) => {
 
   fs.copyFileSync('package.json', `${outDir}/package.json`);
   fs.copyFileSync('electron-builder.npmrc', `${outDir}/.npmrc`);
-  
+
   // Copy patches directory for pnpm patch support
   const patchesDir = 'patches';
   const buildPatchesDir = path.join(outDir, patchesDir);

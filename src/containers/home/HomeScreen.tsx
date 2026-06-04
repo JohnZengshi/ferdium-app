@@ -1,6 +1,6 @@
 import { Component, type ReactElement } from 'react';
-import { Button, Card, Divider, Empty, Skeleton } from 'tdesign-react';
 import { AddIcon } from 'tdesign-icons-react';
+import { Button, Card, Divider, Empty, Skeleton } from 'tdesign-react';
 import DigitalHumanCard from '../../components/home/DigitalHumanCard';
 import OnboardingGuide from '../../components/home/OnboardingGuide';
 import SocialAccountCard from '../../components/home/SocialAccountCard';

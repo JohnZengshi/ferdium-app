@@ -1,6 +1,6 @@
-import { Card, Button, Progress } from 'tdesign-react';
-import { CheckCircleFilledIcon, CircleIcon } from 'tdesign-icons-react';
 import type { ReactElement } from 'react';
+import { CheckCircleFilledIcon, CircleIcon } from 'tdesign-icons-react';
+import { Button, Card, Progress } from 'tdesign-react';
 
 interface OnboardingStep {
   id: string;

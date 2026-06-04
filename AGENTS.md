@@ -16,7 +16,7 @@
 | 包管理 | pnpm 10.14.0 |
 | Node.js | 22.18.0 |
 | 测试 | Jest（esbuild-runner 转译） |
-| 代码质量 | ESLint（Airbnb + TS + React + Unicorn + Sonar，--max-warnings 0）+ Biome + Prettier |
+| 代码质量 | ESLint（Airbnb + TS + React + Unicorn + Sonar，--max-warnings 0）+ Prettier（集成在 ESLint 中）+ Biome |
 | Git 规范 | Conventional Commits（commitlint）、pre-commit hooks（typecheck + lint + prettier + test） |
 
 ---
@@ -324,6 +324,18 @@ pnpm prepare-code      # 完整预提交检查（typecheck + lint + prettier + �
 | 测试 | 禁止删除失败测试来"通过" |
 | Lint | ESLint `--max-warnings 0`，零容忍 |
 | 提交 | 禁止 `--no-verify` 跳过 hooks |
+
+**ESLint + Prettier 协同配置：**
+
+项目使用 `plugin:prettier/recommended`（必须放在 extends 数组最后），自动：
+1. 启用 `eslint-plugin-prettier`，将 Prettier 格式问题作为 ESLint 错误报告
+2. 启用 `eslint-config-prettier`，禁用所有与 Prettier 冲突的 ESLint 规则（如 `@typescript-eslint/brace-style`、`indent` 等）
+3. 确保 Prettier 的格式优先级高于 ESLint 的样式规则
+
+**注意事项：**
+- ⚠️ 如遇到 Prettier 和 ESLint 规则冲突（如格式化成多行但 ESLint 要求单行），检查 `.eslintrc.js` 中 `extends` 数组顺序，确保 `'plugin:prettier/recommended'` 在最后
+- ✅ 所有样式规则由 Prettier 处理（通过 `.prettierrc.js`），ESLint 专注于代码质量和最佳实践
+- ✅ pre-commit hook 会先运行 Prettier 格式化，再运行 ESLint 检查，避免冲突
 
 ### 3.4 MobX 数据流规范
 

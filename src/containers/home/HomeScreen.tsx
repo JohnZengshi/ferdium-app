@@ -1,20 +1,19 @@
 import { Component, type ReactElement } from 'react';
+import { inject, observer } from 'mobx-react';
 import { AddIcon } from 'tdesign-icons-react';
 import { Button, Card, Divider, Empty, Skeleton } from 'tdesign-react';
+import type { RealStores } from '../../stores';
 import DigitalHumanCard from '../../components/home/DigitalHumanCard';
 import OnboardingGuide from '../../components/home/OnboardingGuide';
 import SocialAccountCard from '../../components/home/SocialAccountCard';
 
+interface HomeScreenProps {
+  stores?: RealStores;
+  history?: any;
+}
+
 interface HomeScreenState {
   loading: boolean;
-  digitalHumans: {
-    id: string;
-    name: string;
-    description?: string;
-    avatar?: string;
-    status: 'online' | 'offline' | 'busy';
-    lastActive?: string;
-  }[];
   socialAccounts: {
     id: string;
     platform: string;
@@ -26,104 +25,49 @@ interface HomeScreenState {
   showOnboarding: boolean;
 }
 
-class HomeScreen extends Component<Record<string, unknown>, HomeScreenState> {
-  constructor(props: Record<string, unknown>) {
+@inject('stores')
+@observer
+class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
+  constructor(props: HomeScreenProps) {
     super(props);
 
     this.state = {
       loading: true,
-      digitalHumans: [],
       socialAccounts: [],
       showOnboarding: true,
     };
   }
 
   async componentDidMount(): Promise<void> {
-    await this.loadData();
+    // 加载真实数字人数据
+    await this.props.stores!.digitalHuman.fetchDigitalHumans();
+
+    // 加载社交账号数据（TODO: 实现真实API）
+    // eslint-disable-next-line @eslint-react/no-set-state-in-component-did-mount
+    this.setState({ loading: false });
   }
 
-  loadData = async (): Promise<void> => {
-    this.setState({ loading: true });
-
-    try {
-      // TODO: 调用实际 API 获取数据
-      // const digitalHumans = await listDigitalHumansApiV1DigitalHumansGet();
-      // const accounts = await listAccountsApi();
-
-      // 模拟数据
-      setTimeout(() => {
-        this.setState({
-          loading: false,
-          digitalHumans: [
-            {
-              id: '1',
-              name: '客服小智',
-              description: '负责客户咨询和问题解答',
-              status: 'online',
-              lastActive: '2分钟前',
-            },
-            {
-              id: '2',
-              name: '销售助手',
-              description: '协助销售线索跟进和转化',
-              status: 'busy',
-              lastActive: '10分钟前',
-            },
-          ],
-          socialAccounts: [
-            {
-              id: '1',
-              platform: 'whatsapp',
-              accountName: '+86 138 1234 5678',
-              isConnected: true,
-              unreadCount: 5,
-            },
-            {
-              id: '2',
-              platform: 'wechat',
-              accountName: '企业微信客服',
-              isConnected: true,
-              unreadCount: 0,
-            },
-            {
-              id: '3',
-              platform: 'telegram',
-              accountName: '@customer_support',
-              isConnected: false,
-              unreadCount: 0,
-            },
-          ],
-        });
-      }, 800);
-    } catch (error) {
-      console.error('Failed to load home data:', error);
-      this.setState({ loading: false });
-    }
-  };
-
   handleAddDigitalHuman = (): void => {
-    // TODO: 打开创建数字员工对话框
+    // 跳转到数字人管理页面
+    this.props.stores!.router.push('/settings/digital-humans');
   };
 
   handleAddSocialAccount = (): void => {
     // TODO: 打开添加社交账号对话框
   };
 
-  // @ts-expect-error - TODO: 实现数字员工详情打开逻辑
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  handleDigitalHumanClick = (id: string): void => {
-    // TODO: 打开数字员工详情
+  handleDigitalHumanClick = (): void => {
+    // 跳转到数字人管理页面
+    this.props.stores!.router.push('/settings/digital-humans');
   };
 
-  // @ts-expect-error - TODO: 实现社交账号详情打开逻辑
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  handleSocialAccountClick = (id: string): void => {
+  handleSocialAccountClick = (_id: string): void => {
     // TODO: 打开社交账号详情或跳转到对应服务
   };
 
-  // @ts-expect-error - TODO: 实现新手引导操作逻辑
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  handleOnboardingAction = (stepId: string): void => {
+  handleOnboardingAction = (_stepId: string): void => {
     // TODO: 处理新手引导操作
   };
 
@@ -132,8 +76,20 @@ class HomeScreen extends Component<Record<string, unknown>, HomeScreenState> {
   };
 
   render(): ReactElement {
-    const { loading, digitalHumans, socialAccounts, showOnboarding } =
-      this.state;
+    const { loading, socialAccounts, showOnboarding } = this.state;
+    const digitalHumanStore = this.props.stores!.digitalHuman;
+
+    // 将真实数字人数据转换为组件需要的格式
+    const digitalHumans = digitalHumanStore.digitalHumans.map(dh => ({
+      id: dh.id,
+      name: dh.name,
+      description: dh.persona_prompt || `${dh.platform || 'WhatsApp'} 数字人`,
+      avatar: dh.avatar_url || undefined,
+      status: (dh.is_enabled && dh.status === 'active'
+        ? 'online'
+        : 'offline') as 'online' | 'offline' | 'busy',
+      lastActive: new Date(dh.created_at).toLocaleString('zh-CN'),
+    }));
 
     const onboardingSteps = [
       {
@@ -189,7 +145,7 @@ class HomeScreen extends Component<Record<string, unknown>, HomeScreenState> {
                     </Button>
                   }
                 >
-                  {loading ? (
+                  {digitalHumanStore.isLoading ? (
                     <div className="space-y-4">
                       <Skeleton animation="gradient" />
                       <Skeleton animation="gradient" />
@@ -200,7 +156,7 @@ class HomeScreen extends Component<Record<string, unknown>, HomeScreenState> {
                         <DigitalHumanCard
                           key={dh.id}
                           {...dh}
-                          onClick={() => this.handleDigitalHumanClick(dh.id)}
+                          onClick={() => this.handleDigitalHumanClick()}
                         />
                       ))}
                     </div>

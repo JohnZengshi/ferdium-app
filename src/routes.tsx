@@ -33,6 +33,7 @@ import ServicesScreen from './containers/settings/ServicesScreen';
 import SettingsWindow from './containers/settings/SettingsWindow';
 import SupportFerdiumScreen from './containers/settings/SupportScreen';
 import TeamScreen from './containers/settings/TeamScreen';
+import DigitalHumansScreen from './containers/settings/digital-humans/DigitalHumansScreen';
 import { WORKSPACES_ROUTES } from './features/workspaces/constants';
 import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
 import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen';
@@ -189,6 +190,10 @@ class FerdiumRoutes extends Component<IProps> {
                 path="/settings/user/edit"
                 // @ts-expect-error Fix me
                 element={<EditUserScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/digital-humans"
+                element={<DigitalHumansScreen {...this.props} />}
               />
               <Route
                 path="/settings/team"

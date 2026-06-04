@@ -15,6 +15,7 @@ import ServicesStore from './ServicesStore';
 import SettingsStore from './SettingsStore';
 import UIStore from './UIStore';
 import UserStore from './UserStore';
+import DigitalHumanStore from './DigitalHumanStore';
 
 export interface RealStores {
   router: RouterStore;
@@ -32,6 +33,7 @@ export interface RealStores {
   communityRecipes: typeof communityRecipesStore;
   todos: typeof todosStore;
   whatsappAutomation: typeof whatsappAutomationStore;
+  digitalHuman: DigitalHumanStore;
 }
 
 export default (
@@ -56,6 +58,7 @@ export default (
     communityRecipes: communityRecipesStore,
     todos: todosStore,
     whatsappAutomation: whatsappAutomationStore,
+    digitalHuman: new DigitalHumanStore(stores, api, actions),
   });
 
   // Initialize all stores

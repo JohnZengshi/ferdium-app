@@ -1,0 +1,101 @@
+import { Card } from 'tdesign-react';
+import { UserIcon, CheckCircleIcon, CloseCircleIcon } from 'tdesign-icons-react';
+import type { ReactElement } from 'react';
+
+interface DigitalHumanCardProps {
+  id: string;
+  name: string;
+  description?: string;
+  avatar?: string;
+  status: 'online' | 'offline' | 'busy';
+  lastActive?: string;
+  onClick?: () => void;
+}
+
+const statusConfig = {
+  online: {
+    icon: CheckCircleIcon,
+    color: '#00a870',
+    text: '在线',
+  },
+  offline: {
+    icon: CloseCircleIcon,
+    color: '#e34d59',
+    text: '离线',
+  },
+  busy: {
+    icon: CloseCircleIcon,
+    color: '#f2bd27',
+    text: '忙碌',
+  },
+};
+
+export default function DigitalHumanCard({
+  name,
+  description,
+  avatar,
+  status,
+  lastActive,
+  onClick,
+}: DigitalHumanCardProps): ReactElement {
+  const statusInfo = statusConfig[status];
+  const StatusIcon = statusInfo.icon;
+
+  return (
+    <div
+      onClick={onClick}
+      className="cursor-pointer transition-all duration-200 hover:shadow-lg"
+      role="button"
+      tabIndex={0}
+      onKeyPress={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick?.();
+        }
+      }}
+    >
+      <Card>
+        <div className="flex items-start gap-3">
+          <div className="relative">
+            {avatar ? (
+              <img
+                src={avatar}
+                alt={name}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-full bg-[var(--td-brand-color)] flex items-center justify-center">
+                <UserIcon size="24px" style={{ color: '#fff' }} />
+              </div>
+            )}
+            <div
+              className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white"
+              style={{ backgroundColor: statusInfo.color }}
+            />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-base font-medium truncate">{name}</h3>
+              <span className="text-xs text-[var(--td-text-color-placeholder)]">
+                {statusInfo.text}
+              </span>
+            </div>
+
+            {description && (
+              <p className="text-sm text-[var(--td-text-color-secondary)] line-clamp-2 mb-2">
+                {description}
+              </p>
+            )}
+
+            {lastActive && (
+              <div className="flex items-center gap-1 text-xs text-[var(--td-text-color-placeholder)]">
+                <StatusIcon size="14px" style={{ color: statusInfo.color }} />
+                <span>最后活跃：{lastActive}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}

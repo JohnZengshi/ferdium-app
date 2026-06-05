@@ -1,5 +1,3 @@
-import { mdiBookOpenPageVariant, mdiHome, mdiPuzzle } from '@mdi/js';
-import Icon from '@mdi/react';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 
@@ -7,10 +5,30 @@ import type { Stores } from '../../@types/stores.types';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
 
-const MODULES: { id: FerdiumModule; label: string; icon: string }[] = [
-  { id: 'home', label: '首页', icon: mdiHome },
-  { id: 'service-type', label: 'WA工具', icon: mdiPuzzle },
-  { id: 'knowledge-base', label: '资料库', icon: mdiBookOpenPageVariant },
+const MODULES: {
+  id: FerdiumModule;
+  label: string;
+  icon: string;
+  iconActive: string;
+}[] = [
+  {
+    id: 'home',
+    label: '首页',
+    icon: './assets/images/tab-home.svg',
+    iconActive: './assets/images/tab-home-active.svg',
+  },
+  {
+    id: 'service-type',
+    label: 'WA工具',
+    icon: './assets/images/tab-whats.svg',
+    iconActive: './assets/images/tab-whats-active.svg',
+  },
+  {
+    id: 'knowledge-base',
+    label: '资料库',
+    icon: './assets/images/tab-library.svg',
+    iconActive: './assets/images/tab-library-active.svg',
+  },
 ];
 
 interface IProps {
@@ -25,27 +43,46 @@ class MainModuleTabs extends Component<IProps> {
     const badge = stores?.services.mainModuleBadge;
 
     return (
-      <nav className="flex flex-col items-center w-[56px] py-[8px] gap-[4px] bg-[var(--bg-secondary,#1e1e1e)] border-r border-r-[var(--border-color,rgba(255,255,255,0.08))]">
-        {MODULES.map(mod => (
-          <button
-            key={mod.id}
-            type="button"
-            className={`relative flex flex-col items-center justify-center w-[48px] h-[48px] gap-[2px] text-[10px] border-0 rounded-[8px] bg-transparent cursor-pointer transition-all duration-150 ease-in-out text-[var(--text-secondary,rgba(255,255,255,0.55))] hover:bg-[var(--hover-bg,rgba(255,255,255,0.08))] hover:text-[var(--text-primary,rgba(255,255,255,0.9))] ${navigationStore.activeModule === mod.id ? '!bg-[var(--active-bg,rgba(255,255,255,0.12))] !text-[#1677ff]' : ''}`}
-            onClick={() => {
-              navigationStore.setModule(mod.id);
-            }}
-          >
-            <Icon path={mod.icon} size={1} />
-            <span className="text-[10px] leading-[1.2] whitespace-nowrap">
-              {mod.label}
-            </span>
-            {mod.id === 'service-type' && badge != null && (
-              <span className="absolute top-0 right-0 flex items-center justify-center min-w-[16px] h-[16px] px-[4px] text-[10px] font-bold text-white bg-[#ff4d4f] rounded-full leading-none translate-x-[2px] -translate-y-[2px]">
-                {badge}
-              </span>
-            )}
-          </button>
-        ))}
+      <nav className="flex flex-col items-center w-[88px] py-[24px] h-full min-h-0 bg-white border-r border-solid border-black/10">
+        <img src="./assets/images/sidebar-logo.svg" alt="logo" />
+
+        <div className="flex flex-col items-center h-fit my-auto gap-[4px] w-[64px] p-[8px] rounded-xl shadow-[0px_5px_5px_-3px_rgba(0,0,0,0.10),0px_8px_10px_1px_rgba(0,0,0,0.06),0px_3px_14px_2px_rgba(0,0,0,0.05)]">
+          {MODULES.map(mod => {
+            const isActive = navigationStore.activeModule === mod.id;
+            return (
+              <button
+                key={mod.id}
+                type="button"
+                className="relative flex flex-col items-center justify-center gap-0.5 border-0 bg-transparent cursor-pointer"
+                onClick={() => {
+                  navigationStore.setModule(mod.id);
+                }}
+              >
+                <img
+                  src={isActive ? mod.iconActive : mod.icon}
+                  alt={mod.label}
+                  className="w-[48px]"
+                />
+                <span
+                  className={`text-[12px] leading-5 whitespace-nowrap ${isActive ? 'text-[#0052D9]' : 'text-black/60'}`}
+                >
+                  {mod.label}
+                </span>
+                {mod.id === 'service-type' && badge != null && (
+                  <span className="absolute top-0 right-0 flex items-center justify-center min-w-[12px] h-[12px] text-[9px] text-white/90 bg-[#D54941] rounded-full leading-[15px] translate-x-[2px] -translate-y-[2px]">
+                    {badge}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        <img
+          src="./assets/images/sidebar-ai-bot.png"
+          alt="AI助手"
+          className="w-[40px]"
+        />
       </nav>
     );
   }

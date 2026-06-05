@@ -2,15 +2,14 @@ import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import { ThemeProvider } from 'react-jss';
 import { Outlet } from 'react-router-dom';
-
 import tinycolor from 'tinycolor2';
+
 import type { StoresProps } from '../../@types/ferdium-components.types';
+import AccountSlider from '../../components/layout/AccountSlider';
 import AppLayout from '../../components/layout/AppLayout';
-import Sidebar from '../../components/layout/Sidebar';
+import AppLoading from '../../components/layout/AppLoading';
 import Services from '../../components/services/content/Services';
-import AppLoader from '../../components/ui/AppLoader';
 import { DEFAULT_ACCENT_COLOR } from '../../config';
-import { workspaceStore } from '../../features/workspaces';
 
 interface IProps extends StoresProps {}
 
@@ -31,21 +30,12 @@ class AppLayoutContainer extends Component<IProps> {
     }
 
     const {
-      setActive,
       // handleIPCMessage,
       setWebviewReference,
       detachService,
       // openWindow,
-      reorder,
       reload,
-      toggleNotifications,
-      toggleAudio,
-      toggleDarkMode,
-      deleteService,
       updateService,
-      clearCache,
-      hibernate,
-      awake,
     } = this.props.actions.service;
 
     let { accentColor } = settings.app;
@@ -62,11 +52,9 @@ class AppLayoutContainer extends Component<IProps> {
 
     const { retryRequiredRequests } = this.props.actions.requests;
 
-    const { installUpdate, toggleMuteApp, toggleCollapseMenu } =
-      this.props.actions.app;
+    const { installUpdate } = this.props.actions.app;
 
-    const { openSettings, closeSettings, openDownloads } =
-      this.props.actions.ui;
+    const { openSettings } = this.props.actions.ui;
 
     const isLoadingFeatures =
       features.featuresRequest.isExecuting &&
@@ -79,44 +67,10 @@ class AppLayoutContainer extends Component<IProps> {
     const isLoadingSettings = !settings.loaded;
 
     if (isLoadingSettings || isLoadingFeatures || isLoadingServices) {
-      return (
-        <ThemeProvider theme={ui.theme}>
-          <AppLoader theme={ui.theme} />
-        </ThemeProvider>
-      );
+      return <AppLoading theme={ui.theme} />;
     }
 
-    const sidebar = (
-      <Sidebar
-        services={services.allDisplayed}
-        setActive={setActive}
-        isAppMuted={settings.all.app.isAppMuted}
-        isMenuCollapsed={settings.all.app.isMenuCollapsed}
-        openSettings={openSettings}
-        openDownloads={openDownloads}
-        closeSettings={closeSettings}
-        reorder={reorder}
-        reload={reload}
-        toggleNotifications={toggleNotifications}
-        toggleAudio={toggleAudio}
-        toggleDarkMode={toggleDarkMode}
-        deleteService={deleteService}
-        updateService={updateService}
-        clearCache={clearCache}
-        hibernateService={hibernate}
-        wakeUpService={awake}
-        toggleMuteApp={toggleMuteApp}
-        toggleCollapseMenu={toggleCollapseMenu}
-        isWorkspaceDrawerOpen={workspaceStore.isWorkspaceDrawerOpen}
-        showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
-        showMessageBadgeWhenMutedSetting={
-          settings.all.app.showMessageBadgeWhenMuted
-        }
-        showServiceNameSetting={settings.all.app.showServiceName}
-        showMessageBadgesEvenWhenMuted={ui.showMessageBadgesEvenWhenMuted}
-        isTodosServiceActive={services.isTodosServiceActive || false}
-      />
-    );
+    const sidebar = <AccountSlider />;
 
     const servicesContainer = (
       <Services

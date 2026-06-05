@@ -1,37 +1,128 @@
-import { mdiAccountBadge, mdiAccountCog, mdiMessageText } from '@mdi/js';
-import Icon from '@mdi/react';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 
 import { navigationStore } from '../../stores/NavigationStore';
 import type { ServiceSubTab } from '../../stores/NavigationStore';
 
-const SUB_TABS: { id: ServiceSubTab; label: string; icon: string }[] = [
-  { id: 'messages', label: '消息', icon: mdiMessageText },
-  { id: 'account', label: '账号管理', icon: mdiAccountCog },
-  { id: 'profile', label: '用户画像', icon: mdiAccountBadge },
+const SUB_TABS: {
+  id: ServiceSubTab;
+  label: string;
+  icon: string;
+  iconActive: string;
+}[] = [
+  {
+    id: 'messages',
+    label: '消息',
+    icon: './assets/images/service-subtab-messages.svg',
+    iconActive: './assets/images/service-subtab-messages.svg',
+  },
+  {
+    id: 'account',
+    label: '账号管理',
+    icon: './assets/images/service-subtab-account.svg',
+    iconActive: './assets/images/service-subtab-account.svg',
+  },
+  {
+    id: 'profile',
+    label: '用户画像',
+    icon: './assets/images/service-subtab-profile.svg',
+    iconActive: './assets/images/service-subtab-profile.svg',
+  },
 ];
 
+interface ServiceSubTabsState {
+  isCollapsed: boolean;
+}
+
 @observer
-class ServiceSubTabs extends Component {
+class ServiceSubTabs extends Component<object, ServiceSubTabsState> {
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      isCollapsed: false,
+    };
+  }
+
+  toggleCollapse = () => {
+    this.setState(prevState => ({ isCollapsed: !prevState.isCollapsed }));
+  };
+
   render(): ReactElement {
+    const { isCollapsed } = this.state;
     return (
-      <nav className="flex flex-col items-center w-[56px] py-[8px] gap-[4px] bg-[var(--bg-tertiary,#252525)] border-r border-r-[var(--border-color,rgba(255,255,255,0.06))]">
-        {SUB_TABS.map(tab => (
-          <button
-            key={tab.id}
-            type="button"
-            className={`flex flex-col items-center justify-center w-[48px] h-[48px] gap-[2px] text-[10px] border-0 rounded-[8px] bg-transparent cursor-pointer transition-all duration-150 ease-in-out text-[var(--text-secondary,rgba(255,255,255,0.55))] hover:bg-[var(--hover-bg,rgba(255,255,255,0.08))] hover:text-[var(--text-primary,rgba(255,255,255,0.9))] ${navigationStore.activeServiceTab === tab.id ? '!bg-[var(--active-bg,rgba(255,255,255,0.12))] !text-[#1677ff]' : ''}`}
-            onClick={() => {
-              navigationStore.setServiceTab(tab.id);
-            }}
-          >
-            <Icon path={tab.icon} size={1} />
-            <span className="text-[10px] leading-[1.2] whitespace-nowrap">
-              {tab.label}
+      <nav
+        className={`flex flex-col h-full bg-white border-r border-solid border-[#E7E7E7] overflow-hidden transition-all ${isCollapsed ? 'w-[64px]' : 'w-[232px]'}`}
+      >
+        {/* Header */}
+        <div
+          className={`flex h-fit items-center pt-[15px] pb-[21px] ${isCollapsed ? 'justify-center' : 'justify-between px-[8px]'}`}
+        >
+          {!isCollapsed && (
+            <span className="text-[18px] font-semibold leading-[26px] text-black/90">
+              Whatsapp
             </span>
+          )}
+          <button
+            type="button"
+            aria-label={isCollapsed ? 'expand' : 'collapse'}
+            className="flex items-center justify-center w-[24px] h-[24px] p-0 border-0 bg-transparent cursor-pointer"
+            onClick={this.toggleCollapse}
+          >
+            <img
+              src="./assets/images/service-subtabs-collapse.svg"
+              alt=""
+              className={`w-[24px] h-[24px] transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
+              style={{
+                transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
+              }}
+            />
           </button>
-        ))}
+        </div>
+
+        {/* Tab items */}
+        <div
+          className={`flex flex-col gap-[4px] ${isCollapsed ? 'items-center' : 'px-[8px]'}`}
+        >
+          {SUB_TABS.map(tab => {
+            const isActive = navigationStore.activeServiceTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                className={`relative flex items-center rounded-[3px] border-0 cursor-pointer transition-colors ${
+                  isCollapsed
+                    ? 'justify-center w-[48px] h-[48px]'
+                    : 'gap-[8px] px-[16px] py-[7px] text-left'
+                } ${
+                  isActive
+                    ? 'bg-[#F2F3FF] text-[#0052D9]'
+                    : 'bg-white text-black/60 hover:bg-gray-50'
+                }`}
+                onClick={() => {
+                  navigationStore.setServiceTab(tab.id);
+                }}
+              >
+                <span
+                  className={`flex items-center justify-center w-[20px] h-[20px] ${isActive ? 'text-[#0052D9]' : 'text-black/60'}`}
+                  style={{
+                    maskImage: `url(${isActive ? tab.iconActive : tab.icon})`,
+                    maskSize: 'contain',
+                    maskRepeat: 'no-repeat',
+                    WebkitMaskImage: `url(${isActive ? tab.iconActive : tab.icon})`,
+                    WebkitMaskSize: 'contain',
+                    WebkitMaskRepeat: 'no-repeat',
+                    backgroundColor: 'currentColor',
+                  }}
+                />
+                {!isCollapsed && (
+                  <span className="flex-1 text-[14px] leading-[22px] whitespace-nowrap">
+                    {tab.label}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </nav>
     );
   }

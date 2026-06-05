@@ -237,7 +237,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'code',
       title: '序号',
-      width: 88,
+      width: 50,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -249,7 +249,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'name',
       title: '人设备注',
-      width: 296,
+      minWidth: 120,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -263,7 +263,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'account',
       title: '姓名',
-      width: 165,
+      minWidth: 80,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -275,7 +275,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'scene',
       title: '年龄',
-      width: 139,
+      minWidth: 60,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -287,7 +287,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'tone',
       title: '性别',
-      width: 129,
+      minWidth: 60,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -299,7 +299,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'creator',
       title: '职业',
-      width: 164,
+      minWidth: 80,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -311,7 +311,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'updatedAt',
       title: '家庭清空',
-      width: 120,
+      minWidth: 70,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -323,7 +323,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'status',
       title: '项目参与度',
-      width: 120,
+      minWidth: 80,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
@@ -335,7 +335,7 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'actions',
       title: '操作',
-      width: 268,
+      width: 200,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: () => (
@@ -453,7 +453,6 @@ class KnowledgeBaseScreen extends Component<
                       data={pagedEntries}
                       rowKey="id"
                       hover
-                      tableLayout="fixed"
                       empty={
                         <div className="py-16 text-center text-[15px] leading-6 text-[rgba(0,0,0,0.4)]">
                           暂无资料

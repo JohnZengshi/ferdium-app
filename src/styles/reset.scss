@@ -160,8 +160,7 @@ body {
 }
 
 html,
-body,
-div {
+body {
   height: 100%;
   background: none;
   box-sizing: border-box;
@@ -170,9 +169,11 @@ div {
 *:focus {
   outline: none;
 }
+
 img {
   pointer-events: none;
 }
+
 a {
   cursor: default;
 }

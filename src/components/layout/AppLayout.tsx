@@ -256,7 +256,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
         {isMac && !isFullScreen && <div className="window-draggable" />}
         <ErrorBoundary>
           <div
-            className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}
+            className={`h-full app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}
           >
             {isWindows && !isFullScreen && (
               <TitleBar
@@ -270,7 +270,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 className={classes.titleBar}
               />
             )}
-            <div className={`app__content ${classes.appContent}`}>
+            <div className={`h-full app__content ${classes.appContent}`}>
               <MainModuleTabs />
 
               <div className="flex flex-col flex-1 min-w-0">

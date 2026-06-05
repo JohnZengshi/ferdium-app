@@ -120,7 +120,7 @@ class ServiceView extends Component<IProps, IState> {
 
     return (
       <div
-        className={webviewClasses}
+        className={webviewClasses + " h-full flex flex-col "}
         data-name={service.name}
         style={{ order: service.order }}
       >

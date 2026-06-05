@@ -40,10 +40,11 @@ class ServiceWebview extends Component<IProps> {
           });
           this.webview.view.addEventListener('did-navigate', () => {
             if (this.props.service._webview) {
-              document.title = `Ferdium - ${this.props.service.name} ${this.props.service.dialogTitle
-                ? ` - ${this.props.service.dialogTitle}`
-                : ''
-                } ${`- ${this.props.service._webview.getTitle()}`}`;
+              document.title = `Ferdium - ${this.props.service.name} ${
+                this.props.service.dialogTitle
+                  ? ` - ${this.props.service.dialogTitle}`
+                  : ''
+              } ${`- ${this.props.service._webview.getTitle()}`}`;
             }
           });
         }
@@ -77,10 +78,11 @@ class ServiceWebview extends Component<IProps> {
       webview.view.blur();
       webview.view.focus();
       window.setTimeout(() => {
-        document.title = `Ferdium - ${this.props.service.name} ${this.props.service.dialogTitle
-          ? ` - ${this.props.service.dialogTitle}`
-          : ''
-          } ${`- ${this.props.service._webview.getTitle()}`}`;
+        document.title = `Ferdium - ${this.props.service.name} ${
+          this.props.service.dialogTitle
+            ? ` - ${this.props.service.dialogTitle}`
+            : ''
+        } ${`- ${this.props.service._webview.getTitle()}`}`;
       }, 100);
     } else {
       debug('Refocus not required - Not active service');
@@ -157,8 +159,9 @@ class ServiceWebview extends Component<IProps> {
         }
         allowpopups
         nodeintegration
-        webpreferences={`spellcheck=${isSpellcheckerEnabled ? 1 : 0
-          }, contextIsolation=1`}
+        webpreferences={`spellcheck=${
+          isSpellcheckerEnabled ? 1 : 0
+        }, contextIsolation=1`}
       />
     );
   }

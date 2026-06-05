@@ -237,11 +237,11 @@ class KnowledgeBaseScreen extends Component<
     {
       colKey: 'code',
       title: '序号',
-      width: 50,
+      width: 75,
       align: 'left',
       // eslint-disable-next-line react/no-unstable-nested-components
       cell: ({ row }) => (
-        <span className="text-[15px] leading-6 text-[rgba(0,0,0,0.9)]">
+        <span className="whitespace-nowrap text-[15px] leading-6 text-[rgba(0,0,0,0.9)]">
           {row.code}
         </span>
       ),

@@ -1,0 +1,133 @@
+// Knowledge Base 模块专用样式
+// 按项目规范，新 UI 优先使用 Tailwind，此处仅存放无法用 Tailwind 表达的覆盖
+
+.knowledge-base-screen {
+  .kb-table table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .kb-table-shell {
+    border: 1px solid #e7e7e7;
+    border-radius: 6px;
+    background: #ffffff;
+  }
+
+  .kb-table thead th {
+    background: #f3f3f3;
+    border-bottom: 1px solid #e7e7e7;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    vertical-align: middle;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .kb-table thead th:not(:last-child) {
+    border-right: 1px solid #e7e7e7;
+  }
+
+  .kb-table tbody td {
+    background: #ffffff;
+    border-bottom: 1px solid #e7e7e7;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 15px;
+    line-height: 24px;
+    text-align: left;
+    vertical-align: middle;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .kb-table tbody td:not(:last-child) {
+    border-right: 1px solid #e7e7e7;
+  }
+
+  .kb-table .t-table__content {
+    border: 0;
+  }
+
+  .kb-table .t-table {
+    min-width: 1280px;
+  }
+
+  .kb-table-footer {
+    min-height: 58px;
+  }
+
+  .kb-table-total {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .kb-table-total strong {
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: 600;
+  }
+
+  .kb-table-pagination {
+    align-items: center;
+    color: rgba(0, 0, 0, 0.6);
+    column-gap: 8px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .kb-table-pagination button {
+    min-width: 28px;
+    height: 28px;
+    background: #ffffff;
+    border-color: #e7e7e7;
+    border-radius: 6px;
+    color: rgba(0, 0, 0, 0.6);
+    box-shadow: none;
+  }
+
+  .kb-table-pagination .t-is-current,
+  .kb-table-pagination .t-pagination__item.t-is-current,
+  .kb-table-pagination .t-pagination__btn--current {
+    background: #f3f3f3;
+    border-color: #e7e7e7;
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  .kb-table-pagination svg {
+    color: currentColor;
+  }
+
+  .kb-table-pagination .t-input,
+  .kb-table-pagination .t-input__inner,
+  .kb-table-pagination .t-pagination__jump-number {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+// Dropdown 自适应与项内距调整（覆盖 TDesign 默认）
+.kb-user-dropdown-popup {
+  min-width: max-content !important;
+  width: auto !important;
+
+  ul {
+    padding: 6px 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+
+  li,
+  .t-dropdown__menu-item {
+    padding: 8px 14px !important;
+    white-space: nowrap !important;
+  }
+}

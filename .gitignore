@@ -404,3 +404,6 @@ server*.log
 
 # Understand-anything knowledge graph
 .understand-anything/
+
+# pnpm store directory
+.pnpm-store/

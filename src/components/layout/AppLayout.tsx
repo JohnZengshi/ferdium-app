@@ -275,10 +275,14 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex-shrink-0 w-full h-[56px] bg-white border-b border-solid border-b-[#E7E7E7] flex items-center justify-between px-[24px]">
-                  <span
-                    className="text-[16px] font-semibold leading-[24px]"
-                    style={{ color: 'rgba(0,0,0,0.90)' }}
-                  >
+                  <span className="flex items-center gap-[12px] text-[16px] font-semibold leading-[24px] text-[rgba(0,0,0,0.90)]">
+                    {navigationStore.activeModule === 'knowledge-base' && (
+                      <img
+                        src="./assets/images/tab-library-active.svg"
+                        alt=""
+                        className="h-[16px] w-[16px]"
+                      />
+                    )}
                     {MODULE_LABELS[navigationStore.activeModule]}
                   </span>
 

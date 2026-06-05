@@ -1056,7 +1056,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       '.waa-status-bar{margin:16px 0;font-size:14px;font-weight:600;padding:8px;background:rgba(255,255,255,0.05);border-radius:6px}',
       '.waa-body{margin:20px 0;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center}',
       '.waa-subtitle{font-size:14px;color:#8696a0;margin:8px 0 0}',
-      '.waa-qrimg{width:264px;height:264px;border-radius:4px;image-rendering:pixelated}',
+      '.waa-qrimg{width:256px;height:256px;border-radius:4px;image-rendering:pixelated}',
       '.waa-footer{font-size:12px;color:#667781;margin-top:16px}'
     ].join('');
     document.head.appendChild(s);

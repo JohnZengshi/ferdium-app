@@ -7,17 +7,17 @@
  * - 表单校验
  */
 
-import { Component, type ReactElement } from 'react';
 import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 import {
   Dialog,
   Form,
-  Input,
-  Select,
-  Textarea,
-  MessagePlugin,
   type FormInstanceFunctions,
   type FormRule,
+  Input,
+  MessagePlugin,
+  Select,
+  Textarea,
 } from 'tdesign-react';
 import type {
   DigitalHumanCreateRequest,

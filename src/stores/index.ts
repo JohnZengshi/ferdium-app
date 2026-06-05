@@ -6,6 +6,7 @@ import { todosStore } from '../features/todos';
 import { whatsappAutomationStore } from '../features/whatsappAutomation';
 import { workspaceStore } from '../features/workspaces';
 import AppStore from './AppStore';
+import DigitalHumanStore from './DigitalHumanStore';
 import FeaturesStore from './FeaturesStore';
 import GlobalErrorStore from './GlobalErrorStore';
 import RecipePreviewsStore from './RecipePreviewsStore';
@@ -15,7 +16,6 @@ import ServicesStore from './ServicesStore';
 import SettingsStore from './SettingsStore';
 import UIStore from './UIStore';
 import UserStore from './UserStore';
-import DigitalHumanStore from './DigitalHumanStore';
 
 export interface RealStores {
   router: RouterStore;

@@ -16,16 +16,16 @@ import {
   runInAction,
 } from 'mobx';
 import type {
-  DigitalHumanResponse,
   DigitalHumanCreateRequest,
+  DigitalHumanResponse,
 } from '../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import {
-  listDigitalHumansApiV1DigitalHumansGet,
+  assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost,
   createDigitalHumanApiV1DigitalHumansPost,
   getDigitalHumanApiV1DigitalHumansDigitalHumanIdGet,
-  assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost,
-  unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete,
   listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet,
+  listDigitalHumansApiV1DigitalHumansGet,
+  unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete,
 } from '../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import TypedStore from './lib/TypedStore';
 

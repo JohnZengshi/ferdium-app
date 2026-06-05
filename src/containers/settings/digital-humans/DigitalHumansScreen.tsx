@@ -8,14 +8,15 @@
  * - 分配数字人给子账号（仅 owner）
  */
 
-import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react';
 import type { RouterStore } from '@superwf/mobx-react-router';
-import { Space, Table, Button, Tag, Badge, MessagePlugin } from 'tdesign-react';
+import { inject, observer } from 'mobx-react';
+import type React from 'react';
+import { Component } from 'react';
 import { AddIcon } from 'tdesign-icons-react';
-import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
+import { Badge, Button, MessagePlugin, Space, Table, Tag } from 'tdesign-react';
 import type { DigitalHumanResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import DigitalHumanForm from '../../../components/settings/digital-humans/DigitalHumanForm';
+import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
 
 interface DigitalHumansScreenProps {
   stores?: {

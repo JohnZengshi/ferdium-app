@@ -1,11 +1,11 @@
-import { Component, type ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 import { AddIcon } from 'tdesign-icons-react';
 import { Button, Card, Divider, Empty, Skeleton } from 'tdesign-react';
-import type { RealStores } from '../../stores';
 import DigitalHumanCard from '../../components/home/DigitalHumanCard';
 import OnboardingGuide from '../../components/home/OnboardingGuide';
 import SocialAccountCard from '../../components/home/SocialAccountCard';
+import type { RealStores } from '../../stores';
 
 interface HomeScreenProps {
   stores?: RealStores;

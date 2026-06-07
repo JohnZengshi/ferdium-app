@@ -216,13 +216,13 @@ class DynamicLogin extends Component<DynamicLoginProps> {
     };
 
     const customInputClass =
-      'h-[48px] w-full rounded-[4px] border border-solid border-[#E5E6EB] bg-white !shadow-none [&_.t-input]:!h-full [&_.t-input]:!border-none [&_.t-input]:!shadow-none [&_.t-input]:!rounded-[4px] [&_.t-input]:!pl-[16px] [&_.t-input]:!pr-[12px] [&_.t-input]:!text-[14px] [&_.t-input]:!text-[#1D2129] [&_.t-input]::placeholder:!text-[#86909C] [&_.t-input__prefix]:!absolute [&_.t-input__prefix]:!left-[12px] [&_.t-input__prefix]:!top-1/2 [&_.t-input__prefix]:!-translate-y-1/2 [&_.t-input__prefix]:!text-[#86909C] [&_.t-input__suffix]:!hidden';
+      'h-[48px] w-full rounded-[4px] border border-solid border-line bg-container !shadow-none [&_.t-input]:!h-full [&_.t-input]:!border-none [&_.t-input]:!shadow-none [&_.t-input]:!rounded-[4px] [&_.t-input]:!pl-[16px] [&_.t-input]:!pr-[12px] [&_.t-input]:!text-[14px] [&_.t-input]:!text-primary [&_.t-input]::placeholder:!text-placeholder [&_.t-input__prefix]:!absolute [&_.t-input__prefix]:!left-[12px] [&_.t-input__prefix]:!top-1/2 [&_.t-input__prefix]:!-translate-y-1/2 [&_.t-input__prefix]:!text-placeholder [&_.t-input__suffix]:!hidden';
 
     return (
       <div className="auth__container w-full">
         <div className="auth__form-wrapper flex flex-col">
           <div className="mb-[32px]">
-            <div className="text-[30px] font-bold text-[#165DFF]">
+            <div className="text-[30px] font-bold text-brand">
               欢迎来到拓客！
             </div>
           </div>
@@ -247,7 +247,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                         this.rememberPassword = checked;
                       })
                     }
-                    className="[&_.t-checkbox__label]:text-[13px] [&_.t-checkbox__label]:text-[#1D2129]"
+                    className="[&_.t-checkbox__label]:text-[13px] [&_.t-checkbox__label]:text-primary"
                   >
                     记住密码
                   </Checkbox>
@@ -256,7 +256,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             )}
 
             {this.authError && (
-              <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+              <p className="auth__error-message mt-2.5 text-center text-[14px] text-error">
                 {this.authError}
               </p>
             )}
@@ -266,7 +266,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
               block
               size="large"
               loading={this.isAuthenticating}
-              className="!h-[48px] !rounded-[4px] !bg-[#165DFF] !text-[16px] !font-normal !text-white hover:!bg-[#165DFF]/90"
+              className="!h-[48px] !rounded-[4px] !bg-brand !text-[16px] !font-normal !text-text-anti hover:!bg-brand-hover"
             >
               进入拓客
             </Button>
@@ -291,7 +291,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
           <div className="auth__links--top mt-[24px] flex flex-row gap-4 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
             {config.showSignup && (
               <div className="auth__signup-row inline-flex items-start gap-2">
-                <span className="auth__link-secondary leading-[22px] text-[rgba(0,0,0,.6)]">
+                <span className="auth__link-secondary leading-[22px] text-secondary">
                   {intl.formatMessage({
                     id: 'dynamicLogin.link.signup.prefix',
                     defaultMessage: '没有账号吗 ? ',
@@ -299,7 +299,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                 </span>
                 <Link
                   to="/auth/signup"
-                  className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
+                  className="auth__link-primary cursor-pointer leading-[22px] text-brand hover:underline"
                 >
                   {intl.formatMessage({
                     id: 'dynamicLogin.link.signup',
@@ -311,7 +311,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             {config.showForgotPassword && (
               <Link
                 to="/auth/password"
-                className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
+                className="auth__link-primary cursor-pointer leading-[22px] text-brand hover:underline"
               >
                 {intl.formatMessage({
                   id: 'dynamicLogin.link.forgotPassword',

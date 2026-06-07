@@ -17,19 +17,19 @@ class Welcome extends Component<IProps> {
       <div className="welcome">
         <div className="flex flex-col gap-[20px]">
           <div className="relative">
-            <UserIcon className="absolute left-[14px] top-1/2 -translate-y-1/2 text-[#909399]" />
+            <UserIcon className="absolute left-[14px] top-1/2 -translate-y-1/2 text-placeholder" />
             <input
               type="text"
               placeholder="请输入用户名"
-              className="h-[48px] w-full rounded-[4px] border border-solid border-[#DCDFE6] bg-white pl-[42px] pr-[16px] text-[14px] text-[#1F1F1F] outline-none placeholder:text-[#909399]"
+              className="h-[48px] w-full rounded-[4px] border border-solid border-line bg-container pl-[42px] pr-[16px] text-[14px] text-primary outline-none placeholder:text-placeholder"
             />
           </div>
           <div className="relative">
-            <LockOnIcon className="absolute left-[14px] top-1/2 -translate-y-1/2 text-[#909399]" />
+            <LockOnIcon className="absolute left-[14px] top-1/2 -translate-y-1/2 text-placeholder" />
             <input
               type="password"
               placeholder="请输入密码"
-              className="h-[48px] w-full rounded-[4px] border border-solid border-[#DCDFE6] bg-white pl-[42px] pr-[16px] text-[14px] text-[#1F1F1F] outline-none placeholder:text-[#909399]"
+              className="h-[48px] w-full rounded-[4px] border border-solid border-line bg-container pl-[42px] pr-[16px] text-[14px] text-primary outline-none placeholder:text-placeholder"
             />
           </div>
         </div>
@@ -38,11 +38,11 @@ class Welcome extends Component<IProps> {
           <input
             type="checkbox"
             id="remember"
-            className="h-[14px] w-[14px] cursor-pointer appearance-none rounded-[2px] border border-solid border-[#DCDFE6] bg-white checked:border-[#0052D9] checked:bg-[#0052D9]"
+            className="h-[14px] w-[14px] cursor-pointer appearance-none rounded-[2px] border border-solid border-line bg-container checked:border-brand checked:bg-brand"
           />
           <label
             htmlFor="remember"
-            className="cursor-pointer select-none text-[13px] text-[#333]"
+            className="cursor-pointer select-none text-[13px] text-primary"
           >
             记住密码
           </label>
@@ -50,7 +50,7 @@ class Welcome extends Component<IProps> {
 
         <Link
           to={loginRoute}
-          className="mt-[24px] flex h-[48px] w-full items-center justify-center rounded-[4px] bg-[#0052D9] text-[16px] font-medium text-white no-underline"
+          className="mt-[24px] flex h-[48px] w-full items-center justify-center rounded-[4px] bg-brand text-[16px] font-medium text-text-anti no-underline"
         >
           进入拓客
         </Link>

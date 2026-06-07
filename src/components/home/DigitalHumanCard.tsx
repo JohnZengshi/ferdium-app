@@ -18,17 +18,17 @@ interface DigitalHumanCardProps {
 const statusConfig = {
   online: {
     icon: CheckCircleIcon,
-    color: '#00a870',
+    color: 'var(--td-success-color)',
     text: '在线',
   },
   offline: {
     icon: CloseCircleIcon,
-    color: '#e34d59',
+    color: 'var(--td-error-color)',
     text: '离线',
   },
   busy: {
     icon: CloseCircleIcon,
-    color: '#f2bd27',
+    color: 'var(--td-warning-color)',
     text: '忙碌',
   },
 };
@@ -66,12 +66,15 @@ export default function DigitalHumanCard({
                 className="w-12 h-12 rounded-full object-cover"
               />
             ) : (
-              <div className="w-12 h-12 rounded-full bg-[var(--td-brand-color)] flex items-center justify-center">
-                <UserIcon size="24px" style={{ color: '#fff' }} />
+              <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center">
+                <UserIcon
+                  size="24px"
+                  style={{ color: 'var(--td-text-color-anti)' }}
+                />
               </div>
             )}
             <div
-              className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white"
+              className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-container"
               style={{ backgroundColor: statusInfo.color }}
             />
           </div>
@@ -79,19 +82,19 @@ export default function DigitalHumanCard({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h3 className="text-base font-medium truncate">{name}</h3>
-              <span className="text-xs text-[var(--td-text-color-placeholder)]">
+              <span className="text-xs text-placeholder">
                 {statusInfo.text}
               </span>
             </div>
 
             {description && (
-              <p className="text-sm text-[var(--td-text-color-secondary)] line-clamp-2 mb-2">
+              <p className="text-sm text-secondary line-clamp-2 mb-2">
                 {description}
               </p>
             )}
 
             {lastActive && (
-              <div className="flex items-center gap-1 text-xs text-[var(--td-text-color-placeholder)]">
+              <div className="flex items-center gap-1 text-xs text-placeholder">
                 <StatusIcon size="14px" style={{ color: statusInfo.color }} />
                 <span>最后活跃：{lastActive}</span>
               </div>

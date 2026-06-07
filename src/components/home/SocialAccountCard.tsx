@@ -53,7 +53,7 @@ export default function SocialAccountCard({
                   className="w-10 h-10 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-[var(--td-gray-color-3)] flex items-center justify-center text-xl">
+                <div className="w-10 h-10 rounded-full bg-component flex items-center justify-center text-xl">
                   {platformIcons[platform.toLowerCase()] || '📧'}
                 </div>
               )}
@@ -74,9 +74,7 @@ export default function SocialAccountCard({
                   />
                 )}
               </div>
-              <p className="text-xs text-[var(--td-text-color-placeholder)] capitalize">
-                {platform}
-              </p>
+              <p className="text-xs text-placeholder capitalize">{platform}</p>
             </div>
           </div>
 

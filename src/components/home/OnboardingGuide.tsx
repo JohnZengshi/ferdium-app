@@ -38,9 +38,7 @@ export default function OnboardingGuide({
     >
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-[var(--td-text-color-secondary)]">
-            完成进度
-          </span>
+          <span className="text-sm text-secondary">完成进度</span>
           <span className="text-sm font-medium">
             {completedCount}/{steps.length}
           </span>
@@ -53,9 +51,7 @@ export default function OnboardingGuide({
           <div
             key={step.id}
             className={`flex items-start gap-3 p-3 rounded-md transition-colors ${
-              step.completed
-                ? 'bg-[var(--td-success-color-1)]'
-                : 'bg-[var(--td-bg-color-container)]'
+              step.completed ? 'bg-success-light' : 'bg-container'
             }`}
           >
             <div className="mt-0.5">
@@ -75,16 +71,12 @@ export default function OnboardingGuide({
             <div className="flex-1 min-w-0">
               <h4
                 className={`text-sm font-medium mb-1 ${
-                  step.completed
-                    ? 'line-through text-[var(--td-text-color-placeholder)]'
-                    : ''
+                  step.completed ? 'line-through text-placeholder' : ''
                 }`}
               >
                 {step.title}
               </h4>
-              <p className="text-xs text-[var(--td-text-color-secondary)] mb-2">
-                {step.description}
-              </p>
+              <p className="text-xs text-secondary mb-2">{step.description}</p>
 
               {!step.completed && step.action && (
                 <Button

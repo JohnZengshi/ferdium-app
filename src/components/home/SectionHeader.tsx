@@ -21,11 +21,11 @@ export function SectionHeader(props: SectionHeaderProps): ReactElement {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-[10px]">
         {icon}
-        <h2 className={`${titleClassName} font-bold text-[#1D2129] !mb-0`}>
+        <h2 className={`${titleClassName} font-bold text-primary !mb-0`}>
           {title}
         </h2>
         {description && (
-          <p className="ml-[4px] text-[14px] text-[#86909C]">{description}</p>
+          <p className="ml-[4px] text-[14px] text-secondary">{description}</p>
         )}
       </div>
       {actions && <div className="flex items-center gap-[8px]">{actions}</div>}

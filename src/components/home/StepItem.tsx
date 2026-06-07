@@ -16,52 +16,50 @@ export function StepItem(props: StepItemProps): ReactElement {
   const getIndicator = (): ReactElement => {
     if (status === 'completed') {
       return (
-        <div className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-[2px] border-[#0052D9] bg-white">
-          <CheckCircleFilledIcon className="text-[12px] text-[#0052D9]" />
+        <div className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-[2px] border-brand bg-container">
+          <CheckCircleFilledIcon className="text-[12px] text-brand" />
         </div>
       );
     }
     if (status === 'current') {
       return (
-        <div className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#0052D9] text-[14px] font-bold leading-none text-white">
+        <div className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-brand text-[14px] font-bold leading-none text-text-anti">
           {stepNumber}
         </div>
       );
     }
     return (
-      <div className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-[2px] border-[#999999] bg-white text-[14px] font-semibold leading-none text-[#999999]">
+      <div className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-[2px] border-placeholder bg-container text-[14px] font-semibold leading-none text-placeholder">
         {stepNumber}
       </div>
     );
   };
 
   const getStatusTag = (): ReactElement => {
-    let tagBgColor = '#E8E8E8';
-    let tagTextColor = '#222222';
-    if (status === 'completed') {
-      tagBgColor = '#8BDCAD';
-      tagTextColor = 'white';
-    }
+    const tagClasses =
+      status === 'completed'
+        ? 'bg-success text-text-anti'
+        : 'bg-component text-primary';
 
     return (
       <Tag
-        className="!mt-[6px] !h-[32px] !min-w-[66px] !rounded-[16px] !border-0 !text-[14px] !font-medium !leading-[32px] !text-center flex items-center justify-center"
-        style={{ backgroundColor: tagBgColor, color: tagTextColor }}
+        className={`!mt-[6px] !h-[32px] !min-w-[66px] !rounded-[16px] !border-0 !text-[14px] !font-medium !leading-[32px] !text-center flex items-center justify-center ${tagClasses}`}
       >
         {status === 'completed' ? '已完成' : '待设置'}
       </Tag>
     );
   };
 
-  const titleColor =
+  const titleClass =
     status === 'current'
-      ? '#0052D9'
+      ? 'text-brand'
       : status === 'completed'
-        ? '#222222'
-        : '#999999';
-  const descriptionColor = status === 'completed' ? '#666666' : '#999999';
-  const connectorBgColor =
-    status === 'completed' || status === 'current' ? '#0052D9' : '#E6E6E6';
+        ? 'text-primary'
+        : 'text-placeholder';
+  const descriptionClass =
+    status === 'completed' ? 'text-secondary' : 'text-placeholder';
+  const connectorClass =
+    status === 'completed' || status === 'current' ? 'bg-brand' : 'bg-line';
 
   return (
     <div className="flex min-h-[79px] items-start justify-between">
@@ -70,21 +68,18 @@ export function StepItem(props: StepItemProps): ReactElement {
           {getIndicator()}
           {!isLast && (
             <div
-              className="absolute left-[10px] top-[32px] h-[31px] w-[2px]"
-              style={{ backgroundColor: connectorBgColor }}
+              className={`absolute left-[10px] top-[32px] h-[31px] w-[2px] ${connectorClass}`}
             />
           )}
         </div>
         <div className="pt-[1px]">
           <div
-            className="text-[16px] font-semibold leading-[22px]"
-            style={{ color: titleColor }}
+            className={`text-[16px] font-semibold leading-[22px] ${titleClass}`}
           >
             {title}
           </div>
           <div
-            className="mt-[10px] text-[14px] font-normal leading-[20px]"
-            style={{ color: descriptionColor }}
+            className={`mt-[10px] text-[14px] font-normal leading-[20px] ${descriptionClass}`}
           >
             {description}
           </div>

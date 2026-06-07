@@ -1,5 +1,13 @@
 import type { ReactElement } from 'react';
 import { Tag } from 'tdesign-react';
+import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+
+const messages = defineMessages({
+  vipLabel: {
+    id: 'avatarCell.vipLabel',
+    defaultMessage: 'VIP',
+  },
+});
 
 interface AvatarCellProps {
   title: string;
@@ -15,9 +23,11 @@ const AvatarCell = ({
   subtitle,
   avatarUrl,
   isVIP,
-  vipLabel = '重粉',
+  vipLabel,
   className = '',
-}: AvatarCellProps): ReactElement => {
+  intl,
+}: AvatarCellProps & WrappedComponentProps): ReactElement => {
+  const displayVipLabel = vipLabel || intl.formatMessage(messages.vipLabel);
   return (
     <div className={`flex items-center gap-[12px] py-[2px] ${className}`}>
       {avatarUrl ? (
@@ -44,7 +54,7 @@ const AvatarCell = ({
               variant="light"
               className="!rounded-[4px] !px-[6px] !py-0 !text-[11px]"
             >
-              {vipLabel}
+              {displayVipLabel}
             </Tag>
           )}
         </div>
@@ -58,4 +68,4 @@ const AvatarCell = ({
   );
 };
 
-export default AvatarCell;
+export default injectIntl(AvatarCell);

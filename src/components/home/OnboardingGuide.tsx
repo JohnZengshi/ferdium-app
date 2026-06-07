@@ -1,6 +1,13 @@
 import type { ReactElement } from 'react';
+import { useIntl, defineMessages } from 'react-intl';
 import { CheckCircleFilledIcon, CircleIcon } from 'tdesign-icons-react';
 import { Button, Card, Progress } from 'tdesign-react';
+
+const messages = defineMessages({
+  title: { id: 'onboardingGuide.title', defaultMessage: '新手引导' },
+  dismiss: { id: 'onboardingGuide.dismiss', defaultMessage: '完成并隐藏' },
+  progress: { id: 'onboardingGuide.progress', defaultMessage: '完成进度' },
+});
 
 interface OnboardingStep {
   id: string;
@@ -22,23 +29,24 @@ export default function OnboardingGuide({
   steps,
   onDismiss,
 }: OnboardingGuideProps): ReactElement {
+  const intl = useIntl();
   const completedCount = steps.filter(s => s.completed).length;
   const progress = Math.round((completedCount / steps.length) * 100);
 
   return (
     <Card
-      title="新手引导"
+      title={intl.formatMessage(messages.title)}
       actions={
         progress === 100 && onDismiss ? (
           <Button variant="text" size="small" onClick={onDismiss}>
-            完成并隐藏
+            {intl.formatMessage(messages.dismiss)}
           </Button>
         ) : undefined
       }
     >
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-secondary">完成进度</span>
+          <span className="text-sm text-secondary">{intl.formatMessage(messages.progress)}</span>
           <span className="text-sm font-medium">
             {completedCount}/{steps.length}
           </span>

@@ -1,6 +1,12 @@
 import { type ReactElement } from 'react';
+import { useIntl, defineMessages } from 'react-intl';
 import { CheckCircleFilledIcon } from 'tdesign-icons-react';
 import { Tag } from 'tdesign-react';
+
+const messages = defineMessages({
+  completed: { id: 'stepItem.completed', defaultMessage: '已完成' },
+  pending: { id: 'stepItem.pending', defaultMessage: '待设置' },
+});
 
 interface StepItemProps {
   stepNumber: number;
@@ -11,6 +17,7 @@ interface StepItemProps {
 }
 
 export function StepItem(props: StepItemProps): ReactElement {
+  const intl = useIntl();
   const { stepNumber, title, description, status, isLast } = props;
 
   const getIndicator = (): ReactElement => {
@@ -45,7 +52,7 @@ export function StepItem(props: StepItemProps): ReactElement {
       <Tag
         className={`!mt-[6px] !h-[32px] !min-w-[66px] !rounded-[16px] !border-0 !text-[14px] !font-medium !leading-[32px] !text-center flex items-center justify-center ${tagClasses}`}
       >
-        {status === 'completed' ? '已完成' : '待设置'}
+        {intl.formatMessage(status === 'completed' ? messages.completed : messages.pending)}
       </Tag>
     );
   };

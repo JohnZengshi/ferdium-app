@@ -1,32 +1,42 @@
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
+import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
 import type { Actions } from '../../actions/lib/actions';
 import type { RealStores } from '../../stores';
 
 import { navigationStore } from '../../stores/NavigationStore';
 import type { ServiceSubTab } from '../../stores/NavigationStore';
 
+const messages = defineMessages({
+  tabMessages: { id: 'serviceSubTabs.messages', defaultMessage: '消息' },
+  tabAccount: { id: 'serviceSubTabs.account', defaultMessage: '账号管理' },
+  tabProfile: { id: 'serviceSubTabs.profile', defaultMessage: '用户画像' },
+  whatsappHeader: { id: 'serviceSubTabs.whatsappHeader', defaultMessage: 'Whatsapp' },
+  expand: { id: 'serviceSubTabs.expand', defaultMessage: 'expand' },
+  collapse: { id: 'serviceSubTabs.collapse', defaultMessage: 'collapse' },
+});
+
 const SUB_TABS: {
   id: ServiceSubTab;
-  label: string;
+  labelKey: string;
   icon: string;
   iconActive: string;
 }[] = [
   {
     id: 'messages',
-    label: '消息',
+    labelKey: 'tabMessages',
     icon: './assets/images/service-subtab-messages.svg',
     iconActive: './assets/images/service-subtab-messages.svg',
   },
   {
     id: 'account',
-    label: '账号管理',
+    labelKey: 'tabAccount',
     icon: './assets/images/service-subtab-account.svg',
     iconActive: './assets/images/service-subtab-account.svg',
   },
   {
     id: 'profile',
-    label: '用户画像',
+    labelKey: 'tabProfile',
     icon: './assets/images/service-subtab-profile.svg',
     iconActive: './assets/images/service-subtab-profile.svg',
   },
@@ -44,10 +54,10 @@ interface ServiceSubTabsProps {
 @inject('stores', 'actions')
 @observer
 class ServiceSubTabs extends Component<
-  ServiceSubTabsProps,
+  ServiceSubTabsProps & WrappedComponentProps,
   ServiceSubTabsState
 > {
-  constructor(props: ServiceSubTabsProps) {
+  constructor(props: ServiceSubTabsProps & WrappedComponentProps) {
     super(props);
     this.state = {
       isCollapsed: props.stores?.settings.all.app.isMenuCollapsed ?? false,
@@ -61,6 +71,7 @@ class ServiceSubTabs extends Component<
 
   render(): ReactElement {
     const { isCollapsed } = this.state;
+    const { intl } = this.props;
     return (
       <nav
         className={`flex flex-col h-full bg-container border-r border-solid border-line overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}
@@ -71,12 +82,12 @@ class ServiceSubTabs extends Component<
         >
           {!isCollapsed && (
             <span className="text-[18px] font-semibold leading-[26px] text-primary">
-              Whatsapp
+              {intl.formatMessage(messages.whatsappHeader)}
             </span>
           )}
           <button
             type="button"
-            aria-label={isCollapsed ? 'expand' : 'collapse'}
+            aria-label={intl.formatMessage(isCollapsed ? messages.expand : messages.collapse)}
             className="flex items-center justify-center w-[24px] h-[24px] p-0 border-0 bg-transparent cursor-pointer"
             onClick={this.toggleCollapse}
           >
@@ -128,7 +139,7 @@ class ServiceSubTabs extends Component<
                 />
                 {!isCollapsed && (
                   <span className="flex-1 text-[14px] leading-[22px] whitespace-nowrap">
-                    {tab.label}
+                    {intl.formatMessage(messages[tab.labelKey as keyof typeof messages])}
                   </span>
                 )}
               </button>
@@ -140,4 +151,4 @@ class ServiceSubTabs extends Component<
   }
 }
 
-export default ServiceSubTabs;
+export default injectIntl(ServiceSubTabs);

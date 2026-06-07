@@ -89,7 +89,7 @@ export default class NextAuthProvider implements AuthProvider {
       return {
         success: false,
         status: 'invalid_credentials' as AuthResultStatus,
-        error: '登录失败，请检查邮箱和密码是否正确',
+        error: 'Login failed. Please check your email and password.',
       };
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));

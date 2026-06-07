@@ -3,7 +3,7 @@ import { makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import {
   Button,
   Checkbox,
@@ -21,7 +21,24 @@ import Link from '../ui/Link';
 
 const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 
-const USER_FRIENDLY_ERROR = '登录失败，请检查网络连接或稍后重试';
+const messages = defineMessages({
+  userFriendlyError: {
+    id: 'dynamicLogin.userFriendlyError',
+    defaultMessage: '登录失败，请检查网络连接或稍后重试',
+  },
+  heading: {
+    id: 'dynamicLogin.heading',
+    defaultMessage: '欢迎来到拓客！',
+  },
+  rememberPassword: {
+    id: 'dynamicLogin.rememberPassword',
+    defaultMessage: '记住密码',
+  },
+  enterApp: {
+    id: 'dynamicLogin.enterApp',
+    defaultMessage: '进入拓客',
+  },
+});
 
 function getFieldIcon(fieldType: AuthFieldType): ReactElement {
   switch (fieldType) {
@@ -142,7 +159,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
           } else {
             debug(`Authentication failed: ${result.error}`);
             runInAction(() => {
-              this.authError = result.error || USER_FRIENDLY_ERROR;
+              this.authError = result.error || this.props.intl.formatMessage(messages.userFriendlyError);
             });
           }
         } catch (error) {
@@ -150,7 +167,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             error instanceof Error ? error.message : String(error);
           debug(`Authentication error caught: ${message}`);
           runInAction(() => {
-            this.authError = message || USER_FRIENDLY_ERROR;
+            this.authError = message || this.props.intl.formatMessage(messages.userFriendlyError);
           });
         } finally {
           runInAction(() => {
@@ -223,7 +240,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
         <div className="auth__form-wrapper flex flex-col">
           <div className="mb-[32px]">
             <div className="text-[30px] font-bold text-brand">
-              欢迎来到拓客！
+              {intl.formatMessage(messages.heading)}
             </div>
           </div>
 
@@ -249,7 +266,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                     }
                     className="[&_.t-checkbox__label]:text-[13px] [&_.t-checkbox__label]:text-primary"
                   >
-                    记住密码
+                    {intl.formatMessage(messages.rememberPassword)}
                   </Checkbox>
                 </div>
               </div>
@@ -268,7 +285,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
               loading={this.isAuthenticating}
               className="!h-[48px] !rounded-[4px] !bg-brand !text-[16px] !font-normal !text-text-anti hover:!bg-brand-hover"
             >
-              进入拓客
+              {intl.formatMessage(messages.enterApp)}
             </Button>
           </form>
         </div>

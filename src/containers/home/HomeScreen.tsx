@@ -18,6 +18,7 @@ import {
   MessagePlugin,
   Dialog,
 } from 'tdesign-react';
+import { defineMessages, injectIntl, type WrappedComponentProps } from 'react-intl';
 import type { RealStores } from '../../stores';
 import { StepItem } from '../../components/home/StepItem';
 import { SectionHeader } from '../../components/home/SectionHeader';
@@ -35,6 +36,8 @@ interface HomeScreenProps {
   stores?: RealStores;
   history?: any;
 }
+
+type IHomeScreenProps = HomeScreenProps & WrappedComponentProps;
 
 interface EmployeeResume {
   name: string;
@@ -534,62 +537,315 @@ const EMPLOYEE_RESUMES: Record<string, EmployeeResume> = {
   },
 };
 
+const messages = defineMessages({
+  // ─── Toast messages ───
+  autoReplyEnabled: {
+    id: 'homeScreen.autoReplyEnabled',
+    defaultMessage: 'Auto reply enabled',
+  },
+  autoReplyDisabled: {
+    id: 'homeScreen.autoReplyDisabled',
+    defaultMessage: 'Auto reply disabled',
+  },
+
+  // ─── Social account table ───
+  type: { id: 'homeScreen.type', defaultMessage: 'Type' },
+  totalCount: { id: 'homeScreen.totalCount', defaultMessage: 'Total' },
+  online: { id: 'homeScreen.online', defaultMessage: 'Online' },
+  offline: { id: 'homeScreen.offline', defaultMessage: 'Offline' },
+  errorStatus: { id: 'homeScreen.errorStatus', defaultMessage: 'Error' },
+  moreSocialComing: {
+    id: 'homeScreen.moreSocialComing',
+    defaultMessage: 'More social media coming soon~',
+  },
+
+  // ─── Dashboard section header ───
+  myDigitalEmployees: {
+    id: 'homeScreen.myDigitalEmployees',
+    defaultMessage: 'My Digital Employees',
+  },
+  digitalEmployeesDesc: {
+    id: 'homeScreen.digitalEmployeesDesc',
+    defaultMessage: 'Let digital employees be your best sales partners, handling inquiries and automating conversions 24/7.',
+  },
+  autoReply: { id: 'homeScreen.autoReply', defaultMessage: 'Auto Reply' },
+
+  // ─── Social account overview ───
+  socialAccountOverview: {
+    id: 'homeScreen.socialAccountOverview',
+    defaultMessage: 'Social Accounts Overview',
+  },
+
+  // ─── Onboarding guide ───
+  onboardingTitle: {
+    id: 'homeScreen.onboardingTitle',
+    defaultMessage: 'Onboarding Guide',
+  },
+  completionProgress: {
+    id: 'homeScreen.completionProgress',
+    defaultMessage: 'Progress',
+  },
+  step1Title: {
+    id: 'homeScreen.step1Title',
+    defaultMessage: 'Bind Account',
+  },
+  step1Desc: {
+    id: 'homeScreen.step1Desc',
+    defaultMessage: 'Click any social platform on the left to bind an account',
+  },
+  step2Title: {
+    id: 'homeScreen.step2Title',
+    defaultMessage: 'Create Persona Profile',
+  },
+  step2Desc: {
+    id: 'homeScreen.step2Desc',
+    defaultMessage: 'Click Profile Management on the left to create persona data',
+  },
+  step3Title: {
+    id: 'homeScreen.step3Title',
+    defaultMessage: 'Set Alert Rules (Optional)',
+  },
+  step3Desc: {
+    id: 'homeScreen.step3Desc',
+    defaultMessage: 'Click Monica digital employee to set alert rules',
+  },
+  step4Title: {
+    id: 'homeScreen.step4Title',
+    defaultMessage: 'Bind Persona to Account',
+  },
+  step4Desc: {
+    id: 'homeScreen.step4Desc',
+    defaultMessage: 'Bind the created persona to the linked social account',
+  },
+  setupInfoText: {
+    id: 'homeScreen.setupInfoText',
+    defaultMessage: 'After setup, configure auto-reply for the social accounts and conversation tags. Finally, toggle the master switch on the homepage to activate your digital employees!',
+  },
+
+  // ─── Employee MOCK roles ───
+  roleSeniorSalesExpert: {
+    id: 'homeScreen.roleSeniorSalesExpert',
+    defaultMessage: 'Senior Sales Expert',
+  },
+  roleCustomerMaintenance: {
+    id: 'homeScreen.roleCustomerMaintenance',
+    defaultMessage: 'Customer Maintenance Specialist',
+  },
+  roleMarketingAmbassador: {
+    id: 'homeScreen.roleMarketingAmbassador',
+    defaultMessage: 'Marketing Ambassador',
+  },
+  roleAfterSalesExpert: {
+    id: 'homeScreen.roleAfterSalesExpert',
+    defaultMessage: 'After-Sales Support Expert',
+  },
+  roleLeadAssistant: {
+    id: 'homeScreen.roleLeadAssistant',
+    defaultMessage: 'Lead Collection Assistant',
+  },
+  roleBusinessDevElite: {
+    id: 'homeScreen.roleBusinessDevElite',
+    defaultMessage: 'Business Development Elite',
+  },
+
+  // ─── Employee capabilities ───
+  capAlwaysOnline: {
+    id: 'homeScreen.capAlwaysOnline',
+    defaultMessage: '24/7 Online',
+  },
+  capMultilingual: {
+    id: 'homeScreen.capMultilingual',
+    defaultMessage: 'Multilingual Communication',
+  },
+  capSmartDemand: {
+    id: 'homeScreen.capSmartDemand',
+    defaultMessage: 'Smart Demand Mining',
+  },
+  capRegularVisit: {
+    id: 'homeScreen.capRegularVisit',
+    defaultMessage: 'Regular Follow-up',
+  },
+  capSatisfactionSurvey: {
+    id: 'homeScreen.capSatisfactionSurvey',
+    defaultMessage: 'Satisfaction Survey',
+  },
+  capChurnWarning: {
+    id: 'homeScreen.capChurnWarning',
+    defaultMessage: 'Churn Warning',
+  },
+  capViralCopywriting: {
+    id: 'homeScreen.capViralCopywriting',
+    defaultMessage: 'Viral Copywriting',
+  },
+  capPrecisionCommunity: {
+    id: 'homeScreen.capPrecisionCommunity',
+    defaultMessage: 'Precision Community Targeting',
+  },
+  capActivityAnalysis: {
+    id: 'homeScreen.capActivityAnalysis',
+    defaultMessage: 'Campaign Analysis',
+  },
+  capQuickResponse: {
+    id: 'homeScreen.capQuickResponse',
+    defaultMessage: 'Quick Response',
+  },
+  capKnowledgeBase: {
+    id: 'homeScreen.capKnowledgeBase',
+    defaultMessage: 'Knowledge Base Auto-Matching',
+  },
+  capComplexProcess: {
+    id: 'homeScreen.capComplexProcess',
+    defaultMessage: 'Complex Process Guidance',
+  },
+  capWebScraping: {
+    id: 'homeScreen.capWebScraping',
+    defaultMessage: 'Web-wide Data Scraping',
+  },
+  capKeyContact: {
+    id: 'homeScreen.capKeyContact',
+    defaultMessage: 'Key Contact Identification',
+  },
+  capLeadScreening: {
+    id: 'homeScreen.capLeadScreening',
+    defaultMessage: 'Lead Screening',
+  },
+  capPartnerMining: {
+    id: 'homeScreen.capPartnerMining',
+    defaultMessage: 'Partner Mining',
+  },
+  capBusinessLetter: {
+    id: 'homeScreen.capBusinessLetter',
+    defaultMessage: 'Business Letter Writing',
+  },
+  capMeetingScheduling: {
+    id: 'homeScreen.capMeetingScheduling',
+    defaultMessage: 'Meeting Scheduling',
+  },
+
+  // ─── Buttons / CTAs ───
+  setStrategy: {
+    id: 'homeScreen.setStrategy',
+    defaultMessage: 'Set Strategy',
+  },
+  resume: { id: 'homeScreen.resume', defaultMessage: 'Resume' },
+
+  // ─── Fallback data ───
+  digitalAssistant: {
+    id: 'homeScreen.digitalAssistant',
+    defaultMessage: 'Digital Assistant',
+  },
+  smartChatService: {
+    id: 'homeScreen.smartChatService',
+    defaultMessage: 'Smart Chat Service',
+  },
+  multiChannel: {
+    id: 'homeScreen.multiChannel',
+    defaultMessage: 'Multi-channel Reach',
+  },
+  precisionMarketing: {
+    id: 'homeScreen.precisionMarketing',
+    defaultMessage: 'Precision Marketing',
+  },
+});
+
 const MOCK_EMPLOYEES = [
   {
     id: 'monica',
     name: 'Monica',
-    role: '高级销售专家',
+    roleKey: 'homeScreen.roleSeniorSalesExpert',
+    roleDefault: 'Senior Sales Expert',
     avatar: employeeMonica,
-    capabilities: ['全天候在线', '多语种沟通', '智能需求挖掘'],
-    cta: '设置策略',
+    capabilityKeys: [
+      'homeScreen.capAlwaysOnline',
+      'homeScreen.capMultilingual',
+      'homeScreen.capSmartDemand',
+    ],
+    capabilityDefaults: ['24/7 Online', 'Multilingual Communication', 'Smart Demand Mining'],
+    ctaKey: 'homeScreen.setStrategy',
+    ctaDefault: 'Set Strategy',
     hasBadge: true,
   },
   {
     id: 'mike',
     name: 'Mike',
-    role: '客户维护专员',
+    roleKey: 'homeScreen.roleCustomerMaintenance',
+    roleDefault: 'Customer Maintenance Specialist',
     avatar: employeeMike,
-    capabilities: ['定期回访', '满意度调查', '流失预警'],
-    cta: '简历',
+    capabilityKeys: [
+      'homeScreen.capRegularVisit',
+      'homeScreen.capSatisfactionSurvey',
+      'homeScreen.capChurnWarning',
+    ],
+    capabilityDefaults: ['Regular Follow-up', 'Satisfaction Survey', 'Churn Warning'],
+    ctaKey: 'homeScreen.resume',
+    ctaDefault: 'Resume',
   },
   {
     id: 'alice',
     name: 'Alice',
-    role: '营销推广大使',
+    roleKey: 'homeScreen.roleMarketingAmbassador',
+    roleDefault: 'Marketing Ambassador',
     avatar: employeeAlice,
-    capabilities: ['爆款文案生成', '精准社群触达', '活动效果分析'],
-    cta: '简历',
+    capabilityKeys: [
+      'homeScreen.capViralCopywriting',
+      'homeScreen.capPrecisionCommunity',
+      'homeScreen.capActivityAnalysis',
+    ],
+    capabilityDefaults: ['Viral Copywriting', 'Precision Community Targeting', 'Campaign Analysis'],
+    ctaKey: 'homeScreen.resume',
+    ctaDefault: 'Resume',
   },
   {
     id: 'lily',
     name: 'Lily',
-    role: '售后支持专家',
+    roleKey: 'homeScreen.roleAfterSalesExpert',
+    roleDefault: 'After-Sales Support Expert',
     avatar: employeeLily,
-    capabilities: ['问题快速响应', '知识库自动对标', '复杂流程引导'],
-    cta: '简历',
+    capabilityKeys: [
+      'homeScreen.capQuickResponse',
+      'homeScreen.capKnowledgeBase',
+      'homeScreen.capComplexProcess',
+    ],
+    capabilityDefaults: ['Quick Response', 'Knowledge Base Auto-Matching', 'Complex Process Guidance'],
+    ctaKey: 'homeScreen.resume',
+    ctaDefault: 'Resume',
   },
   {
     id: 'allen',
     name: 'Allen',
-    role: '线索收集助手',
+    roleKey: 'homeScreen.roleLeadAssistant',
+    roleDefault: 'Lead Collection Assistant',
     avatar: employeeAllen,
-    capabilities: ['全网信息抓取', '关键联系人识别', '线索初步洗选'],
-    cta: '简历',
+    capabilityKeys: [
+      'homeScreen.capWebScraping',
+      'homeScreen.capKeyContact',
+      'homeScreen.capLeadScreening',
+    ],
+    capabilityDefaults: ['Web-wide Data Scraping', 'Key Contact Identification', 'Lead Screening'],
+    ctaKey: 'homeScreen.resume',
+    ctaDefault: 'Resume',
   },
   {
     id: 'amy',
     name: 'Amy',
-    role: '商务拓展精英',
+    roleKey: 'homeScreen.roleBusinessDevElite',
+    roleDefault: 'Business Development Elite',
     avatar: employeeAmy,
-    capabilities: ['合作伙伴挖掘', '商务信函代写', '会议预约日程'],
-    cta: '简历',
+    capabilityKeys: [
+      'homeScreen.capPartnerMining',
+      'homeScreen.capBusinessLetter',
+      'homeScreen.capMeetingScheduling',
+    ],
+    capabilityDefaults: ['Partner Mining', 'Business Letter Writing', 'Meeting Scheduling'],
+    ctaKey: 'homeScreen.resume',
+    ctaDefault: 'Resume',
   },
 ];
 
 @inject('stores')
 @observer
-class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
-  constructor(props: HomeScreenProps) {
+class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
+  constructor(props: IHomeScreenProps) {
     super(props);
 
     this.state = {
@@ -624,11 +880,17 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
 
   handleAutoReplyChange = (val: boolean): void => {
     this.setState({ isAutoReply: val });
-    MessagePlugin.success(`自动回复已${val ? '开启' : '关闭'}`);
+    const { intl } = this.props;
+    MessagePlugin.success(
+      val
+        ? intl!.formatMessage(messages.autoReplyEnabled)
+        : intl!.formatMessage(messages.autoReplyDisabled),
+    );
   };
 
   renderSocialAccountTable(): ReactElement {
     const { services, whatsappAutomation } = this.props.stores!;
+    const { intl } = this.props;
     const whatsappServices = services.allDisplayed.filter(
       s => s.recipe.id === 'whatsapp',
     );
@@ -664,27 +926,27 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
           <thead>
             <tr className="h-[45px] bg-secondary-container">
               <th className="w-[116px] border-r border-line pl-[12px] text-left text-[12px] font-medium text-placeholder">
-                类型
+                {intl.formatMessage(messages.type)}
               </th>
               <th className="w-[117px] border-r border-line text-center text-[12px] font-medium text-placeholder">
-                总数量
+                {intl.formatMessage(messages.totalCount)}
               </th>
               <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiIcon className="text-success text-[14px]" />
-                  <span className="text-success">在线</span>
+                  <span className="text-success">{intl.formatMessage(messages.online)}</span>
                 </span>
               </th>
               <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiOffIcon className="text-warning text-[14px]" />
-                  <span className="text-warning">离线</span>
+                  <span className="text-warning">{intl.formatMessage(messages.offline)}</span>
                 </span>
               </th>
               <th className="w-[116px] text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <ErrorCircleIcon className="text-error text-[14px]" />
-                  <span className="text-error">异常</span>
+                  <span className="text-error">{intl.formatMessage(messages.errorStatus)}</span>
                 </span>
               </th>
             </tr>
@@ -733,7 +995,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
         </table>
         <div className="flex h-[48px] items-center justify-center border-t border-line">
           <span className="text-[11px] font-normal text-placeholder">
-            更多社交媒体系统敬请期待哦~
+            {intl.formatMessage(messages.moreSocialComing)}
           </span>
         </div>
       </div>
@@ -824,22 +1086,41 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
     }
 
     const { isAutoReply } = this.state;
+    const { intl } = this.props;
     const digitalHumanStore = this.props.stores!.digitalHuman;
     const realEmployees = digitalHumanStore.digitalHumans;
 
-    const displayEmployees = [...MOCK_EMPLOYEES];
+    const displayEmployees: Array<{
+      id: string;
+      name: string;
+      role: string;
+      avatar: string;
+      capabilities: string[];
+      cta: string;
+      hasBadge?: boolean;
+    }> = MOCK_EMPLOYEES.map(emp => ({
+      id: emp.id,
+      name: emp.name,
+      role: intl.formatMessage({ id: emp.roleKey, defaultMessage: emp.roleDefault }),
+      avatar: emp.avatar,
+      capabilities: emp.capabilityKeys.map((key, i) =>
+        intl.formatMessage({ id: key, defaultMessage: emp.capabilityDefaults[i] }),
+      ),
+      cta: intl.formatMessage({ id: emp.ctaKey, defaultMessage: emp.ctaDefault }),
+      hasBadge: emp.hasBadge,
+    }));
     realEmployees.slice(0, 6).forEach((real, idx) => {
       displayEmployees[idx] = {
         id: real.id,
         name: real.name,
-        role: real.platform || '数字助手',
+        role: real.platform || intl.formatMessage(messages.digitalAssistant),
         avatar: real.avatar_url || 'https://tdesign.gtimg.com/site/avatar.jpg',
         capabilities: [
-          real.persona_prompt || '智能对话服务',
-          '多渠道触达',
-          '精准营销',
+          real.persona_prompt || intl.formatMessage(messages.smartChatService),
+          intl.formatMessage(messages.multiChannel),
+          intl.formatMessage(messages.precisionMarketing),
         ],
-        cta: '简历',
+        cta: intl.formatMessage(messages.resume),
         hasBadge: false,
       };
     });
@@ -855,11 +1136,11 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                     <UserIcon className="text-[24px] text-brand" />
                   </div>
                 }
-                title="我的数字员工"
-                description="让数字员工成为您的最佳销售伙伴，全天候处理咨询并自动化转化。"
+                title={intl.formatMessage(messages.myDigitalEmployees)}
+                description={intl.formatMessage(messages.digitalEmployeesDesc)}
                 actions={
                   <div className="flex items-center gap-[8px]">
-                    <span className="text-[14px] text-secondary">自动回复</span>
+                    <span className="text-[14px] text-secondary">{intl.formatMessage(messages.autoReply)}</span>
                     <Switch
                       value={isAutoReply}
                       onChange={this.handleAutoReplyChange}
@@ -883,7 +1164,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                       </div>
                     </div>
                     <h2 className="text-[20px] font-bold leading-[28px] text-primary !mb-0">
-                      社交账号总览
+                      {intl.formatMessage(messages.socialAccountOverview)}
                     </h2>
                   </div>
                   <RefreshIcon className="h-[22px] w-[22px] cursor-pointer text-primary" />
@@ -901,14 +1182,14 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                         <AddIcon className="text-[10px] text-text-anti" />
                       </div>
                     </div>
-                    <span className="ml-[16px] pt-[2px] text-[20px] font-bold leading-[28px] text-primary">
-                      新手引导
+<span className="ml-[16px] pt-[2px] text-[20px] font-bold leading-[28px] text-primary">
+                     {intl.formatMessage(messages.onboardingTitle)}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between pt-[6px]">
-                    <span className="text-[14px] font-medium leading-[20px] text-secondary">
-                      完成进度
+<span className="text-[14px] font-medium leading-[20px] text-secondary">
+                       {intl.formatMessage(messages.completionProgress)}
                     </span>
                     <div className="mx-[12px] w-[91px]">
                       <Progress
@@ -928,29 +1209,29 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                 <div className="mt-[24px] flex flex-1 flex-col">
                   <StepItem
                     stepNumber={1}
-                    title="绑定账号"
-                    description="点击左侧任意社媒软件绑定一个账号"
+                    title={intl.formatMessage(messages.step1Title)}
+                    description={intl.formatMessage(messages.step1Desc)}
                     status="completed"
                     isLast={false}
                   />
                   <StepItem
                     stepNumber={2}
-                    title="创建社交账号人设资料"
-                    description="点击左侧资料管理创建社媒软件人设资料"
+                    title={intl.formatMessage(messages.step2Title)}
+                    description={intl.formatMessage(messages.step2Desc)}
                     status="current"
                     isLast={false}
                   />
                   <StepItem
                     stepNumber={3}
-                    title="设置人工预警规则（可跳过）"
-                    description="点击Monica数字员工设置人工预警规则"
+                    title={intl.formatMessage(messages.step3Title)}
+                    description={intl.formatMessage(messages.step3Desc)}
                     status="pending"
                     isLast={false}
                   />
                   <StepItem
                     stepNumber={4}
-                    title="给社交账号绑定人设"
-                    description="已绑定的社交账号创建好的人设资料"
+                    title={intl.formatMessage(messages.step4Title)}
+                    description={intl.formatMessage(messages.step4Desc)}
                     status="pending"
                     isLast
                   />
@@ -962,7 +1243,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                       i
                     </div>
                     <p className="max-w-[501px] text-[14px] font-medium leading-[22px] text-primary">
-                      设置完成后，设置需要自动回复的社交账号和会话对象标签，最后现在首页打开员工的总开关，数字员工就可以自动回复啦~
+                      {intl.formatMessage(messages.setupInfoText)}
                     </p>
                   </div>
                 </div>
@@ -977,4 +1258,5 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
   }
 }
 
-export default HomeScreen;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default injectIntl(HomeScreen as any);

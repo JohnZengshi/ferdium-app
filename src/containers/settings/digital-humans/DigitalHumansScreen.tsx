@@ -12,6 +12,7 @@ import type { RouterStore } from '@superwf/mobx-react-router';
 import { inject, observer } from 'mobx-react';
 import type React from 'react';
 import { Component } from 'react';
+import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
 import { Badge, Button, MessagePlugin, Space, Table, Tag } from 'tdesign-react';
 import type { DigitalHumanResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
@@ -30,13 +31,33 @@ interface State {
   selectedDigitalHuman: DigitalHumanResponse | null;
 }
 
+type WithIntlProps = DigitalHumansScreenProps & WrappedComponentProps;
+
+const messages = defineMessages({
+  pageTitle: { id: 'digitalHumansScreen.pageTitle', defaultMessage: 'Digital Humans' },
+  createDigitalHuman: { id: 'digitalHumansScreen.createDigitalHuman', defaultMessage: 'Create Digital Human' },
+  nameColumn: { id: 'digitalHumansScreen.nameColumn', defaultMessage: 'Name' },
+  accountHandleColumn: { id: 'digitalHumansScreen.accountHandleColumn', defaultMessage: 'Account Handle' },
+  platformColumn: { id: 'digitalHumansScreen.platformColumn', defaultMessage: 'Platform' },
+  statusColumn: { id: 'digitalHumansScreen.statusColumn', defaultMessage: 'Status' },
+  createdAtColumn: { id: 'digitalHumansScreen.createdAtColumn', defaultMessage: 'Created At' },
+  actionsColumn: { id: 'digitalHumansScreen.actionsColumn', defaultMessage: 'Actions' },
+  disabledStatus: { id: 'digitalHumansScreen.disabledStatus', defaultMessage: 'Disabled' },
+  activeStatus: { id: 'digitalHumansScreen.activeStatus', defaultMessage: 'Active' },
+  inactiveStatus: { id: 'digitalHumansScreen.inactiveStatus', defaultMessage: 'Inactive' },
+  viewButton: { id: 'digitalHumansScreen.viewButton', defaultMessage: 'View' },
+  editButton: { id: 'digitalHumansScreen.editButton', defaultMessage: 'Edit' },
+  assignedToaster: { id: 'digitalHumansScreen.assignedToaster', defaultMessage: 'Assigned to {count} sub-accounts' },
+  fetchAssignmentError: { id: 'digitalHumansScreen.fetchAssignmentError', defaultMessage: 'Failed to get assignment info' },
+});
+
 @inject('stores')
 @observer
-export default class DigitalHumansScreen extends Component<
-  DigitalHumansScreenProps,
+class DigitalHumansScreen extends Component<
+  WithIntlProps,
   State
 > {
-  constructor(props: DigitalHumansScreenProps) {
+  constructor(props: WithIntlProps) {
     super(props);
     this.state = {
       dialogVisible: false,
@@ -67,107 +88,113 @@ export default class DigitalHumansScreen extends Component<
   };
 
   handleView = async (digitalHuman: DigitalHumanResponse): Promise<void> => {
-    // 查看数字人分配信息
     try {
       const assignments = await this.digitalHumanStore.getAssignments(
         digitalHuman.id,
       );
-      MessagePlugin.info(`已分配给 ${assignments.length} 个子账号`);
+      MessagePlugin.info(
+        this.props.intl.formatMessage(messages.assignedToaster, {
+          count: assignments.length,
+        }),
+      );
     } catch {
-      MessagePlugin.error('获取分配信息失败');
+      MessagePlugin.error(this.props.intl.formatMessage(messages.fetchAssignmentError));
     }
   };
 
   // Disable nested component warnings for TDesign Table cell renderers
   // These are standard TDesign patterns and won't cause re-render issues
 
-  columns = [
-    {
-      colKey: 'name',
-      title: '数字人名称',
-      width: 200,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      cell: ({ row }: { row: DigitalHumanResponse }) => (
-        <Space>
-          {row.avatar_url && (
-            <img
-              src={row.avatar_url}
-              alt={row.name}
-              style={{ width: 32, height: 32, borderRadius: '50%' }}
-            />
-          )}
-          <span>{row.name}</span>
-        </Space>
-      ),
-    },
-    {
-      colKey: 'account_handle',
-      title: '账号句柄',
-      width: 150,
-    },
-    {
-      colKey: 'platform',
-      title: '平台',
-      width: 120,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      cell: ({ row }: { row: DigitalHumanResponse }) => (
-        <Tag variant="light">{row.platform || 'WhatsApp'}</Tag>
-      ),
-    },
-    {
-      colKey: 'status',
-      title: '状态',
-      width: 100,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      cell: ({ row }: { row: DigitalHumanResponse }) => {
-        if (!row.is_enabled) {
-          return <Badge count="已禁用" />;
-        }
-        return row.status === 'active' ? (
-          <Badge count="活跃" color="success" />
-        ) : (
-          <Badge count="未激活" color="default" />
-        );
+  get columns() {
+    const { intl } = this.props;
+    return [
+      {
+        colKey: 'name',
+        title: intl.formatMessage(messages.nameColumn),
+        width: 200,
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: ({ row }: { row: DigitalHumanResponse }) => (
+          <Space>
+            {row.avatar_url && (
+              <img
+                src={row.avatar_url}
+                alt={row.name}
+                style={{ width: 32, height: 32, borderRadius: '50%' }}
+              />
+            )}
+            <span>{row.name}</span>
+          </Space>
+        ),
       },
-    },
-    {
-      colKey: 'default_provider',
-      title: 'LLM Provider',
-      width: 120,
-    },
-    {
-      colKey: 'created_at',
-      title: '创建时间',
-      width: 180,
+      {
+        colKey: 'account_handle',
+        title: intl.formatMessage(messages.accountHandleColumn),
+        width: 150,
+      },
+      {
+        colKey: 'platform',
+        title: intl.formatMessage(messages.platformColumn),
+        width: 120,
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: ({ row }: { row: DigitalHumanResponse }) => (
+          <Tag variant="light">{row.platform || 'WhatsApp'}</Tag>
+        ),
+      },
+      {
+        colKey: 'status',
+        title: intl.formatMessage(messages.statusColumn),
+        width: 100,
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: ({ row }: { row: DigitalHumanResponse }) => {
+          if (!row.is_enabled) {
+            return <Badge count={intl.formatMessage(messages.disabledStatus)} />;
+          }
+          return row.status === 'active' ? (
+            <Badge count={intl.formatMessage(messages.activeStatus)} color="success" />
+          ) : (
+            <Badge count={intl.formatMessage(messages.inactiveStatus)} color="default" />
+          );
+        },
+      },
+      {
+        colKey: 'default_provider',
+        title: 'LLM Provider',
+        width: 120,
+      },
+      {
+        colKey: 'created_at',
+        title: intl.formatMessage(messages.createdAtColumn),
+        width: 180,
 
-      cell: ({ row }: { row: DigitalHumanResponse }) =>
-        new Date(row.created_at).toLocaleString('zh-CN'),
-    },
-    {
-      colKey: 'actions',
-      title: '操作',
-      width: 180,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      cell: ({ row }: { row: DigitalHumanResponse }) => (
-        <Space>
-          <Button
-            size="small"
-            variant="text"
-            onClick={() => this.handleView(row)}
-          >
-            查看
-          </Button>
-          <Button
-            size="small"
-            variant="text"
-            onClick={() => this.handleEdit(row)}
-          >
-            编辑
-          </Button>
-        </Space>
-      ),
-    },
-  ];
+        cell: ({ row }: { row: DigitalHumanResponse }) =>
+          new Date(row.created_at).toLocaleString('zh-CN'),
+      },
+      {
+        colKey: 'actions',
+        title: intl.formatMessage(messages.actionsColumn),
+        width: 180,
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: ({ row }: { row: DigitalHumanResponse }) => (
+          <Space>
+            <Button
+              size="small"
+              variant="text"
+              onClick={() => this.handleView(row)}
+            >
+              {intl.formatMessage(messages.viewButton)}
+            </Button>
+            <Button
+              size="small"
+              variant="text"
+              onClick={() => this.handleEdit(row)}
+            >
+              {intl.formatMessage(messages.editButton)}
+            </Button>
+          </Space>
+        ),
+      },
+    ];
+  }
 
   handleDialogClose = (): void => {
     this.setState({
@@ -179,13 +206,14 @@ export default class DigitalHumansScreen extends Component<
   render(): React.ReactNode {
     const { dialogVisible, selectedDigitalHuman } = this.state;
     const { digitalHumans, isLoading } = this.digitalHumanStore;
+    const { intl } = this.props;
 
     return (
       <div className="p-5 max-w-[1400px] mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-2xl font-bold">数字人管理</h2>
+          <h2 className="text-2xl font-bold">{intl.formatMessage(messages.pageTitle)}</h2>
           <Button icon={<AddIcon />} onClick={this.handleCreate}>
-            创建数字人
+            {intl.formatMessage(messages.createDigitalHuman)}
           </Button>
         </div>
 
@@ -209,3 +237,5 @@ export default class DigitalHumansScreen extends Component<
     );
   }
 }
+
+export default injectIntl(DigitalHumansScreen);

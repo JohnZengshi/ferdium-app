@@ -10,6 +10,11 @@
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import {
   Dialog,
   Form,
   type FormInstanceFunctions,
@@ -25,6 +30,109 @@ import type {
 } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
 
+const messages = defineMessages({
+  validationNameRequired: {
+    id: 'digitalHumanForm.validation.nameRequired',
+    defaultMessage: '请输入数字人名称',
+  },
+  validationNameLength: {
+    id: 'digitalHumanForm.validation.nameLength',
+    defaultMessage: '名称长度为1-64字符',
+  },
+  validationPersonaPromptMax: {
+    id: 'digitalHumanForm.validation.personaPromptMax',
+    defaultMessage: '人设描述最多2000字符',
+  },
+  validationKnowledgeCollectionMax: {
+    id: 'digitalHumanForm.validation.knowledgeCollectionMax',
+    defaultMessage: '知识库集合名称最多128字符',
+  },
+  toastCreateSuccess: {
+    id: 'digitalHumanForm.toast.createSuccess',
+    defaultMessage: '创建成功',
+  },
+  toastCreateFailed: {
+    id: 'digitalHumanForm.toast.createFailed',
+    defaultMessage: '创建失败',
+  },
+  headerEdit: {
+    id: 'digitalHumanForm.header.edit',
+    defaultMessage: '编辑数字人',
+  },
+  headerCreate: {
+    id: 'digitalHumanForm.header.create',
+    defaultMessage: '创建数字人',
+  },
+  btnSave: {
+    id: 'digitalHumanForm.btn.save',
+    defaultMessage: '保存',
+  },
+  btnCreate: {
+    id: 'digitalHumanForm.btn.create',
+    defaultMessage: '创建',
+  },
+  labelName: {
+    id: 'digitalHumanForm.label.name',
+    defaultMessage: '数字人名称',
+  },
+  placeholderName: {
+    id: 'digitalHumanForm.placeholder.name',
+    defaultMessage: '请输入数字人名称',
+  },
+  labelAccountHandle: {
+    id: 'digitalHumanForm.label.accountHandle',
+    defaultMessage: '账号句柄',
+  },
+  placeholderAccountHandle: {
+    id: 'digitalHumanForm.placeholder.accountHandle',
+    defaultMessage: '例如：@customer_service',
+  },
+  labelPlatform: {
+    id: 'digitalHumanForm.label.platform',
+    defaultMessage: '平台',
+  },
+  labelAvatarUrl: {
+    id: 'digitalHumanForm.label.avatarUrl',
+    defaultMessage: '头像URL',
+  },
+  labelPersonaPrompt: {
+    id: 'digitalHumanForm.label.personaPrompt',
+    defaultMessage: '人设描述',
+  },
+  placeholderPersonaPrompt: {
+    id: 'digitalHumanForm.placeholder.personaPrompt',
+    defaultMessage: '用自然语言描述数字人的性格、语气、专业领域...',
+  },
+  labelKnowledgeCollection: {
+    id: 'digitalHumanForm.label.knowledgeCollection',
+    defaultMessage: '知识库集合',
+  },
+  placeholderKnowledgeCollection: {
+    id: 'digitalHumanForm.placeholder.knowledgeCollection',
+    defaultMessage: '关联的Milvus集合名称',
+  },
+  labelVoice: {
+    id: 'digitalHumanForm.label.voice',
+    defaultMessage: '语音配置',
+  },
+  placeholderVoice: {
+    id: 'digitalHumanForm.placeholder.voice',
+    defaultMessage: '语音合成配置（可选）',
+  },
+  labelStatus: {
+    id: 'digitalHumanForm.label.status',
+    defaultMessage: '状态',
+  },
+  selectOptionActive: {
+    id: 'digitalHumanForm.selectOption.active',
+    defaultMessage: '活跃',
+  },
+  selectOptionInactive: {
+    id: 'digitalHumanForm.selectOption.inactive',
+    defaultMessage: '未激活',
+  },
+});
+
 interface DigitalHumanFormProps {
   visible: boolean;
   digitalHuman?: DigitalHumanResponse | null;
@@ -39,13 +147,13 @@ interface DigitalHumanFormState {
 }
 
 @observer
-export default class DigitalHumanForm extends Component<
-  DigitalHumanFormProps,
+class DigitalHumanForm extends Component<
+  DigitalHumanFormProps & WrappedComponentProps,
   DigitalHumanFormState
 > {
   formRef: FormInstanceFunctions | null = null;
 
-  constructor(props: DigitalHumanFormProps) {
+  constructor(props) {
     super(props);
     this.state = {
       submitting: false,
@@ -86,18 +194,21 @@ export default class DigitalHumanForm extends Component<
     }
   }
 
-  rules: Record<string, FormRule[]> = {
-    name: [
-      { required: true, message: '请输入数字人名称', type: 'error' },
-      { min: 1, max: 64, message: '名称长度为1-64字符', type: 'warning' },
-    ],
-    persona_prompt: [
-      { max: 2000, message: '人设描述最多2000字符', type: 'warning' },
-    ],
-    knowledge_collection: [
-      { max: 128, message: '知识库集合名称最多128字符', type: 'warning' },
-    ],
-  };
+  get rules(): Record<string, FormRule[]> {
+    const { intl } = this.props;
+    return {
+      name: [
+        { required: true, message: intl.formatMessage(messages.validationNameRequired), type: 'error' },
+        { min: 1, max: 64, message: intl.formatMessage(messages.validationNameLength), type: 'warning' },
+      ],
+      persona_prompt: [
+        { max: 2000, message: intl.formatMessage(messages.validationPersonaPromptMax), type: 'warning' },
+      ],
+      knowledge_collection: [
+        { max: 128, message: intl.formatMessage(messages.validationKnowledgeCollectionMax), type: 'warning' },
+      ],
+    };
+  }
 
   handleSubmit = async (): Promise<void> => {
     const valid = await this.formRef?.validate();
@@ -109,11 +220,11 @@ export default class DigitalHumanForm extends Component<
 
     try {
       await this.props.store.createDigitalHuman(this.state.formData);
-      MessagePlugin.success('创建成功');
+      MessagePlugin.success(this.props.intl.formatMessage(messages.toastCreateSuccess));
       this.props.onSuccess();
       this.props.onClose();
     } catch (error) {
-      MessagePlugin.error(error instanceof Error ? error.message : '创建失败');
+      MessagePlugin.error(error instanceof Error ? error.message : this.props.intl.formatMessage(messages.toastCreateFailed));
     } finally {
       this.setState({ submitting: false });
     }
@@ -132,17 +243,17 @@ export default class DigitalHumanForm extends Component<
   };
 
   render(): ReactElement {
-    const { visible, digitalHuman, onClose } = this.props;
+    const { visible, digitalHuman, onClose, intl } = this.props;
     const { submitting, formData } = this.state;
     const isEditMode = !!digitalHuman;
 
     return (
       <Dialog
         visible={visible}
-        header={isEditMode ? '编辑数字人' : '创建数字人'}
+        header={intl.formatMessage(isEditMode ? messages.headerEdit : messages.headerCreate)}
         width="600px"
         confirmBtn={{
-          content: isEditMode ? '保存' : '创建',
+          content: intl.formatMessage(isEditMode ? messages.btnSave : messages.btnCreate),
           loading: submitting,
         }}
         onConfirm={this.handleSubmit}
@@ -156,25 +267,25 @@ export default class DigitalHumanForm extends Component<
           labelWidth="120px"
           colon
         >
-          <Form.FormItem label="数字人名称" name="name">
+          <Form.FormItem label={intl.formatMessage(messages.labelName)} name="name">
             <Input
               value={formData.name}
-              placeholder="请输入数字人名称"
+              placeholder={intl.formatMessage(messages.placeholderName)}
               onChange={value => this.handleFieldChange('name', value)}
             />
           </Form.FormItem>
 
-          <Form.FormItem label="账号句柄" name="account_handle">
+          <Form.FormItem label={intl.formatMessage(messages.labelAccountHandle)} name="account_handle">
             <Input
               value={formData.account_handle || ''}
-              placeholder="例如：@customer_service"
+              placeholder={intl.formatMessage(messages.placeholderAccountHandle)}
               onChange={value =>
                 this.handleFieldChange('account_handle', value)
               }
             />
           </Form.FormItem>
 
-          <Form.FormItem label="平台" name="platform">
+          <Form.FormItem label={intl.formatMessage(messages.labelPlatform)} name="platform">
             <Select
               value={formData.platform || 'whatsapp'}
               options={[
@@ -186,7 +297,7 @@ export default class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label="头像URL" name="avatar_url">
+          <Form.FormItem label={intl.formatMessage(messages.labelAvatarUrl)} name="avatar_url">
             <Input
               value={formData.avatar_url || ''}
               placeholder="https://..."
@@ -209,10 +320,10 @@ export default class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label="人设描述" name="persona_prompt">
+          <Form.FormItem label={intl.formatMessage(messages.labelPersonaPrompt)} name="persona_prompt">
             <Textarea
               value={formData.persona_prompt || ''}
-              placeholder="用自然语言描述数字人的性格、语气、专业领域..."
+              placeholder={intl.formatMessage(messages.placeholderPersonaPrompt)}
               rows={4}
               maxlength={2000}
               onChange={value =>
@@ -221,30 +332,30 @@ export default class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label="知识库集合" name="knowledge_collection">
+          <Form.FormItem label={intl.formatMessage(messages.labelKnowledgeCollection)} name="knowledge_collection">
             <Input
               value={formData.knowledge_collection || ''}
-              placeholder="关联的Milvus集合名称"
+              placeholder={intl.formatMessage(messages.placeholderKnowledgeCollection)}
               onChange={value =>
                 this.handleFieldChange('knowledge_collection', value)
               }
             />
           </Form.FormItem>
 
-          <Form.FormItem label="语音配置" name="voice">
+          <Form.FormItem label={intl.formatMessage(messages.labelVoice)} name="voice">
             <Input
               value={formData.voice || ''}
-              placeholder="语音合成配置（可选）"
+              placeholder={intl.formatMessage(messages.placeholderVoice)}
               onChange={value => this.handleFieldChange('voice', value)}
             />
           </Form.FormItem>
 
-          <Form.FormItem label="状态" name="status">
+          <Form.FormItem label={intl.formatMessage(messages.labelStatus)} name="status">
             <Select
               value={formData.status || 'active'}
               options={[
-                { label: '活跃', value: 'active' },
-                { label: '未激活', value: 'inactive' },
+                { label: intl.formatMessage(messages.selectOptionActive), value: 'active' },
+                { label: intl.formatMessage(messages.selectOptionInactive), value: 'inactive' },
               ]}
               onChange={value => this.handleFieldChange('status', value)}
             />
@@ -254,3 +365,5 @@ export default class DigitalHumanForm extends Component<
     );
   }
 }
+
+export default injectIntl(DigitalHumanForm);

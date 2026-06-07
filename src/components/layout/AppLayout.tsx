@@ -31,7 +31,7 @@ import LockedScreen from '../../containers/auth/LockedScreen';
 import type SettingsStore from '../../stores/SettingsStore';
 
 import HomeScreen from '../../containers/home/HomeScreen';
-import KnowledgeBaseScreen from '../../containers/knowledge-base/KnowledgeBaseScreen';
+import KnowledgeScreen from '../../containers/knowledge-base/KnowledgeScreen';
 import AccountManagementScreen from '../../containers/service-group/AccountManagementScreen';
 import UserProfileScreen from '../../containers/service-group/UserProfileScreen';
 import { navigationStore } from '../../stores/NavigationStore';
@@ -239,7 +239,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
           {!isMessages && activeModule === 'home' && <HomeScreen />}
           {!isMessages && activeModule === 'knowledge-base' && (
-            <KnowledgeBaseScreen />
+            <KnowledgeScreen />
           )}
           {!isMessages &&
             activeModule === 'service-type' &&

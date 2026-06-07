@@ -119,7 +119,7 @@ class ChangeServer extends Component<IProps> {
     const { intl } = this.props;
 
     return (
-      <div className="auth__container mx-auto my-0 w-full max-w-[496px] rounded-[12px] bg-white p-[52px_48px] shadow-[0_0_0_1px_rgba(0,0,0,0.02),0_0_20px_0_rgba(0,0,0,0.05),0_10px_40px_-4px_rgba(0,0,0,0.1)]">
+      <div className="auth__container w-full">
         <form
           className="auth__form franz-form flex w-full flex-col gap-5"
           onSubmit={e => this.submit(e)}

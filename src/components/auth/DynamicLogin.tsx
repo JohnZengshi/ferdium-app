@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { makeObservable, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import { Component } from 'react';
+import { Component, type ReactElement } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import {
@@ -11,6 +11,7 @@ import {
   Select,
   type SelectValue,
 } from 'tdesign-react';
+import { UserIcon, LockOnIcon } from 'tdesign-icons-react';
 import type { AuthField, AuthProvider } from '../../@types/auth';
 import { AuthFieldType } from '../../@types/auth';
 import type { Field } from '../../@types/mobx-form.types';
@@ -22,24 +23,18 @@ const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 
 const USER_FRIENDLY_ERROR = '登录失败，请检查网络连接或稍后重试';
 
-const USER_ICON_PATH =
-  'M6.75 1.5C5.30025 1.5 4.125 2.67525 4.125 4.125C4.125 5.57475 5.30025 6.75 6.75 6.75C8.19975 6.75 9.375 5.57475 9.375 4.125C9.375 2.67525 8.19975 1.5 6.75 1.5ZM2.625 4.125C2.625 1.84683 4.47183 0 6.75 0C9.02817 0 10.875 1.84683 10.875 4.125C10.875 6.40317 9.02817 8.25 6.75 8.25C4.47183 8.25 2.625 6.40317 2.625 4.125ZM0 12.75C0 10.6789 1.67893 9 3.75 9H9.75C11.8211 9 13.5 10.6789 13.5 12.75V15H0V12.75ZM3.75 10.5C2.50736 10.5 1.5 11.5074 1.5 12.75V13.5H12V12.75C12 11.5074 10.9926 10.5 9.75 10.5H3.75Z';
-
-const LOCK_ICON_PATH =
-  'M6.375 1.5C4.71815 1.5 3.375 2.84315 3.375 4.5V6.75001H9.375V4.5C9.375 2.84315 8.03185 1.5 6.375 1.5ZM10.875 6.75001H12.75V15.75H0V6.75001H1.875V4.5C1.875 2.01472 3.88972 0 6.375 0C8.86028 0 10.875 2.01472 10.875 4.5V6.75001ZM1.5 8.25001V14.25H11.25V8.25001H1.5ZM4.125 10.5H8.625V12H4.125V10.5Z';
-
-function getFieldIconPath(fieldType: AuthFieldType): string {
+function getFieldIcon(fieldType: AuthFieldType): ReactElement {
   switch (fieldType) {
     case AuthFieldType.EMAIL:
     case AuthFieldType.TEXT:
     case AuthFieldType.TEL: {
-      return USER_ICON_PATH;
+      return <UserIcon />;
     }
     case AuthFieldType.PASSWORD: {
-      return LOCK_ICON_PATH;
+      return <LockOnIcon />;
     }
     default: {
-      return USER_ICON_PATH;
+      return <UserIcon />;
     }
   }
 }
@@ -204,13 +199,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
       }
 
       const inputType = getFieldInputType(field.type);
-      const iconPath = getFieldIconPath(field.type);
       const $field = this.form.$(field.id);
-
-      const viewBox =
-        field.type === AuthFieldType.PASSWORD
-          ? '0 0 12.75 15.75'
-          : '0 0 13.5 15';
 
       return (
         <div key={field.id} className="auth__field w-full">
@@ -219,60 +208,27 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             onChange={(val: string) => $field.set(val)}
             type={inputType as InputType}
             placeholder={field.placeholder || field.label}
-            prefixIcon={
-              <svg fill="none" preserveAspectRatio="none" viewBox={viewBox}>
-                <path d={iconPath} fill="currentColor" fillOpacity="0.4" />
-              </svg>
-            }
+            className={customInputClass}
+            prefixIcon={getFieldIcon(field.type)}
           />
         </div>
       );
     };
 
-    return (
-      <div className="auth__container w-full max-w-[496px] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
-        <div className="auth__form-wrapper flex flex-col gap-8">
-          {(config.showSignup || config.showForgotPassword) && (
-            <div className="auth__links--top flex flex-row gap-4 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
-              {config.showSignup && (
-                <div className="auth__signup-row inline-flex items-start gap-2">
-                  <span className="auth__link-secondary leading-[22px] text-[rgba(0,0,0,.6)]">
-                    {intl.formatMessage({
-                      id: 'dynamicLogin.link.signup.prefix',
-                      defaultMessage: '没有账号吗 ? ',
-                    })}
-                  </span>
-                  <Link
-                    to="/auth/signup"
-                    className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
-                  >
-                    {intl.formatMessage({
-                      id: 'dynamicLogin.link.signup',
-                      defaultMessage: '注册新账号',
-                    })}
-                  </Link>
-                </div>
-              )}
-              {config.showForgotPassword && (
-                <Link
-                  to="/auth/password"
-                  className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
-                >
-                  {intl.formatMessage({
-                    id: 'dynamicLogin.link.forgotPassword',
-                    defaultMessage: 'Forgot password?',
-                  })}
-                </Link>
-              )}
-            </div>
-          )}
+    const customInputClass =
+      'h-[48px] w-full rounded-[4px] border border-solid border-[#E5E6EB] bg-white !shadow-none [&_.t-input]:!h-full [&_.t-input]:!border-none [&_.t-input]:!shadow-none [&_.t-input]:!rounded-[4px] [&_.t-input]:!pl-[16px] [&_.t-input]:!pr-[12px] [&_.t-input]:!text-[14px] [&_.t-input]:!text-[#1D2129] [&_.t-input]::placeholder:!text-[#86909C] [&_.t-input__prefix]:!absolute [&_.t-input__prefix]:!left-[12px] [&_.t-input__prefix]:!top-1/2 [&_.t-input__prefix]:!-translate-y-1/2 [&_.t-input__prefix]:!text-[#86909C] [&_.t-input__suffix]:!hidden';
 
-          <div className="auth__title mb-7 break-words font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[36px] font-semibold leading-[44px] text-[#0052d9]">
-            {config.headerText || 'AI Chat 拓客销售系统'}
+    return (
+      <div className="auth__container w-full">
+        <div className="auth__form-wrapper flex flex-col">
+          <div className="mb-[32px]">
+            <div className="text-[30px] font-bold text-[#165DFF]">
+              欢迎来到拓客！
+            </div>
           </div>
 
           <form
-            className="auth__form flex w-full flex-col gap-[20px]"
+            className="auth__form flex w-full flex-col gap-[18px]"
             onSubmit={e => {
               e.preventDefault();
               this.submitForm();
@@ -281,9 +237,9 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             {nonPasswordFields.map(field => renderField(field))}
 
             {passwordField && (
-              <div className="auth__password-section flex flex-col gap-6">
+              <div className="auth__password-section flex flex-col gap-[18px]">
                 {renderField(passwordField)}
-                <div className="auth__remember -mt-2 flex items-center">
+                <div className="auth__remember -mt-1 flex justify-end">
                   <Checkbox
                     checked={this.rememberPassword}
                     onChange={(checked: boolean) =>
@@ -291,6 +247,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                         this.rememberPassword = checked;
                       })
                     }
+                    className="[&_.t-checkbox__label]:text-[13px] [&_.t-checkbox__label]:text-[#1D2129]"
                   >
                     记住密码
                   </Checkbox>
@@ -309,9 +266,9 @@ class DynamicLogin extends Component<DynamicLoginProps> {
               block
               size="large"
               loading={this.isAuthenticating}
-              className="auth__button mt-2 rounded-[6px] text-[16px] font-semibold"
+              className="!h-[48px] !rounded-[4px] !bg-[#165DFF] !text-[16px] !font-normal !text-white hover:!bg-[#165DFF]/90"
             >
-              {config.submitLabel}
+              进入拓客
             </Button>
           </form>
         </div>
@@ -327,6 +284,41 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                 {link.label}
               </Link>
             ))}
+          </div>
+        )}
+
+        {(config.showSignup || config.showForgotPassword) && (
+          <div className="auth__links--top mt-[24px] flex flex-row gap-4 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
+            {config.showSignup && (
+              <div className="auth__signup-row inline-flex items-start gap-2">
+                <span className="auth__link-secondary leading-[22px] text-[rgba(0,0,0,.6)]">
+                  {intl.formatMessage({
+                    id: 'dynamicLogin.link.signup.prefix',
+                    defaultMessage: '没有账号吗 ? ',
+                  })}
+                </span>
+                <Link
+                  to="/auth/signup"
+                  className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
+                >
+                  {intl.formatMessage({
+                    id: 'dynamicLogin.link.signup',
+                    defaultMessage: '注册新账号',
+                  })}
+                </Link>
+              </div>
+            )}
+            {config.showForgotPassword && (
+              <Link
+                to="/auth/password"
+                className="auth__link-primary cursor-pointer leading-[22px] text-[#366ef4] hover:underline"
+              >
+                {intl.formatMessage({
+                  id: 'dynamicLogin.link.forgotPassword',
+                  defaultMessage: 'Forgot password?',
+                })}
+              </Link>
+            )}
           </div>
         )}
       </div>

@@ -97,7 +97,7 @@ class PluggableAuthScreen extends Component<IProps> {
           </p>
         )}
 
-        <div className="mr-auto ml-[140px] h-fit">
+        <div className="h-fit w-full">
           <DynamicLogin
             provider={activeProvider}
             onAuthenticated={this.handleAuthenticated}

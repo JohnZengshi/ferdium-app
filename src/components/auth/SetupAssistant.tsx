@@ -199,9 +199,7 @@ class SetupAssistant extends Component<IProps, IState> {
     } = this.state;
 
     return (
-      <div
-        className={`auth__container ${classes.root} relative max-w-full rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]`}
-      >
+      <div className={`auth__container ${classes.root} w-full`}>
         {this.state.showSuccessInfo && isInviteSuccessful && (
           <Appear>
             <Infobox

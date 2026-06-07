@@ -71,7 +71,7 @@ class AuthReleaseNotesScreen extends Component<IProps, IState> {
 
     const { data } = this.state;
     return (
-      <div className="auth__container mx-auto my-0 h-fit max-h-[80%] w-[90%] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
+      <div className="auth__container h-fit w-full">
         <div className="auth__main--releasenotes mx-[4%] mt-0 mb-[2%] flex h-[-webkit-fill-available] flex-col justify-center">
           <div className="auth__header inline-flex h-fit flex-row flex-wrap content-center justify-center text-[x-large]">
             <span className="auth__header-item">

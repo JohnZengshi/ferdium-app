@@ -44,7 +44,7 @@ export default class NextAuthProvider implements AuthProvider {
     ],
     showSignup: false,
     showForgotPassword: false,
-    submitLabel: 'Login with NextAuth',
+    submitLabel: '进入拓客',
     extraLinks: [],
   };
 

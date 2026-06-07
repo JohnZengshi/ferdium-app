@@ -43,7 +43,7 @@ export default class FerdiumProvider implements AuthProvider {
     ],
     showSignup: true,
     showForgotPassword: true,
-    submitLabel: '登录',
+    submitLabel: '进入拓客',
     extraLinks: [],
     headerText: 'AI Chat 拓客销售系统',
   };

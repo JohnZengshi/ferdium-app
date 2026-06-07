@@ -84,7 +84,7 @@ class Password extends Component<IProps> {
     const { isSubmitting, signupRoute, loginRoute, status, intl } = this.props;
 
     return (
-      <div className="auth__container mx-auto my-0 w-full max-w-[400px]">
+      <div className="auth__container w-full">
         <form
           className="auth__form franz-form flex w-full flex-col gap-5"
           onSubmit={e => this.submit(e)}

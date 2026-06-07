@@ -74,56 +74,75 @@ class AuthLayout extends Component<IProps, IState> {
             icon="assets/images/logo.svg"
           />
         )}
-        <div className="auth relative flex min-h-screen h-auto flex-col justify-center overflow-hidden bg-[#f5f6fe]">
+        <div className="auth relative flex min-h-screen overflow-hidden">
           <div className="auth__background pointer-events-none absolute inset-0 z-0 overflow-hidden">
             <img
               alt=""
               className="auth__background-image h-full w-full object-cover"
-              src="./assets/images/login-background.png"
+              src="./assets/images/登录背景图.png"
             />
+            <div className="pointer-events-none absolute left-0 top-0 h-full">
+              <img
+                alt=""
+                className="h-full w-auto object-contain"
+                src="./assets/images/登录背景图左侧覆盖层.png"
+              />
+            </div>
           </div>
-          <div
-            className={`auth__header-bar absolute inset-x-0 top-0 z-2 flex h-auto items-center bg-white/[0.05] px-[24px] backdrop-blur-[10px] ${isFullScreen ? 'py-[12px]' : 'pt-[30px] pb-[12px]'}`}
-          >
-            <img
-              className="auth__logo h-[56px]"
-              src="./assets/images/login-logo.png"
-              alt=""
-            />
-          </div>
+
           {!isOnline && (
-            <InfoBar type="warning">
-              <Icon icon={mdiFlash} />
-              {intl.formatMessage(globalMessages.notConnectedToTheInternet)}
-            </InfoBar>
+            <div className="fixed left-0 right-0 top-0 z-50">
+              <InfoBar type="warning">
+                <Icon icon={mdiFlash} />
+                {intl.formatMessage(globalMessages.notConnectedToTheInternet)}
+              </InfoBar>
+            </div>
           )}
           {(appUpdateIsDownloaded || (isSnap && isUpdateAvailable)) &&
             this.state.shouldShowAppUpdateInfoBar && (
-              <AppUpdateInfoBar
-                onInstallUpdate={installAppUpdate}
-                updateVersionParsed={updateVersionParse(updateVersion)}
-                onHide={() => {
-                  this.setState({ shouldShowAppUpdateInfoBar: false });
-                }}
-              />
+              <div className="fixed left-0 right-0 top-0 z-50">
+                <AppUpdateInfoBar
+                  onInstallUpdate={installAppUpdate}
+                  updateVersionParsed={updateVersionParse(updateVersion)}
+                  onHide={() => {
+                    this.setState({ shouldShowAppUpdateInfoBar: false });
+                  }}
+                />
+              </div>
             )}
           {isOnline && !isAPIHealthy && (
-            <InfoBar
-              type="danger"
-              ctaLabel="Try again"
-              ctaLoading={isHealthCheckLoading}
-              sticky
-              onClick={retryHealthCheck}
-            >
-              <Icon icon={mdiFlash} />
-              {intl.formatMessage(globalMessages.APIUnhealthy, {
-                serverNameParse,
-              })}
-            </InfoBar>
+            <div className="fixed left-0 right-0 top-0 z-50">
+              <InfoBar
+                type="danger"
+                ctaLabel="Try again"
+                ctaLoading={isHealthCheckLoading}
+                sticky
+                onClick={retryHealthCheck}
+              >
+                <Icon icon={mdiFlash} />
+                {intl.formatMessage(globalMessages.APIUnhealthy, {
+                  serverNameParse,
+                })}
+              </InfoBar>
+            </div>
           )}
-          <div className="auth__layout relative z-1 flex min-h-screen w-full items-center justify-center overflow-auto p-6">
-            {/* eslint-disable-next-line @eslint-react/no-clone-element */}
-            {cloneElement(children, { error })}
+
+          <div className="relative z-10 flex w-[45%] min-w-[480px] flex-col">
+            <div className="px-[48px] pt-[40px]">
+              <img
+                className="auth__logo h-[56px]"
+                src="./assets/images/login-logo.png"
+                alt=""
+              />
+            </div>
+            <div className="flex flex-1 items-center justify-start">
+              <div className="w-full max-w-[400px] ml-[138px]">
+                <div className="auth__layout">
+                  {/* eslint-disable-next-line @eslint-react/no-clone-element */}
+                  {cloneElement(children, { error })}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <PublishDebugInfo />

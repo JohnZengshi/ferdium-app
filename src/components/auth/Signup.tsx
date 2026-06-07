@@ -129,7 +129,7 @@ class Signup extends Component<IProps> {
 
     return (
       <div className="auth__scroll-container w-full h-fit">
-        <div className="auth__container auth__container--signup mx-auto my-0 w-full max-w-[450px] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
+        <div className="auth__container auth__container--signup w-full">
           <form
             className="auth__form franz-form flex w-full flex-col gap-5"
             onSubmit={e => this.submit(e)}

@@ -203,13 +203,7 @@ class Invite extends Component<IProps, IState> {
     );
 
     return (
-      <div
-        className={
-          embed
-            ? 'settings__main'
-            : 'auth__container mx-auto my-0 w-[496px] max-w-full rounded-[12px] bg-white px-12 py-[52px] relative shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]'
-        }
-      >
+      <div className={embed ? 'settings__main' : 'auth__container w-full'}>
         {embed && (
           <div className="settings__header">
             <H1>{intl.formatMessage(messages.settingsHeadline)}</H1>

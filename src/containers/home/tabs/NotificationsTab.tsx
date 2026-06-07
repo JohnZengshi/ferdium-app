@@ -208,19 +208,19 @@ class NotificationsTab extends Component<
         if (r.platform === 'whatsapp') {
           return (
             <div className="flex items-center gap-[8px]">
-              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#22C55E]">
-                <ChatBubble1FilledIcon className="text-white" />
+              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-success">
+                <ChatBubble1FilledIcon className="text-text-anti" />
               </div>
-              <span className="text-[14px] text-[#1F2937]">Whatsapp</span>
+              <span className="text-[14px] text-primary">Whatsapp</span>
             </div>
           );
         }
         return (
           <div className="flex items-center gap-[8px]">
-            <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#2563EB]">
-              <SendIcon className="text-white" />
+            <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand">
+              <SendIcon className="text-text-anti" />
             </div>
-            <span className="text-[14px] text-[#1F2937]">Telegram</span>
+            <span className="text-[14px] text-primary">Telegram</span>
           </div>
         );
       },
@@ -234,12 +234,10 @@ class NotificationsTab extends Component<
         const r = row as NotificationRecord;
         return (
           <div className="flex items-center gap-[8px]">
-            <div className="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-full bg-[#E5E7EB] text-[11px] font-medium text-[#6B7280]">
+            <div className="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-full bg-component text-[11px] font-medium text-placeholder">
               {r.user[0]}
             </div>
-            <span className="truncate text-[14px] text-[#1F2937]">
-              {r.user}
-            </span>
+            <span className="truncate text-[14px] text-primary">{r.user}</span>
           </div>
         );
       },
@@ -256,10 +254,10 @@ class NotificationsTab extends Component<
         return (
           <span className="inline-flex items-center gap-[6px]">
             <span
-              className={`inline-block h-[6px] w-[6px] rounded-full ${isRead ? 'bg-[#10B981]' : 'bg-[#EF4444]'}`}
+              className={`inline-block h-[6px] w-[6px] rounded-full ${isRead ? 'bg-success' : 'bg-error'}`}
             />
             <span
-              className={`text-[14px] font-normal leading-[22px] ${isRead ? 'text-[#10B981]' : 'text-[#EF4444]'}`}
+              className={`text-[14px] font-normal leading-[22px] ${isRead ? 'text-success' : 'text-error'}`}
             >
               {isRead ? '已读' : '未读'}
             </span>
@@ -277,7 +275,7 @@ class NotificationsTab extends Component<
           <button
             type="button"
             onClick={() => this.handleViewConversation(r.id)}
-            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-[#2563EB] hover:text-[#1D4ED8] hover:underline"
+            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
           >
             查看对话
           </button>
@@ -297,34 +295,34 @@ class NotificationsTab extends Component<
       >
         <div className="flex h-[56px] items-center gap-[20px]">
           <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-[#374151]">
+            <span className="text-[14px] font-normal text-secondary">
               通知时间
             </span>
             <DateRangePicker
               mode="date"
               placeholder={['开始日期', '结束日期']}
               style={{ width: 260, height: 32 }}
-              className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-[#D1D5DB]"
+              className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
             />
           </div>
 
           <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-[#374151]">
+            <span className="text-[14px] font-normal text-secondary">
               社交媒体
             </span>
             <Select
               style={{ width: 160 }}
-              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-[#D1D5DB]"
+              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
               placeholder="请选择内容状态"
               options={SOCIAL_OPTIONS}
             />
           </div>
 
           <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-[#374151]">状态</span>
+            <span className="text-[14px] font-normal text-secondary">状态</span>
             <Select
               style={{ width: 160 }}
-              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-[#D1D5DB]"
+              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
               placeholder="请选择内容状态"
               options={STATUS_OPTIONS}
             />
@@ -332,14 +330,14 @@ class NotificationsTab extends Component<
 
           <button
             type="button"
-            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-[#2563EB] text-[14px] font-medium text-white"
+            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[14px] font-medium text-text-anti"
           >
             搜索
           </button>
 
           <button
             type="button"
-            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-[#D1D5DB] bg-white text-[14px] font-medium text-[#374151]"
+            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container text-[14px] font-medium text-secondary"
           >
             重置
           </button>
@@ -349,7 +347,7 @@ class NotificationsTab extends Component<
           <button
             type="button"
             onClick={this.handleMarkAllRead}
-            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-[#2563EB] px-[16px] text-[14px] font-medium text-white"
+            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[16px] text-[14px] font-medium text-text-anti"
           >
             全部标记为已读
           </button>
@@ -357,15 +355,15 @@ class NotificationsTab extends Component<
           <button
             type="button"
             onClick={this.handleExport}
-            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-[#D1D5DB] bg-white px-[16px] text-[14px] font-medium text-[#374151]"
+            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
           >
             导出已选择
           </button>
 
           {someSelected && (
-            <span className="text-[14px] font-normal text-[#6B7280]">
+            <span className="text-[14px] font-normal text-placeholder">
               已选{' '}
-              <span className="font-medium text-[#2563EB]">
+              <span className="font-medium text-brand">
                 {selectedRowIds.length}
               </span>{' '}
               项
@@ -373,7 +371,7 @@ class NotificationsTab extends Component<
           )}
         </div>
 
-        <div className="mt-[16px] rounded-[8px] border border-solid border-[#E5E7EB]">
+        <div className="mt-[16px] rounded-[8px] border border-solid border-line">
           <Table
             data={MOCK_DATA}
             columns={this.columns}
@@ -385,10 +383,10 @@ class NotificationsTab extends Component<
             stripe={false}
             bordered
             size="medium"
-            className="[&_.t-table__header]:!bg-[#F9FAFB] [&_.t-table__header-th]:!border-b [&_.t-table__header-th]:!border-solid [&_.t-table__header-th]:!border-[#E5E7EB] [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__header-th]:!text-[#6B7280] [&_.t-table__body-td]:!h-[52px]"
+            className="[&_.t-table__header]:!bg-secondary-container [&_.t-table__header-th]:!border-b [&_.t-table__header-th]:!border-solid [&_.t-table__header-th]:!border-line [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__header-th]:!text-placeholder [&_.t-table__body-td]:!h-[52px]"
           />
 
-          <div className="flex h-[52px] items-center justify-between border-t border-solid border-[#E5E7EB] bg-white px-[24px]">
+          <div className="flex h-[52px] items-center justify-between border-t border-solid border-line bg-container px-[24px]">
             <Pagination
               total={101}
               pageSize={pageSize}

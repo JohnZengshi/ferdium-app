@@ -53,36 +53,36 @@ const DEFAULT_CORE_COMPETENCIES = [
   {
     title: '风险识别',
     description: '实时监测会话内容，智能识别潜在风险和异常行为',
-    iconBg: '#FFF1F0',
-    iconColor: '#F53F3F',
+    iconBg: 'bg-error-light',
+    iconColor: 'text-error',
     iconText: '⚠',
   },
   {
     title: '边界控制',
     description: '严格限定数字员工的行为边界和权限范围',
-    iconBg: '#E8F5FF',
-    iconColor: '#2080F0',
+    iconBg: 'bg-brand-light',
+    iconColor: 'text-brand',
     iconText: '◈',
   },
   {
     title: '人工接管触发',
     description: '当风险等级超过阈值时，自动触发人工接管流程',
-    iconBg: '#FFF7E6',
-    iconColor: '#FAAD14',
+    iconBg: 'bg-warning-light',
+    iconColor: 'text-warning',
     iconText: '◎',
   },
   {
     title: '高意向预警',
     description: '识别高意向客户并通知人工跟进，提升成交效率',
-    iconBg: '#F0FFF0',
-    iconColor: '#52C41A',
+    iconBg: 'bg-success-light',
+    iconColor: 'text-success',
     iconText: '◆',
   },
   {
     title: '会话暂停控制',
     description: '在特定场景下自动暂停会话，等待人工介入处理',
-    iconBg: '#F3F0FF',
-    iconColor: '#722ED1',
+    iconBg: 'bg-purple-50',
+    iconColor: 'text-purple-600',
     iconText: '■',
   },
 ];
@@ -91,10 +91,10 @@ class ResumeTab extends Component<ResumeTabProps> {
   renderStageCard(): ReactElement {
     const tags = this.props.stageTags || DEFAULT_STAGE_TAGS;
     return (
-      <div className="flex h-[284px] flex-col rounded-[8px] bg-white p-[24px]">
+      <div className="flex h-[284px] flex-col rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#EEF3FF]">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
+          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
+            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                 <path
                   d="M5 2V8M2 5H8"
@@ -105,13 +105,13 @@ class ResumeTab extends Component<ResumeTabProps> {
               </svg>
             </div>
           </div>
-          <span className="text-[20px] font-bold text-[#1F1F1F]">适用阶段</span>
+          <span className="text-[20px] font-bold text-primary">适用阶段</span>
         </div>
         <div className="mt-[16px] flex flex-wrap gap-[14px]">
           {tags.map(tag => (
             <span
               key={tag}
-              className="inline-flex h-[28px] items-center justify-center rounded-[4px] bg-[#EEF4FF] px-[8px] text-[16px] font-medium text-[#0052D9]"
+              className="inline-flex h-[28px] items-center justify-center rounded-[4px] bg-brand-light px-[8px] text-[16px] font-medium text-brand"
             >
               {tag}
             </span>
@@ -135,31 +135,31 @@ class ResumeTab extends Component<ResumeTabProps> {
           />
         </div>
 
-        <div className="absolute left-[15%] top-[18%] h-[8px] w-[8px] rounded-full bg-[#D6E8FF]" />
-        <div className="absolute right-[12%] top-[22%] h-[6px] w-[6px] rounded-full bg-[#B5D4FF]" />
-        <div className="absolute bottom-[25%] left-[10%] h-[10px] w-[10px] rounded-full bg-[#C5D8FF]" />
-        <div className="absolute bottom-[30%] right-[15%] h-[7px] w-[7px] rounded-full bg-[#D0E0FF]" />
-        <div className="absolute left-[25%] top-[35%] h-[5px] w-[5px] rounded-full bg-[#E0ECFF]" />
-        <div className="absolute right-[8%] top-[40%] h-[9px] w-[9px] rounded-full bg-[#C8DBFF]" />
+        <div className="absolute left-[15%] top-[18%] h-[8px] w-[8px] rounded-full bg-brand-light" />
+        <div className="absolute right-[12%] top-[22%] h-[6px] w-[6px] rounded-full bg-brand-light" />
+        <div className="absolute bottom-[25%] left-[10%] h-[10px] w-[10px] rounded-full bg-brand-light" />
+        <div className="absolute bottom-[30%] right-[15%] h-[7px] w-[7px] rounded-full bg-brand-light" />
+        <div className="absolute left-[25%] top-[35%] h-[5px] w-[5px] rounded-full bg-brand-light" />
+        <div className="absolute right-[8%] top-[40%] h-[9px] w-[9px] rounded-full bg-brand-light" />
 
         <div className="relative z-10 ml-[40px] mt-[50px] flex flex-col items-start self-start">
-          <span className="text-[48px] font-bold leading-[56px] text-[#1F1F1F]">
+          <span className="text-[48px] font-bold leading-[56px] text-primary">
             {name}
           </span>
-          <span className="mt-[8px] text-[18px] font-semibold leading-[26px] text-[#222222]">
+          <span className="mt-[8px] text-[18px] font-semibold leading-[26px] text-primary">
             职位：{role}
           </span>
         </div>
 
         <div className="relative z-10 mb-[19px] mt-auto flex flex-col items-center">
-          <span className="mb-[12px] text-[18px] font-semibold leading-[26px] text-[#222222]">
+          <span className="mb-[12px] text-[18px] font-semibold leading-[26px] text-primary">
             具备技能
           </span>
           <div className="flex flex-wrap justify-center gap-[12px] px-[20px]">
             {['识别风险', '预警异常', '人工接管'].map(skill => (
               <span
                 key={skill}
-                className="inline-flex h-[38px] items-center justify-center rounded-[19px] border border-solid border-[#2F6BFF] bg-white px-[16px] text-[14px] font-medium text-[#0052D9]"
+                className="inline-flex h-[38px] items-center justify-center rounded-[19px] border border-solid border-brand bg-container px-[16px] text-[14px] font-medium text-brand"
               >
                 {skill}
               </span>
@@ -175,16 +175,16 @@ class ResumeTab extends Component<ResumeTabProps> {
       this.props.profile ||
       'Monica 会持续监控所有会话，在识别到高风险、高异议、高价值或超出边界的问题时，自动触发预警并协助人工接管。';
     return (
-      <div className="flex flex-col h-[148px] rounded-[8px] bg-white p-[24px] min-h-[148px]">
+      <div className="flex flex-col h-[148px] rounded-[8px] bg-container p-[24px] min-h-[148px]">
         <div className="flex items-center gap-[8px]">
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#EEF3FF]">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
+          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
+            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
               <UserIcon />
             </div>
           </div>
-          <span className="text-[20px] font-bold text-[#1F1F1F]">个人介绍</span>
+          <span className="text-[20px] font-bold text-primary">个人介绍</span>
         </div>
-        <p className="mt-[16px] text-[16px] font-normal text-[#4E5969]">
+        <p className="mt-[16px] text-[16px] font-normal text-secondary">
           {profileText}
         </p>
       </div>
@@ -208,25 +208,25 @@ class ResumeTab extends Component<ResumeTabProps> {
       },
     ];
     return (
-      <div className="flex h-[292px] flex-col rounded-[8px] bg-white p-[24px]">
+      <div className="flex h-[292px] flex-col rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#EEF3FF]">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
+          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
+            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
               <FolderOpenIcon />
             </div>
           </div>
-          <span className="text-[20px] font-bold text-[#1F1F1F]">客户评价</span>
+          <span className="text-[20px] font-bold text-primary">客户评价</span>
         </div>
         <div className="mt-[16px] flex flex-col gap-[19px]">
           {reviews.map((item, i) => (
             <div
               key={i}
-              className="flex flex-row flex-wrap items-baseline border-l-[4px] border-solid border-[#0052D9] pl-[12px]"
+              className="flex flex-row flex-wrap items-baseline border-l-[4px] border-solid border-brand pl-[12px]"
             >
-              <span className="text-[14px] font-normal leading-[24px] text-[#4E5969]">
+              <span className="text-[14px] font-normal leading-[24px] text-secondary">
                 {item.text}
                 {item.highlight && (
-                  <span className="font-bold text-[#FF7A00]">
+                  <span className="font-bold text-warning">
                     {item.highlight}
                   </span>
                 )}
@@ -295,10 +295,10 @@ class ResumeTab extends Component<ResumeTabProps> {
     ];
 
     return (
-      <div className="flex h-[428px] flex-col rounded-[12px] bg-white p-[24px]">
+      <div className="flex h-[428px] flex-col rounded-[12px] bg-container p-[24px]">
         <div className="flex items-center gap-[12px]">
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#EEF3FF]">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
+          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
+            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
               <svg width="10" height="10" viewBox="0.5 0.5 9 9" fill="none">
                 <path
                   d="M2 8L5 5L8 2"
@@ -309,7 +309,7 @@ class ResumeTab extends Component<ResumeTabProps> {
               </svg>
             </div>
           </div>
-          <span className="text-[20px] font-bold leading-[28px] text-[#1F1F1F]">
+          <span className="text-[20px] font-bold leading-[28px] text-primary">
             {costTitle}
           </span>
         </div>
@@ -327,13 +327,13 @@ class ResumeTab extends Component<ResumeTabProps> {
                 }}
               >
                 <div className="flex h-[16px] items-center gap-[6px]">
-                  <div className="h-[6px] w-[6px] flex-shrink-0 rounded-full bg-white" />
-                  <span className="whitespace-nowrap text-[12px] font-medium leading-[16px] text-white">
+                  <div className="h-[6px] w-[6px] flex-shrink-0 rounded-full bg-container" />
+                  <span className="whitespace-nowrap text-[12px] font-medium leading-[16px] text-text-anti">
                     {s.label}
                   </span>
                 </div>
                 <span
-                  className="text-[24px] font-bold leading-[28px] text-white"
+                  className="text-[24px] font-bold leading-[28px] text-text-anti"
                   style={{ letterSpacing: '-0.3px' }}
                 >
                   {s.value}
@@ -349,7 +349,7 @@ class ResumeTab extends Component<ResumeTabProps> {
           })}
         </div>
 
-        <span className="mt-[24px] text-[14px] font-medium text-[#333333]">
+        <span className="mt-[24px] text-[14px] font-medium text-primary">
           {costAxisLabel}
         </span>
 
@@ -361,13 +361,19 @@ class ResumeTab extends Component<ResumeTabProps> {
             >
               <defs>
                 <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#2563EB" />
-                  <stop offset="100%" stopColor="#BFDBFE" />
+                  <stop
+                    offset="0%"
+                    style={{ stopColor: 'var(--td-brand-color)' }}
+                  />
+                  <stop
+                    offset="100%"
+                    style={{ stopColor: 'var(--td-brand-color-light)' }}
+                  />
                 </linearGradient>
               </defs>
               <CartesianGrid
                 horizontalValues={yTickValues}
-                stroke="#E5E5E5"
+                style={{ stroke: 'var(--td-border-level-1-color)' }}
                 vertical={false}
               />
               <XAxis
@@ -399,7 +405,7 @@ class ResumeTab extends Component<ResumeTabProps> {
                 <LabelList
                   dataKey="value"
                   position="top"
-                  fill="#111827"
+                  style={{ fill: 'var(--td-text-color-primary)' }}
                   fontSize={14}
                 />
               </Bar>
@@ -413,10 +419,10 @@ class ResumeTab extends Component<ResumeTabProps> {
   renderEfficiencyCard(): ReactElement {
     const effData = this.props.efficiencyData || DEFAULT_EFFICIENCY_DATA;
     return (
-      <div className="flex h-[312px] flex-col rounded-[8px] bg-white p-[32px] pb-[36px] pt-[28px]">
+      <div className="flex h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
         <div className="flex items-center gap-[8px]">
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#EEF3FF]">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
+          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
+            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                 <path
                   d="M2 5H8"
@@ -427,7 +433,7 @@ class ResumeTab extends Component<ResumeTabProps> {
               </svg>
             </div>
           </div>
-          <span className="text-[20px] font-bold text-[#1F1F1F]">
+          <span className="text-[20px] font-bold text-primary">
             效率提升数据
           </span>
         </div>
@@ -435,14 +441,14 @@ class ResumeTab extends Component<ResumeTabProps> {
           {effData.map(item => (
             <div key={item.label} className="flex flex-col gap-[8px]">
               <div className="flex items-center justify-between">
-                <span className="text-[15px] font-medium text-[#4E5969]">
+                <span className="text-[15px] font-medium text-secondary">
                   {item.label}
                 </span>
-                <span className="text-[16px] font-bold text-[#0052D9]">
+                <span className="text-[16px] font-bold text-brand">
                   {item.value}%
                 </span>
               </div>
-              <div className="h-[8px] w-full overflow-hidden rounded-[4px] bg-[#EEF1F5]">
+              <div className="h-[8px] w-full overflow-hidden rounded-[4px] bg-secondary-container">
                 <div
                   className="h-full rounded-[4px]"
                   style={{
@@ -462,32 +468,31 @@ class ResumeTab extends Component<ResumeTabProps> {
   renderCoreCompetenciesCard(): ReactElement {
     const compData = this.props.coreCompetencies || DEFAULT_CORE_COMPETENCIES;
     return (
-      <div className="flex h-[312px] flex-col rounded-[8px] bg-white p-[32px] pb-[36px] pt-[28px]">
+      <div className="flex h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
         <div className="flex items-center gap-[8px]">
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#EEF3FF]">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
+          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
+            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
               <LockOnIcon />
             </div>
           </div>
-          <span className="text-[20px] font-bold text-[#1F1F1F]">核心能力</span>
+          <span className="text-[20px] font-bold text-primary">核心能力</span>
         </div>
         <div className="mt-[10px] grid grid-cols-3 gap-[16px]">
           {compData.map(cap => (
             <div
               key={cap.title}
-              className="flex items-start gap-[16px] rounded-[10px] border border-solid border-[#EEF1F5] bg-[#FAFBFD] p-[16px]"
+              className="flex items-start gap-[16px] rounded-[10px] border border-solid border-line bg-container p-[16px]"
             >
               <div
-                className="flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-[8px] text-[20px]"
-                style={{ backgroundColor: cap.iconBg }}
+                className={`flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-[8px] text-[20px] ${cap.iconBg} ${cap.iconColor}`}
               >
                 {cap.iconText}
               </div>
               <div className="flex-1">
-                <span className="block text-[16px] font-bold leading-[22px] text-[#1F1F1F]">
+                <span className="block text-[16px] font-bold leading-[22px] text-primary">
                   {cap.title}
                 </span>
-                <span className="mt-[4px] block text-[13px] font-normal leading-[20px] text-[#86909C] line-clamp-2">
+                <span className="mt-[4px] block text-[13px] font-normal leading-[20px] text-placeholder line-clamp-2">
                   {cap.description}
                 </span>
               </div>

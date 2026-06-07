@@ -96,6 +96,10 @@ export default class UserStore extends TypedStore {
 
   @observable logoutReason: string | null = null;
 
+  @observable waAkgEmail: string | null = localStorage.getItem(
+    'whatsappAutomationUserEmail',
+  );
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -286,6 +290,10 @@ export default class UserStore extends TypedStore {
 
     localStorage.removeItem(API_KEY_STORAGE_KEY);
     window.localStorage.removeItem(API_KEY_STORAGE_KEY);
+    localStorage.removeItem('whatsappAutomationUserEmail');
+    window.localStorage.removeItem('whatsappAutomationUserEmail');
+
+    this.waAkgEmail = null;
 
     this.getUserInfoRequest.invalidate().reset();
     this.authToken = null;
@@ -471,6 +479,15 @@ export default class UserStore extends TypedStore {
     } else {
       this.authToken = null;
       this.id = null;
+    }
+  }
+
+  @action setWaAkgEmail(email: string | null): void {
+    this.waAkgEmail = email;
+    if (email) {
+      localStorage.setItem('whatsappAutomationUserEmail', email);
+    } else {
+      localStorage.removeItem('whatsappAutomationUserEmail');
     }
   }
 

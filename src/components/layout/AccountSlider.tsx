@@ -6,11 +6,25 @@ import { injectIntl } from 'react-intl';
 import type { WrappedComponentProps } from 'react-intl';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { AddIcon, UserIcon } from 'tdesign-icons-react';
-import { Avatar, Badge, Button, Empty } from 'tdesign-react';
+import {
+  Avatar,
+  Badge,
+  Button,
+  DialogPlugin,
+  Empty,
+  Form,
+  Select,
+} from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
 import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
 import type Service from '../../models/Service';
 import type { RealStores } from '../../stores';
+
+const PERSONA_OPTIONS = [
+  { label: '销售人设', value: 'sales' },
+  { label: '客服人设', value: 'support' },
+  { label: '运营人设', value: 'operation' },
+];
 
 const TABS = [
   { id: 'all', label: '全部', color: '#0052D9', badge: '99+' },
@@ -183,6 +197,41 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               <span className="text-[14px] text-black/60 leading-[22px]">
                 {service.recipe?.name || '人设'}
               </span>
+              <Button
+                variant="outline"
+                className="!h-[20px] !min-w-[37px] text-[12px] !px-[4px]"
+                ghost
+                theme="success"
+                onClick={() => {
+                  const confirmDia = DialogPlugin.confirm({
+                    placement: 'center',
+                    header: '绑定社交账号人设资料',
+                    body: (
+                      <Form colon labelWidth={80} className="py-[16px]">
+                        <Form.FormItem label="选择人设" name="persona">
+                          <Select
+                            placeholder="请选择人设"
+                            options={PERSONA_OPTIONS}
+                          />
+                        </Form.FormItem>
+
+                        <span className="text-[12px] text-black/40 leading-[20px]">
+                          提示：如没有人设资料，请在左侧菜单人设管理中添加资料后进行绑定
+                        </span>
+                      </Form>
+                    ),
+                    confirmBtn: '确认',
+                    onConfirm: () => {
+                      confirmDia.hide();
+                    },
+                    onClose: () => {
+                      confirmDia.hide();
+                    },
+                  });
+                }}
+              >
+                绑定
+              </Button>
             </div>
           </div>
         </div>

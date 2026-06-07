@@ -1,5 +1,7 @@
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
+import type { Actions } from '../../actions/lib/actions';
+import type { RealStores } from '../../stores';
 
 import { navigationStore } from '../../stores/NavigationStore';
 import type { ServiceSubTab } from '../../stores/NavigationStore';
@@ -34,16 +36,26 @@ interface ServiceSubTabsState {
   isCollapsed: boolean;
 }
 
+interface ServiceSubTabsProps {
+  stores?: RealStores;
+  actions?: Actions;
+}
+
+@inject('stores', 'actions')
 @observer
-class ServiceSubTabs extends Component<object, ServiceSubTabsState> {
-  constructor(props: object) {
+class ServiceSubTabs extends Component<
+  ServiceSubTabsProps,
+  ServiceSubTabsState
+> {
+  constructor(props: ServiceSubTabsProps) {
     super(props);
     this.state = {
-      isCollapsed: false,
+      isCollapsed: props.stores?.settings.all.app.isMenuCollapsed ?? false,
     };
   }
 
   toggleCollapse = () => {
+    this.props.actions?.app.toggleCollapseMenu();
     this.setState(prevState => ({ isCollapsed: !prevState.isCollapsed }));
   };
 
@@ -51,7 +63,7 @@ class ServiceSubTabs extends Component<object, ServiceSubTabsState> {
     const { isCollapsed } = this.state;
     return (
       <nav
-        className={`flex flex-col h-full bg-white border-r border-solid border-[#E7E7E7] overflow-hidden transition-all ${isCollapsed ? 'w-[64px]' : 'w-[232px]'}`}
+        className={`flex flex-col h-full bg-white border-r border-solid border-[#E7E7E7] overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}
       >
         {/* Header */}
         <div

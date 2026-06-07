@@ -30,7 +30,7 @@ class FullscreenLoader extends Component<IProps> {
     } = this.props;
 
     return (
-      <div className={classes.wrapper}>
+      <div className={`${classes.wrapper} h-full`}>
         <div
           className={classnames({
             [`${classes.component}`]: true,

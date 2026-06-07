@@ -16,6 +16,7 @@ const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
 const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
 export const API_KEY_STORAGE_KEY =
   process.env.API_KEY_STORAGE_KEY ?? 'whatsappAutomationApiKey';
+export const WA_USER_EMAIL_STORAGE_KEY = 'whatsappAutomationUserEmail';
 
 export interface AuthCredentials {
   email: string;
@@ -174,23 +175,9 @@ export const setApiKey = (key: string): void => {
  * Ensures that all persisted copies are removed to prevent stale key reuse.
  */
 export const clearApiKey = (): void => {
-  try {
-    localStorage.removeItem(API_KEY_STORAGE_KEY);
-  } catch {
-    console.warn(
-      '[WhatsApp Automation] Failed to remove API key from localStorage',
-    );
-  }
-  try {
-    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settingsApp && typeof settingsApp === 'object') {
-      settingsApp[API_KEY_KEY] = '';
-    }
-  } catch {
-    console.warn(
-      '[WhatsApp Automation] Failed to clear API key from settings store',
-    );
-  }
+  localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
+  (window as any).ferdium?.stores?.user?.setWaAkgEmail?.(null);
+  localStorage.removeItem(API_KEY_STORAGE_KEY);
 };
 
 /**
@@ -289,6 +276,14 @@ export const initializeAuth = async (
         console.error('[WhatsApp Automation] Session check failed', session);
         return null;
       }
+      window.localStorage.setItem(
+        WA_USER_EMAIL_STORAGE_KEY,
+        session.user.email,
+      );
+      (window as any).ferdium?.stores?.user?.setWaAkgEmail?.(
+        session.user.email,
+      );
+
       // eslint-disable-next-line no-console
       console.log('[WhatsApp Automation] Authenticated as', session.user.email);
     } catch (error) {

@@ -307,6 +307,7 @@ interface UserStore extends TypedStore {
   SIGNUP_ROUTE: '/auth/signup';
   WA_AKG_LOGIN_ROUTE: '/auth/wa-akg/login';
   WELCOME_ROUTE: '/auth/welcome';
+  waAkgEmail: string | null;
   accountType: () => void;
   authToken: () => void;
   deleteAccountRequest: () => void;

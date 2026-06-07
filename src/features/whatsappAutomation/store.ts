@@ -304,6 +304,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
                 'Session start action failed (may already be starting):',
                 startError,
               );
+              runInAction(() => {
+                this.isLoadingQr.set(serviceId, false);
+              });
             }
             this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.CONNECTING);
           }

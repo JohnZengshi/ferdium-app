@@ -276,13 +276,6 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex-shrink-0 w-full h-[56px] bg-white border-b border-solid border-b-[#E7E7E7] flex items-center justify-between px-[24px]">
                   <span className="flex items-center gap-[12px] text-[16px] font-semibold leading-[24px] text-[rgba(0,0,0,0.90)]">
-                    {navigationStore.activeModule === 'knowledge-base' && (
-                      <img
-                        src="./assets/images/tab-library-active.svg"
-                        alt=""
-                        className="h-[16px] w-[16px]"
-                      />
-                    )}
                     {MODULE_LABELS[navigationStore.activeModule]}
                   </span>
 
@@ -292,7 +285,8 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         <span className="text-xs text-black/50">Avatar</span>
                       </div>
                       <span className="text-[14px] text-black/90">
-                        {stores.user.data.firstname} {stores.user.data.lastname}
+                        {stores.user.waAkgEmail ||
+                          `${stores.user.data.firstname} ${stores.user.data.lastname}`}
                       </span>
                       <img
                         src="./assets/images/topbar-user-chevron.svg"

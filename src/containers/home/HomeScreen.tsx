@@ -273,7 +273,13 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         onClose={this.handleCloseResume}
         className="[&_.t-dialog\\_\\_body]:!p-0 [&_.t-dialog\\_\\_wrap]:!items-center [&_.t-dialog]:!p-0"
       >
-        <div className="relative max-h-[85vh] overflow-y-auto rounded-[12px] bg-container p-[22px]">
+        <div
+          className="relative max-h-[85vh] overflow-y-auto rounded-[12px] p-[22px]"
+          style={{
+            background:
+              'linear-gradient(180deg, color-mix(in srgb, var(--td-brand-color-light) 73%, transparent) 0%, color-mix(in srgb, var(--td-brand-color-light) 14%, transparent) 100%)',
+          }}
+        >
           <ResumeTab
             stageTags={emp.stageTags}
             profile={emp.profile}

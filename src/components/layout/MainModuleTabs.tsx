@@ -1,5 +1,13 @@
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
+import {
+  HomeIcon,
+  HomeFilledIcon,
+  ChatBubble1Icon,
+  ChatBubble1FilledIcon,
+  BookOpenIcon,
+  BookOpenFilledIcon,
+} from 'tdesign-icons-react';
 
 import type { Stores } from '../../@types/stores.types';
 import { navigationStore } from '../../stores/NavigationStore';
@@ -8,26 +16,26 @@ import type { FerdiumModule } from '../../stores/NavigationStore';
 const MODULES: {
   id: FerdiumModule;
   label: string;
-  icon: string;
-  iconActive: string;
+  activeIcon: ReactElement;
+  inactiveIcon: ReactElement;
 }[] = [
   {
     id: 'home',
     label: '首页',
-    icon: './assets/images/tab-home.svg',
-    iconActive: './assets/images/tab-home-active.svg',
+    activeIcon: <HomeFilledIcon size="24px" />,
+    inactiveIcon: <HomeIcon size="24px" />,
   },
   {
     id: 'service-type',
     label: 'WA工具',
-    icon: './assets/images/tab-whats.svg',
-    iconActive: './assets/images/tab-whats-active.svg',
+    activeIcon: <ChatBubble1FilledIcon size="24px" />,
+    inactiveIcon: <ChatBubble1Icon size="24px" />,
   },
   {
     id: 'knowledge-base',
     label: '资料库',
-    icon: './assets/images/tab-library.svg',
-    iconActive: './assets/images/tab-library-active.svg',
+    activeIcon: <BookOpenFilledIcon size="24px" />,
+    inactiveIcon: <BookOpenIcon size="24px" />,
   },
 ];
 
@@ -43,7 +51,7 @@ class MainModuleTabs extends Component<IProps> {
     const badge = stores?.services.mainModuleBadge;
 
     return (
-      <nav className="flex flex-col items-center w-[88px] py-[24px] h-full min-h-0 bg-white border-r border-solid border-black/10">
+      <nav className="flex flex-col items-center w-[88px] py-[24px] h-full min-h-0 bg-container border-r border-solid border-line">
         <img src="./assets/images/sidebar-logo.svg" alt="logo" />
 
         <div className="flex flex-col items-center h-fit my-auto gap-[4px] w-[64px] p-[8px] rounded-xl shadow-[0px_5px_5px_-3px_rgba(0,0,0,0.10),0px_8px_10px_1px_rgba(0,0,0,0.06),0px_3px_14px_2px_rgba(0,0,0,0.05)]">
@@ -58,18 +66,22 @@ class MainModuleTabs extends Component<IProps> {
                   navigationStore.setModule(mod.id);
                 }}
               >
-                <img
-                  src={isActive ? mod.iconActive : mod.icon}
-                  alt={mod.label}
-                  className="w-[48px]"
-                />
+                {isActive ? (
+                  <span className="flex items-center justify-center w-[48px] h-[48px] rounded-full bg-brand-light text-brand">
+                    {mod.activeIcon}
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center w-[48px] h-[48px] text-secondary">
+                    {mod.inactiveIcon}
+                  </span>
+                )}
                 <span
-                  className={`text-[12px] leading-5 whitespace-nowrap ${isActive ? 'text-[#0052D9]' : 'text-black/60'}`}
+                  className={`text-[12px] leading-5 whitespace-nowrap ${isActive ? 'text-brand' : 'text-secondary'}`}
                 >
                   {mod.label}
                 </span>
                 {mod.id === 'service-type' && badge != null && (
-                  <span className="absolute top-0 right-0 flex items-center justify-center min-w-[12px] h-[12px] text-[9px] text-white/90 bg-[#D54941] rounded-full leading-[15px] translate-x-[2px] -translate-y-[2px]">
+                  <span className="absolute top-0 right-0 flex items-center justify-center min-w-[12px] h-[12px] text-[9px] text-text-anti/90 bg-error rounded-full leading-[15px] translate-x-[2px] -translate-y-[2px]">
                     {badge}
                   </span>
                 )}

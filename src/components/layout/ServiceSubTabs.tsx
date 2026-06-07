@@ -63,14 +63,14 @@ class ServiceSubTabs extends Component<
     const { isCollapsed } = this.state;
     return (
       <nav
-        className={`flex flex-col h-full bg-white border-r border-solid border-[#E7E7E7] overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}
+        className={`flex flex-col h-full bg-container border-r border-solid border-line overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}
       >
         {/* Header */}
         <div
           className={`flex h-fit items-center pt-[15px] pb-[21px] ${isCollapsed ? 'justify-center' : 'justify-between px-[8px]'}`}
         >
           {!isCollapsed && (
-            <span className="text-[18px] font-semibold leading-[26px] text-black/90">
+            <span className="text-[18px] font-semibold leading-[26px] text-primary">
               Whatsapp
             </span>
           )}
@@ -107,15 +107,15 @@ class ServiceSubTabs extends Component<
                     : 'gap-[8px] px-[16px] py-[7px] text-left'
                 } ${
                   isActive
-                    ? 'bg-[#F2F3FF] text-[#0052D9]'
-                    : 'bg-white text-black/60 hover:bg-gray-50'
+                    ? 'bg-brand-light text-brand'
+                    : 'bg-container text-secondary hover:bg-secondary-container'
                 }`}
                 onClick={() => {
                   navigationStore.setServiceTab(tab.id);
                 }}
               >
                 <span
-                  className={`flex items-center justify-center w-[20px] h-[20px] ${isActive ? 'text-[#0052D9]' : 'text-black/60'}`}
+                  className={`flex items-center justify-center w-[20px] h-[20px] ${isActive ? 'text-brand' : 'text-secondary'}`}
                   style={{
                     maskImage: `url(${isActive ? tab.iconActive : tab.icon})`,
                     maskSize: 'contain',

@@ -27,11 +27,31 @@ const PERSONA_OPTIONS = [
 ];
 
 const TABS = [
-  { id: 'all', label: '全部', color: '#0052D9', badge: '99+' },
-  { id: 'online', label: '在线', color: '#2BA471', badge: '2' },
-  { id: 'offline', label: '离线', color: '#E37318', badge: '2' },
-  { id: 'error', label: '异常', color: '#D54941', badge: '2' },
+  { id: 'all', label: '全部', badge: '99+' },
+  { id: 'online', label: '在线', badge: '2' },
+  { id: 'offline', label: '离线', badge: '2' },
+  { id: 'error', label: '异常', badge: '2' },
 ] as const;
+
+const tabTextColor = (tabId: TabId): string => {
+  switch (tabId) {
+    case 'all': {
+      return 'text-brand';
+    }
+    case 'online': {
+      return 'text-success';
+    }
+    case 'offline': {
+      return 'text-warning';
+    }
+    case 'error': {
+      return 'text-error';
+    }
+    default: {
+      return '';
+    }
+  }
+};
 
 type TabId = (typeof TABS)[number]['id'];
 
@@ -71,10 +91,10 @@ const getStatusTag = (
 ): StatusTag | null => {
   switch (getMappedStatus(sessionStatus)) {
     case 'error': {
-      return { label: '异常', bg: 'bg-[#FFF0ED]', text: 'text-[#D54941]' };
+      return { label: '异常', bg: 'bg-error-light', text: 'text-error' };
     }
     case 'offline': {
-      return { label: '离线', bg: 'bg-[#FFF6ED]', text: 'text-[#E37318]' };
+      return { label: '离线', bg: 'bg-warning-light', text: 'text-warning' };
     }
     default: {
       return null;
@@ -126,16 +146,16 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
       const presenceColor = (() => {
         switch (getMappedStatus(waStatus)) {
           case 'online': {
-            return 'bg-[#2BA471]';
+            return 'bg-success';
           }
           case 'offline': {
-            return 'bg-[#E37318]';
+            return 'bg-warning';
           }
           case 'error': {
-            return 'bg-[#D54941]';
+            return 'bg-error';
           }
           default: {
-            return service.isEnabled ? 'bg-[#2BA471]' : 'bg-[#E37318]';
+            return service.isEnabled ? 'bg-success' : 'bg-warning';
           }
         }
       })();
@@ -144,7 +164,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
         <div
           role="button"
           tabIndex={0}
-          className="flex items-center h-[72px] shrink-0 w-full px-[12px] gap-[15px] rounded-[8px] hover:!bg-[#F3F3F3] cursor-pointer"
+          className={`flex items-center h-[72px] shrink-0 w-full px-[12px] gap-[15px] rounded-[8px] cursor-pointer ${service.isActive ? 'bg-brand-light' : 'bg-transparent'} hover:!bg-secondary-container`}
           onClick={() =>
             actions?.service?.setActive?.({ serviceId: service.id })
           }
@@ -155,9 +175,6 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
             }
           }}
           onContextMenu={() => onContextMenu(service)}
-          style={{
-            backgroundColor: service.isActive ? '#F2F3FF' : 'transparent',
-          }}
         >
           <div className="relative w-[56px] h-[56px]">
             <Avatar
@@ -166,19 +183,19 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               className="!w-full !h-full"
             />
             {unread > 0 && (
-              <div className="absolute -top-[2px] -right-[2px] min-w-[16px] h-[16px] bg-[#D54941] rounded-full flex items-center justify-center px-[3px] border border-white">
-                <span className="text-[9px] text-white leading-[15px] font-normal">
+              <div className="absolute -top-[2px] -right-[2px] min-w-[16px] h-[16px] bg-error rounded-full flex items-center justify-center px-[3px] border border-container">
+                <span className="text-[9px] text-text-anti leading-[15px] font-normal">
                   {unread > 99 ? '99+' : unread}
                 </span>
               </div>
             )}
             <div
-              className={`absolute bottom-0 right-0 w-[8px] h-[8px] rounded-full border border-white ${presenceColor}`}
+              className={`absolute bottom-0 right-0 w-[8px] h-[8px] rounded-full border border-container ${presenceColor}`}
             />
           </div>
           <div className="flex flex-col items-start justify-center gap-[9px] h-fit flex-auto min-w-0">
             <div className="flex items-center justify-between w-full">
-              <span className="text-[16px] font-normal leading-[26px] text-black/90 truncate">
+              <span className="text-[16px] font-normal leading-[26px] text-primary truncate">
                 {service.name}
               </span>
               {statusTag && (
@@ -194,7 +211,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               )}
             </div>
             <div className="flex items-center gap-[4px]">
-              <span className="text-[14px] text-black/60 leading-[22px]">
+              <span className="text-[14px] text-secondary leading-[22px]">
                 {service.recipe?.name || '人设'}
               </span>
               <Button
@@ -215,7 +232,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                           />
                         </Form.FormItem>
 
-                        <span className="text-[12px] text-black/40 leading-[20px]">
+                        <span className="text-[12px] text-placeholder leading-[20px]">
                           提示：如没有人设资料，请在左侧菜单人设管理中添加资料后进行绑定
                         </span>
                       </Form>
@@ -429,7 +446,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     );
 
     return (
-      <div className="flex flex-col h-full bg-white px-[8px] py-[16px] gap-[16px] overflow-hidden">
+      <div className="flex flex-col h-full bg-container px-[8px] py-[16px] gap-[16px] overflow-hidden">
         <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0">
           {TABS.map(tab => {
             const isActive = activeTab === tab.id;
@@ -453,8 +470,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                       />
                     )}
                     <span
-                      className="text-[14px] font-normal leading-[22px]"
-                      style={{ color: tab.color }}
+                      className={`text-[14px] font-normal leading-[22px] ${tabTextColor(tab.id)}`}
                     >
                       {tab.label}
                     </span>

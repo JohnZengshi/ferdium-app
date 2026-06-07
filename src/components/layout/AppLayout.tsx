@@ -274,17 +274,17 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               <MainModuleTabs />
 
               <div className="flex flex-col flex-1 min-w-0">
-                <div className="flex-shrink-0 w-full h-[56px] bg-white border-b border-solid border-b-[#E7E7E7] flex items-center justify-between px-[24px]">
-                  <span className="flex items-center gap-[12px] text-[16px] font-semibold leading-[24px] text-[rgba(0,0,0,0.90)]">
+                <div className="flex-shrink-0 w-full h-[56px] bg-container border-b border-solid border-b-line flex items-center justify-between px-[24px]">
+                  <span className="flex items-center gap-[12px] text-[16px] font-semibold leading-[24px] text-primary">
                     {MODULE_LABELS[navigationStore.activeModule]}
                   </span>
 
                   {stores?.user.data && (
                     <div className="flex items-center gap-[8px]">
-                      <div className="w-[32px] h-[32px] rounded-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-xs text-black/50">Avatar</span>
+                      <div className="w-[32px] h-[32px] rounded-full bg-component flex items-center justify-center">
+                        <span className="text-xs text-secondary">Avatar</span>
                       </div>
-                      <span className="text-[14px] text-black/90">
+                      <span className="text-[14px] text-primary">
                         {stores.user.waAkgEmail ||
                           `${stores.user.data.firstname} ${stores.user.data.lastname}`}
                       </span>

@@ -219,7 +219,7 @@ interface ResumeTabProps {
   avatarSrc?: string;
 }
 
-interface IProps extends ResumeTabProps, WrappedComponentProps {}
+interface IProps extends ResumeTabProps, WrappedComponentProps { }
 
 class ResumeTab extends Component<IProps> {
   renderStageCard(): ReactElement {
@@ -236,7 +236,7 @@ class ResumeTab extends Component<IProps> {
       intl.formatMessage(messages.stageEcosystemIntegration),
     ];
     return (
-      <div className="flex h-[284px] flex-col rounded-[8px] bg-container p-[24px]">
+      <div className="flex min-h-[284px] flex-col rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
@@ -327,7 +327,7 @@ class ResumeTab extends Component<IProps> {
     const profileText =
       profile || intl.formatMessage(messages.defaultProfile);
     return (
-      <div className="flex flex-col h-[148px] rounded-[8px] bg-container p-[24px] min-h-[148px]">
+      <div className="flex flex-col min-h-[148px] rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
@@ -363,7 +363,7 @@ class ResumeTab extends Component<IProps> {
       },
     ];
     return (
-      <div className="flex h-[292px] flex-col rounded-[8px] bg-container p-[24px]">
+      <div className="flex min-h-[292px] flex-col rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
@@ -411,12 +411,12 @@ class ResumeTab extends Component<IProps> {
     const maxVal = Math.max(...barData.map(d => d.value));
     const yLabels = costChartData
       ? [
-          maxVal,
-          Math.round(maxVal * 0.7),
-          Math.round(maxVal * 0.4),
-          Math.round(maxVal * 0.1),
-          0,
-        ]
+        maxVal,
+        Math.round(maxVal * 0.7),
+        Math.round(maxVal * 0.4),
+        Math.round(maxVal * 0.1),
+        0,
+      ]
       : defaultYLabels;
     const getBarHeight = (value: number): number => {
       if (!costChartData) {
@@ -460,7 +460,7 @@ class ResumeTab extends Component<IProps> {
     ];
 
     return (
-      <div className="flex h-[428px] flex-col rounded-[12px] bg-container p-[24px]">
+      <div className="flex min-h-[428px] flex-col rounded-[12px] bg-container p-[24px]">
         <div className="flex items-center gap-[12px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
@@ -604,7 +604,7 @@ class ResumeTab extends Component<IProps> {
       },
     ];
     return (
-      <div className="flex h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
+      <div className="flex min-h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
@@ -690,7 +690,7 @@ class ResumeTab extends Component<IProps> {
       },
     ];
     return (
-      <div className="flex h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
+      <div className="flex min-h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">

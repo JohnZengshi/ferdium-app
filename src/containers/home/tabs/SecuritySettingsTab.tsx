@@ -308,20 +308,19 @@ class SecuritySettingsTab extends Component<
             const isFocused = focusedBoundaryId === item.id;
             return (
               <div key={item.id} className="flex min-h-[52px] items-center">
-                <div className="flex w-[88px] flex-shrink-0 items-center gap-[8px]">
+                <div className="flex min-w-[88px] flex-shrink-0 items-center gap-[8px]">
                   <div className="h-[18px] w-[4px] flex-shrink-0 rounded-[2px] bg-brand" />
-                  <span className="w-[76px] text-right text-[15px] font-medium leading-[22px] text-primary">
+                  <span className="min-w-[76px] text-right text-[15px] font-medium leading-[22px] text-primary">
                     {item.label}
                   </span>
                 </div>
 
                 <div className="ml-[16px] flex-1">
                   <div
-                    className={`flex items-center h-[44px] rounded-[8px] bg-container transition-all duration-200 ${
-                      isFocused
-                        ? 'border-[1.5px] border-brand shadow-[0_0_0_3px_rgba(37,99,235,0.08)]'
-                        : 'border border-line'
-                    }`}
+                    className={`flex items-center h-[44px] rounded-[8px] bg-container transition-all duration-200 ${isFocused
+                      ? 'border-[1.5px] border-brand shadow-[0_0_0_3px_rgba(37,99,235,0.08)]'
+                      : 'border border-line'
+                      }`}
                   >
                     <input
                       type="text"

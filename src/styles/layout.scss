@@ -101,7 +101,7 @@ body.win32:not(.isFullScreen) .app .app__content {
 }
 
 .app {
-  background: #fff;
+  background: var(--td-bg-color-container);
   .app__content {
     display: flex;
     width: 100%;

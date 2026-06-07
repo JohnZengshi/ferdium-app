@@ -43,7 +43,7 @@ class AppLayoutContainer extends Component<IProps> {
       ? accentColor
       : DEFAULT_ACCENT_COLOR;
     document.documentElement.style.setProperty('--td-brand-color', accentColor);
-    if (settings.app.darkMode) {
+    if (ui.isDarkThemeActive) {
       document.documentElement.setAttribute('theme-mode', 'dark');
     } else {
       document.documentElement.removeAttribute('theme-mode');

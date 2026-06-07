@@ -1,4 +1,10 @@
-import { Component, type ReactElement } from 'react';
+import {
+  useCallback,
+  useState,
+  useMemo,
+  type ReactElement,
+} from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 import {
   Button,
   DatePicker,
@@ -27,6 +33,111 @@ import {
   type SidebarItem,
 } from '../../components/home/SidebarMenu';
 
+const messages = defineMessages({
+  createPersonaProfile: {
+    id: 'knowledgeScreen.createPersonaProfile',
+    defaultMessage: '创建人设资料',
+  },
+  serialNumber: {
+    id: 'knowledgeScreen.serialNumber',
+    defaultMessage: '序号',
+  },
+  personaRemark: {
+    id: 'knowledgeScreen.personaRemark',
+    defaultMessage: '人设备注',
+  },
+  name: {
+    id: 'knowledgeScreen.name',
+    defaultMessage: '姓名',
+  },
+  age: {
+    id: 'knowledgeScreen.age',
+    defaultMessage: '年龄',
+  },
+  gender: {
+    id: 'knowledgeScreen.gender',
+    defaultMessage: '性别',
+  },
+  occupation: {
+    id: 'knowledgeScreen.occupation',
+    defaultMessage: '职业',
+  },
+  familyStatus: {
+    id: 'knowledgeScreen.familyStatus',
+    defaultMessage: '家庭情况',
+  },
+  participation: {
+    id: 'knowledgeScreen.participation',
+    defaultMessage: '项目参与度',
+  },
+  actions: {
+    id: 'knowledgeScreen.actions',
+    defaultMessage: '操作',
+  },
+  view: {
+    id: 'knowledgeScreen.view',
+    defaultMessage: '查看',
+  },
+  edit: {
+    id: 'knowledgeScreen.edit',
+    defaultMessage: '编辑',
+  },
+  description: {
+    id: 'knowledgeScreen.description',
+    defaultMessage:
+      '人设资料是您社交账号的信息资料，与账号绑定后，数字员工会以账号的人设进行聊天',
+  },
+  inputPlaceholder: {
+    id: 'knowledgeScreen.inputPlaceholder',
+    defaultMessage: '请输入内容',
+  },
+  datePlaceholder: {
+    id: 'knowledgeScreen.datePlaceholder',
+    defaultMessage: '请选择日期',
+  },
+  selectPlaceholder: {
+    id: 'knowledgeScreen.selectPlaceholder',
+    defaultMessage: '请选择内容',
+  },
+  save: {
+    id: 'knowledgeScreen.save',
+    defaultMessage: '保存',
+  },
+  smartImport: {
+    id: 'knowledgeScreen.smartImport',
+    defaultMessage: '智能导入',
+  },
+  smartImportAndRecognize: {
+    id: 'knowledgeScreen.smartImportAndRecognize',
+    defaultMessage: '识别并导入',
+  },
+  smartImportSuccess: {
+    id: 'knowledgeScreen.smartImportSuccess',
+    defaultMessage: '智能导入成功',
+  },
+  saveSuccess: {
+    id: 'knowledgeScreen.saveSuccess',
+    defaultMessage: '保存成功',
+  },
+  male: {
+    id: 'knowledgeScreen.male',
+    defaultMessage: '男',
+  },
+  female: {
+    id: 'knowledgeScreen.female',
+    defaultMessage: '女',
+  },
+  socialAccountPersona: {
+    id: 'knowledgeScreen.socialAccountPersona',
+    defaultMessage: '社交账号人设',
+  },
+  smartImportPlaceholder: {
+    id: 'knowledgeScreen.smartImportPlaceholder',
+    defaultMessage:
+      '输入文本到此处，将自动识别人设信息\n\n例：Amy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可；企业级 / 大客户项目需持续跟进交付、验收与长期合作维护。销售为项目客户侧第一责任人，统筹对外沟通与商务推进。\n\nAmy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接...',
+  },
+});
+
 interface PersonaRecord {
   id: number;
   remark: string;
@@ -48,14 +159,6 @@ interface FormData {
   participation: string;
 }
 
-interface KnowledgeScreenState {
-  view: 'list' | 'create';
-  currentPage: number;
-  pageSize: number;
-  formData: FormData;
-  smartImportText: string;
-}
-
 const MOCK_DATA: PersonaRecord[] = Array.from({ length: 5 }, (_, i) => ({
   id: i + 6,
   remark: '嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻...',
@@ -67,22 +170,15 @@ const MOCK_DATA: PersonaRecord[] = Array.from({ length: 5 }, (_, i) => ({
   participation: '89%',
 }));
 
-const GENDER_OPTIONS = [
-  { label: '男', value: 'male' },
-  { label: '女', value: 'female' },
-];
-
-const SIDEBAR_ITEMS: SidebarItem[] = [
-  {
-    key: 'persona',
-    label: '社交账号人设',
-    icon: <UsergroupIcon />,
-  },
-];
-
-const SMART_IMPORT_PLACEHOLDER = `输入文本到此处，将自动识别人设信息
-
-例：Amy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可；企业级 / 大客户项目需持续跟进交付、验收与长期合作维护。销售为项目客户侧第一责任人，统筹对外沟通与商务推进。Amy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接...`;
+const INITIAL_FORM_DATA: FormData = {
+  name: '',
+  remark: '',
+  age: '',
+  gender: '',
+  family: '',
+  occupation: '',
+  participation: '',
+};
 
 const FormLabel = ({
   icon,
@@ -99,171 +195,183 @@ const FormLabel = ({
   </div>
 );
 
-class KnowledgeScreen extends Component<
-  Record<string, never>,
-  KnowledgeScreenState
-> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      view: 'list',
-      currentPage: 11,
-      pageSize: 20,
-      formData: {
-        name: '',
-        remark: '',
-        age: '',
-        gender: '',
-        family: '',
-        occupation: '',
-        participation: '',
+const KnowledgeScreen: React.FC = () => {
+  const intl = useIntl();
+
+  const [view, setView] = useState<'list' | 'create'>('list');
+  const [currentPage, setCurrentPage] = useState(11);
+  const [pageSize, setPageSize] = useState(20);
+  const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
+  const [smartImportText, setSmartImportText] = useState('');
+
+  const genderOptions = useMemo(
+    () => [
+      { label: intl.formatMessage(messages.male), value: 'male' },
+      { label: intl.formatMessage(messages.female), value: 'female' },
+    ],
+    [intl],
+  );
+
+  const sidebarItems: SidebarItem[] = useMemo(
+    () => [
+      {
+        key: 'persona',
+        label: intl.formatMessage(messages.socialAccountPersona),
+        icon: <UsergroupIcon />,
       },
-      smartImportText: '',
-    };
-  }
+    ],
+    [intl],
+  );
 
-  columns: PrimaryTableCol<PersonaRecord>[] = [
-    {
-      colKey: 'id',
-      title: '序号',
-      width: 80,
-      align: 'center',
+  const handlePageChange = useCallback(
+    (pageInfo: { current: number; pageSize: number }) => {
+      setCurrentPage(pageInfo.current);
+      setPageSize(pageInfo.pageSize);
     },
-    {
-      colKey: 'remark',
-      title: '人设备注',
-      width: 220,
-      ellipsis: true,
-    },
-    {
-      colKey: 'name',
-      title: '姓名',
-      width: 140,
-      ellipsis: true,
-    },
-    {
-      colKey: 'age',
-      title: '年龄',
-      width: 100,
-    },
-    {
-      colKey: 'gender',
-      title: '性别',
-      width: 100,
-    },
-    {
-      colKey: 'occupation',
-      title: '职业',
-      width: 140,
-    },
-    {
-      colKey: 'familyStatus',
-      title: '家庭情况',
-      width: 120,
-    },
-    {
-      colKey: 'participation',
-      title: '项目参与度',
-      width: 120,
-    },
-    {
-      colKey: 'op',
-      title: '操作',
-      width: 140,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      cell: () => (
-        <div className="flex items-center gap-[16px]">
-          <button
-            type="button"
-            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
-            onClick={() => this.handleView()}
-          >
-            查看
-          </button>
-          <button
-            type="button"
-            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
-            onClick={() => this.handleEditPersona()}
-          >
-            编辑
-          </button>
-        </div>
-      ),
-    },
-  ];
+    [],
+  );
 
-  handlePageChange = (pageInfo: {
-    current: number;
-    pageSize: number;
-  }): void => {
-    this.setState({
-      currentPage: pageInfo.current,
-      pageSize: pageInfo.pageSize,
-    });
-  };
+  const handleCreate = useCallback(() => {
+    setView('create');
+  }, []);
 
-  handleCreate = (): void => {
-    this.setState({ view: 'create' });
-  };
+  const handleBack = useCallback(() => {
+    setView('list');
+  }, []);
 
-  handleBack = (): void => {
-    this.setState({ view: 'list' });
-  };
-
-  handleView = (): void => {
+  const handleView = useCallback(() => {
     // TODO: navigate to detail view
-  };
+  }, []);
 
-  handleEditPersona = (): void => {
+  const handleEditPersona = useCallback(() => {
     // TODO: navigate to edit view
-  };
+  }, []);
 
-  handleFormChange = (field: keyof FormData, value: string): void => {
-    this.setState(prev => ({
-      formData: { ...prev.formData, [field]: value },
-    }));
-  };
+  const handleFormChange = useCallback(
+    (field: keyof FormData, value: string) => {
+      setFormData(prev => ({ ...prev, [field]: value }));
+    },
+    [],
+  );
 
-  handleSmartImportTextChange = (value: string): void => {
-    this.setState({ smartImportText: value });
-  };
+  const handleSmartImportTextChange = useCallback((value: string) => {
+    setSmartImportText(value);
+  }, []);
 
-  handleSmartImport = async (): Promise<void> => {
-    await MessagePlugin.success('智能导入成功');
-  };
+  const handleSmartImport = useCallback(async () => {
+    await MessagePlugin.success(intl.formatMessage(messages.smartImportSuccess));
+  }, [intl]);
 
-  handleSave = async (): Promise<void> => {
-    await MessagePlugin.success({ content: '保存成功', placement: 'bottom' });
-  };
+  const handleSave = useCallback(async () => {
+    await MessagePlugin.success({
+      content: intl.formatMessage(messages.saveSuccess),
+      placement: 'bottom',
+    });
+  }, [intl]);
 
-  renderContent(): ReactElement {
-    const { view, currentPage, pageSize, formData, smartImportText } =
-      this.state;
+  const columns: PrimaryTableCol<PersonaRecord>[] = useMemo(
+    () => [
+      {
+        colKey: 'id',
+        title: intl.formatMessage(messages.serialNumber),
+        width: 80,
+        align: 'center',
+      },
+      {
+        colKey: 'remark',
+        title: intl.formatMessage(messages.personaRemark),
+        width: 220,
+        ellipsis: true,
+      },
+      {
+        colKey: 'name',
+        title: intl.formatMessage(messages.name),
+        width: 140,
+        ellipsis: true,
+      },
+      {
+        colKey: 'age',
+        title: intl.formatMessage(messages.age),
+        width: 100,
+      },
+      {
+        colKey: 'gender',
+        title: intl.formatMessage(messages.gender),
+        width: 100,
+      },
+      {
+        colKey: 'occupation',
+        title: intl.formatMessage(messages.occupation),
+        width: 140,
+      },
+      {
+        colKey: 'familyStatus',
+        title: intl.formatMessage(messages.familyStatus),
+        width: 120,
+      },
+      {
+        colKey: 'participation',
+        title: intl.formatMessage(messages.participation),
+        width: 120,
+      },
+      {
+        colKey: 'op',
+        title: intl.formatMessage(messages.actions),
+        width: 140,
+        // eslint-disable-next-line react/no-unstable-nested-components
+        cell: () => (
+          <div className="flex items-center gap-[16px]">
+            <button
+              type="button"
+              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
+              onClick={() => handleView()}
+            >
+              {intl.formatMessage(messages.view)}
+            </button>
+            <button
+              type="button"
+              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
+              onClick={() => handleEditPersona()}
+            >
+              {intl.formatMessage(messages.edit)}
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [intl, handleView, handleEditPersona],
+  );
 
-    if (view === 'list') {
-      return (
+  return (
+    <div className="flex min-h-0 flex-1 bg-page">
+      <SidebarMenu
+        items={sidebarItems}
+        activeKey="persona"
+        onItemClick={() => {}}
+      />
+      {view === 'list' ? (
         <div className="flex-1 p-[24px]">
           <div className="rounded-[4px] bg-container p-[24px]">
             <div className="flex items-center">
               <Button
                 theme="primary"
                 className="!h-[32px] !rounded-[2px] !px-[12px]"
-                onClick={this.handleCreate}
+                onClick={handleCreate}
               >
                 <div className="flex items-center gap-[8px]">
                   <AddIcon />
-                  <span>创建人设资料</span>
+                  <span>{intl.formatMessage(messages.createPersonaProfile)}</span>
                 </div>
               </Button>
               <span className="ml-[12px] text-[12px] text-secondary">
-                人设资料是您社交账号的信息资料，与账号绑定后，数字员工会以账号的人设进行聊天
+                {intl.formatMessage(messages.description)}
               </span>
             </div>
 
             <div className="mt-[24px]">
               <Table
                 data={MOCK_DATA}
-                columns={this.columns}
+                columns={columns}
                 rowKey="id"
                 bordered
                 hover
@@ -278,7 +386,7 @@ class KnowledgeScreen extends Component<
                 total={101}
                 pageSize={pageSize}
                 current={currentPage}
-                onChange={this.handlePageChange}
+                onChange={handlePageChange}
                 showJumper
                 showPageSize
                 size="small"
@@ -287,152 +395,137 @@ class KnowledgeScreen extends Component<
             </div>
           </div>
         </div>
-      );
-    }
-
-    return (
-      <div className="flex flex-1 flex-col">
-        <div className="flex h-[60px] items-center bg-container px-[24px]">
-          <button
-            type="button"
-            onClick={this.handleBack}
-            className="flex cursor-pointer items-center gap-[8px] border-none bg-transparent p-0 text-primary"
-          >
-            <ChevronLeftIcon size="20px" />
-            <span className="text-[16px] font-bold">创建人设资料</span>
-          </button>
-        </div>
-
-        <div className="flex flex-1 gap-[40px] p-[24px]">
-          <div
-            className="flex-1 rounded-[4px] bg-container p-[24px]"
-            style={{ maxWidth: 600 }}
-          >
-            <div className="mb-[24px]">
-              <FormLabel icon={<UserIcon size="14px" />} text="姓名" />
-              <Input
-                placeholder="请输入内容"
-                value={formData.name}
-                onChange={v => this.handleFormChange('name', v)}
-                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
-              />
-            </div>
-
-            <div className="mb-[24px]">
-              <FormLabel icon={<EditIcon size="14px" />} text="人设备注" />
-              <Input
-                placeholder="请输入内容"
-                value={formData.remark}
-                onChange={v => this.handleFormChange('remark', v)}
-                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
-              />
-            </div>
-
-            <div className="mb-[24px] flex gap-[16px]">
-              <div className="flex-1">
-                <FormLabel icon={<CalendarIcon size="14px" />} text="年龄" />
-                <DatePicker
-                  placeholder="请选择日期"
-                  className="!h-[36px] !w-full !rounded-[2px] [&_.t-input]:!h-[36px] [&_.t-input]:!border-line [&_.t-input]:!rounded-[2px]"
-                />
-              </div>
-              <div className="flex-1">
-                <FormLabel icon={<GenderMaleIcon size="14px" />} text="性别" />
-                <Select
-                  placeholder="请选择内容"
-                  options={GENDER_OPTIONS}
-                  className="!w-full [&_.t-select__trigger]:!h-[36px] [&_.t-input]:!rounded-[2px] [&_.t-input]:!border-line"
-                />
-              </div>
-            </div>
-
-            <div className="mb-[24px]">
-              <FormLabel icon={<HomeIcon size="14px" />} text="家庭情况" />
-              <textarea
-                placeholder="请输入内容"
-                value={formData.family}
-                onChange={e => this.handleFormChange('family', e.target.value)}
-                className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
-              />
-            </div>
-
-            <div className="mb-[24px]">
-              <FormLabel icon={<WorkIcon size="14px" />} text="职业" />
-              <Input
-                placeholder="请输入内容"
-                value={formData.occupation}
-                onChange={v => this.handleFormChange('occupation', v)}
-                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
-              />
-            </div>
-
-            <div className="mb-[24px]">
-              <FormLabel icon={<FolderIcon size="14px" />} text="项目参与度" />
-              <textarea
-                placeholder="请输入内容"
-                value={formData.participation}
-                onChange={e =>
-                  this.handleFormChange('participation', e.target.value)
-                }
-                className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
-              />
-            </div>
-
-            <div className="mt-[32px] flex justify-center">
-              <Button
-                theme="primary"
-                className="!h-[36px] !w-[80px] !rounded-[2px]"
-                onClick={this.handleSave}
-              >
-                保存
-              </Button>
-            </div>
-          </div>
-
-          <div className="flex-1 rounded-[4px] bg-container p-[24px]">
-            <div className="mb-[16px] flex items-center gap-[8px]">
-              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand-light text-brand">
-                <FileIcon size="14px" />
-              </div>
-              <span className="text-[16px] font-bold text-primary">
-                智能导入
+      ) : (
+        <div className="flex flex-1 flex-col">
+          <div className="flex h-[60px] items-center bg-container px-[24px]">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="flex cursor-pointer items-center gap-[8px] border-none bg-transparent p-0 text-primary"
+            >
+              <ChevronLeftIcon size="20px" />
+              <span className="text-[16px] font-bold">
+                {intl.formatMessage(messages.createPersonaProfile)}
               </span>
+            </button>
+          </div>
+
+          <div className="flex flex-1 gap-[40px] p-[24px]">
+            <div
+              className="flex-1 rounded-[4px] bg-container p-[24px]"
+              style={{ maxWidth: 600 }}
+            >
+              <div className="mb-[24px]">
+                <FormLabel icon={<UserIcon size="14px" />} text={intl.formatMessage(messages.name)} />
+                <Input
+                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
+                  value={formData.name}
+                  onChange={v => handleFormChange('name', v)}
+                  className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
+                />
+              </div>
+
+              <div className="mb-[24px]">
+                <FormLabel icon={<EditIcon size="14px" />} text={intl.formatMessage(messages.personaRemark)} />
+                <Input
+                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
+                  value={formData.remark}
+                  onChange={v => handleFormChange('remark', v)}
+                  className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
+                />
+              </div>
+
+              <div className="mb-[24px] flex gap-[16px]">
+                <div className="flex-1">
+                  <FormLabel icon={<CalendarIcon size="14px" />} text={intl.formatMessage(messages.age)} />
+                  <DatePicker
+                    placeholder={intl.formatMessage(messages.datePlaceholder)}
+                    className="!h-[36px] !w-full !rounded-[2px] [&_.t-input]:!h-[36px] [&_.t-input]:!border-line [&_.t-input]:!rounded-[2px]"
+                  />
+                </div>
+                <div className="flex-1">
+                  <FormLabel icon={<GenderMaleIcon size="14px" />} text={intl.formatMessage(messages.gender)} />
+                  <Select
+                    placeholder={intl.formatMessage(messages.selectPlaceholder)}
+                    options={genderOptions}
+                    className="!w-full [&_.t-select__trigger]:!h-[36px] [&_.t-input]:!rounded-[2px] [&_.t-input]:!border-line"
+                  />
+                </div>
+              </div>
+
+              <div className="mb-[24px]">
+                <FormLabel icon={<HomeIcon size="14px" />} text={intl.formatMessage(messages.familyStatus)} />
+                <textarea
+                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
+                  value={formData.family}
+                  onChange={e => handleFormChange('family', e.target.value)}
+                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
+                />
+              </div>
+
+              <div className="mb-[24px]">
+                <FormLabel icon={<WorkIcon size="14px" />} text={intl.formatMessage(messages.occupation)} />
+                <Input
+                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
+                  value={formData.occupation}
+                  onChange={v => handleFormChange('occupation', v)}
+                  className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
+                />
+              </div>
+
+              <div className="mb-[24px]">
+                <FormLabel icon={<FolderIcon size="14px" />} text={intl.formatMessage(messages.participation)} />
+                <textarea
+                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
+                  value={formData.participation}
+                  onChange={e => handleFormChange('participation', e.target.value)}
+                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
+                />
+              </div>
+
+              <div className="mt-[32px] flex justify-center">
+                <Button
+                  theme="primary"
+                  className="!h-[36px] !w-[80px] !rounded-[2px]"
+                  onClick={handleSave}
+                >
+                  {intl.formatMessage(messages.save)}
+                </Button>
+              </div>
             </div>
 
-            <textarea
-              placeholder={SMART_IMPORT_PLACEHOLDER}
-              value={smartImportText}
-              onChange={e => this.handleSmartImportTextChange(e.target.value)}
-              className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-brand p-[12px] text-[12px] leading-[1.5] text-secondary outline-none placeholder:text-secondary"
-            />
+            <div className="flex-1 rounded-[4px] bg-container p-[24px]">
+              <div className="mb-[16px] flex items-center gap-[8px]">
+                <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand-light text-brand">
+                  <FileIcon size="14px" />
+                </div>
+                <span className="text-[16px] font-bold text-primary">
+                  {intl.formatMessage(messages.smartImport)}
+                </span>
+              </div>
 
-            <div className="mt-[16px] flex justify-end">
-              <Button
-                theme="primary"
-                className="!h-[36px] !w-[100px] !rounded-[2px]"
-                onClick={this.handleSmartImport}
-              >
-                识别并导入
-              </Button>
+              <textarea
+                placeholder={intl.formatMessage(messages.smartImportPlaceholder)}
+                value={smartImportText}
+                onChange={e => handleSmartImportTextChange(e.target.value)}
+                className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-brand p-[12px] text-[12px] leading-[1.5] text-secondary outline-none placeholder:text-secondary"
+              />
+
+              <div className="mt-[16px] flex justify-end">
+                <Button
+                  theme="primary"
+                  className="!h-[36px] !w-[100px] !rounded-[2px]"
+                  onClick={handleSmartImport}
+                >
+                  {intl.formatMessage(messages.smartImportAndRecognize)}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  render(): ReactElement {
-    return (
-      <div className="flex min-h-0 flex-1 bg-page">
-        <SidebarMenu
-          items={SIDEBAR_ITEMS}
-          activeKey="persona"
-          onItemClick={() => {}}
-        />
-        {this.renderContent()}
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};
 
 export default KnowledgeScreen;

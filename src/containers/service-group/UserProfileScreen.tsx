@@ -92,7 +92,8 @@ const STAGE_COLOR_MAP = {
   orange: 'warning' as const,
 };
 const TAG_COLOR_MAP = { orange: 'warning' as const, red: 'danger' as const };
-const INTENT_COLOR_MAP = { green: '#00B42A', red: '#F53F3F' };
+const INTENT_CLASS_MAP = { green: 'text-success', red: 'text-error' };
+const INTENT_DOT_MAP = { green: 'bg-success', red: 'bg-error' };
 
 class UserProfileScreen extends Component {
   columns: PrimaryTableCol<FanProfile>[] = [
@@ -115,7 +116,7 @@ class UserProfileScreen extends Component {
       title: '所在地区',
       width: 120,
       cell: ({ row }) => (
-        <span className="text-[14px] leading-[22px] text-[#1F2329]">
+        <span className="text-[14px] leading-[22px] text-primary">
           {row.region}
         </span>
       ),
@@ -125,7 +126,7 @@ class UserProfileScreen extends Component {
       title: '性别',
       width: 100,
       cell: ({ row }) => (
-        <span className="text-[14px] leading-[22px] text-[#1F2329]">
+        <span className="text-[14px] leading-[22px] text-primary">
           {row.gender}
         </span>
       ),
@@ -162,28 +163,23 @@ class UserProfileScreen extends Component {
       colKey: 'intentLevel',
       title: '意向等级',
       width: 120,
-      cell: ({ row }) => {
-        const color = INTENT_COLOR_MAP[row.intentColor];
-        return (
-          <div
-            className="flex items-center gap-[8px] text-[14px] leading-[22px]"
-            style={{ color }}
-          >
-            <span
-              className="h-[8px] w-[8px] rounded-full"
-              style={{ backgroundColor: color }}
-            />
-            <span>{row.intentLevel}</span>
-          </div>
-        );
-      },
+      cell: ({ row }) => (
+        <div
+          className={`flex items-center gap-[8px] text-[14px] leading-[22px] ${INTENT_CLASS_MAP[row.intentColor]}`}
+        >
+          <span
+            className={`h-[8px] w-[8px] rounded-full ${INTENT_DOT_MAP[row.intentColor]}`}
+          />
+          <span>{row.intentLevel}</span>
+        </div>
+      ),
     },
     {
       colKey: 'chatSummary',
       title: '聊天摘要',
       width: 120,
       cell: () => (
-        <span className="cursor-pointer text-[14px] leading-[22px] text-[#0052D9]">
+        <span className="cursor-pointer text-[14px] leading-[22px] text-brand">
           查看
         </span>
       ),
@@ -193,7 +189,7 @@ class UserProfileScreen extends Component {
       title: '客服备注',
       width: 120,
       cell: () => (
-        <span className="cursor-pointer text-[14px] leading-[22px] text-[#0052D9]">
+        <span className="cursor-pointer text-[14px] leading-[22px] text-brand">
           查看
         </span>
       ),
@@ -210,8 +206,8 @@ class UserProfileScreen extends Component {
 
   render(): ReactElement {
     return (
-      <div className="flex flex-1 flex-col bg-[#F3F3F3] p-[24px]">
-        <div className="flex h-full flex-col bg-white p-[32px]">
+      <div className="flex flex-1 flex-col bg-page p-[24px]">
+        <div className="flex h-full flex-col bg-container p-[32px]">
           <FilterToolbar
             leftContent={
               <>
@@ -220,11 +216,11 @@ class UserProfileScreen extends Component {
                   placeholder="粉丝姓名。手机号"
                   className="!w-[240px]"
                 />
-                <span className="text-[14px] leading-[22px] text-[#1F2329]">
+                <span className="text-[14px] leading-[22px] text-primary">
                   状态
                 </span>
                 <Select className="!w-[160px]" placeholder="请选择内容状态" />
-                <span className="text-[14px] leading-[22px] text-[#1F2329]">
+                <span className="text-[14px] leading-[22px] text-primary">
                   人设
                 </span>
                 <Select className="!w-[160px]" placeholder="请选择内容状态" />
@@ -240,17 +236,17 @@ class UserProfileScreen extends Component {
             }
             rightContent={
               <>
-                <span className="text-[14px] leading-[22px] text-[#86909C]">
+                <span className="text-[14px] leading-[22px] text-secondary">
                   已选 2 项
                 </span>
                 <Button
                   theme="primary"
                   variant="text"
-                  className="!rounded-[8px] !bg-[#E8F3FF] !px-[14px] !text-[#0052D9]"
+                  className="!rounded-[8px] !bg-brand-light !px-[14px] !text-brand"
                 >
                   更多操作
                 </Button>
-                <RefreshIcon className="cursor-pointer text-[20px] text-[#1F2329]" />
+                <RefreshIcon className="cursor-pointer text-[20px] text-primary" />
               </>
             }
           />
@@ -273,7 +269,7 @@ class UserProfileScreen extends Component {
             tableLayout="fixed"
           />
 
-          <div className="flex-1 bg-white" />
+          <div className="flex-1 bg-container" />
         </div>
       </div>
     );

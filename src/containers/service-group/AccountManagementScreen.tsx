@@ -42,7 +42,7 @@ class AccountManagementScreen extends Component {
       width: 88,
       align: 'center',
       cell: ({ row }) => (
-        <span className="text-[14px] leading-[22px] text-[#1F2329]">
+        <span className="text-[14px] leading-[22px] text-primary">
           {row.id}
         </span>
       ),
@@ -88,9 +88,9 @@ class AccountManagementScreen extends Component {
       title: '账号备注',
       width: 184,
       cell: ({ row }) => (
-        <div className="flex items-center gap-[8px] text-[14px] leading-[22px] text-[#1F2329]">
+        <div className="flex items-center gap-[8px] text-[14px] leading-[22px] text-primary">
           <span>{row.note}</span>
-          <Edit1Icon className="cursor-pointer text-[#86909C]" size="14px" />
+          <Edit1Icon className="cursor-pointer text-secondary" size="14px" />
         </div>
       ),
     },
@@ -106,17 +106,14 @@ class AccountManagementScreen extends Component {
             : row.autoChat === 'off'
               ? '关闭'
               : '健康';
-        const color = isOff ? '#F53F3F' : '#00B42A';
+        const textClass = isOff ? 'text-error' : 'text-success';
+        const dotClass = isOff ? 'bg-error' : 'bg-success';
 
         return (
           <div
-            className="flex items-center gap-[8px] text-[14px] leading-[22px]"
-            style={{ color }}
+            className={`flex items-center gap-[8px] text-[14px] leading-[22px] ${textClass}`}
           >
-            <span
-              className="h-[8px] w-[8px] rounded-full"
-              style={{ backgroundColor: color }}
-            />
+            <span className={`h-[8px] w-[8px] rounded-full ${dotClass}`} />
             <span>{text}</span>
           </div>
         );
@@ -127,9 +124,9 @@ class AccountManagementScreen extends Component {
       title: '代理 IP',
       width: 212,
       cell: ({ row }) => (
-        <div className="flex items-center gap-[8px] text-[14px] leading-[22px] text-[#1F2329]">
+        <div className="flex items-center gap-[8px] text-[14px] leading-[22px] text-primary">
           <span>{row.proxy}</span>
-          <Edit1Icon className="cursor-pointer text-[#86909C]" size="14px" />
+          <Edit1Icon className="cursor-pointer text-secondary" size="14px" />
         </div>
       ),
     },
@@ -138,7 +135,7 @@ class AccountManagementScreen extends Component {
       title: '创建时间',
       width: 176,
       cell: ({ row }) => (
-        <span className="text-[14px] leading-[22px] text-[#1F2329]">
+        <span className="text-[14px] leading-[22px] text-primary">
           {row.createdAt}
         </span>
       ),
@@ -147,16 +144,16 @@ class AccountManagementScreen extends Component {
 
   render(): ReactElement {
     return (
-      <div className="account-management-screen flex flex-1 flex-col bg-[#F3F3F3] p-[24px]">
-        <div className="flex h-full w-full flex-col bg-white p-[32px]">
+      <div className="account-management-screen flex flex-1 flex-col bg-page p-[24px]">
+        <div className="flex h-full w-full flex-col bg-container p-[32px]">
           <FilterToolbar
             leftContent={
               <>
-                <span className="text-[14px] leading-[22px] text-[#1F2329]">
+                <span className="text-[14px] leading-[22px] text-primary">
                   状态
                 </span>
                 <Select className="!w-[160px]" placeholder="请选择内容状态" />
-                <span className="text-[14px] leading-[22px] text-[#1F2329]">
+                <span className="text-[14px] leading-[22px] text-primary">
                   人设
                 </span>
                 <Select className="!w-[160px]" placeholder="请选择内容状态" />
@@ -172,17 +169,17 @@ class AccountManagementScreen extends Component {
             }
             rightContent={
               <>
-                <span className="text-[14px] leading-[22px] text-[#86909C]">
+                <span className="text-[14px] leading-[22px] text-secondary">
                   已选 2 项
                 </span>
                 <Button
                   theme="primary"
                   variant="text"
-                  className="!rounded-[8px] !bg-[#E8F3FF] !px-[14px] !text-[#0052D9]"
+                  className="!rounded-[8px] !bg-brand-light !px-[14px] !text-brand"
                 >
                   更多操作
                 </Button>
-                <RefreshIcon className="cursor-pointer text-[20px] text-[#1F2329]" />
+                <RefreshIcon className="cursor-pointer text-[20px] text-primary" />
               </>
             }
           />
@@ -205,7 +202,7 @@ class AccountManagementScreen extends Component {
             tableLayout="fixed"
           />
 
-          <div className="flex-1 bg-white" />
+          <div className="flex-1 bg-container" />
         </div>
       </div>
     );

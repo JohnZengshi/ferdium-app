@@ -21,7 +21,7 @@ const AvatarCell = ({
   return (
     <div className={`flex items-center gap-[12px] py-[2px] ${className}`}>
       {avatarUrl ? (
-        <div className="h-[32px] w-[32px] overflow-hidden rounded-full border-[1px] border-[#E5E6EB]">
+        <div className="h-[32px] w-[32px] overflow-hidden rounded-full border-[1px] border-line">
           <img
             src={avatarUrl}
             alt={title}
@@ -29,13 +29,13 @@ const AvatarCell = ({
           />
         </div>
       ) : (
-        <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#E5E6EB] text-[13px] font-medium text-[#4E5969]">
+        <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-component text-[13px] font-medium text-secondary">
           {title.slice(0, 1)}
         </div>
       )}
       <div className="flex flex-col">
         <div className="flex items-center gap-[6px]">
-          <span className="text-[14px] leading-[22px] text-[#1F2329] font-medium">
+          <span className="text-[14px] leading-[22px] text-primary font-medium">
             {title}
           </span>
           {isVIP && (
@@ -49,7 +49,7 @@ const AvatarCell = ({
           )}
         </div>
         {subtitle && (
-          <span className="text-[12px] leading-[20px] text-[#86909C]">
+          <span className="text-[12px] leading-[20px] text-secondary">
             {subtitle}
           </span>
         )}

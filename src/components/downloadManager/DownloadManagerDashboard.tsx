@@ -213,7 +213,9 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                       </button>
                       <h6
                         style={{
-                          color: isPaused ? '#ed6c02' : undefined,
+                          color: isPaused
+                            ? 'var(--td-warning-color)'
+                            : undefined,
                         }}
                       >
                         {stateParse !== null && !isPaused

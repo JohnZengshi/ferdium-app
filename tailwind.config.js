@@ -49,7 +49,8 @@ module.exports = {
         'container-active': 'var(--td-bg-color-container-active)',
         'container-select': 'var(--td-bg-color-container-select)',
         'secondary-container': 'var(--td-bg-color-secondarycontainer)',
-        'secondary-container-hover': 'var(--td-bg-color-secondarycontainer-hover)',
+        'secondary-container-hover':
+          'var(--td-bg-color-secondarycontainer-hover)',
         component: 'var(--td-bg-color-component)',
         'component-hover': 'var(--td-bg-color-component-hover)',
         'component-active': 'var(--td-bg-color-component-active)',

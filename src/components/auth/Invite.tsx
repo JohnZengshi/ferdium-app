@@ -138,12 +138,12 @@ class Invite extends Component<IProps, IState> {
       .some(emailValue => emailValue.trim() !== '');
 
     const sendButtonClassName = `${[
-      'mt-2 w-full rounded-[3px] border-none bg-[#0052d9]',
+      'mt-2 w-full rounded-[3px] border-none bg-brand',
       "px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif]",
-      'text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)]',
+      'text-[16px] leading-[24px] text-text-anti',
       'cursor-pointer transition-colors duration-200',
-      'hover:bg-[#0046b8] active:bg-[#003a9e]',
-      'disabled:cursor-not-allowed disabled:bg-[#6b89d6]',
+      'hover:bg-brand-hover active:bg-brand-active',
+      'disabled:cursor-not-allowed disabled:bg-brand-disabled',
     ].join(' ')}${embed ? ' invite__embed--button' : ''}`;
 
     const renderForm = (
@@ -193,7 +193,7 @@ class Invite extends Component<IProps, IState> {
           {!embed && (
             <Link
               to="/"
-              className="auth__button auth__button--skip franz-form__button franz-form__button--secondary rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] cursor-pointer transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] block text-center mx-auto w-[20%] mt-2.5"
+              className="auth__button auth__button--skip franz-form__button franz-form__button--secondary rounded-[3px] border-none bg-brand px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-text-anti cursor-pointer transition-colors duration-200 hover:bg-brand-hover active:bg-brand-active block text-center mx-auto w-[20%] mt-2.5"
             >
               {intl.formatMessage(messages.skipButtonLabel)}
             </Link>

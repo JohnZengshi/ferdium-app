@@ -123,7 +123,7 @@ class Login extends Component<IProps> {
     } = this.props;
 
     return (
-      <div className="auth__container relative w-full max-w-[496px] rounded-[12px] bg-white px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
+      <div className="auth__container relative w-full max-w-[496px] rounded-[12px] bg-container px-12 py-[52px] shadow-[0_0_12px_0_rgba(0,0,0,0.08),0_20px_32px_-8px_rgba(0,0,0,0.2)]">
         <form
           className="auth__form franz-form flex w-full flex-col gap-5"
           onSubmit={e => this.submit(e)}
@@ -139,12 +139,12 @@ class Login extends Component<IProps> {
             {intl.formatMessage(messages.headline)}
           </H1>
           {isTokenExpired && (
-            <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+            <p className="auth__error-message mt-2.5 text-center text-[14px] text-error">
               {intl.formatMessage(messages.tokenExpired)}
             </p>
           )}
           {isServerLogout && (
-            <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+            <p className="auth__error-message mt-2.5 text-center text-[14px] text-error">
               {intl.formatMessage(messages.serverLogout)}
             </p>
           )}
@@ -152,16 +152,16 @@ class Login extends Component<IProps> {
           <Input {...form.$('password').bind()} showPasswordToggle />
           {error.code === 'invalid-credentials' && (
             <>
-              <h2 className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+              <h2 className="auth__error-message mt-2.5 text-center text-[14px] text-error">
                 {intl.formatMessage(messages.invalidCredentials)}
               </h2>
               {window['ferdium'].stores.settings.all.app.server !==
                 LIVE_FRANZ_API && (
                 <>
-                  <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+                  <p className="auth__error-message mt-2.5 text-center text-[14px] text-error">
                     {intl.formatMessage(messages.customServerQuestion)}{' '}
                   </p>
-                  <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+                  <p className="auth__error-message mt-2.5 text-center text-[14px] text-error">
                     <Link
                       to={`${window[
                         'ferdium'
@@ -181,7 +181,7 @@ class Login extends Component<IProps> {
           )}
           {isSubmitting ? (
             <Button
-              className="auth__button is-loading mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
+              className="auth__button is-loading mt-2 w-full rounded-[3px] border-none bg-brand px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-text-anti transition-colors duration-200 hover:bg-brand-hover active:bg-brand-active disabled:cursor-not-allowed disabled:bg-brand-disabled"
               buttonType="secondary"
               label={`${intl.formatMessage(messages.submitButtonLabel)} ...`}
               loaded={false}
@@ -191,7 +191,7 @@ class Login extends Component<IProps> {
           ) : (
             <Button
               type="submit"
-              className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:bg-[#0046b8] active:bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
+              className="auth__button mt-2 w-full rounded-[3px] border-none bg-brand px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-text-anti transition-colors duration-200 hover:bg-brand-hover active:bg-brand-active disabled:cursor-not-allowed disabled:bg-brand-disabled"
               label={intl.formatMessage(messages.submitButtonLabel)}
               onClick={noop}
             />

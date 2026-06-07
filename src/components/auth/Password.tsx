@@ -106,13 +106,13 @@ class Password extends Component<IProps> {
           )}
           <Input className="auth__field" {...form.$('email').bind()} focus />
           {status.length > 0 && status.includes('no-user') && (
-            <p className="auth__error-message mt-2.5 text-center text-[14px] text-[#d4183d]">
+            <p className="auth__error-message mt-2.5 text-center text-[14px] text-error">
               {intl.formatMessage(messages.noUser)}
             </p>
           )}
           {isSubmitting ? (
             <Button
-              className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 is-loading disabled:cursor-not-allowed disabled:bg-[#6b89d6] hover:not(:disabled):bg-[#0046b8] active:not(:disabled):bg-[#003a9e]"
+              className="auth__button mt-2 w-full rounded-[3px] border-none bg-brand px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-text-anti transition-colors duration-200 is-loading disabled:cursor-not-allowed disabled:bg-brand-disabled hover:not(:disabled):bg-brand-hover active:not(:disabled):bg-brand-active"
               buttonType="secondary"
               label={`${intl.formatMessage(globalMessages.submit)} ...`}
               loaded={false}
@@ -122,7 +122,7 @@ class Password extends Component<IProps> {
           ) : (
             <Button
               type="submit"
-              className="auth__button mt-2 w-full rounded-[3px] border-none bg-[#0052d9] px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-[rgba(255,255,255,0.9)] transition-colors duration-200 hover:not(:disabled):bg-[#0046b8] active:not(:disabled):bg-[#003a9e] disabled:cursor-not-allowed disabled:bg-[#6b89d6]"
+              className="auth__button mt-2 w-full rounded-[3px] border-none bg-brand px-6 py-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[16px] leading-[24px] text-text-anti transition-colors duration-200 hover:not(:disabled):bg-brand-hover active:not(:disabled):bg-brand-active disabled:cursor-not-allowed disabled:bg-brand-disabled"
               buttonType="secondary"
               label={intl.formatMessage(globalMessages.submit)}
               loaded={false}
@@ -133,13 +133,13 @@ class Password extends Component<IProps> {
         <div className="auth__links mt-4 flex flex-col gap-2 font-['PingFang_SC',-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[14px]">
           <Link
             to={signupRoute}
-            className="block text-center text-[#9b9b9b] no-underline transition-colors duration-200 hover:text-[#366ef4] hover:underline"
+            className="block text-center text-placeholder no-underline transition-colors duration-200 hover:text-brand hover:underline"
           >
             {intl.formatMessage(messages.signupLink)}
           </Link>
           <Link
             to={loginRoute}
-            className="block text-center text-[#9b9b9b] no-underline transition-colors duration-200 hover:text-[#366ef4] hover:underline"
+            className="block text-center text-placeholder no-underline transition-colors duration-200 hover:text-brand hover:underline"
           >
             {intl.formatMessage(messages.loginLink)}
           </Link>

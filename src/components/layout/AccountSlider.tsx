@@ -2,8 +2,8 @@ import { Menu, dialog, app as electronApp } from '@electron/remote';
 import { inject, observer } from 'mobx-react';
 import { Component } from 'react';
 import type { ReactElement } from 'react';
-import { injectIntl } from 'react-intl';
-import type { WrappedComponentProps } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
+import type { IntlShape, WrappedComponentProps } from 'react-intl';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { AddIcon, UserIcon } from 'tdesign-icons-react';
 import {
@@ -20,18 +20,92 @@ import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
 import type Service from '../../models/Service';
 import type { RealStores } from '../../stores';
 
-const PERSONA_OPTIONS = [
-  { label: '销售人设', value: 'sales' },
-  { label: '客服人设', value: 'support' },
-  { label: '运营人设', value: 'operation' },
+const messages = defineMessages({
+  personaSales: {
+    id: 'accountSlider.personaSales',
+    defaultMessage: '销售人设',
+  },
+  personaSupport: {
+    id: 'accountSlider.personaSupport',
+    defaultMessage: '客服人设',
+  },
+  personaOperation: {
+    id: 'accountSlider.personaOperation',
+    defaultMessage: '运营人设',
+  },
+  tabAll: {
+    id: 'accountSlider.tabAll',
+    defaultMessage: '全部',
+  },
+  tabOnline: {
+    id: 'accountSlider.tabOnline',
+    defaultMessage: '在线',
+  },
+  tabOffline: {
+    id: 'accountSlider.tabOffline',
+    defaultMessage: '离线',
+  },
+  tabError: {
+    id: 'accountSlider.tabError',
+    defaultMessage: '异常',
+  },
+  statusError: {
+    id: 'accountSlider.statusError',
+    defaultMessage: '异常',
+  },
+  statusOffline: {
+    id: 'accountSlider.statusOffline',
+    defaultMessage: '离线',
+  },
+  bindAccount: {
+    id: 'accountSlider.bindAccount',
+    defaultMessage: '绑定账号',
+  },
+  personaFallback: {
+    id: 'accountSlider.personaFallback',
+    defaultMessage: '人设',
+  },
+  bindPersona: {
+    id: 'accountSlider.bindPersona',
+    defaultMessage: '绑定',
+  },
+  bindPersonaDialogTitle: {
+    id: 'accountSlider.bindPersonaDialogTitle',
+    defaultMessage: '绑定社交账号人设资料',
+  },
+  selectPersona: {
+    id: 'accountSlider.selectPersona',
+    defaultMessage: '选择人设',
+  },
+  selectPersonaPlaceholder: {
+    id: 'accountSlider.selectPersonaPlaceholder',
+    defaultMessage: '请选择人设',
+  },
+  personaHint: {
+    id: 'accountSlider.personaHint',
+    defaultMessage: '提示：如没有人设资料，请在左侧菜单人设管理中添加资料后进行绑定',
+  },
+  confirmText: {
+    id: 'accountSlider.confirmText',
+    defaultMessage: '确认',
+  },
+});
+
+const getPersonaOptions = (intl: IntlShape) => [
+  { label: intl.formatMessage(messages.personaSales), value: 'sales' },
+  { label: intl.formatMessage(messages.personaSupport), value: 'support' },
+  { label: intl.formatMessage(messages.personaOperation), value: 'operation' },
 ];
 
-const TABS = [
-  { id: 'all', label: '全部', badge: '99+' },
-  { id: 'online', label: '在线', badge: '2' },
-  { id: 'offline', label: '离线', badge: '2' },
-  { id: 'error', label: '异常', badge: '2' },
-] as const;
+const TAB_IDS = ['all', 'online', 'offline', 'error'] as const;
+type TabId = (typeof TAB_IDS)[number];
+
+const getTabs = (intl: IntlShape): { id: TabId; label: string }[] => [
+  { id: 'all', label: intl.formatMessage(messages.tabAll) },
+  { id: 'online', label: intl.formatMessage(messages.tabOnline) },
+  { id: 'offline', label: intl.formatMessage(messages.tabOffline) },
+  { id: 'error', label: intl.formatMessage(messages.tabError) },
+];
 
 const tabTextColor = (tabId: TabId): string => {
   switch (tabId) {
@@ -52,8 +126,6 @@ const tabTextColor = (tabId: TabId): string => {
     }
   }
 };
-
-type TabId = (typeof TABS)[number]['id'];
 
 interface StatusTag {
   label: string;
@@ -88,13 +160,22 @@ const getMappedStatus = (
 
 const getStatusTag = (
   sessionStatus: WhatsAppSessionStatus,
+  intl: IntlShape,
 ): StatusTag | null => {
   switch (getMappedStatus(sessionStatus)) {
     case 'error': {
-      return { label: '异常', bg: 'bg-error-light', text: 'text-error' };
+      return {
+        label: intl.formatMessage(messages.statusError),
+        bg: 'bg-error-light',
+        text: 'text-error',
+      };
     }
     case 'offline': {
-      return { label: '离线', bg: 'bg-warning-light', text: 'text-warning' };
+      return {
+        label: intl.formatMessage(messages.statusOffline),
+        bg: 'bg-warning-light',
+        text: 'text-warning',
+      };
     }
     default: {
       return null;
@@ -133,127 +214,138 @@ interface AccountSliderItemProps {
 }
 
 const AccountSliderItem = SortableElement<AccountSliderItemProps>(
-  observer(
-    ({
-      service,
-      actions,
-      onContextMenu,
-      waStatus,
-    }: AccountSliderItemProps): ReactElement => {
-      const unread =
-        service.unreadDirectMessageCount + service.unreadIndirectMessageCount;
-      const statusTag = getStatusTag(waStatus);
-      const presenceColor = (() => {
-        switch (getMappedStatus(waStatus)) {
-          case 'online': {
-            return 'bg-success';
-          }
-          case 'offline': {
-            return 'bg-warning';
-          }
-          case 'error': {
-            return 'bg-error';
-          }
-          default: {
-            return service.isEnabled ? 'bg-success' : 'bg-warning';
-          }
-        }
-      })();
-
-      return (
-        <div
-          role="button"
-          tabIndex={0}
-          className={`flex items-center h-[72px] shrink-0 w-full px-[12px] gap-[15px] rounded-[8px] cursor-pointer ${service.isActive ? 'bg-brand-light' : 'bg-transparent'} hover:!bg-secondary-container`}
-          onClick={() =>
-            actions?.service?.setActive?.({ serviceId: service.id })
-          }
-          onKeyDown={(e: React.KeyboardEvent) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              actions?.service?.setActive?.({ serviceId: service.id });
+  injectIntl(
+    observer(
+      ({
+        service,
+        actions,
+        onContextMenu,
+        waStatus,
+        intl,
+      }: AccountSliderItemProps & WrappedComponentProps): ReactElement => {
+        const unread =
+          service.unreadDirectMessageCount + service.unreadIndirectMessageCount;
+        const statusTag = getStatusTag(waStatus, intl);
+        const presenceColor = (() => {
+          switch (getMappedStatus(waStatus)) {
+            case 'online': {
+              return 'bg-success';
             }
-          }}
-          onContextMenu={() => onContextMenu(service)}
-        >
-          <div className="relative w-[56px] h-[56px]">
-            <Avatar
-              image={service.icon || ''}
-              icon={<UserIcon />}
-              className="!w-full !h-full"
-            />
-            {unread > 0 && (
-              <div className="absolute -top-[2px] -right-[2px] min-w-[16px] h-[16px] bg-error rounded-full flex items-center justify-center px-[3px] border border-container">
-                <span className="text-[9px] text-text-anti leading-[15px] font-normal">
-                  {unread > 99 ? '99+' : unread}
-                </span>
-              </div>
-            )}
-            <div
-              className={`absolute bottom-0 right-0 w-[8px] h-[8px] rounded-full border border-container ${presenceColor}`}
-            />
-          </div>
-          <div className="flex flex-col items-start justify-center gap-[9px] h-fit flex-auto min-w-0">
-            <div className="flex items-center justify-between w-full">
-              <span className="text-[16px] font-normal leading-[26px] text-primary truncate">
-                {service.name}
-              </span>
-              {statusTag && (
-                <div
-                  className={`w-fit h-[20px] px-[4px] ${statusTag.bg} rounded-[3px] flex items-center justify-center shrink-0`}
-                >
-                  <span
-                    className={`text-[12px] ${statusTag.text} leading-[20px]`}
-                  >
-                    {statusTag.label}
+            case 'offline': {
+              return 'bg-warning';
+            }
+            case 'error': {
+              return 'bg-error';
+            }
+            default: {
+              return service.isEnabled ? 'bg-success' : 'bg-warning';
+            }
+          }
+        })();
+
+        return (
+          <div
+            role="button"
+            tabIndex={0}
+            className={`flex items-center h-[72px] shrink-0 w-full px-[12px] gap-[15px] rounded-[8px] cursor-pointer ${service.isActive ? 'bg-brand-light' : 'bg-transparent'} hover:!bg-secondary-container`}
+            onClick={() =>
+              actions?.service?.setActive?.({ serviceId: service.id })
+            }
+            onKeyDown={(e: React.KeyboardEvent) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                actions?.service?.setActive?.({ serviceId: service.id });
+              }
+            }}
+            onContextMenu={() => onContextMenu(service)}
+          >
+            <div className="relative w-[56px] h-[56px]">
+              <Avatar
+                image={service.icon || ''}
+                icon={<UserIcon />}
+                className="!w-full !h-full"
+              />
+              {unread > 0 && (
+                <div className="absolute -top-[2px] -right-[2px] min-w-[16px] h-[16px] bg-error rounded-full flex items-center justify-center px-[3px] border border-container">
+                  <span className="text-[9px] text-text-anti leading-[15px] font-normal">
+                    {unread > 99 ? '99+' : unread}
                   </span>
                 </div>
               )}
+              <div
+                className={`absolute bottom-0 right-0 w-[8px] h-[8px] rounded-full border border-container ${presenceColor}`}
+              />
             </div>
-            <div className="flex items-center gap-[4px]">
-              <span className="text-[14px] text-secondary leading-[22px]">
-                {service.recipe?.name || '人设'}
-              </span>
-              <Button
-                variant="outline"
-                className="!h-[20px] !min-w-[37px] text-[12px] !px-[4px]"
-                ghost
-                theme="success"
-                onClick={() => {
-                  const confirmDia = DialogPlugin.confirm({
-                    placement: 'center',
-                    header: '绑定社交账号人设资料',
-                    body: (
-                      <Form colon labelWidth={80} className="py-[16px]">
-                        <Form.FormItem label="选择人设" name="persona">
-                          <Select
-                            placeholder="请选择人设"
-                            options={PERSONA_OPTIONS}
-                          />
-                        </Form.FormItem>
+            <div className="flex flex-col items-start justify-center gap-[9px] h-fit flex-auto min-w-0">
+              <div className="flex items-center justify-between w-full">
+                <span className="text-[16px] font-normal leading-[26px] text-primary truncate">
+                  {service.name}
+                </span>
+                {statusTag && (
+                  <div
+                    className={`w-fit h-[20px] px-[4px] ${statusTag.bg} rounded-[3px] flex items-center justify-center shrink-0`}
+                  >
+                    <span
+                      className={`text-[12px] ${statusTag.text} leading-[20px]`}
+                    >
+                      {statusTag.label}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center gap-[4px]">
+                <span className="text-[14px] text-secondary leading-[22px]">
+                  {service.recipe?.name ||
+                    intl.formatMessage(messages.personaFallback)}
+                </span>
+                <Button
+                  variant="outline"
+                  className="!h-[20px] !min-w-[37px] text-[12px] !px-[4px]"
+                  ghost
+                  theme="success"
+                  onClick={() => {
+                    const confirmDia = DialogPlugin.confirm({
+                      placement: 'center',
+                      header: intl.formatMessage(
+                        messages.bindPersonaDialogTitle,
+                      ),
+                      body: (
+                        <Form colon labelWidth={80} className="py-[16px]">
+                          <Form.FormItem
+                            label={intl.formatMessage(messages.selectPersona)}
+                            name="persona"
+                          >
+                            <Select
+                              placeholder={intl.formatMessage(
+                                messages.selectPersonaPlaceholder,
+                              )}
+                              options={getPersonaOptions(intl)}
+                            />
+                          </Form.FormItem>
 
-                        <span className="text-[12px] text-placeholder leading-[20px]">
-                          提示：如没有人设资料，请在左侧菜单人设管理中添加资料后进行绑定
-                        </span>
-                      </Form>
-                    ),
-                    confirmBtn: '确认',
-                    onConfirm: () => {
-                      confirmDia.hide();
-                    },
-                    onClose: () => {
-                      confirmDia.hide();
-                    },
-                  });
-                }}
-              >
-                绑定
-              </Button>
+                          <span className="text-[12px] text-placeholder leading-[20px]">
+                            {intl.formatMessage(messages.personaHint)}
+                          </span>
+                        </Form>
+                      ),
+                      confirmBtn: intl.formatMessage(messages.confirmText),
+                      onConfirm: () => {
+                        confirmDia.hide();
+                      },
+                      onClose: () => {
+                        confirmDia.hide();
+                      },
+                    });
+                  }}
+                >
+                  {intl.formatMessage(messages.bindPersona)}
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      );
-    },
+        );
+      },
+    ),
   ),
 );
 
@@ -433,7 +525,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
   };
 
   render(): ReactElement {
-    const { stores, actions } = this.props;
+    const { stores, actions, intl } = this.props;
     const { activeTab } = this.state;
     const allServices = stores?.services?.all ?? [];
     const waStatuses =
@@ -444,11 +536,12 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     const filteredServices = allServices.filter(service =>
       isServiceMatchingTab(waStatuses.get(service.id), activeTab),
     );
+    const tabs = getTabs(intl);
 
     return (
       <div className="flex flex-col h-full bg-container px-[8px] py-[16px] gap-[16px] overflow-hidden">
         <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0">
-          {TABS.map(tab => {
+          {tabs.map(tab => {
             const isActive = activeTab === tab.id;
             const count = allServices.filter(service =>
               isServiceMatchingTab(waStatuses.get(service.id), tab.id),
@@ -486,7 +579,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           icon={<AddIcon />}
           onClick={() => actions?.ui?.openSettings?.({ path: 'recipes' })}
         >
-          绑定账号
+          {intl.formatMessage(messages.bindAccount)}
         </Button>
 
         {filteredServices.length > 0 ? (

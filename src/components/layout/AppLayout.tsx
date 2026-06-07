@@ -39,13 +39,6 @@ import type { FerdiumModule } from '../../stores/NavigationStore';
 import MainModuleTabs from './MainModuleTabs';
 import ServiceSubTabs from './ServiceSubTabs';
 
-const MODULE_LABELS: Record<FerdiumModule, string> = {
-  home: '首页',
-  'service-type': 'WA工具',
-  'knowledge-base': '资料库',
-  settings: '设置',
-};
-
 const messages = defineMessages({
   servicesUpdated: {
     id: 'infobar.servicesUpdated',
@@ -63,6 +56,34 @@ const messages = defineMessages({
     id: 'infobar.authRequestFailed',
     defaultMessage:
       'There were errors while trying to perform an authenticated request. Please try logging out and back in if this error persists.',
+  },
+  moduleHome: {
+    id: 'appLayout.moduleHome',
+    defaultMessage: '首页',
+  },
+  moduleServiceType: {
+    id: 'appLayout.moduleServiceType',
+    defaultMessage: 'WA工具',
+  },
+  moduleKnowledgeBase: {
+    id: 'appLayout.moduleKnowledgeBase',
+    defaultMessage: '资料库',
+  },
+  moduleSettings: {
+    id: 'appLayout.moduleSettings',
+    defaultMessage: '设置',
+  },
+  settingsTooltip: {
+    id: 'appLayout.settingsTooltip',
+    defaultMessage: 'Settings',
+  },
+  avatarPlaceholder: {
+    id: 'appLayout.avatarPlaceholder',
+    defaultMessage: 'Avatar',
+  },
+  tryAgain: {
+    id: 'appLayout.tryAgain',
+    defaultMessage: 'Try again',
   },
 });
 
@@ -150,6 +171,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { intl } = this.props;
 
+    const MODULE_LABELS: Record<FerdiumModule, string> = {
+      home: intl.formatMessage(messages.moduleHome),
+      'service-type': intl.formatMessage(messages.moduleServiceType),
+      'knowledge-base': intl.formatMessage(messages.moduleKnowledgeBase),
+      settings: intl.formatMessage(messages.moduleSettings),
+    };
+
     const { locked, automaticUpdates, useCompactWorkspaceDrawer } =
       settings.app;
     if (locked) {
@@ -181,7 +209,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
               <InfoBar
                 type="danger"
-                ctaLabel="Try again"
+                ctaLabel={intl.formatMessage(messages.tryAgain)}
                 ctaLoading={areRequiredRequestsLoading}
                 sticky
                 onClick={retryRequiredRequests}
@@ -193,7 +221,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             {authRequestFailed && (
               <InfoBar
                 type="danger"
-                ctaLabel="Try again"
+                ctaLabel={intl.formatMessage(messages.tryAgain)}
                 ctaLoading={areRequiredRequestsLoading}
                 sticky
                 onClick={retryRequiredRequests}
@@ -282,7 +310,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                   {stores?.user.data && (
                     <div className="flex items-center gap-[8px]">
                       <div className="w-[32px] h-[32px] rounded-full bg-component flex items-center justify-center">
-                        <span className="text-xs text-secondary">Avatar</span>
+                        <span className="text-xs text-secondary">{intl.formatMessage(messages.avatarPlaceholder)}</span>
                       </div>
                       <span className="text-[14px] text-primary">
                         {stores.user.waAkgEmail ||
@@ -302,7 +330,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         }
                         className="ml-2 sidebar__button sidebar__button--settings"
                         data-tooltip-id="tooltip-sidebar-button"
-                        data-tooltip-content="Settings"
+                        data-tooltip-content={intl.formatMessage(messages.settingsTooltip)}
                       >
                         <Icon icon={mdiCog} size={1} />
                         {showUpdateDot && (

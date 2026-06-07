@@ -12,32 +12,48 @@ import {
 import type { Stores } from '../../@types/stores.types';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
+import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
 
 const MODULES: {
   id: FerdiumModule;
-  label: string;
   activeIcon: ReactElement;
   inactiveIcon: ReactElement;
 }[] = [
   {
     id: 'home',
-    label: '首页',
     activeIcon: <HomeFilledIcon size="24px" />,
     inactiveIcon: <HomeIcon size="24px" />,
   },
   {
     id: 'service-type',
-    label: 'WA工具',
     activeIcon: <ChatBubble1FilledIcon size="24px" />,
     inactiveIcon: <ChatBubble1Icon size="24px" />,
   },
   {
     id: 'knowledge-base',
-    label: '资料库',
     activeIcon: <BookOpenFilledIcon size="24px" />,
     inactiveIcon: <BookOpenIcon size="24px" />,
   },
 ];
+
+const messages = defineMessages({
+  home: {
+    id: 'mainModuleTabs.home',
+    defaultMessage: 'Home',
+  },
+  serviceType: {
+    id: 'mainModuleTabs.serviceType',
+    defaultMessage: 'WA Tools',
+  },
+  knowledgeBase: {
+    id: 'mainModuleTabs.knowledgeBase',
+    defaultMessage: 'Knowledge Base',
+  },
+  aiAssistant: {
+    id: 'mainModuleTabs.aiAssistant',
+    defaultMessage: 'AI Assistant',
+  },
+});
 
 interface IProps {
   stores?: Stores;
@@ -45,9 +61,9 @@ interface IProps {
 
 @inject('stores')
 @observer
-class MainModuleTabs extends Component<IProps> {
+class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
   render(): ReactElement {
-    const { stores } = this.props;
+    const { stores, intl } = this.props;
     const badge = stores?.services.mainModuleBadge;
 
     return (
@@ -78,7 +94,13 @@ class MainModuleTabs extends Component<IProps> {
                 <span
                   className={`text-[12px] leading-5 whitespace-nowrap ${isActive ? 'text-brand' : 'text-secondary'}`}
                 >
-                  {mod.label}
+                  {intl.formatMessage(
+                    ({
+                      home: messages.home,
+                      'service-type': messages.serviceType,
+                      'knowledge-base': messages.knowledgeBase,
+                    } as const)[mod.id],
+                  )}
                 </span>
                 {mod.id === 'service-type' && badge != null && (
                   <span className="absolute top-0 right-0 flex items-center justify-center min-w-[12px] h-[12px] text-[9px] text-text-anti/90 bg-error rounded-full leading-[15px] translate-x-[2px] -translate-y-[2px]">
@@ -92,7 +114,7 @@ class MainModuleTabs extends Component<IProps> {
 
         <img
           src="./assets/images/sidebar-ai-bot.png"
-          alt="AI助手"
+          alt={intl.formatMessage(messages.aiAssistant)}
           className="w-[40px]"
         />
       </nav>
@@ -100,4 +122,4 @@ class MainModuleTabs extends Component<IProps> {
   }
 }
 
-export default MainModuleTabs;
+export default injectIntl(MainModuleTabs);

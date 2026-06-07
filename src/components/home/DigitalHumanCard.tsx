@@ -5,6 +5,26 @@ import {
   UserIcon,
 } from 'tdesign-icons-react';
 import { Card } from 'tdesign-react';
+import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+
+const messages = defineMessages({
+  online: {
+    id: 'digitalHumanCard.online',
+    defaultMessage: 'Online',
+  },
+  offline: {
+    id: 'digitalHumanCard.offline',
+    defaultMessage: 'Offline',
+  },
+  busy: {
+    id: 'digitalHumanCard.busy',
+    defaultMessage: 'Busy',
+  },
+  lastActive: {
+    id: 'digitalHumanCard.lastActive',
+    defaultMessage: 'Last active: {time}',
+  },
+});
 
 interface DigitalHumanCardProps {
   name: string;
@@ -19,28 +39,26 @@ const statusConfig = {
   online: {
     icon: CheckCircleIcon,
     color: 'var(--td-success-color)',
-    text: '在线',
   },
   offline: {
     icon: CloseCircleIcon,
     color: 'var(--td-error-color)',
-    text: '离线',
   },
   busy: {
     icon: CloseCircleIcon,
     color: 'var(--td-warning-color)',
-    text: '忙碌',
   },
 };
 
-export default function DigitalHumanCard({
+const DigitalHumanCard = ({
   name,
   description,
   avatar,
   status,
   lastActive,
   onClick,
-}: DigitalHumanCardProps): ReactElement {
+  intl,
+}: DigitalHumanCardProps & WrappedComponentProps): ReactElement => {
   const statusInfo = statusConfig[status];
   const StatusIcon = statusInfo.icon;
 
@@ -83,7 +101,7 @@ export default function DigitalHumanCard({
             <div className="flex items-center gap-2 mb-1">
               <h3 className="text-base font-medium truncate">{name}</h3>
               <span className="text-xs text-placeholder">
-                {statusInfo.text}
+                {intl.formatMessage(messages[status])}
               </span>
             </div>
 
@@ -96,7 +114,7 @@ export default function DigitalHumanCard({
             {lastActive && (
               <div className="flex items-center gap-1 text-xs text-placeholder">
                 <StatusIcon size="14px" style={{ color: statusInfo.color }} />
-                <span>最后活跃：{lastActive}</span>
+                <span>{intl.formatMessage(messages.lastActive, { time: lastActive })}</span>
               </div>
             )}
           </div>
@@ -104,4 +122,6 @@ export default function DigitalHumanCard({
       </Card>
     </div>
   );
-}
+};
+
+export default injectIntl(DigitalHumanCard);

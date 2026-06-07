@@ -1,6 +1,91 @@
 import { Component, type ReactElement } from 'react';
+import type { WrappedComponentProps } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
 import { Dialog } from 'tdesign-react';
+
+const messages = defineMessages({
+  title: {
+    id: 'securitySettingsTab.title',
+    defaultMessage: 'Safety boundaries',
+  },
+  descP1: {
+    id: 'securitySettingsTab.desc.p1',
+    defaultMessage: 'Set content the AI agent cannot promise, commit to, or reply freely, e.g.',
+  },
+  descP2: {
+    id: 'securitySettingsTab.desc.p2',
+    defaultMessage: '1. No offline meetings;',
+  },
+  descP3: {
+    id: 'securitySettingsTab.desc.p3',
+    defaultMessage: '2. No private contact info;',
+  },
+  descP4: {
+    id: 'securitySettingsTab.desc.p4',
+    defaultMessage: '3. No fabricated itineraries, etc.',
+  },
+  inputPlaceholder: {
+    id: 'securitySettingsTab.inputPlaceholder',
+    defaultMessage: 'Enter content',
+  },
+  inputConditionPlaceholder: {
+    id: 'securitySettingsTab.inputConditionPlaceholder',
+    defaultMessage: 'Enter condition',
+  },
+  addCondition: {
+    id: 'securitySettingsTab.addCondition',
+    defaultMessage: 'Add condition',
+  },
+  confirm: {
+    id: 'securitySettingsTab.confirm',
+    defaultMessage: 'Confirm',
+  },
+  toastDeleted: {
+    id: 'securitySettingsTab.toast.deleted',
+    defaultMessage: 'Deleted',
+  },
+  dialogTitle: {
+    id: 'securitySettingsTab.dialog.title',
+    defaultMessage: 'Save changes?',
+  },
+  dialogDesc: {
+    id: 'securitySettingsTab.dialog.desc',
+    defaultMessage: 'You have unsaved changes, do you want to save?',
+  },
+  dialogExit: {
+    id: 'securitySettingsTab.dialog.exit',
+    defaultMessage: 'Exit',
+  },
+  dialogSave: {
+    id: 'securitySettingsTab.dialog.save',
+    defaultMessage: 'Save',
+  },
+  boundaryOne: {
+    id: 'securitySettingsTab.boundaryOne',
+    defaultMessage: 'Boundary 1',
+  },
+  boundaryTwo: {
+    id: 'securitySettingsTab.boundaryTwo',
+    defaultMessage: 'Boundary 2',
+  },
+  boundaryThree: {
+    id: 'securitySettingsTab.boundaryThree',
+    defaultMessage: 'Boundary 3',
+  },
+  boundaryFour: {
+    id: 'securitySettingsTab.boundaryFour',
+    defaultMessage: 'Boundary 4',
+  },
+  boundaryFive: {
+    id: 'securitySettingsTab.boundaryFive',
+    defaultMessage: 'Boundary 5',
+  },
+  mockValue: {
+    id: 'securitySettingsTab.mockValue',
+    defaultMessage: 'Do not promise specific time for offline meetings',
+  },
+});
 
 interface BoundaryItem {
   id: number;
@@ -17,42 +102,46 @@ interface SecuritySettingsTabState {
 }
 
 class SecuritySettingsTab extends Component<
-  Record<string, never>,
+  Record<string, never> & WrappedComponentProps,
   SecuritySettingsTabState
 > {
-  state: SecuritySettingsTabState = {
-    focusedBoundaryId: null,
-    showDeleteToast: false,
-    showConfirmDialog: false,
-    boundaries: [
-      { id: 1, label: '边界一', value: '', placeholder: '请输入内容' },
-      { id: 2, label: '边界二', value: '', placeholder: '请输入内容' },
-      {
-        id: 3,
-        label: '边界三',
-        value: '客户要求线下见面时，不要承诺答应具体时间',
-        placeholder: '请输入内容',
-      },
-      {
-        id: 4,
-        label: '边界三',
-        value: '客户要求线下见面时，不要承诺答应具体时间',
-        placeholder: '请输入内容',
-      },
-      {
-        id: 5,
-        label: '边界四',
-        value: '客户要求线下见面时，不要承诺答应具体时间',
-        placeholder: '请输入内容',
-      },
-      {
-        id: 6,
-        label: '边界五',
-        value: '客户要求线下见面时，不要承诺答应具体时间',
-        placeholder: '请输入内容',
-      },
-    ],
-  };
+  constructor(props: Record<string, never> & WrappedComponentProps) {
+    super(props);
+    const { intl } = props;
+    this.state = {
+      focusedBoundaryId: null,
+      showDeleteToast: false,
+      showConfirmDialog: false,
+      boundaries: [
+        { id: 1, label: intl.formatMessage(messages.boundaryOne), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
+        { id: 2, label: intl.formatMessage(messages.boundaryTwo), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
+        {
+          id: 3,
+          label: intl.formatMessage(messages.boundaryThree),
+          value: intl.formatMessage(messages.mockValue),
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+        {
+          id: 4,
+          label: intl.formatMessage(messages.boundaryThree),
+          value: intl.formatMessage(messages.mockValue),
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+        {
+          id: 5,
+          label: intl.formatMessage(messages.boundaryFour),
+          value: intl.formatMessage(messages.mockValue),
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+        {
+          id: 6,
+          label: intl.formatMessage(messages.boundaryFive),
+          value: intl.formatMessage(messages.mockValue),
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+      ],
+    };
+  }
 
   private nextBoundaryId = 7;
 
@@ -67,6 +156,7 @@ class SecuritySettingsTab extends Component<
   };
 
   handleBoundaryAdd = (): void => {
+    const { intl } = this.props;
     this.setState(prev => ({
       boundaries: [
         ...prev.boundaries,
@@ -74,7 +164,7 @@ class SecuritySettingsTab extends Component<
           id: this.nextBoundaryId++,
           label: '',
           value: '',
-          placeholder: '请输入条件',
+          placeholder: intl.formatMessage(messages.inputConditionPlaceholder),
         },
       ],
     }));
@@ -111,6 +201,7 @@ class SecuritySettingsTab extends Component<
       showDeleteToast,
       showConfirmDialog,
     } = this.state;
+    const { intl } = this.props;
 
     const renderAction = (item: BoundaryItem): ReactElement | null => {
       switch (item.id) {
@@ -175,7 +266,7 @@ class SecuritySettingsTab extends Component<
               onClick={this.handleSaveConfirm}
               className="flex h-[28px] w-[56px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-brand text-[13px] font-medium text-text-anti"
             >
-              确定
+              {intl.formatMessage(messages.confirm)}
             </button>
           );
         }
@@ -201,14 +292,14 @@ class SecuritySettingsTab extends Component<
               className="text-[17px] font-semibold leading-[26px] text-primary"
               style={{ letterSpacing: '0.2px' }}
             >
-              安全边界
+              {intl.formatMessage(messages.title)}
             </span>
           </div>
           <div className="ml-[32px] mt-[10px] text-[14px] font-normal leading-[24px] text-secondary">
-            <p>设置数字员工团队不能答应、不能承诺、不能自由回复的内容，例如</p>
-            <p>1、不答应线下见面；</p>
-            <p>2、不提供私人联系方式；</p>
-            <p>3、不编造行程等</p>
+            <p>{intl.formatMessage(messages.descP1)}</p>
+            <p>{intl.formatMessage(messages.descP2)}</p>
+            <p>{intl.formatMessage(messages.descP3)}</p>
+            <p>{intl.formatMessage(messages.descP4)}</p>
           </div>
         </div>
 
@@ -267,7 +358,7 @@ class SecuritySettingsTab extends Component<
             className="flex h-[48px] w-full cursor-pointer items-center justify-center gap-[8px] rounded-[8px] border-[1.5px] border-dashed border-brand bg-transparent transition-colors duration-200 hover:bg-brand-light"
           >
             <AddIcon size="18px" className="text-brand" />
-            <span className="text-[15px] font-medium text-brand">新增条件</span>
+            <span className="text-[15px] font-medium text-brand">{intl.formatMessage(messages.addCondition)}</span>
           </button>
         </div>
 
@@ -280,7 +371,7 @@ class SecuritySettingsTab extends Component<
                 </span>
               </div>
               <span className="text-[15px] font-normal text-primary">
-                删除成功
+                {intl.formatMessage(messages.toastDeleted)}
               </span>
             </div>
           </div>
@@ -310,14 +401,14 @@ class SecuritySettingsTab extends Component<
               className="text-[20px] font-semibold text-primary"
               style={{ lineHeight: '36px', letterSpacing: '0.5px' }}
             >
-              是否保存
+              {intl.formatMessage(messages.dialogTitle)}
             </span>
           </div>
           <p
             className="mt-[12px] text-[15px] font-normal text-placeholder"
             style={{ lineHeight: '24px' }}
           >
-            您有未保存的内容，是否要保存？
+            {intl.formatMessage(messages.dialogDesc)}
           </p>
           <div className="mt-[24px] flex justify-end gap-[12px]">
             <button
@@ -325,14 +416,14 @@ class SecuritySettingsTab extends Component<
               onClick={this.handleDialogExit}
               className="flex h-[36px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-component px-[16px] text-[14px] font-medium text-secondary hover:bg-component"
             >
-              退出
+              {intl.formatMessage(messages.dialogExit)}
             </button>
             <button
               type="button"
               onClick={this.handleDialogSave}
               className="flex h-[36px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[16px] text-[14px] font-medium text-text-anti hover:bg-brand-hover"
             >
-              保存
+              {intl.formatMessage(messages.dialogSave)}
             </button>
           </div>
         </Dialog>
@@ -341,4 +432,4 @@ class SecuritySettingsTab extends Component<
   }
 }
 
-export default SecuritySettingsTab;
+export default injectIntl(SecuritySettingsTab);

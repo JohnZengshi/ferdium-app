@@ -1,7 +1,132 @@
 import { Component, type ReactElement } from 'react';
+import type { WrappedComponentProps } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Table, Select, Pagination, DateRangePicker } from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
 import { ChatBubble1FilledIcon, SendIcon } from 'tdesign-icons-react';
+
+const messages = defineMessages({
+  serialNumber: {
+    id: 'notificationsTab.col.serialNumber',
+    defaultMessage: '#',
+  },
+  time: {
+    id: 'notificationsTab.col.time',
+    defaultMessage: 'Time',
+  },
+  platform: {
+    id: 'notificationsTab.col.platform',
+    defaultMessage: 'Platform',
+  },
+  account: {
+    id: 'notificationsTab.col.account',
+    defaultMessage: 'Account',
+  },
+  conversation: {
+    id: 'notificationsTab.col.conversation',
+    defaultMessage: 'Conversation',
+  },
+  triggerContent: {
+    id: 'notificationsTab.col.triggerContent',
+    defaultMessage: 'Content',
+  },
+  rule: {
+    id: 'notificationsTab.col.rule',
+    defaultMessage: 'Rule',
+  },
+  status: {
+    id: 'notificationsTab.col.status',
+    defaultMessage: 'Status',
+  },
+  actions: {
+    id: 'notificationsTab.col.actions',
+    defaultMessage: 'Actions',
+  },
+  filterNotificationTime: {
+    id: 'notificationsTab.filter.notificationTime',
+    defaultMessage: 'Notify time',
+  },
+  filterSocialMedia: {
+    id: 'notificationsTab.filter.socialMedia',
+    defaultMessage: 'Social media',
+  },
+  filterStatus: {
+    id: 'notificationsTab.filter.status',
+    defaultMessage: 'Status',
+  },
+  filterAll: {
+    id: 'notificationsTab.filter.all',
+    defaultMessage: 'All',
+  },
+  filterWhatsApp: {
+    id: 'notificationsTab.filter.whatsapp',
+    defaultMessage: 'WhatsApp',
+  },
+  filterTelegram: {
+    id: 'notificationsTab.filter.telegram',
+    defaultMessage: 'Telegram',
+  },
+  filterRead: {
+    id: 'notificationsTab.filter.read',
+    defaultMessage: 'Read',
+  },
+  filterUnread: {
+    id: 'notificationsTab.filter.unread',
+    defaultMessage: 'Unread',
+  },
+  startDate: {
+    id: 'notificationsTab.filter.startDate',
+    defaultMessage: 'Start date',
+  },
+  endDate: {
+    id: 'notificationsTab.filter.endDate',
+    defaultMessage: 'End date',
+  },
+  selectStatus: {
+    id: 'notificationsTab.filter.selectStatus',
+    defaultMessage: 'Select status',
+  },
+  btnSearch: {
+    id: 'notificationsTab.btn.search',
+    defaultMessage: 'Search',
+  },
+  btnReset: {
+    id: 'notificationsTab.btn.reset',
+    defaultMessage: 'Reset',
+  },
+  btnMarkAllRead: {
+    id: 'notificationsTab.btn.markAllRead',
+    defaultMessage: 'Mark all read',
+  },
+  btnExportSelected: {
+    id: 'notificationsTab.btn.exportSelected',
+    defaultMessage: 'Export selected',
+  },
+  selectedItems: {
+    id: 'notificationsTab.selected.items',
+    defaultMessage: '{count} selected',
+  },
+  platformWhatsapp: {
+    id: 'notificationsTab.platform.whatsapp',
+    defaultMessage: 'WhatsApp',
+  },
+  platformTelegram: {
+    id: 'notificationsTab.platform.telegram',
+    defaultMessage: 'Telegram',
+  },
+  statusRead: {
+    id: 'notificationsTab.status.read',
+    defaultMessage: 'Read',
+  },
+  statusUnread: {
+    id: 'notificationsTab.status.unread',
+    defaultMessage: 'Unread',
+  },
+  viewConversation: {
+    id: 'notificationsTab.action.viewConversation',
+    defaultMessage: 'View',
+  },
+});
 
 interface NotificationRecord {
   id: number;
@@ -13,18 +138,6 @@ interface NotificationRecord {
   rule: string;
   status: 'read' | 'unread';
 }
-
-const SOCIAL_OPTIONS = [
-  { label: '全部', value: 'all' },
-  { label: 'WhatsApp', value: 'whatsapp' },
-  { label: 'Telegram', value: 'telegram' },
-];
-
-const STATUS_OPTIONS = [
-  { label: '全部', value: 'all' },
-  { label: '已读', value: 'read' },
-  { label: '未读', value: 'unread' },
-];
 
 const MOCK_DATA: NotificationRecord[] = [
   {
@@ -156,7 +269,7 @@ interface NotificationsTabState {
 }
 
 class NotificationsTab extends Component<
-  Record<string, never>,
+  Record<string, never> & WrappedComponentProps,
   NotificationsTabState
 > {
   state: NotificationsTabState = {
@@ -185,108 +298,124 @@ class NotificationsTab extends Component<
 
   handleViewConversation = (_id: number): void => {};
 
-  columns: PrimaryTableCol[] = [
-    { colKey: 'row-select', type: 'multiple', width: 48 },
-    { colKey: 'id', title: '序号', width: 56, align: 'center' },
-    {
-      colKey: 'time',
-      title: '消息时间',
-      width: 148,
-      ellipsis: true,
-      cell: ({ row }) => (
-        <span style={{ fontVariantNumeric: 'tabular-nums' }}>
-          {(row as NotificationRecord).time}
-        </span>
-      ),
-    },
-    {
-      colKey: 'platform',
-      title: '社交媒体',
-      width: 124,
-      cell: ({ row }) => {
-        const r = row as NotificationRecord;
-        if (r.platform === 'whatsapp') {
+  getColumns = (): PrimaryTableCol[] => {
+    const { intl } = this.props;
+    return [
+      { colKey: 'row-select', type: 'multiple', width: 48 },
+      { colKey: 'id', title: intl.formatMessage(messages.serialNumber), width: 56, align: 'center' },
+      {
+        colKey: 'time',
+        title: intl.formatMessage(messages.time),
+        width: 148,
+        ellipsis: true,
+        cell: ({ row }) => (
+          <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+            {(row as NotificationRecord).time}
+          </span>
+        ),
+      },
+      {
+        colKey: 'platform',
+        title: intl.formatMessage(messages.platform),
+        width: 124,
+        cell: ({ row }) => {
+          const r = row as NotificationRecord;
+          if (r.platform === 'whatsapp') {
+            return (
+              <div className="flex items-center gap-[8px]">
+                <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-success">
+                  <ChatBubble1FilledIcon className="text-text-anti" />
+                </div>
+                <span className="text-[14px] text-primary">{intl.formatMessage(messages.platformWhatsapp)}</span>
+              </div>
+            );
+          }
           return (
             <div className="flex items-center gap-[8px]">
-              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-success">
-                <ChatBubble1FilledIcon className="text-text-anti" />
+              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand">
+                <SendIcon className="text-text-anti" />
               </div>
-              <span className="text-[14px] text-primary">Whatsapp</span>
+              <span className="text-[14px] text-primary">{intl.formatMessage(messages.platformTelegram)}</span>
             </div>
           );
-        }
-        return (
-          <div className="flex items-center gap-[8px]">
-            <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand">
-              <SendIcon className="text-text-anti" />
-            </div>
-            <span className="text-[14px] text-primary">Telegram</span>
-          </div>
-        );
+        },
       },
-    },
-    { colKey: 'account', title: '账号', width: 144, ellipsis: true },
-    {
-      colKey: 'user',
-      title: '会话',
-      width: 120,
-      cell: ({ row }) => {
-        const r = row as NotificationRecord;
-        return (
-          <div className="flex items-center gap-[8px]">
-            <div className="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-full bg-component text-[11px] font-medium text-placeholder">
-              {r.user[0]}
+      { colKey: 'account', title: intl.formatMessage(messages.account), width: 144, ellipsis: true },
+      {
+        colKey: 'user',
+        title: intl.formatMessage(messages.conversation),
+        width: 120,
+        cell: ({ row }) => {
+          const r = row as NotificationRecord;
+          return (
+            <div className="flex items-center gap-[8px]">
+              <div className="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-full bg-component text-[11px] font-medium text-placeholder">
+                {r.user[0]}
+              </div>
+              <span className="truncate text-[14px] text-primary">{r.user}</span>
             </div>
-            <span className="truncate text-[14px] text-primary">{r.user}</span>
-          </div>
-        );
+          );
+        },
       },
-    },
-    { colKey: 'triggerContent', title: '触发内容', ellipsis: true },
-    { colKey: 'rule', title: '预警规则', ellipsis: true },
-    {
-      colKey: 'status',
-      title: '状态',
-      width: 84,
-      cell: ({ row }) => {
-        const r = row as NotificationRecord;
-        const isRead = r.status === 'read';
-        return (
-          <span className="inline-flex items-center gap-[6px]">
-            <span
-              className={`inline-block h-[6px] w-[6px] rounded-full ${isRead ? 'bg-success' : 'bg-error'}`}
-            />
-            <span
-              className={`text-[14px] font-normal leading-[22px] ${isRead ? 'text-success' : 'text-error'}`}
-            >
-              {isRead ? '已读' : '未读'}
+      { colKey: 'triggerContent', title: intl.formatMessage(messages.triggerContent), ellipsis: true },
+      { colKey: 'rule', title: intl.formatMessage(messages.rule), ellipsis: true },
+      {
+        colKey: 'status',
+        title: intl.formatMessage(messages.status),
+        width: 84,
+        cell: ({ row }) => {
+          const r = row as NotificationRecord;
+          const isRead = r.status === 'read';
+          return (
+            <span className="inline-flex items-center gap-[6px]">
+              <span
+                className={`inline-block h-[6px] w-[6px] rounded-full ${isRead ? 'bg-success' : 'bg-error'}`}
+              />
+              <span
+                className={`text-[14px] font-normal leading-[22px] ${isRead ? 'text-success' : 'text-error'}`}
+              >
+                {isRead ? intl.formatMessage(messages.statusRead) : intl.formatMessage(messages.statusUnread)}
+              </span>
             </span>
-          </span>
-        );
+          );
+        },
       },
-    },
-    {
-      colKey: 'op',
-      title: '操作',
-      width: 84,
-      cell: ({ row }) => {
-        const r = row as NotificationRecord;
-        return (
-          <button
-            type="button"
-            onClick={() => this.handleViewConversation(r.id)}
-            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
-          >
-            查看对话
-          </button>
-        );
+      {
+        colKey: 'op',
+        title: intl.formatMessage(messages.actions),
+        width: 84,
+        cell: ({ row }) => {
+          const r = row as NotificationRecord;
+          return (
+            <button
+              type="button"
+              onClick={() => this.handleViewConversation(r.id)}
+              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
+            >
+              {intl.formatMessage(messages.viewConversation)}
+            </button>
+          );
+        },
       },
-    },
-  ];
+    ];
+  };
 
   render(): ReactElement {
     const { selectedRowIds, currentPage, pageSize } = this.state;
+    const { intl } = this.props;
     const someSelected = selectedRowIds.length > 0;
+
+    const socialOptions = [
+      { label: intl.formatMessage(messages.filterAll), value: 'all' },
+      { label: 'WhatsApp', value: 'whatsapp' },
+      { label: 'Telegram', value: 'telegram' },
+    ];
+
+    const statusOptions = [
+      { label: intl.formatMessage(messages.filterAll), value: 'all' },
+      { label: intl.formatMessage(messages.filterRead), value: 'read' },
+      { label: intl.formatMessage(messages.filterUnread), value: 'unread' },
+    ];
 
     return (
       <div
@@ -296,11 +425,11 @@ class NotificationsTab extends Component<
         <div className="flex h-[56px] items-center gap-[20px]">
           <div className="flex items-center gap-[8px]">
             <span className="text-[14px] font-normal text-secondary">
-              通知时间
+              {intl.formatMessage(messages.filterNotificationTime)}
             </span>
             <DateRangePicker
               mode="date"
-              placeholder={['开始日期', '结束日期']}
+              placeholder={[intl.formatMessage(messages.startDate), intl.formatMessage(messages.endDate)]}
               style={{ width: 260, height: 32 }}
               className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
             />
@@ -308,23 +437,23 @@ class NotificationsTab extends Component<
 
           <div className="flex items-center gap-[8px]">
             <span className="text-[14px] font-normal text-secondary">
-              社交媒体
+              {intl.formatMessage(messages.filterSocialMedia)}
             </span>
             <Select
               style={{ width: 160 }}
               className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-              placeholder="请选择内容状态"
-              options={SOCIAL_OPTIONS}
+              placeholder={intl.formatMessage(messages.selectStatus)}
+              options={socialOptions}
             />
           </div>
 
           <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-secondary">状态</span>
+            <span className="text-[14px] font-normal text-secondary">{intl.formatMessage(messages.filterStatus)}</span>
             <Select
               style={{ width: 160 }}
               className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-              placeholder="请选择内容状态"
-              options={STATUS_OPTIONS}
+              placeholder={intl.formatMessage(messages.selectStatus)}
+              options={statusOptions}
             />
           </div>
 
@@ -332,14 +461,14 @@ class NotificationsTab extends Component<
             type="button"
             className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[14px] font-medium text-text-anti"
           >
-            搜索
+            {intl.formatMessage(messages.btnSearch)}
           </button>
 
           <button
             type="button"
             className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container text-[14px] font-medium text-secondary"
           >
-            重置
+            {intl.formatMessage(messages.btnReset)}
           </button>
         </div>
 
@@ -349,7 +478,7 @@ class NotificationsTab extends Component<
             onClick={this.handleMarkAllRead}
             className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[16px] text-[14px] font-medium text-text-anti"
           >
-            全部标记为已读
+            {intl.formatMessage(messages.btnMarkAllRead)}
           </button>
 
           <button
@@ -357,16 +486,12 @@ class NotificationsTab extends Component<
             onClick={this.handleExport}
             className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
           >
-            导出已选择
+            {intl.formatMessage(messages.btnExportSelected)}
           </button>
 
           {someSelected && (
             <span className="text-[14px] font-normal text-placeholder">
-              已选{' '}
-              <span className="font-medium text-brand">
-                {selectedRowIds.length}
-              </span>{' '}
-              项
+              {intl.formatMessage(messages.selectedItems, { count: selectedRowIds.length })}
             </span>
           )}
         </div>
@@ -374,7 +499,7 @@ class NotificationsTab extends Component<
         <div className="mt-[16px] rounded-[8px] border border-solid border-line">
           <Table
             data={MOCK_DATA}
-            columns={this.columns}
+            columns={this.getColumns()}
             rowKey="id"
             selectedRowKeys={selectedRowIds}
             onSelectChange={this.handleSelectChange}
@@ -402,4 +527,4 @@ class NotificationsTab extends Component<
   }
 }
 
-export default NotificationsTab;
+export default injectIntl(NotificationsTab);

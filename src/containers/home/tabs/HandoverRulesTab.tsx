@@ -1,10 +1,99 @@
 import { Component, type ReactElement } from 'react';
+import type { WrappedComponentProps } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import {
   AddIcon,
   NotificationIcon,
   CheckIcon,
   CloseIcon,
 } from 'tdesign-icons-react';
+
+const messages = defineMessages({
+  title: {
+    id: 'handoverRulesTab.title',
+    defaultMessage: 'Handover rules',
+  },
+  descP1: {
+    id: 'handoverRulesTab.desc.p1',
+    defaultMessage: 'When a message triggers your rules, the AI agent will alert a human operator, e.g.',
+  },
+  descP2: {
+    id: 'handoverRulesTab.desc.p2',
+    defaultMessage: '1. Suspecting it is AI, not a real person;',
+  },
+  descP3: {
+    id: 'handoverRulesTab.desc.p3',
+    defaultMessage: '2. Asking about payments;',
+  },
+  descP4: {
+    id: 'handoverRulesTab.desc.p4',
+    defaultMessage: '3. Asking about product returns and safety.',
+  },
+  notificationTitle: {
+    id: 'handoverRulesTab.notificationTitle',
+    defaultMessage: 'Bind notification account',
+  },
+  notificationDesc: {
+    id: 'handoverRulesTab.notificationDesc',
+    defaultMessage: 'When a rule is triggered, alerts will be pushed to the bound channel for timely handling.',
+  },
+  whatsappBot: {
+    id: 'handoverRulesTab.whatsappBot',
+    defaultMessage: 'WhatsApp Bot',
+  },
+  telegramBot: {
+    id: 'handoverRulesTab.telegramBot',
+    defaultMessage: 'Telegram Bot',
+  },
+  bound: {
+    id: 'handoverRulesTab.bound',
+    defaultMessage: 'Bound',
+  },
+  unbound: {
+    id: 'handoverRulesTab.unbound',
+    defaultMessage: 'Unbound',
+  },
+  rebind: {
+    id: 'handoverRulesTab.rebind',
+    defaultMessage: 'Rebind',
+  },
+  goBind: {
+    id: 'handoverRulesTab.goBind',
+    defaultMessage: 'Bind',
+  },
+  inputPlaceholder: {
+    id: 'handoverRulesTab.inputPlaceholder',
+    defaultMessage: 'Enter content',
+  },
+  inputConditionPlaceholder: {
+    id: 'handoverRulesTab.inputConditionPlaceholder',
+    defaultMessage: 'Enter condition',
+  },
+  addRule: {
+    id: 'handoverRulesTab.addRule',
+    defaultMessage: 'Add handover rule',
+  },
+  confirm: {
+    id: 'handoverRulesTab.confirm',
+    defaultMessage: 'Confirm',
+  },
+  ruleOne: {
+    id: 'handoverRulesTab.ruleOne',
+    defaultMessage: 'Rule 1',
+  },
+  ruleTwo: {
+    id: 'handoverRulesTab.ruleTwo',
+    defaultMessage: 'Rule 2',
+  },
+  ruleThree: {
+    id: 'handoverRulesTab.ruleThree',
+    defaultMessage: 'Rule 3',
+  },
+  ruleFour: {
+    id: 'handoverRulesTab.ruleFour',
+    defaultMessage: 'Rule 4',
+  },
+});
 
 interface RuleItem {
   id: number;
@@ -19,28 +108,32 @@ interface HandoverRulesTabState {
 }
 
 class HandoverRulesTab extends Component<
-  Record<string, never>,
+  Record<string, never> & WrappedComponentProps,
   HandoverRulesTabState
 > {
-  state: HandoverRulesTabState = {
-    focusedRuleId: null,
-    rules: [
-      { id: 1, label: '规则一', value: '', placeholder: '请输入内容' },
-      { id: 2, label: '规则二', value: '', placeholder: '请输入内容' },
-      {
-        id: 3,
-        label: '规则三',
-        value: '客户要求线下见面时，不要承诺答应具体时间',
-        placeholder: '请输入内容',
-      },
-      {
-        id: 4,
-        label: '规则四',
-        value: '客户要求线下见面时，不要承诺答应具体时间',
-        placeholder: '请输入内容',
-      },
-    ],
-  };
+  constructor(props: Record<string, never> & WrappedComponentProps) {
+    super(props);
+    const { intl } = props;
+    this.state = {
+      focusedRuleId: null,
+      rules: [
+        { id: 1, label: intl.formatMessage(messages.ruleOne), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
+        { id: 2, label: intl.formatMessage(messages.ruleTwo), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
+        {
+          id: 3,
+          label: intl.formatMessage(messages.ruleThree),
+          value: intl.formatMessage(messages.descP1),
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+        {
+          id: 4,
+          label: intl.formatMessage(messages.ruleFour),
+          value: intl.formatMessage(messages.descP1),
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+      ],
+    };
+  }
 
   private nextRuleId = 5;
 
@@ -49,6 +142,7 @@ class HandoverRulesTab extends Component<
   };
 
   handleRuleAdd = (): void => {
+    const { intl } = this.props;
     this.setState(prev => ({
       rules: [
         ...prev.rules,
@@ -56,7 +150,7 @@ class HandoverRulesTab extends Component<
           id: this.nextRuleId++,
           label: '',
           value: '',
-          placeholder: '请输入条件',
+          placeholder: intl.formatMessage(messages.inputConditionPlaceholder),
         },
       ],
     }));
@@ -91,10 +185,10 @@ class HandoverRulesTab extends Component<
             type="button"
             className="flex h-[28px] w-[56px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-brand text-[13px] font-medium text-text-anti"
           >
-            确定
-          </button>
-        );
-      }
+             {this.props.intl.formatMessage(messages.confirm)}
+            </button>
+          );
+        }
       default: {
         return null;
       }
@@ -103,6 +197,7 @@ class HandoverRulesTab extends Component<
 
   render(): ReactElement {
     const { rules, focusedRuleId } = this.state;
+    const { intl } = this.props;
 
     return (
       <div
@@ -120,16 +215,16 @@ class HandoverRulesTab extends Component<
               className="text-[17px] font-semibold leading-[26px] text-primary"
               style={{ letterSpacing: '0.2px' }}
             >
-              人工接管规则
+              {intl.formatMessage(messages.title)}
             </span>
           </div>
           <div className="ml-[32px] mt-[10px] text-[14px] font-normal leading-[24px] text-secondary">
             <p>
-              当客户的消息触发您设置的规则时，数字员工会推送消息给人工进行预警，例如
+              {intl.formatMessage(messages.descP1)}
             </p>
-            <p>1、怀疑不是真人，是AI 在聊天；</p>
-            <p>2、询问付款和充值；</p>
-            <p>3、询问产品收益和安全。</p>
+            <p>{intl.formatMessage(messages.descP2)}</p>
+            <p>{intl.formatMessage(messages.descP3)}</p>
+            <p>{intl.formatMessage(messages.descP4)}</p>
           </div>
         </div>
 
@@ -145,7 +240,7 @@ class HandoverRulesTab extends Component<
               className="text-[18px] font-semibold text-primary"
               style={{ lineHeight: '36px', letterSpacing: '0.3px' }}
             >
-              绑定人工通知账号
+              {intl.formatMessage(messages.notificationTitle)}
             </span>
           </div>
 
@@ -153,7 +248,7 @@ class HandoverRulesTab extends Component<
             className="ml-[48px] mt-[14px] text-[14px] font-normal text-placeholder"
             style={{ lineHeight: '22px', maxWidth: '500px' }}
           >
-            绑定后，当触发接管规则时，数字员工将预警提醒推送到所选渠道，方便人工及时处理。
+            {intl.formatMessage(messages.notificationDesc)}
           </p>
 
           <div className="mt-[24px] flex gap-[24px]">
@@ -181,13 +276,13 @@ class HandoverRulesTab extends Component<
               </div>
 
               <span className="mt-[16px] block text-[16px] font-medium leading-[22px] text-primary">
-                WhatsApp Bot通知
+                {intl.formatMessage(messages.whatsappBot)}
               </span>
 
               <div className="mt-[12px] inline-flex h-[28px] items-center gap-[4px] rounded-[6px] bg-success-light px-[10px]">
                 <CheckIcon size="16px" className="text-success-active" />
                 <span className="text-[13px] font-medium leading-none text-success-active">
-                  已绑定
+                  {intl.formatMessage(messages.bound)}
                 </span>
               </div>
 
@@ -195,7 +290,7 @@ class HandoverRulesTab extends Component<
                 type="button"
                 className="absolute bottom-[24px] right-[24px] flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-brand bg-container text-[13px] font-medium text-brand"
               >
-                重新绑定
+                {intl.formatMessage(messages.rebind)}
               </button>
             </div>
 
@@ -219,13 +314,13 @@ class HandoverRulesTab extends Component<
               </div>
 
               <span className="mt-[16px] block text-[16px] font-medium leading-[22px] text-primary">
-                Telegram Bot通知
+                {intl.formatMessage(messages.telegramBot)}
               </span>
 
               <div className="mt-[12px] inline-flex h-[28px] items-center gap-[4px] rounded-[6px] bg-secondary-container px-[10px]">
                 <CloseIcon size="16px" className="text-placeholder" />
                 <span className="text-[13px] font-medium leading-none text-placeholder">
-                  未绑定
+                  {intl.formatMessage(messages.unbound)}
                 </span>
               </div>
 
@@ -233,7 +328,7 @@ class HandoverRulesTab extends Component<
                 type="button"
                 className="absolute bottom-[24px] right-[24px] flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[13px] font-medium text-text-anti"
               >
-                去绑定
+                {intl.formatMessage(messages.goBind)}
               </button>
             </div>
           </div>
@@ -293,7 +388,7 @@ class HandoverRulesTab extends Component<
           >
             <AddIcon size="18px" className="text-brand" />
             <span className="text-[15px] font-medium text-brand">
-              新增接管规则
+              {intl.formatMessage(messages.addRule)}
             </span>
           </button>
         </div>
@@ -302,4 +397,4 @@ class HandoverRulesTab extends Component<
   }
 }
 
-export default HandoverRulesTab;
+export default injectIntl(HandoverRulesTab);

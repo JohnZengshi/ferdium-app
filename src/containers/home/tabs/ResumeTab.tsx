@@ -9,6 +9,195 @@ import {
   LabelList,
   ResponsiveContainer,
 } from 'recharts';
+import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+
+const messages = defineMessages({
+  stageSectionTitle: {
+    id: 'resumeTab.stageSectionTitle',
+    defaultMessage: '适用阶段',
+  },
+  stageIdentityQuestioning: {
+    id: 'resumeTab.stageIdentityQuestioning',
+    defaultMessage: '身份质疑阶段',
+  },
+  stageProductObjection: {
+    id: 'resumeTab.stageProductObjection',
+    defaultMessage: '产品异议阶段',
+  },
+  stageRiskConcern: {
+    id: 'resumeTab.stageRiskConcern',
+    defaultMessage: '风险顾虑阶段',
+  },
+  stageDigitalReply: {
+    id: 'resumeTab.stageDigitalReply',
+    defaultMessage: '数字员工回复',
+  },
+  stageComplaintRefund: {
+    id: 'resumeTab.stageComplaintRefund',
+    defaultMessage: '投诉/退款阶段',
+  },
+  stageHighIntentConversion: {
+    id: 'resumeTab.stageHighIntentConversion',
+    defaultMessage: '高意向转化阶段',
+  },
+  stageBusinessStartup: {
+    id: 'resumeTab.stageBusinessStartup',
+    defaultMessage: '业务启动期',
+  },
+  stageFastExpansion: {
+    id: 'resumeTab.stageFastExpansion',
+    defaultMessage: '快速扩张期',
+  },
+  stageEcosystemIntegration: {
+    id: 'resumeTab.stageEcosystemIntegration',
+    defaultMessage: '生态融合与战略升级期',
+  },
+  roleLabel: {
+    id: 'resumeTab.roleLabel',
+    defaultMessage: '职位：{role}',
+  },
+  defaultRole: {
+    id: 'resumeTab.defaultRole',
+    defaultMessage: '接管助手',
+  },
+  skillsSectionTitle: {
+    id: 'resumeTab.skillsSectionTitle',
+    defaultMessage: '具备技能',
+  },
+  defaultSkillRiskDetection: {
+    id: 'resumeTab.defaultSkillRiskDetection',
+    defaultMessage: '识别风险',
+  },
+  defaultSkillAnomalyWarning: {
+    id: 'resumeTab.defaultSkillAnomalyWarning',
+    defaultMessage: '预警异常',
+  },
+  defaultSkillHandover: {
+    id: 'resumeTab.defaultSkillHandover',
+    defaultMessage: '人工接管',
+  },
+  profileSectionTitle: {
+    id: 'resumeTab.profileSectionTitle',
+    defaultMessage: '个人介绍',
+  },
+  reviewSectionTitle: {
+    id: 'resumeTab.reviewSectionTitle',
+    defaultMessage: '客户评价',
+  },
+  reviewConversionRate: {
+    id: 'resumeTab.reviewConversionRate',
+    defaultMessage: '客户转化率提升了',
+  },
+  reviewConversionRateSuffix: {
+    id: 'resumeTab.reviewConversionRateSuffix',
+    defaultMessage: '，月均新增成交额超过2000w元',
+  },
+  reviewSatisfaction: {
+    id: 'resumeTab.reviewSatisfaction',
+    defaultMessage: '满意度评分从85分提升至98.5分，客户复购率增长',
+  },
+  reviewConsultationVolume: {
+    id: 'resumeTab.reviewConsultationVolume',
+    defaultMessage: '累计处理客户咨询超过230w次，帮助企业节省人力成本',
+  },
+  costSavingsTitle: {
+    id: 'resumeTab.costSavingsTitle',
+    defaultMessage: '成本节约数据',
+  },
+  costAxisLabel: {
+    id: 'resumeTab.costAxisLabel',
+    defaultMessage: '成本节约（万元）',
+  },
+  costTotalSavings: {
+    id: 'resumeTab.costTotalSavings',
+    defaultMessage: '总成本节约',
+  },
+  costDisputeDuration: {
+    id: 'resumeTab.costDisputeDuration',
+    defaultMessage: '纠纷处理时长缩短',
+  },
+  enterpriseSME: {
+    id: 'resumeTab.enterpriseSME',
+    defaultMessage: '中小型企业',
+  },
+  enterpriseLarge: {
+    id: 'resumeTab.enterpriseLarge',
+    defaultMessage: '大型企业',
+  },
+  enterpriseExtraLarge: {
+    id: 'resumeTab.enterpriseExtraLarge',
+    defaultMessage: '超大型企业',
+  },
+  efficiencySectionTitle: {
+    id: 'resumeTab.efficiencySectionTitle',
+    defaultMessage: '效率提升数据',
+  },
+  effCustomerWorkHour: {
+    id: 'resumeTab.effCustomerWorkHour',
+    defaultMessage: '节省客户工作时间',
+  },
+  effOperationEfficiency: {
+    id: 'resumeTab.effOperationEfficiency',
+    defaultMessage: '平均企业运营效率',
+  },
+  effProcessAutomation: {
+    id: 'resumeTab.effProcessAutomation',
+    defaultMessage: '流程自动化完成率',
+  },
+  effHighRiskInterception: {
+    id: 'resumeTab.effHighRiskInterception',
+    defaultMessage: '高风险拦截成功率',
+  },
+  coreCompetencyTitle: {
+    id: 'resumeTab.coreCompetencyTitle',
+    defaultMessage: '核心能力',
+  },
+  compRiskIdentification: {
+    id: 'resumeTab.compRiskIdentification',
+    defaultMessage: '风险识别',
+  },
+  compBoundaryControl: {
+    id: 'resumeTab.compBoundaryControl',
+    defaultMessage: '边界控制',
+  },
+  compHumanHandover: {
+    id: 'resumeTab.compHumanHandover',
+    defaultMessage: '人工接管触发',
+  },
+  compHighIntentAlert: {
+    id: 'resumeTab.compHighIntentAlert',
+    defaultMessage: '高意向预警',
+  },
+  compSessionPause: {
+    id: 'resumeTab.compSessionPause',
+    defaultMessage: '会话暂停控制',
+  },
+  compRiskIdentificationDesc: {
+    id: 'resumeTab.compRiskIdentificationDesc',
+    defaultMessage: '实时监测会话内容，智能识别潜在风险和异常行为',
+  },
+  compBoundaryControlDesc: {
+    id: 'resumeTab.compBoundaryControlDesc',
+    defaultMessage: '严格限定数字员工的行为边界和权限范围',
+  },
+  compHumanHandoverDesc: {
+    id: 'resumeTab.compHumanHandoverDesc',
+    defaultMessage: '当风险等级超过阈值时，自动触发人工接管流程',
+  },
+  compHighIntentAlertDesc: {
+    id: 'resumeTab.compHighIntentAlertDesc',
+    defaultMessage: '识别高意向客户并通知人工跟进，提升成交效率',
+  },
+  compSessionPauseDesc: {
+    id: 'resumeTab.compSessionPauseDesc',
+    defaultMessage: '在特定场景下自动暂停会话，等待人工介入处理',
+  },
+  defaultProfile: {
+    id: 'resumeTab.defaultProfile',
+    defaultMessage:
+      'Monica 会持续监控所有会话，在识别到高风险、高异议、高价值或超出边界的问题时，自动触发预警并协助人工接管。',
+  },
+});
 
 interface ResumeTabProps {
   stageTags?: string[];
@@ -30,66 +219,22 @@ interface ResumeTabProps {
   avatarSrc?: string;
 }
 
-const DEFAULT_STAGE_TAGS = [
-  '身份质疑阶段',
-  '产品异议阶段',
-  '风险顾虑阶段',
-  '数字员工回复',
-  '投诉/退款阶段',
-  '高意向转化阶段',
-  '业务启动期',
-  '快速扩张期',
-  '生态融合与战略升级期',
-];
+interface IProps extends ResumeTabProps, WrappedComponentProps {}
 
-const DEFAULT_EFFICIENCY_DATA = [
-  { label: '节省客户工作时间', value: 82 },
-  { label: '平均企业运营效率', value: 72 },
-  { label: '流程自动化完成率', value: 95 },
-  { label: '高风险拦截成功率', value: 99 },
-];
-
-const DEFAULT_CORE_COMPETENCIES = [
-  {
-    title: '风险识别',
-    description: '实时监测会话内容，智能识别潜在风险和异常行为',
-    iconBg: 'bg-error-light',
-    iconColor: 'text-error',
-    iconText: '⚠',
-  },
-  {
-    title: '边界控制',
-    description: '严格限定数字员工的行为边界和权限范围',
-    iconBg: 'bg-brand-light',
-    iconColor: 'text-brand',
-    iconText: '◈',
-  },
-  {
-    title: '人工接管触发',
-    description: '当风险等级超过阈值时，自动触发人工接管流程',
-    iconBg: 'bg-warning-light',
-    iconColor: 'text-warning',
-    iconText: '◎',
-  },
-  {
-    title: '高意向预警',
-    description: '识别高意向客户并通知人工跟进，提升成交效率',
-    iconBg: 'bg-success-light',
-    iconColor: 'text-success',
-    iconText: '◆',
-  },
-  {
-    title: '会话暂停控制',
-    description: '在特定场景下自动暂停会话，等待人工介入处理',
-    iconBg: 'bg-purple-50',
-    iconColor: 'text-purple-600',
-    iconText: '■',
-  },
-];
-
-class ResumeTab extends Component<ResumeTabProps> {
+class ResumeTab extends Component<IProps> {
   renderStageCard(): ReactElement {
-    const tags = this.props.stageTags || DEFAULT_STAGE_TAGS;
+    const { intl, stageTags } = this.props;
+    const tags = stageTags || [
+      intl.formatMessage(messages.stageIdentityQuestioning),
+      intl.formatMessage(messages.stageProductObjection),
+      intl.formatMessage(messages.stageRiskConcern),
+      intl.formatMessage(messages.stageDigitalReply),
+      intl.formatMessage(messages.stageComplaintRefund),
+      intl.formatMessage(messages.stageHighIntentConversion),
+      intl.formatMessage(messages.stageBusinessStartup),
+      intl.formatMessage(messages.stageFastExpansion),
+      intl.formatMessage(messages.stageEcosystemIntegration),
+    ];
     return (
       <div className="flex h-[284px] flex-col rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
@@ -105,7 +250,9 @@ class ResumeTab extends Component<ResumeTabProps> {
               </svg>
             </div>
           </div>
-          <span className="text-[20px] font-bold text-primary">适用阶段</span>
+          <span className="text-[20px] font-bold text-primary">
+            {intl.formatMessage(messages.stageSectionTitle)}
+          </span>
         </div>
         <div className="mt-[16px] flex flex-wrap gap-[14px]">
           {tags.map(tag => (
@@ -122,14 +269,15 @@ class ResumeTab extends Component<ResumeTabProps> {
   }
 
   renderMonicaShowcase(): ReactElement {
-    const name = this.props.employeeName || 'Monica';
-    const role = this.props.employeeRole || '接管助手';
-    const avatarSrc = this.props.avatarSrc || './assets/images/monica.png';
+    const { intl, employeeName, employeeRole, avatarSrc } = this.props;
+    const name = employeeName || 'Monica';
+    const role = employeeRole || intl.formatMessage(messages.defaultRole);
+    const avatarSrcFinal = avatarSrc || './assets/images/monica.png';
     return (
       <div className="relative flex h-full flex-col items-center overflow-hidden rounded-[8px]">
         <div className="absolute inset-0 flex items-center justify-center">
           <img
-            src={avatarSrc}
+            src={avatarSrcFinal}
             alt={name}
             className="h-full w-full object-contain"
           />
@@ -147,16 +295,20 @@ class ResumeTab extends Component<ResumeTabProps> {
             {name}
           </span>
           <span className="mt-[8px] text-[18px] font-semibold leading-[26px] text-primary">
-            职位：{role}
+            {intl.formatMessage(messages.roleLabel, { role })}
           </span>
         </div>
 
         <div className="relative z-10 mb-[19px] mt-auto flex flex-col items-center">
           <span className="mb-[12px] text-[18px] font-semibold leading-[26px] text-primary">
-            具备技能
+            {intl.formatMessage(messages.skillsSectionTitle)}
           </span>
           <div className="flex flex-wrap justify-center gap-[12px] px-[20px]">
-            {['识别风险', '预警异常', '人工接管'].map(skill => (
+            {[
+              intl.formatMessage(messages.defaultSkillRiskDetection),
+              intl.formatMessage(messages.defaultSkillAnomalyWarning),
+              intl.formatMessage(messages.defaultSkillHandover),
+            ].map(skill => (
               <span
                 key={skill}
                 className="inline-flex h-[38px] items-center justify-center rounded-[19px] border border-solid border-brand bg-container px-[16px] text-[14px] font-medium text-brand"
@@ -171,9 +323,9 @@ class ResumeTab extends Component<ResumeTabProps> {
   }
 
   renderProfileCard(): ReactElement {
+    const { intl, profile } = this.props;
     const profileText =
-      this.props.profile ||
-      'Monica 会持续监控所有会话，在识别到高风险、高异议、高价值或超出边界的问题时，自动触发预警并协助人工接管。';
+      profile || intl.formatMessage(messages.defaultProfile);
     return (
       <div className="flex flex-col h-[148px] rounded-[8px] bg-container p-[24px] min-h-[148px]">
         <div className="flex items-center gap-[8px]">
@@ -182,7 +334,9 @@ class ResumeTab extends Component<ResumeTabProps> {
               <UserIcon />
             </div>
           </div>
-          <span className="text-[20px] font-bold text-primary">个人介绍</span>
+          <span className="text-[20px] font-bold text-primary">
+            {intl.formatMessage(messages.profileSectionTitle)}
+          </span>
         </div>
         <p className="mt-[16px] text-[16px] font-normal text-secondary">
           {profileText}
@@ -192,18 +346,19 @@ class ResumeTab extends Component<ResumeTabProps> {
   }
 
   renderCustomerReviewCard(): ReactElement {
-    const reviews = this.props.reviews || [
+    const { intl, reviews } = this.props;
+    const reviewItems = reviews || [
       {
-        text: '客户转化率提升了',
+        text: intl.formatMessage(messages.reviewConversionRate),
         highlight: '12%',
-        suffix: '，月均新增成交额超过2000w元',
+        suffix: intl.formatMessage(messages.reviewConversionRateSuffix),
       },
       {
-        text: '满意度评分从85分提升至98.5分，客户复购率增长',
+        text: intl.formatMessage(messages.reviewSatisfaction),
         highlight: '12倍',
       },
       {
-        text: '累计处理客户咨询超过230w次，帮助企业节省人力成本',
+        text: intl.formatMessage(messages.reviewConsultationVolume),
         highlight: '41%',
       },
     ];
@@ -215,10 +370,12 @@ class ResumeTab extends Component<ResumeTabProps> {
               <FolderOpenIcon />
             </div>
           </div>
-          <span className="text-[20px] font-bold text-primary">客户评价</span>
+          <span className="text-[20px] font-bold text-primary">
+            {intl.formatMessage(messages.reviewSectionTitle)}
+          </span>
         </div>
         <div className="mt-[16px] flex flex-col gap-[19px]">
-          {reviews.map((item, i) => (
+          {reviewItems.map((item, i) => (
             <div
               key={i}
               className="flex flex-row flex-wrap items-baseline border-l-[4px] border-solid border-brand pl-[12px]"
@@ -240,15 +397,19 @@ class ResumeTab extends Component<ResumeTabProps> {
   }
 
   renderCostSavingsCard(): ReactElement {
+    const { intl, costLabel, costChartData, costSummary } = this.props;
+    const costTitle = costLabel || intl.formatMessage(messages.costSavingsTitle);
+    const costAxisLabelText =
+      costLabel || intl.formatMessage(messages.costAxisLabel);
     const defaultBarData = [
-      { label: '中小型企业', value: 80 },
-      { label: '大型企业', value: 750 },
-      { label: '超大型企业', value: 1500 },
+      { label: intl.formatMessage(messages.enterpriseSME), value: 80 },
+      { label: intl.formatMessage(messages.enterpriseLarge), value: 750 },
+      { label: intl.formatMessage(messages.enterpriseExtraLarge), value: 1500 },
     ];
-    const barData = this.props.costChartData || defaultBarData;
+    const barData = costChartData || defaultBarData;
     const defaultYLabels = [1600, 1100, 600, 100, 0];
     const maxVal = Math.max(...barData.map(d => d.value));
-    const yLabels = this.props.costChartData
+    const yLabels = costChartData
       ? [
           maxVal,
           Math.round(maxVal * 0.7),
@@ -258,7 +419,7 @@ class ResumeTab extends Component<ResumeTabProps> {
         ]
       : defaultYLabels;
     const getBarHeight = (value: number): number => {
-      if (!this.props.costChartData) {
+      if (!costChartData) {
         if (value <= 100) return (value / 100) * 20;
         return 20 + ((value - 100) / 500) * 40;
       }
@@ -271,11 +432,15 @@ class ResumeTab extends Component<ResumeTabProps> {
       barHeight: getBarHeight(d.value),
     }));
     const yTickValues = yLabels.map(v => getBarHeight(v));
-    const costTitle = this.props.costLabel || '成本节约数据';
-    const costAxisLabel = this.props.costLabel || '成本节约（万元）';
-    const summaryItems = this.props.costSummary || [
-      { label: '总成本节约', value: '12.6亿' },
-      { label: '纠纷处理时长缩短', value: '67%' },
+    const summaryItems = costSummary || [
+      {
+        label: intl.formatMessage(messages.costTotalSavings),
+        value: '12.6亿',
+      },
+      {
+        label: intl.formatMessage(messages.costDisputeDuration),
+        value: '67%',
+      },
     ];
     const summaryDefs = [
       {
@@ -350,7 +515,7 @@ class ResumeTab extends Component<ResumeTabProps> {
         </div>
 
         <span className="mt-[24px] text-[14px] font-medium text-primary">
-          {costAxisLabel}
+          {costAxisLabelText}
         </span>
 
         <div className="mt-[8px] flex-1">
@@ -388,7 +553,9 @@ class ResumeTab extends Component<ResumeTabProps> {
                 width={32}
                 tickFormatter={(v: number) => {
                   const idx = yTickValues.indexOf(v);
-                  return yLabels[idx] === undefined ? '' : String(yLabels[idx]);
+                  return yLabels[idx] === undefined
+                    ? ''
+                    : String(yLabels[idx]);
                 }}
                 tick={{ fontSize: 12, fill: '#999999' }}
                 axisLine={false}
@@ -417,7 +584,25 @@ class ResumeTab extends Component<ResumeTabProps> {
   }
 
   renderEfficiencyCard(): ReactElement {
-    const effData = this.props.efficiencyData || DEFAULT_EFFICIENCY_DATA;
+    const { intl, efficiencyData } = this.props;
+    const effData = efficiencyData || [
+      {
+        label: intl.formatMessage(messages.effCustomerWorkHour),
+        value: 82,
+      },
+      {
+        label: intl.formatMessage(messages.effOperationEfficiency),
+        value: 72,
+      },
+      {
+        label: intl.formatMessage(messages.effProcessAutomation),
+        value: 95,
+      },
+      {
+        label: intl.formatMessage(messages.effHighRiskInterception),
+        value: 99,
+      },
+    ];
     return (
       <div className="flex h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
         <div className="flex items-center gap-[8px]">
@@ -434,7 +619,7 @@ class ResumeTab extends Component<ResumeTabProps> {
             </div>
           </div>
           <span className="text-[20px] font-bold text-primary">
-            效率提升数据
+            {intl.formatMessage(messages.efficiencySectionTitle)}
           </span>
         </div>
         <div className="mt-[24px] flex flex-col gap-[20px]">
@@ -466,7 +651,44 @@ class ResumeTab extends Component<ResumeTabProps> {
   }
 
   renderCoreCompetenciesCard(): ReactElement {
-    const compData = this.props.coreCompetencies || DEFAULT_CORE_COMPETENCIES;
+    const { intl, coreCompetencies } = this.props;
+    const compData = coreCompetencies || [
+      {
+        title: intl.formatMessage(messages.compRiskIdentification),
+        description: intl.formatMessage(messages.compRiskIdentificationDesc),
+        iconBg: 'bg-error-light',
+        iconColor: 'text-error',
+        iconText: '⚠',
+      },
+      {
+        title: intl.formatMessage(messages.compBoundaryControl),
+        description: intl.formatMessage(messages.compBoundaryControlDesc),
+        iconBg: 'bg-brand-light',
+        iconColor: 'text-brand',
+        iconText: '◈',
+      },
+      {
+        title: intl.formatMessage(messages.compHumanHandover),
+        description: intl.formatMessage(messages.compHumanHandoverDesc),
+        iconBg: 'bg-warning-light',
+        iconColor: 'text-warning',
+        iconText: '◎',
+      },
+      {
+        title: intl.formatMessage(messages.compHighIntentAlert),
+        description: intl.formatMessage(messages.compHighIntentAlertDesc),
+        iconBg: 'bg-success-light',
+        iconColor: 'text-success',
+        iconText: '◆',
+      },
+      {
+        title: intl.formatMessage(messages.compSessionPause),
+        description: intl.formatMessage(messages.compSessionPauseDesc),
+        iconBg: 'bg-purple-50',
+        iconColor: 'text-purple-600',
+        iconText: '■',
+      },
+    ];
     return (
       <div className="flex h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
         <div className="flex items-center gap-[8px]">
@@ -475,7 +697,9 @@ class ResumeTab extends Component<ResumeTabProps> {
               <LockOnIcon />
             </div>
           </div>
-          <span className="text-[20px] font-bold text-primary">核心能力</span>
+          <span className="text-[20px] font-bold text-primary">
+            {intl.formatMessage(messages.coreCompetencyTitle)}
+          </span>
         </div>
         <div className="mt-[10px] grid grid-cols-3 gap-[16px]">
           {compData.map(cap => (
@@ -526,4 +750,4 @@ class ResumeTab extends Component<ResumeTabProps> {
   }
 }
 
-export default ResumeTab;
+export default injectIntl(ResumeTab);

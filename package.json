@@ -126,6 +126,7 @@
     "react-tooltip": "5.28.0",
     "react-topbar-progress-indicator": "4.1.1",
     "react-transition-group": "4.4.5",
+    "recharts": "3.8.1",
     "route-parser": "0.0.5",
     "sanitize-filename": "1.6.3",
     "semver": "7.6.3",

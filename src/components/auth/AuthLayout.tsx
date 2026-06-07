@@ -79,13 +79,13 @@ class AuthLayout extends Component<IProps, IState> {
             <img
               alt=""
               className="auth__background-image h-full w-full object-cover"
-              src="./assets/images/登录背景图.png"
+              src="./assets/images/login-bg.png"
             />
             <div className="pointer-events-none absolute left-0 top-0 h-full">
               <img
                 alt=""
                 className="h-full w-auto object-contain"
-                src="./assets/images/登录背景图左侧覆盖层.png"
+                src="./assets/images/login-bg-left-overlay.png"
               />
             </div>
           </div>

@@ -25,12 +25,12 @@ import { SectionHeader } from '../../components/home/SectionHeader';
 import StrategyConfigScreen from './StrategyConfigScreen';
 import ResumeTab from './tabs/ResumeTab';
 
-const employeeMonica = './assets/images/接管助手.png';
-const employeeMike = './assets/images/销售主管.png';
-const employeeAlice = './assets/images/情感陪伴师.png';
-const employeeLily = './assets/images/商务专员.png';
-const employeeAllen = './assets/images/风控主管.png';
-const employeeAmy = './assets/images/用户运营.png';
+const employeeMonica = './assets/images/handover-assistant.png';
+const employeeMike = './assets/images/sales-director.png';
+const employeeAlice = './assets/images/emotional-companion.png';
+const employeeLily = './assets/images/business-specialist.png';
+const employeeAllen = './assets/images/risk-control-director.png';
+const employeeAmy = './assets/images/user-operations.png';
 
 interface HomeScreenProps {
   stores?: RealStores;

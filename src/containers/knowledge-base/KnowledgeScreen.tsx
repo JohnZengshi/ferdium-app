@@ -92,10 +92,10 @@ const FormLabel = ({
   text: string;
 }): ReactElement => (
   <div className="mb-[8px] flex items-center gap-[8px]">
-    <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#E8F3FF] text-[#165DFF]">
+    <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand-light text-brand">
       {icon}
     </div>
-    <span className="text-[14px] font-bold text-[#1D2129]">{text}</span>
+    <span className="text-[14px] font-bold text-primary">{text}</span>
   </div>
 );
 
@@ -175,14 +175,14 @@ class KnowledgeScreen extends Component<
         <div className="flex items-center gap-[16px]">
           <button
             type="button"
-            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-[#165DFF] hover:underline"
+            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
             onClick={() => this.handleView()}
           >
             查看
           </button>
           <button
             type="button"
-            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-[#165DFF] hover:underline"
+            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
             onClick={() => this.handleEditPersona()}
           >
             编辑
@@ -243,7 +243,7 @@ class KnowledgeScreen extends Component<
     if (view === 'list') {
       return (
         <div className="flex-1 p-[24px]">
-          <div className="rounded-[4px] bg-white p-[24px]">
+          <div className="rounded-[4px] bg-container p-[24px]">
             <div className="flex items-center">
               <Button
                 theme="primary"
@@ -255,7 +255,7 @@ class KnowledgeScreen extends Component<
                   <span>创建人设资料</span>
                 </div>
               </Button>
-              <span className="ml-[12px] text-[12px] text-[#86909C]">
+              <span className="ml-[12px] text-[12px] text-secondary">
                 人设资料是您社交账号的信息资料，与账号绑定后，数字员工会以账号的人设进行聊天
               </span>
             </div>
@@ -269,7 +269,7 @@ class KnowledgeScreen extends Component<
                 hover
                 stripe={false}
                 tableLayout="fixed"
-                className="[&_.t-table__header]:!bg-[#F7F8FA] [&_.t-table__header-th]:!h-[40px] [&_.t-table__header-th]:!border-b [&_.t-table__header-th]:!border-solid [&_.t-table__header-th]:!border-[#E5E6EB] [&_.t-table__header-th]:!text-[14px] [&_.t-table__header-th]:!font-normal [&_.t-table__header-th]:!text-[#1D2129] [&_.t-table__body-td]:!h-[56px] [&_.t-table__body-td]:!border-b [&_.t-table__body-td]:!border-solid [&_.t-table__body-td]:!border-[#E5E6EB] [&_.t-table__body-td]:!p-0"
+                className="[&_.t-table__header]:!bg-secondary-container [&_.t-table__header-th]:!h-[40px] [&_.t-table__header-th]:!border-b [&_.t-table__header-th]:!border-solid [&_.t-table__header-th]:!border-line [&_.t-table__header-th]:!text-[14px] [&_.t-table__header-th]:!font-normal [&_.t-table__header-th]:!text-primary [&_.t-table__body-td]:!h-[56px] [&_.t-table__body-td]:!border-b [&_.t-table__body-td]:!border-solid [&_.t-table__body-td]:!border-line [&_.t-table__body-td]:!p-0"
               />
             </div>
 
@@ -292,11 +292,11 @@ class KnowledgeScreen extends Component<
 
     return (
       <div className="flex flex-1 flex-col">
-        <div className="flex h-[60px] items-center bg-white px-[24px]">
+        <div className="flex h-[60px] items-center bg-container px-[24px]">
           <button
             type="button"
             onClick={this.handleBack}
-            className="flex cursor-pointer items-center gap-[8px] border-none bg-transparent p-0 text-[#1D2129]"
+            className="flex cursor-pointer items-center gap-[8px] border-none bg-transparent p-0 text-primary"
           >
             <ChevronLeftIcon size="20px" />
             <span className="text-[16px] font-bold">创建人设资料</span>
@@ -305,7 +305,7 @@ class KnowledgeScreen extends Component<
 
         <div className="flex flex-1 gap-[40px] p-[24px]">
           <div
-            className="flex-1 rounded-[4px] bg-white p-[24px]"
+            className="flex-1 rounded-[4px] bg-container p-[24px]"
             style={{ maxWidth: 600 }}
           >
             <div className="mb-[24px]">
@@ -314,7 +314,7 @@ class KnowledgeScreen extends Component<
                 placeholder="请输入内容"
                 value={formData.name}
                 onChange={v => this.handleFormChange('name', v)}
-                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-[#E5E6EB]"
+                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
               />
             </div>
 
@@ -324,7 +324,7 @@ class KnowledgeScreen extends Component<
                 placeholder="请输入内容"
                 value={formData.remark}
                 onChange={v => this.handleFormChange('remark', v)}
-                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-[#E5E6EB]"
+                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
               />
             </div>
 
@@ -333,7 +333,7 @@ class KnowledgeScreen extends Component<
                 <FormLabel icon={<CalendarIcon size="14px" />} text="年龄" />
                 <DatePicker
                   placeholder="请选择日期"
-                  className="!h-[36px] !w-full !rounded-[2px] [&_.t-input]:!h-[36px] [&_.t-input]:!border-[#E5E6EB] [&_.t-input]:!rounded-[2px]"
+                  className="!h-[36px] !w-full !rounded-[2px] [&_.t-input]:!h-[36px] [&_.t-input]:!border-line [&_.t-input]:!rounded-[2px]"
                 />
               </div>
               <div className="flex-1">
@@ -341,7 +341,7 @@ class KnowledgeScreen extends Component<
                 <Select
                   placeholder="请选择内容"
                   options={GENDER_OPTIONS}
-                  className="!w-full [&_.t-select__trigger]:!h-[36px] [&_.t-input]:!rounded-[2px] [&_.t-input]:!border-[#E5E6EB]"
+                  className="!w-full [&_.t-select__trigger]:!h-[36px] [&_.t-input]:!rounded-[2px] [&_.t-input]:!border-line"
                 />
               </div>
             </div>
@@ -352,7 +352,7 @@ class KnowledgeScreen extends Component<
                 placeholder="请输入内容"
                 value={formData.family}
                 onChange={e => this.handleFormChange('family', e.target.value)}
-                className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-[#E5E6EB] p-[8px] text-[14px] text-[#1D2129] outline-none placeholder:text-[#86909C]"
+                className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
               />
             </div>
 
@@ -362,7 +362,7 @@ class KnowledgeScreen extends Component<
                 placeholder="请输入内容"
                 value={formData.occupation}
                 onChange={v => this.handleFormChange('occupation', v)}
-                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-[#E5E6EB]"
+                className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
               />
             </div>
 
@@ -374,7 +374,7 @@ class KnowledgeScreen extends Component<
                 onChange={e =>
                   this.handleFormChange('participation', e.target.value)
                 }
-                className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-[#E5E6EB] p-[8px] text-[14px] text-[#1D2129] outline-none placeholder:text-[#86909C]"
+                className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
               />
             </div>
 
@@ -389,12 +389,12 @@ class KnowledgeScreen extends Component<
             </div>
           </div>
 
-          <div className="flex-1 rounded-[4px] bg-white p-[24px]">
+          <div className="flex-1 rounded-[4px] bg-container p-[24px]">
             <div className="mb-[16px] flex items-center gap-[8px]">
-              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-[#E8F3FF] text-[#165DFF]">
+              <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand-light text-brand">
                 <FileIcon size="14px" />
               </div>
-              <span className="text-[16px] font-bold text-[#1D2129]">
+              <span className="text-[16px] font-bold text-primary">
                 智能导入
               </span>
             </div>
@@ -403,7 +403,7 @@ class KnowledgeScreen extends Component<
               placeholder={SMART_IMPORT_PLACEHOLDER}
               value={smartImportText}
               onChange={e => this.handleSmartImportTextChange(e.target.value)}
-              className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-[#165DFF] p-[12px] text-[12px] leading-[1.5] text-[#86909C] outline-none placeholder:text-[#86909C]"
+              className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-brand p-[12px] text-[12px] leading-[1.5] text-secondary outline-none placeholder:text-secondary"
             />
 
             <div className="mt-[16px] flex justify-end">
@@ -423,7 +423,7 @@ class KnowledgeScreen extends Component<
 
   render(): ReactElement {
     return (
-      <div className="flex min-h-0 flex-1 bg-[#F5F6F7]">
+      <div className="flex min-h-0 flex-1 bg-page">
         <SidebarMenu
           items={SIDEBAR_ITEMS}
           activeKey="persona"

@@ -656,47 +656,47 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
     ];
 
     return (
-      <div className="mt-[24px] overflow-hidden rounded-[6px] border border-[#E7E7E7]">
+      <div className="mt-[24px] overflow-hidden rounded-[6px] border border-line">
         <table
           className="w-full"
           style={{ tableLayout: 'fixed', borderCollapse: 'collapse' }}
         >
           <thead>
-            <tr className="h-[45px] bg-[#FAFAFA]">
-              <th className="w-[116px] border-r border-[#E7E7E7] pl-[12px] text-left text-[12px] font-medium text-[#8C8C8C]">
+            <tr className="h-[45px] bg-secondary-container">
+              <th className="w-[116px] border-r border-line pl-[12px] text-left text-[12px] font-medium text-placeholder">
                 类型
               </th>
-              <th className="w-[117px] border-r border-[#E7E7E7] text-center text-[12px] font-medium text-[#8C8C8C]">
+              <th className="w-[117px] border-r border-line text-center text-[12px] font-medium text-placeholder">
                 总数量
               </th>
-              <th className="w-[117px] border-r border-[#E7E7E7] text-center text-[12px] font-medium">
+              <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
-                  <WifiIcon className="text-[#2BAE66] text-[14px]" />
-                  <span className="text-[#2BAE66]">在线</span>
+                  <WifiIcon className="text-success text-[14px]" />
+                  <span className="text-success">在线</span>
                 </span>
               </th>
-              <th className="w-[117px] border-r border-[#E7E7E7] text-center text-[12px] font-medium">
+              <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
-                  <WifiOffIcon className="text-[#E37318] text-[14px]" />
-                  <span className="text-[#E37318]">离线</span>
+                  <WifiOffIcon className="text-warning text-[14px]" />
+                  <span className="text-warning">离线</span>
                 </span>
               </th>
               <th className="w-[116px] text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
-                  <ErrorCircleIcon className="text-[#D54941] text-[14px]" />
-                  <span className="text-[#D54941]">异常</span>
+                  <ErrorCircleIcon className="text-error text-[14px]" />
+                  <span className="text-error">异常</span>
                 </span>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="h-[46px] text-[14px] font-medium text-[#1F1F1F]">
-              <td className="border-r border-[#E7E7E7] pl-[12px]">
+            <tr className="h-[46px] text-[14px] font-medium text-primary">
+              <td className="border-r border-line pl-[12px]">
                 <div className="flex items-center gap-[8px]">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                     <path
                       d="M7.5 1C3.9 1 1 3.6 1 6.8C1 8.3 1.5 9.7 2.4 10.8L1.5 14L4.7 12.6C5.6 13.1 6.5 13.3 7.5 13.3C11.1 13.3 14 10.7 14 7.2C14 3.7 11.1 1 7.5 1Z"
-                      fill="#58C087"
+                      style={{ fill: 'var(--td-success-color)' }}
                     />
                     <path
                       d="M5.5 6C5.5 5 6.5 4.5 7.5 4.5C8.5 4.5 9.5 5 9.5 6"
@@ -718,21 +718,21 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                   <span>Whats</span>
                 </div>
               </td>
-              <td className="border-r border-[#E7E7E7] text-center">
+              <td className="border-r border-line text-center">
                 {data[0].total}
               </td>
-              <td className="border-r border-[#E7E7E7] text-center">
+              <td className="border-r border-line text-center">
                 {data[0].online}
               </td>
-              <td className="border-r border-[#E7E7E7] text-center">
+              <td className="border-r border-line text-center">
                 {data[0].offline}
               </td>
               <td className="text-center">{data[0].error}</td>
             </tr>
           </tbody>
         </table>
-        <div className="flex h-[48px] items-center justify-center border-t border-[#E7E7E7]">
-          <span className="text-[11px] font-normal text-[#B8B8B8]">
+        <div className="flex h-[48px] items-center justify-center border-t border-line">
+          <span className="text-[11px] font-normal text-placeholder">
             更多社交媒体系统敬请期待哦~
           </span>
         </div>
@@ -744,7 +744,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
     return (
       <div
         key={employee.id}
-        className="relative flex h-[331px] w-[237px] flex-col overflow-hidden rounded-[16px] border border-[#E7E7E7] bg-white transition-all hover:shadow-md"
+        className="relative flex h-[331px] w-[237px] flex-col overflow-hidden rounded-[16px] border border-line bg-container transition-all hover:shadow-md"
       >
         <div className="absolute inset-0 z-0">
           <img
@@ -760,7 +760,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
               <Button
                 theme="primary"
                 size="small"
-                className="!bg-[#0052D9] !px-[20px] !py-[6px] !rounded-[8px] font-bold text-white shadow-sm"
+                className="!bg-brand !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm"
                 suffix={<ChevronRightIcon />}
                 onClick={this.handleOpenStrategy}
               >
@@ -771,7 +771,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
             <Button
               theme="primary"
               size="small"
-              className="!bg-[#0052D9] !px-[20px] !py-[6px] !rounded-[8px] font-bold text-white shadow-sm"
+              className="!bg-brand !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm"
               suffix={<ChevronRightIcon />}
               onClick={() => this.handleOpenResume(employee)}
             >
@@ -799,7 +799,7 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
         onClose={this.handleCloseResume}
         className="[&_.t-dialog\\_\\_body]:!p-0 [&_.t-dialog\\_\\_wrap]:!items-center [&_.t-dialog]:!p-0"
       >
-        <div className="relative max-h-[85vh] overflow-y-auto rounded-[12px] bg-[#F2F4F8] p-[22px]">
+        <div className="relative max-h-[85vh] overflow-y-auto rounded-[12px] bg-container p-[22px]">
           <ResumeTab
             stageTags={emp.stageTags}
             profile={emp.profile}
@@ -846,20 +846,20 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
 
     return (
       <>
-        <div className="flex h-full flex-col bg-[#F3F5F8] p-[24px] overflow-auto">
+        <div className="flex h-full flex-col bg-page p-[24px] overflow-auto">
           <div className="flex gap-[24px] h-full">
-            <div className="flex flex-[2] flex-col rounded-[24px] bg-white p-[32px] shadow-sm">
+            <div className="flex flex-[2] flex-col rounded-[24px] bg-container p-[32px] shadow-sm">
               <SectionHeader
                 icon={
-                  <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[#E1EEFF]">
-                    <UserIcon className="text-[24px] text-[#0052D9]" />
+                  <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-brand-light">
+                    <UserIcon className="text-[24px] text-brand" />
                   </div>
                 }
                 title="我的数字员工"
                 description="让数字员工成为您的最佳销售伙伴，全天候处理咨询并自动化转化。"
                 actions={
                   <div className="flex items-center gap-[8px]">
-                    <span className="text-[14px] text-[#4E5969]">自动回复</span>
+                    <span className="text-[14px] text-secondary">自动回复</span>
                     <Switch
                       value={isAutoReply}
                       onChange={this.handleAutoReplyChange}
@@ -874,52 +874,52 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
             </div>
 
             <div className="flex flex-1 flex-col gap-[24px]">
-              <div className="flex h-[369px] flex-col rounded-[8px] bg-white px-[32px] pb-[24px] pt-[28px] shadow-sm">
+              <div className="flex h-[369px] flex-col rounded-[8px] bg-container px-[32px] pb-[24px] pt-[28px] shadow-sm">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-[16px]">
-                    <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#EEF3FF]">
-                      <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
-                        <UsergroupIcon className="text-white text-[10px]" />
+                    <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
+                      <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
+                        <UsergroupIcon className="text-text-anti text-[10px]" />
                       </div>
                     </div>
-                    <h2 className="text-[20px] font-bold leading-[28px] text-[#1F1F1F] !mb-0">
+                    <h2 className="text-[20px] font-bold leading-[28px] text-primary !mb-0">
                       社交账号总览
                     </h2>
                   </div>
-                  <RefreshIcon className="h-[22px] w-[22px] cursor-pointer text-[#1F1F1F]" />
+                  <RefreshIcon className="h-[22px] w-[22px] cursor-pointer text-primary" />
                 </div>
 
                 {this.renderSocialAccountTable()}
               </div>
 
-              <div className="flex h-[509px] w-[647px] flex-auto flex-col rounded-[8px] bg-white px-[32px] pb-[36px] pt-[28px] shadow-sm">
+              <div className="flex h-[509px] w-[647px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
                 <div className="flex h-[55px] items-start justify-between">
                   <div className="flex items-start">
                     <div className="relative h-[32px] w-[32px] flex-shrink-0">
-                      <div className="absolute inset-0 rounded-full bg-[#F2F4FF]" />
-                      <div className="absolute left-[7px] top-[7px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#0052D9]">
-                        <AddIcon className="text-[10px] text-white" />
+                      <div className="absolute inset-0 rounded-full bg-brand-light" />
+                      <div className="absolute left-[7px] top-[7px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
+                        <AddIcon className="text-[10px] text-text-anti" />
                       </div>
                     </div>
-                    <span className="ml-[16px] pt-[2px] text-[20px] font-bold leading-[28px] text-[#1F1F1F]">
+                    <span className="ml-[16px] pt-[2px] text-[20px] font-bold leading-[28px] text-primary">
                       新手引导
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between pt-[6px]">
-                    <span className="text-[14px] font-medium leading-[20px] text-[#555555]">
+                    <span className="text-[14px] font-medium leading-[20px] text-secondary">
                       完成进度
                     </span>
                     <div className="mx-[12px] w-[91px]">
                       <Progress
                         percentage={57}
-                        color="#0052D9"
-                        trackColor="#E8E8E8"
+                        color="var(--td-brand-color)"
+                        trackColor="var(--td-border-level-1-color)"
                         strokeWidth={4}
                         label={false}
                       />
                     </div>
-                    <span className="text-[14px] font-medium leading-[20px] text-[#1F1F1F]">
+                    <span className="text-[14px] font-medium leading-[20px] text-primary">
                       80%
                     </span>
                   </div>
@@ -956,12 +956,12 @@ class HomeScreen extends Component<HomeScreenProps, HomeScreenState> {
                   />
                 </div>
 
-                <div className="mt-[24px] h-[66px] w-full rounded-[6px] bg-[#D9E2FF] px-[34px] py-[15px]">
+                <div className="mt-[24px] h-[66px] w-full rounded-[6px] bg-brand-light px-[34px] py-[15px]">
                   <div className="flex items-start gap-[10px]">
-                    <div className="mt-[9px] flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-[#0052D9] text-[12px] font-semibold leading-none text-white">
+                    <div className="mt-[9px] flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-brand text-[12px] font-semibold leading-none text-text-anti">
                       i
                     </div>
-                    <p className="max-w-[501px] text-[14px] font-medium leading-[22px] text-[#1F2633]">
+                    <p className="max-w-[501px] text-[14px] font-medium leading-[22px] text-primary">
                       设置完成后，设置需要自动回复的社交账号和会话对象标签，最后现在首页打开员工的总开关，数字员工就可以自动回复啦~
                     </p>
                   </div>

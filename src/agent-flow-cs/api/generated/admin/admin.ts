@@ -11,16 +11,17 @@ import type {
   AdminPasswordResetRequest,
   AdminResponse,
   AdminUpdateRequest,
+  AgentObservabilityResponse,
   AgentReplyRequest,
-  AuditLogListResponse,
+  AppApiAdminAuditAuditLogListResponse,
+  AppApiSchemasConversationListResponse,
+  AppApiSchemasCustomerProfileListResponse,
+  AppApiSchemasDigitalHumanListResponse,
+  AppApiSchemasDigitalHumanResponse,
   ConversationBriefResponse,
-  ConversationListResponse,
   ConversationTrendsResponse,
   CustomerProfileDetailResponse,
-  CustomerProfileListResponse,
   DigitalHumanAdminUpdateRequest,
-  DigitalHumanListResponse,
-  DigitalHumanResponse,
   GetAgentStatsApiV1AdminStatsAgentStatsGetParams,
   GetConversationTrendsApiV1AdminStatsTrendsGetParams,
   HTTPValidationError,
@@ -40,895 +41,819 @@ import type {
   MemoryOverviewResponse,
   MessageBriefResponse,
   MessageListResponse,
+  OwnerCreateRequest,
   OwnerDetailResponse,
   OwnerListResponse,
   OwnerSuspendRequest,
   OwnerWithMembersResponse,
   PlatformStatsResponse,
-  TraceResponse,
+  TraceResponse
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type adminLoginApiV1AdminAuthLoginPostResponse200 = {
-  data: AdminLoginResponse;
-  status: 200;
-};
+  data: AdminLoginResponse
+  status: 200
+}
 
 export type adminLoginApiV1AdminAuthLoginPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponseSuccess = (adminLoginApiV1AdminAuthLoginPostResponse200) & {
+  headers: Headers;
+};
+export type adminLoginApiV1AdminAuthLoginPostResponseError = (adminLoginApiV1AdminAuthLoginPostResponse422) & {
+  headers: Headers;
 };
 
-export type adminLoginApiV1AdminAuthLoginPostResponseSuccess =
-  adminLoginApiV1AdminAuthLoginPostResponse200 & {
-    headers: Headers;
-  };
-export type adminLoginApiV1AdminAuthLoginPostResponseError =
-  adminLoginApiV1AdminAuthLoginPostResponse422 & {
-    headers: Headers;
-  };
-
-export type adminLoginApiV1AdminAuthLoginPostResponse =
-  | adminLoginApiV1AdminAuthLoginPostResponseSuccess
-  | adminLoginApiV1AdminAuthLoginPostResponseError;
+export type adminLoginApiV1AdminAuthLoginPostResponse = (adminLoginApiV1AdminAuthLoginPostResponseSuccess | adminLoginApiV1AdminAuthLoginPostResponseError)
 
 export const getAdminLoginApiV1AdminAuthLoginPostUrl = () => {
-  return 'http://10.0.0.179:8000/api/v1/admin/auth/login';
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/auth/login`
+}
 
 /**
  * 平台管理员登录（独立认证入口，token 带 platform_admin scope）。
  * @summary Admin Login
  */
-export const adminLoginApiV1AdminAuthLoginPost = async (
-  adminLoginRequest: AdminLoginRequest,
-  options?: RequestInit,
-): Promise<adminLoginApiV1AdminAuthLoginPostResponse> => {
-  return useCustomInstance<adminLoginApiV1AdminAuthLoginPostResponse>(
-    getAdminLoginApiV1AdminAuthLoginPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(adminLoginRequest),
-    },
-  );
-};
+export const adminLoginApiV1AdminAuthLoginPost = async (adminLoginRequest: AdminLoginRequest, options?: RequestInit): Promise<adminLoginApiV1AdminAuthLoginPostResponse> => {
+
+  return useCustomInstance<adminLoginApiV1AdminAuthLoginPostResponse>(getAdminLoginApiV1AdminAuthLoginPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(adminLoginRequest)
+  }
+);}
+
 
 export type listAdminsApiV1AdminAdminsGetResponse200 = {
-  data: AdminResponse[];
-  status: 200;
-};
+  data: AdminResponse[]
+  status: 200
+}
 
 export type listAdminsApiV1AdminAdminsGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listAdminsApiV1AdminAdminsGetResponseSuccess = (listAdminsApiV1AdminAdminsGetResponse200) & {
+  headers: Headers;
+};
+export type listAdminsApiV1AdminAdminsGetResponseError = (listAdminsApiV1AdminAdminsGetResponse422) & {
+  headers: Headers;
 };
 
-export type listAdminsApiV1AdminAdminsGetResponseSuccess =
-  listAdminsApiV1AdminAdminsGetResponse200 & {
-    headers: Headers;
-  };
-export type listAdminsApiV1AdminAdminsGetResponseError =
-  listAdminsApiV1AdminAdminsGetResponse422 & {
-    headers: Headers;
-  };
+export type listAdminsApiV1AdminAdminsGetResponse = (listAdminsApiV1AdminAdminsGetResponseSuccess | listAdminsApiV1AdminAdminsGetResponseError)
 
-export type listAdminsApiV1AdminAdminsGetResponse =
-  | listAdminsApiV1AdminAdminsGetResponseSuccess
-  | listAdminsApiV1AdminAdminsGetResponseError;
-
-export const getListAdminsApiV1AdminAdminsGetUrl = (
-  params?: ListAdminsApiV1AdminAdminsGetParams,
-) => {
+export const getListAdminsApiV1AdminAdminsGetUrl = (params?: ListAdminsApiV1AdminAdminsGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/admins?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/admins';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/admins?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/admins`
+}
 
 /**
  * 列出平台管理员（super_admin 限定）。
  * @summary List Admins
  */
-export const listAdminsApiV1AdminAdminsGet = async (
-  params?: ListAdminsApiV1AdminAdminsGetParams,
-  options?: RequestInit,
-): Promise<listAdminsApiV1AdminAdminsGetResponse> => {
-  return useCustomInstance<listAdminsApiV1AdminAdminsGetResponse>(
-    getListAdminsApiV1AdminAdminsGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listAdminsApiV1AdminAdminsGet = async (params?: ListAdminsApiV1AdminAdminsGetParams, options?: RequestInit): Promise<listAdminsApiV1AdminAdminsGetResponse> => {
+
+  return useCustomInstance<listAdminsApiV1AdminAdminsGetResponse>(getListAdminsApiV1AdminAdminsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type createAdminApiV1AdminAdminsPostResponse201 = {
-  data: AdminResponse;
-  status: 201;
-};
+  data: AdminResponse
+  status: 201
+}
 
 export type createAdminApiV1AdminAdminsPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createAdminApiV1AdminAdminsPostResponseSuccess = (createAdminApiV1AdminAdminsPostResponse201) & {
+  headers: Headers;
+};
+export type createAdminApiV1AdminAdminsPostResponseError = (createAdminApiV1AdminAdminsPostResponse422) & {
+  headers: Headers;
 };
 
-export type createAdminApiV1AdminAdminsPostResponseSuccess =
-  createAdminApiV1AdminAdminsPostResponse201 & {
-    headers: Headers;
-  };
-export type createAdminApiV1AdminAdminsPostResponseError =
-  createAdminApiV1AdminAdminsPostResponse422 & {
-    headers: Headers;
-  };
-
-export type createAdminApiV1AdminAdminsPostResponse =
-  | createAdminApiV1AdminAdminsPostResponseSuccess
-  | createAdminApiV1AdminAdminsPostResponseError;
+export type createAdminApiV1AdminAdminsPostResponse = (createAdminApiV1AdminAdminsPostResponseSuccess | createAdminApiV1AdminAdminsPostResponseError)
 
 export const getCreateAdminApiV1AdminAdminsPostUrl = () => {
-  return 'http://10.0.0.179:8000/api/v1/admin/admins';
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/admins`
+}
 
 /**
  * 创建平台管理员（super_admin 限定）。
  * @summary Create Admin
  */
-export const createAdminApiV1AdminAdminsPost = async (
-  adminCreateRequest: AdminCreateRequest,
-  options?: RequestInit,
-): Promise<createAdminApiV1AdminAdminsPostResponse> => {
-  return useCustomInstance<createAdminApiV1AdminAdminsPostResponse>(
-    getCreateAdminApiV1AdminAdminsPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(adminCreateRequest),
-    },
-  );
-};
+export const createAdminApiV1AdminAdminsPost = async (adminCreateRequest: AdminCreateRequest, options?: RequestInit): Promise<createAdminApiV1AdminAdminsPostResponse> => {
+
+  return useCustomInstance<createAdminApiV1AdminAdminsPostResponse>(getCreateAdminApiV1AdminAdminsPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(adminCreateRequest)
+  }
+);}
+
 
 export type getAdminApiV1AdminAdminsAdminIdGetResponse200 = {
-  data: AdminResponse;
-  status: 200;
-};
+  data: AdminResponse
+  status: 200
+}
 
 export type getAdminApiV1AdminAdminsAdminIdGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponseSuccess = (getAdminApiV1AdminAdminsAdminIdGetResponse200) & {
+  headers: Headers;
+};
+export type getAdminApiV1AdminAdminsAdminIdGetResponseError = (getAdminApiV1AdminAdminsAdminIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type getAdminApiV1AdminAdminsAdminIdGetResponseSuccess =
-  getAdminApiV1AdminAdminsAdminIdGetResponse200 & {
-    headers: Headers;
-  };
-export type getAdminApiV1AdminAdminsAdminIdGetResponseError =
-  getAdminApiV1AdminAdminsAdminIdGetResponse422 & {
-    headers: Headers;
-  };
+export type getAdminApiV1AdminAdminsAdminIdGetResponse = (getAdminApiV1AdminAdminsAdminIdGetResponseSuccess | getAdminApiV1AdminAdminsAdminIdGetResponseError)
 
-export type getAdminApiV1AdminAdminsAdminIdGetResponse =
-  | getAdminApiV1AdminAdminsAdminIdGetResponseSuccess
-  | getAdminApiV1AdminAdminsAdminIdGetResponseError;
+export const getGetAdminApiV1AdminAdminsAdminIdGetUrl = (adminId: string,) => {
 
-export const getGetAdminApiV1AdminAdminsAdminIdGetUrl = (adminId: string) => {
-  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}`;
-};
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}`
+}
 
 /**
  * 获取管理员详情（super_admin 限定）。
  * @summary Get Admin
  */
-export const getAdminApiV1AdminAdminsAdminIdGet = async (
-  adminId: string,
-  options?: RequestInit,
-): Promise<getAdminApiV1AdminAdminsAdminIdGetResponse> => {
-  return useCustomInstance<getAdminApiV1AdminAdminsAdminIdGetResponse>(
-    getGetAdminApiV1AdminAdminsAdminIdGetUrl(adminId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getAdminApiV1AdminAdminsAdminIdGet = async (adminId: string, options?: RequestInit): Promise<getAdminApiV1AdminAdminsAdminIdGetResponse> => {
+
+  return useCustomInstance<getAdminApiV1AdminAdminsAdminIdGetResponse>(getGetAdminApiV1AdminAdminsAdminIdGetUrl(adminId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type updateAdminApiV1AdminAdminsAdminIdPatchResponse200 = {
-  data: AdminResponse;
-  status: 200;
-};
+  data: AdminResponse
+  status: 200
+}
 
 export type updateAdminApiV1AdminAdminsAdminIdPatchResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponseSuccess = (updateAdminApiV1AdminAdminsAdminIdPatchResponse200) & {
+  headers: Headers;
+};
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponseError = (updateAdminApiV1AdminAdminsAdminIdPatchResponse422) & {
+  headers: Headers;
 };
 
-export type updateAdminApiV1AdminAdminsAdminIdPatchResponseSuccess =
-  updateAdminApiV1AdminAdminsAdminIdPatchResponse200 & {
-    headers: Headers;
-  };
-export type updateAdminApiV1AdminAdminsAdminIdPatchResponseError =
-  updateAdminApiV1AdminAdminsAdminIdPatchResponse422 & {
-    headers: Headers;
-  };
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse = (updateAdminApiV1AdminAdminsAdminIdPatchResponseSuccess | updateAdminApiV1AdminAdminsAdminIdPatchResponseError)
 
-export type updateAdminApiV1AdminAdminsAdminIdPatchResponse =
-  | updateAdminApiV1AdminAdminsAdminIdPatchResponseSuccess
-  | updateAdminApiV1AdminAdminsAdminIdPatchResponseError;
+export const getUpdateAdminApiV1AdminAdminsAdminIdPatchUrl = (adminId: string,) => {
 
-export const getUpdateAdminApiV1AdminAdminsAdminIdPatchUrl = (
-  adminId: string,
-) => {
-  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}`;
-};
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}`
+}
 
 /**
  * 修改管理员属性（super_admin 限定）。
  * @summary Update Admin
  */
-export const updateAdminApiV1AdminAdminsAdminIdPatch = async (
-  adminId: string,
-  adminUpdateRequest: AdminUpdateRequest,
-  options?: RequestInit,
-): Promise<updateAdminApiV1AdminAdminsAdminIdPatchResponse> => {
-  return useCustomInstance<updateAdminApiV1AdminAdminsAdminIdPatchResponse>(
-    getUpdateAdminApiV1AdminAdminsAdminIdPatchUrl(adminId),
-    {
-      ...options,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(adminUpdateRequest),
-    },
-  );
+export const updateAdminApiV1AdminAdminsAdminIdPatch = async (adminId: string,
+    adminUpdateRequest: AdminUpdateRequest, options?: RequestInit): Promise<updateAdminApiV1AdminAdminsAdminIdPatchResponse> => {
+
+  return useCustomInstance<updateAdminApiV1AdminAdminsAdminIdPatchResponse>(getUpdateAdminApiV1AdminAdminsAdminIdPatchUrl(adminId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(adminUpdateRequest)
+  }
+);}
+
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse204 = {
+  data: void
+  status: 204
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseSuccess = (resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse204) & {
+  headers: Headers;
+};
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseError = (resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse422) & {
+  headers: Headers;
 };
 
-export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse204 =
-  {
-    data: void;
-    status: 204;
-  };
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse = (resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseSuccess | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseError)
 
-export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getResetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostUrl = (adminId: string,) => {
 
-export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseSuccess =
-  resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse204 & {
-    headers: Headers;
-  };
-export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseError =
-  resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse422 & {
-    headers: Headers;
-  };
 
-export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse =
 
-    | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseSuccess
-    | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseError;
 
-export const getResetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostUrl =
-  (adminId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}/reset-password`;
-  };
+  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}/reset-password`
+}
 
 /**
  * 重置管理员密码（super_admin 限定）。
  * @summary Reset Admin Password
  */
-export const resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPost =
-  async (
-    adminId: string,
-    adminPasswordResetRequest: AdminPasswordResetRequest,
-    options?: RequestInit,
-  ): Promise<resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse> => {
-    return useCustomInstance<resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse>(
-      getResetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostUrl(adminId),
-      {
-        ...options,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(adminPasswordResetRequest),
-      },
-    );
-  };
+export const resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPost = async (adminId: string,
+    adminPasswordResetRequest: AdminPasswordResetRequest, options?: RequestInit): Promise<resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse> => {
+
+  return useCustomInstance<resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse>(getResetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostUrl(adminId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(adminPasswordResetRequest)
+  }
+);}
+
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse201 = {
+  data: OwnerDetailResponse
+  status: 201
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponseSuccess = (createOwnerApiV1AdminAccountsOwnersPostResponse201) & {
+  headers: Headers;
+};
+export type createOwnerApiV1AdminAccountsOwnersPostResponseError = (createOwnerApiV1AdminAccountsOwnersPostResponse422) & {
+  headers: Headers;
+};
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse = (createOwnerApiV1AdminAccountsOwnersPostResponseSuccess | createOwnerApiV1AdminAccountsOwnersPostResponseError)
+
+export const getCreateOwnerApiV1AdminAccountsOwnersPostUrl = () => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners`
+}
+
+/**
+ * 新建主账号（平台管理员专用）。
+ * @summary Create Owner
+ */
+export const createOwnerApiV1AdminAccountsOwnersPost = async (ownerCreateRequest: OwnerCreateRequest, options?: RequestInit): Promise<createOwnerApiV1AdminAccountsOwnersPostResponse> => {
+
+  return useCustomInstance<createOwnerApiV1AdminAccountsOwnersPostResponse>(getCreateOwnerApiV1AdminAccountsOwnersPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(ownerCreateRequest)
+  }
+);}
+
 
 export type listOwnersApiV1AdminAccountsOwnersGetResponse200 = {
-  data: OwnerListResponse;
-  status: 200;
-};
+  data: OwnerListResponse
+  status: 200
+}
 
 export type listOwnersApiV1AdminAccountsOwnersGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponseSuccess = (listOwnersApiV1AdminAccountsOwnersGetResponse200) & {
+  headers: Headers;
+};
+export type listOwnersApiV1AdminAccountsOwnersGetResponseError = (listOwnersApiV1AdminAccountsOwnersGetResponse422) & {
+  headers: Headers;
 };
 
-export type listOwnersApiV1AdminAccountsOwnersGetResponseSuccess =
-  listOwnersApiV1AdminAccountsOwnersGetResponse200 & {
-    headers: Headers;
-  };
-export type listOwnersApiV1AdminAccountsOwnersGetResponseError =
-  listOwnersApiV1AdminAccountsOwnersGetResponse422 & {
-    headers: Headers;
-  };
+export type listOwnersApiV1AdminAccountsOwnersGetResponse = (listOwnersApiV1AdminAccountsOwnersGetResponseSuccess | listOwnersApiV1AdminAccountsOwnersGetResponseError)
 
-export type listOwnersApiV1AdminAccountsOwnersGetResponse =
-  | listOwnersApiV1AdminAccountsOwnersGetResponseSuccess
-  | listOwnersApiV1AdminAccountsOwnersGetResponseError;
-
-export const getListOwnersApiV1AdminAccountsOwnersGetUrl = (
-  params?: ListOwnersApiV1AdminAccountsOwnersGetParams,
-) => {
+export const getListOwnersApiV1AdminAccountsOwnersGetUrl = (params?: ListOwnersApiV1AdminAccountsOwnersGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/accounts/owners?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/accounts/owners';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/accounts/owners?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/accounts/owners`
+}
 
 /**
  * 列出全部主账号（支持搜索和状态过滤）。
  * @summary List Owners
  */
-export const listOwnersApiV1AdminAccountsOwnersGet = async (
-  params?: ListOwnersApiV1AdminAccountsOwnersGetParams,
-  options?: RequestInit,
-): Promise<listOwnersApiV1AdminAccountsOwnersGetResponse> => {
-  return useCustomInstance<listOwnersApiV1AdminAccountsOwnersGetResponse>(
-    getListOwnersApiV1AdminAccountsOwnersGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listOwnersApiV1AdminAccountsOwnersGet = async (params?: ListOwnersApiV1AdminAccountsOwnersGetParams, options?: RequestInit): Promise<listOwnersApiV1AdminAccountsOwnersGetResponse> => {
+
+  return useCustomInstance<listOwnersApiV1AdminAccountsOwnersGetResponse>(getListOwnersApiV1AdminAccountsOwnersGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse200 = {
-  data: OwnerWithMembersResponse;
-  status: 200;
-};
+  data: OwnerWithMembersResponse
+  status: 200
+}
 
 export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseSuccess = (getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse200) & {
+  headers: Headers;
+};
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseError = (getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseSuccess =
-  getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse200 & {
-    headers: Headers;
-  };
-export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseError =
-  getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse422 & {
-    headers: Headers;
-  };
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse = (getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseSuccess | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseError)
 
-export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse =
-  | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseSuccess
-  | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseError;
+export const getGetOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetUrl = (ownerId: string,) => {
 
-export const getGetOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetUrl = (
-  ownerId: string,
-) => {
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}`;
-};
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}`
+}
 
 /**
  * 获取主账号详情及其子账号树。
  * @summary Get Owner With Members
  */
-export const getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGet = async (
-  ownerId: string,
-  options?: RequestInit,
-): Promise<getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse> => {
-  return useCustomInstance<getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse>(
-    getGetOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetUrl(ownerId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGet = async (ownerId: string, options?: RequestInit): Promise<getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse> => {
+
+  return useCustomInstance<getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse>(getGetOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetUrl(ownerId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse200 = {
+  data: OwnerDetailResponse
+  status: 200
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseSuccess = (suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse200) & {
+  headers: Headers;
+};
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseError = (suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse422) & {
+  headers: Headers;
 };
 
-export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse200 =
-  {
-    data: OwnerDetailResponse;
-    status: 200;
-  };
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse = (suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseSuccess | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseError)
 
-export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getSuspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchUrl = (ownerId: string,) => {
 
-export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseSuccess =
-  suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse200 & {
-    headers: Headers;
-  };
-export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseError =
-  suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse422 & {
-    headers: Headers;
-  };
 
-export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse =
-  | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseSuccess
-  | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseError;
 
-export const getSuspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchUrl = (
-  ownerId: string,
-) => {
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/suspend`;
-};
+
+  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/suspend`
+}
 
 /**
  * 封禁或解封主账号（级联影响旗下子账号）。
  * @summary Suspend Owner
  */
-export const suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatch = async (
-  ownerId: string,
-  ownerSuspendRequest: OwnerSuspendRequest,
-  options?: RequestInit,
-): Promise<suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse> => {
-  return useCustomInstance<suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse>(
-    getSuspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchUrl(ownerId),
-    {
-      ...options,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(ownerSuspendRequest),
-    },
-  );
+export const suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatch = async (ownerId: string,
+    ownerSuspendRequest: OwnerSuspendRequest, options?: RequestInit): Promise<suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse> => {
+
+  return useCustomInstance<suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse>(getSuspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchUrl(ownerId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(ownerSuspendRequest)
+  }
+);}
+
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse200 = {
+  data: MemberBriefResponse
+  status: 200
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseSuccess = (suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse200) & {
+  headers: Headers;
+};
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseError = (suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse422) & {
+  headers: Headers;
 };
 
-export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse200 =
-  {
-    data: MemberBriefResponse;
-    status: 200;
-  };
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse = (suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseSuccess | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseError)
 
-export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getSuspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchUrl = (memberId: string,) => {
 
-export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseSuccess =
-  suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse200 & {
-    headers: Headers;
-  };
-export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseError =
-  suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse422 & {
-    headers: Headers;
-  };
 
-export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse =
 
-    | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseSuccess
-    | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseError;
 
-export const getSuspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchUrl =
-  (memberId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/accounts/members/${memberId}/suspend`;
-  };
+  return `http://10.0.0.179:8000/api/v1/admin/accounts/members/${memberId}/suspend`
+}
 
 /**
  * 封禁或解封单个子账号。
  * @summary Suspend Member
  */
-export const suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatch =
-  async (
-    memberId: string,
-    ownerSuspendRequest: OwnerSuspendRequest,
-    options?: RequestInit,
-  ): Promise<suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse> => {
-    return useCustomInstance<suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse>(
-      getSuspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchUrl(
-        memberId,
-      ),
-      {
-        ...options,
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(ownerSuspendRequest),
-      },
-    );
-  };
+export const suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatch = async (memberId: string,
+    ownerSuspendRequest: OwnerSuspendRequest, options?: RequestInit): Promise<suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse> => {
 
-export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse204 =
+  return useCustomInstance<suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse>(getSuspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchUrl(memberId),
   {
-    data: void;
-    status: 204;
-  };
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(ownerSuspendRequest)
+  }
+);}
 
-export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseSuccess =
-  resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse204 & {
-    headers: Headers;
-  };
-export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseError =
-  resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse422 & {
-    headers: Headers;
-  };
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse204 = {
+  data: void
+  status: 204
+}
 
-export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse =
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
 
-    | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseSuccess
-    | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseError;
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseSuccess = (resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse204) & {
+  headers: Headers;
+};
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseError = (resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse422) & {
+  headers: Headers;
+};
 
-export const getResetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostUrl =
-  (ownerId: string, memberId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/members/${memberId}/reset-password`;
-  };
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse = (resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseSuccess | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseError)
+
+export const getResetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostUrl = (ownerId: string,
+    memberId: string,) => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/members/${memberId}/reset-password`
+}
 
 /**
  * 管理员代子账号重置密码。
  * @summary Reset Member Password
  */
-export const resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPost =
-  async (
-    ownerId: string,
+export const resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPost = async (ownerId: string,
     memberId: string,
-    adminPasswordResetRequest: AdminPasswordResetRequest,
-    options?: RequestInit,
-  ): Promise<resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse> => {
-    return useCustomInstance<resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse>(
-      getResetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostUrl(
-        ownerId,
-        memberId,
-      ),
-      {
-        ...options,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(adminPasswordResetRequest),
-      },
-    );
-  };
+    adminPasswordResetRequest: AdminPasswordResetRequest, options?: RequestInit): Promise<resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse> => {
 
-export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse204 =
+  return useCustomInstance<resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse>(getResetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostUrl(ownerId,memberId),
   {
-    data: void;
-    status: 204;
-  };
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(adminPasswordResetRequest)
+  }
+);}
 
-export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseSuccess =
-  resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse204 & {
-    headers: Headers;
-  };
-export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseError =
-  resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse422 & {
-    headers: Headers;
-  };
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse204 = {
+  data: void
+  status: 204
+}
 
-export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse =
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
 
-    | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseSuccess
-    | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseError;
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseSuccess = (resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse204) & {
+  headers: Headers;
+};
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseError = (resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse422) & {
+  headers: Headers;
+};
 
-export const getResetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostUrl =
-  (ownerId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/reset-password`;
-  };
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse = (resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseSuccess | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseError)
+
+export const getResetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostUrl = (ownerId: string,) => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/reset-password`
+}
 
 /**
  * 管理员代主账号重置密码。
  * @summary Reset Owner Password
  */
-export const resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPost =
-  async (
-    ownerId: string,
-    adminPasswordResetRequest: AdminPasswordResetRequest,
-    options?: RequestInit,
-  ): Promise<resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse> => {
-    return useCustomInstance<resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse>(
-      getResetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostUrl(
-        ownerId,
-      ),
-      {
-        ...options,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(adminPasswordResetRequest),
-      },
-    );
-  };
+export const resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPost = async (ownerId: string,
+    adminPasswordResetRequest: AdminPasswordResetRequest, options?: RequestInit): Promise<resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse> => {
+
+  return useCustomInstance<resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse>(getResetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostUrl(ownerId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(adminPasswordResetRequest)
+  }
+);}
+
 
 export type listConversationsApiV1AdminOverviewConversationsGetResponse200 = {
-  data: ConversationListResponse;
-  status: 200;
-};
+  data: AppApiSchemasConversationListResponse
+  status: 200
+}
 
 export type listConversationsApiV1AdminOverviewConversationsGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponseSuccess = (listConversationsApiV1AdminOverviewConversationsGetResponse200) & {
+  headers: Headers;
+};
+export type listConversationsApiV1AdminOverviewConversationsGetResponseError = (listConversationsApiV1AdminOverviewConversationsGetResponse422) & {
+  headers: Headers;
 };
 
-export type listConversationsApiV1AdminOverviewConversationsGetResponseSuccess =
-  listConversationsApiV1AdminOverviewConversationsGetResponse200 & {
-    headers: Headers;
-  };
-export type listConversationsApiV1AdminOverviewConversationsGetResponseError =
-  listConversationsApiV1AdminOverviewConversationsGetResponse422 & {
-    headers: Headers;
-  };
+export type listConversationsApiV1AdminOverviewConversationsGetResponse = (listConversationsApiV1AdminOverviewConversationsGetResponseSuccess | listConversationsApiV1AdminOverviewConversationsGetResponseError)
 
-export type listConversationsApiV1AdminOverviewConversationsGetResponse =
-  | listConversationsApiV1AdminOverviewConversationsGetResponseSuccess
-  | listConversationsApiV1AdminOverviewConversationsGetResponseError;
-
-export const getListConversationsApiV1AdminOverviewConversationsGetUrl = (
-  params?: ListConversationsApiV1AdminOverviewConversationsGetParams,
-) => {
+export const getListConversationsApiV1AdminOverviewConversationsGetUrl = (params?: ListConversationsApiV1AdminOverviewConversationsGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/overview/conversations?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/overview/conversations';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/conversations?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/conversations`
+}
 
 /**
  * 跨租户分页查询会话（支持过滤）。
  * @summary List Conversations
  */
-export const listConversationsApiV1AdminOverviewConversationsGet = async (
-  params?: ListConversationsApiV1AdminOverviewConversationsGetParams,
-  options?: RequestInit,
-): Promise<listConversationsApiV1AdminOverviewConversationsGetResponse> => {
-  return useCustomInstance<listConversationsApiV1AdminOverviewConversationsGetResponse>(
-    getListConversationsApiV1AdminOverviewConversationsGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const listConversationsApiV1AdminOverviewConversationsGet = async (params?: ListConversationsApiV1AdminOverviewConversationsGetParams, options?: RequestInit): Promise<listConversationsApiV1AdminOverviewConversationsGetResponse> => {
+
+  return useCustomInstance<listConversationsApiV1AdminOverviewConversationsGetResponse>(getListConversationsApiV1AdminOverviewConversationsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse200 = {
+  data: ConversationBriefResponse
+  status: 200
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponseSuccess = (getConversationApiV1AdminOverviewConversationsConversationIdGetResponse200) & {
+  headers: Headers;
+};
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponseError = (getConversationApiV1AdminOverviewConversationsConversationIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse200 =
-  {
-    data: ConversationBriefResponse;
-    status: 200;
-  };
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse = (getConversationApiV1AdminOverviewConversationsConversationIdGetResponseSuccess | getConversationApiV1AdminOverviewConversationsConversationIdGetResponseError)
 
-export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getGetConversationApiV1AdminOverviewConversationsConversationIdGetUrl = (conversationId: string,) => {
 
-export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponseSuccess =
-  getConversationApiV1AdminOverviewConversationsConversationIdGetResponse200 & {
-    headers: Headers;
-  };
-export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponseError =
-  getConversationApiV1AdminOverviewConversationsConversationIdGetResponse422 & {
-    headers: Headers;
-  };
 
-export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse =
 
-    | getConversationApiV1AdminOverviewConversationsConversationIdGetResponseSuccess
-    | getConversationApiV1AdminOverviewConversationsConversationIdGetResponseError;
 
-export const getGetConversationApiV1AdminOverviewConversationsConversationIdGetUrl =
-  (conversationId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}`;
-  };
+  return `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}`
+}
 
 /**
  * 查看单个会话。
  * @summary Get Conversation
  */
-export const getConversationApiV1AdminOverviewConversationsConversationIdGet =
-  async (
-    conversationId: string,
-    options?: RequestInit,
-  ): Promise<getConversationApiV1AdminOverviewConversationsConversationIdGetResponse> => {
-    return useCustomInstance<getConversationApiV1AdminOverviewConversationsConversationIdGetResponse>(
-      getGetConversationApiV1AdminOverviewConversationsConversationIdGetUrl(
-        conversationId,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const getConversationApiV1AdminOverviewConversationsConversationIdGet = async (conversationId: string, options?: RequestInit): Promise<getConversationApiV1AdminOverviewConversationsConversationIdGetResponse> => {
+
+  return useCustomInstance<getConversationApiV1AdminOverviewConversationsConversationIdGetResponse>(getGetConversationApiV1AdminOverviewConversationsConversationIdGetUrl(conversationId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse200 = {
-  data: DigitalHumanListResponse;
-  status: 200;
-};
+  data: AppApiSchemasDigitalHumanListResponse
+  status: 200
+}
 
 export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseSuccess = (listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse200) & {
+  headers: Headers;
+};
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseError = (listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse422) & {
+  headers: Headers;
 };
 
-export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseSuccess =
-  listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse200 & {
-    headers: Headers;
-  };
-export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseError =
-  listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse422 & {
-    headers: Headers;
-  };
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse = (listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseSuccess | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseError)
 
-export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse =
-  | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseSuccess
-  | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseError;
-
-export const getListDigitalHumansApiV1AdminOverviewDigitalHumansGetUrl = (
-  params?: ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams,
-) => {
+export const getListDigitalHumansApiV1AdminOverviewDigitalHumansGetUrl = (params?: ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/overview/digital-humans?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/overview/digital-humans';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/digital-humans?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/digital-humans`
+}
 
 /**
  * 跨租户分页查询数字人（支持过滤）。
  * @summary List Digital Humans
  */
-export const listDigitalHumansApiV1AdminOverviewDigitalHumansGet = async (
-  params?: ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams,
-  options?: RequestInit,
-): Promise<listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse> => {
-  return useCustomInstance<listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse>(
-    getListDigitalHumansApiV1AdminOverviewDigitalHumansGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const listDigitalHumansApiV1AdminOverviewDigitalHumansGet = async (params?: ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams, options?: RequestInit): Promise<listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse> => {
+
+  return useCustomInstance<listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse>(getListDigitalHumansApiV1AdminOverviewDigitalHumansGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse200 = {
+  data: MessageListResponse
+  status: 200
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseSuccess = (listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse200) & {
+  headers: Headers;
+};
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseError = (listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse422) & {
+  headers: Headers;
 };
 
-export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse200 =
-  {
-    data: MessageListResponse;
-    status: 200;
-  };
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse = (listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseSuccess | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseError)
 
-export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetUrl = (conversationId: string,
+    params?: ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseSuccess =
-  listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse200 & {
-    headers: Headers;
-  };
-export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseError =
-  listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse422 & {
-    headers: Headers;
-  };
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse =
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
 
-    | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseSuccess
-    | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseError;
+  const stringifiedParams = normalizedParams.toString();
 
-export const getListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetUrl =
-  (
-    conversationId: string,
-    params?: ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams,
-  ) => {
-    const normalizedParams = new URLSearchParams();
-
-    Object.entries(params || {}).forEach(([key, value]) => {
-      if (value !== undefined) {
-        normalizedParams.append(key, value === null ? 'null' : String(value));
-      }
-    });
-
-    const stringifiedParams = normalizedParams.toString();
-
-    return stringifiedParams.length > 0
-      ? `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/messages?${stringifiedParams}`
-      : `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/messages`;
-  };
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/messages?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/messages`
+}
 
 /**
  * 查看指定会话的消息（排障用）。
  * @summary List Messages
  */
-export const listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGet =
-  async (
-    conversationId: string,
-    params?: ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams,
-    options?: RequestInit,
-  ): Promise<listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse> => {
-    return useCustomInstance<listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse>(
-      getListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetUrl(
-        conversationId,
-        params,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGet = async (conversationId: string,
+    params?: ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams, options?: RequestInit): Promise<listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse> => {
 
-export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse200 =
+  return useCustomInstance<listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse>(getListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetUrl(conversationId,params),
   {
-    data: MessageBriefResponse;
-    status: 200;
-  };
+    ...options,
+    method: 'GET'
 
-export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseSuccess =
-  adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse200 & {
-    headers: Headers;
-  };
-export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseError =
-  adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse422 & {
-    headers: Headers;
-  };
+  }
+);}
 
-export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse =
 
-    | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseSuccess
-    | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseError;
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse200 = {
+  data: MessageBriefResponse
+  status: 200
+}
 
-export const getAdminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostUrl =
-  (conversationId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/agent-reply`;
-  };
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseSuccess = (adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse200) & {
+  headers: Headers;
+};
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseError = (adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse422) & {
+  headers: Headers;
+};
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse = (adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseSuccess | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseError)
+
+export const getAdminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostUrl = (conversationId: string,) => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/agent-reply`
+}
 
 /**
  * 平台管理员以人工坐席身份回复客户，绕过 Agent 图。
@@ -936,590 +861,505 @@ export const getAdminAgentReplyApiV1AdminOverviewConversationsConversationIdAgen
  * 对于 WhatsApp 会话，回复会通过 WA-AKG 外发至客户。
  * @summary Admin Agent Reply
  */
-export const adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPost =
-  async (
-    conversationId: string,
-    agentReplyRequest: AgentReplyRequest,
-    options?: RequestInit,
-  ): Promise<adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse> => {
-    return useCustomInstance<adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse>(
-      getAdminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostUrl(
-        conversationId,
-      ),
-      {
-        ...options,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(agentReplyRequest),
-      },
-    );
-  };
+export const adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPost = async (conversationId: string,
+    agentReplyRequest: AgentReplyRequest, options?: RequestInit): Promise<adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse> => {
 
-export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse200 =
+  return useCustomInstance<adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse>(getAdminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostUrl(conversationId),
   {
-    data: CustomerProfileListResponse;
-    status: 200;
-  };
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(agentReplyRequest)
+  }
+);}
 
-export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseSuccess =
-  listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse200 & {
-    headers: Headers;
-  };
-export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseError =
-  listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse422 & {
-    headers: Headers;
-  };
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse200 = {
+  data: AppApiSchemasCustomerProfileListResponse
+  status: 200
+}
 
-export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse =
-  | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseSuccess
-  | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseError;
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
 
-export const getListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetUrl = (
-  params?: ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams,
-) => {
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseSuccess = (listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse200) & {
+  headers: Headers;
+};
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseError = (listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse422) & {
+  headers: Headers;
+};
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse = (listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseSuccess | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseError)
+
+export const getListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetUrl = (params?: ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles`
+}
 
 /**
  * 跨租户分页查询客户画像（支持搜索和多维过滤）。
  * @summary List Customer Profiles
  */
-export const listCustomerProfilesApiV1AdminOverviewCustomerProfilesGet = async (
-  params?: ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams,
-  options?: RequestInit,
-): Promise<listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse> => {
-  return useCustomInstance<listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse>(
-    getListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const listCustomerProfilesApiV1AdminOverviewCustomerProfilesGet = async (params?: ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams, options?: RequestInit): Promise<listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse> => {
+
+  return useCustomInstance<listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse>(getListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse200 = {
+  data: CustomerProfileDetailResponse
+  status: 200
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseSuccess = (getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse200) & {
+  headers: Headers;
+};
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseError = (getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse200 =
-  {
-    data: CustomerProfileDetailResponse;
-    status: 200;
-  };
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse = (getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseSuccess | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseError)
 
-export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getGetCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetUrl = (profileId: string,) => {
 
-export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseSuccess =
-  getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse200 & {
-    headers: Headers;
-  };
-export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseError =
-  getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse422 & {
-    headers: Headers;
-  };
 
-export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse =
 
-    | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseSuccess
-    | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseError;
 
-export const getGetCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetUrl =
-  (profileId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles/${profileId}`;
-  };
+  return `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles/${profileId}`
+}
 
 /**
  * 查看单个客户画像详情。
  * @summary Get Customer Profile
  */
-export const getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGet =
-  async (
-    profileId: string,
-    options?: RequestInit,
-  ): Promise<getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse> => {
-    return useCustomInstance<getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse>(
-      getGetCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetUrl(
-        profileId,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGet = async (profileId: string, options?: RequestInit): Promise<getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse> => {
+
+  return useCustomInstance<getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse>(getGetCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetUrl(profileId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type listHandoffsApiV1AdminOverviewHandoffsGetResponse200 = {
-  data: HandoffListResponse;
-  status: 200;
-};
+  data: HandoffListResponse
+  status: 200
+}
 
 export type listHandoffsApiV1AdminOverviewHandoffsGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponseSuccess = (listHandoffsApiV1AdminOverviewHandoffsGetResponse200) & {
+  headers: Headers;
+};
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponseError = (listHandoffsApiV1AdminOverviewHandoffsGetResponse422) & {
+  headers: Headers;
 };
 
-export type listHandoffsApiV1AdminOverviewHandoffsGetResponseSuccess =
-  listHandoffsApiV1AdminOverviewHandoffsGetResponse200 & {
-    headers: Headers;
-  };
-export type listHandoffsApiV1AdminOverviewHandoffsGetResponseError =
-  listHandoffsApiV1AdminOverviewHandoffsGetResponse422 & {
-    headers: Headers;
-  };
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse = (listHandoffsApiV1AdminOverviewHandoffsGetResponseSuccess | listHandoffsApiV1AdminOverviewHandoffsGetResponseError)
 
-export type listHandoffsApiV1AdminOverviewHandoffsGetResponse =
-  | listHandoffsApiV1AdminOverviewHandoffsGetResponseSuccess
-  | listHandoffsApiV1AdminOverviewHandoffsGetResponseError;
-
-export const getListHandoffsApiV1AdminOverviewHandoffsGetUrl = (
-  params?: ListHandoffsApiV1AdminOverviewHandoffsGetParams,
-) => {
+export const getListHandoffsApiV1AdminOverviewHandoffsGetUrl = (params?: ListHandoffsApiV1AdminOverviewHandoffsGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/overview/handoffs?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/overview/handoffs';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/handoffs?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/handoffs`
+}
 
 /**
  * 跨租户分页查询人工接管记录（支持按状态过滤）。
  * @summary List Handoffs
  */
-export const listHandoffsApiV1AdminOverviewHandoffsGet = async (
-  params?: ListHandoffsApiV1AdminOverviewHandoffsGetParams,
-  options?: RequestInit,
-): Promise<listHandoffsApiV1AdminOverviewHandoffsGetResponse> => {
-  return useCustomInstance<listHandoffsApiV1AdminOverviewHandoffsGetResponse>(
-    getListHandoffsApiV1AdminOverviewHandoffsGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const listHandoffsApiV1AdminOverviewHandoffsGet = async (params?: ListHandoffsApiV1AdminOverviewHandoffsGetParams, options?: RequestInit): Promise<listHandoffsApiV1AdminOverviewHandoffsGetResponse> => {
+
+  return useCustomInstance<listHandoffsApiV1AdminOverviewHandoffsGetResponse>(getListHandoffsApiV1AdminOverviewHandoffsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse200 = {
+  data: HandoffBriefResponse
+  status: 200
+}
+
+export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseSuccess = (adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse200) & {
+  headers: Headers;
+};
+export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseError = (adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse422) & {
+  headers: Headers;
 };
 
-export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse200 =
-  {
-    data: HandoffBriefResponse;
-    status: 200;
-  };
+export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse = (adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseSuccess | adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseError)
 
-export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getAdminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostUrl = (conversationId: string,) => {
 
-export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseSuccess =
-  adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse200 & {
-    headers: Headers;
-  };
-export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseError =
-  adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse422 & {
-    headers: Headers;
-  };
 
-export type adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse =
 
-    | adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseSuccess
-    | adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponseError;
 
-export const getAdminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostUrl =
-  (conversationId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/overview/handoffs/${conversationId}/resolve`;
-  };
+  return `http://10.0.0.179:8000/api/v1/admin/overview/handoffs/${conversationId}/resolve`
+}
 
 /**
  * 管理员将指定接管记录标记为已解决。
  * @summary Admin Resolve Handoff
  */
-export const adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePost =
-  async (
-    conversationId: string,
-    handoffResolveRequest: HandoffResolveRequest,
-    options?: RequestInit,
-  ): Promise<adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse> => {
-    return useCustomInstance<adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse>(
-      getAdminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostUrl(
-        conversationId,
-      ),
-      {
-        ...options,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(handoffResolveRequest),
-      },
-    );
-  };
+export const adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePost = async (conversationId: string,
+    handoffResolveRequest: HandoffResolveRequest, options?: RequestInit): Promise<adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse> => {
 
-export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse200 =
+  return useCustomInstance<adminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostResponse>(getAdminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResolvePostUrl(conversationId),
   {
-    data: HandoffBriefResponse;
-    status: 200;
-  };
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(handoffResolveRequest)
+  }
+);}
 
-export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseSuccess =
-  adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse200 & {
-    headers: Headers;
-  };
-export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseError =
-  adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse422 & {
-    headers: Headers;
-  };
+export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse200 = {
+  data: HandoffBriefResponse
+  status: 200
+}
 
-export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse =
+export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
 
-    | adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseSuccess
-    | adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseError;
+export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseSuccess = (adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse200) & {
+  headers: Headers;
+};
+export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseError = (adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse422) & {
+  headers: Headers;
+};
 
-export const getAdminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostUrl =
-  (conversationId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/overview/handoffs/${conversationId}/close`;
-  };
+export type adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse = (adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseSuccess | adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponseError)
+
+export const getAdminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostUrl = (conversationId: string,) => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/overview/handoffs/${conversationId}/close`
+}
 
 /**
  * 管理员将指定接管记录关闭。
  * @summary Admin Close Handoff
  */
-export const adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePost =
-  async (
-    conversationId: string,
-    handoffResolveRequest: HandoffResolveRequest,
-    options?: RequestInit,
-  ): Promise<adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse> => {
-    return useCustomInstance<adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse>(
-      getAdminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostUrl(
-        conversationId,
-      ),
-      {
-        ...options,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(handoffResolveRequest),
-      },
-    );
-  };
+export const adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePost = async (conversationId: string,
+    handoffResolveRequest: HandoffResolveRequest, options?: RequestInit): Promise<adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse> => {
+
+  return useCustomInstance<adminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostResponse>(getAdminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePostUrl(conversationId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(handoffResolveRequest)
+  }
+);}
+
 
 export type getPlatformStatsApiV1AdminStatsGetResponse200 = {
-  data: PlatformStatsResponse;
-  status: 200;
+  data: PlatformStatsResponse
+  status: 200
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponseSuccess = (getPlatformStatsApiV1AdminStatsGetResponse200) & {
+  headers: Headers;
 };
+;
 
-export type getPlatformStatsApiV1AdminStatsGetResponseSuccess =
-  getPlatformStatsApiV1AdminStatsGetResponse200 & {
-    headers: Headers;
-  };
-
-export type getPlatformStatsApiV1AdminStatsGetResponse =
-  getPlatformStatsApiV1AdminStatsGetResponseSuccess;
+export type getPlatformStatsApiV1AdminStatsGetResponse = (getPlatformStatsApiV1AdminStatsGetResponseSuccess)
 
 export const getGetPlatformStatsApiV1AdminStatsGetUrl = () => {
-  return 'http://10.0.0.179:8000/api/v1/admin/stats';
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/stats`
+}
 
 /**
  * 平台级统计指标快照。
  * @summary Get Platform Stats
  */
-export const getPlatformStatsApiV1AdminStatsGet = async (
-  options?: RequestInit,
-): Promise<getPlatformStatsApiV1AdminStatsGetResponse> => {
-  return useCustomInstance<getPlatformStatsApiV1AdminStatsGetResponse>(
-    getGetPlatformStatsApiV1AdminStatsGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getPlatformStatsApiV1AdminStatsGet = async ( options?: RequestInit): Promise<getPlatformStatsApiV1AdminStatsGetResponse> => {
+
+  return useCustomInstance<getPlatformStatsApiV1AdminStatsGetResponse>(getGetPlatformStatsApiV1AdminStatsGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getConversationTrendsApiV1AdminStatsTrendsGetResponse200 = {
-  data: ConversationTrendsResponse;
-  status: 200;
-};
+  data: ConversationTrendsResponse
+  status: 200
+}
 
 export type getConversationTrendsApiV1AdminStatsTrendsGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponseSuccess = (getConversationTrendsApiV1AdminStatsTrendsGetResponse200) & {
+  headers: Headers;
+};
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponseError = (getConversationTrendsApiV1AdminStatsTrendsGetResponse422) & {
+  headers: Headers;
 };
 
-export type getConversationTrendsApiV1AdminStatsTrendsGetResponseSuccess =
-  getConversationTrendsApiV1AdminStatsTrendsGetResponse200 & {
-    headers: Headers;
-  };
-export type getConversationTrendsApiV1AdminStatsTrendsGetResponseError =
-  getConversationTrendsApiV1AdminStatsTrendsGetResponse422 & {
-    headers: Headers;
-  };
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse = (getConversationTrendsApiV1AdminStatsTrendsGetResponseSuccess | getConversationTrendsApiV1AdminStatsTrendsGetResponseError)
 
-export type getConversationTrendsApiV1AdminStatsTrendsGetResponse =
-  | getConversationTrendsApiV1AdminStatsTrendsGetResponseSuccess
-  | getConversationTrendsApiV1AdminStatsTrendsGetResponseError;
-
-export const getGetConversationTrendsApiV1AdminStatsTrendsGetUrl = (
-  params?: GetConversationTrendsApiV1AdminStatsTrendsGetParams,
-) => {
+export const getGetConversationTrendsApiV1AdminStatsTrendsGetUrl = (params?: GetConversationTrendsApiV1AdminStatsTrendsGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/stats/trends?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/stats/trends';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/stats/trends?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/stats/trends`
+}
 
 /**
  * 返回最近 N 天每日新建会话数趋势。
  * @summary Get Conversation Trends
  */
-export const getConversationTrendsApiV1AdminStatsTrendsGet = async (
-  params?: GetConversationTrendsApiV1AdminStatsTrendsGetParams,
-  options?: RequestInit,
-): Promise<getConversationTrendsApiV1AdminStatsTrendsGetResponse> => {
-  return useCustomInstance<getConversationTrendsApiV1AdminStatsTrendsGetResponse>(
-    getGetConversationTrendsApiV1AdminStatsTrendsGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getConversationTrendsApiV1AdminStatsTrendsGet = async (params?: GetConversationTrendsApiV1AdminStatsTrendsGetParams, options?: RequestInit): Promise<getConversationTrendsApiV1AdminStatsTrendsGetResponse> => {
+
+  return useCustomInstance<getConversationTrendsApiV1AdminStatsTrendsGetResponse>(getGetConversationTrendsApiV1AdminStatsTrendsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse200 = {
-  data: unknown;
-  status: 200;
-};
+  data: AgentObservabilityResponse
+  status: 200
+}
 
 export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponseSuccess = (getAgentStatsApiV1AdminStatsAgentStatsGetResponse200) & {
+  headers: Headers;
+};
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponseError = (getAgentStatsApiV1AdminStatsAgentStatsGetResponse422) & {
+  headers: Headers;
 };
 
-export type getAgentStatsApiV1AdminStatsAgentStatsGetResponseSuccess =
-  getAgentStatsApiV1AdminStatsAgentStatsGetResponse200 & {
-    headers: Headers;
-  };
-export type getAgentStatsApiV1AdminStatsAgentStatsGetResponseError =
-  getAgentStatsApiV1AdminStatsAgentStatsGetResponse422 & {
-    headers: Headers;
-  };
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse = (getAgentStatsApiV1AdminStatsAgentStatsGetResponseSuccess | getAgentStatsApiV1AdminStatsAgentStatsGetResponseError)
 
-export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse =
-  | getAgentStatsApiV1AdminStatsAgentStatsGetResponseSuccess
-  | getAgentStatsApiV1AdminStatsAgentStatsGetResponseError;
-
-export const getGetAgentStatsApiV1AdminStatsAgentStatsGetUrl = (
-  params?: GetAgentStatsApiV1AdminStatsAgentStatsGetParams,
-) => {
+export const getGetAgentStatsApiV1AdminStatsAgentStatsGetUrl = (params?: GetAgentStatsApiV1AdminStatsAgentStatsGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/stats/agent-stats?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/stats/agent-stats';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/stats/agent-stats?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/stats/agent-stats`
+}
 
 /**
  * Agent 节点追踪性能统计（从 Redis trace 聚合）。
  * @summary Get Agent Stats
  */
-export const getAgentStatsApiV1AdminStatsAgentStatsGet = async (
-  params?: GetAgentStatsApiV1AdminStatsAgentStatsGetParams,
-  options?: RequestInit,
-): Promise<getAgentStatsApiV1AdminStatsAgentStatsGetResponse> => {
-  return useCustomInstance<getAgentStatsApiV1AdminStatsAgentStatsGetResponse>(
-    getGetAgentStatsApiV1AdminStatsAgentStatsGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getAgentStatsApiV1AdminStatsAgentStatsGet = async (params?: GetAgentStatsApiV1AdminStatsAgentStatsGetParams, options?: RequestInit): Promise<getAgentStatsApiV1AdminStatsAgentStatsGetResponse> => {
+
+  return useCustomInstance<getAgentStatsApiV1AdminStatsAgentStatsGetResponse>(getGetAgentStatsApiV1AdminStatsAgentStatsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse200 = {
-  data: AuditLogListResponse;
-  status: 200;
-};
+  data: AppApiAdminAuditAuditLogListResponse
+  status: 200
+}
 
 export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponseSuccess = (listAuditLogsApiV1AdminAuditAuditLogsGetResponse200) & {
+  headers: Headers;
+};
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponseError = (listAuditLogsApiV1AdminAuditAuditLogsGetResponse422) & {
+  headers: Headers;
 };
 
-export type listAuditLogsApiV1AdminAuditAuditLogsGetResponseSuccess =
-  listAuditLogsApiV1AdminAuditAuditLogsGetResponse200 & {
-    headers: Headers;
-  };
-export type listAuditLogsApiV1AdminAuditAuditLogsGetResponseError =
-  listAuditLogsApiV1AdminAuditAuditLogsGetResponse422 & {
-    headers: Headers;
-  };
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse = (listAuditLogsApiV1AdminAuditAuditLogsGetResponseSuccess | listAuditLogsApiV1AdminAuditAuditLogsGetResponseError)
 
-export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse =
-  | listAuditLogsApiV1AdminAuditAuditLogsGetResponseSuccess
-  | listAuditLogsApiV1AdminAuditAuditLogsGetResponseError;
-
-export const getListAuditLogsApiV1AdminAuditAuditLogsGetUrl = (
-  params?: ListAuditLogsApiV1AdminAuditAuditLogsGetParams,
-) => {
+export const getListAuditLogsApiV1AdminAuditAuditLogsGetUrl = (params?: ListAuditLogsApiV1AdminAuditAuditLogsGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.179:8000/api/v1/admin/audit/audit-logs?${stringifiedParams}`
-    : 'http://10.0.0.179:8000/api/v1/admin/audit/audit-logs';
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/audit/audit-logs?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/audit/audit-logs`
+}
 
 /**
  * 查询平台管理员操作审计日志。
  * @summary List Audit Logs
  */
-export const listAuditLogsApiV1AdminAuditAuditLogsGet = async (
-  params?: ListAuditLogsApiV1AdminAuditAuditLogsGetParams,
-  options?: RequestInit,
-): Promise<listAuditLogsApiV1AdminAuditAuditLogsGetResponse> => {
-  return useCustomInstance<listAuditLogsApiV1AdminAuditAuditLogsGetResponse>(
-    getListAuditLogsApiV1AdminAuditAuditLogsGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const listAuditLogsApiV1AdminAuditAuditLogsGet = async (params?: ListAuditLogsApiV1AdminAuditAuditLogsGetParams, options?: RequestInit): Promise<listAuditLogsApiV1AdminAuditAuditLogsGetResponse> => {
+
+  return useCustomInstance<listAuditLogsApiV1AdminAuditAuditLogsGetResponse>(getListAuditLogsApiV1AdminAuditAuditLogsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse200 = {
+  data: TraceResponse
+  status: 200
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseSuccess = (getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse200) & {
+  headers: Headers;
+};
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseError = (getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse422) & {
+  headers: Headers;
 };
 
-export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse200 =
-  {
-    data: TraceResponse;
-    status: 200;
-  };
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse = (getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseSuccess | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseError)
 
-export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getGetConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetUrl = (conversationId: string,) => {
 
-export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseSuccess =
-  getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse200 & {
-    headers: Headers;
-  };
-export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseError =
-  getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse422 & {
-    headers: Headers;
-  };
 
-export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse =
 
-    | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseSuccess
-    | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseError;
 
-export const getGetConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetUrl =
-  (conversationId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/audit/conversations/${conversationId}/trace`;
-  };
+  return `http://10.0.0.179:8000/api/v1/admin/audit/conversations/${conversationId}/trace`
+}
 
 /**
  * 查看指定会话的 Agent 执行链路（排障用）。
  * @summary Get Conversation Trace
  */
-export const getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGet =
-  async (
-    conversationId: string,
-    options?: RequestInit,
-  ): Promise<getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse> => {
-    return useCustomInstance<getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse>(
-      getGetConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetUrl(
-        conversationId,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGet = async (conversationId: string, options?: RequestInit): Promise<getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse> => {
 
-export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse200 =
+  return useCustomInstance<getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse>(getGetConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetUrl(conversationId),
   {
-    data: unknown;
-    status: 200;
-  };
+    ...options,
+    method: 'GET'
 
-export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseSuccess =
-  streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse200 & {
-    headers: Headers;
-  };
-export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseError =
-  streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse422 & {
-    headers: Headers;
-  };
+  }
+);}
 
-export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse =
 
-    | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseSuccess
-    | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseError;
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse200 = {
+  data: unknown
+  status: 200
+}
 
-export const getStreamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetUrl =
-  (conversationId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/audit/conversations/${conversationId}/trace/stream`;
-  };
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseSuccess = (streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse200) & {
+  headers: Headers;
+};
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseError = (streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse422) & {
+  headers: Headers;
+};
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse = (streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseSuccess | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseError)
+
+export const getStreamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetUrl = (conversationId: string,) => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/audit/conversations/${conversationId}/trace/stream`
+}
 
 /**
  * SSE 端点：实时推送 Agent 执行事件。
@@ -1529,142 +1369,124 @@ export const getStreamConversationTraceApiV1AdminAuditConversationsConversationI
  * 3. 客户端断开时自动取消订阅
  * @summary Stream Conversation Trace
  */
-export const streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGet =
-  async (
-    conversationId: string,
-    options?: RequestInit,
-  ): Promise<streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse> => {
-    return useCustomInstance<streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse>(
-      getStreamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetUrl(
-        conversationId,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGet = async (conversationId: string, options?: RequestInit): Promise<streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse> => {
 
-export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse200 =
+  return useCustomInstance<streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse>(getStreamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetUrl(conversationId),
   {
-    data: DigitalHumanResponse;
-    status: 200;
-  };
+    ...options,
+    method: 'GET'
 
-export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseSuccess =
-  getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse200 & {
-    headers: Headers;
-  };
-export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseError =
-  getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse422 & {
-    headers: Headers;
-  };
+  }
+);}
 
-export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse =
 
-    | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseSuccess
-    | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseError;
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse200 = {
+  data: AppApiSchemasDigitalHumanResponse
+  status: 200
+}
 
-export const getGetDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetUrl =
-  (digitalHumanId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/digital-humans/${digitalHumanId}`;
-  };
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseSuccess = (getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse200) & {
+  headers: Headers;
+};
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseError = (getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse422) & {
+  headers: Headers;
+};
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse = (getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseSuccess | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseError)
+
+export const getGetDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetUrl = (digitalHumanId: string,) => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/digital-humans/${digitalHumanId}`
+}
 
 /**
  * 跨租户获取数字人完整详情（管理员专用）。
  * @summary Get Digital Human Detail
  */
-export const getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGet =
-  async (
-    digitalHumanId: string,
-    options?: RequestInit,
-  ): Promise<getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse> => {
-    return useCustomInstance<getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse>(
-      getGetDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetUrl(
-        digitalHumanId,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGet = async (digitalHumanId: string, options?: RequestInit): Promise<getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse> => {
 
-export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse200 =
+  return useCustomInstance<getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse>(getGetDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetUrl(digitalHumanId),
   {
-    data: DigitalHumanResponse;
-    status: 200;
-  };
+    ...options,
+    method: 'GET'
 
-export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseSuccess =
-  updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse200 & {
-    headers: Headers;
-  };
-export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseError =
-  updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse422 & {
-    headers: Headers;
-  };
+  }
+);}
 
-export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse =
 
-    | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseSuccess
-    | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseError;
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse200 = {
+  data: AppApiSchemasDigitalHumanResponse
+  status: 200
+}
 
-export const getUpdateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutUrl =
-  (digitalHumanId: string) => {
-    return `http://10.0.0.179:8000/api/v1/admin/digital-humans/${digitalHumanId}`;
-  };
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseSuccess = (updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse200) & {
+  headers: Headers;
+};
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseError = (updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse422) & {
+  headers: Headers;
+};
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse = (updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseSuccess | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseError)
+
+export const getUpdateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutUrl = (digitalHumanId: string,) => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/digital-humans/${digitalHumanId}`
+}
 
 /**
  * 跨租户修改数字人配置（管理员专用）。
  * @summary Update Digital Human
  */
-export const updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPut =
-  async (
-    digitalHumanId: string,
-    digitalHumanAdminUpdateRequest: DigitalHumanAdminUpdateRequest,
-    options?: RequestInit,
-  ): Promise<updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse> => {
-    return useCustomInstance<updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse>(
-      getUpdateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutUrl(
-        digitalHumanId,
-      ),
-      {
-        ...options,
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', ...options?.headers },
-        body: JSON.stringify(digitalHumanAdminUpdateRequest),
-      },
-    );
-  };
+export const updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPut = async (digitalHumanId: string,
+    digitalHumanAdminUpdateRequest: DigitalHumanAdminUpdateRequest, options?: RequestInit): Promise<updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse> => {
+
+  return useCustomInstance<updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse>(getUpdateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutUrl(digitalHumanId),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(digitalHumanAdminUpdateRequest)
+  }
+);}
+
 
 export type healthCheckApiV1AdminHealthGetResponse200 = {
-  data: HealthCheckResponse;
-  status: 200;
-};
+  data: HealthCheckResponse
+  status: 200
+}
 
-export type healthCheckApiV1AdminHealthGetResponseSuccess =
-  healthCheckApiV1AdminHealthGetResponse200 & {
-    headers: Headers;
-  };
-export type healthCheckApiV1AdminHealthGetResponse =
-  healthCheckApiV1AdminHealthGetResponseSuccess;
+export type healthCheckApiV1AdminHealthGetResponseSuccess = (healthCheckApiV1AdminHealthGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type healthCheckApiV1AdminHealthGetResponse = (healthCheckApiV1AdminHealthGetResponseSuccess)
 
 export const getHealthCheckApiV1AdminHealthGetUrl = () => {
-  return 'http://10.0.0.179:8000/api/v1/admin/health';
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/health`
+}
 
 /**
  * 管理员级别的系统依赖健康检查。
@@ -1673,33 +1495,37 @@ export const getHealthCheckApiV1AdminHealthGetUrl = () => {
  * 返回每个服务的状态及延迟，用于排障和运维监控。
  * @summary Health Check
  */
-export const healthCheckApiV1AdminHealthGet = async (
-  options?: RequestInit,
-): Promise<healthCheckApiV1AdminHealthGetResponse> => {
-  return useCustomInstance<healthCheckApiV1AdminHealthGetResponse>(
-    getHealthCheckApiV1AdminHealthGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const healthCheckApiV1AdminHealthGet = async ( options?: RequestInit): Promise<healthCheckApiV1AdminHealthGetResponse> => {
+
+  return useCustomInstance<healthCheckApiV1AdminHealthGetResponse>(getHealthCheckApiV1AdminHealthGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200 = {
-  data: MemoryOverviewResponse;
-  status: 200;
-};
+  data: MemoryOverviewResponse
+  status: 200
+}
 
-export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess =
-  getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200 & {
-    headers: Headers;
-  };
-export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse =
-  getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess;
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess)
 
 export const getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl = () => {
-  return 'http://10.0.0.179:8000/api/v1/admin/memory/overview';
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/admin/memory/overview`
+}
 
 /**
  * 跨租户记忆存储概览（命名空间数和估算记忆总量）。
@@ -1707,14 +1533,15 @@ export const getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl = () => {
  * 依赖 LangGraph BaseStore，若 store 未初始化则返回全零并附带说明。
  * @summary Get Memory Overview
  */
-export const getMemoryOverviewApiV1AdminMemoryOverviewGet = async (
-  options?: RequestInit,
-): Promise<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse> => {
-  return useCustomInstance<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse>(
-    getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getMemoryOverviewApiV1AdminMemoryOverviewGet = async ( options?: RequestInit): Promise<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse> => {
+
+  return useCustomInstance<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse>(getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

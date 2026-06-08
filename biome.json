@@ -7,7 +7,7 @@
     "enabled": true
   },
   "linter": {
-    "ignore": ["build", "build-e2e", ".tmp", "coverage", "node_modules", "recipes", "*.json", "src/whatsapp-automation/api/generated", "src/agent-flow-cs/api/generated"],
+    "ignore": ["build", "build-e2e", ".tmp", "coverage", "node_modules", "recipes", "*.json", "src/whatsapp-automation/api/generated", "src/agent-flow-cs/api/generated", "src/akg-api/api/generated"],
     "rules": {
       "style": {
         "noNonNullAssertion": "off",

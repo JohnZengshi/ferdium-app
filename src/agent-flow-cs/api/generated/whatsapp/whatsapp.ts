@@ -6,53 +6,51 @@
  */
 import type {
   HTTPValidationError,
-  WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200,
+  WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200 = {
-  data: WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200;
-  status: 200;
-};
+  data: WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200
+  status: 200
+}
 
 export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200) & {
+  headers: Headers;
+};
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422) & {
+  headers: Headers;
 };
 
-export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess =
-  whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200 & {
-    headers: Headers;
-  };
-export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError =
-  whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422 & {
-    headers: Headers;
-  };
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError)
 
-export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse =
-  | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess
-  | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError;
+export const getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl = (sessionId: string,) => {
 
-export const getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl = (
-  sessionId: string,
-) => {
-  return `http://10.0.0.179:8000/api/v1/whatsapp/webhooks/${sessionId}`;
-};
+
+
+
+  return `http://10.0.0.179:8000/api/v1/whatsapp/webhooks/${sessionId}`
+}
 
 /**
  * 接收 WA-AKG 的 webhook 回调，异步编排 Agent 回复。
  * @summary Whatsapp Webhook
  */
-export const whatsappWebhookApiV1WhatsappWebhooksSessionIdPost = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse> => {
-  return useCustomInstance<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse>(
-    getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl(sessionId),
-    {
-      ...options,
-      method: 'POST',
-    },
-  );
-};
+export const whatsappWebhookApiV1WhatsappWebhooksSessionIdPost = async (sessionId: string, options?: RequestInit): Promise<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse> => {
+
+  return useCustomInstance<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse>(getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl(sessionId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+

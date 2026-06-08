@@ -9,14 +9,14 @@
  */
 export interface AdminCreateRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
   /** @pattern ^(super_admin|operator)$ */
   role?: string;
@@ -28,14 +28,14 @@ export interface AdminCreateRequest {
  */
 export interface AdminLoginRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -54,9 +54,9 @@ export interface AdminLoginResponse {
  */
 export interface AdminPasswordResetRequest {
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   new_password: string;
 }
 
@@ -83,12 +83,58 @@ export interface AdminUpdateRequest {
 }
 
 /**
+ * 单个 Agent 节点定义信息。
+ */
+export interface AgentNodeInfo {
+  node_name: string;
+  agent_code?: string | null;
+  display_name: string;
+  category: string;
+}
+
+/**
+ * 单个 Agent 节点的追踪聚合统计。
+ */
+export interface AgentTraceStats {
+  node_name: string;
+  /** @minimum 0 */
+  call_count: number;
+  avg_duration_ms?: number | null;
+  max_duration_ms?: number | null;
+  /** @minimum 0 */
+  error_count: number;
+  error_rate?: number | null;
+}
+
+/**
+ * Agent 可观测性完整响应。
+ */
+export interface AgentObservabilityResponse {
+  nodes?: AgentNodeInfo[];
+  trace_stats?: AgentTraceStats[];
+  /** @minimum 0 */
+  total_traces_scanned: number;
+  note?: string | null;
+}
+
+/**
  * 人工坐席在接管期间的代表回复。
  */
 export interface AgentReplyRequest {
   /** @minLength 1 */
   content: string;
   sender_name?: string | null;
+}
+
+export interface AssignRequest {
+  user_id: string;
+  assign?: boolean;
+}
+
+export interface AssigneeResponse {
+  user_id: string;
+  username: string;
+  assigned_at: string;
 }
 
 export type AuditLogEntryDetail = { [key: string]: unknown } | null;
@@ -106,21 +152,27 @@ export interface AuditLogEntry {
   created_at: string;
 }
 
-/**
- * 审计日志分页列表响应。
- */
-export interface AuditLogListResponse {
-  items?: AuditLogEntry[];
-  /** @minimum 0 */
-  total: number;
-  /** @minimum 0 */
-  offset: number;
-  /** @minimum 1 */
-  limit: number;
+export type AuditLogResponseDetail = { [key: string]: unknown } | null;
+
+export interface AuditLogResponse {
+  id: string;
+  actor_id: string;
+  actor_username: string;
+  action: string;
+  resource_type: string;
+  resource_id: string | null;
+  detail: AuditLogResponseDetail;
+  created_at: string;
 }
 
-export type ChatRequestProvider =
-  (typeof ChatRequestProvider)[keyof typeof ChatRequestProvider];
+export interface BodyUploadDocumentApiV1OwnersKnowledgeUploadPost {
+  file: Blob;
+  collection?: string | null;
+  domain?: string | null;
+}
+
+export type ChatRequestProvider = typeof ChatRequestProvider[keyof typeof ChatRequestProvider];
+
 
 export const ChatRequestProvider = {
   openai: 'openai',
@@ -129,8 +181,8 @@ export const ChatRequestProvider = {
   deepseek: 'deepseek',
 } as const;
 
-export type ChatRequestSourceType =
-  (typeof ChatRequestSourceType)[keyof typeof ChatRequestSourceType];
+export type ChatRequestSourceType = typeof ChatRequestSourceType[keyof typeof ChatRequestSourceType];
+
 
 export const ChatRequestSourceType = {
   unknown: 'unknown',
@@ -165,9 +217,9 @@ export interface ReplyMessage {
   /** @minLength 1 */
   content: string;
   /**
-   * @minimum 0
-   * @maximum 8000
-   */
+     * @minimum 0
+     * @maximum 8000
+     */
   delay_ms: number;
 }
 
@@ -213,31 +265,37 @@ export interface ConversationCreateRequest {
   title?: string;
 }
 
-/**
- * 会话分页列表响应。
- */
-export interface ConversationListResponse {
-  items?: ConversationBriefResponse[];
-  /** @minimum 0 */
-  total: number;
-  /** @minimum 0 */
-  offset: number;
-  /** @minimum 1 */
-  limit: number;
+export interface AppApiSchemasOwnersConversationResponse {
+  id: string;
+  owner_user_id: string;
+  owner_username: string;
+  digital_human_id: string | null;
+  digital_human_name: string | null;
+  customer_id: string | null;
+  platform: string;
+  title: string;
+  status: string;
+  message_count?: number;
+  last_message_at?: string | null;
+  created_at: string;
 }
 
 /**
- * 序列化后的会话响应。
+ * 会话中的单条消息。
  */
-export interface ConversationResponse {
+export interface AppApiSchemasOwnersMessageResponse {
   id: string;
-  owner_user_id: string;
-  customer_id?: string | null;
-  platform?: string | null;
-  digital_human_id?: string | null;
-  title: string;
-  status: string;
+  role: string;
+  content: string;
+  sender_type?: string;
   created_at: string;
+}
+
+export interface ConversationDetailResponse {
+  conversation: AppApiSchemasOwnersConversationResponse;
+  messages: AppApiSchemasOwnersMessageResponse[];
+  next_cursor?: string | null;
+  has_more?: boolean;
 }
 
 /**
@@ -254,9 +312,9 @@ export interface DailyTrend {
  */
 export interface ConversationTrendsResponse {
   /**
-   * @minimum 1
-   * @maximum 90
-   */
+     * @minimum 1
+     * @maximum 90
+     */
   days: number;
   trends?: DailyTrend[];
 }
@@ -294,22 +352,47 @@ export interface CustomerProfileDetailResponse {
   updated_at: string;
 }
 
-/**
- * 客户画像分页列表响应。
- */
-export interface CustomerProfileListResponse {
-  items?: CustomerProfileDetailResponse[];
-  /** @minimum 0 */
-  total: number;
-  /** @minimum 0 */
-  offset: number;
-  /** @minimum 1 */
-  limit: number;
+export interface CustomerProfileResponse {
+  id: string;
+  owner_user_id: string;
+  owner_username: string;
+  digital_human_id: string | null;
+  digital_human_name: string | null;
+  customer_id: string;
+  platform: string;
+  nickname: string | null;
+  gender: string;
+  age_range: string | null;
+  region: string | null;
+  language: string;
+  interests: unknown[];
+  pain_points: unknown[];
+  purchase_signals: unknown[];
+  tags: unknown[];
+  conversation_summary: string;
+  intent_level: string;
+  customer_value: string;
+  next_action: string;
+  lead_source: string | null;
+  source_type: string;
+  campaign: string | null;
+  engagement: string;
+  last_updated_turn: number;
+  created_at: string;
+  updated_at: string;
 }
 
-export type DigitalHumanAdminUpdateRequestPersonaConfig = {
-  [key: string]: unknown;
-} | null;
+export interface DashboardStats {
+  digital_human_count: number;
+  active_digital_human_count: number;
+  sub_account_count: number;
+  active_sub_account_count: number;
+  conversation_count: number;
+  active_conversation_count: number;
+  customer_profile_count: number;
+}
+
+export type DigitalHumanAdminUpdateRequestPersonaConfig = { [key: string]: unknown } | null;
 
 /**
  * 管理员跨租户修改数字人请求体（全部字段可选，仅更新传入字段）。
@@ -340,18 +423,63 @@ export interface DigitalHumanBriefResponse {
   created_at: string;
 }
 
-export type DigitalHumanCreateRequestPersonaConfig = {
-  [key: string]: unknown;
-} | null;
+export type PersonaConfigEmojiFreq = typeof PersonaConfigEmojiFreq[keyof typeof PersonaConfigEmojiFreq];
+
+
+export const PersonaConfigEmojiFreq = {
+  低: '低',
+  中: '中',
+  高: '高',
+} as const;
+
+/**
+ * 数字人人设配置。
+ */
+export interface PersonaConfig {
+  /** @maxLength 32 */
+  tone?: string;
+  /** @maxLength 32 */
+  style?: string;
+  emoji_freq?: PersonaConfigEmojiFreq;
+  taboo?: string[];
+  /** @maxLength 64 */
+  opening?: string;
+  /** @maxLength 64 */
+  signature?: string;
+  /**
+     * 人设描述，直接注入给 Agent 作为本轮角色设定
+     * @maxLength 2000
+     */
+  persona_prompt?: string;
+}
+
+export interface DigitalHumanCreate {
+  /**
+     * @minLength 1
+     * @maxLength 64
+     */
+  name: string;
+  avatar_url?: string | null;
+  voice?: string | null;
+  account_handle?: string | null;
+  platform?: string | null;
+  persona_config?: PersonaConfig;
+  knowledge_collection?: string | null;
+  /** @maxLength 32 */
+  default_provider?: string;
+  is_enabled?: boolean;
+}
+
+export type DigitalHumanCreateRequestPersonaConfig = { [key: string]: unknown } | null;
 
 /**
  * 创建数字人配置的请求体。
  */
 export interface DigitalHumanCreateRequest {
   /**
-   * @minLength 1
-   * @maxLength 64
-   */
+     * @minLength 1
+     * @maxLength 64
+     */
   name: string;
   avatar_url?: string | null;
   voice?: string | null;
@@ -365,38 +493,78 @@ export interface DigitalHumanCreateRequest {
   status?: string;
 }
 
+export type PersonaConfigPatchEmojiFreq = typeof PersonaConfigPatchEmojiFreq[keyof typeof PersonaConfigPatchEmojiFreq] | null;
+
+
+export const PersonaConfigPatchEmojiFreq = {
+  低: '低',
+  中: '中',
+  高: '高',
+} as const;
+
 /**
- * 数字人分页列表响应。
+ * 数字人人设局部更新配置；未传字段必须保持未设置。
  */
-export interface DigitalHumanListResponse {
-  items?: DigitalHumanBriefResponse[];
-  /** @minimum 0 */
-  total: number;
-  /** @minimum 0 */
-  offset: number;
-  /** @minimum 1 */
-  limit: number;
+export interface PersonaConfigPatch {
+  tone?: string | null;
+  style?: string | null;
+  emoji_freq?: PersonaConfigPatchEmojiFreq;
+  taboo?: string[] | null;
+  opening?: string | null;
+  signature?: string | null;
+  persona_prompt?: string | null;
 }
 
-export type DigitalHumanResponsePersonaConfig = { [key: string]: unknown };
-
-/**
- * 序列化后的数字人响应。
- */
-export interface DigitalHumanResponse {
-  id: string;
-  name: string;
-  avatar_url: string | null;
-  voice: string | null;
-  is_enabled: boolean;
+export interface DigitalHumanUpdate {
+  name?: string | null;
+  avatar_url?: string | null;
+  voice?: string | null;
   account_handle?: string | null;
   platform?: string | null;
-  persona_config?: DigitalHumanResponsePersonaConfig;
+  persona_config?: PersonaConfigPatch | null;
+  knowledge_collection?: string | null;
+  default_provider?: string | null;
+  is_enabled?: boolean | null;
+  status?: string | null;
+}
+
+export type DigitalHumanUpdateRequestPersonaConfig = { [key: string]: unknown } | null;
+
+/**
+ * 更新数字人配置的请求体（所有字段可选）。
+ */
+export interface DigitalHumanUpdateRequest {
+  name?: string | null;
+  avatar_url?: string | null;
+  voice?: string | null;
+  account_handle?: string | null;
+  platform?: string | null;
+  persona_config?: DigitalHumanUpdateRequestPersonaConfig;
   persona_prompt?: string | null;
   knowledge_collection?: string | null;
-  default_provider?: string;
-  status?: string;
-  created_at: string;
+  default_provider?: string | null;
+  status?: string | null;
+}
+
+/**
+ * 企业唯一标识符响应。
+ */
+export interface EnterpriseCodeResponse {
+  enterprise_code?: string | null;
+  set_at?: string | null;
+}
+
+/**
+ * 设置企业唯一标识符的请求体。
+ */
+export interface EnterpriseCodeSetRequest {
+  /**
+     * 企业唯一标识符，仅限 1-10 个英文字母（a-z, A-Z）
+     * @minLength 1
+     * @maxLength 10
+     * @pattern ^[a-zA-Z]{1,10}$
+     */
+  enterprise_code: string;
 }
 
 export type ValidationErrorCtx = { [key: string]: unknown };
@@ -432,9 +600,9 @@ export interface HandoffBriefResponse {
 export interface HandoffCreateRequest {
   conversation_id: string;
   /**
-   * @minLength 1
-   * @maxLength 256
-   */
+     * @minLength 1
+     * @maxLength 256
+     */
   reason: string;
 }
 
@@ -491,6 +659,42 @@ export interface HealthCheckResponse {
   checked_at: string;
 }
 
+/**
+ * 知识库集合信息。
+ */
+export interface KnowledgeCollectionItem {
+  name: string;
+  document_count?: number;
+}
+
+/**
+ * 删除操作响应。
+ */
+export interface KnowledgeDeleteResponse {
+  ok?: boolean;
+}
+
+/**
+ * 知识库文档列表项。
+ */
+export interface KnowledgeDocumentItem {
+  doc_id: string;
+  name: string;
+  size_bytes?: number;
+  status: string;
+  collection?: string;
+  domain?: string;
+  created_at?: string;
+}
+
+/**
+ * 知识库文档列表响应。
+ */
+export interface KnowledgeDocumentListResponse {
+  items: KnowledgeDocumentItem[];
+  total: number;
+}
+
 export type KnowledgeDocumentResponseMetadata = { [key: string]: unknown };
 
 /**
@@ -512,16 +716,16 @@ export type KnowledgeSearchRequestFilters = { [key: string]: unknown } | null;
  */
 export interface KnowledgeSearchRequest {
   /**
-   * @minLength 1
-   * @maxLength 512
-   */
+     * @minLength 1
+     * @maxLength 512
+     */
   query: string;
   domain?: string | null;
   collection?: string | null;
   /**
-   * @minimum 1
-   * @maximum 20
-   */
+     * @minimum 1
+     * @maximum 20
+     */
   top_k?: number;
   filters?: KnowledgeSearchRequestFilters;
 }
@@ -542,18 +746,27 @@ export interface KnowledgeSearchResponse {
 }
 
 /**
+ * 知识库文件上传响应。
+ */
+export interface KnowledgeUploadResponse {
+  doc_id: string;
+  name: string;
+  status: string;
+}
+
+/**
  * 用户名密码登录请求体。
  */
 export interface LoginRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -564,6 +777,7 @@ export interface LoginResponse {
   access_token: string;
   token_type?: string;
   user_id: string;
+  enterprise_code?: string | null;
 }
 
 /**
@@ -581,14 +795,15 @@ export interface MemberBriefResponse {
  */
 export interface MemberCreateRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
+     * @minLength 3
+     * @maxLength 52
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -649,7 +864,7 @@ export interface MemoryExportResponse {
   memories?: MemoryRecordResponse[];
 }
 
-export type MemoryMetricsResponseCounters = { [key: string]: number };
+export type MemoryMetricsResponseCounters = {[key: string]: number};
 
 /**
  * Long-term memory operation counters.
@@ -678,7 +893,9 @@ export interface MemoryRetentionCleanupResponse {
   /** @minimum 1 */
   retention_days: number;
   /** @minimum 0 */
-  deleted_count: number;
+  soft_deleted_count: number;
+  /** @minimum 0 */
+  purged_count: number;
 }
 
 /**
@@ -716,18 +933,6 @@ export interface MessageListResponse {
   limit: number;
 }
 
-/**
- * 序列化后的消息响应。
- */
-export interface MessageResponse {
-  id: string;
-  conversation_id: string;
-  role: string;
-  content: string;
-  sender_type?: string;
-  created_at: string;
-}
-
 export type NodeTraceInputPreview = { [key: string]: unknown } | null;
 
 export type NodeTraceOutputPreview = { [key: string]: unknown } | null;
@@ -746,12 +951,29 @@ export interface NodeTrace {
 }
 
 /**
+ * 新建主账号请求体。
+ */
+export interface OwnerCreateRequest {
+  /**
+     * @minLength 3
+     * @maxLength 64
+     */
+  username: string;
+  /**
+     * @minLength 6
+     * @maxLength 128
+     */
+  password: string;
+}
+
+/**
  * 主账号详情（含子账号列表摘要）。
  */
 export interface OwnerDetailResponse {
   id: string;
   username: string;
   is_active: boolean;
+  enterprise_code?: string | null;
   member_count: number;
   created_at: string;
   updated_at: string;
@@ -806,15 +1028,52 @@ export interface PlatformStatsResponse {
  */
 export interface RegisterRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
+}
+
+export interface ResetPasswordRequest {
+  /**
+     * @minLength 6
+     * @maxLength 128
+     */
+  new_password: string;
+}
+
+export interface SubAccountCreate {
+  /**
+     * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
+     * @minLength 1
+     * @maxLength 52
+     */
+  username: string;
+  /**
+     * @minLength 6
+     * @maxLength 128
+     */
+  password: string;
+}
+
+export interface SubAccountResponse {
+  id: string;
+  username: string;
+  role: string;
+  is_active: boolean;
+  created_at: string;
+  digital_human_count?: number;
+  conversation_count?: number;
+}
+
+export interface SubAccountListResponse {
+  items: SubAccountResponse[];
+  total: number;
 }
 
 /**
@@ -833,177 +1092,460 @@ export interface TraceResponse {
   turns?: TurnTrace[];
 }
 
+/**
+ * 前端完成 AKG QR 扫码后通知后端绑定的请求体。
+ */
+export interface WhatsAppBindRequest {
+  /**
+     * @minLength 1
+     * @maxLength 128
+     */
+  session_id: string;
+}
+
+/**
+ * WhatsApp 绑定记录响应。
+ */
+export interface WhatsAppBindingResponse {
+  id: string;
+  owner_user_id: string;
+  digital_human_id: string;
+  session_id: string;
+  webhook_id: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * 审计日志分页列表响应。
+ */
+export interface AppApiAdminAuditAuditLogListResponse {
+  items?: AuditLogEntry[];
+  /** @minimum 0 */
+  total: number;
+  /** @minimum 0 */
+  offset: number;
+  /** @minimum 1 */
+  limit: number;
+}
+
+/**
+ * 会话分页列表响应。
+ */
+export interface AppApiSchemasConversationListResponse {
+  items?: ConversationBriefResponse[];
+  /** @minimum 0 */
+  total: number;
+  /** @minimum 0 */
+  offset: number;
+  /** @minimum 1 */
+  limit: number;
+}
+
+/**
+ * 序列化后的会话响应。
+ */
+export interface AppApiSchemasConversationResponse {
+  id: string;
+  owner_user_id: string;
+  customer_id?: string | null;
+  platform?: string | null;
+  digital_human_id?: string | null;
+  title: string;
+  status: string;
+  created_at: string;
+}
+
+/**
+ * 客户画像分页列表响应。
+ */
+export interface AppApiSchemasCustomerProfileListResponse {
+  items?: CustomerProfileDetailResponse[];
+  /** @minimum 0 */
+  total: number;
+  /** @minimum 0 */
+  offset: number;
+  /** @minimum 1 */
+  limit: number;
+}
+
+/**
+ * 数字人分页列表响应。
+ */
+export interface AppApiSchemasDigitalHumanListResponse {
+  items?: DigitalHumanBriefResponse[];
+  /** @minimum 0 */
+  total: number;
+  /** @minimum 0 */
+  offset: number;
+  /** @minimum 1 */
+  limit: number;
+}
+
+export type AppApiSchemasDigitalHumanResponsePersonaConfig = { [key: string]: unknown };
+
+/**
+ * 序列化后的数字人响应。
+ */
+export interface AppApiSchemasDigitalHumanResponse {
+  id: string;
+  name: string;
+  avatar_url: string | null;
+  voice: string | null;
+  is_enabled: boolean;
+  account_handle?: string | null;
+  platform?: string | null;
+  persona_config?: AppApiSchemasDigitalHumanResponsePersonaConfig;
+  persona_prompt?: string | null;
+  knowledge_collection?: string | null;
+  default_provider?: string;
+  status?: string;
+  created_by?: string | null;
+  created_at: string;
+}
+
+/**
+ * 序列化后的消息响应。
+ */
+export interface AppApiSchemasMessageResponse {
+  id: string;
+  conversation_id: string;
+  role: string;
+  content: string;
+  sender_type?: string;
+  created_at: string;
+}
+
+export interface AppApiSchemasOwnersAuditLogListResponse {
+  items: AuditLogResponse[];
+  total: number;
+}
+
+export interface AppApiSchemasOwnersConversationListResponse {
+  items: AppApiSchemasOwnersConversationResponse[];
+  total: number;
+}
+
+export interface AppApiSchemasOwnersCustomerProfileListResponse {
+  items: CustomerProfileResponse[];
+  total: number;
+}
+
+export type AppApiSchemasOwnersDigitalHumanResponsePersonaConfig = { [key: string]: unknown };
+
+export interface AppApiSchemasOwnersDigitalHumanResponse {
+  id: string;
+  name: string;
+  avatar_url: string | null;
+  voice: string | null;
+  account_handle: string | null;
+  platform: string | null;
+  persona_config: AppApiSchemasOwnersDigitalHumanResponsePersonaConfig;
+  knowledge_collection: string | null;
+  default_provider: string;
+  is_enabled: boolean;
+  status: string;
+  creator_user_id: string;
+  created_by?: string | null;
+  created_by_username?: string | null;
+  created_at: string;
+  updated_at: string;
+  assigned_members?: string[];
+}
+
+export interface AppApiSchemasOwnersDigitalHumanListResponse {
+  items: AppApiSchemasOwnersDigitalHumanResponse[];
+  total: number;
+}
+
 export type ListAdminsApiV1AdminAdminsGetParams = {
-  offset?: number;
-  limit?: number;
+offset?: number;
+limit?: number;
 };
 
 export type ListOwnersApiV1AdminAccountsOwnersGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  search?: string | null;
-  is_active?: boolean | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+search?: string | null;
+is_active?: boolean | null;
 };
 
 export type ListConversationsApiV1AdminOverviewConversationsGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  owner_user_id?: string | null;
-  platform?: string | null;
-  status?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+owner_user_id?: string | null;
+platform?: string | null;
+status?: string | null;
 };
 
 export type ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  creator_user_id?: string | null;
-  status?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+creator_user_id?: string | null;
+status?: string | null;
 };
 
-export type ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams =
-  {
-    /**
-     * @minimum 0
-     */
-    offset?: number;
-    /**
-     * @minimum 1
-     * @maximum 200
-     */
-    limit?: number;
-  };
+export type ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams = {
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+};
 
 export type ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  search?: string | null;
-  owner_user_id?: string | null;
-  platform?: string | null;
-  intent_level?: string | null;
-  customer_value?: string | null;
-  engagement?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+search?: string | null;
+owner_user_id?: string | null;
+platform?: string | null;
+intent_level?: string | null;
+customer_value?: string | null;
+engagement?: string | null;
 };
 
 export type ListHandoffsApiV1AdminOverviewHandoffsGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  status?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+status?: string | null;
 };
 
 export type GetConversationTrendsApiV1AdminStatsTrendsGetParams = {
-  /**
-   * @minimum 1
-   * @maximum 90
-   */
-  days?: number;
+/**
+ * @minimum 1
+ * @maximum 90
+ */
+days?: number;
 };
 
 export type GetAgentStatsApiV1AdminStatsAgentStatsGetParams = {
-  /**
-   * @minimum 50
-   * @maximum 2000
-   */
-  max_scan?: number;
+/**
+ * @minimum 50
+ * @maximum 2000
+ */
+max_scan?: number;
 };
 
 export type ListAuditLogsApiV1AdminAuditAuditLogsGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  admin_id?: string | null;
-  action?: string | null;
-  target_type?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+admin_id?: string | null;
+action?: string | null;
+target_type?: string | null;
 };
 
 export type GetConversationTraceApiV1ChatConversationIdTraceGetParams = {
-  /**
-   * 返回最近 N 轮，0 表示全部
-   * @minimum 0
-   */
-  turns?: number;
+/**
+ * 返回最近 N 轮，0 表示全部
+ * @minimum 0
+ */
+turns?: number;
 };
 
-export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams =
-  {
-    /**
-     * 被分配的子账号 id
-     */
-    user_id: string;
-  };
+export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams = {
+/**
+ * 被分配的子账号 id
+ */
+user_id: string;
+};
 
-export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost201 =
-  { [key: string]: string };
+export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost201 = {[key: string]: string};
 
-export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams =
-  {
-    /**
-     * 被撤回的子账号 id
-     */
-    user_id: string;
-  };
+export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams = {
+/**
+ * 被撤回的子账号 id
+ */
+user_id: string;
+};
 
-export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200 =
-  { [key: string]: string };
+export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200 = {[key: string]: string};
 
-export type ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200 =
-  { [key: string]: string[] };
+export type ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200 = {[key: string]: string[]};
 
 export type ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams = {
-  account_id: string;
-  owner_user_id: string;
-  platform?: string | null;
+account_id: string;
+owner_user_id: string;
+platform?: string | null;
 };
 
-export type DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams =
-  {
-    account_id: string;
-    owner_user_id: string;
-    platform?: string | null;
-  };
-
-export type WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200 = {
-  [key: string]: unknown;
+export type DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams = {
+account_id: string;
+owner_user_id: string;
+platform?: string | null;
 };
 
-export type HealthzHealthzGet200 = { [key: string]: string };
+export type ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams = {
+account_id: string;
+owner_user_id: string;
+platform?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+page_size?: number;
+};
+
+export type WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200 = { [key: string]: unknown };
+
+export type ListDigitalHumansApiV1OwnersDigitalHumansGetParams = {
+search?: string | null;
+status?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
+};
+
+export type AssignDigitalHumanApiV1OwnersDigitalHumansDhIdAssignPost200 = {[key: string]: boolean};
+
+export type ListSubAccountsApiV1OwnersSubAccountsGetParams = {
+search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
+};
+
+export type ResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPost200 = {[key: string]: boolean};
+
+export type ListConversationsApiV1OwnersConversationsGetParams = {
+owner_user_id?: string | null;
+digital_human_id?: string | null;
+platform?: string | null;
+status?: string | null;
+search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
+};
+
+export type GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetParams = {
+/**
+ * 上一页返回的 next_cursor
+ */
+before?: string | null;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+};
+
+export type ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams = {
+owner_user_id?: string | null;
+digital_human_id?: string | null;
+platform?: string | null;
+intent_level?: string | null;
+customer_value?: string | null;
+search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
+};
+
+export type ListDocumentsApiV1OwnersKnowledgeDocumentsGetParams = {
+collection?: string | null;
+domain?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
+};
+
+export type DeleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteParams = {
+collection?: string | null;
+};
+
+export type ListAuditLogsApiV1OwnersAuditLogsGetParams = {
+action?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
+};
+
+export type HealthzHealthzGet200 = {[key: string]: string};
+

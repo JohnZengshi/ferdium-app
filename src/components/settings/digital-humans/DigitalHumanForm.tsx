@@ -26,7 +26,7 @@ import {
 } from 'tdesign-react';
 import type {
   DigitalHumanCreateRequest,
-  DigitalHumanResponse,
+  AppApiSchemasDigitalHumanResponse,
 } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
 
@@ -135,7 +135,7 @@ const messages = defineMessages({
 
 interface DigitalHumanFormProps {
   visible: boolean;
-  digitalHuman?: DigitalHumanResponse | null;
+  digitalHuman?: AppApiSchemasDigitalHumanResponse | null;
   store: DigitalHumanStore;
   onClose: () => void;
   onSuccess: () => void;
@@ -198,14 +198,33 @@ class DigitalHumanForm extends Component<
     const { intl } = this.props;
     return {
       name: [
-        { required: true, message: intl.formatMessage(messages.validationNameRequired), type: 'error' },
-        { min: 1, max: 64, message: intl.formatMessage(messages.validationNameLength), type: 'warning' },
+        {
+          required: true,
+          message: intl.formatMessage(messages.validationNameRequired),
+          type: 'error',
+        },
+        {
+          min: 1,
+          max: 64,
+          message: intl.formatMessage(messages.validationNameLength),
+          type: 'warning',
+        },
       ],
       persona_prompt: [
-        { max: 2000, message: intl.formatMessage(messages.validationPersonaPromptMax), type: 'warning' },
+        {
+          max: 2000,
+          message: intl.formatMessage(messages.validationPersonaPromptMax),
+          type: 'warning',
+        },
       ],
       knowledge_collection: [
-        { max: 128, message: intl.formatMessage(messages.validationKnowledgeCollectionMax), type: 'warning' },
+        {
+          max: 128,
+          message: intl.formatMessage(
+            messages.validationKnowledgeCollectionMax,
+          ),
+          type: 'warning',
+        },
       ],
     };
   }
@@ -220,11 +239,17 @@ class DigitalHumanForm extends Component<
 
     try {
       await this.props.store.createDigitalHuman(this.state.formData);
-      MessagePlugin.success(this.props.intl.formatMessage(messages.toastCreateSuccess));
+      MessagePlugin.success(
+        this.props.intl.formatMessage(messages.toastCreateSuccess),
+      );
       this.props.onSuccess();
       this.props.onClose();
     } catch (error) {
-      MessagePlugin.error(error instanceof Error ? error.message : this.props.intl.formatMessage(messages.toastCreateFailed));
+      MessagePlugin.error(
+        error instanceof Error
+          ? error.message
+          : this.props.intl.formatMessage(messages.toastCreateFailed),
+      );
     } finally {
       this.setState({ submitting: false });
     }
@@ -250,10 +275,14 @@ class DigitalHumanForm extends Component<
     return (
       <Dialog
         visible={visible}
-        header={intl.formatMessage(isEditMode ? messages.headerEdit : messages.headerCreate)}
+        header={intl.formatMessage(
+          isEditMode ? messages.headerEdit : messages.headerCreate,
+        )}
         width="600px"
         confirmBtn={{
-          content: intl.formatMessage(isEditMode ? messages.btnSave : messages.btnCreate),
+          content: intl.formatMessage(
+            isEditMode ? messages.btnSave : messages.btnCreate,
+          ),
           loading: submitting,
         }}
         onConfirm={this.handleSubmit}
@@ -267,7 +296,10 @@ class DigitalHumanForm extends Component<
           labelWidth="120px"
           colon
         >
-          <Form.FormItem label={intl.formatMessage(messages.labelName)} name="name">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelName)}
+            name="name"
+          >
             <Input
               value={formData.name}
               placeholder={intl.formatMessage(messages.placeholderName)}
@@ -275,17 +307,25 @@ class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label={intl.formatMessage(messages.labelAccountHandle)} name="account_handle">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelAccountHandle)}
+            name="account_handle"
+          >
             <Input
               value={formData.account_handle || ''}
-              placeholder={intl.formatMessage(messages.placeholderAccountHandle)}
+              placeholder={intl.formatMessage(
+                messages.placeholderAccountHandle,
+              )}
               onChange={value =>
                 this.handleFieldChange('account_handle', value)
               }
             />
           </Form.FormItem>
 
-          <Form.FormItem label={intl.formatMessage(messages.labelPlatform)} name="platform">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelPlatform)}
+            name="platform"
+          >
             <Select
               value={formData.platform || 'whatsapp'}
               options={[
@@ -297,7 +337,10 @@ class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label={intl.formatMessage(messages.labelAvatarUrl)} name="avatar_url">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelAvatarUrl)}
+            name="avatar_url"
+          >
             <Input
               value={formData.avatar_url || ''}
               placeholder="https://..."
@@ -320,10 +363,15 @@ class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label={intl.formatMessage(messages.labelPersonaPrompt)} name="persona_prompt">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelPersonaPrompt)}
+            name="persona_prompt"
+          >
             <Textarea
               value={formData.persona_prompt || ''}
-              placeholder={intl.formatMessage(messages.placeholderPersonaPrompt)}
+              placeholder={intl.formatMessage(
+                messages.placeholderPersonaPrompt,
+              )}
               rows={4}
               maxlength={2000}
               onChange={value =>
@@ -332,17 +380,25 @@ class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label={intl.formatMessage(messages.labelKnowledgeCollection)} name="knowledge_collection">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelKnowledgeCollection)}
+            name="knowledge_collection"
+          >
             <Input
               value={formData.knowledge_collection || ''}
-              placeholder={intl.formatMessage(messages.placeholderKnowledgeCollection)}
+              placeholder={intl.formatMessage(
+                messages.placeholderKnowledgeCollection,
+              )}
               onChange={value =>
                 this.handleFieldChange('knowledge_collection', value)
               }
             />
           </Form.FormItem>
 
-          <Form.FormItem label={intl.formatMessage(messages.labelVoice)} name="voice">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelVoice)}
+            name="voice"
+          >
             <Input
               value={formData.voice || ''}
               placeholder={intl.formatMessage(messages.placeholderVoice)}
@@ -350,12 +406,21 @@ class DigitalHumanForm extends Component<
             />
           </Form.FormItem>
 
-          <Form.FormItem label={intl.formatMessage(messages.labelStatus)} name="status">
+          <Form.FormItem
+            label={intl.formatMessage(messages.labelStatus)}
+            name="status"
+          >
             <Select
               value={formData.status || 'active'}
               options={[
-                { label: intl.formatMessage(messages.selectOptionActive), value: 'active' },
-                { label: intl.formatMessage(messages.selectOptionInactive), value: 'inactive' },
+                {
+                  label: intl.formatMessage(messages.selectOptionActive),
+                  value: 'active',
+                },
+                {
+                  label: intl.formatMessage(messages.selectOptionInactive),
+                  value: 'inactive',
+                },
               ]}
               onChange={value => this.handleFieldChange('status', value)}
             />

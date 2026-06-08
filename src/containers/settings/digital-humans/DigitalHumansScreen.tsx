@@ -12,10 +12,14 @@ import type { RouterStore } from '@superwf/mobx-react-router';
 import { inject, observer } from 'mobx-react';
 import type React from 'react';
 import { Component } from 'react';
-import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
 import { Badge, Button, MessagePlugin, Space, Table, Tag } from 'tdesign-react';
-import type { DigitalHumanResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import type { AppApiSchemasDigitalHumanResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import DigitalHumanForm from '../../../components/settings/digital-humans/DigitalHumanForm';
 import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
 
@@ -28,35 +32,68 @@ interface DigitalHumansScreenProps {
 
 interface State {
   dialogVisible: boolean;
-  selectedDigitalHuman: DigitalHumanResponse | null;
+  selectedDigitalHuman: AppApiSchemasDigitalHumanResponse | null;
 }
 
 type WithIntlProps = DigitalHumansScreenProps & WrappedComponentProps;
 
 const messages = defineMessages({
-  pageTitle: { id: 'digitalHumansScreen.pageTitle', defaultMessage: 'Digital Humans' },
-  createDigitalHuman: { id: 'digitalHumansScreen.createDigitalHuman', defaultMessage: 'Create Digital Human' },
+  pageTitle: {
+    id: 'digitalHumansScreen.pageTitle',
+    defaultMessage: 'Digital Humans',
+  },
+  createDigitalHuman: {
+    id: 'digitalHumansScreen.createDigitalHuman',
+    defaultMessage: 'Create Digital Human',
+  },
   nameColumn: { id: 'digitalHumansScreen.nameColumn', defaultMessage: 'Name' },
-  accountHandleColumn: { id: 'digitalHumansScreen.accountHandleColumn', defaultMessage: 'Account Handle' },
-  platformColumn: { id: 'digitalHumansScreen.platformColumn', defaultMessage: 'Platform' },
-  statusColumn: { id: 'digitalHumansScreen.statusColumn', defaultMessage: 'Status' },
-  createdAtColumn: { id: 'digitalHumansScreen.createdAtColumn', defaultMessage: 'Created At' },
-  actionsColumn: { id: 'digitalHumansScreen.actionsColumn', defaultMessage: 'Actions' },
-  disabledStatus: { id: 'digitalHumansScreen.disabledStatus', defaultMessage: 'Disabled' },
-  activeStatus: { id: 'digitalHumansScreen.activeStatus', defaultMessage: 'Active' },
-  inactiveStatus: { id: 'digitalHumansScreen.inactiveStatus', defaultMessage: 'Inactive' },
+  accountHandleColumn: {
+    id: 'digitalHumansScreen.accountHandleColumn',
+    defaultMessage: 'Account Handle',
+  },
+  platformColumn: {
+    id: 'digitalHumansScreen.platformColumn',
+    defaultMessage: 'Platform',
+  },
+  statusColumn: {
+    id: 'digitalHumansScreen.statusColumn',
+    defaultMessage: 'Status',
+  },
+  createdAtColumn: {
+    id: 'digitalHumansScreen.createdAtColumn',
+    defaultMessage: 'Created At',
+  },
+  actionsColumn: {
+    id: 'digitalHumansScreen.actionsColumn',
+    defaultMessage: 'Actions',
+  },
+  disabledStatus: {
+    id: 'digitalHumansScreen.disabledStatus',
+    defaultMessage: 'Disabled',
+  },
+  activeStatus: {
+    id: 'digitalHumansScreen.activeStatus',
+    defaultMessage: 'Active',
+  },
+  inactiveStatus: {
+    id: 'digitalHumansScreen.inactiveStatus',
+    defaultMessage: 'Inactive',
+  },
   viewButton: { id: 'digitalHumansScreen.viewButton', defaultMessage: 'View' },
   editButton: { id: 'digitalHumansScreen.editButton', defaultMessage: 'Edit' },
-  assignedToaster: { id: 'digitalHumansScreen.assignedToaster', defaultMessage: 'Assigned to {count} sub-accounts' },
-  fetchAssignmentError: { id: 'digitalHumansScreen.fetchAssignmentError', defaultMessage: 'Failed to get assignment info' },
+  assignedToaster: {
+    id: 'digitalHumansScreen.assignedToaster',
+    defaultMessage: 'Assigned to {count} sub-accounts',
+  },
+  fetchAssignmentError: {
+    id: 'digitalHumansScreen.fetchAssignmentError',
+    defaultMessage: 'Failed to get assignment info',
+  },
 });
 
 @inject('stores')
 @observer
-class DigitalHumansScreen extends Component<
-  WithIntlProps,
-  State
-> {
+class DigitalHumansScreen extends Component<WithIntlProps, State> {
   constructor(props: WithIntlProps) {
     super(props);
     this.state = {
@@ -80,14 +117,16 @@ class DigitalHumansScreen extends Component<
     });
   };
 
-  handleEdit = (digitalHuman: DigitalHumanResponse): void => {
+  handleEdit = (digitalHuman: AppApiSchemasDigitalHumanResponse): void => {
     this.setState({
       dialogVisible: true,
       selectedDigitalHuman: digitalHuman,
     });
   };
 
-  handleView = async (digitalHuman: DigitalHumanResponse): Promise<void> => {
+  handleView = async (
+    digitalHuman: AppApiSchemasDigitalHumanResponse,
+  ): Promise<void> => {
     try {
       const assignments = await this.digitalHumanStore.getAssignments(
         digitalHuman.id,
@@ -98,7 +137,9 @@ class DigitalHumansScreen extends Component<
         }),
       );
     } catch {
-      MessagePlugin.error(this.props.intl.formatMessage(messages.fetchAssignmentError));
+      MessagePlugin.error(
+        this.props.intl.formatMessage(messages.fetchAssignmentError),
+      );
     }
   };
 
@@ -113,7 +154,7 @@ class DigitalHumansScreen extends Component<
         title: intl.formatMessage(messages.nameColumn),
         width: 200,
         // eslint-disable-next-line react/no-unstable-nested-components
-        cell: ({ row }: { row: DigitalHumanResponse }) => (
+        cell: ({ row }: { row: AppApiSchemasDigitalHumanResponse }) => (
           <Space>
             {row.avatar_url && (
               <img
@@ -136,7 +177,7 @@ class DigitalHumansScreen extends Component<
         title: intl.formatMessage(messages.platformColumn),
         width: 120,
         // eslint-disable-next-line react/no-unstable-nested-components
-        cell: ({ row }: { row: DigitalHumanResponse }) => (
+        cell: ({ row }: { row: AppApiSchemasDigitalHumanResponse }) => (
           <Tag variant="light">{row.platform || 'WhatsApp'}</Tag>
         ),
       },
@@ -145,14 +186,22 @@ class DigitalHumansScreen extends Component<
         title: intl.formatMessage(messages.statusColumn),
         width: 100,
         // eslint-disable-next-line react/no-unstable-nested-components
-        cell: ({ row }: { row: DigitalHumanResponse }) => {
+        cell: ({ row }: { row: AppApiSchemasDigitalHumanResponse }) => {
           if (!row.is_enabled) {
-            return <Badge count={intl.formatMessage(messages.disabledStatus)} />;
+            return (
+              <Badge count={intl.formatMessage(messages.disabledStatus)} />
+            );
           }
           return row.status === 'active' ? (
-            <Badge count={intl.formatMessage(messages.activeStatus)} color="success" />
+            <Badge
+              count={intl.formatMessage(messages.activeStatus)}
+              color="success"
+            />
           ) : (
-            <Badge count={intl.formatMessage(messages.inactiveStatus)} color="default" />
+            <Badge
+              count={intl.formatMessage(messages.inactiveStatus)}
+              color="default"
+            />
           );
         },
       },
@@ -166,7 +215,7 @@ class DigitalHumansScreen extends Component<
         title: intl.formatMessage(messages.createdAtColumn),
         width: 180,
 
-        cell: ({ row }: { row: DigitalHumanResponse }) =>
+        cell: ({ row }: { row: AppApiSchemasDigitalHumanResponse }) =>
           new Date(row.created_at).toLocaleString('zh-CN'),
       },
       {
@@ -174,7 +223,7 @@ class DigitalHumansScreen extends Component<
         title: intl.formatMessage(messages.actionsColumn),
         width: 180,
         // eslint-disable-next-line react/no-unstable-nested-components
-        cell: ({ row }: { row: DigitalHumanResponse }) => (
+        cell: ({ row }: { row: AppApiSchemasDigitalHumanResponse }) => (
           <Space>
             <Button
               size="small"
@@ -211,7 +260,9 @@ class DigitalHumansScreen extends Component<
     return (
       <div className="p-5 max-w-[1400px] mx-auto">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-2xl font-bold">{intl.formatMessage(messages.pageTitle)}</h2>
+          <h2 className="text-2xl font-bold">
+            {intl.formatMessage(messages.pageTitle)}
+          </h2>
           <Button icon={<AddIcon />} onClick={this.handleCreate}>
             {intl.formatMessage(messages.createDigitalHuman)}
           </Button>

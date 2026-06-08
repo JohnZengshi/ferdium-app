@@ -17,7 +17,7 @@ import {
 } from 'mobx';
 import type {
   DigitalHumanCreateRequest,
-  DigitalHumanResponse,
+  AppApiSchemasDigitalHumanResponse,
 } from '../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import {
   assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost,
@@ -30,20 +30,20 @@ import {
 import TypedStore from './lib/TypedStore';
 
 export interface IDigitalHumanStore {
-  digitalHumans: DigitalHumanResponse[];
+  digitalHumans: AppApiSchemasDigitalHumanResponse[];
   isLoading: boolean;
   error: string | null;
 
   // Computed
-  activeDigitalHumans: DigitalHumanResponse[];
+  activeDigitalHumans: AppApiSchemasDigitalHumanResponse[];
   digitalHumanCount: number;
 
   // Actions
   fetchDigitalHumans(): Promise<void>;
   createDigitalHuman(
     data: DigitalHumanCreateRequest,
-  ): Promise<DigitalHumanResponse>;
-  getDigitalHuman(id: string): Promise<DigitalHumanResponse>;
+  ): Promise<AppApiSchemasDigitalHumanResponse>;
+  getDigitalHuman(id: string): Promise<AppApiSchemasDigitalHumanResponse>;
   assignToMember(digitalHumanId: string, memberId: string): Promise<void>;
   unassignFromMember(digitalHumanId: string, memberId: string): Promise<void>;
   getAssignments(digitalHumanId: string): Promise<string[]>;
@@ -51,7 +51,7 @@ export interface IDigitalHumanStore {
 }
 
 export default class DigitalHumanStore extends TypedStore {
-  @observable digitalHumans: DigitalHumanResponse[] = [];
+  @observable digitalHumans: AppApiSchemasDigitalHumanResponse[] = [];
 
   @observable isLoading = false;
 
@@ -62,7 +62,7 @@ export default class DigitalHumanStore extends TypedStore {
     makeObservable(this);
   }
 
-  @computed get activeDigitalHumans(): DigitalHumanResponse[] {
+  @computed get activeDigitalHumans(): AppApiSchemasDigitalHumanResponse[] {
     return this.digitalHumans.filter(
       dh => dh.status === 'active' && dh.is_enabled,
     );
@@ -100,7 +100,7 @@ export default class DigitalHumanStore extends TypedStore {
 
   @action async createDigitalHuman(
     data: DigitalHumanCreateRequest,
-  ): Promise<DigitalHumanResponse> {
+  ): Promise<AppApiSchemasDigitalHumanResponse> {
     this.isLoading = true;
     this.error = null;
 
@@ -126,7 +126,9 @@ export default class DigitalHumanStore extends TypedStore {
     }
   }
 
-  @action async getDigitalHuman(id: string): Promise<DigitalHumanResponse> {
+  @action async getDigitalHuman(
+    id: string,
+  ): Promise<AppApiSchemasDigitalHumanResponse> {
     this.isLoading = true;
     this.error = null;
 

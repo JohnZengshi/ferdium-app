@@ -332,7 +332,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       }),
       hasBadge: emp.hasBadge,
     }));
-    realEmployees.slice(0, 6).forEach((real, idx) => {
+    realEmployees.forEach((real, idx) => {
       displayEmployees[idx] = {
         id: real.id,
         name: real.name,
@@ -352,7 +352,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       <>
         <div className="flex h-full flex-col bg-page p-[24px] overflow-auto">
           <div className="flex gap-[24px] h-full">
-            <div className="flex flex-[2] flex-col rounded-[24px] bg-container p-[32px] shadow-sm">
+            <div className="flex min-h-0 flex-[2] flex-col rounded-[24px] bg-container p-[32px] shadow-sm">
               <SectionHeader
                 icon={
                   <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-brand-light">
@@ -374,8 +374,10 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 }
               />
 
-              <div className="mt-[40px] grid grid-cols-[repeat(auto-fill,minmax(237px,1fr))] gap-[20px]">
-                {displayEmployees.map(emp => this.renderEmployeeCard(emp))}
+              <div className="mt-[40px] min-h-0 flex-1 overflow-y-auto pr-[4px]">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(237px,1fr))] gap-[20px]">
+                  {displayEmployees.map(emp => this.renderEmployeeCard(emp))}
+                </div>
               </div>
             </div>
 

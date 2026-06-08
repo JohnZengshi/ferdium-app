@@ -9,10 +9,14 @@ import {
   BookOpenFilledIcon,
 } from 'tdesign-icons-react';
 
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import type { Stores } from '../../@types/stores.types';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
-import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
 
 const MODULES: {
   id: FerdiumModule;
@@ -95,11 +99,13 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
                   className={`text-[12px] leading-5 whitespace-nowrap ${isActive ? 'text-brand' : 'text-secondary'}`}
                 >
                   {intl.formatMessage(
-                    ({
-                      home: messages.home,
-                      'service-type': messages.serviceType,
-                      'knowledge-base': messages.knowledgeBase,
-                    } as const)[mod.id],
+                    (
+                      {
+                        home: messages.home,
+                        'service-type': messages.serviceType,
+                        'knowledge-base': messages.knowledgeBase,
+                      } as const
+                    )[mod.id],
                   )}
                 </span>
                 {mod.id === 'service-type' && badge != null && (

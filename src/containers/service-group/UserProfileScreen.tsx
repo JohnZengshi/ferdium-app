@@ -15,23 +15,44 @@ import FilterToolbar from '../../components/ui/FilterToolbar';
 
 const messages = defineMessages({
   colId: { id: 'userProfile.col.id', defaultMessage: '序号' },
-  colFanAccount: { id: 'userProfile.col.fanAccount', defaultMessage: '粉丝账号' },
+  colFanAccount: {
+    id: 'userProfile.col.fanAccount',
+    defaultMessage: '粉丝账号',
+  },
   colRegion: { id: 'userProfile.col.region', defaultMessage: '所在地区' },
   colGender: { id: 'userProfile.col.gender', defaultMessage: '性别' },
   colStage: { id: 'userProfile.col.stage', defaultMessage: '当前阶段' },
   colTag: { id: 'userProfile.col.tag', defaultMessage: '标签' },
-  colIntentLevel: { id: 'userProfile.col.intentLevel', defaultMessage: '意向等级' },
-  colChatSummary: { id: 'userProfile.col.chatSummary', defaultMessage: '聊天摘要' },
-  colServiceNote: { id: 'userProfile.col.serviceNote', defaultMessage: '客服备注' },
+  colIntentLevel: {
+    id: 'userProfile.col.intentLevel',
+    defaultMessage: '意向等级',
+  },
+  colChatSummary: {
+    id: 'userProfile.col.chatSummary',
+    defaultMessage: '聊天摘要',
+  },
+  colServiceNote: {
+    id: 'userProfile.col.serviceNote',
+    defaultMessage: '客服备注',
+  },
   colOwner: { id: 'userProfile.col.owner', defaultMessage: '归属账号' },
   view: { id: 'userProfile.view', defaultMessage: '查看' },
-  searchPlaceholder: { id: 'userProfile.searchPlaceholder', defaultMessage: '粉丝姓名。手机号' },
+  searchPlaceholder: {
+    id: 'userProfile.searchPlaceholder',
+    defaultMessage: '粉丝姓名。手机号',
+  },
   filterStatus: { id: 'userProfile.filterStatus', defaultMessage: '状态' },
-  filterPlaceholder: { id: 'userProfile.filterPlaceholder', defaultMessage: '请选择内容状态' },
+  filterPlaceholder: {
+    id: 'userProfile.filterPlaceholder',
+    defaultMessage: '请选择内容状态',
+  },
   filterPersona: { id: 'userProfile.filterPersona', defaultMessage: '人设' },
   search: { id: 'userProfile.search', defaultMessage: '搜索' },
   reset: { id: 'userProfile.reset', defaultMessage: '重置' },
-  selectedItems: { id: 'userProfile.selectedItems', defaultMessage: '已选 2 项' },
+  selectedItems: {
+    id: 'userProfile.selectedItems',
+    defaultMessage: '已选 2 项',
+  },
   moreActions: { id: 'userProfile.moreActions', defaultMessage: '更多操作' },
   vipLabel: { id: 'avatarCell.vipLabel', defaultMessage: '重粉' },
 });
@@ -125,7 +146,12 @@ function UserProfileScreen(): ReactElement {
 
   const columns: PrimaryTableCol<FanProfile>[] = useMemo(
     () => [
-      { colKey: 'id', title: intl.formatMessage(messages.colId), width: 64, align: 'center' },
+      {
+        colKey: 'id',
+        title: intl.formatMessage(messages.colId),
+        width: 64,
+        align: 'center',
+      },
       {
         colKey: 'username',
         title: intl.formatMessage(messages.colFanAccount),
@@ -248,17 +274,21 @@ function UserProfileScreen(): ReactElement {
               <span className="text-[14px] leading-[22px] text-primary">
                 {intl.formatMessage(messages.filterStatus)}
               </span>
-              <Select className="!w-[160px]" placeholder={intl.formatMessage(messages.filterPlaceholder)} />
+              <Select
+                className="!w-[160px]"
+                placeholder={intl.formatMessage(messages.filterPlaceholder)}
+              />
               <span className="text-[14px] leading-[22px] text-primary">
                 {intl.formatMessage(messages.filterPersona)}
               </span>
-              <Select className="!w-[160px]" placeholder={intl.formatMessage(messages.filterPlaceholder)} />
-              <Button theme="primary">{intl.formatMessage(messages.search)}</Button>
-              <Button
-                theme="default"
-                variant="outline"
-                icon={<RefreshIcon />}
-              >
+              <Select
+                className="!w-[160px]"
+                placeholder={intl.formatMessage(messages.filterPlaceholder)}
+              />
+              <Button theme="primary">
+                {intl.formatMessage(messages.search)}
+              </Button>
+              <Button theme="default" variant="outline" icon={<RefreshIcon />}>
                 {intl.formatMessage(messages.reset)}
               </Button>
             </>

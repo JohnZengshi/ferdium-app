@@ -5,7 +5,11 @@ import {
   UserIcon,
 } from 'tdesign-icons-react';
 import { Card } from 'tdesign-react';
-import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 
 const messages = defineMessages({
   online: {
@@ -114,7 +118,11 @@ const DigitalHumanCard = ({
             {lastActive && (
               <div className="flex items-center gap-1 text-xs text-placeholder">
                 <StatusIcon size="14px" style={{ color: statusInfo.color }} />
-                <span>{intl.formatMessage(messages.lastActive, { time: lastActive })}</span>
+                <span>
+                  {intl.formatMessage(messages.lastActive, {
+                    time: lastActive,
+                  })}
+                </span>
               </div>
             )}
           </div>

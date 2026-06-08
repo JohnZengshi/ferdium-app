@@ -83,7 +83,8 @@ const messages = defineMessages({
   },
   personaHint: {
     id: 'accountSlider.personaHint',
-    defaultMessage: '提示：如没有人设资料，请在左侧菜单人设管理中添加资料后进行绑定',
+    defaultMessage:
+      '提示：如没有人设资料，请在左侧菜单人设管理中添加资料后进行绑定',
   },
   confirmText: {
     id: 'accountSlider.confirmText',

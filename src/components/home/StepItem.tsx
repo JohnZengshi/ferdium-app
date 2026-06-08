@@ -52,7 +52,9 @@ export function StepItem(props: StepItemProps): ReactElement {
       <Tag
         className={`!mt-[6px] !h-[32px] !min-w-[66px] !rounded-[16px] !border-0 !text-[14px] !font-medium !leading-[32px] !text-center flex items-center justify-center ${tagClasses}`}
       >
-        {intl.formatMessage(status === 'completed' ? messages.completed : messages.pending)}
+        {intl.formatMessage(
+          status === 'completed' ? messages.completed : messages.pending,
+        )}
       </Tag>
     );
   };

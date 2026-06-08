@@ -31,8 +31,6 @@ import {
   getEmployeeResumes,
 } from './homeScreenData';
 
-
-
 interface HomeScreenProps {
   stores?: RealStores;
   history?: any;
@@ -40,16 +38,11 @@ interface HomeScreenProps {
 
 type IHomeScreenProps = HomeScreenProps & WrappedComponentProps;
 
-
-
 interface HomeScreenState {
   isAutoReply: boolean;
   viewMode: 'dashboard' | 'strategy';
   dialogEmployee: EmployeeResume | null;
 }
-
-
-
 
 @inject('stores')
 @observer
@@ -75,8 +68,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       this.setState({ dialogEmployee: resume });
     }
   };
-
-
 
   handleCloseResume = (): void => {
     this.setState({ dialogEmployee: null });
@@ -146,19 +137,25 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
               <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiIcon className="text-success text-[14px]" />
-                  <span className="text-success">{intl.formatMessage(messages.online)}</span>
+                  <span className="text-success">
+                    {intl.formatMessage(messages.online)}
+                  </span>
                 </span>
               </th>
               <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiOffIcon className="text-warning text-[14px]" />
-                  <span className="text-warning">{intl.formatMessage(messages.offline)}</span>
+                  <span className="text-warning">
+                    {intl.formatMessage(messages.offline)}
+                  </span>
                 </span>
               </th>
               <th className="w-[116px] text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <ErrorCircleIcon className="text-error text-[14px]" />
-                  <span className="text-error">{intl.formatMessage(messages.errorStatus)}</span>
+                  <span className="text-error">
+                    {intl.formatMessage(messages.errorStatus)}
+                  </span>
                 </span>
               </th>
             </tr>
@@ -308,7 +305,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     const digitalHumanStore = this.props.stores!.digitalHuman;
     const realEmployees = digitalHumanStore.digitalHumans;
 
-    const displayEmployees: Array<{
+    const displayEmployees: {
       id: string;
       name: string;
       role: string;
@@ -316,15 +313,24 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       capabilities: string[];
       cta: string;
       hasBadge?: boolean;
-    }> = MOCK_EMPLOYEES.map(emp => ({
+    }[] = MOCK_EMPLOYEES.map(emp => ({
       id: emp.id,
       name: emp.name,
-      role: intl.formatMessage({ id: emp.roleKey, defaultMessage: emp.roleDefault }),
+      role: intl.formatMessage({
+        id: emp.roleKey,
+        defaultMessage: emp.roleDefault,
+      }),
       avatar: emp.avatar,
       capabilities: emp.capabilityKeys.map((key, i) =>
-        intl.formatMessage({ id: key, defaultMessage: emp.capabilityDefaults[i] }),
+        intl.formatMessage({
+          id: key,
+          defaultMessage: emp.capabilityDefaults[i],
+        }),
       ),
-      cta: intl.formatMessage({ id: emp.ctaKey, defaultMessage: emp.ctaDefault }),
+      cta: intl.formatMessage({
+        id: emp.ctaKey,
+        defaultMessage: emp.ctaDefault,
+      }),
       hasBadge: emp.hasBadge,
     }));
     realEmployees.slice(0, 6).forEach((real, idx) => {
@@ -358,7 +364,9 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 description={intl.formatMessage(messages.digitalEmployeesDesc)}
                 actions={
                   <div className="flex items-center gap-[8px]">
-                    <span className="text-[14px] text-secondary">{intl.formatMessage(messages.autoReply)}</span>
+                    <span className="text-[14px] text-secondary">
+                      {intl.formatMessage(messages.autoReply)}
+                    </span>
                     <Switch
                       value={isAutoReply}
                       onChange={this.handleAutoReplyChange}
@@ -476,5 +484,4 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default injectIntl(HomeScreen as any);

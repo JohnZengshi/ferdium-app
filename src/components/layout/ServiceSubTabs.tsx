@@ -1,6 +1,10 @@
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
-import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import type { Actions } from '../../actions/lib/actions';
 import type { RealStores } from '../../stores';
 
@@ -11,7 +15,10 @@ const messages = defineMessages({
   tabMessages: { id: 'serviceSubTabs.messages', defaultMessage: '消息' },
   tabAccount: { id: 'serviceSubTabs.account', defaultMessage: '账号管理' },
   tabProfile: { id: 'serviceSubTabs.profile', defaultMessage: '用户画像' },
-  whatsappHeader: { id: 'serviceSubTabs.whatsappHeader', defaultMessage: 'Whatsapp' },
+  whatsappHeader: {
+    id: 'serviceSubTabs.whatsappHeader',
+    defaultMessage: 'Whatsapp',
+  },
   expand: { id: 'serviceSubTabs.expand', defaultMessage: 'expand' },
   collapse: { id: 'serviceSubTabs.collapse', defaultMessage: 'collapse' },
 });
@@ -87,7 +94,9 @@ class ServiceSubTabs extends Component<
           )}
           <button
             type="button"
-            aria-label={intl.formatMessage(isCollapsed ? messages.expand : messages.collapse)}
+            aria-label={intl.formatMessage(
+              isCollapsed ? messages.expand : messages.collapse,
+            )}
             className="flex items-center justify-center w-[24px] h-[24px] p-0 border-0 bg-transparent cursor-pointer"
             onClick={this.toggleCollapse}
           >
@@ -139,7 +148,9 @@ class ServiceSubTabs extends Component<
                 />
                 {!isCollapsed && (
                   <span className="flex-1 text-[14px] leading-[22px] whitespace-nowrap">
-                    {intl.formatMessage(messages[tab.labelKey as keyof typeof messages])}
+                    {intl.formatMessage(
+                      messages[tab.labelKey as keyof typeof messages],
+                    )}
                   </span>
                 )}
               </button>

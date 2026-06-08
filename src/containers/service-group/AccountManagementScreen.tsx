@@ -14,7 +14,10 @@ import FilterToolbar from '../../components/ui/FilterToolbar';
 
 const messages = defineMessages({
   colId: { id: 'accountMgmt.col.id', defaultMessage: '序号' },
-  colAccountInfo: { id: 'accountMgmt.col.accountInfo', defaultMessage: '账号信息' },
+  colAccountInfo: {
+    id: 'accountMgmt.col.accountInfo',
+    defaultMessage: '账号信息',
+  },
   colStatus: { id: 'accountMgmt.col.status', defaultMessage: '状态' },
   colPersona: { id: 'accountMgmt.col.persona', defaultMessage: '账号人设' },
   colNote: { id: 'accountMgmt.col.note', defaultMessage: '账号备注' },
@@ -25,13 +28,22 @@ const messages = defineMessages({
   statusOffline: { id: 'accountMgmt.status.offline', defaultMessage: '离线' },
   autoChatOn: { id: 'accountMgmt.autoChat.on', defaultMessage: '开启' },
   autoChatOff: { id: 'accountMgmt.autoChat.off', defaultMessage: '关闭' },
-  autoChatHealthy: { id: 'accountMgmt.autoChat.healthy', defaultMessage: '健康' },
+  autoChatHealthy: {
+    id: 'accountMgmt.autoChat.healthy',
+    defaultMessage: '健康',
+  },
   filterStatus: { id: 'accountMgmt.filterStatus', defaultMessage: '状态' },
-  filterPlaceholder: { id: 'accountMgmt.filterPlaceholder', defaultMessage: '请选择内容状态' },
+  filterPlaceholder: {
+    id: 'accountMgmt.filterPlaceholder',
+    defaultMessage: '请选择内容状态',
+  },
   filterPersona: { id: 'accountMgmt.filterPersona', defaultMessage: '人设' },
   search: { id: 'accountMgmt.search', defaultMessage: '搜索' },
   reset: { id: 'accountMgmt.reset', defaultMessage: '重置' },
-  selectedItems: { id: 'accountMgmt.selectedItems', defaultMessage: '已选 2 项' },
+  selectedItems: {
+    id: 'accountMgmt.selectedItems',
+    defaultMessage: '已选 2 项',
+  },
   moreActions: { id: 'accountMgmt.moreActions', defaultMessage: '更多操作' },
 });
 
@@ -94,7 +106,9 @@ function AccountManagementScreen(): ReactElement {
             className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
           >
             {intl.formatMessage(
-              row.status === 'online' ? messages.statusOnline : messages.statusOffline,
+              row.status === 'online'
+                ? messages.statusOnline
+                : messages.statusOffline,
             )}
           </Tag>
         ),
@@ -132,15 +146,18 @@ function AccountManagementScreen(): ReactElement {
           const isOff = row.autoChat === 'off';
           let statusText: string;
           switch (row.autoChat) {
-            case 'on':
+            case 'on': {
               statusText = intl.formatMessage(messages.autoChatOn);
               break;
-            case 'off':
+            }
+            case 'off': {
               statusText = intl.formatMessage(messages.autoChatOff);
               break;
-            default:
+            }
+            default: {
               statusText = intl.formatMessage(messages.autoChatHealthy);
               break;
+            }
           }
           const textClass = isOff ? 'text-error' : 'text-success';
           const dotClass = isOff ? 'bg-error' : 'bg-success';
@@ -189,17 +206,21 @@ function AccountManagementScreen(): ReactElement {
               <span className="text-[14px] leading-[22px] text-primary">
                 {intl.formatMessage(messages.filterStatus)}
               </span>
-              <Select className="!w-[160px]" placeholder={intl.formatMessage(messages.filterPlaceholder)} />
+              <Select
+                className="!w-[160px]"
+                placeholder={intl.formatMessage(messages.filterPlaceholder)}
+              />
               <span className="text-[14px] leading-[22px] text-primary">
                 {intl.formatMessage(messages.filterPersona)}
               </span>
-              <Select className="!w-[160px]" placeholder={intl.formatMessage(messages.filterPlaceholder)} />
-              <Button theme="primary">{intl.formatMessage(messages.search)}</Button>
-              <Button
-                theme="default"
-                variant="outline"
-                icon={<RefreshIcon />}
-              >
+              <Select
+                className="!w-[160px]"
+                placeholder={intl.formatMessage(messages.filterPlaceholder)}
+              />
+              <Button theme="primary">
+                {intl.formatMessage(messages.search)}
+              </Button>
+              <Button theme="default" variant="outline" icon={<RefreshIcon />}>
                 {intl.formatMessage(messages.reset)}
               </Button>
             </>

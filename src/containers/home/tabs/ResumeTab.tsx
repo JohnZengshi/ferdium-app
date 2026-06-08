@@ -9,7 +9,11 @@ import {
   LabelList,
   ResponsiveContainer,
 } from 'recharts';
-import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 
 const messages = defineMessages({
   stageSectionTitle: {
@@ -219,7 +223,7 @@ interface ResumeTabProps {
   avatarSrc?: string;
 }
 
-interface IProps extends ResumeTabProps, WrappedComponentProps { }
+interface IProps extends ResumeTabProps, WrappedComponentProps {}
 
 class ResumeTab extends Component<IProps> {
   renderStageCard(): ReactElement {
@@ -324,8 +328,7 @@ class ResumeTab extends Component<IProps> {
 
   renderProfileCard(): ReactElement {
     const { intl, profile } = this.props;
-    const profileText =
-      profile || intl.formatMessage(messages.defaultProfile);
+    const profileText = profile || intl.formatMessage(messages.defaultProfile);
     return (
       <div className="flex flex-col min-h-[148px] rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
@@ -398,7 +401,8 @@ class ResumeTab extends Component<IProps> {
 
   renderCostSavingsCard(): ReactElement {
     const { intl, costLabel, costChartData, costSummary } = this.props;
-    const costTitle = costLabel || intl.formatMessage(messages.costSavingsTitle);
+    const costTitle =
+      costLabel || intl.formatMessage(messages.costSavingsTitle);
     const costAxisLabelText =
       costLabel || intl.formatMessage(messages.costAxisLabel);
     const defaultBarData = [
@@ -411,12 +415,12 @@ class ResumeTab extends Component<IProps> {
     const maxVal = Math.max(...barData.map(d => d.value));
     const yLabels = costChartData
       ? [
-        maxVal,
-        Math.round(maxVal * 0.7),
-        Math.round(maxVal * 0.4),
-        Math.round(maxVal * 0.1),
-        0,
-      ]
+          maxVal,
+          Math.round(maxVal * 0.7),
+          Math.round(maxVal * 0.4),
+          Math.round(maxVal * 0.1),
+          0,
+        ]
       : defaultYLabels;
     const getBarHeight = (value: number): number => {
       if (!costChartData) {
@@ -553,9 +557,7 @@ class ResumeTab extends Component<IProps> {
                 width={32}
                 tickFormatter={(v: number) => {
                   const idx = yTickValues.indexOf(v);
-                  return yLabels[idx] === undefined
-                    ? ''
-                    : String(yLabels[idx]);
+                  return yLabels[idx] === undefined ? '' : String(yLabels[idx]);
                 }}
                 tick={{ fontSize: 12, fill: '#999999' }}
                 axisLine={false}

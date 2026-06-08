@@ -1,13 +1,26 @@
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
-import { type WrappedComponentProps, defineMessages, injectIntl } from 'react-intl';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import { UserIcon, LockOnIcon } from 'tdesign-icons-react';
 import Link from '../ui/Link';
 
 const messages = defineMessages({
-  usernamePlaceholder: { id: 'welcome.usernamePlaceholder', defaultMessage: '请输入用户名' },
-  passwordPlaceholder: { id: 'welcome.passwordPlaceholder', defaultMessage: '请输入密码' },
-  rememberPassword: { id: 'welcome.rememberPassword', defaultMessage: '记住密码' },
+  usernamePlaceholder: {
+    id: 'welcome.usernamePlaceholder',
+    defaultMessage: '请输入用户名',
+  },
+  passwordPlaceholder: {
+    id: 'welcome.passwordPlaceholder',
+    defaultMessage: '请输入密码',
+  },
+  rememberPassword: {
+    id: 'welcome.rememberPassword',
+    defaultMessage: '记住密码',
+  },
   enterApp: { id: 'welcome.enterApp', defaultMessage: '进入拓客' },
 });
 

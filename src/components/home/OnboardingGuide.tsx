@@ -46,7 +46,9 @@ export default function OnboardingGuide({
     >
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-secondary">{intl.formatMessage(messages.progress)}</span>
+          <span className="text-sm text-secondary">
+            {intl.formatMessage(messages.progress)}
+          </span>
           <span className="text-sm font-medium">
             {completedCount}/{steps.length}
           </span>

@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState, type ReactElement } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactElement,
+} from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import {
   ChevronLeftIcon,
@@ -46,7 +52,9 @@ interface SidebarItem {
   badge?: string;
 }
 
-const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({ onBack }) => {
+const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
+  onBack,
+}) => {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState('resume');
   const contentRef = useRef<HTMLDivElement>(null);
@@ -75,9 +83,21 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({ onBack }) =
   }, []);
 
   const sidebarItems: SidebarItem[] = [
-    { key: 'resume', label: intl.formatMessage(messages.resume), icon: <UserIcon /> },
-    { key: 'security', label: intl.formatMessage(messages.security), icon: <LockOnIcon /> },
-    { key: 'handover', label: intl.formatMessage(messages.handover), icon: <UserSafetyIcon /> },
+    {
+      key: 'resume',
+      label: intl.formatMessage(messages.resume),
+      icon: <UserIcon />,
+    },
+    {
+      key: 'security',
+      label: intl.formatMessage(messages.security),
+      icon: <LockOnIcon />,
+    },
+    {
+      key: 'handover',
+      label: intl.formatMessage(messages.handover),
+      icon: <UserSafetyIcon />,
+    },
     {
       key: 'notifications',
       label: intl.formatMessage(messages.notifications),

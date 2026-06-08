@@ -310,7 +310,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                   {stores?.user.data && (
                     <div className="flex items-center gap-[8px]">
                       <div className="w-[32px] h-[32px] rounded-full bg-component flex items-center justify-center">
-                        <span className="text-xs text-secondary">{intl.formatMessage(messages.avatarPlaceholder)}</span>
+                        <span className="text-xs text-secondary">
+                          {intl.formatMessage(messages.avatarPlaceholder)}
+                        </span>
                       </div>
                       <span className="text-[14px] text-primary">
                         {stores.user.waAkgEmail ||
@@ -330,7 +332,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         }
                         className="ml-2 sidebar__button sidebar__button--settings"
                         data-tooltip-id="tooltip-sidebar-button"
-                        data-tooltip-content={intl.formatMessage(messages.settingsTooltip)}
+                        data-tooltip-content={intl.formatMessage(
+                          messages.settingsTooltip,
+                        )}
                       >
                         <Icon icon={mdiCog} size={1} />
                         {showUpdateDot && (

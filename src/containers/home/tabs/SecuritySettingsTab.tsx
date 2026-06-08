@@ -11,7 +11,8 @@ const messages = defineMessages({
   },
   descP1: {
     id: 'securitySettingsTab.desc.p1',
-    defaultMessage: 'Set content the AI agent cannot promise, commit to, or reply freely, e.g.',
+    defaultMessage:
+      'Set content the AI agent cannot promise, commit to, or reply freely, e.g.',
   },
   descP2: {
     id: 'securitySettingsTab.desc.p2',
@@ -113,8 +114,18 @@ class SecuritySettingsTab extends Component<
       showDeleteToast: false,
       showConfirmDialog: false,
       boundaries: [
-        { id: 1, label: intl.formatMessage(messages.boundaryOne), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
-        { id: 2, label: intl.formatMessage(messages.boundaryTwo), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
+        {
+          id: 1,
+          label: intl.formatMessage(messages.boundaryOne),
+          value: '',
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+        {
+          id: 2,
+          label: intl.formatMessage(messages.boundaryTwo),
+          value: '',
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
         {
           id: 3,
           label: intl.formatMessage(messages.boundaryThree),
@@ -317,10 +328,11 @@ class SecuritySettingsTab extends Component<
 
                 <div className="ml-[16px] flex-1">
                   <div
-                    className={`flex items-center h-[44px] rounded-[8px] bg-container transition-all duration-200 ${isFocused
-                      ? 'border-[1.5px] border-brand shadow-[0_0_0_3px_rgba(37,99,235,0.08)]'
-                      : 'border border-line'
-                      }`}
+                    className={`flex items-center h-[44px] rounded-[8px] bg-container transition-all duration-200 ${
+                      isFocused
+                        ? 'border-[1.5px] border-brand shadow-[0_0_0_3px_rgba(37,99,235,0.08)]'
+                        : 'border border-line'
+                    }`}
                   >
                     <input
                       type="text"
@@ -357,7 +369,9 @@ class SecuritySettingsTab extends Component<
             className="flex h-[48px] w-full cursor-pointer items-center justify-center gap-[8px] rounded-[8px] border-[1.5px] border-dashed border-brand bg-transparent transition-colors duration-200 hover:bg-brand-light"
           >
             <AddIcon size="18px" className="text-brand" />
-            <span className="text-[15px] font-medium text-brand">{intl.formatMessage(messages.addCondition)}</span>
+            <span className="text-[15px] font-medium text-brand">
+              {intl.formatMessage(messages.addCondition)}
+            </span>
           </button>
         </div>
 

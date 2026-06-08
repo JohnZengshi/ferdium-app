@@ -1,9 +1,4 @@
-import {
-  useCallback,
-  useState,
-  useMemo,
-  type ReactElement,
-} from 'react';
+import { useCallback, useState, useMemo, type ReactElement } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import {
   Button,
@@ -259,7 +254,9 @@ const KnowledgeScreen: React.FC = () => {
   }, []);
 
   const handleSmartImport = useCallback(async () => {
-    await MessagePlugin.success(intl.formatMessage(messages.smartImportSuccess));
+    await MessagePlugin.success(
+      intl.formatMessage(messages.smartImportSuccess),
+    );
   }, [intl]);
 
   const handleSave = useCallback(async () => {
@@ -360,7 +357,9 @@ const KnowledgeScreen: React.FC = () => {
               >
                 <div className="flex items-center gap-[8px]">
                   <AddIcon />
-                  <span>{intl.formatMessage(messages.createPersonaProfile)}</span>
+                  <span>
+                    {intl.formatMessage(messages.createPersonaProfile)}
+                  </span>
                 </div>
               </Button>
               <span className="ml-[12px] text-[12px] text-secondary">
@@ -416,7 +415,10 @@ const KnowledgeScreen: React.FC = () => {
               style={{ maxWidth: 600 }}
             >
               <div className="mb-[24px]">
-                <FormLabel icon={<UserIcon size="14px" />} text={intl.formatMessage(messages.name)} />
+                <FormLabel
+                  icon={<UserIcon size="14px" />}
+                  text={intl.formatMessage(messages.name)}
+                />
                 <Input
                   placeholder={intl.formatMessage(messages.inputPlaceholder)}
                   value={formData.name}
@@ -426,7 +428,10 @@ const KnowledgeScreen: React.FC = () => {
               </div>
 
               <div className="mb-[24px]">
-                <FormLabel icon={<EditIcon size="14px" />} text={intl.formatMessage(messages.personaRemark)} />
+                <FormLabel
+                  icon={<EditIcon size="14px" />}
+                  text={intl.formatMessage(messages.personaRemark)}
+                />
                 <Input
                   placeholder={intl.formatMessage(messages.inputPlaceholder)}
                   value={formData.remark}
@@ -437,14 +442,20 @@ const KnowledgeScreen: React.FC = () => {
 
               <div className="mb-[24px] flex gap-[16px]">
                 <div className="flex-1">
-                  <FormLabel icon={<CalendarIcon size="14px" />} text={intl.formatMessage(messages.age)} />
+                  <FormLabel
+                    icon={<CalendarIcon size="14px" />}
+                    text={intl.formatMessage(messages.age)}
+                  />
                   <DatePicker
                     placeholder={intl.formatMessage(messages.datePlaceholder)}
                     className="!h-[36px] !w-full !rounded-[2px] [&_.t-input]:!h-[36px] [&_.t-input]:!border-line [&_.t-input]:!rounded-[2px]"
                   />
                 </div>
                 <div className="flex-1">
-                  <FormLabel icon={<GenderMaleIcon size="14px" />} text={intl.formatMessage(messages.gender)} />
+                  <FormLabel
+                    icon={<GenderMaleIcon size="14px" />}
+                    text={intl.formatMessage(messages.gender)}
+                  />
                   <Select
                     placeholder={intl.formatMessage(messages.selectPlaceholder)}
                     options={genderOptions}
@@ -454,7 +465,10 @@ const KnowledgeScreen: React.FC = () => {
               </div>
 
               <div className="mb-[24px]">
-                <FormLabel icon={<HomeIcon size="14px" />} text={intl.formatMessage(messages.familyStatus)} />
+                <FormLabel
+                  icon={<HomeIcon size="14px" />}
+                  text={intl.formatMessage(messages.familyStatus)}
+                />
                 <textarea
                   placeholder={intl.formatMessage(messages.inputPlaceholder)}
                   value={formData.family}
@@ -464,7 +478,10 @@ const KnowledgeScreen: React.FC = () => {
               </div>
 
               <div className="mb-[24px]">
-                <FormLabel icon={<WorkIcon size="14px" />} text={intl.formatMessage(messages.occupation)} />
+                <FormLabel
+                  icon={<WorkIcon size="14px" />}
+                  text={intl.formatMessage(messages.occupation)}
+                />
                 <Input
                   placeholder={intl.formatMessage(messages.inputPlaceholder)}
                   value={formData.occupation}
@@ -474,11 +491,16 @@ const KnowledgeScreen: React.FC = () => {
               </div>
 
               <div className="mb-[24px]">
-                <FormLabel icon={<FolderIcon size="14px" />} text={intl.formatMessage(messages.participation)} />
+                <FormLabel
+                  icon={<FolderIcon size="14px" />}
+                  text={intl.formatMessage(messages.participation)}
+                />
                 <textarea
                   placeholder={intl.formatMessage(messages.inputPlaceholder)}
                   value={formData.participation}
-                  onChange={e => handleFormChange('participation', e.target.value)}
+                  onChange={e =>
+                    handleFormChange('participation', e.target.value)
+                  }
                   className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
                 />
               </div>
@@ -505,7 +527,9 @@ const KnowledgeScreen: React.FC = () => {
               </div>
 
               <textarea
-                placeholder={intl.formatMessage(messages.smartImportPlaceholder)}
+                placeholder={intl.formatMessage(
+                  messages.smartImportPlaceholder,
+                )}
                 value={smartImportText}
                 onChange={e => handleSmartImportTextChange(e.target.value)}
                 className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-brand p-[12px] text-[12px] leading-[1.5] text-secondary outline-none placeholder:text-secondary"

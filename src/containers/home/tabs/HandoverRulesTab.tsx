@@ -15,7 +15,8 @@ const messages = defineMessages({
   },
   descP1: {
     id: 'handoverRulesTab.desc.p1',
-    defaultMessage: 'When a message triggers your rules, the AI agent will alert a human operator, e.g.',
+    defaultMessage:
+      'When a message triggers your rules, the AI agent will alert a human operator, e.g.',
   },
   descP2: {
     id: 'handoverRulesTab.desc.p2',
@@ -35,7 +36,8 @@ const messages = defineMessages({
   },
   notificationDesc: {
     id: 'handoverRulesTab.notificationDesc',
-    defaultMessage: 'When a rule is triggered, alerts will be pushed to the bound channel for timely handling.',
+    defaultMessage:
+      'When a rule is triggered, alerts will be pushed to the bound channel for timely handling.',
   },
   whatsappBot: {
     id: 'handoverRulesTab.whatsappBot',
@@ -117,8 +119,18 @@ class HandoverRulesTab extends Component<
     this.state = {
       focusedRuleId: null,
       rules: [
-        { id: 1, label: intl.formatMessage(messages.ruleOne), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
-        { id: 2, label: intl.formatMessage(messages.ruleTwo), value: '', placeholder: intl.formatMessage(messages.inputPlaceholder) },
+        {
+          id: 1,
+          label: intl.formatMessage(messages.ruleOne),
+          value: '',
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
+        {
+          id: 2,
+          label: intl.formatMessage(messages.ruleTwo),
+          value: '',
+          placeholder: intl.formatMessage(messages.inputPlaceholder),
+        },
         {
           id: 3,
           label: intl.formatMessage(messages.ruleThree),
@@ -185,10 +197,10 @@ class HandoverRulesTab extends Component<
             type="button"
             className="flex h-[28px] w-[56px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-brand text-[13px] font-medium text-text-anti"
           >
-             {this.props.intl.formatMessage(messages.confirm)}
-            </button>
-          );
-        }
+            {this.props.intl.formatMessage(messages.confirm)}
+          </button>
+        );
+      }
       default: {
         return null;
       }
@@ -219,9 +231,7 @@ class HandoverRulesTab extends Component<
             </span>
           </div>
           <div className="ml-[32px] mt-[10px] text-[14px] font-normal leading-[24px] text-secondary">
-            <p>
-              {intl.formatMessage(messages.descP1)}
-            </p>
+            <p>{intl.formatMessage(messages.descP1)}</p>
             <p>{intl.formatMessage(messages.descP2)}</p>
             <p>{intl.formatMessage(messages.descP3)}</p>
             <p>{intl.formatMessage(messages.descP4)}</p>

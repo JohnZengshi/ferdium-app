@@ -302,7 +302,12 @@ class NotificationsTab extends Component<
     const { intl } = this.props;
     return [
       { colKey: 'row-select', type: 'multiple', width: 48 },
-      { colKey: 'id', title: intl.formatMessage(messages.serialNumber), width: 56, align: 'center' },
+      {
+        colKey: 'id',
+        title: intl.formatMessage(messages.serialNumber),
+        width: 56,
+        align: 'center',
+      },
       {
         colKey: 'time',
         title: intl.formatMessage(messages.time),
@@ -326,7 +331,9 @@ class NotificationsTab extends Component<
                 <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-success">
                   <ChatBubble1FilledIcon className="text-text-anti" />
                 </div>
-                <span className="text-[14px] text-primary">{intl.formatMessage(messages.platformWhatsapp)}</span>
+                <span className="text-[14px] text-primary">
+                  {intl.formatMessage(messages.platformWhatsapp)}
+                </span>
               </div>
             );
           }
@@ -335,12 +342,19 @@ class NotificationsTab extends Component<
               <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand">
                 <SendIcon className="text-text-anti" />
               </div>
-              <span className="text-[14px] text-primary">{intl.formatMessage(messages.platformTelegram)}</span>
+              <span className="text-[14px] text-primary">
+                {intl.formatMessage(messages.platformTelegram)}
+              </span>
             </div>
           );
         },
       },
-      { colKey: 'account', title: intl.formatMessage(messages.account), width: 144, ellipsis: true },
+      {
+        colKey: 'account',
+        title: intl.formatMessage(messages.account),
+        width: 144,
+        ellipsis: true,
+      },
       {
         colKey: 'user',
         title: intl.formatMessage(messages.conversation),
@@ -352,13 +366,23 @@ class NotificationsTab extends Component<
               <div className="flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center rounded-full bg-component text-[11px] font-medium text-placeholder">
                 {r.user[0]}
               </div>
-              <span className="truncate text-[14px] text-primary">{r.user}</span>
+              <span className="truncate text-[14px] text-primary">
+                {r.user}
+              </span>
             </div>
           );
         },
       },
-      { colKey: 'triggerContent', title: intl.formatMessage(messages.triggerContent), ellipsis: true },
-      { colKey: 'rule', title: intl.formatMessage(messages.rule), ellipsis: true },
+      {
+        colKey: 'triggerContent',
+        title: intl.formatMessage(messages.triggerContent),
+        ellipsis: true,
+      },
+      {
+        colKey: 'rule',
+        title: intl.formatMessage(messages.rule),
+        ellipsis: true,
+      },
       {
         colKey: 'status',
         title: intl.formatMessage(messages.status),
@@ -374,7 +398,9 @@ class NotificationsTab extends Component<
               <span
                 className={`text-[14px] font-normal leading-[22px] ${isRead ? 'text-success' : 'text-error'}`}
               >
-                {isRead ? intl.formatMessage(messages.statusRead) : intl.formatMessage(messages.statusUnread)}
+                {isRead
+                  ? intl.formatMessage(messages.statusRead)
+                  : intl.formatMessage(messages.statusUnread)}
               </span>
             </span>
           );
@@ -429,7 +455,10 @@ class NotificationsTab extends Component<
             </span>
             <DateRangePicker
               mode="date"
-              placeholder={[intl.formatMessage(messages.startDate), intl.formatMessage(messages.endDate)]}
+              placeholder={[
+                intl.formatMessage(messages.startDate),
+                intl.formatMessage(messages.endDate),
+              ]}
               style={{ width: 260, height: 32 }}
               className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
             />
@@ -448,7 +477,9 @@ class NotificationsTab extends Component<
           </div>
 
           <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-secondary">{intl.formatMessage(messages.filterStatus)}</span>
+            <span className="text-[14px] font-normal text-secondary">
+              {intl.formatMessage(messages.filterStatus)}
+            </span>
             <Select
               style={{ width: 160 }}
               className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
@@ -491,7 +522,9 @@ class NotificationsTab extends Component<
 
           {someSelected && (
             <span className="text-[14px] font-normal text-placeholder">
-              {intl.formatMessage(messages.selectedItems, { count: selectedRowIds.length })}
+              {intl.formatMessage(messages.selectedItems, {
+                count: selectedRowIds.length,
+              })}
             </span>
           )}
         </div>

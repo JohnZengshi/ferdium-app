@@ -159,7 +159,9 @@ class DynamicLogin extends Component<DynamicLoginProps> {
           } else {
             debug(`Authentication failed: ${result.error}`);
             runInAction(() => {
-              this.authError = result.error || this.props.intl.formatMessage(messages.userFriendlyError);
+              this.authError =
+                result.error ||
+                this.props.intl.formatMessage(messages.userFriendlyError);
             });
           }
         } catch (error) {
@@ -167,7 +169,9 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             error instanceof Error ? error.message : String(error);
           debug(`Authentication error caught: ${message}`);
           runInAction(() => {
-            this.authError = message || this.props.intl.formatMessage(messages.userFriendlyError);
+            this.authError =
+              message ||
+              this.props.intl.formatMessage(messages.userFriendlyError);
           });
         } finally {
           runInAction(() => {

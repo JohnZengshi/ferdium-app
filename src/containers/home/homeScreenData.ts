@@ -55,7 +55,8 @@ export const messages = defineMessages({
   },
   digitalEmployeesDesc: {
     id: 'homeScreen.digitalEmployeesDesc',
-    defaultMessage: 'Let digital employees be your best sales partners, handling inquiries and automating conversions 24/7.',
+    defaultMessage:
+      'Let digital employees be your best sales partners, handling inquiries and automating conversions 24/7.',
   },
   autoReply: { id: 'homeScreen.autoReply', defaultMessage: 'Auto Reply' },
 
@@ -88,7 +89,8 @@ export const messages = defineMessages({
   },
   step2Desc: {
     id: 'homeScreen.step2Desc',
-    defaultMessage: 'Click Profile Management on the left to create persona data',
+    defaultMessage:
+      'Click Profile Management on the left to create persona data',
   },
   step3Title: {
     id: 'homeScreen.step3Title',
@@ -108,7 +110,8 @@ export const messages = defineMessages({
   },
   setupInfoText: {
     id: 'homeScreen.setupInfoText',
-    defaultMessage: 'After setup, configure auto-reply for the social accounts and conversation tags. Finally, toggle the master switch on the homepage to activate your digital employees!',
+    defaultMessage:
+      'After setup, configure auto-reply for the social accounts and conversation tags. Finally, toggle the master switch on the homepage to activate your digital employees!',
   },
 
   // ─── Employee MOCK roles ───
@@ -239,7 +242,8 @@ export const messages = defineMessages({
   // ─── Employee Mike ───
   employeeMikeProfile: {
     id: 'homeScreen.employee.mike.profile',
-    defaultMessage: 'Mike is responsible for daily maintenance of the digital employee team, continuously monitoring service quality, and automatically alerting when customer satisfaction drops or churn risk exists.',
+    defaultMessage:
+      'Mike is responsible for daily maintenance of the digital employee team, continuously monitoring service quality, and automatically alerting when customer satisfaction drops or churn risk exists.',
   },
   employeeMikeCostLabel: {
     id: 'homeScreen.employee.mike.costLabel',
@@ -311,11 +315,13 @@ export const messages = defineMessages({
   },
   employeeMikeReview2Text: {
     id: 'homeScreen.employee.mike.review2Text',
-    defaultMessage: 'Satisfaction score improved from 78 to 92, complaint response time reduced by',
+    defaultMessage:
+      'Satisfaction score improved from 78 to 92, complaint response time reduced by',
   },
   employeeMikeReview3Text: {
     id: 'homeScreen.employee.mike.review3Text',
-    defaultMessage: 'Completed over 800K customer visits, retention rate increased by',
+    defaultMessage:
+      'Completed over 800K customer visits, retention rate increased by',
   },
   employeeMikeComp1Title: {
     id: 'homeScreen.employee.mike.comp1Title',
@@ -323,7 +329,8 @@ export const messages = defineMessages({
   },
   employeeMikeComp1Desc: {
     id: 'homeScreen.employee.mike.comp1Desc',
-    defaultMessage: 'Automatically plan visit schedules and proactively reach out to maintain relationships',
+    defaultMessage:
+      'Automatically plan visit schedules and proactively reach out to maintain relationships',
   },
   employeeMikeComp2Title: {
     id: 'homeScreen.employee.mike.comp2Title',
@@ -361,7 +368,8 @@ export const messages = defineMessages({
   // ─── Employee Alice ───
   employeeAliceProfile: {
     id: 'homeScreen.employee.alice.profile',
-    defaultMessage: 'Alice has precise community reach capabilities, intelligently matching personalized marketing content based on customer profiles to achieve efficient conversions.',
+    defaultMessage:
+      'Alice has precise community reach capabilities, intelligently matching personalized marketing content based on customer profiles to achieve efficient conversions.',
   },
   employeeAliceCostLabel: {
     id: 'homeScreen.employee.alice.costLabel',
@@ -441,7 +449,8 @@ export const messages = defineMessages({
   },
   employeeAliceReview3Text: {
     id: 'homeScreen.employee.alice.review3Text',
-    defaultMessage: 'Completed over 12K viral copies, content production efficiency improved',
+    defaultMessage:
+      'Completed over 12K viral copies, content production efficiency improved',
   },
   employeeAliceComp1Title: {
     id: 'homeScreen.employee.alice.comp1Title',
@@ -449,7 +458,8 @@ export const messages = defineMessages({
   },
   employeeAliceComp1Desc: {
     id: 'homeScreen.employee.alice.comp1Desc',
-    defaultMessage: 'Generate high-conversion marketing copy based on AIDA model',
+    defaultMessage:
+      'Generate high-conversion marketing copy based on AIDA model',
   },
   employeeAliceComp2Title: {
     id: 'homeScreen.employee.alice.comp2Title',
@@ -465,7 +475,8 @@ export const messages = defineMessages({
   },
   employeeAliceComp3Desc: {
     id: 'homeScreen.employee.alice.comp3Desc',
-    defaultMessage: 'Multi-dimensional analysis of campaign ROI and user engagement',
+    defaultMessage:
+      'Multi-dimensional analysis of campaign ROI and user engagement',
   },
   employeeAliceComp4Title: {
     id: 'homeScreen.employee.alice.comp4Title',
@@ -473,7 +484,8 @@ export const messages = defineMessages({
   },
   employeeAliceComp4Desc: {
     id: 'homeScreen.employee.alice.comp4Desc',
-    defaultMessage: 'Coordinate multi-platform content publishing and scheduling',
+    defaultMessage:
+      'Coordinate multi-platform content publishing and scheduling',
   },
   employeeAliceComp5Title: {
     id: 'homeScreen.employee.alice.comp5Title',
@@ -487,7 +499,8 @@ export const messages = defineMessages({
   // ─── Employee Lily ───
   employeeLilyProfile: {
     id: 'homeScreen.employee.lily.profile',
-    defaultMessage: 'Lily specializes in after-sales support, quickly responding to customer issues, auto-matching knowledge base solutions, and guiding customers through complex business processes.',
+    defaultMessage:
+      'Lily specializes in after-sales support, quickly responding to customer issues, auto-matching knowledge base solutions, and guiding customers through complex business processes.',
   },
   employeeLilyCostLabel: {
     id: 'homeScreen.employee.lily.costLabel',
@@ -611,13 +624,15 @@ export const messages = defineMessages({
   },
   employeeLilyComp5Desc: {
     id: 'homeScreen.employee.lily.comp5Desc',
-    defaultMessage: 'Auto-push repurchase reminders and offers at conversation end',
+    defaultMessage:
+      'Auto-push repurchase reminders and offers at conversation end',
   },
 
   // ─── Employee Allen ───
   employeeAllenProfile: {
     id: 'homeScreen.employee.allen.profile',
-    defaultMessage: 'Allen focuses on lead collection and cleaning, scraping information from multiple channels, auto-identifying key contacts, and pre-screening to improve sales team efficiency.',
+    defaultMessage:
+      'Allen focuses on lead collection and cleaning, scraping information from multiple channels, auto-identifying key contacts, and pre-screening to improve sales team efficiency.',
   },
   employeeAllenCostLabel: {
     id: 'homeScreen.employee.allen.costLabel',
@@ -747,7 +762,8 @@ export const messages = defineMessages({
   // ─── Employee Amy ───
   employeeAmyProfile: {
     id: 'homeScreen.employee.amy.profile',
-    defaultMessage: 'Amy excels at business development, auto-generating personalized business letters, intelligently matching potential partners, efficiently scheduling meetings and managing calendars.',
+    defaultMessage:
+      'Amy excels at business development, auto-generating personalized business letters, intelligently matching potential partners, efficiently scheduling meetings and managing calendars.',
   },
   employeeAmyCostLabel: {
     id: 'homeScreen.employee.amy.costLabel',
@@ -887,7 +903,11 @@ export const MOCK_EMPLOYEES = [
       'homeScreen.capMultilingual',
       'homeScreen.capSmartDemand',
     ],
-    capabilityDefaults: ['24/7 Online', 'Multilingual Communication', 'Smart Demand Mining'],
+    capabilityDefaults: [
+      '24/7 Online',
+      'Multilingual Communication',
+      'Smart Demand Mining',
+    ],
     ctaKey: 'homeScreen.setStrategy',
     ctaDefault: 'Set Strategy',
     hasBadge: true,
@@ -903,7 +923,11 @@ export const MOCK_EMPLOYEES = [
       'homeScreen.capSatisfactionSurvey',
       'homeScreen.capChurnWarning',
     ],
-    capabilityDefaults: ['Regular Follow-up', 'Satisfaction Survey', 'Churn Warning'],
+    capabilityDefaults: [
+      'Regular Follow-up',
+      'Satisfaction Survey',
+      'Churn Warning',
+    ],
     ctaKey: 'homeScreen.resume',
     ctaDefault: 'Resume',
   },
@@ -918,7 +942,11 @@ export const MOCK_EMPLOYEES = [
       'homeScreen.capPrecisionCommunity',
       'homeScreen.capActivityAnalysis',
     ],
-    capabilityDefaults: ['Viral Copywriting', 'Precision Community Targeting', 'Campaign Analysis'],
+    capabilityDefaults: [
+      'Viral Copywriting',
+      'Precision Community Targeting',
+      'Campaign Analysis',
+    ],
     ctaKey: 'homeScreen.resume',
     ctaDefault: 'Resume',
   },
@@ -933,7 +961,11 @@ export const MOCK_EMPLOYEES = [
       'homeScreen.capKnowledgeBase',
       'homeScreen.capComplexProcess',
     ],
-    capabilityDefaults: ['Quick Response', 'Knowledge Base Auto-Matching', 'Complex Process Guidance'],
+    capabilityDefaults: [
+      'Quick Response',
+      'Knowledge Base Auto-Matching',
+      'Complex Process Guidance',
+    ],
     ctaKey: 'homeScreen.resume',
     ctaDefault: 'Resume',
   },
@@ -948,7 +980,11 @@ export const MOCK_EMPLOYEES = [
       'homeScreen.capKeyContact',
       'homeScreen.capLeadScreening',
     ],
-    capabilityDefaults: ['Web-wide Data Scraping', 'Key Contact Identification', 'Lead Screening'],
+    capabilityDefaults: [
+      'Web-wide Data Scraping',
+      'Key Contact Identification',
+      'Lead Screening',
+    ],
     ctaKey: 'homeScreen.resume',
     ctaDefault: 'Resume',
   },
@@ -963,263 +999,688 @@ export const MOCK_EMPLOYEES = [
       'homeScreen.capBusinessLetter',
       'homeScreen.capMeetingScheduling',
     ],
-    capabilityDefaults: ['Partner Mining', 'Business Letter Writing', 'Meeting Scheduling'],
+    capabilityDefaults: [
+      'Partner Mining',
+      'Business Letter Writing',
+      'Meeting Scheduling',
+    ],
     ctaKey: 'homeScreen.resume',
     ctaDefault: 'Resume',
   },
 ];
 
 export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
-    return {
-      monica: {
-        name: 'Monica',
-        avatarSrc: './assets/images/monica.png',
-        employeeRole: intl.formatMessage(messages.roleSeniorSalesExpert),
-        stageTags: [
-          intl.formatMessage({ id: 'resumeTab.stageIdentityQuestioning', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageProductObjection', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageRiskConcern', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageDigitalReply', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageComplaintRefund', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageHighIntentConversion', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageBusinessStartup', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageFastExpansion', defaultMessage: '' }),
-          intl.formatMessage({ id: 'resumeTab.stageEcosystemIntegration', defaultMessage: '' }),
-        ],
-        profile: intl.formatMessage({ id: 'resumeTab.defaultProfile', defaultMessage: '' }),
-        reviews: [
-          { text: intl.formatMessage({ id: 'resumeTab.reviewConversionRate', defaultMessage: '' }), highlight: '12%', suffix: intl.formatMessage({ id: 'resumeTab.reviewConversionRateSuffix', defaultMessage: '' }) },
-          { text: intl.formatMessage({ id: 'resumeTab.reviewSatisfaction', defaultMessage: '' }), highlight: '12x' },
-          { text: intl.formatMessage({ id: 'resumeTab.reviewConsultationVolume', defaultMessage: '' }), highlight: '41%' },
-        ],
-        costLabel: intl.formatMessage({ id: 'resumeTab.costAxisLabel', defaultMessage: '' }),
-        costChartData: [
-          { label: intl.formatMessage({ id: 'resumeTab.enterpriseSME', defaultMessage: '' }), value: 80 },
-          { label: intl.formatMessage({ id: 'resumeTab.enterpriseLarge', defaultMessage: '' }), value: 750 },
-          { label: intl.formatMessage({ id: 'resumeTab.enterpriseExtraLarge', defaultMessage: '' }), value: 1500 },
-        ],
-        costSummary: [
-          { label: intl.formatMessage({ id: 'resumeTab.costTotalSavings', defaultMessage: '' }), value: '1.26B' },
-          { label: intl.formatMessage({ id: 'resumeTab.costDisputeDuration', defaultMessage: '' }), value: '67%' },
-        ],
-        efficiencyData: [
-          { label: intl.formatMessage({ id: 'resumeTab.effCustomerWorkHour', defaultMessage: '' }), value: 82 },
-          { label: intl.formatMessage({ id: 'resumeTab.effOperationEfficiency', defaultMessage: '' }), value: 72 },
-          { label: intl.formatMessage({ id: 'resumeTab.effProcessAutomation', defaultMessage: '' }), value: 95 },
-          { label: intl.formatMessage({ id: 'resumeTab.effHighRiskInterception', defaultMessage: '' }), value: 99 },
-        ],
-        coreCompetencies: [
-          { title: intl.formatMessage({ id: 'resumeTab.compRiskIdentification', defaultMessage: '' }), description: intl.formatMessage({ id: 'resumeTab.compRiskIdentificationDesc', defaultMessage: '' }), iconBg: '#FFF1F0', iconText: '⚠' },
-          { title: intl.formatMessage({ id: 'resumeTab.compBoundaryControl', defaultMessage: '' }), description: intl.formatMessage({ id: 'resumeTab.compBoundaryControlDesc', defaultMessage: '' }), iconBg: '#E8F5FF', iconText: '◈' },
-          { title: intl.formatMessage({ id: 'resumeTab.compHumanHandover', defaultMessage: '' }), description: intl.formatMessage({ id: 'resumeTab.compHumanHandoverDesc', defaultMessage: '' }), iconBg: '#FFF7E6', iconText: '◎' },
-          { title: intl.formatMessage({ id: 'resumeTab.compHighIntentAlert', defaultMessage: '' }), description: intl.formatMessage({ id: 'resumeTab.compHighIntentAlertDesc', defaultMessage: '' }), iconBg: '#F0FFF0', iconText: '◆' },
-          { title: intl.formatMessage({ id: 'resumeTab.compSessionPause', defaultMessage: '' }), description: intl.formatMessage({ id: 'resumeTab.compSessionPauseDesc', defaultMessage: '' }), iconBg: '#F3F0FF', iconText: '■' },
-        ],
-      },
-      mike: {
-        name: 'Mike',
-        avatarSrc: './assets/images/mike.png',
-        employeeRole: intl.formatMessage(messages.roleCustomerMaintenance),
-        stageTags: [
-          intl.formatMessage(messages.employeeMikeStage1),
-          intl.formatMessage(messages.employeeMikeStage2),
-          intl.formatMessage(messages.employeeMikeStage3),
-          intl.formatMessage(messages.employeeMikeStage4),
-          intl.formatMessage(messages.employeeMikeStage5),
-        ],
-        profile: intl.formatMessage(messages.employeeMikeProfile),
-        reviews: [
-          { text: intl.formatMessage(messages.employeeMikeReview1Text), highlight: '23%', suffix: intl.formatMessage(messages.employeeMikeReview1Suffix) },
-          { text: intl.formatMessage(messages.employeeMikeReview2Text), highlight: '65%' },
-          { text: intl.formatMessage(messages.employeeMikeReview3Text), highlight: '18%' },
-        ],
-        costLabel: intl.formatMessage(messages.employeeMikeCostLabel),
-        costChartData: [
-          { label: intl.formatMessage(messages.employeeMikeCostChart1), value: 30 },
-          { label: intl.formatMessage(messages.employeeMikeCostChart2), value: 200 },
-          { label: intl.formatMessage(messages.employeeMikeCostChart3), value: 800 },
-        ],
-        costSummary: [
-          { label: intl.formatMessage(messages.employeeMikeCostSummary1), value: '830M' },
-          { label: intl.formatMessage(messages.employeeMikeCostSummary2), value: '42%' },
-        ],
-        efficiencyData: [
-          { label: intl.formatMessage(messages.employeeMikeEff1), value: 94 },
-          { label: intl.formatMessage(messages.employeeMikeEff2), value: 88 },
-          { label: intl.formatMessage(messages.employeeMikeEff3), value: 76 },
-          { label: intl.formatMessage(messages.employeeMikeEff4), value: 91 },
-        ],
-        coreCompetencies: [
-          { title: intl.formatMessage(messages.employeeMikeComp1Title), description: intl.formatMessage(messages.employeeMikeComp1Desc), iconBg: '#FFF1F0', iconText: '🔔' },
-          { title: intl.formatMessage(messages.employeeMikeComp2Title), description: intl.formatMessage(messages.employeeMikeComp2Desc), iconBg: '#E8F5FF', iconText: '📊' },
-          { title: intl.formatMessage(messages.employeeMikeComp3Title), description: intl.formatMessage(messages.employeeMikeComp3Desc), iconBg: '#FFF7E6', iconText: '⚠' },
-          { title: intl.formatMessage(messages.employeeMikeComp4Title), description: intl.formatMessage(messages.employeeMikeComp4Desc), iconBg: '#F0FFF0', iconText: '📈' },
-          { title: intl.formatMessage(messages.employeeMikeComp5Title), description: intl.formatMessage(messages.employeeMikeComp5Desc), iconBg: '#F3F0FF', iconText: '💌' },
-        ],
-      },
-      alice: {
-        name: 'Alice',
-        avatarSrc: './assets/images/alice.png',
-        employeeRole: intl.formatMessage(messages.roleMarketingAmbassador),
-        stageTags: [
-          intl.formatMessage(messages.employeeAliceStage1),
-          intl.formatMessage(messages.employeeAliceStage2),
-          intl.formatMessage(messages.employeeAliceStage3),
-          intl.formatMessage(messages.employeeAliceStage4),
-          intl.formatMessage(messages.employeeAliceStage5),
-        ],
-        profile: intl.formatMessage(messages.employeeAliceProfile),
-        reviews: [
-          { text: intl.formatMessage(messages.employeeAliceReview1Text), highlight: '156%', suffix: intl.formatMessage(messages.employeeAliceReview1Suffix) },
-          { text: intl.formatMessage(messages.employeeAliceReview2Text), highlight: '89%', suffix: intl.formatMessage(messages.employeeAliceReview2Suffix) },
-          { text: intl.formatMessage(messages.employeeAliceReview3Text), highlight: '12x' },
-        ],
-        costLabel: intl.formatMessage(messages.employeeAliceCostLabel),
-        costChartData: [
-          { label: intl.formatMessage(messages.employeeAliceCostChart1), value: 10 },
-          { label: intl.formatMessage(messages.employeeAliceCostChart2), value: 80 },
-          { label: intl.formatMessage(messages.employeeAliceCostChart3), value: 300 },
-        ],
-        costSummary: [
-          { label: intl.formatMessage(messages.employeeAliceCostSummary1), value: '8.5x' },
-          { label: intl.formatMessage(messages.employeeAliceCostSummary2), value: '57%' },
-        ],
-        efficiencyData: [
-          { label: intl.formatMessage(messages.employeeAliceEff1), value: 96 },
-          { label: intl.formatMessage(messages.employeeAliceEff2), value: 85 },
-          { label: intl.formatMessage(messages.employeeAliceEff3), value: 78 },
-          { label: intl.formatMessage(messages.employeeAliceEff4), value: 92 },
-        ],
-        coreCompetencies: [
-          { title: intl.formatMessage(messages.employeeAliceComp1Title), description: intl.formatMessage(messages.employeeAliceComp1Desc), iconBg: '#FFF1F0', iconText: '✍' },
-          { title: intl.formatMessage(messages.employeeAliceComp2Title), description: intl.formatMessage(messages.employeeAliceComp2Desc), iconBg: '#E8F5FF', iconText: '🎯' },
-          { title: intl.formatMessage(messages.employeeAliceComp3Title), description: intl.formatMessage(messages.employeeAliceComp3Desc), iconBg: '#FFF7E6', iconText: '📊' },
-          { title: intl.formatMessage(messages.employeeAliceComp4Title), description: intl.formatMessage(messages.employeeAliceComp4Desc), iconBg: '#F0FFF0', iconText: '📋' },
-          { title: intl.formatMessage(messages.employeeAliceComp5Title), description: intl.formatMessage(messages.employeeAliceComp5Desc), iconBg: '#F3F0FF', iconText: '👤' },
-        ],
-      },
-      lily: {
-        name: 'Lily',
-        avatarSrc: './assets/images/lily.png',
-        employeeRole: intl.formatMessage(messages.roleAfterSalesExpert),
-        stageTags: [
-          intl.formatMessage(messages.employeeLilyStage1),
-          intl.formatMessage(messages.employeeLilyStage2),
-          intl.formatMessage(messages.employeeLilyStage3),
-          intl.formatMessage(messages.employeeLilyStage4),
-          intl.formatMessage(messages.employeeLilyStage5),
-        ],
-        profile: intl.formatMessage(messages.employeeLilyProfile),
-        reviews: [
-          { text: intl.formatMessage(messages.employeeLilyReview1Text), highlight: '45秒', suffix: intl.formatMessage(messages.employeeLilyReview1Suffix) },
-          { text: intl.formatMessage(messages.employeeLilyReview2Text), highlight: '78%', suffix: intl.formatMessage(messages.employeeLilyReview2Suffix) },
-          { text: intl.formatMessage(messages.employeeLilyReview3Text), highlight: '94%', suffix: intl.formatMessage(messages.employeeLilyReview3Suffix) },
-        ],
-        costLabel: intl.formatMessage(messages.employeeLilyCostLabel),
-        costChartData: [
-          { label: intl.formatMessage(messages.employeeLilyCostChart1), value: 20 },
-          { label: intl.formatMessage(messages.employeeLilyCostChart2), value: 120 },
-          { label: intl.formatMessage(messages.employeeLilyCostChart3), value: 500 },
-        ],
-        costSummary: [
-          { label: intl.formatMessage(messages.employeeLilyCostSummary1), value: '520M' },
-          { label: intl.formatMessage(messages.employeeLilyCostSummary2), value: '73%' },
-        ],
-        efficiencyData: [
-          { label: intl.formatMessage(messages.employeeLilyEff1), value: 97 },
-          { label: intl.formatMessage(messages.employeeLilyEff2), value: 94 },
-          { label: intl.formatMessage(messages.employeeLilyEff3), value: 82 },
-          { label: intl.formatMessage(messages.employeeLilyEff4), value: 90 },
-        ],
-        coreCompetencies: [
-          { title: intl.formatMessage(messages.employeeLilyComp1Title), description: intl.formatMessage(messages.employeeLilyComp1Desc), iconBg: '#FFF1F0', iconText: '⚡' },
-          { title: intl.formatMessage(messages.employeeLilyComp2Title), description: intl.formatMessage(messages.employeeLilyComp2Desc), iconBg: '#E8F5FF', iconText: '📚' },
-          { title: intl.formatMessage(messages.employeeLilyComp3Title), description: intl.formatMessage(messages.employeeLilyComp3Desc), iconBg: '#FFF7E6', iconText: '🧭' },
-          { title: intl.formatMessage(messages.employeeLilyComp4Title), description: intl.formatMessage(messages.employeeLilyComp4Desc), iconBg: '#F0FFF0', iconText: '💰' },
-          { title: intl.formatMessage(messages.employeeLilyComp5Title), description: intl.formatMessage(messages.employeeLilyComp5Desc), iconBg: '#F3F0FF', iconText: '🔄' },
-        ],
-      },
-      allen: {
-        name: 'Allen',
-        avatarSrc: './assets/images/allen.png',
-        employeeRole: intl.formatMessage(messages.roleLeadAssistant),
-        stageTags: [
-          intl.formatMessage(messages.employeeAllenStage1),
-          intl.formatMessage(messages.employeeAllenStage2),
-          intl.formatMessage(messages.employeeAllenStage3),
-          intl.formatMessage(messages.employeeAllenStage4),
-          intl.formatMessage(messages.employeeAllenStage5),
-        ],
-        profile: intl.formatMessage(messages.employeeAllenProfile),
-        reviews: [
-          { text: intl.formatMessage(messages.employeeAllenReview1Text), highlight: '340%', suffix: intl.formatMessage(messages.employeeAllenReview1Suffix) },
-          { text: intl.formatMessage(messages.employeeAllenReview2Text), highlight: '87%', suffix: intl.formatMessage(messages.employeeAllenReview2Suffix) },
-          { text: intl.formatMessage(messages.employeeAllenReview3Text), highlight: '2.8x', suffix: intl.formatMessage(messages.employeeAllenReview3Suffix) },
-        ],
-        costLabel: intl.formatMessage(messages.employeeAllenCostLabel),
-        costChartData: [
-          { label: intl.formatMessage(messages.employeeAllenCostChart1), value: 5 },
-          { label: intl.formatMessage(messages.employeeAllenCostChart2), value: 60 },
-          { label: intl.formatMessage(messages.employeeAllenCostChart3), value: 400 },
-        ],
-        costSummary: [
-          { label: intl.formatMessage(messages.employeeAllenCostSummary1), value: '64%' },
-          { label: intl.formatMessage(messages.employeeAllenCostSummary2), value: '35%' },
-        ],
-        efficiencyData: [
-          { label: intl.formatMessage(messages.employeeAllenEff1), value: 93 },
-          { label: intl.formatMessage(messages.employeeAllenEff2), value: 86 },
-          { label: intl.formatMessage(messages.employeeAllenEff3), value: 91 },
-          { label: intl.formatMessage(messages.employeeAllenEff4), value: 78 },
-        ],
-        coreCompetencies: [
-          { title: intl.formatMessage(messages.employeeAllenComp1Title), description: intl.formatMessage(messages.employeeAllenComp1Desc), iconBg: '#FFF1F0', iconText: '🌐' },
-          { title: intl.formatMessage(messages.employeeAllenComp2Title), description: intl.formatMessage(messages.employeeAllenComp2Desc), iconBg: '#E8F5FF', iconText: '🔍' },
-          { title: intl.formatMessage(messages.employeeAllenComp3Title), description: intl.formatMessage(messages.employeeAllenComp3Desc), iconBg: '#FFF7E6', iconText: '⚖' },
-          { title: intl.formatMessage(messages.employeeAllenComp4Title), description: intl.formatMessage(messages.employeeAllenComp4Desc), iconBg: '#F0FFF0', iconText: '👤' },
-          { title: intl.formatMessage(messages.employeeAllenComp5Title), description: intl.formatMessage(messages.employeeAllenComp5Desc), iconBg: '#F3F0FF', iconText: '📨' },
-        ],
-      },
-      amy: {
-        name: 'Amy',
-        avatarSrc: './assets/images/amy.png',
-        employeeRole: intl.formatMessage(messages.roleBusinessDevElite),
-        stageTags: [
-          intl.formatMessage(messages.employeeAmyStage1),
-          intl.formatMessage(messages.employeeAmyStage2),
-          intl.formatMessage(messages.employeeAmyStage3),
-          intl.formatMessage(messages.employeeAmyStage4),
-          intl.formatMessage(messages.employeeAmyStage5),
-        ],
-        profile: intl.formatMessage(messages.employeeAmyProfile),
-        reviews: [
-          { text: intl.formatMessage(messages.employeeAmyReview1Text), highlight: '215%', suffix: intl.formatMessage(messages.employeeAmyReview1Suffix) },
-          { text: intl.formatMessage(messages.employeeAmyReview2Text), highlight: '82%', suffix: intl.formatMessage(messages.employeeAmyReview2Suffix) },
-          { text: intl.formatMessage(messages.employeeAmyReview3Text), highlight: '10x', suffix: intl.formatMessage(messages.employeeAmyReview3Suffix) },
-        ],
-        costLabel: intl.formatMessage(messages.employeeAmyCostLabel),
-        costChartData: [
-          { label: intl.formatMessage(messages.employeeAmyCostChart1), value: 15 },
-          { label: intl.formatMessage(messages.employeeAmyCostChart2), value: 100 },
-          { label: intl.formatMessage(messages.employeeAmyCostChart3), value: 600 },
-        ],
-        costSummary: [
-          { label: intl.formatMessage(messages.employeeAmyCostSummary1), value: '52%' },
-          { label: intl.formatMessage(messages.employeeAmyCostSummary2), value: '48%' },
-        ],
-        efficiencyData: [
-          { label: intl.formatMessage(messages.employeeAmyEff1), value: 88 },
-          { label: intl.formatMessage(messages.employeeAmyEff2), value: 95 },
-          { label: intl.formatMessage(messages.employeeAmyEff3), value: 83 },
-          { label: intl.formatMessage(messages.employeeAmyEff4), value: 76 },
-        ],
-        coreCompetencies: [
-          { title: intl.formatMessage(messages.employeeAmyComp1Title), description: intl.formatMessage(messages.employeeAmyComp1Desc), iconBg: '#FFF1F0', iconText: '🤝' },
-          { title: intl.formatMessage(messages.employeeAmyComp2Title), description: intl.formatMessage(messages.employeeAmyComp2Desc), iconBg: '#E8F5FF', iconText: '✉' },
-          { title: intl.formatMessage(messages.employeeAmyComp3Title), description: intl.formatMessage(messages.employeeAmyComp3Desc), iconBg: '#FFF7E6', iconText: '📅' },
-          { title: intl.formatMessage(messages.employeeAmyComp4Title), description: intl.formatMessage(messages.employeeAmyComp4Desc), iconBg: '#F0FFF0', iconText: '📄' },
-          { title: intl.formatMessage(messages.employeeAmyComp5Title), description: intl.formatMessage(messages.employeeAmyComp5Desc), iconBg: '#F3F0FF', iconText: '🔗' },
-        ],
-      },
-    };
+  return {
+    monica: {
+      name: 'Monica',
+      avatarSrc: './assets/images/monica.png',
+      employeeRole: intl.formatMessage(messages.roleSeniorSalesExpert),
+      stageTags: [
+        intl.formatMessage({
+          id: 'resumeTab.stageIdentityQuestioning',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageProductObjection',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageRiskConcern',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageDigitalReply',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageComplaintRefund',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageHighIntentConversion',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageBusinessStartup',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageFastExpansion',
+          defaultMessage: '',
+        }),
+        intl.formatMessage({
+          id: 'resumeTab.stageEcosystemIntegration',
+          defaultMessage: '',
+        }),
+      ],
+      profile: intl.formatMessage({
+        id: 'resumeTab.defaultProfile',
+        defaultMessage: '',
+      }),
+      reviews: [
+        {
+          text: intl.formatMessage({
+            id: 'resumeTab.reviewConversionRate',
+            defaultMessage: '',
+          }),
+          highlight: '12%',
+          suffix: intl.formatMessage({
+            id: 'resumeTab.reviewConversionRateSuffix',
+            defaultMessage: '',
+          }),
+        },
+        {
+          text: intl.formatMessage({
+            id: 'resumeTab.reviewSatisfaction',
+            defaultMessage: '',
+          }),
+          highlight: '12x',
+        },
+        {
+          text: intl.formatMessage({
+            id: 'resumeTab.reviewConsultationVolume',
+            defaultMessage: '',
+          }),
+          highlight: '41%',
+        },
+      ],
+      costLabel: intl.formatMessage({
+        id: 'resumeTab.costAxisLabel',
+        defaultMessage: '',
+      }),
+      costChartData: [
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.enterpriseSME',
+            defaultMessage: '',
+          }),
+          value: 80,
+        },
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.enterpriseLarge',
+            defaultMessage: '',
+          }),
+          value: 750,
+        },
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.enterpriseExtraLarge',
+            defaultMessage: '',
+          }),
+          value: 1500,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.costTotalSavings',
+            defaultMessage: '',
+          }),
+          value: '1.26B',
+        },
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.costDisputeDuration',
+            defaultMessage: '',
+          }),
+          value: '67%',
+        },
+      ],
+      efficiencyData: [
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.effCustomerWorkHour',
+            defaultMessage: '',
+          }),
+          value: 82,
+        },
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.effOperationEfficiency',
+            defaultMessage: '',
+          }),
+          value: 72,
+        },
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.effProcessAutomation',
+            defaultMessage: '',
+          }),
+          value: 95,
+        },
+        {
+          label: intl.formatMessage({
+            id: 'resumeTab.effHighRiskInterception',
+            defaultMessage: '',
+          }),
+          value: 99,
+        },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage({
+            id: 'resumeTab.compRiskIdentification',
+            defaultMessage: '',
+          }),
+          description: intl.formatMessage({
+            id: 'resumeTab.compRiskIdentificationDesc',
+            defaultMessage: '',
+          }),
+          iconBg: '#FFF1F0',
+          iconText: '⚠',
+        },
+        {
+          title: intl.formatMessage({
+            id: 'resumeTab.compBoundaryControl',
+            defaultMessage: '',
+          }),
+          description: intl.formatMessage({
+            id: 'resumeTab.compBoundaryControlDesc',
+            defaultMessage: '',
+          }),
+          iconBg: '#E8F5FF',
+          iconText: '◈',
+        },
+        {
+          title: intl.formatMessage({
+            id: 'resumeTab.compHumanHandover',
+            defaultMessage: '',
+          }),
+          description: intl.formatMessage({
+            id: 'resumeTab.compHumanHandoverDesc',
+            defaultMessage: '',
+          }),
+          iconBg: '#FFF7E6',
+          iconText: '◎',
+        },
+        {
+          title: intl.formatMessage({
+            id: 'resumeTab.compHighIntentAlert',
+            defaultMessage: '',
+          }),
+          description: intl.formatMessage({
+            id: 'resumeTab.compHighIntentAlertDesc',
+            defaultMessage: '',
+          }),
+          iconBg: '#F0FFF0',
+          iconText: '◆',
+        },
+        {
+          title: intl.formatMessage({
+            id: 'resumeTab.compSessionPause',
+            defaultMessage: '',
+          }),
+          description: intl.formatMessage({
+            id: 'resumeTab.compSessionPauseDesc',
+            defaultMessage: '',
+          }),
+          iconBg: '#F3F0FF',
+          iconText: '■',
+        },
+      ],
+    },
+    mike: {
+      name: 'Mike',
+      avatarSrc: './assets/images/mike.png',
+      employeeRole: intl.formatMessage(messages.roleCustomerMaintenance),
+      stageTags: [
+        intl.formatMessage(messages.employeeMikeStage1),
+        intl.formatMessage(messages.employeeMikeStage2),
+        intl.formatMessage(messages.employeeMikeStage3),
+        intl.formatMessage(messages.employeeMikeStage4),
+        intl.formatMessage(messages.employeeMikeStage5),
+      ],
+      profile: intl.formatMessage(messages.employeeMikeProfile),
+      reviews: [
+        {
+          text: intl.formatMessage(messages.employeeMikeReview1Text),
+          highlight: '23%',
+          suffix: intl.formatMessage(messages.employeeMikeReview1Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeMikeReview2Text),
+          highlight: '65%',
+        },
+        {
+          text: intl.formatMessage(messages.employeeMikeReview3Text),
+          highlight: '18%',
+        },
+      ],
+      costLabel: intl.formatMessage(messages.employeeMikeCostLabel),
+      costChartData: [
+        {
+          label: intl.formatMessage(messages.employeeMikeCostChart1),
+          value: 30,
+        },
+        {
+          label: intl.formatMessage(messages.employeeMikeCostChart2),
+          value: 200,
+        },
+        {
+          label: intl.formatMessage(messages.employeeMikeCostChart3),
+          value: 800,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage(messages.employeeMikeCostSummary1),
+          value: '830M',
+        },
+        {
+          label: intl.formatMessage(messages.employeeMikeCostSummary2),
+          value: '42%',
+        },
+      ],
+      efficiencyData: [
+        { label: intl.formatMessage(messages.employeeMikeEff1), value: 94 },
+        { label: intl.formatMessage(messages.employeeMikeEff2), value: 88 },
+        { label: intl.formatMessage(messages.employeeMikeEff3), value: 76 },
+        { label: intl.formatMessage(messages.employeeMikeEff4), value: 91 },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage(messages.employeeMikeComp1Title),
+          description: intl.formatMessage(messages.employeeMikeComp1Desc),
+          iconBg: '#FFF1F0',
+          iconText: '🔔',
+        },
+        {
+          title: intl.formatMessage(messages.employeeMikeComp2Title),
+          description: intl.formatMessage(messages.employeeMikeComp2Desc),
+          iconBg: '#E8F5FF',
+          iconText: '📊',
+        },
+        {
+          title: intl.formatMessage(messages.employeeMikeComp3Title),
+          description: intl.formatMessage(messages.employeeMikeComp3Desc),
+          iconBg: '#FFF7E6',
+          iconText: '⚠',
+        },
+        {
+          title: intl.formatMessage(messages.employeeMikeComp4Title),
+          description: intl.formatMessage(messages.employeeMikeComp4Desc),
+          iconBg: '#F0FFF0',
+          iconText: '📈',
+        },
+        {
+          title: intl.formatMessage(messages.employeeMikeComp5Title),
+          description: intl.formatMessage(messages.employeeMikeComp5Desc),
+          iconBg: '#F3F0FF',
+          iconText: '💌',
+        },
+      ],
+    },
+    alice: {
+      name: 'Alice',
+      avatarSrc: './assets/images/alice.png',
+      employeeRole: intl.formatMessage(messages.roleMarketingAmbassador),
+      stageTags: [
+        intl.formatMessage(messages.employeeAliceStage1),
+        intl.formatMessage(messages.employeeAliceStage2),
+        intl.formatMessage(messages.employeeAliceStage3),
+        intl.formatMessage(messages.employeeAliceStage4),
+        intl.formatMessage(messages.employeeAliceStage5),
+      ],
+      profile: intl.formatMessage(messages.employeeAliceProfile),
+      reviews: [
+        {
+          text: intl.formatMessage(messages.employeeAliceReview1Text),
+          highlight: '156%',
+          suffix: intl.formatMessage(messages.employeeAliceReview1Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeAliceReview2Text),
+          highlight: '89%',
+          suffix: intl.formatMessage(messages.employeeAliceReview2Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeAliceReview3Text),
+          highlight: '12x',
+        },
+      ],
+      costLabel: intl.formatMessage(messages.employeeAliceCostLabel),
+      costChartData: [
+        {
+          label: intl.formatMessage(messages.employeeAliceCostChart1),
+          value: 10,
+        },
+        {
+          label: intl.formatMessage(messages.employeeAliceCostChart2),
+          value: 80,
+        },
+        {
+          label: intl.formatMessage(messages.employeeAliceCostChart3),
+          value: 300,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage(messages.employeeAliceCostSummary1),
+          value: '8.5x',
+        },
+        {
+          label: intl.formatMessage(messages.employeeAliceCostSummary2),
+          value: '57%',
+        },
+      ],
+      efficiencyData: [
+        { label: intl.formatMessage(messages.employeeAliceEff1), value: 96 },
+        { label: intl.formatMessage(messages.employeeAliceEff2), value: 85 },
+        { label: intl.formatMessage(messages.employeeAliceEff3), value: 78 },
+        { label: intl.formatMessage(messages.employeeAliceEff4), value: 92 },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage(messages.employeeAliceComp1Title),
+          description: intl.formatMessage(messages.employeeAliceComp1Desc),
+          iconBg: '#FFF1F0',
+          iconText: '✍',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAliceComp2Title),
+          description: intl.formatMessage(messages.employeeAliceComp2Desc),
+          iconBg: '#E8F5FF',
+          iconText: '🎯',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAliceComp3Title),
+          description: intl.formatMessage(messages.employeeAliceComp3Desc),
+          iconBg: '#FFF7E6',
+          iconText: '📊',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAliceComp4Title),
+          description: intl.formatMessage(messages.employeeAliceComp4Desc),
+          iconBg: '#F0FFF0',
+          iconText: '📋',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAliceComp5Title),
+          description: intl.formatMessage(messages.employeeAliceComp5Desc),
+          iconBg: '#F3F0FF',
+          iconText: '👤',
+        },
+      ],
+    },
+    lily: {
+      name: 'Lily',
+      avatarSrc: './assets/images/lily.png',
+      employeeRole: intl.formatMessage(messages.roleAfterSalesExpert),
+      stageTags: [
+        intl.formatMessage(messages.employeeLilyStage1),
+        intl.formatMessage(messages.employeeLilyStage2),
+        intl.formatMessage(messages.employeeLilyStage3),
+        intl.formatMessage(messages.employeeLilyStage4),
+        intl.formatMessage(messages.employeeLilyStage5),
+      ],
+      profile: intl.formatMessage(messages.employeeLilyProfile),
+      reviews: [
+        {
+          text: intl.formatMessage(messages.employeeLilyReview1Text),
+          highlight: '45秒',
+          suffix: intl.formatMessage(messages.employeeLilyReview1Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeLilyReview2Text),
+          highlight: '78%',
+          suffix: intl.formatMessage(messages.employeeLilyReview2Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeLilyReview3Text),
+          highlight: '94%',
+          suffix: intl.formatMessage(messages.employeeLilyReview3Suffix),
+        },
+      ],
+      costLabel: intl.formatMessage(messages.employeeLilyCostLabel),
+      costChartData: [
+        {
+          label: intl.formatMessage(messages.employeeLilyCostChart1),
+          value: 20,
+        },
+        {
+          label: intl.formatMessage(messages.employeeLilyCostChart2),
+          value: 120,
+        },
+        {
+          label: intl.formatMessage(messages.employeeLilyCostChart3),
+          value: 500,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage(messages.employeeLilyCostSummary1),
+          value: '520M',
+        },
+        {
+          label: intl.formatMessage(messages.employeeLilyCostSummary2),
+          value: '73%',
+        },
+      ],
+      efficiencyData: [
+        { label: intl.formatMessage(messages.employeeLilyEff1), value: 97 },
+        { label: intl.formatMessage(messages.employeeLilyEff2), value: 94 },
+        { label: intl.formatMessage(messages.employeeLilyEff3), value: 82 },
+        { label: intl.formatMessage(messages.employeeLilyEff4), value: 90 },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage(messages.employeeLilyComp1Title),
+          description: intl.formatMessage(messages.employeeLilyComp1Desc),
+          iconBg: '#FFF1F0',
+          iconText: '⚡',
+        },
+        {
+          title: intl.formatMessage(messages.employeeLilyComp2Title),
+          description: intl.formatMessage(messages.employeeLilyComp2Desc),
+          iconBg: '#E8F5FF',
+          iconText: '📚',
+        },
+        {
+          title: intl.formatMessage(messages.employeeLilyComp3Title),
+          description: intl.formatMessage(messages.employeeLilyComp3Desc),
+          iconBg: '#FFF7E6',
+          iconText: '🧭',
+        },
+        {
+          title: intl.formatMessage(messages.employeeLilyComp4Title),
+          description: intl.formatMessage(messages.employeeLilyComp4Desc),
+          iconBg: '#F0FFF0',
+          iconText: '💰',
+        },
+        {
+          title: intl.formatMessage(messages.employeeLilyComp5Title),
+          description: intl.formatMessage(messages.employeeLilyComp5Desc),
+          iconBg: '#F3F0FF',
+          iconText: '🔄',
+        },
+      ],
+    },
+    allen: {
+      name: 'Allen',
+      avatarSrc: './assets/images/allen.png',
+      employeeRole: intl.formatMessage(messages.roleLeadAssistant),
+      stageTags: [
+        intl.formatMessage(messages.employeeAllenStage1),
+        intl.formatMessage(messages.employeeAllenStage2),
+        intl.formatMessage(messages.employeeAllenStage3),
+        intl.formatMessage(messages.employeeAllenStage4),
+        intl.formatMessage(messages.employeeAllenStage5),
+      ],
+      profile: intl.formatMessage(messages.employeeAllenProfile),
+      reviews: [
+        {
+          text: intl.formatMessage(messages.employeeAllenReview1Text),
+          highlight: '340%',
+          suffix: intl.formatMessage(messages.employeeAllenReview1Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeAllenReview2Text),
+          highlight: '87%',
+          suffix: intl.formatMessage(messages.employeeAllenReview2Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeAllenReview3Text),
+          highlight: '2.8x',
+          suffix: intl.formatMessage(messages.employeeAllenReview3Suffix),
+        },
+      ],
+      costLabel: intl.formatMessage(messages.employeeAllenCostLabel),
+      costChartData: [
+        {
+          label: intl.formatMessage(messages.employeeAllenCostChart1),
+          value: 5,
+        },
+        {
+          label: intl.formatMessage(messages.employeeAllenCostChart2),
+          value: 60,
+        },
+        {
+          label: intl.formatMessage(messages.employeeAllenCostChart3),
+          value: 400,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage(messages.employeeAllenCostSummary1),
+          value: '64%',
+        },
+        {
+          label: intl.formatMessage(messages.employeeAllenCostSummary2),
+          value: '35%',
+        },
+      ],
+      efficiencyData: [
+        { label: intl.formatMessage(messages.employeeAllenEff1), value: 93 },
+        { label: intl.formatMessage(messages.employeeAllenEff2), value: 86 },
+        { label: intl.formatMessage(messages.employeeAllenEff3), value: 91 },
+        { label: intl.formatMessage(messages.employeeAllenEff4), value: 78 },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage(messages.employeeAllenComp1Title),
+          description: intl.formatMessage(messages.employeeAllenComp1Desc),
+          iconBg: '#FFF1F0',
+          iconText: '🌐',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAllenComp2Title),
+          description: intl.formatMessage(messages.employeeAllenComp2Desc),
+          iconBg: '#E8F5FF',
+          iconText: '🔍',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAllenComp3Title),
+          description: intl.formatMessage(messages.employeeAllenComp3Desc),
+          iconBg: '#FFF7E6',
+          iconText: '⚖',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAllenComp4Title),
+          description: intl.formatMessage(messages.employeeAllenComp4Desc),
+          iconBg: '#F0FFF0',
+          iconText: '👤',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAllenComp5Title),
+          description: intl.formatMessage(messages.employeeAllenComp5Desc),
+          iconBg: '#F3F0FF',
+          iconText: '📨',
+        },
+      ],
+    },
+    amy: {
+      name: 'Amy',
+      avatarSrc: './assets/images/amy.png',
+      employeeRole: intl.formatMessage(messages.roleBusinessDevElite),
+      stageTags: [
+        intl.formatMessage(messages.employeeAmyStage1),
+        intl.formatMessage(messages.employeeAmyStage2),
+        intl.formatMessage(messages.employeeAmyStage3),
+        intl.formatMessage(messages.employeeAmyStage4),
+        intl.formatMessage(messages.employeeAmyStage5),
+      ],
+      profile: intl.formatMessage(messages.employeeAmyProfile),
+      reviews: [
+        {
+          text: intl.formatMessage(messages.employeeAmyReview1Text),
+          highlight: '215%',
+          suffix: intl.formatMessage(messages.employeeAmyReview1Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeAmyReview2Text),
+          highlight: '82%',
+          suffix: intl.formatMessage(messages.employeeAmyReview2Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeAmyReview3Text),
+          highlight: '10x',
+          suffix: intl.formatMessage(messages.employeeAmyReview3Suffix),
+        },
+      ],
+      costLabel: intl.formatMessage(messages.employeeAmyCostLabel),
+      costChartData: [
+        {
+          label: intl.formatMessage(messages.employeeAmyCostChart1),
+          value: 15,
+        },
+        {
+          label: intl.formatMessage(messages.employeeAmyCostChart2),
+          value: 100,
+        },
+        {
+          label: intl.formatMessage(messages.employeeAmyCostChart3),
+          value: 600,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage(messages.employeeAmyCostSummary1),
+          value: '52%',
+        },
+        {
+          label: intl.formatMessage(messages.employeeAmyCostSummary2),
+          value: '48%',
+        },
+      ],
+      efficiencyData: [
+        { label: intl.formatMessage(messages.employeeAmyEff1), value: 88 },
+        { label: intl.formatMessage(messages.employeeAmyEff2), value: 95 },
+        { label: intl.formatMessage(messages.employeeAmyEff3), value: 83 },
+        { label: intl.formatMessage(messages.employeeAmyEff4), value: 76 },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage(messages.employeeAmyComp1Title),
+          description: intl.formatMessage(messages.employeeAmyComp1Desc),
+          iconBg: '#FFF1F0',
+          iconText: '🤝',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAmyComp2Title),
+          description: intl.formatMessage(messages.employeeAmyComp2Desc),
+          iconBg: '#E8F5FF',
+          iconText: '✉',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAmyComp3Title),
+          description: intl.formatMessage(messages.employeeAmyComp3Desc),
+          iconBg: '#FFF7E6',
+          iconText: '📅',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAmyComp4Title),
+          description: intl.formatMessage(messages.employeeAmyComp4Desc),
+          iconBg: '#F0FFF0',
+          iconText: '📄',
+        },
+        {
+          title: intl.formatMessage(messages.employeeAmyComp5Title),
+          description: intl.formatMessage(messages.employeeAmyComp5Desc),
+          iconBg: '#F3F0FF',
+          iconText: '🔗',
+        },
+      ],
+    },
+  };
 }

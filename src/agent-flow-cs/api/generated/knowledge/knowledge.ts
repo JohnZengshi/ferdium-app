@@ -7,37 +7,37 @@
 import type {
   HTTPValidationError,
   KnowledgeSearchRequest,
-  KnowledgeSearchResponse,
+  KnowledgeSearchResponse
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type knowledgeSearchApiV1KnowledgeSearchPostResponse200 = {
-  data: KnowledgeSearchResponse;
-  status: 200;
-};
+  data: KnowledgeSearchResponse
+  status: 200
+}
 
 export type knowledgeSearchApiV1KnowledgeSearchPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponseSuccess = (knowledgeSearchApiV1KnowledgeSearchPostResponse200) & {
+  headers: Headers;
+};
+export type knowledgeSearchApiV1KnowledgeSearchPostResponseError = (knowledgeSearchApiV1KnowledgeSearchPostResponse422) & {
+  headers: Headers;
 };
 
-export type knowledgeSearchApiV1KnowledgeSearchPostResponseSuccess =
-  knowledgeSearchApiV1KnowledgeSearchPostResponse200 & {
-    headers: Headers;
-  };
-export type knowledgeSearchApiV1KnowledgeSearchPostResponseError =
-  knowledgeSearchApiV1KnowledgeSearchPostResponse422 & {
-    headers: Headers;
-  };
-
-export type knowledgeSearchApiV1KnowledgeSearchPostResponse =
-  | knowledgeSearchApiV1KnowledgeSearchPostResponseSuccess
-  | knowledgeSearchApiV1KnowledgeSearchPostResponseError;
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse = (knowledgeSearchApiV1KnowledgeSearchPostResponseSuccess | knowledgeSearchApiV1KnowledgeSearchPostResponseError)
 
 export const getKnowledgeSearchApiV1KnowledgeSearchPostUrl = () => {
-  return 'http://10.0.0.179:8000/api/v1/knowledge/search';
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/knowledge/search`
+}
 
 /**
  * 检索知识库（仅主账号可用，用于调试验证 RAG 模块）。
@@ -45,17 +45,15 @@ export const getKnowledgeSearchApiV1KnowledgeSearchPostUrl = () => {
  * 直接调用外部 RAG 服务并返回原始检索结果，不经过 Agent 链路。
  * @summary Knowledge Search
  */
-export const knowledgeSearchApiV1KnowledgeSearchPost = async (
-  knowledgeSearchRequest: KnowledgeSearchRequest,
-  options?: RequestInit,
-): Promise<knowledgeSearchApiV1KnowledgeSearchPostResponse> => {
-  return useCustomInstance<knowledgeSearchApiV1KnowledgeSearchPostResponse>(
-    getKnowledgeSearchApiV1KnowledgeSearchPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(knowledgeSearchRequest),
-    },
-  );
-};
+export const knowledgeSearchApiV1KnowledgeSearchPost = async (knowledgeSearchRequest: KnowledgeSearchRequest, options?: RequestInit): Promise<knowledgeSearchApiV1KnowledgeSearchPostResponse> => {
+
+  return useCustomInstance<knowledgeSearchApiV1KnowledgeSearchPostResponse>(getKnowledgeSearchApiV1KnowledgeSearchPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(knowledgeSearchRequest)
+  }
+);}
+
+

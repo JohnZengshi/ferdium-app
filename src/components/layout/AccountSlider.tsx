@@ -138,7 +138,8 @@ const messages = defineMessages({
   },
   cookieAutoFillPlaceholder: {
     id: 'accountSlider.cookieAutoFillPlaceholder',
-    defaultMessage: '支持数组包含JSON格式的Cookie，例如\n[(“name”:“name”,“value”:“value”,“domain”:“domain”)]',
+    defaultMessage:
+      '支持数组包含JSON格式的Cookie，例如\n[(“name”:“name”,“value”:“value”,“domain”:“domain”)]',
   },
   proxyCheckDesc: {
     id: 'accountSlider.proxyCheckDesc',
@@ -730,12 +731,12 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
     const proxy = bindForm.proxyAutoFill
       ? {
-        isEnabled: true,
-        host: bindForm.proxyHost,
-        port: bindForm.proxyPort,
-        user: bindForm.proxyUser,
-        password: bindForm.proxyPassword,
-      }
+          isEnabled: true,
+          host: bindForm.proxyHost,
+          port: bindForm.proxyPort,
+          user: bindForm.proxyUser,
+          password: bindForm.proxyPassword,
+        }
       : { isEnabled: false };
 
     if (editingService) {
@@ -896,7 +897,9 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                   <div className="relative w-[406px]">
                     <Input
                       className="!h-[40px] !border-[#dcdcdc]"
-                      placeholder={intl.formatMessage(messages.accountRemarkPlaceholder)}
+                      placeholder={intl.formatMessage(
+                        messages.accountRemarkPlaceholder,
+                      )}
                       value={this.state.bindForm.remark}
                       onChange={val => this.handleBindFormChange('remark', val)}
                     />
@@ -914,7 +917,9 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                   </span>
                   <Switch
                     value={this.state.bindForm.proxyAutoFill}
-                    onChange={val => this.handleBindFormChange('proxyAutoFill', val)}
+                    onChange={val =>
+                      this.handleBindFormChange('proxyAutoFill', val)
+                    }
                   />
                   {!this.state.bindForm.proxyAutoFill && (
                     <div className="flex items-center gap-x-[4px]">
@@ -935,9 +940,16 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                       <div className="w-[406px]">
                         <Textarea
                           className="!h-[132px] !border-[#dcdcdc] !p-[12px]"
-                          placeholder={intl.formatMessage(messages.autoFillPlaceholder)}
+                          placeholder={intl.formatMessage(
+                            messages.autoFillPlaceholder,
+                          )}
                           value={this.state.bindForm.proxyAutoFillContent}
-                          onChange={val => this.handleBindFormChange('proxyAutoFillContent', val)}
+                          onChange={val =>
+                            this.handleBindFormChange(
+                              'proxyAutoFillContent',
+                              val,
+                            )
+                          }
                         />
                       </div>
                     </div>
@@ -948,9 +960,13 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                       </div>
                       <Input
                         className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
-                        placeholder={intl.formatMessage(messages.proxyHostPlaceholder)}
+                        placeholder={intl.formatMessage(
+                          messages.proxyHostPlaceholder,
+                        )}
                         value={this.state.bindForm.proxyHost}
-                        onChange={val => this.handleBindFormChange('proxyHost', val)}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyHost', val)
+                        }
                       />
                     </div>
 
@@ -960,9 +976,13 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                       </div>
                       <Input
                         className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
-                        placeholder={intl.formatMessage(messages.proxyPortPlaceholder)}
+                        placeholder={intl.formatMessage(
+                          messages.proxyPortPlaceholder,
+                        )}
                         value={this.state.bindForm.proxyPort}
-                        onChange={val => this.handleBindFormChange('proxyPort', val)}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyPort', val)
+                        }
                       />
                     </div>
 
@@ -972,9 +992,13 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                       </div>
                       <Input
                         className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
-                        placeholder={intl.formatMessage(messages.proxyUserPlaceholder)}
+                        placeholder={intl.formatMessage(
+                          messages.proxyUserPlaceholder,
+                        )}
                         value={this.state.bindForm.proxyUser}
-                        onChange={val => this.handleBindFormChange('proxyUser', val)}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyUser', val)
+                        }
                       />
                     </div>
 
@@ -985,16 +1009,20 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                       <Input
                         type="password"
                         className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
-                        placeholder={intl.formatMessage(messages.proxyPasswordPlaceholder)}
+                        placeholder={intl.formatMessage(
+                          messages.proxyPasswordPlaceholder,
+                        )}
                         value={this.state.bindForm.proxyPassword}
-                        onChange={val => this.handleBindFormChange('proxyPassword', val)}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyPassword', val)
+                        }
                       />
                     </div>
 
                     <div className="ml-[94px]">
                       <Button
                         className="!w-[118px] !h-[40px] !bg-[#0052D9] !text-white !font-medium"
-                        onClick={() => { }}
+                        onClick={() => {}}
                       >
                         {intl.formatMessage(messages.proxyCheck)}
                       </Button>
@@ -1013,7 +1041,9 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                   </span>
                   <Switch
                     value={this.state.bindForm.cookieAutoFill}
-                    onChange={val => this.handleBindFormChange('cookieAutoFill', val)}
+                    onChange={val =>
+                      this.handleBindFormChange('cookieAutoFill', val)
+                    }
                   />
                 </div>
 
@@ -1021,7 +1051,9 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                   <div className="flex flex-col">
                     <Textarea
                       className="!w-[406px] min-h-[148px] !border-[#dcdcdc] !p-[12px] self-end"
-                      placeholder={intl.formatMessage(messages.cookiePlaceholder)}
+                      placeholder={intl.formatMessage(
+                        messages.cookiePlaceholder,
+                      )}
                       value={this.state.bindForm.cookie}
                       onChange={val => this.handleBindFormChange('cookie', val)}
                     />

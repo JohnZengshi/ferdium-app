@@ -1509,55 +1509,68 @@
         }
       },
       {
-        "defaultMessage": "!!!Get started",
+        "defaultMessage": "!!!No accounts",
         "end": {
           "column": 3,
           "line": 22
         },
         "file": "src/components/services/content/Services.js",
-        "id": "services.getStarted",
+        "id": "services.noAccountsTitle",
         "start": {
           "column": 14,
           "line": 19
         }
       },
       {
-        "defaultMessage": "!!!Please login to use Ferdium.",
+        "defaultMessage": "!!!Chat data will appear here after you bind an account.",
         "end": {
           "column": 3,
           "line": 26
         },
         "file": "src/components/services/content/Services.js",
+        "id": "services.noAccountsDescription",
+        "start": {
+          "column": 14,
+          "line": 23
+        }
+      },
+      {
+        "defaultMessage": "!!!Please login to use Ferdium.",
+        "end": {
+          "column": 3,
+          "line": 30
+        },
+        "file": "src/components/services/content/Services.js",
         "id": "services.login",
         "start": {
           "column": 9,
-          "line": 23
+          "line": 27
         }
       },
       {
         "defaultMessage": "!!!Use Ferdium without an Account",
         "end": {
           "column": 3,
-          "line": 30
+          "line": 34
         },
         "file": "src/components/services/content/Services.js",
         "id": "services.serverless",
         "start": {
           "column": 14,
-          "line": 27
+          "line": 31
         }
       },
       {
         "defaultMessage": "!!!Optionally, you can change your Ferdium server by clicking the cog in the bottom left corner.",
         "end": {
           "column": 3,
-          "line": 34
+          "line": 38
         },
         "file": "src/components/services/content/Services.js",
         "id": "services.serverInfo",
         "start": {
           "column": 14,
-          "line": 31
+          "line": 35
         }
       }
     ],

@@ -8,15 +8,18 @@ import {
   injectIntl,
 } from 'react-intl';
 import withStyles, { type WithStylesProps } from 'react-jss';
-import { Link } from 'react-router-dom';
 import type Service from '../../../models/Service';
 import Appear from '../../ui/effects/Appear';
 import ServiceView from './ServiceView';
 
 const messages = defineMessages({
-  getStarted: {
-    id: 'services.getStarted',
-    defaultMessage: 'Get started',
+  noAccountsTitle: {
+    id: 'services.noAccountsTitle',
+    defaultMessage: '暂无账号',
+  },
+  noAccountsDescription: {
+    id: 'services.noAccountsDescription',
+    defaultMessage: '绑定账号后将在这里显示聊天数据',
   },
   login: {
     id: 'services.login',
@@ -39,6 +42,41 @@ const styles = {
     width: '100%',
     zIndex: 9999,
     pointerEvents: 'none',
+  },
+  emptyAccountLayer: {
+    height: '100%',
+    width: '100%',
+  },
+  emptyAccountContent: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    transform: 'translateY(52px)',
+  },
+  emptyAccountState: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
+  },
+  emptyAccountImage: {
+    height: 210,
+    width: 260,
+    marginBottom: 18,
+  },
+  emptyAccountTitle: {
+    color: '#6B7280',
+    fontSize: 16,
+    fontWeight: 400,
+    lineHeight: '24px',
+    margin: 0,
+  },
+  emptyAccountDescription: {
+    color: '#9CA3AF',
+    fontSize: 16,
+    fontWeight: 400,
+    lineHeight: '24px',
+    margin: 0,
   },
 };
 
@@ -120,17 +158,24 @@ class Services extends Component<IProps, IState> {
         )}
         {services.length === 0 && (
           <Appear transitionName="slideUp">
-            <div className="services__no-service">
-              <img
-                src="./assets/images/logo-beard-only.svg"
-                alt="Logo"
-                style={{ maxHeight: '50vh' }}
-              />
-              <Appear transitionName="slideUp">
-                <Link to="/settings/recipes" className="button">
-                  {intl.formatMessage(messages.getStarted)}
-                </Link>
-              </Appear>
+            <div
+              className={`services__no-service ${classes.emptyAccountLayer}`}
+            >
+              <div className={classes.emptyAccountContent}>
+                <img
+                  src="./assets/images/empty-accounts.svg"
+                  alt=""
+                  className={classes.emptyAccountImage}
+                />
+                <div className={classes.emptyAccountState}>
+                  <p className={classes.emptyAccountTitle}>
+                    {intl.formatMessage(messages.noAccountsTitle)}
+                  </p>
+                  <p className={classes.emptyAccountDescription}>
+                    {intl.formatMessage(messages.noAccountsDescription)}
+                  </p>
+                </div>
+              </div>
             </div>
           </Appear>
         )}

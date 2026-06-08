@@ -271,6 +271,8 @@
   "service.webviewLoader.loading": "正在加载 {service}",
   "services.getStarted": "开始使用",
   "services.login": "请登录以使用 Ferdium",
+  "services.noAccountsDescription": "绑定账号后将在这里显示聊天数据",
+  "services.noAccountsTitle": "暂无账号",
   "services.serverInfo": "您可以通过点击左下角的齿轮图标来更改 Ferdium 服务器。如果您从托管服务器切换到无账户使用 Ferdium，请注意您可以从原服务器导出数据，并通过帮助菜单导入，以恢复工作区和配置服务！",
   "services.serverless": "无账户使用 Ferdium",
   "settings.account.account.editButton": "编辑账户",

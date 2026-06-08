@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { join } from 'node:path';
 import { outputJsonSync, pathExistsSync, readJsonSync } from 'fs-extra';
 import { action, makeObservable, observable, toJS } from 'mobx';
 import { userDataPath } from '../environment-remote';
@@ -11,16 +13,28 @@ export default class Settings {
 
   @observable store: object = {};
 
+  profileEmail: string = '';
+
   constructor(type: string, defaultState = {}) {
     makeObservable(this);
 
     this.type = type;
-    this.store = defaultState;
+    this.store = this._clone(defaultState);
     this.defaultState = defaultState;
 
     if (pathExistsSync(this.settingsFile)) {
       this._hydrate();
     } else {
+      this._writeFile();
+    }
+  }
+
+  @action setProfileEmail(email?: string | null): void {
+    this.profileEmail = email?.trim().toLowerCase() ?? '';
+    if (pathExistsSync(this.settingsFile)) {
+      this._hydrate();
+    } else {
+      this.store = this._clone(this.defaultState);
       this._writeFile();
     }
   }
@@ -44,7 +58,15 @@ export default class Settings {
   }
 
   _merge(settings: object): object {
-    return Object.assign(this.defaultState, this.store, settings);
+    return Object.assign(
+      this._clone(this.defaultState),
+      this._clone(this.store),
+      settings,
+    );
+  }
+
+  _clone(settings: object): object {
+    return JSON.parse(JSON.stringify(settings));
   }
 
   _hydrate(): void {
@@ -60,9 +82,20 @@ export default class Settings {
   }
 
   get settingsFile(): string {
-    return userDataPath(
+    const filename = `${this.type === 'app' ? 'settings' : this.type}.json`;
+    if (!this.profileEmail) {
+      return userDataPath('config', filename);
+    }
+    const profileHash = createHash('sha256')
+      .update(this.profileEmail)
+      .digest('hex');
+    return join(
+      userDataPath(),
+      'profiles',
+      'wa-akg',
+      profileHash,
       'config',
-      `${this.type === 'app' ? 'settings' : this.type}.json`,
+      filename,
     );
   }
 }

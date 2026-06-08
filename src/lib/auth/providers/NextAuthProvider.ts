@@ -11,12 +11,11 @@ import {
   getApiKey,
   initializeAuth,
 } from '../../../whatsapp-automation/api/auth';
+import { API_KEY_STORAGE_KEY } from '../../../whatsapp-automation/constants';
 
 const debug = require('../../../preload-safe-debug')(
   'Ferdium:auth:NextAuthProvider',
 );
-
-const API_KEY_STORAGE_KEY = 'whatsappAutomationApiKey';
 
 export default class NextAuthProvider implements AuthProvider {
   name = 'nextauth';

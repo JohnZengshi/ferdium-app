@@ -1018,7 +1018,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                     <Input
                       placeholder={intl.formatMessage(messages.lockedPassword)}
                       onChange={e => this.submit(e)}
-                      {...form.$('lockedPassword')}
+                      {...form.$('lockedPassword').bind()}
                       type="password"
                       scorePassword
                       showPasswordToggle
@@ -1030,7 +1030,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                         messages.lockAfterInactivity,
                       )}
                       onChange={e => this.submit(e)}
-                      {...form.$('inactivityLock')}
+                      {...form.$('inactivityLock').bind()}
                       autoFocus
                     />
                     <p>{intl.formatMessage(messages.inactivityLockInfo)}</p>

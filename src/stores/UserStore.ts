@@ -12,7 +12,11 @@ import serverlessLogin from '../helpers/serverless-helpers';
 import authManager from '../lib/auth/AuthManager';
 import FerdiumProvider from '../lib/auth/providers/FerdiumProvider';
 import NextAuthProvider from '../lib/auth/providers/NextAuthProvider';
-import { API_KEY_STORAGE_KEY } from '../whatsapp-automation/api/auth';
+import {
+  API_KEY_STORAGE_KEY,
+  WA_USER_EMAIL_STORAGE_KEY,
+} from '../whatsapp-automation/constants';
+import { saveLocalStorageProfile } from '../whatsapp-automation/profileStorage';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
@@ -97,7 +101,7 @@ export default class UserStore extends TypedStore {
   @observable logoutReason: string | null = null;
 
   @observable waAkgEmail: string | null = localStorage.getItem(
-    'whatsappAutomationUserEmail',
+    WA_USER_EMAIL_STORAGE_KEY,
   );
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
@@ -284,14 +288,16 @@ export default class UserStore extends TypedStore {
 
     this.isLoggingOut = false;
 
+    saveLocalStorageProfile(localStorage.getItem(WA_USER_EMAIL_STORAGE_KEY));
+
     // workaround mobx issue
     localStorage.removeItem('authToken');
     window.localStorage.removeItem('authToken');
 
     localStorage.removeItem(API_KEY_STORAGE_KEY);
     window.localStorage.removeItem(API_KEY_STORAGE_KEY);
-    localStorage.removeItem('whatsappAutomationUserEmail');
-    window.localStorage.removeItem('whatsappAutomationUserEmail');
+    localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
+    window.localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
 
     this.waAkgEmail = null;
 
@@ -485,9 +491,9 @@ export default class UserStore extends TypedStore {
   @action setWaAkgEmail(email: string | null): void {
     this.waAkgEmail = email;
     if (email) {
-      localStorage.setItem('whatsappAutomationUserEmail', email);
+      localStorage.setItem(WA_USER_EMAIL_STORAGE_KEY, email);
     } else {
-      localStorage.removeItem('whatsappAutomationUserEmail');
+      localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
     }
   }
 

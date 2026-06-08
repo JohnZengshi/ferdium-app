@@ -669,6 +669,10 @@ export default class AppStore extends TypedStore {
     this.locale = value;
   }
 
+  changeLocale(value: string) {
+    this._changeLocale(value);
+  }
+
   @action _addDownload(download: Download) {
     this.downloads.unshift(download);
     debug('Download added', this.downloads);

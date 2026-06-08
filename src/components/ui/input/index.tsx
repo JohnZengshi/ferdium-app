@@ -222,4 +222,6 @@ class Input extends Component<IProps, IState> {
   }
 }
 
-export default injectIntl(withStyles(styles, { injectTheme: true })(Input));
+export default injectIntl(withStyles(styles, { injectTheme: true })(Input), {
+  forwardRef: true,
+});

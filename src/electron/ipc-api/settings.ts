@@ -1,7 +1,20 @@
 import { type BrowserWindow, type Settings, ipcMain } from 'electron';
 
+const setSettingsProfile = (
+  settings: Settings,
+  email?: string | null,
+): void => {
+  for (const store of Object.values(settings)) {
+    store.setProfileEmail?.(email);
+  }
+};
+
 export default (params: { mainWindow: BrowserWindow; settings: Settings }) => {
-  ipcMain.on('getAppSettings', (_event, type) => {
+  ipcMain.on('getAppSettings', (_event, args) => {
+    const type = typeof args === 'string' ? args : args.type;
+    if (typeof args !== 'string' && 'waAkgEmail' in args) {
+      setSettingsProfile(params.settings, args.waAkgEmail);
+    }
     params.mainWindow.webContents.send('appSettings', {
       type,
       data: params.settings[type].allSerialized,
@@ -9,6 +22,9 @@ export default (params: { mainWindow: BrowserWindow; settings: Settings }) => {
   });
 
   ipcMain.on('updateAppSettings', (_event, args) => {
+    if ('waAkgEmail' in args) {
+      setSettingsProfile(params.settings, args.waAkgEmail);
+    }
     params.settings[args.type].set(args.data);
   });
 };

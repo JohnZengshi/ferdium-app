@@ -15,10 +15,11 @@
 |     Make sure to pass a relative path from the project root.
 */
 
+import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import fold from '@adonisjs/fold';
 import { Ignitor, hooks } from '@adonisjs/ignitor';
-import { chmod, readFile, stat, writeFile } from 'fs-extra';
+import { chmod, ensureDir, readFile, stat, writeFile } from 'fs-extra';
 import { LOCAL_HOSTNAME } from '../config';
 import { isWindows } from '../environment';
 
@@ -45,12 +46,22 @@ async function ensureDB(dbPath: string): Promise<void> {
 }
 
 export const server = async (userPath: string, port: number, token: string) => {
-  const dbPath = join(userPath, 'server.sqlite');
+  const waAkgEmail = process.env.WA_AKG_PROFILE_EMAIL?.trim().toLowerCase();
+  const profilePath = waAkgEmail
+    ? join(
+        userPath,
+        'profiles',
+        'wa-akg',
+        createHash('sha256').update(waAkgEmail).digest('hex'),
+      )
+    : userPath;
+  await ensureDir(profilePath);
+  const dbPath = join(profilePath, 'server.sqlite');
   await ensureDB(dbPath);
 
   // Note: These env vars are used by adonis as env vars
   process.env.DB_PATH = dbPath;
-  process.env.USER_PATH = userPath;
+  process.env.USER_PATH = profilePath;
   process.env.HOST = LOCAL_HOSTNAME;
   process.env.PORT = port.toString();
   process.env.FERDIUM_LOCAL_TOKEN = token;

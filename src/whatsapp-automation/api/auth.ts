@@ -11,12 +11,11 @@
  */
 
 import { ipcRenderer } from 'electron';
+import { API_KEY_STORAGE_KEY, WA_USER_EMAIL_STORAGE_KEY } from '../constants';
+import { switchLocalStorageProfile } from '../profileStorage';
 
 const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
 const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
-export const API_KEY_STORAGE_KEY =
-  process.env.API_KEY_STORAGE_KEY ?? 'whatsappAutomationApiKey';
-export const WA_USER_EMAIL_STORAGE_KEY = 'whatsappAutomationUserEmail';
 
 export interface AuthCredentials {
   email: string;
@@ -28,6 +27,50 @@ let cookieJar: string[] = [];
 
 /** Guard flag: prevents concurrent initializeAuth() calls from corrupting the cookie jar */
 let authInProgress = false;
+
+async function waitForLocalServer(): Promise<void> {
+  await new Promise<void>(resolve => {
+    ipcRenderer.once('localServerPort', () => {
+      resolve();
+    });
+  });
+}
+
+function markFerdiumLoggedInForWaAkg(): void {
+  localStorage.setItem('authToken', 'wa-akg');
+  window.localStorage.setItem('authToken', 'wa-akg');
+}
+
+function setWaAkgIdentity(email: string): void {
+  switchLocalStorageProfile(email);
+  window.localStorage.setItem(WA_USER_EMAIL_STORAGE_KEY, email);
+  (window as any).ferdium?.stores?.user?.setWaAkgEmail?.(email);
+  (window as any).ferdium?.stores?.settings?.reloadFileSystemSettings?.();
+}
+
+async function switchLocalFerdiumProfile(email: string): Promise<void> {
+  try {
+    const result = await ipcRenderer.invoke('setWaAkgProfile', { email });
+    markFerdiumLoggedInForWaAkg();
+    if (result?.requiresRestart) {
+      await ipcRenderer.invoke('relaunchForWaAkgProfile');
+      await new Promise(() => {});
+      return;
+    }
+    ipcRenderer.send('startLocalServer', { waAkgEmail: email });
+    if (!result?.isLocalServerStarted) {
+      await waitForLocalServer();
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    console.warn(
+      '[WhatsApp Automation] Failed to switch Ferdium profile',
+      error,
+    );
+  }
+}
 
 function resetCookieJar() {
   cookieJar = [];
@@ -208,6 +251,7 @@ export const initializeAuth = async (
 
   try {
     resetCookieJar();
+    let authenticatedEmail = '';
 
     // --- Step 1: Get CSRF token for NextAuth login ---
     let csrfToken = '';
@@ -276,13 +320,8 @@ export const initializeAuth = async (
         console.error('[WhatsApp Automation] Session check failed', session);
         return null;
       }
-      window.localStorage.setItem(
-        WA_USER_EMAIL_STORAGE_KEY,
-        session.user.email,
-      );
-      (window as any).ferdium?.stores?.user?.setWaAkgEmail?.(
-        session.user.email,
-      );
+      setWaAkgIdentity(session.user.email);
+      authenticatedEmail = session.user.email;
 
       // eslint-disable-next-line no-console
       console.log('[WhatsApp Automation] Authenticated as', session.user.email);
@@ -292,6 +331,7 @@ export const initializeAuth = async (
     }
 
     // --- Step 4: Get existing API key ---
+    let apiKey = '';
     try {
       const keyRes = await nodeRequest({
         path: '/api/user/api-key',
@@ -300,8 +340,7 @@ export const initializeAuth = async (
       if (keyRes.status === 200) {
         const keyData = JSON.parse(keyRes.data);
         if (keyData?.data?.apiKey) {
-          setApiKey(keyData.data.apiKey);
-          return keyData.data.apiKey;
+          apiKey = keyData.data.apiKey;
         }
       }
     } catch {
@@ -309,21 +348,31 @@ export const initializeAuth = async (
     }
 
     // --- Step 5: Generate a new API key if none exists ---
-    try {
-      const genRes = await nodeRequest({
-        path: '/api/user/api-key',
-        method: 'POST',
-        headers: { Cookie: getCookieHeader() },
-      });
-      if (genRes.status === 200) {
-        const genData = JSON.parse(genRes.data);
-        if (genData?.data?.apiKey) {
-          setApiKey(genData.data.apiKey);
-          return genData.data.apiKey;
+    if (!apiKey) {
+      try {
+        const genRes = await nodeRequest({
+          path: '/api/user/api-key',
+          method: 'POST',
+          headers: { Cookie: getCookieHeader() },
+        });
+        if (genRes.status === 200) {
+          const genData = JSON.parse(genRes.data);
+          if (genData?.data?.apiKey) {
+            apiKey = genData.data.apiKey;
+          }
         }
+      } catch (error) {
+        console.error(
+          '[WhatsApp Automation] Failed to generate API key',
+          error,
+        );
       }
-    } catch (error) {
-      console.error('[WhatsApp Automation] Failed to generate API key', error);
+    }
+
+    if (apiKey) {
+      setApiKey(apiKey);
+      await switchLocalFerdiumProfile(authenticatedEmail);
+      return apiKey;
     }
 
     return null;

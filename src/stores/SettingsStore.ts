@@ -12,6 +12,7 @@ import {
   LOCAL_SERVER,
 } from '../config';
 import { hash } from '../helpers/password-helpers';
+import { WA_USER_EMAIL_STORAGE_KEY } from '../whatsapp-automation/constants';
 import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:SettingsStore');
@@ -58,7 +59,9 @@ export default class SettingsStore extends TypedStore {
             : process.env.FERDIUM_SERVER
           : server;
         if (effectiveServer === LOCAL_SERVER) {
-          ipcRenderer.send('startLocalServer');
+          ipcRenderer.send('startLocalServer', {
+            waAkgEmail: this.waAkgEmail,
+          });
         }
       },
       { fireImmediately: true },
@@ -108,12 +111,28 @@ export default class SettingsStore extends TypedStore {
         type: resp.type,
         data: resp.data,
       });
+      if (resp.type === 'app' && resp.data.locale) {
+        this.stores.app.changeLocale(resp.data.locale);
+      }
       this.setLoaded();
       ipcRenderer.send('initialAppSettings', resp);
     });
 
     for (const type of this.fileSystemSettingsTypes) {
-      ipcRenderer.send('getAppSettings', type);
+      this.loadFileSystemSettings(type);
+    }
+  }
+
+  loadFileSystemSettings(type: string): void {
+    ipcRenderer.send('getAppSettings', {
+      type,
+      waAkgEmail: this.waAkgEmail,
+    });
+  }
+
+  reloadFileSystemSettings(): void {
+    for (const type of this.fileSystemSettingsTypes) {
+      this.loadFileSystemSettings(type);
     }
   }
 
@@ -171,6 +190,7 @@ export default class SettingsStore extends TypedStore {
       ipcRenderer.send('updateAppSettings', {
         type,
         data,
+        waAkgEmail: this.waAkgEmail,
       });
 
       Object.assign(this._fileSystemSettingsCache[type], data);
@@ -248,5 +268,9 @@ export default class SettingsStore extends TypedStore {
 
       debug('Migrated default user-agent settings');
     });
+  }
+
+  get waAkgEmail(): string | null {
+    return localStorage.getItem(WA_USER_EMAIL_STORAGE_KEY);
   }
 }

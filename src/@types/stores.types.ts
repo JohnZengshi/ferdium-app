@@ -92,6 +92,7 @@ export interface AppStore extends TypedStore {
   twoFactorAutoCatcherMatcher: string;
   clearAppCacheRequest: () => void;
   clipboardNotifications: boolean;
+  changeLocale: (value: string) => void;
   darkMode: boolean;
   enableSpellchecking: boolean;
   enableTranslator: boolean;

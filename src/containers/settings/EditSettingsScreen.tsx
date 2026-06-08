@@ -551,6 +551,7 @@ class EditSettingsScreen extends Component<
       // TODO: The conversions might not be necessary once we convert to typescript
       data: newSettings,
     });
+    this.props.stores.app.changeLocale(settingsData.locale);
 
     settings.update({
       type: 'shortcuts',

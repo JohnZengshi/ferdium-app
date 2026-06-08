@@ -1,5 +1,5 @@
-import { type ReactElement } from 'react';
-import { useIntl, defineMessages } from 'react-intl';
+import type { ReactElement } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 import { CheckCircleFilledIcon } from 'tdesign-icons-react';
 import { Tag } from 'tdesign-react';
 

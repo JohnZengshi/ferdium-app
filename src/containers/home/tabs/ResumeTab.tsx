@@ -1,19 +1,19 @@
 import { Component, type ReactElement } from 'react';
-import { UserIcon, LockOnIcon, FolderOpenIcon } from 'tdesign-icons-react';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  LabelList,
-  ResponsiveContainer,
-} from 'recharts';
 import {
   type WrappedComponentProps,
   defineMessages,
   injectIntl,
 } from 'react-intl';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import { FolderOpenIcon, LockOnIcon, UserIcon } from 'tdesign-icons-react';
 
 const messages = defineMessages({
   stageSectionTitle: {
@@ -378,9 +378,9 @@ class ResumeTab extends Component<IProps> {
           </span>
         </div>
         <div className="mt-[16px] flex flex-col gap-[19px]">
-          {reviewItems.map((item, i) => (
+          {reviewItems.map(item => (
             <div
-              key={i}
+              key={item.text}
               className="flex flex-row flex-wrap items-baseline border-l-[4px] border-solid border-brand pl-[12px]"
             >
               <span className="text-[14px] font-normal leading-[24px] text-secondary">

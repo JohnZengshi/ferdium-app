@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { useIntl, defineMessages } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 import { CheckCircleFilledIcon, CircleIcon } from 'tdesign-icons-react';
 import { Button, Card, Progress } from 'tdesign-react';
 

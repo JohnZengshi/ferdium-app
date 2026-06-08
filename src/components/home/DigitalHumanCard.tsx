@@ -1,15 +1,15 @@
 import type { ReactElement } from 'react';
 import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import {
   CheckCircleIcon,
   CloseCircleIcon,
   UserIcon,
 } from 'tdesign-icons-react';
 import { Card } from 'tdesign-react';
-import {
-  type WrappedComponentProps,
-  defineMessages,
-  injectIntl,
-} from 'react-intl';
 
 const messages = defineMessages({
   online: {

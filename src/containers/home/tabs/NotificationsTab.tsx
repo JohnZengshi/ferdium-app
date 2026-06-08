@@ -1,9 +1,10 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { Component, type ReactElement } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Table, Select, Pagination, DateRangePicker } from 'tdesign-react';
-import type { PrimaryTableCol } from 'tdesign-react';
 import { ChatBubble1FilledIcon, SendIcon } from 'tdesign-icons-react';
+import { DateRangePicker, Pagination, Select, Table } from 'tdesign-react';
+import type { PrimaryTableCol } from 'tdesign-react';
 
 const messages = defineMessages({
   serialNumber: {
@@ -272,11 +273,15 @@ class NotificationsTab extends Component<
   Record<string, never> & WrappedComponentProps,
   NotificationsTabState
 > {
-  state: NotificationsTabState = {
-    selectedRowIds: [1],
-    currentPage: 1,
-    pageSize: 20,
-  };
+  constructor(props: Record<string, never> & WrappedComponentProps) {
+    super(props);
+
+    this.state = {
+      selectedRowIds: [1],
+      currentPage: 1,
+      pageSize: 20,
+    };
+  }
 
   handlePageChange = (pageInfo: {
     current: number;
@@ -296,7 +301,7 @@ class NotificationsTab extends Component<
 
   handleExport = (): void => {};
 
-  handleViewConversation = (_id: number): void => {};
+  handleViewConversation = (): void => {};
 
   getColumns = (): PrimaryTableCol[] => {
     const { intl } = this.props;
@@ -410,18 +415,15 @@ class NotificationsTab extends Component<
         colKey: 'op',
         title: intl.formatMessage(messages.actions),
         width: 84,
-        cell: ({ row }) => {
-          const r = row as NotificationRecord;
-          return (
-            <button
-              type="button"
-              onClick={() => this.handleViewConversation(r.id)}
-              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
-            >
-              {intl.formatMessage(messages.viewConversation)}
-            </button>
-          );
-        },
+        cell: () => (
+          <button
+            type="button"
+            onClick={this.handleViewConversation}
+            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
+          >
+            {intl.formatMessage(messages.viewConversation)}
+          </button>
+        ),
       },
     ];
   };

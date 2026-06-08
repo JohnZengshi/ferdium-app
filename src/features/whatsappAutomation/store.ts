@@ -19,6 +19,7 @@ import {
 } from './constants';
 
 import {
+  deleteSessionsIdSettings,
   getSessions,
   getSessionsIdQr,
   postSessions,
@@ -187,14 +188,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     for (const trackedId of this._initializedServices) {
       if (!currentIds.has(trackedId)) {
         debug(`Cleaning up removed service: ${trackedId}`);
-        this._initializedServices.delete(trackedId);
-        this._stopSocketIoForSession(trackedId);
-        runInAction(() => {
-          this.sessionStatuses.delete(trackedId);
-          this.qrCodes.delete(trackedId);
-          this.isLoadingQr.delete(trackedId);
-          this.errorMessages.delete(trackedId);
-        });
+        this._cleanUpSessionState(trackedId);
       }
     }
   };
@@ -480,6 +474,24 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       .catch(() => {
         // Ignore - webview might be navigating
       });
+  };
+
+  deleteSessionForService = async (serviceId: string): Promise<void> => {
+    debug('Deleting WA-AKG session for service', serviceId);
+    this._cleanUpSessionState(serviceId);
+
+    const authenticated = await this._ensureAuthenticated();
+    if (!authenticated) {
+      debug('Skipping WA-AKG session delete because authentication failed');
+      return;
+    }
+
+    try {
+      await deleteSessionsIdSettings(serviceId);
+      debug('WA-AKG session deleted for service', serviceId);
+    } catch (error) {
+      debug('Failed to delete WA-AKG session for service', serviceId, error);
+    }
   };
 
   // ========== PRIVATE METHODS ========= //
@@ -850,6 +862,18 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       socket.disconnect();
       this._sockets.delete(serviceId);
     }
+  };
+
+  @action _cleanUpSessionState = (serviceId: string) => {
+    this._initializedServices.delete(serviceId);
+    this._retryCounts.delete(serviceId);
+    this._sessionInfo.delete(serviceId);
+    this._socketConnectWaiters.delete(serviceId);
+    this._stopSocketIoForSession(serviceId);
+    this.sessionStatuses.delete(serviceId);
+    this.qrCodes.delete(serviceId);
+    this.isLoadingQr.delete(serviceId);
+    this.errorMessages.delete(serviceId);
   };
 
   _updateQrModalStatus = (serviceId: string, status: string) => {

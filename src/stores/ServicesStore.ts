@@ -11,6 +11,7 @@ import type { ApiInterface } from '../api';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { whatsappAutomationActions } from '../features/whatsappAutomation/actions';
+import { WHATSAPP_RECIPE_ID } from '../features/whatsappAutomation/constants';
 import { workspaceStore } from '../features/workspaces';
 import {
   getDevRecipeDirectory,
@@ -600,6 +601,13 @@ export default class ServicesStore extends TypedStore {
 
   @action async _deleteService({ serviceId, redirect }): Promise<void> {
     const request = this.deleteServiceRequest.execute(serviceId);
+    const service = this.one(serviceId);
+
+    if (service?.recipe?.id === WHATSAPP_RECIPE_ID) {
+      await this.stores.whatsappAutomation?.deleteSessionForService?.(
+        serviceId,
+      );
+    }
 
     if (redirect) {
       this.stores.router.push(redirect);

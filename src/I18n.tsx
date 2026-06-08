@@ -3,14 +3,14 @@ import { Component, type ReactNode } from 'react';
 import { IntlProvider } from 'react-intl';
 import { ConfigProvider } from 'tdesign-react';
 
+import arConfig from 'tdesign-react/cjs/locale/ar_KW';
 import enConfig from 'tdesign-react/cjs/locale/en_US';
-import zhCnConfig from 'tdesign-react/cjs/locale/zh_CN';
-import zhTwConfig from 'tdesign-react/cjs/locale/zh_TW';
+import itConfig from 'tdesign-react/cjs/locale/it_IT';
 import jaConfig from 'tdesign-react/cjs/locale/ja_JP';
 import koConfig from 'tdesign-react/cjs/locale/ko_KR';
 import ruConfig from 'tdesign-react/cjs/locale/ru_RU';
-import itConfig from 'tdesign-react/cjs/locale/it_IT';
-import arConfig from 'tdesign-react/cjs/locale/ar_KW';
+import zhCnConfig from 'tdesign-react/cjs/locale/zh_CN';
+import zhTwConfig from 'tdesign-react/cjs/locale/zh_TW';
 import generatedTranslations from './i18n/translations';
 import type AppStore from './stores/AppStore';
 import type UserStore from './stores/UserStore';

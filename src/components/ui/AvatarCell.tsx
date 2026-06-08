@@ -1,10 +1,10 @@
 import type { ReactElement } from 'react';
-import { Tag } from 'tdesign-react';
 import {
   type WrappedComponentProps,
   defineMessages,
   injectIntl,
 } from 'react-intl';
+import { Tag } from 'tdesign-react';
 
 const messages = defineMessages({
   vipLabel: {

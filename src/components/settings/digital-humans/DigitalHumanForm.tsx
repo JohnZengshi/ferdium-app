@@ -25,8 +25,8 @@ import {
   Textarea,
 } from 'tdesign-react';
 import type {
-  DigitalHumanCreateRequest,
   AppApiSchemasDigitalHumanResponse,
+  DigitalHumanCreateRequest,
 } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
 

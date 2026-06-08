@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { defineMessages, injectIntl } from 'react-intl';
+import { LockOnIcon, UserIcon } from 'tdesign-icons-react';
 import {
   Button,
   Checkbox,
@@ -11,7 +12,6 @@ import {
   Select,
   type SelectValue,
 } from 'tdesign-react';
-import { UserIcon, LockOnIcon } from 'tdesign-icons-react';
 import type { AuthField, AuthProvider } from '../../@types/auth';
 import { AuthFieldType } from '../../@types/auth';
 import type { Field } from '../../@types/mobx-form.types';

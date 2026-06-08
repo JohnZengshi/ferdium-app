@@ -5,7 +5,7 @@ import {
   defineMessages,
   injectIntl,
 } from 'react-intl';
-import { UserIcon, LockOnIcon } from 'tdesign-icons-react';
+import { LockOnIcon, UserIcon } from 'tdesign-icons-react';
 import Link from '../ui/Link';
 
 const messages = defineMessages({

@@ -168,11 +168,13 @@ class SecuritySettingsTab extends Component<
 
   handleBoundaryAdd = (): void => {
     const { intl } = this.props;
+    const id = this.nextBoundaryId;
+    this.nextBoundaryId += 1;
     this.setState(prev => ({
       boundaries: [
         ...prev.boundaries,
         {
-          id: this.nextBoundaryId++,
+          id,
           label: '',
           value: '',
           placeholder: intl.formatMessage(messages.inputConditionPlaceholder),
@@ -184,12 +186,6 @@ class SecuritySettingsTab extends Component<
   handleBoundaryChange = (id: number, value: string): void => {
     this.setState(prev => ({
       boundaries: prev.boundaries.map(b => (b.id === id ? { ...b, value } : b)),
-    }));
-  };
-
-  handleBoundaryLabelChange = (id: number, label: string): void => {
-    this.setState(prev => ({
-      boundaries: prev.boundaries.map(b => (b.id === id ? { ...b, label } : b)),
     }));
   };
 
@@ -345,7 +341,6 @@ class SecuritySettingsTab extends Component<
                         this.setState({ focusedBoundaryId: item.id })
                       }
                       onBlur={() => this.setState({ focusedBoundaryId: null })}
-                      autoFocus={item.id === 2}
                       className="h-full flex-1 rounded-[8px] border-none bg-transparent px-[16px] text-[15px] font-normal text-primary outline-none placeholder:text-placeholder"
                       style={{ lineHeight: '44px' }}
                     />

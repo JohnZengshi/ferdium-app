@@ -1,39 +1,38 @@
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
+import { type WrappedComponentProps, injectIntl } from 'react-intl';
 import {
   AddIcon,
+  ChevronRightIcon,
+  ErrorCircleIcon,
   RefreshIcon,
   UserIcon,
-  ChevronRightIcon,
+  UsergroupIcon,
   WifiIcon,
   WifiOffIcon,
-  ErrorCircleIcon,
-  UsergroupIcon,
 } from 'tdesign-icons-react';
 import {
-  Button,
-  Switch,
-  Progress,
   Badge,
-  MessagePlugin,
+  Button,
   Dialog,
+  MessagePlugin,
+  Progress,
+  Switch,
 } from 'tdesign-react';
-import { injectIntl, type WrappedComponentProps } from 'react-intl';
-import type { RealStores } from '../../stores';
-import { StepItem } from '../../components/home/StepItem';
 import { SectionHeader } from '../../components/home/SectionHeader';
+import { StepItem } from '../../components/home/StepItem';
+import type { RealStores } from '../../stores';
 import StrategyConfigScreen from './StrategyConfigScreen';
-import ResumeTab from './tabs/ResumeTab';
 import {
   type EmployeeResume,
-  messages,
   MOCK_EMPLOYEES,
   getEmployeeResumes,
+  messages,
 } from './homeScreenData';
+import ResumeTab from './tabs/ResumeTab';
 
 interface HomeScreenProps {
   stores?: RealStores;
-  history?: any;
 }
 
 type IHomeScreenProps = HomeScreenProps & WrappedComponentProps;
@@ -105,9 +104,9 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
     whatsappServices.forEach(s => {
       const status = whatsappAutomation.sessionStatuses.get(s.id);
-      if (status === 'CONNECTED') onlineCount++;
-      else if (status === 'DISCONNECTED') offlineCount++;
-      else errorCount++;
+      if (status === 'CONNECTED') onlineCount += 1;
+      else if (status === 'DISCONNECTED') offlineCount += 1;
+      else errorCount += 1;
     });
 
     const data = [

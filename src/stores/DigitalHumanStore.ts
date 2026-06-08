@@ -16,8 +16,8 @@ import {
   runInAction,
 } from 'mobx';
 import type {
-  DigitalHumanCreateRequest,
   AppApiSchemasDigitalHumanResponse,
+  DigitalHumanCreateRequest,
 } from '../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import {
   assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost,

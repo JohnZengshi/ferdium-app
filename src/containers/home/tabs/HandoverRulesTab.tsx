@@ -3,9 +3,9 @@ import type { WrappedComponentProps } from 'react-intl';
 import { defineMessages, injectIntl } from 'react-intl';
 import {
   AddIcon,
-  NotificationIcon,
   CheckIcon,
   CloseIcon,
+  NotificationIcon,
 } from 'tdesign-icons-react';
 
 const messages = defineMessages({
@@ -149,17 +149,15 @@ class HandoverRulesTab extends Component<
 
   private nextRuleId = 5;
 
-  handleRuleDelete = (id: number): void => {
-    this.setState(prev => ({ rules: prev.rules.filter(r => r.id !== id) }));
-  };
-
   handleRuleAdd = (): void => {
     const { intl } = this.props;
+    const id = this.nextRuleId;
+    this.nextRuleId += 1;
     this.setState(prev => ({
       rules: [
         ...prev.rules,
         {
-          id: this.nextRuleId++,
+          id,
           label: '',
           value: '',
           placeholder: intl.formatMessage(messages.inputConditionPlaceholder),
@@ -373,7 +371,6 @@ class HandoverRulesTab extends Component<
                       placeholder={item.placeholder}
                       onFocus={() => this.setState({ focusedRuleId: item.id })}
                       onBlur={() => this.setState({ focusedRuleId: null })}
-                      autoFocus={item.id === 2}
                       className="h-full flex-1 rounded-[8px] border-none bg-transparent px-[16px] text-[15px] font-normal text-primary outline-none placeholder:text-placeholder"
                       style={{ lineHeight: '44px' }}
                     />

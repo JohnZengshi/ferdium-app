@@ -72,7 +72,7 @@ describe('NextAuthProvider', () => {
     });
 
     it('has correct submit label', () => {
-      expect(provider.config.submitLabel).toBe('Login with NextAuth');
+      expect(provider.config.submitLabel).toBe('进入拓客');
     });
   });
 

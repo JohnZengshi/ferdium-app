@@ -8,182 +8,197 @@ import type {
   HTTPValidationError,
   HandoffCreateRequest,
   HandoffResolveRequest,
-  HandoffResponse
+  HandoffResponse,
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type createHandoffApiV1HandoffPostResponse200 = {
-  data: HandoffResponse
-  status: 200
-}
+  data: HandoffResponse;
+  status: 200;
+};
 
 export type createHandoffApiV1HandoffPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type createHandoffApiV1HandoffPostResponseSuccess = (createHandoffApiV1HandoffPostResponse200) & {
-  headers: Headers;
-};
-export type createHandoffApiV1HandoffPostResponseError = (createHandoffApiV1HandoffPostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type createHandoffApiV1HandoffPostResponse = (createHandoffApiV1HandoffPostResponseSuccess | createHandoffApiV1HandoffPostResponseError)
+export type createHandoffApiV1HandoffPostResponseSuccess =
+  createHandoffApiV1HandoffPostResponse200 & {
+    headers: Headers;
+  };
+export type createHandoffApiV1HandoffPostResponseError =
+  createHandoffApiV1HandoffPostResponse422 & {
+    headers: Headers;
+  };
+
+export type createHandoffApiV1HandoffPostResponse =
+  | createHandoffApiV1HandoffPostResponseSuccess
+  | createHandoffApiV1HandoffPostResponseError;
 
 export const getCreateHandoffApiV1HandoffPostUrl = () => {
-
-
-
-
-  return `http://10.0.0.179:8000/api/v1/handoff`
-}
+  return `http://10.0.0.179:8000/api/v1/handoff`;
+};
 
 /**
  * 为某个会话创建人工接管请求。
  * @summary Create Handoff
  */
-export const createHandoffApiV1HandoffPost = async (handoffCreateRequest: HandoffCreateRequest, options?: RequestInit): Promise<createHandoffApiV1HandoffPostResponse> => {
-
-  return useCustomInstance<createHandoffApiV1HandoffPostResponse>(getCreateHandoffApiV1HandoffPostUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(handoffCreateRequest)
-  }
-);}
-
+export const createHandoffApiV1HandoffPost = async (
+  handoffCreateRequest: HandoffCreateRequest,
+  options?: RequestInit,
+): Promise<createHandoffApiV1HandoffPostResponse> => {
+  return useCustomInstance<createHandoffApiV1HandoffPostResponse>(
+    getCreateHandoffApiV1HandoffPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(handoffCreateRequest),
+    },
+  );
+};
 
 export type listHandoffsApiV1HandoffConversationIdGetResponse200 = {
-  data: HandoffResponse[]
-  status: 200
-}
+  data: HandoffResponse[];
+  status: 200;
+};
 
 export type listHandoffsApiV1HandoffConversationIdGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type listHandoffsApiV1HandoffConversationIdGetResponseSuccess = (listHandoffsApiV1HandoffConversationIdGetResponse200) & {
-  headers: Headers;
-};
-export type listHandoffsApiV1HandoffConversationIdGetResponseError = (listHandoffsApiV1HandoffConversationIdGetResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type listHandoffsApiV1HandoffConversationIdGetResponse = (listHandoffsApiV1HandoffConversationIdGetResponseSuccess | listHandoffsApiV1HandoffConversationIdGetResponseError)
+export type listHandoffsApiV1HandoffConversationIdGetResponseSuccess =
+  listHandoffsApiV1HandoffConversationIdGetResponse200 & {
+    headers: Headers;
+  };
+export type listHandoffsApiV1HandoffConversationIdGetResponseError =
+  listHandoffsApiV1HandoffConversationIdGetResponse422 & {
+    headers: Headers;
+  };
 
-export const getListHandoffsApiV1HandoffConversationIdGetUrl = (conversationId: string,) => {
+export type listHandoffsApiV1HandoffConversationIdGetResponse =
+  | listHandoffsApiV1HandoffConversationIdGetResponseSuccess
+  | listHandoffsApiV1HandoffConversationIdGetResponseError;
 
-
-
-
-  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}`
-}
+export const getListHandoffsApiV1HandoffConversationIdGetUrl = (
+  conversationId: string,
+) => {
+  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}`;
+};
 
 /**
  * 列出某个会话关联的人工接管记录。
  * @summary List Handoffs
  */
-export const listHandoffsApiV1HandoffConversationIdGet = async (conversationId: string, options?: RequestInit): Promise<listHandoffsApiV1HandoffConversationIdGetResponse> => {
-
-  return useCustomInstance<listHandoffsApiV1HandoffConversationIdGetResponse>(getListHandoffsApiV1HandoffConversationIdGetUrl(conversationId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const listHandoffsApiV1HandoffConversationIdGet = async (
+  conversationId: string,
+  options?: RequestInit,
+): Promise<listHandoffsApiV1HandoffConversationIdGetResponse> => {
+  return useCustomInstance<listHandoffsApiV1HandoffConversationIdGetResponse>(
+    getListHandoffsApiV1HandoffConversationIdGetUrl(conversationId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type resolveHandoffApiV1HandoffConversationIdResolvePostResponse200 = {
-  data: HandoffResponse
-  status: 200
-}
+  data: HandoffResponse;
+  status: 200;
+};
 
 export type resolveHandoffApiV1HandoffConversationIdResolvePostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type resolveHandoffApiV1HandoffConversationIdResolvePostResponseSuccess = (resolveHandoffApiV1HandoffConversationIdResolvePostResponse200) & {
-  headers: Headers;
-};
-export type resolveHandoffApiV1HandoffConversationIdResolvePostResponseError = (resolveHandoffApiV1HandoffConversationIdResolvePostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type resolveHandoffApiV1HandoffConversationIdResolvePostResponse = (resolveHandoffApiV1HandoffConversationIdResolvePostResponseSuccess | resolveHandoffApiV1HandoffConversationIdResolvePostResponseError)
+export type resolveHandoffApiV1HandoffConversationIdResolvePostResponseSuccess =
+  resolveHandoffApiV1HandoffConversationIdResolvePostResponse200 & {
+    headers: Headers;
+  };
+export type resolveHandoffApiV1HandoffConversationIdResolvePostResponseError =
+  resolveHandoffApiV1HandoffConversationIdResolvePostResponse422 & {
+    headers: Headers;
+  };
 
-export const getResolveHandoffApiV1HandoffConversationIdResolvePostUrl = (conversationId: string,) => {
+export type resolveHandoffApiV1HandoffConversationIdResolvePostResponse =
+  | resolveHandoffApiV1HandoffConversationIdResolvePostResponseSuccess
+  | resolveHandoffApiV1HandoffConversationIdResolvePostResponseError;
 
-
-
-
-  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}/resolve`
-}
+export const getResolveHandoffApiV1HandoffConversationIdResolvePostUrl = (
+  conversationId: string,
+) => {
+  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}/resolve`;
+};
 
 /**
  * 将指定接管记录标记为已解决。
  * @summary Resolve Handoff
  */
-export const resolveHandoffApiV1HandoffConversationIdResolvePost = async (conversationId: string,
-    handoffResolveRequest: HandoffResolveRequest, options?: RequestInit): Promise<resolveHandoffApiV1HandoffConversationIdResolvePostResponse> => {
-
-  return useCustomInstance<resolveHandoffApiV1HandoffConversationIdResolvePostResponse>(getResolveHandoffApiV1HandoffConversationIdResolvePostUrl(conversationId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(handoffResolveRequest)
-  }
-);}
-
+export const resolveHandoffApiV1HandoffConversationIdResolvePost = async (
+  conversationId: string,
+  handoffResolveRequest: HandoffResolveRequest,
+  options?: RequestInit,
+): Promise<resolveHandoffApiV1HandoffConversationIdResolvePostResponse> => {
+  return useCustomInstance<resolveHandoffApiV1HandoffConversationIdResolvePostResponse>(
+    getResolveHandoffApiV1HandoffConversationIdResolvePostUrl(conversationId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(handoffResolveRequest),
+    },
+  );
+};
 
 export type closeHandoffApiV1HandoffConversationIdClosePostResponse200 = {
-  data: HandoffResponse
-  status: 200
-}
+  data: HandoffResponse;
+  status: 200;
+};
 
 export type closeHandoffApiV1HandoffConversationIdClosePostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type closeHandoffApiV1HandoffConversationIdClosePostResponseSuccess = (closeHandoffApiV1HandoffConversationIdClosePostResponse200) & {
-  headers: Headers;
-};
-export type closeHandoffApiV1HandoffConversationIdClosePostResponseError = (closeHandoffApiV1HandoffConversationIdClosePostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type closeHandoffApiV1HandoffConversationIdClosePostResponse = (closeHandoffApiV1HandoffConversationIdClosePostResponseSuccess | closeHandoffApiV1HandoffConversationIdClosePostResponseError)
+export type closeHandoffApiV1HandoffConversationIdClosePostResponseSuccess =
+  closeHandoffApiV1HandoffConversationIdClosePostResponse200 & {
+    headers: Headers;
+  };
+export type closeHandoffApiV1HandoffConversationIdClosePostResponseError =
+  closeHandoffApiV1HandoffConversationIdClosePostResponse422 & {
+    headers: Headers;
+  };
 
-export const getCloseHandoffApiV1HandoffConversationIdClosePostUrl = (conversationId: string,) => {
+export type closeHandoffApiV1HandoffConversationIdClosePostResponse =
+  | closeHandoffApiV1HandoffConversationIdClosePostResponseSuccess
+  | closeHandoffApiV1HandoffConversationIdClosePostResponseError;
 
-
-
-
-  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}/close`
-}
+export const getCloseHandoffApiV1HandoffConversationIdClosePostUrl = (
+  conversationId: string,
+) => {
+  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}/close`;
+};
 
 /**
  * 将指定接管记录关闭。
  * @summary Close Handoff
  */
-export const closeHandoffApiV1HandoffConversationIdClosePost = async (conversationId: string,
-    handoffResolveRequest: HandoffResolveRequest, options?: RequestInit): Promise<closeHandoffApiV1HandoffConversationIdClosePostResponse> => {
-
-  return useCustomInstance<closeHandoffApiV1HandoffConversationIdClosePostResponse>(getCloseHandoffApiV1HandoffConversationIdClosePostUrl(conversationId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(handoffResolveRequest)
-  }
-);}
-
-
+export const closeHandoffApiV1HandoffConversationIdClosePost = async (
+  conversationId: string,
+  handoffResolveRequest: HandoffResolveRequest,
+  options?: RequestInit,
+): Promise<closeHandoffApiV1HandoffConversationIdClosePostResponse> => {
+  return useCustomInstance<closeHandoffApiV1HandoffConversationIdClosePostResponse>(
+    getCloseHandoffApiV1HandoffConversationIdClosePostUrl(conversationId),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(handoffResolveRequest),
+    },
+  );
+};

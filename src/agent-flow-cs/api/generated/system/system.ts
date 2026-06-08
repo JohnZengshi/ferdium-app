@@ -4,45 +4,36 @@
  * agent-flow-cs
  * OpenAPI spec version: 0.1.0
  */
-import type {
-  HealthzHealthzGet200
-} from '../agentFlowCs.schemas';
+import type { HealthzHealthzGet200 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type healthzHealthzGetResponse200 = {
-  data: HealthzHealthzGet200
-  status: 200
-}
+  data: HealthzHealthzGet200;
+  status: 200;
+};
 
-export type healthzHealthzGetResponseSuccess = (healthzHealthzGetResponse200) & {
+export type healthzHealthzGetResponseSuccess = healthzHealthzGetResponse200 & {
   headers: Headers;
 };
-;
-
-export type healthzHealthzGetResponse = (healthzHealthzGetResponseSuccess)
+export type healthzHealthzGetResponse = healthzHealthzGetResponseSuccess;
 
 export const getHealthzHealthzGetUrl = () => {
-
-
-
-
-  return `http://10.0.0.179:8000/healthz`
-}
+  return `http://10.0.0.179:8000/healthz`;
+};
 
 /**
  * 提供基础存活探针，供本地检查和编排系统使用。
  * @summary Healthz
  */
-export const healthzHealthzGet = async ( options?: RequestInit): Promise<healthzHealthzGetResponse> => {
-
-  return useCustomInstance<healthzHealthzGetResponse>(getHealthzHealthzGetUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
+export const healthzHealthzGet = async (
+  options?: RequestInit,
+): Promise<healthzHealthzGetResponse> => {
+  return useCustomInstance<healthzHealthzGetResponse>(
+    getHealthzHealthzGetUrl(),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};

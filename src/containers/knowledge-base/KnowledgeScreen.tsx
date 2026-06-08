@@ -1,5 +1,18 @@
-import { useCallback, useState, useMemo, type ReactElement } from 'react';
+import { type ReactElement, useCallback, useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import {
+  AddIcon,
+  CalendarIcon,
+  ChevronLeftIcon,
+  EditIcon,
+  FileIcon,
+  FolderIcon,
+  GenderMaleIcon,
+  HomeIcon,
+  UserIcon,
+  UsergroupIcon,
+  WorkIcon,
+} from 'tdesign-icons-react';
 import {
   Button,
   DatePicker,
@@ -11,21 +24,8 @@ import {
 } from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
 import {
-  AddIcon,
-  CalendarIcon,
-  ChevronLeftIcon,
-  EditIcon,
-  FileIcon,
-  FolderIcon,
-  GenderMaleIcon,
-  HomeIcon,
-  UsergroupIcon,
-  UserIcon,
-  WorkIcon,
-} from 'tdesign-icons-react';
-import {
-  SidebarMenu,
   type SidebarItem,
+  SidebarMenu,
 } from '../../components/home/SidebarMenu';
 
 const messages = defineMessages({

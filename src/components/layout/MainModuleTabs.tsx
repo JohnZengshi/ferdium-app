@@ -1,12 +1,12 @@
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import {
-  HomeIcon,
-  HomeFilledIcon,
-  ChatBubble1Icon,
-  ChatBubble1FilledIcon,
-  BookOpenIcon,
   BookOpenFilledIcon,
+  BookOpenIcon,
+  ChatBubble1FilledIcon,
+  ChatBubble1Icon,
+  HomeFilledIcon,
+  HomeIcon,
 } from 'tdesign-icons-react';
 
 import {

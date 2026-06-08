@@ -1,22 +1,23 @@
+import PropTypes from 'prop-types';
 import {
+  type ReactElement,
   useCallback,
   useEffect,
   useRef,
   useState,
-  type ReactElement,
 } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import {
   ChevronLeftIcon,
-  UserIcon,
-  LockOnIcon,
-  UserSafetyIcon,
   FolderOpenIcon,
+  LockOnIcon,
+  UserIcon,
+  UserSafetyIcon,
 } from 'tdesign-icons-react';
-import ResumeTab from './tabs/ResumeTab';
-import SecuritySettingsTab from './tabs/SecuritySettingsTab';
 import HandoverRulesTab from './tabs/HandoverRulesTab';
 import NotificationsTab from './tabs/NotificationsTab';
+import ResumeTab from './tabs/ResumeTab';
+import SecuritySettingsTab from './tabs/SecuritySettingsTab';
 
 const messages = defineMessages({
   title: {
@@ -115,12 +116,13 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
       >
         <ChevronLeftIcon className="h-[18px] w-[18px] text-primary" />
       </button>
-      <span
-        className="ml-[12px] cursor-pointer select-none text-[20px] font-semibold leading-[28px] text-primary"
+      <button
+        type="button"
+        className="ml-[12px] cursor-pointer select-none border-none bg-transparent p-0 text-[20px] font-semibold leading-[28px] text-primary"
         onClick={onBack}
       >
         {intl.formatMessage(messages.title)}
-      </span>
+      </button>
     </div>
   );
 
@@ -131,7 +133,14 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
         return (
           <div
             key={item.key}
+            role="button"
+            tabIndex={0}
             onClick={() => handleSidebarClick(item.key)}
+            onKeyDown={event => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                handleSidebarClick(item.key);
+              }
+            }}
             className={`ml-[8px] mr-[8px] mb-[8px] flex h-[36px] cursor-pointer items-center rounded-[4px] pl-[12px] pr-[16px] transition-colors duration-200 ${
               isActive ? 'bg-brand-light' : 'hover:bg-secondary-container'
             }`}
@@ -185,6 +194,10 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
       </div>
     </div>
   );
+};
+
+StrategyConfigScreen.propTypes = {
+  onBack: PropTypes.func.isRequired,
 };
 
 export default StrategyConfigScreen;

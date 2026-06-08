@@ -221,6 +221,16 @@ export const clearApiKey = (): void => {
   localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
   (window as any).ferdium?.stores?.user?.setWaAkgEmail?.(null);
   localStorage.removeItem(API_KEY_STORAGE_KEY);
+  try {
+    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
+    if (settingsApp && typeof settingsApp === 'object') {
+      settingsApp[API_KEY_KEY] = '';
+    }
+  } catch {
+    console.warn(
+      '[WhatsApp Automation] Failed to clear API key from settings store',
+    );
+  }
 };
 
 /**

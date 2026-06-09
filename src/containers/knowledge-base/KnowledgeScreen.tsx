@@ -666,7 +666,7 @@ const KnowledgeScreen: React.FC = () => {
                   placeholder={intl.formatMessage(messages.inputPlaceholder)}
                   value={formData.family}
                   onChange={e => handleFormChange('family', e.target.value)}
-                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
+                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line bg-special-component p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
                 />
               </div>
 
@@ -694,7 +694,7 @@ const KnowledgeScreen: React.FC = () => {
                   onChange={e =>
                     handleFormChange('participation', e.target.value)
                   }
-                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
+                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line bg-special-component p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
                 />
               </div>
 
@@ -726,7 +726,7 @@ const KnowledgeScreen: React.FC = () => {
                 )}
                 value={smartImportText}
                 onChange={e => handleSmartImportTextChange(e.target.value)}
-                className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-brand p-[12px] text-[12px] leading-[1.5] text-secondary outline-none placeholder:text-secondary"
+                className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-brand bg-special-component p-[12px] text-[12px] leading-[1.5] text-secondary outline-none placeholder:text-secondary"
               />
 
               <div className="mt-[16px] flex justify-end">

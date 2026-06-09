@@ -109,6 +109,18 @@ export function getStepStatus(
 
 /**
  * Reset onboarding progress (for testing or admin purposes)
+ *
+ * Usage in browser DevTools console:
+ * ```javascript
+ * localStorage.removeItem('ferdium_onboarding_progress');
+ * window.location.reload();
+ * ```
+ *
+ * Or programmatically:
+ * ```typescript
+ * import { resetOnboardingProgress } from './helpers/onboarding-helpers';
+ * resetOnboardingProgress();
+ * ```
  */
 export function resetOnboardingProgress(): void {
   localStorage.removeItem(ONBOARDING_STORAGE_KEY);

@@ -1,5 +1,5 @@
-import { inject, observer } from 'mobx-react';
 import { reaction } from 'mobx';
+import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import { type WrappedComponentProps, injectIntl } from 'react-intl';
 import {
@@ -123,21 +123,26 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
   /**
    * Check if step 1 (account binding) is completed
+   * Note: This is a one-time onboarding check, not a real-time status monitor.
+   * Once the user completes this step, it stays completed even if they delete
+   * the service later, since the goal is to guide new users, not track live status.
    */
   checkStep1Completion = async (): Promise<void> => {
     const { whatsappAutomation } = this.props.stores!;
 
+    // If already marked as completed in localStorage, keep it completed
+    // (user has already learned how to do this, no need to guide again)
+    if (this.state.step1Completed) {
+      return;
+    }
+
     try {
       const isBinding = await whatsappAutomation.hasAnyAccountBinding();
 
-      if (isBinding && !this.state.step1Completed) {
-        // Mark step 1 as completed
+      if (isBinding) {
+        // First-time completion: mark as completed and save permanently
         this.setState({ step1Completed: true });
         updateOnboardingStep(1, true);
-      } else if (!isBinding && this.state.step1Completed) {
-        // If account is unbound, revert step 1
-        this.setState({ step1Completed: false });
-        updateOnboardingStep(1, false);
       }
     } catch (error) {
       console.error('Failed to check step 1 completion:', error);

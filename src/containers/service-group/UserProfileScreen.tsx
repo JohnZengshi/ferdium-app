@@ -1,6 +1,12 @@
 import { observer } from 'mobx-react';
 /* eslint-disable react/no-unstable-nested-components */
-import { type ReactElement, useMemo } from 'react';
+import {
+  type ReactElement,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { RefreshIcon, SearchIcon } from 'tdesign-icons-react';
 import {
@@ -13,6 +19,12 @@ import {
 } from 'tdesign-react';
 import AvatarCell from '../../components/ui/AvatarCell';
 import FilterToolbar from '../../components/ui/FilterToolbar';
+import { listCustomerProfilesApiV1OwnersCustomerProfilesGet } from '../../agent-flow-cs/api/generated/owners/owners';
+import type {
+  AppApiSchemasOwnersCustomerProfileListResponse,
+  CustomerProfileResponse,
+  ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams,
+} from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 
 const messages = defineMessages({
   colId: { id: 'userProfile.col.id', defaultMessage: '序号' },
@@ -59,7 +71,7 @@ const messages = defineMessages({
 });
 
 interface FanProfile {
-  id: number;
+  id: string;
   username: string;
   phone: string;
   isVIP: boolean;
@@ -75,83 +87,125 @@ interface FanProfile {
   ownerPhone: string;
 }
 
-const rows: FanProfile[] = Array.from({ length: 5 }, (_, i): FanProfile => {
-  switch (i) {
-    case 0: {
-      return {
-        id: 6,
-        username: '用户名',
-        phone: '+85217856343',
-        isVIP: true,
-        region: '美国',
-        gender: '男',
-        stage: '新增线索',
-        stageColor: 'blue',
-        tag: '金融理财',
-        tagColor: 'orange',
-        intentLevel: '高意向',
-        intentColor: 'green',
-        ownerUsername: '用户名',
-        ownerPhone: '+85217856343',
-      };
-    }
-    case 1: {
-      return {
-        id: 7,
-        username: '用户名',
-        phone: '+85217856343',
-        isVIP: false,
-        region: '美国',
-        gender: '男',
-        stage: '未知',
-        stageColor: 'orange',
-        tag: '不匹配',
-        tagColor: 'red',
-        intentLevel: '不匹配',
-        intentColor: 'red',
-        ownerUsername: '用户名',
-        ownerPhone: '+85217856343',
-      };
-    }
-    default: {
-      return {
-        id: 6 + i,
-        username: '用户名',
-        phone: '+85217856343',
-        isVIP: false,
-        region: '美国',
-        gender: '男',
-        stage: '默认标签',
-        stageColor: 'blue',
-        tag: '默认标签',
-        tagColor: 'orange',
-        intentLevel: '健康',
-        intentColor: 'green',
-        ownerUsername: '用户名',
-        ownerPhone: '+85217856343',
-      };
-    }
-  }
-});
-
-const STAGE_COLOR_MAP = {
-  blue: 'primary' as const,
-  orange: 'warning' as const,
+const STAGE_COLOR_MAP: Record<string, 'primary' | 'warning'> = {
+  blue: 'primary',
+  orange: 'warning',
 };
-const TAG_COLOR_MAP = { orange: 'warning' as const, red: 'danger' as const };
-const INTENT_CLASS_MAP = { green: 'text-success', red: 'text-error' };
-const INTENT_DOT_MAP = { green: 'bg-success', red: 'bg-error' };
+const TAG_COLOR_MAP: Record<string, 'warning' | 'danger'> = {
+  orange: 'warning',
+  red: 'danger',
+};
+const INTENT_CLASS_MAP: Record<string, string> = {
+  green: 'text-success',
+  red: 'text-error',
+};
+const INTENT_DOT_MAP: Record<string, string> = {
+  green: 'bg-success',
+  red: 'bg-error',
+};
+
+function mapProfileToFanProfile(profile: CustomerProfileResponse): FanProfile {
+  const stage = profile.customer_value || '—';
+  const stageColor: 'blue' | 'orange' = stage.includes('高')
+    ? 'blue'
+    : 'orange';
+
+  const firstTag =
+    Array.isArray(profile.tags) && profile.tags.length > 0
+      ? String(profile.tags[0])
+      : '—';
+  const tagColor: 'orange' | 'red' = firstTag.includes('不匹配')
+    ? 'red'
+    : 'orange';
+
+  const intentLevel = profile.intent_level || '—';
+  const intentColor: 'green' | 'red' =
+    intentLevel.includes('高') || intentLevel.toLowerCase().includes('high')
+      ? 'green'
+      : 'red';
+
+  return {
+    id: profile.customer_id || profile.id,
+    username: profile.nickname || '—',
+    phone: '',
+    isVIP: profile.customer_value === '高价值',
+    region: profile.region || '—',
+    gender: profile.gender || '—',
+    stage,
+    stageColor,
+    tag: firstTag,
+    tagColor,
+    intentLevel,
+    intentColor,
+    ownerUsername: profile.owner_username || '—',
+    ownerPhone: '',
+  };
+}
 
 function UserProfileScreen(): ReactElement {
   const intl = useIntl();
 
-  const columns: PrimaryTableCol<FanProfile>[] = useMemo(
+  const [data, setData] = useState<FanProfile[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [searchText, setSearchText] = useState('');
+  const [filterStatus, setFilterStatus] = useState<string | undefined>();
+  const [filterPersona, setFilterPersona] = useState<string | undefined>();
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params: ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams = {
+        page,
+        page_size: pageSize,
+      };
+      if (searchText) params.search = searchText;
+      if (filterStatus) params.intent_level = filterStatus;
+      if (filterPersona) params.customer_value = filterPersona;
+
+      const result =
+        await listCustomerProfilesApiV1OwnersCustomerProfilesGet(params);
+      const body =
+        result.data as AppApiSchemasOwnersCustomerProfileListResponse;
+      const items = (
+        body.items || []
+      ).map(profile => mapProfileToFanProfile(profile));
+      setData(items);
+      setTotal(body.total);
+    } catch {
+      setData([]);
+      setTotal(0);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, pageSize, searchText, filterStatus, filterPersona]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleSearch = useCallback(() => {
+    setPage(1);
+    fetchData();
+  }, [fetchData]);
+
+  const handleReset = useCallback(() => {
+    setSearchText('');
+    setFilterStatus(undefined);
+    setFilterPersona(undefined);
+    setPage(1);
+  }, []);
+
+  const columns = useMemo<PrimaryTableCol<FanProfile>[]>(
     () => [
       {
         colKey: 'id',
         title: intl.formatMessage(messages.colId),
         width: 64,
         align: 'center',
+        cell: ({ rowIndex }) => rowIndex + 1 + (page - 1) * pageSize,
       },
       {
         colKey: 'username',
@@ -259,7 +313,7 @@ function UserProfileScreen(): ReactElement {
         ),
       },
     ],
-    [intl],
+    [intl, page, pageSize],
   );
 
   return (
@@ -272,6 +326,8 @@ function UserProfileScreen(): ReactElement {
                 prefixIcon={<SearchIcon />}
                 placeholder={intl.formatMessage(messages.searchPlaceholder)}
                 className="!w-[240px]"
+                value={searchText}
+                onChange={setSearchText}
               />
               <span className="text-[14px] leading-[22px] text-primary">
                 {intl.formatMessage(messages.filterStatus)}
@@ -279,6 +335,15 @@ function UserProfileScreen(): ReactElement {
               <Select
                 className="!w-[160px]"
                 placeholder={intl.formatMessage(messages.filterPlaceholder)}
+                value={filterStatus}
+                onChange={val => setFilterStatus(val as string)}
+                clearable
+                options={[
+                  { label: '高意向', value: '高意向' },
+                  { label: '低意向', value: '低意向' },
+                  { label: '新增线索', value: '新增线索' },
+                  { label: '不匹配', value: '不匹配' },
+                ]}
               />
               <span className="text-[14px] leading-[22px] text-primary">
                 {intl.formatMessage(messages.filterPersona)}
@@ -286,11 +351,24 @@ function UserProfileScreen(): ReactElement {
               <Select
                 className="!w-[160px]"
                 placeholder={intl.formatMessage(messages.filterPlaceholder)}
+                value={filterPersona}
+                onChange={val => setFilterPersona(val as string)}
+                clearable
+                options={[
+                  { label: '高价值', value: '高价值' },
+                  { label: '中价值', value: '中价值' },
+                  { label: '低价值', value: '低价值' },
+                ]}
               />
-              <Button theme="primary">
+              <Button theme="primary" onClick={handleSearch}>
                 {intl.formatMessage(messages.search)}
               </Button>
-              <Button theme="default" variant="outline" icon={<RefreshIcon />}>
+              <Button
+                theme="default"
+                variant="outline"
+                icon={<RefreshIcon />}
+                onClick={handleReset}
+              >
                 {intl.formatMessage(messages.reset)}
               </Button>
             </>
@@ -307,25 +385,33 @@ function UserProfileScreen(): ReactElement {
               >
                 {intl.formatMessage(messages.moreActions)}
               </Button>
-              <RefreshIcon className="cursor-pointer text-[20px] text-primary" />
+              <RefreshIcon
+                className="cursor-pointer text-[20px] text-primary"
+                onClick={() => fetchData()}
+              />
             </>
           }
         />
 
         <Table
-          data={rows}
+          data={data}
           columns={columns}
           rowKey="id"
           bordered
           stripe={false}
           hover
+          loading={loading}
           pagination={{
-            current: 11,
-            pageSize: 20,
-            total: 101,
+            current: page,
+            pageSize,
+            total,
             showJumper: true,
             showPageSize: true,
             pageSizeOptions: [10, 20, 50],
+          }}
+          onPageChange={pageInfo => {
+            setPage(pageInfo.current);
+            setPageSize(pageInfo.pageSize);
           }}
           tableLayout="fixed"
           resizable

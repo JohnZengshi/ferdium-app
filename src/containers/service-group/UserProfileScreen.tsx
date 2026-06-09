@@ -253,6 +253,7 @@ function UserProfileScreen(): ReactElement {
         colKey: 'owner',
         title: intl.formatMessage(messages.colOwner),
         width: 200,
+        fixed: 'right',
         cell: ({ row }) => (
           <AvatarCell title={row.ownerUsername} subtitle={row.ownerPhone} />
         ),
@@ -327,6 +328,8 @@ function UserProfileScreen(): ReactElement {
             pageSizeOptions: [10, 20, 50],
           }}
           tableLayout="fixed"
+          resizable
+          lazyLoad
         />
 
         <div className="flex-1 bg-container" />

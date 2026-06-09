@@ -13,417 +13,364 @@ import type {
   HTTPValidationError,
   ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200,
   UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200,
-  UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams,
+  UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listDigitalHumansApiV1DigitalHumansGetResponse200 = {
-  data: AppApiSchemasDigitalHumanResponse[];
-  status: 200;
-};
+  data: AppApiSchemasDigitalHumanResponse[]
+  status: 200
+}
 
-export type listDigitalHumansApiV1DigitalHumansGetResponseSuccess =
-  listDigitalHumansApiV1DigitalHumansGetResponse200 & {
-    headers: Headers;
-  };
-export type listDigitalHumansApiV1DigitalHumansGetResponse =
-  listDigitalHumansApiV1DigitalHumansGetResponseSuccess;
+export type listDigitalHumansApiV1DigitalHumansGetResponseSuccess = (listDigitalHumansApiV1DigitalHumansGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse = (listDigitalHumansApiV1DigitalHumansGetResponseSuccess)
 
 export const getListDigitalHumansApiV1DigitalHumansGetUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans`;
-};
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/digital-humans`
+}
 
 /**
  * 列出当前用户可见的数字人：主账号看自建全部，子账号看被分配的。
  * @summary List Digital Humans
  */
-export const listDigitalHumansApiV1DigitalHumansGet = async (
-  options?: RequestInit,
-): Promise<listDigitalHumansApiV1DigitalHumansGetResponse> => {
-  return useCustomInstance<listDigitalHumansApiV1DigitalHumansGetResponse>(
-    getListDigitalHumansApiV1DigitalHumansGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listDigitalHumansApiV1DigitalHumansGet = async ( options?: RequestInit): Promise<listDigitalHumansApiV1DigitalHumansGetResponse> => {
+
+  return useCustomInstance<listDigitalHumansApiV1DigitalHumansGetResponse>(getListDigitalHumansApiV1DigitalHumansGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type createDigitalHumanApiV1DigitalHumansPostResponse200 = {
-  data: AppApiSchemasDigitalHumanResponse;
-  status: 200;
-};
+  data: AppApiSchemasDigitalHumanResponse
+  status: 200
+}
 
 export type createDigitalHumanApiV1DigitalHumansPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponseSuccess = (createDigitalHumanApiV1DigitalHumansPostResponse200) & {
+  headers: Headers;
+};
+export type createDigitalHumanApiV1DigitalHumansPostResponseError = (createDigitalHumanApiV1DigitalHumansPostResponse422) & {
+  headers: Headers;
 };
 
-export type createDigitalHumanApiV1DigitalHumansPostResponseSuccess =
-  createDigitalHumanApiV1DigitalHumansPostResponse200 & {
-    headers: Headers;
-  };
-export type createDigitalHumanApiV1DigitalHumansPostResponseError =
-  createDigitalHumanApiV1DigitalHumansPostResponse422 & {
-    headers: Headers;
-  };
-
-export type createDigitalHumanApiV1DigitalHumansPostResponse =
-  | createDigitalHumanApiV1DigitalHumansPostResponseSuccess
-  | createDigitalHumanApiV1DigitalHumansPostResponseError;
+export type createDigitalHumanApiV1DigitalHumansPostResponse = (createDigitalHumanApiV1DigitalHumansPostResponseSuccess | createDigitalHumanApiV1DigitalHumansPostResponseError)
 
 export const getCreateDigitalHumanApiV1DigitalHumansPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans`;
-};
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/digital-humans`
+}
 
 /**
  * 创建数字人（主账号或子账号均可，子账号创建时自动分配给自己）。
  * @summary Create Digital Human
  */
-export const createDigitalHumanApiV1DigitalHumansPost = async (
-  digitalHumanCreateRequest: DigitalHumanCreateRequest,
-  options?: RequestInit,
-): Promise<createDigitalHumanApiV1DigitalHumansPostResponse> => {
-  return useCustomInstance<createDigitalHumanApiV1DigitalHumansPostResponse>(
-    getCreateDigitalHumanApiV1DigitalHumansPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(digitalHumanCreateRequest),
-    },
-  );
-};
+export const createDigitalHumanApiV1DigitalHumansPost = async (digitalHumanCreateRequest: DigitalHumanCreateRequest, options?: RequestInit): Promise<createDigitalHumanApiV1DigitalHumansPostResponse> => {
+
+  return useCustomInstance<createDigitalHumanApiV1DigitalHumansPostResponse>(getCreateDigitalHumanApiV1DigitalHumansPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(digitalHumanCreateRequest)
+  }
+);}
+
 
 export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse200 = {
-  data: AppApiSchemasDigitalHumanResponse;
-  status: 200;
-};
+  data: AppApiSchemasDigitalHumanResponse
+  status: 200
+}
 
 export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseSuccess = (getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse200) & {
+  headers: Headers;
+};
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseError = (getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseSuccess =
-  getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse200 & {
-    headers: Headers;
-  };
-export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseError =
-  getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse422 & {
-    headers: Headers;
-  };
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse = (getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseSuccess | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseError)
 
-export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse =
-  | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseSuccess
-  | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseError;
+export const getGetDigitalHumanApiV1DigitalHumansDigitalHumanIdGetUrl = (digitalHumanId: string,) => {
 
-export const getGetDigitalHumanApiV1DigitalHumansDigitalHumanIdGetUrl = (
-  digitalHumanId: string,
-) => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`;
-};
+
+
+
+  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`
+}
 
 /**
  * 按 id 获取数字人；超出可见范围按 404 处理（不泄露存在性）。
  * @summary Get Digital Human
  */
-export const getDigitalHumanApiV1DigitalHumansDigitalHumanIdGet = async (
-  digitalHumanId: string,
-  options?: RequestInit,
-): Promise<getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse> => {
-  return useCustomInstance<getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse>(
-    getGetDigitalHumanApiV1DigitalHumansDigitalHumanIdGetUrl(digitalHumanId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getDigitalHumanApiV1DigitalHumansDigitalHumanIdGet = async (digitalHumanId: string, options?: RequestInit): Promise<getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse> => {
+
+  return useCustomInstance<getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse>(getGetDigitalHumanApiV1DigitalHumansDigitalHumanIdGetUrl(digitalHumanId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse200 = {
-  data: AppApiSchemasDigitalHumanResponse;
-  status: 200;
-};
+  data: AppApiSchemasDigitalHumanResponse
+  status: 200
+}
 
 export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseSuccess = (updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse200) & {
+  headers: Headers;
+};
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseError = (updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse422) & {
+  headers: Headers;
 };
 
-export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseSuccess =
-  updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse200 & {
-    headers: Headers;
-  };
-export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseError =
-  updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse422 & {
-    headers: Headers;
-  };
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse = (updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseSuccess | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseError)
 
-export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse =
-  | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseSuccess
-  | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseError;
+export const getUpdateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutUrl = (digitalHumanId: string,) => {
 
-export const getUpdateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutUrl = (
-  digitalHumanId: string,
-) => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`;
-};
+
+
+
+  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`
+}
 
 /**
  * 更新数字人（主账号或创建者可操作）。
  * @summary Update Digital Human
  */
-export const updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut = async (
-  digitalHumanId: string,
-  digitalHumanUpdateRequest: DigitalHumanUpdateRequest,
-  options?: RequestInit,
-): Promise<updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse> => {
-  return useCustomInstance<updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse>(
-    getUpdateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutUrl(digitalHumanId),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(digitalHumanUpdateRequest),
-    },
-  );
+export const updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut = async (digitalHumanId: string,
+    digitalHumanUpdateRequest: DigitalHumanUpdateRequest, options?: RequestInit): Promise<updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse> => {
+
+  return useCustomInstance<updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse>(getUpdateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutUrl(digitalHumanId),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(digitalHumanUpdateRequest)
+  }
+);}
+
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse204 = {
+  data: void
+  status: 204
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseSuccess = (deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse204) & {
+  headers: Headers;
+};
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseError = (deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse422) & {
+  headers: Headers;
 };
 
-export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse204 =
-  {
-    data: void;
-    status: 204;
-  };
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse = (deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseSuccess | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseError)
 
-export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getDeleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteUrl = (digitalHumanId: string,) => {
 
-export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseSuccess =
-  deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse204 & {
-    headers: Headers;
-  };
-export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseError =
-  deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse422 & {
-    headers: Headers;
-  };
 
-export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse =
-  | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseSuccess
-  | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseError;
 
-export const getDeleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteUrl = (
-  digitalHumanId: string,
-) => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`;
-};
+
+  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`
+}
 
 /**
  * 归档数字人（主账号或创建者可操作）。
  * @summary Delete Digital Human
  */
-export const deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDelete = async (
-  digitalHumanId: string,
-  options?: RequestInit,
-): Promise<deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse> => {
-  return useCustomInstance<deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse>(
-    getDeleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteUrl(
-      digitalHumanId,
-    ),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
+export const deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDelete = async (digitalHumanId: string, options?: RequestInit): Promise<deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse> => {
+
+  return useCustomInstance<deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse>(getDeleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteUrl(digitalHumanId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse201 = {
+  data: AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost201
+  status: 201
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseSuccess = (assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse201) & {
+  headers: Headers;
+};
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseError = (assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse422) & {
+  headers: Headers;
 };
 
-export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse201 =
-  {
-    data: AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost201;
-    status: 201;
-  };
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse = (assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseSuccess | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseError)
 
-export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getAssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostUrl = (digitalHumanId: string,
+    params: AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseSuccess =
-  assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse201 & {
-    headers: Headers;
-  };
-export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseError =
-  assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse422 & {
-    headers: Headers;
-  };
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse =
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
 
-    | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseSuccess
-    | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseError;
+  const stringifiedParams = normalizedParams.toString();
 
-export const getAssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostUrl =
-  (
-    digitalHumanId: string,
-    params: AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams,
-  ) => {
-    const normalizedParams = new URLSearchParams();
-
-    Object.entries(params || {}).forEach(([key, value]) => {
-      if (value !== undefined) {
-        normalizedParams.append(key, value === null ? 'null' : String(value));
-      }
-    });
-
-    const stringifiedParams = normalizedParams.toString();
-
-    return stringifiedParams.length > 0
-      ? `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}`
-      : `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
-  };
+  return stringifiedParams.length > 0 ? `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}` : `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
+}
 
 /**
  * 主账号将数字人分配给子账号。
  * @summary Assign Digital Human
  */
-export const assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost =
-  async (
-    digitalHumanId: string,
-    params: AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams,
-    options?: RequestInit,
-  ): Promise<assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse> => {
-    return useCustomInstance<assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse>(
-      getAssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostUrl(
-        digitalHumanId,
-        params,
-      ),
-      {
-        ...options,
-        method: 'POST',
-      },
-    );
-  };
+export const assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost = async (digitalHumanId: string,
+    params: AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams, options?: RequestInit): Promise<assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse> => {
 
-export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse200 =
+  return useCustomInstance<assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse>(getAssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostUrl(digitalHumanId,params),
   {
-    data: UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200;
-    status: 200;
-  };
+    ...options,
+    method: 'POST'
 
-export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseSuccess =
-  unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse200 & {
-    headers: Headers;
-  };
-export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseError =
-  unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse422 & {
-    headers: Headers;
-  };
+  }
+);}
 
-export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse =
 
-    | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseSuccess
-    | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseError;
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse200 = {
+  data: UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200
+  status: 200
+}
 
-export const getUnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteUrl =
-  (
-    digitalHumanId: string,
-    params: UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams,
-  ) => {
-    const normalizedParams = new URLSearchParams();
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
 
-    Object.entries(params || {}).forEach(([key, value]) => {
-      if (value !== undefined) {
-        normalizedParams.append(key, value === null ? 'null' : String(value));
-      }
-    });
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseSuccess = (unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse200) & {
+  headers: Headers;
+};
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseError = (unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse422) & {
+  headers: Headers;
+};
 
-    const stringifiedParams = normalizedParams.toString();
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse = (unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseSuccess | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseError)
 
-    return stringifiedParams.length > 0
-      ? `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}`
-      : `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
-  };
+export const getUnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteUrl = (digitalHumanId: string,
+    params: UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}` : `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
+}
 
 /**
  * 主账号撤回对某子账号的数字人分配。
  * @summary Unassign Digital Human
  */
-export const unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete =
-  async (
-    digitalHumanId: string,
-    params: UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams,
-    options?: RequestInit,
-  ): Promise<unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse> => {
-    return useCustomInstance<unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse>(
-      getUnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteUrl(
-        digitalHumanId,
-        params,
-      ),
-      {
-        ...options,
-        method: 'DELETE',
-      },
-    );
-  };
+export const unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete = async (digitalHumanId: string,
+    params: UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams, options?: RequestInit): Promise<unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse> => {
 
-export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse200 =
+  return useCustomInstance<unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse>(getUnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteUrl(digitalHumanId,params),
   {
-    data: ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200;
-    status: 200;
-  };
+    ...options,
+    method: 'DELETE'
 
-export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseSuccess =
-  listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse200 & {
-    headers: Headers;
-  };
-export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseError =
-  listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse422 & {
-    headers: Headers;
-  };
+  }
+);}
 
-export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse =
 
-    | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseSuccess
-    | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseError;
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse200 = {
+  data: ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200
+  status: 200
+}
 
-export const getListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetUrl =
-  (digitalHumanId: string) => {
-    return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
-  };
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseSuccess = (listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse200) & {
+  headers: Headers;
+};
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseError = (listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse422) & {
+  headers: Headers;
+};
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse = (listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseSuccess | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseError)
+
+export const getListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetUrl = (digitalHumanId: string,) => {
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
+}
 
 /**
  * 主账号查看数字人被分配给的子账号集合。
  * @summary List Digital Human Assignments
  */
-export const listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet =
-  async (
-    digitalHumanId: string,
-    options?: RequestInit,
-  ): Promise<listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse> => {
-    return useCustomInstance<listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse>(
-      getListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetUrl(
-        digitalHumanId,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet = async (digitalHumanId: string, options?: RequestInit): Promise<listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse> => {
+
+  return useCustomInstance<listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse>(getListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetUrl(digitalHumanId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

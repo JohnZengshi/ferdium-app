@@ -1,17 +1,20 @@
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 /* eslint-disable react/no-unstable-nested-components */
-import { type ReactElement, useMemo } from 'react';
+import { type ReactElement, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Edit1Icon, RefreshIcon } from 'tdesign-icons-react';
 import {
   Button,
   type PrimaryTableCol,
+  type PrimaryTableRef,
   Select,
   Table,
   Tag,
 } from 'tdesign-react';
 import AvatarCell from '../../components/ui/AvatarCell';
 import FilterToolbar from '../../components/ui/FilterToolbar';
+import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
+import type Service from '../../models/Service';
 
 const messages = defineMessages({
   colId: { id: 'accountMgmt.col.id', defaultMessage: '序号' },
@@ -49,38 +52,97 @@ const messages = defineMessages({
 });
 
 interface Account {
-  id: number;
+  id: string;
   username: string;
   phone: string;
-  status: 'online' | 'offline';
+  status: 'online' | 'offline' | 'error' | 'unknown';
   persona: string;
   note: string;
-  autoChat: 'on' | 'off' | 'healthy';
+  autoChat: 'on' | 'off' | 'healthy' | 'unknown';
   proxy: string;
   createdAt: string;
 }
 
-const mockData: Account[] = Array.from({ length: 5 }, (_, index) => ({
-  id: index + 6,
-  username: '用户名',
-  phone: '+85217856343',
-  status: index === 2 ? 'offline' : 'online',
-  persona: index === 1 ? '默认标签' : '人设名称',
-  note: '美国1号手机',
-  autoChat: index === 2 ? 'off' : index === 3 || index === 4 ? 'healthy' : 'on',
-  proxy: '9.124.123.456.789',
-  createdAt: '2025-05-12 08:12',
-}));
+interface ServiceProxyConfig {
+  isEnabled?: boolean;
+  host?: string;
+  port?: string | number;
+}
+const formatProxy = (proxy: unknown): string => {
+  if (!proxy || typeof proxy !== 'object') {
+    return '';
+  }
 
-function AccountManagementScreen(): ReactElement {
+  const config = proxy as ServiceProxyConfig;
+
+  if (!config.isEnabled || !config.host) {
+    return '';
+  }
+
+  return config.port ? `${config.host}:${config.port}` : config.host;
+};
+
+interface IProps {
+  stores?: any;
+}
+
+function AccountManagementScreen({ stores }: IProps): ReactElement {
   const intl = useIntl();
+  const [tableLayout] = useState<'fixed'>('fixed');
+  const tableRef = useRef<PrimaryTableRef>(null);
+
+  const allServices: Service[] = stores?.services?.all ?? [];
+  const waStatuses: Map<string, string> =
+    stores?.whatsappAutomation?.sessionStatuses ?? new Map();
+
+  const data: Account[] = useMemo(
+    () =>
+      allServices.map(service => {
+        const waStatus = waStatuses.get(service.id);
+        let status: Account['status'] = 'offline';
+        switch (waStatus) {
+          case WA_SESSION_STATUS.CONNECTED: {
+            status = 'online';
+
+            break;
+          }
+          case WA_SESSION_STATUS.DISCONNECTED: {
+            break;
+          }
+          case WA_SESSION_STATUS.LOGGED_OUT:
+          case WA_SESSION_STATUS.STOPPED:
+          case WA_SESSION_STATUS.SERVER_ERROR: {
+            status = 'error';
+
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+
+        return {
+          id: service.id,
+          username: service.name,
+          phone: '', // 暂无
+          status,
+          persona: service.recipe?.name ?? '',
+          note: service.team || '',
+          autoChat: service.isEnabled ? 'on' : 'off',
+          proxy: formatProxy(service.proxy),
+          createdAt: '', // 暂无
+        };
+      }),
+    [allServices, waStatuses],
+  );
 
   const columns: PrimaryTableCol<Account>[] = useMemo(
     () => [
       {
         colKey: 'id',
         title: intl.formatMessage(messages.colId),
-        width: 88,
+        width: 96,
+        fixed: 'left',
         align: 'center',
         cell: ({ row }) => (
           <span className="text-[14px] leading-[22px] text-primary">
@@ -91,7 +153,8 @@ function AccountManagementScreen(): ReactElement {
       {
         colKey: 'username',
         title: intl.formatMessage(messages.colAccountInfo),
-        width: 248,
+        width: 320,
+        fixed: 'left',
         cell: ({ row }) => (
           <AvatarCell title={row.username} subtitle={row.phone} />
         ),
@@ -99,7 +162,7 @@ function AccountManagementScreen(): ReactElement {
       {
         colKey: 'status',
         title: intl.formatMessage(messages.colStatus),
-        width: 112,
+        width: 128,
         cell: ({ row }) => (
           <Tag
             variant="outline"
@@ -117,7 +180,7 @@ function AccountManagementScreen(): ReactElement {
       {
         colKey: 'persona',
         title: intl.formatMessage(messages.colPersona),
-        width: 160,
+        width: 200,
         cell: ({ row }) => (
           <Tag
             variant="outline"
@@ -131,7 +194,7 @@ function AccountManagementScreen(): ReactElement {
       {
         colKey: 'note',
         title: intl.formatMessage(messages.colNote),
-        width: 184,
+        width: 240,
         cell: ({ row }) => (
           <div className="flex items-center gap-[8px] text-[14px] leading-[22px] text-primary">
             <span>{row.note}</span>
@@ -142,7 +205,7 @@ function AccountManagementScreen(): ReactElement {
       {
         colKey: 'autoChat',
         title: intl.formatMessage(messages.colAutoChat),
-        width: 132,
+        width: 160,
         cell: ({ row }) => {
           const isOff = row.autoChat === 'off';
           let statusText: string;
@@ -176,7 +239,7 @@ function AccountManagementScreen(): ReactElement {
       {
         colKey: 'proxy',
         title: intl.formatMessage(messages.colProxy),
-        width: 212,
+        width: 280,
         cell: ({ row }) => (
           <div className="flex items-center gap-[8px] text-[14px] leading-[22px] text-primary">
             <span>{row.proxy}</span>
@@ -187,7 +250,8 @@ function AccountManagementScreen(): ReactElement {
       {
         colKey: 'createdAt',
         title: intl.formatMessage(messages.colCreatedAt),
-        width: 176,
+        width: 256,
+        fixed: 'right',
         cell: ({ row }) => (
           <span className="text-[14px] leading-[22px] text-primary">
             {row.createdAt}
@@ -238,18 +302,25 @@ function AccountManagementScreen(): ReactElement {
               >
                 {intl.formatMessage(messages.moreActions)}
               </Button>
+
               <RefreshIcon className="cursor-pointer text-[20px] text-primary" />
             </>
           }
         />
 
         <Table
-          data={mockData}
+          ref={tableRef}
+          data={data}
           columns={columns}
           rowKey="id"
           bordered
           stripe={false}
           hover
+          maxHeight="calc(100vh - 360px)"
+          tableLayout={tableLayout}
+          tableContentWidth={tableLayout === 'fixed' ? undefined : '1200px'}
+          resizable
+          lazyLoad
           pagination={{
             current: 11,
             pageSize: 20,
@@ -258,13 +329,10 @@ function AccountManagementScreen(): ReactElement {
             showPageSize: true,
             pageSizeOptions: [10, 20, 50],
           }}
-          tableLayout="fixed"
         />
-
-        <div className="flex-1 bg-container" />
       </div>
     </div>
   );
 }
 
-export default observer(AccountManagementScreen);
+export default inject('stores')(observer(AccountManagementScreen));

@@ -381,11 +381,13 @@ class NotificationsTab extends Component<
       {
         colKey: 'triggerContent',
         title: intl.formatMessage(messages.triggerContent),
+        width: 200,
         ellipsis: true,
       },
       {
         colKey: 'rule',
         title: intl.formatMessage(messages.rule),
+        width: 160,
         ellipsis: true,
       },
       {
@@ -415,6 +417,7 @@ class NotificationsTab extends Component<
         colKey: 'op',
         title: intl.formatMessage(messages.actions),
         width: 84,
+        fixed: 'right',
         cell: () => (
           <button
             type="button"
@@ -539,6 +542,8 @@ class NotificationsTab extends Component<
             selectedRowKeys={selectedRowIds}
             onSelectChange={this.handleSelectChange}
             tableLayout="fixed"
+            resizable
+            lazyLoad
             hover
             stripe={false}
             bordered

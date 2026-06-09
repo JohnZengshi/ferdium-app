@@ -1,6 +1,6 @@
+import { Component, useEffect, useState } from 'react';
 import { Menu, dialog, app as electronApp } from '@electron/remote';
 import { inject, observer } from 'mobx-react';
-import { Component } from 'react';
 import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import type { IntlShape, WrappedComponentProps } from 'react-intl';
@@ -14,8 +14,16 @@ import {
   Empty,
   Form,
   Select,
+  MessagePlugin,
 } from 'tdesign-react';
+import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
+import {
+  createWhatsappBindingApiV1WhatsappBindPost,
+  getWhatsappBindingApiV1WhatsappBindGet,
+  switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
+} from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import type { Actions } from '../../actions/lib/actions';
+
 import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
 import type Service from '../../models/Service';
 import type { RealStores } from '../../stores';
@@ -90,13 +98,19 @@ const messages = defineMessages({
     id: 'accountSlider.confirmText',
     defaultMessage: '确认',
   },
+  selectPersonaFirst: {
+    id: 'accountSlider.selectPersonaFirst',
+    defaultMessage: '请先选择人设',
+  },
+  bindPersonaSuccess: {
+    id: 'accountSlider.bindPersonaSuccess',
+    defaultMessage: '人设绑定成功',
+  },
+  bindPersonaFailed: {
+    id: 'accountSlider.bindPersonaFailed',
+    defaultMessage: '人设绑定失败',
+  },
 });
-
-const getPersonaOptions = (intl: IntlShape) => [
-  { label: intl.formatMessage(messages.personaSales), value: 'sales' },
-  { label: intl.formatMessage(messages.personaSupport), value: 'support' },
-  { label: intl.formatMessage(messages.personaOperation), value: 'operation' },
-];
 
 const TAB_IDS = ['all', 'online', 'offline', 'error'] as const;
 type TabId = (typeof TAB_IDS)[number];
@@ -244,6 +258,43 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
           }
         })();
 
+        const [boundPersonaName, setBoundPersonaName] = useState<string>('');
+        const [isLoadingBinding, setIsLoadingBinding] = useState<boolean>(true);
+
+        useEffect(() => {
+          let cancelled = false;
+          const loadBinding = async () => {
+            try {
+              const bindRes = await getWhatsappBindingApiV1WhatsappBindGet({
+                session_id: service.id,
+              });
+              if (
+                cancelled ||
+                bindRes.status !== 200 ||
+                !bindRes.data?.digital_human_id
+              )
+                return;
+              const boundId = bindRes.data.digital_human_id;
+              try {
+                const listRes = await listDigitalHumansApiV1DigitalHumansGet();
+                if (cancelled) return;
+                const found = listRes.data.find(dh => dh.id === boundId);
+                setBoundPersonaName(found?.name ?? '');
+              } catch {
+                // name lookup best-effort
+              }
+            } catch {
+              // binding check best-effort
+            } finally {
+              if (!cancelled) setIsLoadingBinding(false);
+            }
+          };
+          loadBinding();
+          return () => {
+            cancelled = true;
+          };
+        }, [service.id]);
+
         return (
           <div
             role="button"
@@ -303,8 +354,25 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                   variant="outline"
                   className="!h-[20px] !min-w-[37px] text-[12px] !px-[4px]"
                   ghost
-                  theme="success"
-                  onClick={() => {
+                  theme={boundPersonaName ? 'primary' : 'success'}
+                  loading={isLoadingBinding}
+                  onClick={async event => {
+                    event.stopPropagation();
+                    let options: { label: string; value: string }[] = [];
+                    try {
+                      const res =
+                        await listDigitalHumansApiV1DigitalHumansGet();
+                      options = res.data.map(item => ({
+                        label: item.name,
+                        value: item.id,
+                      }));
+                    } catch {
+                      MessagePlugin.error('获取人设列表失败');
+                      return;
+                    }
+
+                    let selectedPersonaId = '';
+
                     const confirmDia = DialogPlugin.confirm({
                       placement: 'center',
                       header: intl.formatMessage(
@@ -320,7 +388,13 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                               placeholder={intl.formatMessage(
                                 messages.selectPersonaPlaceholder,
                               )}
-                              options={getPersonaOptions(intl)}
+                              options={options}
+                              onChange={value => {
+                                selectedPersonaId =
+                                  typeof value === 'string'
+                                    ? value
+                                    : String(value ?? '');
+                              }}
                             />
                           </Form.FormItem>
 
@@ -330,8 +404,45 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                         </Form>
                       ),
                       confirmBtn: intl.formatMessage(messages.confirmText),
-                      onConfirm: () => {
-                        confirmDia.hide();
+                      onConfirm: async () => {
+                        if (!selectedPersonaId) {
+                          MessagePlugin.warning(
+                            intl.formatMessage(messages.selectPersonaFirst),
+                          );
+                          return;
+                        }
+
+                        try {
+                          await (boundPersonaName
+                            ? switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch(
+                                {
+                                  digital_human_id: selectedPersonaId,
+                                  session_id: service.id,
+                                },
+                              )
+                            : createWhatsappBindingApiV1WhatsappBindPost({
+                                session_id: service.id,
+                                digital_human_id: selectedPersonaId,
+                              }));
+                          setBoundPersonaName(
+                            options.find(o => o.value === selectedPersonaId)
+                              ?.label ?? '',
+                          );
+                          MessagePlugin.success(
+                            options.find(o => o.value === selectedPersonaId)
+                              ?.label ?? '',
+                          );
+                          MessagePlugin.success(
+                            intl.formatMessage(messages.bindPersonaSuccess),
+                          );
+                          confirmDia.hide();
+                        } catch (error) {
+                          const message =
+                            error instanceof Error
+                              ? error.message
+                              : intl.formatMessage(messages.bindPersonaFailed);
+                          MessagePlugin.error(message);
+                        }
                       },
                       onClose: () => {
                         confirmDia.hide();
@@ -339,7 +450,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                     });
                   }}
                 >
-                  {intl.formatMessage(messages.bindPersona)}
+                  {boundPersonaName || intl.formatMessage(messages.bindPersona)}
                 </Button>
               </div>
             </div>

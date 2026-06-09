@@ -18,7 +18,15 @@ import {
   injectIntl,
 } from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
-import { Badge, Button, MessagePlugin, Space, Table, Tag } from 'tdesign-react';
+import {
+  Badge,
+  Button,
+  MessagePlugin,
+  type PrimaryTableCol,
+  Space,
+  Table,
+  Tag,
+} from 'tdesign-react';
 import type { AppApiSchemasDigitalHumanResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import DigitalHumanForm from '../../../components/settings/digital-humans/DigitalHumanForm';
 import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
@@ -146,7 +154,7 @@ class DigitalHumansScreen extends Component<WithIntlProps, State> {
   // Disable nested component warnings for TDesign Table cell renderers
   // These are standard TDesign patterns and won't cause re-render issues
 
-  get columns() {
+  get columns(): PrimaryTableCol<AppApiSchemasDigitalHumanResponse>[] {
     const { intl } = this.props;
     return [
       {
@@ -222,6 +230,7 @@ class DigitalHumansScreen extends Component<WithIntlProps, State> {
         colKey: 'actions',
         title: intl.formatMessage(messages.actionsColumn),
         width: 180,
+        fixed: 'right',
         // eslint-disable-next-line react/no-unstable-nested-components
         cell: ({ row }: { row: AppApiSchemasDigitalHumanResponse }) => (
           <Space>
@@ -273,6 +282,9 @@ class DigitalHumansScreen extends Component<WithIntlProps, State> {
           columns={this.columns}
           rowKey="id"
           loading={isLoading}
+          tableLayout="fixed"
+          resizable
+          lazyLoad
         />
 
         <DigitalHumanForm

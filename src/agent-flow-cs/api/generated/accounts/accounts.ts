@@ -10,297 +10,290 @@ import type {
   HTTPValidationError,
   MemberCreateRequest,
   MemberResponse,
-  MemberUpdateRequest,
+  MemberUpdateRequest
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listMembersApiV1AccountsMembersGetResponse200 = {
-  data: MemberResponse[];
-  status: 200;
-};
+  data: MemberResponse[]
+  status: 200
+}
 
-export type listMembersApiV1AccountsMembersGetResponseSuccess =
-  listMembersApiV1AccountsMembersGetResponse200 & {
-    headers: Headers;
-  };
-export type listMembersApiV1AccountsMembersGetResponse =
-  listMembersApiV1AccountsMembersGetResponseSuccess;
+export type listMembersApiV1AccountsMembersGetResponseSuccess = (listMembersApiV1AccountsMembersGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type listMembersApiV1AccountsMembersGetResponse = (listMembersApiV1AccountsMembersGetResponseSuccess)
 
 export const getListMembersApiV1AccountsMembersGetUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members`;
-};
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/accounts/members`
+}
 
 /**
  * 列出主账号旗下全部子账号。
  * @summary List Members
  */
-export const listMembersApiV1AccountsMembersGet = async (
-  options?: RequestInit,
-): Promise<listMembersApiV1AccountsMembersGetResponse> => {
-  return useCustomInstance<listMembersApiV1AccountsMembersGetResponse>(
-    getListMembersApiV1AccountsMembersGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listMembersApiV1AccountsMembersGet = async ( options?: RequestInit): Promise<listMembersApiV1AccountsMembersGetResponse> => {
+
+  return useCustomInstance<listMembersApiV1AccountsMembersGetResponse>(getListMembersApiV1AccountsMembersGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type createMemberApiV1AccountsMembersPostResponse201 = {
-  data: MemberResponse;
-  status: 201;
-};
+  data: MemberResponse
+  status: 201
+}
 
 export type createMemberApiV1AccountsMembersPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createMemberApiV1AccountsMembersPostResponseSuccess = (createMemberApiV1AccountsMembersPostResponse201) & {
+  headers: Headers;
+};
+export type createMemberApiV1AccountsMembersPostResponseError = (createMemberApiV1AccountsMembersPostResponse422) & {
+  headers: Headers;
 };
 
-export type createMemberApiV1AccountsMembersPostResponseSuccess =
-  createMemberApiV1AccountsMembersPostResponse201 & {
-    headers: Headers;
-  };
-export type createMemberApiV1AccountsMembersPostResponseError =
-  createMemberApiV1AccountsMembersPostResponse422 & {
-    headers: Headers;
-  };
-
-export type createMemberApiV1AccountsMembersPostResponse =
-  | createMemberApiV1AccountsMembersPostResponseSuccess
-  | createMemberApiV1AccountsMembersPostResponseError;
+export type createMemberApiV1AccountsMembersPostResponse = (createMemberApiV1AccountsMembersPostResponseSuccess | createMemberApiV1AccountsMembersPostResponseError)
 
 export const getCreateMemberApiV1AccountsMembersPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members`;
-};
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/accounts/members`
+}
 
 /**
  * 主账号创建子账号。
  * @summary Create Member
  */
-export const createMemberApiV1AccountsMembersPost = async (
-  memberCreateRequest: MemberCreateRequest,
-  options?: RequestInit,
-): Promise<createMemberApiV1AccountsMembersPostResponse> => {
-  return useCustomInstance<createMemberApiV1AccountsMembersPostResponse>(
-    getCreateMemberApiV1AccountsMembersPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(memberCreateRequest),
-    },
-  );
-};
+export const createMemberApiV1AccountsMembersPost = async (memberCreateRequest: MemberCreateRequest, options?: RequestInit): Promise<createMemberApiV1AccountsMembersPostResponse> => {
+
+  return useCustomInstance<createMemberApiV1AccountsMembersPostResponse>(getCreateMemberApiV1AccountsMembersPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(memberCreateRequest)
+  }
+);}
+
 
 export type getMemberApiV1AccountsMembersMemberIdGetResponse200 = {
-  data: MemberResponse;
-  status: 200;
-};
+  data: MemberResponse
+  status: 200
+}
 
 export type getMemberApiV1AccountsMembersMemberIdGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponseSuccess = (getMemberApiV1AccountsMembersMemberIdGetResponse200) & {
+  headers: Headers;
+};
+export type getMemberApiV1AccountsMembersMemberIdGetResponseError = (getMemberApiV1AccountsMembersMemberIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type getMemberApiV1AccountsMembersMemberIdGetResponseSuccess =
-  getMemberApiV1AccountsMembersMemberIdGetResponse200 & {
-    headers: Headers;
-  };
-export type getMemberApiV1AccountsMembersMemberIdGetResponseError =
-  getMemberApiV1AccountsMembersMemberIdGetResponse422 & {
-    headers: Headers;
-  };
+export type getMemberApiV1AccountsMembersMemberIdGetResponse = (getMemberApiV1AccountsMembersMemberIdGetResponseSuccess | getMemberApiV1AccountsMembersMemberIdGetResponseError)
 
-export type getMemberApiV1AccountsMembersMemberIdGetResponse =
-  | getMemberApiV1AccountsMembersMemberIdGetResponseSuccess
-  | getMemberApiV1AccountsMembersMemberIdGetResponseError;
+export const getGetMemberApiV1AccountsMembersMemberIdGetUrl = (memberId: string,) => {
 
-export const getGetMemberApiV1AccountsMembersMemberIdGetUrl = (
-  memberId: string,
-) => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`;
-};
+
+
+
+  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`
+}
 
 /**
  * 获取子账号详情。
  * @summary Get Member
  */
-export const getMemberApiV1AccountsMembersMemberIdGet = async (
-  memberId: string,
-  options?: RequestInit,
-): Promise<getMemberApiV1AccountsMembersMemberIdGetResponse> => {
-  return useCustomInstance<getMemberApiV1AccountsMembersMemberIdGetResponse>(
-    getGetMemberApiV1AccountsMembersMemberIdGetUrl(memberId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getMemberApiV1AccountsMembersMemberIdGet = async (memberId: string, options?: RequestInit): Promise<getMemberApiV1AccountsMembersMemberIdGetResponse> => {
+
+  return useCustomInstance<getMemberApiV1AccountsMembersMemberIdGetResponse>(getGetMemberApiV1AccountsMembersMemberIdGetUrl(memberId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type updateMemberApiV1AccountsMembersMemberIdPatchResponse200 = {
-  data: MemberResponse;
-  status: 200;
-};
+  data: MemberResponse
+  status: 200
+}
 
 export type updateMemberApiV1AccountsMembersMemberIdPatchResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponseSuccess = (updateMemberApiV1AccountsMembersMemberIdPatchResponse200) & {
+  headers: Headers;
+};
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponseError = (updateMemberApiV1AccountsMembersMemberIdPatchResponse422) & {
+  headers: Headers;
 };
 
-export type updateMemberApiV1AccountsMembersMemberIdPatchResponseSuccess =
-  updateMemberApiV1AccountsMembersMemberIdPatchResponse200 & {
-    headers: Headers;
-  };
-export type updateMemberApiV1AccountsMembersMemberIdPatchResponseError =
-  updateMemberApiV1AccountsMembersMemberIdPatchResponse422 & {
-    headers: Headers;
-  };
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse = (updateMemberApiV1AccountsMembersMemberIdPatchResponseSuccess | updateMemberApiV1AccountsMembersMemberIdPatchResponseError)
 
-export type updateMemberApiV1AccountsMembersMemberIdPatchResponse =
-  | updateMemberApiV1AccountsMembersMemberIdPatchResponseSuccess
-  | updateMemberApiV1AccountsMembersMemberIdPatchResponseError;
+export const getUpdateMemberApiV1AccountsMembersMemberIdPatchUrl = (memberId: string,) => {
 
-export const getUpdateMemberApiV1AccountsMembersMemberIdPatchUrl = (
-  memberId: string,
-) => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`;
-};
+
+
+
+  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`
+}
 
 /**
  * 主账号修改子账号密码或启用/停用状态。
  * @summary Update Member
  */
-export const updateMemberApiV1AccountsMembersMemberIdPatch = async (
-  memberId: string,
-  memberUpdateRequest: MemberUpdateRequest,
-  options?: RequestInit,
-): Promise<updateMemberApiV1AccountsMembersMemberIdPatchResponse> => {
-  return useCustomInstance<updateMemberApiV1AccountsMembersMemberIdPatchResponse>(
-    getUpdateMemberApiV1AccountsMembersMemberIdPatchUrl(memberId),
-    {
-      ...options,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(memberUpdateRequest),
-    },
-  );
-};
+export const updateMemberApiV1AccountsMembersMemberIdPatch = async (memberId: string,
+    memberUpdateRequest: MemberUpdateRequest, options?: RequestInit): Promise<updateMemberApiV1AccountsMembersMemberIdPatchResponse> => {
+
+  return useCustomInstance<updateMemberApiV1AccountsMembersMemberIdPatchResponse>(getUpdateMemberApiV1AccountsMembersMemberIdPatchUrl(memberId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(memberUpdateRequest)
+  }
+);}
+
 
 export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse204 = {
-  data: void;
-  status: 204;
-};
+  data: void
+  status: 204
+}
 
 export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponseSuccess = (deleteMemberApiV1AccountsMembersMemberIdDeleteResponse204) & {
+  headers: Headers;
+};
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponseError = (deleteMemberApiV1AccountsMembersMemberIdDeleteResponse422) & {
+  headers: Headers;
 };
 
-export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponseSuccess =
-  deleteMemberApiV1AccountsMembersMemberIdDeleteResponse204 & {
-    headers: Headers;
-  };
-export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponseError =
-  deleteMemberApiV1AccountsMembersMemberIdDeleteResponse422 & {
-    headers: Headers;
-  };
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse = (deleteMemberApiV1AccountsMembersMemberIdDeleteResponseSuccess | deleteMemberApiV1AccountsMembersMemberIdDeleteResponseError)
 
-export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse =
-  | deleteMemberApiV1AccountsMembersMemberIdDeleteResponseSuccess
-  | deleteMemberApiV1AccountsMembersMemberIdDeleteResponseError;
+export const getDeleteMemberApiV1AccountsMembersMemberIdDeleteUrl = (memberId: string,) => {
 
-export const getDeleteMemberApiV1AccountsMembersMemberIdDeleteUrl = (
-  memberId: string,
-) => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`;
-};
+
+
+
+  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`
+}
 
 /**
  * 软删子账号（is_active=False），级联清理数字人分配与通道绑定，
  * 保留业务数据供主账号查看。
  * @summary Delete Member
  */
-export const deleteMemberApiV1AccountsMembersMemberIdDelete = async (
-  memberId: string,
-  options?: RequestInit,
-): Promise<deleteMemberApiV1AccountsMembersMemberIdDeleteResponse> => {
-  return useCustomInstance<deleteMemberApiV1AccountsMembersMemberIdDeleteResponse>(
-    getDeleteMemberApiV1AccountsMembersMemberIdDeleteUrl(memberId),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteMemberApiV1AccountsMembersMemberIdDelete = async (memberId: string, options?: RequestInit): Promise<deleteMemberApiV1AccountsMembersMemberIdDeleteResponse> => {
 
-export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse200 =
+  return useCustomInstance<deleteMemberApiV1AccountsMembersMemberIdDeleteResponse>(getDeleteMemberApiV1AccountsMembersMemberIdDeleteUrl(memberId),
   {
-    data: AppApiSchemasConversationResponse[];
-    status: 200;
-  };
+    ...options,
+    method: 'DELETE'
 
-export type overviewConversationsApiV1AccountsOverviewConversationsGetResponseSuccess =
-  overviewConversationsApiV1AccountsOverviewConversationsGetResponse200 & {
-    headers: Headers;
-  };
-export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse =
-  overviewConversationsApiV1AccountsOverviewConversationsGetResponseSuccess;
 
-export const getOverviewConversationsApiV1AccountsOverviewConversationsGetUrl =
-  () => {
-    return `http://10.0.0.205:8000/api/v1/accounts/overview/conversations`;
-  };
+  }
+);}
+
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse200 = {
+  data: AppApiSchemasConversationResponse[]
+  status: 200
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponseSuccess = (overviewConversationsApiV1AccountsOverviewConversationsGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse = (overviewConversationsApiV1AccountsOverviewConversationsGetResponseSuccess)
+
+export const getOverviewConversationsApiV1AccountsOverviewConversationsGetUrl = () => {
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/accounts/overview/conversations`
+}
 
 /**
  * 主账号俯视旗下全部子账号的会话数据。
  * @summary Overview Conversations
  */
-export const overviewConversationsApiV1AccountsOverviewConversationsGet =
-  async (
-    options?: RequestInit,
-  ): Promise<overviewConversationsApiV1AccountsOverviewConversationsGetResponse> => {
-    return useCustomInstance<overviewConversationsApiV1AccountsOverviewConversationsGetResponse>(
-      getOverviewConversationsApiV1AccountsOverviewConversationsGetUrl(),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const overviewConversationsApiV1AccountsOverviewConversationsGet = async ( options?: RequestInit): Promise<overviewConversationsApiV1AccountsOverviewConversationsGetResponse> => {
 
-export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse200 =
+  return useCustomInstance<overviewConversationsApiV1AccountsOverviewConversationsGetResponse>(getOverviewConversationsApiV1AccountsOverviewConversationsGetUrl(),
   {
-    data: AppApiSchemasDigitalHumanResponse[];
-    status: 200;
-  };
+    ...options,
+    method: 'GET'
 
-export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseSuccess =
-  overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse200 & {
-    headers: Headers;
-  };
-export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse =
-  overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseSuccess;
 
-export const getOverviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetUrl =
-  () => {
-    return `http://10.0.0.205:8000/api/v1/accounts/overview/digital-humans`;
-  };
+  }
+);}
+
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse200 = {
+  data: AppApiSchemasDigitalHumanResponse[]
+  status: 200
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseSuccess = (overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse = (overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseSuccess)
+
+export const getOverviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetUrl = () => {
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/accounts/overview/digital-humans`
+}
 
 /**
  * 主账号俯视旗下全部数字人。
  * @summary Overview Digital Humans
  */
-export const overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGet =
-  async (
-    options?: RequestInit,
-  ): Promise<overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse> => {
-    return useCustomInstance<overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse>(
-      getOverviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetUrl(),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGet = async ( options?: RequestInit): Promise<overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse> => {
+
+  return useCustomInstance<overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse>(getOverviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

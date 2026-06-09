@@ -1,4 +1,10 @@
-import { type ReactElement, useCallback, useMemo, useState } from 'react';
+import {
+  type ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import {
   AddIcon,
@@ -24,6 +30,16 @@ import {
 } from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
 import {
+  createDigitalHumanApiV1DigitalHumansPost,
+  listDigitalHumansApiV1DigitalHumansGet,
+  updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut,
+} from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
+import type {
+  AppApiSchemasDigitalHumanResponse,
+  DigitalHumanCreateRequest,
+  DigitalHumanUpdateRequest,
+} from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import {
   type SidebarItem,
   SidebarMenu,
 } from '../../components/home/SidebarMenu';
@@ -32,6 +48,10 @@ const messages = defineMessages({
   createPersonaProfile: {
     id: 'knowledgeScreen.createPersonaProfile',
     defaultMessage: '创建人设资料',
+  },
+  editPersonaProfile: {
+    id: 'knowledgeScreen.editPersonaProfile',
+    defaultMessage: '编辑人设资料',
   },
   serialNumber: {
     id: 'knowledgeScreen.serialNumber',
@@ -114,6 +134,18 @@ const messages = defineMessages({
     id: 'knowledgeScreen.saveSuccess',
     defaultMessage: '保存成功',
   },
+  loadFailed: {
+    id: 'knowledgeScreen.loadFailed',
+    defaultMessage: '获取人设列表失败',
+  },
+  saveFailed: {
+    id: 'knowledgeScreen.saveFailed',
+    defaultMessage: '保存失败',
+  },
+  nameRequired: {
+    id: 'knowledgeScreen.nameRequired',
+    defaultMessage: '请输入姓名',
+  },
   male: {
     id: 'knowledgeScreen.male',
     defaultMessage: '男',
@@ -134,14 +166,16 @@ const messages = defineMessages({
 });
 
 interface PersonaRecord {
-  id: number;
+  id: string;
+  index: number;
   remark: string;
   name: string;
-  age: number;
+  age: string;
   gender: string;
   occupation: string;
   familyStatus: string;
   participation: string;
+  source: AppApiSchemasDigitalHumanResponse;
 }
 
 interface FormData {
@@ -154,17 +188,6 @@ interface FormData {
   participation: string;
 }
 
-const MOCK_DATA: PersonaRecord[] = Array.from({ length: 5 }, (_, i) => ({
-  id: i + 6,
-  remark: '嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻...',
-  name: '哈哈哈哈哈哈...',
-  age: 23,
-  gender: '男',
-  occupation: 'UI设计师',
-  familyStatus: '离异',
-  participation: '89%',
-}));
-
 const INITIAL_FORM_DATA: FormData = {
   name: '',
   remark: '',
@@ -174,6 +197,74 @@ const INITIAL_FORM_DATA: FormData = {
   occupation: '',
   participation: '',
 };
+
+const getConfigString = (
+  config: AppApiSchemasDigitalHumanResponse['persona_config'],
+  key: keyof FormData,
+): string => {
+  if (!config || typeof config !== 'object') {
+    return '';
+  }
+
+  const value = config[key];
+  return typeof value === 'string' || typeof value === 'number'
+    ? String(value)
+    : '';
+};
+
+const getGenderLabel = (gender: string): string => {
+  switch (gender) {
+    case 'male': {
+      return '男';
+    }
+    case 'female': {
+      return '女';
+    }
+    default: {
+      return gender;
+    }
+  }
+};
+
+const digitalHumanToFormData = (
+  digitalHuman: AppApiSchemasDigitalHumanResponse,
+): FormData => ({
+  name: digitalHuman.name,
+  remark: getConfigString(digitalHuman.persona_config, 'remark'),
+  age: getConfigString(digitalHuman.persona_config, 'age'),
+  gender: getConfigString(digitalHuman.persona_config, 'gender'),
+  family: getConfigString(digitalHuman.persona_config, 'family'),
+  occupation: getConfigString(digitalHuman.persona_config, 'occupation'),
+  participation: getConfigString(digitalHuman.persona_config, 'participation'),
+});
+
+const buildPersonaPrompt = (data: FormData): string =>
+  [
+    `姓名：${data.name}`,
+    `人设备注：${data.remark}`,
+    `年龄：${data.age}`,
+    `性别：${getGenderLabel(data.gender)}`,
+    `家庭情况：${data.family}`,
+    `职业：${data.occupation}`,
+    `项目参与度：${data.participation}`,
+  ].join('；');
+
+const buildDigitalHumanRequest = (
+  data: FormData,
+): DigitalHumanCreateRequest => ({
+  name: data.name.trim(),
+  persona_config: {
+    remark: data.remark,
+    age: data.age,
+    gender: data.gender,
+    family: data.family,
+    occupation: data.occupation,
+    participation: data.participation,
+  },
+  persona_prompt: buildPersonaPrompt(data),
+  default_provider: 'openai',
+  status: 'active',
+});
 
 const FormLabel = ({
   icon,
@@ -194,10 +285,16 @@ const KnowledgeScreen: React.FC = () => {
   const intl = useIntl();
 
   const [view, setView] = useState<'list' | 'create'>('list');
-  const [currentPage, setCurrentPage] = useState(11);
+  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
   const [smartImportText, setSmartImportText] = useState('');
+  const [digitalHumans, setDigitalHumans] = useState<
+    AppApiSchemasDigitalHumanResponse[]
+  >([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const genderOptions = useMemo(
     () => [
@@ -218,6 +315,47 @@ const KnowledgeScreen: React.FC = () => {
     [intl],
   );
 
+  const fetchDigitalHumans = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await listDigitalHumansApiV1DigitalHumansGet();
+      setDigitalHumans(response.data);
+    } catch {
+      await MessagePlugin.error(intl.formatMessage(messages.loadFailed));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [intl]);
+
+  useEffect(() => {
+    fetchDigitalHumans();
+  }, [fetchDigitalHumans]);
+
+  const tableData = useMemo<PersonaRecord[]>(
+    () =>
+      digitalHumans.map((digitalHuman, index) => {
+        const parsedFormData = digitalHumanToFormData(digitalHuman);
+        return {
+          id: digitalHuman.id,
+          index: index + 1,
+          remark: parsedFormData.remark,
+          name: digitalHuman.name,
+          age: parsedFormData.age,
+          gender: getGenderLabel(parsedFormData.gender),
+          occupation: parsedFormData.occupation,
+          familyStatus: parsedFormData.family,
+          participation: parsedFormData.participation,
+          source: digitalHuman,
+        };
+      }),
+    [digitalHumans],
+  );
+
+  const pagedTableData = useMemo(
+    () => tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize),
+    [currentPage, pageSize, tableData],
+  );
+
   const handlePageChange = useCallback(
     (pageInfo: { current: number; pageSize: number }) => {
       setCurrentPage(pageInfo.current);
@@ -227,19 +365,28 @@ const KnowledgeScreen: React.FC = () => {
   );
 
   const handleCreate = useCallback(() => {
+    setEditingId(null);
+    setFormData(INITIAL_FORM_DATA);
+    setSmartImportText('');
     setView('create');
   }, []);
 
   const handleBack = useCallback(() => {
     setView('list');
+    setEditingId(null);
+    setFormData(INITIAL_FORM_DATA);
   }, []);
 
-  const handleView = useCallback(() => {
-    // TODO: navigate to detail view
+  const handleView = useCallback((record: PersonaRecord) => {
+    setEditingId(record.id);
+    setFormData(digitalHumanToFormData(record.source));
+    setView('create');
   }, []);
 
-  const handleEditPersona = useCallback(() => {
-    // TODO: navigate to edit view
+  const handleEditPersona = useCallback((record: PersonaRecord) => {
+    setEditingId(record.id);
+    setFormData(digitalHumanToFormData(record.source));
+    setView('create');
   }, []);
 
   const handleFormChange = useCallback(
@@ -260,16 +407,49 @@ const KnowledgeScreen: React.FC = () => {
   }, [intl]);
 
   const handleSave = useCallback(async () => {
-    await MessagePlugin.success({
-      content: intl.formatMessage(messages.saveSuccess),
-      placement: 'bottom',
-    });
-  }, [intl]);
+    if (!formData.name.trim()) {
+      await MessagePlugin.error(intl.formatMessage(messages.nameRequired));
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const request = buildDigitalHumanRequest(formData);
+      if (editingId) {
+        const updateRequest: DigitalHumanUpdateRequest = request;
+        const response =
+          await updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut(
+            editingId,
+            updateRequest,
+          );
+        if (response.status !== 200) {
+          throw new Error('Failed to update digital human');
+        }
+      } else {
+        const response =
+          await createDigitalHumanApiV1DigitalHumansPost(request);
+        if (response.status !== 200) {
+          throw new Error('Failed to create digital human');
+        }
+      }
+
+      await MessagePlugin.success({
+        content: intl.formatMessage(messages.saveSuccess),
+        placement: 'bottom',
+      });
+      await fetchDigitalHumans();
+      handleBack();
+    } catch {
+      await MessagePlugin.error(intl.formatMessage(messages.saveFailed));
+    } finally {
+      setIsSaving(false);
+    }
+  }, [editingId, fetchDigitalHumans, formData, handleBack, intl]);
 
   const columns: PrimaryTableCol<PersonaRecord>[] = useMemo(
     () => [
       {
-        colKey: 'id',
+        colKey: 'index',
         title: intl.formatMessage(messages.serialNumber),
         width: 80,
         align: 'center',
@@ -315,20 +495,21 @@ const KnowledgeScreen: React.FC = () => {
         colKey: 'op',
         title: intl.formatMessage(messages.actions),
         width: 140,
+        fixed: 'right',
         // eslint-disable-next-line react/no-unstable-nested-components
-        cell: () => (
+        cell: ({ row }) => (
           <div className="flex items-center gap-[16px]">
             <button
               type="button"
               className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
-              onClick={() => handleView()}
+              onClick={() => handleView(row)}
             >
               {intl.formatMessage(messages.view)}
             </button>
             <button
               type="button"
               className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
-              onClick={() => handleEditPersona()}
+              onClick={() => handleEditPersona(row)}
             >
               {intl.formatMessage(messages.edit)}
             </button>
@@ -347,7 +528,7 @@ const KnowledgeScreen: React.FC = () => {
         onItemClick={() => {}}
       />
       {view === 'list' ? (
-        <div className="flex-1 p-[24px]">
+        <div className="flex-1 min-w-0 p-[24px]">
           <div className="rounded-[4px] bg-container p-[24px]">
             <div className="flex items-center">
               <Button
@@ -369,20 +550,23 @@ const KnowledgeScreen: React.FC = () => {
 
             <div className="mt-[24px]">
               <Table
-                data={MOCK_DATA}
+                data={pagedTableData}
                 columns={columns}
                 rowKey="id"
+                loading={isLoading}
                 bordered
                 hover
                 stripe={false}
                 tableLayout="fixed"
+                resizable
+                lazyLoad
                 className="[&_.t-table__header]:!bg-secondary-container [&_.t-table__header-th]:!h-[40px] [&_.t-table__header-th]:!border-b [&_.t-table__header-th]:!border-solid [&_.t-table__header-th]:!border-line [&_.t-table__header-th]:!text-[14px] [&_.t-table__header-th]:!font-normal [&_.t-table__header-th]:!text-primary [&_.t-table__body-td]:!h-[56px] [&_.t-table__body-td]:!border-b [&_.t-table__body-td]:!border-solid [&_.t-table__body-td]:!border-line [&_.t-table__body-td]:!p-0"
               />
             </div>
 
             <div className="mt-[24px] flex items-center justify-between">
               <Pagination
-                total={101}
+                total={tableData.length}
                 pageSize={pageSize}
                 current={currentPage}
                 onChange={handlePageChange}
@@ -404,16 +588,17 @@ const KnowledgeScreen: React.FC = () => {
             >
               <ChevronLeftIcon size="20px" />
               <span className="text-[16px] font-bold">
-                {intl.formatMessage(messages.createPersonaProfile)}
+                {intl.formatMessage(
+                  editingId
+                    ? messages.editPersonaProfile
+                    : messages.createPersonaProfile,
+                )}
               </span>
             </button>
           </div>
 
           <div className="flex flex-1 gap-[40px] p-[24px]">
-            <div
-              className="flex-1 rounded-[4px] bg-container p-[24px]"
-              style={{ maxWidth: 600 }}
-            >
+            <div className="max-w-[600px] flex-1 rounded-[4px] bg-container p-[24px]">
               <div className="mb-[24px]">
                 <FormLabel
                   icon={<UserIcon size="14px" />}
@@ -448,6 +633,10 @@ const KnowledgeScreen: React.FC = () => {
                   />
                   <DatePicker
                     placeholder={intl.formatMessage(messages.datePlaceholder)}
+                    value={formData.age}
+                    onChange={value =>
+                      handleFormChange('age', String(value ?? ''))
+                    }
                     className="!h-[36px] !w-full !rounded-[2px] [&_.t-input]:!h-[36px] [&_.t-input]:!border-line [&_.t-input]:!rounded-[2px]"
                   />
                 </div>
@@ -459,6 +648,10 @@ const KnowledgeScreen: React.FC = () => {
                   <Select
                     placeholder={intl.formatMessage(messages.selectPlaceholder)}
                     options={genderOptions}
+                    value={formData.gender}
+                    onChange={value =>
+                      handleFormChange('gender', String(value ?? ''))
+                    }
                     className="!w-full [&_.t-select__trigger]:!h-[36px] [&_.t-input]:!rounded-[2px] [&_.t-input]:!border-line"
                   />
                 </div>
@@ -508,6 +701,7 @@ const KnowledgeScreen: React.FC = () => {
               <div className="mt-[32px] flex justify-center">
                 <Button
                   theme="primary"
+                  loading={isSaving}
                   className="!h-[36px] !w-[80px] !rounded-[2px]"
                   onClick={handleSave}
                 >

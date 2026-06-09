@@ -350,7 +350,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
                   {isServiceTypeMessagesMode && sidebar}
 
-                  <div className="app__service">{renderMainContent()}</div>
+                  <div className="app__service flex-auto min-w-0">
+                    {renderMainContent()}
+                  </div>
 
                   {isServiceTypeMessagesMode && <Todos />}
                 </div>

@@ -415,17 +415,15 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     }));
     realEmployees.forEach((real, idx) => {
       displayEmployees[idx] = {
+        ...displayEmployees[idx],
         id: real.id,
         name: real.name,
         role: real.platform || intl.formatMessage(messages.digitalAssistant),
-        avatar: real.avatar_url || 'https://tdesign.gtimg.com/site/avatar.jpg',
         capabilities: [
           real.persona_prompt || intl.formatMessage(messages.smartChatService),
           intl.formatMessage(messages.multiChannel),
           intl.formatMessage(messages.precisionMarketing),
         ],
-        cta: intl.formatMessage(messages.resume),
-        hasBadge: false,
       };
     });
 

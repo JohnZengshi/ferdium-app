@@ -29,16 +29,16 @@ import {
   Table,
 } from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
-import {
-  createDigitalHumanApiV1DigitalHumansPost,
-  listDigitalHumansApiV1DigitalHumansGet,
-  updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut,
-} from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
   DigitalHumanUpdateRequest,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import {
+  createDigitalHumanApiV1DigitalHumansPost,
+  listDigitalHumansApiV1DigitalHumansGet,
+  updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut,
+} from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
   type SidebarItem,
   SidebarMenu,

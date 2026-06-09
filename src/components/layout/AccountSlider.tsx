@@ -1,6 +1,6 @@
-import { Component, useEffect, useState } from 'react';
 import { Menu, dialog, app as electronApp } from '@electron/remote';
 import { inject, observer } from 'mobx-react';
+import { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import type { IntlShape, WrappedComponentProps } from 'react-intl';
@@ -13,16 +13,16 @@ import {
   DialogPlugin,
   Empty,
   Form,
-  Select,
   MessagePlugin,
+  Select,
 } from 'tdesign-react';
+import type { Actions } from '../../actions/lib/actions';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
   createWhatsappBindingApiV1WhatsappBindPost,
   getWhatsappBindingApiV1WhatsappBindGet,
   switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
-import type { Actions } from '../../actions/lib/actions';
 
 import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
 import type Service from '../../models/Service';

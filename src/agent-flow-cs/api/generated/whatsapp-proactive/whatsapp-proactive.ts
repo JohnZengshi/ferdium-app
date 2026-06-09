@@ -10,518 +10,579 @@ import type {
   CampaignTaskRunResponse,
   FollowupStateResponse,
   FollowupStrategyRequest,
-  HTTPValidationError
+  HTTPValidationError,
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse200 = {
-  data: CampaignTaskResponse[]
-  status: 200
-}
-
-export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess = (listCampaignTasksApiV1WhatsappCampaignTasksGetResponse200) & {
-  headers: Headers;
+  data: CampaignTaskResponse[];
+  status: 200;
 };
-;
 
-export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse = (listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess)
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess =
+  listCampaignTasksApiV1WhatsappCampaignTasksGetResponse200 & {
+    headers: Headers;
+  };
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse =
+  listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess;
 
 export const getListCampaignTasksApiV1WhatsappCampaignTasksGetUrl = () => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks`
-}
+  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks`;
+};
 
 /**
  * List all campaign tasks belonging to the current member.
  * @summary List Campaign Tasks
  */
-export const listCampaignTasksApiV1WhatsappCampaignTasksGet = async ( options?: RequestInit): Promise<listCampaignTasksApiV1WhatsappCampaignTasksGetResponse> => {
-
-  return useCustomInstance<listCampaignTasksApiV1WhatsappCampaignTasksGetResponse>(getListCampaignTasksApiV1WhatsappCampaignTasksGetUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const listCampaignTasksApiV1WhatsappCampaignTasksGet = async (
+  options?: RequestInit,
+): Promise<listCampaignTasksApiV1WhatsappCampaignTasksGetResponse> => {
+  return useCustomInstance<listCampaignTasksApiV1WhatsappCampaignTasksGetResponse>(
+    getListCampaignTasksApiV1WhatsappCampaignTasksGetUrl(),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse201 = {
-  data: CampaignTaskResponse
-  status: 201
-}
+  data: CampaignTaskResponse;
+  status: 201;
+};
 
 export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponseSuccess = (createCampaignTaskApiV1WhatsappCampaignTasksPostResponse201) & {
-  headers: Headers;
-};
-export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponseError = (createCampaignTaskApiV1WhatsappCampaignTasksPostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse = (createCampaignTaskApiV1WhatsappCampaignTasksPostResponseSuccess | createCampaignTaskApiV1WhatsappCampaignTasksPostResponseError)
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponseSuccess =
+  createCampaignTaskApiV1WhatsappCampaignTasksPostResponse201 & {
+    headers: Headers;
+  };
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponseError =
+  createCampaignTaskApiV1WhatsappCampaignTasksPostResponse422 & {
+    headers: Headers;
+  };
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse =
+  | createCampaignTaskApiV1WhatsappCampaignTasksPostResponseSuccess
+  | createCampaignTaskApiV1WhatsappCampaignTasksPostResponseError;
 
 export const getCreateCampaignTaskApiV1WhatsappCampaignTasksPostUrl = () => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks`
-}
+  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks`;
+};
 
 /**
  * Create a fixed-text proactive WhatsApp marketing task.
  * @summary Create Campaign Task
  */
-export const createCampaignTaskApiV1WhatsappCampaignTasksPost = async (campaignTaskCreateRequest: CampaignTaskCreateRequest, options?: RequestInit): Promise<createCampaignTaskApiV1WhatsappCampaignTasksPostResponse> => {
-
-  return useCustomInstance<createCampaignTaskApiV1WhatsappCampaignTasksPostResponse>(getCreateCampaignTaskApiV1WhatsappCampaignTasksPostUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(campaignTaskCreateRequest)
-  }
-);}
-
+export const createCampaignTaskApiV1WhatsappCampaignTasksPost = async (
+  campaignTaskCreateRequest: CampaignTaskCreateRequest,
+  options?: RequestInit,
+): Promise<createCampaignTaskApiV1WhatsappCampaignTasksPostResponse> => {
+  return useCustomInstance<createCampaignTaskApiV1WhatsappCampaignTasksPostResponse>(
+    getCreateCampaignTaskApiV1WhatsappCampaignTasksPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(campaignTaskCreateRequest),
+    },
+  );
+};
 
 export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse200 = {
-  data: CampaignTaskResponse
-  status: 200
-}
+  data: CampaignTaskResponse;
+  status: 200;
+};
 
 export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseSuccess = (getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse200) & {
-  headers: Headers;
-};
-export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseError = (getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse = (getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseSuccess | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseError)
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseSuccess =
+  getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse200 & {
+    headers: Headers;
+  };
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseError =
+  getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse422 & {
+    headers: Headers;
+  };
 
-export const getGetCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetUrl = (taskId: string,) => {
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse =
+  | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseSuccess
+  | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseError;
 
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}`
-}
+export const getGetCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetUrl = (
+  taskId: string,
+) => {
+  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}`;
+};
 
 /**
  * Get a single campaign task detail.
  * @summary Get Campaign Task
  */
-export const getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGet = async (taskId: string, options?: RequestInit): Promise<getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse> => {
+export const getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGet = async (
+  taskId: string,
+  options?: RequestInit,
+): Promise<getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse> => {
+  return useCustomInstance<getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse>(
+    getGetCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetUrl(taskId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
-  return useCustomInstance<getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse>(getGetCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetUrl(taskId),
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse204 =
   {
-    ...options,
-    method: 'GET'
+    data: void;
+    status: 204;
+  };
 
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseSuccess =
+  deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse204 & {
+    headers: Headers;
+  };
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseError =
+  deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse422 & {
+    headers: Headers;
+  };
 
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse =
+  | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseSuccess
+  | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseError;
 
-export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse204 = {
-  data: void
-  status: 204
-}
-
-export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseSuccess = (deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse204) & {
-  headers: Headers;
+export const getDeleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteUrl = (
+  taskId: string,
+) => {
+  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}`;
 };
-export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseError = (deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse422) & {
-  headers: Headers;
-};
-
-export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse = (deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseSuccess | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseError)
-
-export const getDeleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteUrl = (taskId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}`
-}
 
 /**
  * Soft-delete a campaign task.
  * @summary Delete Campaign Task
  */
-export const deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDelete = async (taskId: string, options?: RequestInit): Promise<deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse> => {
+export const deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDelete = async (
+  taskId: string,
+  options?: RequestInit,
+): Promise<deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse> => {
+  return useCustomInstance<deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse>(
+    getDeleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteUrl(taskId),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};
 
-  return useCustomInstance<deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse>(getDeleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteUrl(taskId),
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse200 =
   {
-    ...options,
-    method: 'DELETE'
+    data: CampaignTaskResponse;
+    status: 200;
+  };
 
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseSuccess =
+  pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse200 & {
+    headers: Headers;
+  };
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseError =
+  pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse422 & {
+    headers: Headers;
+  };
 
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse =
 
-export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse200 = {
-  data: CampaignTaskResponse
-  status: 200
-}
+    | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseSuccess
+    | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseError;
 
-export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseSuccess = (pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse200) & {
-  headers: Headers;
-};
-export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseError = (pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse422) & {
-  headers: Headers;
-};
-
-export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse = (pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseSuccess | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseError)
-
-export const getPauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostUrl = (taskId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/pause`
-}
+export const getPauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostUrl =
+  (taskId: string) => {
+    return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/pause`;
+  };
 
 /**
  * Pause a campaign task.
  * @summary Pause Campaign Task
  */
-export const pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePost = async (taskId: string, options?: RequestInit): Promise<pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse> => {
+export const pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePost =
+  async (
+    taskId: string,
+    options?: RequestInit,
+  ): Promise<pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse> => {
+    return useCustomInstance<pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse>(
+      getPauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostUrl(taskId),
+      {
+        ...options,
+        method: 'POST',
+      },
+    );
+  };
 
-  return useCustomInstance<pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse>(getPauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostUrl(taskId),
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse200 =
   {
-    ...options,
-    method: 'POST'
+    data: CampaignTaskResponse;
+    status: 200;
+  };
 
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseSuccess =
+  resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse200 & {
+    headers: Headers;
+  };
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseError =
+  resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse422 & {
+    headers: Headers;
+  };
 
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse =
 
-export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse200 = {
-  data: CampaignTaskResponse
-  status: 200
-}
+    | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseSuccess
+    | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseError;
 
-export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseSuccess = (resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse200) & {
-  headers: Headers;
-};
-export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseError = (resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse422) & {
-  headers: Headers;
-};
-
-export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse = (resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseSuccess | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseError)
-
-export const getResumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostUrl = (taskId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/resume`
-}
+export const getResumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostUrl =
+  (taskId: string) => {
+    return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/resume`;
+  };
 
 /**
  * Resume a paused campaign task.
  * @summary Resume Campaign Task
  */
-export const resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePost = async (taskId: string, options?: RequestInit): Promise<resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse> => {
+export const resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePost =
+  async (
+    taskId: string,
+    options?: RequestInit,
+  ): Promise<resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse> => {
+    return useCustomInstance<resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse>(
+      getResumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostUrl(
+        taskId,
+      ),
+      {
+        ...options,
+        method: 'POST',
+      },
+    );
+  };
 
-  return useCustomInstance<resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse>(getResumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostUrl(taskId),
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse200 =
   {
-    ...options,
-    method: 'POST'
+    data: CampaignTaskRunResponse[];
+    status: 200;
+  };
 
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseSuccess =
+  listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse200 & {
+    headers: Headers;
+  };
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseError =
+  listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse422 & {
+    headers: Headers;
+  };
 
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse =
 
-export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse200 = {
-  data: CampaignTaskRunResponse[]
-  status: 200
-}
+    | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseSuccess
+    | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseError;
 
-export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseSuccess = (listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse200) & {
-  headers: Headers;
-};
-export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseError = (listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse422) & {
-  headers: Headers;
-};
-
-export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse = (listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseSuccess | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseError)
-
-export const getListCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetUrl = (taskId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/runs`
-}
+export const getListCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetUrl =
+  (taskId: string) => {
+    return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/runs`;
+  };
 
 /**
  * List run audit records for a campaign task.
  * @summary List Campaign Task Runs
  */
-export const listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGet = async (taskId: string, options?: RequestInit): Promise<listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse> => {
+export const listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGet =
+  async (
+    taskId: string,
+    options?: RequestInit,
+  ): Promise<listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse> => {
+    return useCustomInstance<listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse>(
+      getListCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetUrl(taskId),
+      {
+        ...options,
+        method: 'GET',
+      },
+    );
+  };
 
-  return useCustomInstance<listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse>(getListCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetUrl(taskId),
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse200 =
   {
-    ...options,
-    method: 'GET'
+    data: FollowupStateResponse;
+    status: 200;
+  };
 
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseSuccess =
+  configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse200 & {
+    headers: Headers;
+  };
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseError =
+  configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse422 & {
+    headers: Headers;
+  };
 
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse =
+  | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseSuccess
+  | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseError;
 
-export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse200 = {
-  data: FollowupStateResponse
-  status: 200
-}
-
-export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseSuccess = (configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse200) & {
-  headers: Headers;
+export const getConfigureFollowupApiV1WhatsappFollowupsConversationIdPutUrl = (
+  conversationId: string,
+) => {
+  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}`;
 };
-export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseError = (configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse422) & {
-  headers: Headers;
-};
-
-export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse = (configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseSuccess | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseError)
-
-export const getConfigureFollowupApiV1WhatsappFollowupsConversationIdPutUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}`
-}
 
 /**
  * Enable or update smart proactive follow-up for one conversation.
  * @summary Configure Followup
  */
-export const configureFollowupApiV1WhatsappFollowupsConversationIdPut = async (conversationId: string,
-    followupStrategyRequest: FollowupStrategyRequest, options?: RequestInit): Promise<configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse> => {
-
-  return useCustomInstance<configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse>(getConfigureFollowupApiV1WhatsappFollowupsConversationIdPutUrl(conversationId),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(followupStrategyRequest)
-  }
-);}
-
+export const configureFollowupApiV1WhatsappFollowupsConversationIdPut = async (
+  conversationId: string,
+  followupStrategyRequest: FollowupStrategyRequest,
+  options?: RequestInit,
+): Promise<configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse> => {
+  return useCustomInstance<configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse>(
+    getConfigureFollowupApiV1WhatsappFollowupsConversationIdPutUrl(
+      conversationId,
+    ),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(followupStrategyRequest),
+    },
+  );
+};
 
 export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse200 = {
-  data: FollowupStateResponse
-  status: 200
-}
+  data: FollowupStateResponse;
+  status: 200;
+};
 
 export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponseSuccess = (getFollowupApiV1WhatsappFollowupsConversationIdGetResponse200) & {
-  headers: Headers;
-};
-export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponseError = (getFollowupApiV1WhatsappFollowupsConversationIdGetResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse = (getFollowupApiV1WhatsappFollowupsConversationIdGetResponseSuccess | getFollowupApiV1WhatsappFollowupsConversationIdGetResponseError)
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponseSuccess =
+  getFollowupApiV1WhatsappFollowupsConversationIdGetResponse200 & {
+    headers: Headers;
+  };
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponseError =
+  getFollowupApiV1WhatsappFollowupsConversationIdGetResponse422 & {
+    headers: Headers;
+  };
 
-export const getGetFollowupApiV1WhatsappFollowupsConversationIdGetUrl = (conversationId: string,) => {
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse =
+  | getFollowupApiV1WhatsappFollowupsConversationIdGetResponseSuccess
+  | getFollowupApiV1WhatsappFollowupsConversationIdGetResponseError;
 
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}`
-}
+export const getGetFollowupApiV1WhatsappFollowupsConversationIdGetUrl = (
+  conversationId: string,
+) => {
+  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}`;
+};
 
 /**
  * Get the follow-up state for one conversation.
  * @summary Get Followup
  */
-export const getFollowupApiV1WhatsappFollowupsConversationIdGet = async (conversationId: string, options?: RequestInit): Promise<getFollowupApiV1WhatsappFollowupsConversationIdGetResponse> => {
+export const getFollowupApiV1WhatsappFollowupsConversationIdGet = async (
+  conversationId: string,
+  options?: RequestInit,
+): Promise<getFollowupApiV1WhatsappFollowupsConversationIdGetResponse> => {
+  return useCustomInstance<getFollowupApiV1WhatsappFollowupsConversationIdGetResponse>(
+    getGetFollowupApiV1WhatsappFollowupsConversationIdGetUrl(conversationId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
-  return useCustomInstance<getFollowupApiV1WhatsappFollowupsConversationIdGetResponse>(getGetFollowupApiV1WhatsappFollowupsConversationIdGetUrl(conversationId),
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse200 =
   {
-    ...options,
-    method: 'GET'
+    data: FollowupStateResponse;
+    status: 200;
+  };
 
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseSuccess =
+  pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse200 & {
+    headers: Headers;
+  };
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseError =
+  pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse422 & {
+    headers: Headers;
+  };
 
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse =
 
-export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse200 = {
-  data: FollowupStateResponse
-  status: 200
-}
+    | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseSuccess
+    | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseError;
 
-export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseSuccess = (pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse200) & {
-  headers: Headers;
-};
-export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseError = (pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse422) & {
-  headers: Headers;
-};
-
-export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse = (pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseSuccess | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseError)
-
-export const getPauseFollowupApiV1WhatsappFollowupsConversationIdPausePostUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/pause`
-}
+export const getPauseFollowupApiV1WhatsappFollowupsConversationIdPausePostUrl =
+  (conversationId: string) => {
+    return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/pause`;
+  };
 
 /**
  * Pause smart proactive follow-up for one conversation.
  * @summary Pause Followup
  */
-export const pauseFollowupApiV1WhatsappFollowupsConversationIdPausePost = async (conversationId: string, options?: RequestInit): Promise<pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse> => {
+export const pauseFollowupApiV1WhatsappFollowupsConversationIdPausePost =
+  async (
+    conversationId: string,
+    options?: RequestInit,
+  ): Promise<pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse> => {
+    return useCustomInstance<pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse>(
+      getPauseFollowupApiV1WhatsappFollowupsConversationIdPausePostUrl(
+        conversationId,
+      ),
+      {
+        ...options,
+        method: 'POST',
+      },
+    );
+  };
 
-  return useCustomInstance<pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse>(getPauseFollowupApiV1WhatsappFollowupsConversationIdPausePostUrl(conversationId),
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse200 =
   {
-    ...options,
-    method: 'POST'
+    data: FollowupStateResponse;
+    status: 200;
+  };
 
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseSuccess =
+  resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse200 & {
+    headers: Headers;
+  };
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseError =
+  resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse422 & {
+    headers: Headers;
+  };
 
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse =
 
-export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse200 = {
-  data: FollowupStateResponse
-  status: 200
-}
+    | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseSuccess
+    | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseError;
 
-export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseSuccess = (resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse200) & {
-  headers: Headers;
-};
-export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseError = (resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse422) & {
-  headers: Headers;
-};
-
-export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse = (resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseSuccess | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseError)
-
-export const getResumeFollowupApiV1WhatsappFollowupsConversationIdResumePostUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/resume`
-}
+export const getResumeFollowupApiV1WhatsappFollowupsConversationIdResumePostUrl =
+  (conversationId: string) => {
+    return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/resume`;
+  };
 
 /**
  * Resume paused or stopped smart proactive follow-up.
  * @summary Resume Followup
  */
-export const resumeFollowupApiV1WhatsappFollowupsConversationIdResumePost = async (conversationId: string, options?: RequestInit): Promise<resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse> => {
+export const resumeFollowupApiV1WhatsappFollowupsConversationIdResumePost =
+  async (
+    conversationId: string,
+    options?: RequestInit,
+  ): Promise<resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse> => {
+    return useCustomInstance<resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse>(
+      getResumeFollowupApiV1WhatsappFollowupsConversationIdResumePostUrl(
+        conversationId,
+      ),
+      {
+        ...options,
+        method: 'POST',
+      },
+    );
+  };
 
-  return useCustomInstance<resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse>(getResumeFollowupApiV1WhatsappFollowupsConversationIdResumePostUrl(conversationId),
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse200 =
   {
-    ...options,
-    method: 'POST'
+    data: FollowupStateResponse;
+    status: 200;
+  };
 
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseSuccess =
+  stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse200 & {
+    headers: Headers;
+  };
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseError =
+  stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse422 & {
+    headers: Headers;
+  };
 
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse =
+  | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseSuccess
+  | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseError;
 
-export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse200 = {
-  data: FollowupStateResponse
-  status: 200
-}
-
-export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseSuccess = (stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse200) & {
-  headers: Headers;
+export const getStopFollowupApiV1WhatsappFollowupsConversationIdStopPostUrl = (
+  conversationId: string,
+) => {
+  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/stop`;
 };
-export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseError = (stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse422) & {
-  headers: Headers;
-};
-
-export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse = (stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseSuccess | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseError)
-
-export const getStopFollowupApiV1WhatsappFollowupsConversationIdStopPostUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/stop`
-}
 
 /**
  * Permanently stop smart proactive follow-up for one conversation.
  * @summary Stop Followup
  */
-export const stopFollowupApiV1WhatsappFollowupsConversationIdStopPost = async (conversationId: string, options?: RequestInit): Promise<stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse> => {
-
-  return useCustomInstance<stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse>(getStopFollowupApiV1WhatsappFollowupsConversationIdStopPostUrl(conversationId),
-  {
-    ...options,
-    method: 'POST'
-
-
-  }
-);}
-
-
+export const stopFollowupApiV1WhatsappFollowupsConversationIdStopPost = async (
+  conversationId: string,
+  options?: RequestInit,
+): Promise<stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse> => {
+  return useCustomInstance<stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse>(
+    getStopFollowupApiV1WhatsappFollowupsConversationIdStopPostUrl(
+      conversationId,
+    ),
+    {
+      ...options,
+      method: 'POST',
+    },
+  );
+};

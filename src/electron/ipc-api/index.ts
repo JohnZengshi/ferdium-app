@@ -10,6 +10,7 @@ import httpRequest from './httpRequest';
 import languageDetect from './languageDetect';
 import localServer from './localServer';
 import processManager from './processManager';
+import proxyTest from './proxyTest';
 import sessionStorage from './sessionStorage';
 import settings from './settings';
 import whatsappWebhook from './whatsappWebhook';
@@ -31,4 +32,5 @@ export default (params: {
   focusState(params);
   whatsappWebhook(params);
   httpRequest();
+  proxyTest();
 };

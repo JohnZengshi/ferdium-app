@@ -1,4 +1,5 @@
 import { inject, observer } from 'mobx-react';
+import { reaction } from 'mobx';
 import { Component, type ReactElement } from 'react';
 import { type WrappedComponentProps, injectIntl } from 'react-intl';
 import {
@@ -53,6 +54,8 @@ interface HomeScreenState {
 @inject('stores')
 @observer
 class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
+  _statusReactionDisposer: (() => void) | undefined;
+
   constructor(props: IHomeScreenProps) {
     super(props);
 
@@ -92,6 +95,30 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     await this.props.stores!.whatsappAutomation.fetchAllSessionStatuses();
     // Check account binding status
     await this.checkStep1Completion();
+
+    // Set up reaction to monitor session status changes
+    this._statusReactionDisposer = reaction(
+      () => {
+        const { whatsappAutomation } = this.props.stores!;
+        // Track all session statuses as a string to trigger reaction on any change
+        return [...whatsappAutomation.sessionStatuses.entries()]
+          .map(([id, status]) => `${id}:${status}`)
+          .join('|');
+      },
+      () => {
+        // When any session status changes, recheck step 1 completion
+        this.checkStep1Completion();
+      },
+      { delay: 500 }, // Debounce to avoid too frequent checks
+    );
+  }
+
+  componentWillUnmount(): void {
+    // Clean up reaction
+    if (this._statusReactionDisposer) {
+      this._statusReactionDisposer();
+      this._statusReactionDisposer = undefined;
+    }
   }
 
   /**

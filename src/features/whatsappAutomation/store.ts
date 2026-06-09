@@ -268,16 +268,24 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         const isWhatsAppLoggedIn = await service.webview.executeJavaScript(`
           (function() {
             try {
-              // WhatsApp Web shows a specific header when logged in
-              // Check for the main app container (exists only when logged in)
-              const hasMainApp = !!document.querySelector('div[data-testid="default-user"]') ||
-                                 !!document.querySelector('div#app > div > div') ||
-                                 !!document.querySelector('div#pane-side');
-
-              // QR modal is shown when NOT logged in
+              // Check if QR modal is still present (means NOT logged in)
               const hasQrModal = !!document.getElementById('wa-akg-qr-modal');
+              if (hasQrModal) {
+                return false;
+              }
 
-              return hasMainApp && !hasQrModal;
+              // Check for WhatsApp Web logged-in indicators
+              // Multiple checks to ensure robustness
+              const hasUserPanel = !!document.querySelector('div[data-testid="default-user"]');
+              const hasChatList = !!document.querySelector('div#pane-side');
+              const hasMainApp = !!document.querySelector('div#app > div > div > div');
+              const hasSearchInput = !!document.querySelector('div[contenteditable="true"][data-testid="chat-list-search"]');
+
+              // At least 2 indicators must be present to confirm login
+              const indicators = [hasUserPanel, hasChatList, hasMainApp, hasSearchInput];
+              const positiveCount = indicators.filter(Boolean).length;
+
+              return positiveCount >= 2;
             } catch(e) {
               return false;
             }

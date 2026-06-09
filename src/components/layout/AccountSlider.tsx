@@ -5,16 +5,25 @@ import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import type { IntlShape, WrappedComponentProps } from 'react-intl';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { AddIcon, UserIcon } from 'tdesign-icons-react';
+import {
+  AddIcon,
+  CloseIcon,
+  ErrorCircleFilledIcon,
+  UserIcon,
+} from 'tdesign-icons-react';
 import {
   Avatar,
   Badge,
   Button,
   DialogPlugin,
+  Drawer,
   Empty,
   Form,
+  Input,
   MessagePlugin,
   Select,
+  Switch,
+  Textarea,
 } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
@@ -110,6 +119,119 @@ const messages = defineMessages({
     id: 'accountSlider.bindPersonaFailed',
     defaultMessage: '人设绑定失败',
   },
+  bindAccountDialogTitle: {
+    id: 'accountSlider.bindAccountDialogTitle',
+    defaultMessage: '绑定账号',
+  },
+  basicSettings: {
+    id: 'accountSlider.basicSettings',
+    defaultMessage: '基础设置',
+  },
+  accountRemark: {
+    id: 'accountSlider.accountRemark',
+    defaultMessage: '账号备注',
+  },
+  accountRemarkPlaceholder: {
+    id: 'accountSlider.accountRemarkPlaceholder',
+    defaultMessage: '请输入内容',
+  },
+  proxyHostPlaceholder: {
+    id: 'accountSlider.proxyHostPlaceholder',
+    defaultMessage: '例如： http://127.0.0.1',
+  },
+  proxyPortPlaceholder: {
+    id: 'accountSlider.proxyPortPlaceholder',
+    defaultMessage: '例如 8080',
+  },
+  proxyUserPlaceholder: {
+    id: 'accountSlider.proxyUserPlaceholder',
+    defaultMessage: '如有填写此处',
+  },
+  proxyPasswordPlaceholder: {
+    id: 'accountSlider.proxyPasswordPlaceholder',
+    defaultMessage: '如有填写此处',
+  },
+  autoFillPlaceholder: {
+    id: 'accountSlider.autoFillPlaceholder',
+    defaultMessage: '粘贴ip信息到这里会自动解析下面格式',
+  },
+  cookieAutoFillPlaceholder: {
+    id: 'accountSlider.cookieAutoFillPlaceholder',
+    defaultMessage:
+      '支持数组包含JSON格式的Cookie，例如\n[(“name”:“name”,“value”:“value”,“domain”:“domain”)]',
+  },
+  proxyCheckDesc: {
+    id: 'accountSlider.proxyCheckDesc',
+    defaultMessage: '设置代理后请先检测',
+  },
+  cookieHint: {
+    id: 'accountSlider.cookieHint',
+    defaultMessage: '用于登录会话时使用',
+  },
+  proxySettings: {
+    id: 'accountSlider.proxySettings',
+    defaultMessage: '代理设置',
+  },
+  proxyAutoFill: {
+    id: 'accountSlider.proxyAutoFill',
+    defaultMessage: '代理自动填充',
+  },
+  proxyHost: {
+    id: 'accountSlider.proxyHost',
+    defaultMessage: '地址',
+  },
+  proxyPort: {
+    id: 'accountSlider.proxyPort',
+    defaultMessage: '端口',
+  },
+  proxyUser: {
+    id: 'accountSlider.proxyUser',
+    defaultMessage: '用户名',
+  },
+  proxyPassword: {
+    id: 'accountSlider.proxyPassword',
+    defaultMessage: '密码',
+  },
+  proxyCheck: {
+    id: 'accountSlider.proxyCheck',
+    defaultMessage: '点击检测',
+  },
+  cookieSettings: {
+    id: 'accountSlider.cookieSettings',
+    defaultMessage: 'Cookie设置',
+  },
+  cookieAutoFill: {
+    id: 'accountSlider.cookieAutoFill',
+    defaultMessage: 'Cookie自动填充',
+  },
+  cookiePlaceholder: {
+    id: 'accountSlider.cookiePlaceholder',
+    defaultMessage: '请输入Cookie内容',
+  },
+  proxyRestartInfo: {
+    id: 'accountSlider.proxyRestartInfo',
+    defaultMessage: '修改代理设置后，需重新启动软件生效',
+  },
+  proxyRiskWarning: {
+    id: 'accountSlider.proxyRiskWarning',
+    defaultMessage: '建议打开代理，关闭代理会有风险哦～',
+  },
+  autoFillLabel: {
+    id: 'accountSlider.autoFillLabel',
+    defaultMessage: '自动填充',
+  },
+  clickCheckDesc: {
+    id: 'accountSlider.clickCheckDesc',
+    defaultMessage: '代理自动填充功能，开启后，绑定账号将自动获取代理内容',
+  },
+  cancel: {
+    id: 'accountSlider.cancel',
+    defaultMessage: '取消',
+  },
+  confirm: {
+    id: 'accountSlider.confirm',
+    defaultMessage: '确认',
+  },
 });
 
 const TAB_IDS = ['all', 'online', 'offline', 'error'] as const;
@@ -146,6 +268,18 @@ interface StatusTag {
   label: string;
   bg: string;
   text: string;
+}
+
+interface BindAccountFormValues {
+  remark: string;
+  proxyAutoFill: boolean;
+  proxyAutoFillContent: string;
+  proxyHost: string;
+  proxyPort: string;
+  proxyUser: string;
+  proxyPassword: string;
+  cookieAutoFill: boolean;
+  cookie: string;
 }
 
 type WhatsAppSessionStatus =
@@ -429,10 +563,6 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                               ?.label ?? '',
                           );
                           MessagePlugin.success(
-                            options.find(o => o.value === selectedPersonaId)
-                              ?.label ?? '',
-                          );
-                          MessagePlugin.success(
                             intl.formatMessage(messages.bindPersonaSuccess),
                           );
                           confirmDia.hide();
@@ -504,6 +634,9 @@ interface IProps extends WrappedComponentProps {
 
 interface IAccountSliderState {
   activeTab: TabId;
+  isBindDrawerVisible: boolean;
+  bindForm: BindAccountFormValues;
+  editingService: Service | null;
 }
 
 @inject('stores', 'actions')
@@ -513,6 +646,19 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     super(props);
     this.state = {
       activeTab: 'all',
+      isBindDrawerVisible: false,
+      bindForm: {
+        remark: '',
+        proxyAutoFill: false,
+        proxyAutoFillContent: '',
+        proxyHost: '',
+        proxyPort: '',
+        proxyUser: '',
+        proxyPassword: '',
+        cookieAutoFill: true,
+        cookie: '',
+      },
+      editingService: null,
     };
   }
 
@@ -565,8 +711,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
       },
       {
         label: 'Edit',
-        click: () =>
-          actions?.ui?.openSettings?.({ path: `services/edit/${service.id}` }),
+        click: () => this.openBindDrawer(service),
       },
       { type: 'separator' as const },
       {
@@ -636,6 +781,95 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     this.setState({ activeTab: id });
   };
 
+  openBindDrawer = (editingService: Service | null = null) => {
+    if (editingService) {
+      const proxy = (editingService as any).proxy || {};
+      this.setState({
+        isBindDrawerVisible: true,
+        editingService,
+        bindForm: {
+          remark: editingService.name || '',
+          proxyAutoFill: proxy.isEnabled || false,
+          proxyAutoFillContent: '',
+          proxyHost: proxy.host || '',
+          proxyPort: proxy.port || '',
+          proxyUser: proxy.user || '',
+          proxyPassword: proxy.password || '',
+          cookieAutoFill: true,
+          cookie: '',
+        },
+      });
+    } else {
+      this.setState({
+        isBindDrawerVisible: true,
+        editingService: null,
+        bindForm: {
+          remark: '',
+          proxyAutoFill: false,
+          proxyAutoFillContent: '',
+          proxyHost: '',
+          proxyPort: '',
+          proxyUser: '',
+          proxyPassword: '',
+          cookieAutoFill: true,
+          cookie: '',
+        },
+      });
+    }
+  };
+
+  closeBindDrawer = () => {
+    this.setState({ isBindDrawerVisible: false, editingService: null });
+  };
+
+  handleBindFormChange = (
+    field: keyof BindAccountFormValues,
+    value: string | boolean,
+  ) => {
+    this.setState(prevState => ({
+      bindForm: { ...prevState.bindForm, [field]: value },
+    }));
+  };
+
+  handleBindConfirm = () => {
+    const { actions } = this.props;
+    const { bindForm, editingService } = this.state;
+
+    const proxy = bindForm.proxyAutoFill
+      ? {
+          isEnabled: true,
+          host: bindForm.proxyHost,
+          port: bindForm.proxyPort,
+          user: bindForm.proxyUser,
+          password: bindForm.proxyPassword,
+        }
+      : { isEnabled: false };
+
+    if (editingService) {
+      actions?.service?.updateService?.({
+        serviceId: editingService.id,
+        serviceData: {
+          name: bindForm.remark || 'WhatsApp',
+          proxy,
+        },
+        redirect: false,
+      });
+      MessagePlugin.success({ content: '更新成功', duration: 3000 });
+    } else {
+      actions?.service?.createService?.({
+        recipeId: 'whatsapp',
+        serviceData: {
+          name: bindForm.remark || 'WhatsApp',
+          proxy,
+        },
+        redirect: false,
+      });
+      MessagePlugin.success({ content: '绑定成功', duration: 3000 });
+    }
+
+    this.closeBindDrawer();
+  };
+
   render(): ReactElement {
     const { stores, actions, intl } = this.props;
     const { activeTab } = this.state;
@@ -689,7 +923,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           height="40px"
           className="rounded-[6px] flex-shrink-0"
           icon={<AddIcon />}
-          onClick={() => actions?.ui?.openSettings?.({ path: 'recipes' })}
+          onClick={() => this.openBindDrawer()}
         >
           {intl.formatMessage(messages.bindAccount)}
         </Button>
@@ -715,6 +949,229 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
             />
           </div>
         )}
+
+        <Drawer
+          header={
+            <div className="flex items-center justify-between w-full h-full">
+              <span className="text-[18px] font-semibold text-[#1f2329]">
+                {intl.formatMessage(messages.bindAccountDialogTitle)}
+              </span>
+              <CloseIcon
+                className="w-[16px] h-[16px] text-[#666] cursor-pointer"
+                onClick={this.closeBindDrawer}
+              />
+            </div>
+          }
+          visible={this.state.isBindDrawerVisible}
+          size="548px"
+          onClose={this.closeBindDrawer}
+          destroyOnClose
+          closeOnOverlayClick={false}
+          placement="right"
+          closeBtn={false}
+          className="[&_.t-drawer__body]:!p-0"
+          footer={
+            <div className="flex items-center justify-end h-full px-[24px] gap-[12px] border-t border-[#e7e7e7]">
+              <Button
+                theme="default"
+                variant="base"
+                className="!w-[80px] !h-[40px] !bg-[#F2F3F5] !text-[#333] border-none"
+                onClick={this.closeBindDrawer}
+              >
+                {intl.formatMessage(messages.cancel)}
+              </Button>
+              <Button
+                theme="primary"
+                className="!w-[88px] !h-[40px] !bg-[#0052D9]"
+                onClick={this.handleBindConfirm}
+              >
+                {intl.formatMessage(messages.confirm)}
+              </Button>
+            </div>
+          }
+        >
+          <div className="flex flex-col h-full">
+            <div className="flex-1 overflow-y-auto px-[24px] pt-[28px] pb-[32px]">
+              <div className="mb-[40px]">
+                <div className="text-[16px] font-semibold text-[#1f2329] mb-[24px]">
+                  {intl.formatMessage(messages.basicSettings)}
+                </div>
+                <div className="flex items-start gap-x-[12px] mb-[20px]">
+                  <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                    {intl.formatMessage(messages.accountRemark)}
+                  </div>
+                  <div className="relative w-[406px]">
+                    <Input
+                      className="!h-[40px] !border-[#dcdcdc]"
+                      placeholder={intl.formatMessage(
+                        messages.accountRemarkPlaceholder,
+                      )}
+                      value={this.state.bindForm.remark}
+                      onChange={val => this.handleBindFormChange('remark', val)}
+                    />
+                    <span className="absolute right-[12px] top-[10px] text-[12px] text-[#0052d9]">
+                      {this.state.bindForm.remark.length}/10
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-[40px]">
+                <div className="flex items-center gap-x-[12px] mb-[24px]">
+                  <span className="text-[16px] font-semibold text-[#1f2329]">
+                    {intl.formatMessage(messages.proxySettings)}
+                  </span>
+                  <Switch
+                    value={this.state.bindForm.proxyAutoFill}
+                    onChange={val =>
+                      this.handleBindFormChange('proxyAutoFill', val)
+                    }
+                  />
+                  {!this.state.bindForm.proxyAutoFill && (
+                    <div className="flex items-center gap-x-[4px]">
+                      <ErrorCircleFilledIcon className="w-[16px] h-[16px] text-[#ed7b2f]" />
+                      <span className="text-[12px] text-[#999]">
+                        {intl.formatMessage(messages.proxyRiskWarning)}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {this.state.bindForm.proxyAutoFill && (
+                  <>
+                    <div className="flex items-start gap-x-[12px] mb-[20px]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                        {intl.formatMessage(messages.autoFillLabel)}
+                      </div>
+                      <div className="w-[406px]">
+                        <Textarea
+                          className="!h-[132px] !border-[#dcdcdc] !p-[12px]"
+                          placeholder={intl.formatMessage(
+                            messages.autoFillPlaceholder,
+                          )}
+                          value={this.state.bindForm.proxyAutoFillContent}
+                          onChange={val =>
+                            this.handleBindFormChange(
+                              'proxyAutoFillContent',
+                              val,
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-x-[12px] mb-[16px]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                        {intl.formatMessage(messages.proxyHost)}
+                      </div>
+                      <Input
+                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        placeholder={intl.formatMessage(
+                          messages.proxyHostPlaceholder,
+                        )}
+                        value={this.state.bindForm.proxyHost}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyHost', val)
+                        }
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-x-[12px] mb-[16px]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                        {intl.formatMessage(messages.proxyPort)}
+                      </div>
+                      <Input
+                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        placeholder={intl.formatMessage(
+                          messages.proxyPortPlaceholder,
+                        )}
+                        value={this.state.bindForm.proxyPort}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyPort', val)
+                        }
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-x-[12px] mb-[16px]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                        {intl.formatMessage(messages.proxyUser)}
+                      </div>
+                      <Input
+                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        placeholder={intl.formatMessage(
+                          messages.proxyUserPlaceholder,
+                        )}
+                        value={this.state.bindForm.proxyUser}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyUser', val)
+                        }
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-x-[12px] mb-[16px]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                        {intl.formatMessage(messages.proxyPassword)}
+                      </div>
+                      <Input
+                        type="password"
+                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        placeholder={intl.formatMessage(
+                          messages.proxyPasswordPlaceholder,
+                        )}
+                        value={this.state.bindForm.proxyPassword}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyPassword', val)
+                        }
+                      />
+                    </div>
+
+                    <div className="ml-[94px]">
+                      <Button
+                        className="!w-[118px] !h-[40px] !bg-[#0052D9] !text-white !font-medium"
+                        onClick={() => {}}
+                      >
+                        {intl.formatMessage(messages.proxyCheck)}
+                      </Button>
+                      <div className="mt-[8px] text-[12px] text-[#999]">
+                        {intl.formatMessage(messages.clickCheckDesc)}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <div>
+                <div className="flex items-center justify-start gap-[12px] w-full mb-[24px]">
+                  <span className="text-[16px] font-semibold text-[#1f2329]">
+                    {intl.formatMessage(messages.cookieSettings)}
+                  </span>
+                  <Switch
+                    value={this.state.bindForm.cookieAutoFill}
+                    onChange={val =>
+                      this.handleBindFormChange('cookieAutoFill', val)
+                    }
+                  />
+                </div>
+
+                {this.state.bindForm.cookieAutoFill && (
+                  <div className="flex flex-col">
+                    <Textarea
+                      className="!w-[406px] min-h-[148px] !border-[#dcdcdc] !p-[12px] self-end"
+                      placeholder={intl.formatMessage(
+                        messages.cookiePlaceholder,
+                      )}
+                      value={this.state.bindForm.cookie}
+                      onChange={val => this.handleBindFormChange('cookie', val)}
+                    />
+                    <div className="mt-[8px] text-[12px] text-[#999] self-end w-[406px]">
+                      {intl.formatMessage(messages.cookieHint)}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </Drawer>
       </div>
     );
   }

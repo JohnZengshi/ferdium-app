@@ -1131,7 +1131,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     return map[status] || { color: '#9E9E9E', label: status };
   };
 
-  /** Inject or update a floating status indicator (bottom-right) in the webview. */
+  /** Inject or update a floating status indicator (top-right) in the webview. */
   _injectOrUpdateStatusIndicator = (serviceId: string, status: string) => {
     const service = this._getService(serviceId);
     if (!service?.webview) return;
@@ -1156,7 +1156,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   s.textContent = [
     '@keyframes waa-si-pulse{0%{box-shadow:0 0 0 0 ${escColor}88}70%{box-shadow:0 0 0 14px ${escColor}00}100%{box-shadow:0 0 0 0 ${escColor}00}}',
     '@keyframes waa-si-radar{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}',
-    '#${SID}{position:fixed;bottom:20px;right:20px;z-index:2147483646;display:flex;align-items:center;gap:10px;background:rgba(11,20,26,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:30px;padding:10px 18px 10px 14px;box-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;pointer-events:none;user-select:none}',
+    '#${SID}{position:fixed;top:20px;right:20px;z-index:2147483646;display:flex;align-items:center;gap:10px;background:rgba(11,20,26,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:30px;padding:10px 18px 10px 14px;box-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;pointer-events:none;user-select:none}',
     '.waa-si-radar{position:relative;width:20px;height:20px;flex-shrink:0}',
     '.waa-si-dot{position:absolute;inset:4px;border-radius:50%;background:${escColor};z-index:2;animation:waa-si-pulse 2s infinite}',
     '.waa-si-sweep{position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;border-top-color:${escColor}44;animation:waa-si-radar 2s linear infinite}',

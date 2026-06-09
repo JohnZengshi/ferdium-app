@@ -1,3 +1,4 @@
+import { getApiKey } from '../../whatsapp-automation/api/auth';
 /**
  * Custom fetch instance for orval-generated API client.
  * Handles Bearer token authentication for the Agent Flow CS API.
@@ -5,7 +6,6 @@
  * Returns ORval-compatible format: { data, status, headers }.
  */
 import { getAccessToken } from './auth';
-import { getApiKey } from '../../whatsapp-automation/api/auth';
 
 type OrvalResponse<T> = {
   data: T;
@@ -39,7 +39,9 @@ export const useCustomInstance = <T>(
     ...options,
     signal: options?.signal ?? controller.signal,
     headers: {
-      ...(!isAkgKey && bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
+      ...(!isAkgKey && bearerToken
+        ? { Authorization: `Bearer ${bearerToken}` }
+        : {}),
       ...(akgApiKey ? { 'X-AKG-Api-Key': akgApiKey } : {}),
       ...options?.headers,
       'Content-Type': 'application/json',

@@ -7,6 +7,8 @@ import type CachedRequest from '../stores/lib/CachedRequest';
 import type Reaction from '../stores/lib/Reaction';
 import type Request from '../stores/lib/Request';
 
+import type ServicesStore from '../stores/ServicesStore';
+
 // TODO: This file will be removed in the future when all stores are
 // correctly typed and the use of these interfaces are obsolete.
 
@@ -208,8 +210,6 @@ interface RouterStore {
   push(path: string): void;
   replace: () => void;
 }
-
-import type ServicesStore from '../stores/ServicesStore';
 
 // TODO: Create actual type based on the default config in config.ts
 interface ISettings {

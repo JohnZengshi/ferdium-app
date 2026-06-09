@@ -8,10 +8,10 @@ import {
   runInAction,
 } from 'mobx';
 import { type Socket, io } from 'socket.io-client';
-import { createActionBindings } from '../utils/ActionBinding';
-import FeatureStore from '../utils/FeatureStore';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';
+import { createActionBindings } from '../utils/ActionBinding';
+import FeatureStore from '../utils/FeatureStore';
 import { whatsappAutomationActions } from './actions';
 import {
   WA_AKG_BASE_URL,
@@ -28,9 +28,9 @@ import {
   postSessionsIdAction,
 } from '../../whatsapp-automation/api/generated/sessions/sessions';
 
+import { createWhatsappBindingApiV1WhatsappBindPost } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import authManager from '../../lib/auth/AuthManager';
 import { clearApiKey, getApiKey } from '../../whatsapp-automation/api/auth';
-import { createWhatsappBindingApiV1WhatsappBindPost } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
 const debug = require('../../preload-safe-debug')(
@@ -530,16 +530,24 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           try {
             // POST /api/v1/whatsapp/bind
             // customInstance.ts will automatically attach X-AKG-Api-Key header
-            await createWhatsappBindingApiV1WhatsappBindPost(
-              { session_id: serviceId }
+            await createWhatsappBindingApiV1WhatsappBindPost({
+              session_id: serviceId,
+            });
+            debug(
+              'Agent Flow CS webhook binding triggered for session',
+              serviceId,
             );
-            debug('Agent Flow CS webhook binding triggered for session', serviceId);
           } catch (bindError) {
             // Non-blocking: session is still usable, just webhook won't be registered
-            debug('Agent Flow CS webhook binding failed (non-blocking):', bindError);
+            debug(
+              'Agent Flow CS webhook binding failed (non-blocking):',
+              bindError,
+            );
           }
         } else {
-          debug('No AKG API key available, skipping agent-flow-cs webhook binding');
+          debug(
+            'No AKG API key available, skipping agent-flow-cs webhook binding',
+          );
         }
 
         // Ensure Socket.IO is connected and join room BEFORE starting

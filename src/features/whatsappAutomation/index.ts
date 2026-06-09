@@ -1,6 +1,6 @@
-import WhatsAppAutomationStore from './store';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';
+import WhatsAppAutomationStore from './store';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:whatsapp-automation:init',

@@ -262,6 +262,37 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         return false;
       }
 
+      // Check if WhatsApp is actually logged in within Ferdium webview
+      // by detecting the presence of logged-in UI elements
+      try {
+        const isWhatsAppLoggedIn = await service.webview.executeJavaScript(`
+          (function() {
+            try {
+              // WhatsApp Web shows a specific header when logged in
+              // Check for the main app container (exists only when logged in)
+              const hasMainApp = !!document.querySelector('div[data-testid="default-user"]') ||
+                                 !!document.querySelector('div#app > div > div') ||
+                                 !!document.querySelector('div#pane-side');
+
+              // QR modal is shown when NOT logged in
+              const hasQrModal = !!document.getElementById('wa-akg-qr-modal');
+
+              return hasMainApp && !hasQrModal;
+            } catch(e) {
+              return false;
+            }
+          })();
+        `);
+
+        if (!isWhatsAppLoggedIn) {
+          debug('WhatsApp not logged in within Ferdium webview for', serviceId);
+          return false;
+        }
+      } catch (jsError) {
+        debug('Failed to check WhatsApp login status in webview:', jsError);
+        return false;
+      }
+
       debug('Account binding complete for', serviceId);
       return true;
     } catch (error) {

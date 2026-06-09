@@ -21,13 +21,13 @@ import {
 } from 'tdesign-react';
 import { SectionHeader } from '../../components/home/SectionHeader';
 import { StepItem } from '../../components/home/StepItem';
-import type { RealStores } from '../../stores';
 import {
   calculateOnboardingProgress,
   getOnboardingProgress,
   getStepStatus,
   updateOnboardingStep,
 } from '../../helpers/onboarding-helpers';
+import type { RealStores } from '../../stores';
 import StrategyConfigScreen from './StrategyConfigScreen';
 import {
   type EmployeeResume,

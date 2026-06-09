@@ -679,9 +679,21 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         this.errorMessages.set(serviceId, undefined);
       });
 
+      const proxyData = this.stores?.settings?.proxy?.[serviceId];
+      let proxyUrl: string | undefined;
+      if (proxyData?.isEnabled && proxyData?.host && proxyData?.port) {
+        const protocol = proxyData?.protocol || 'http';
+        const { host, port, user, password } = proxyData;
+        proxyUrl =
+          user && password
+            ? `${protocol}://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}`
+            : `${protocol}://${host}:${port}`;
+      }
+
       const createResponse = await postSessions({
         name: `Ferdium-${serviceId}`,
         sessionId: serviceId,
+        ...(proxyUrl ? { proxyUrl } : {}),
       });
 
       if (createResponse.status === 200) {

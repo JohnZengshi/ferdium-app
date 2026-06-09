@@ -56,6 +56,7 @@
   "accountSlider.proxyRestartInfo": "修改代理设置后，需重新启动软件生效",
   "accountSlider.proxyRiskWarning": "建议打开代理，关闭代理会有风险哦～",
   "accountSlider.proxySettings": "代理设置",
+  "accountSlider.proxyType": "代理类型",
   "accountSlider.proxyUser": "用户名",
   "accountSlider.proxyUserPlaceholder": "如有填写此处",
   "accountSlider.selectPersona": "选择人设",

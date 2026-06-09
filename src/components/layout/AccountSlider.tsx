@@ -1,4 +1,5 @@
 import { Menu, dialog, app as electronApp } from '@electron/remote';
+import { ipcRenderer } from 'electron';
 import { inject, observer } from 'mobx-react';
 import { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
@@ -151,6 +152,10 @@ const messages = defineMessages({
     id: 'accountSlider.proxyPasswordPlaceholder',
     defaultMessage: '如有填写此处',
   },
+  proxyType: {
+    id: 'accountSlider.proxyType',
+    defaultMessage: '代理类型',
+  },
   autoFillPlaceholder: {
     id: 'accountSlider.autoFillPlaceholder',
     defaultMessage: '粘贴ip信息到这里会自动解析下面格式',
@@ -274,6 +279,7 @@ interface BindAccountFormValues {
   remark: string;
   proxyAutoFill: boolean;
   proxyAutoFillContent: string;
+  proxyType: 'http' | 'socks5';
   proxyHost: string;
   proxyPort: string;
   proxyUser: string;
@@ -637,6 +643,7 @@ interface IAccountSliderState {
   isBindDrawerVisible: boolean;
   bindForm: BindAccountFormValues;
   editingService: Service | null;
+  isProxyTesting: boolean;
 }
 
 @inject('stores', 'actions')
@@ -647,10 +654,12 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     this.state = {
       activeTab: 'all',
       isBindDrawerVisible: false,
+      isProxyTesting: false,
       bindForm: {
         remark: '',
-        proxyAutoFill: false,
+        proxyAutoFill: true,
         proxyAutoFillContent: '',
+        proxyType: 'http',
         proxyHost: '',
         proxyPort: '',
         proxyUser: '',
@@ -791,6 +800,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           remark: editingService.name || '',
           proxyAutoFill: proxy.isEnabled || false,
           proxyAutoFillContent: '',
+          proxyType: proxy.protocol || 'http',
           proxyHost: proxy.host || '',
           proxyPort: proxy.port || '',
           proxyUser: proxy.user || '',
@@ -805,8 +815,9 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         editingService: null,
         bindForm: {
           remark: '',
-          proxyAutoFill: false,
+          proxyAutoFill: true,
           proxyAutoFillContent: '',
+          proxyType: 'http',
           proxyHost: '',
           proxyPort: '',
           proxyUser: '',
@@ -838,6 +849,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     const proxy = bindForm.proxyAutoFill
       ? {
           isEnabled: true,
+          protocol: bindForm.proxyType,
           host: bindForm.proxyHost,
           port: bindForm.proxyPort,
           user: bindForm.proxyUser,
@@ -868,6 +880,40 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     }
 
     this.closeBindDrawer();
+  };
+
+  handleProxyCheck = async () => {
+    const { bindForm } = this.state;
+    if (!bindForm.proxyHost || !bindForm.proxyPort) {
+      MessagePlugin.warning('请先填写代理地址和端口');
+      return;
+    }
+
+    this.setState({ isProxyTesting: true });
+    try {
+      const result = await ipcRenderer.invoke('proxy-test', {
+        host: bindForm.proxyHost,
+        port: Number.parseInt(bindForm.proxyPort, 10),
+        protocol: bindForm.proxyType,
+        timeout: 5000,
+      });
+
+      if (result.reachable) {
+        const label = result.protocol === 'socks5' ? 'SOCKS5' : 'HTTP';
+        MessagePlugin.success(
+          `${label}代理连接成功 (延迟: ${result.latency}ms)`,
+        );
+      } else {
+        const label = bindForm.proxyType === 'socks5' ? 'SOCKS5' : 'HTTP';
+        MessagePlugin.error(
+          `${label}代理连接失败: ${result.error || '请检查地址和端口是否正确'}`,
+        );
+      }
+    } catch {
+      MessagePlugin.error('检测失败，请检查代理配置');
+    } finally {
+      this.setState({ isProxyTesting: false });
+    }
   };
 
   render(): ReactElement {
@@ -1062,6 +1108,26 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
                       <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                        {intl.formatMessage(messages.proxyType)}
+                      </div>
+                      <Select
+                        className="!w-[406px]"
+                        value={this.state.bindForm.proxyType}
+                        onChange={val =>
+                          this.handleBindFormChange(
+                            'proxyType',
+                            typeof val === 'string' ? val : 'http',
+                          )
+                        }
+                        options={[
+                          { label: 'HTTP', value: 'http' },
+                          { label: 'SOCKS5', value: 'socks5' },
+                        ]}
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-x-[12px] mb-[16px]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
                         {intl.formatMessage(messages.proxyHost)}
                       </div>
                       <Input
@@ -1128,12 +1194,13 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                     <div className="ml-[94px]">
                       <Button
                         className="!w-[118px] !h-[40px] !bg-[#0052D9] !text-white !font-medium"
-                        onClick={() => {}}
+                        onClick={this.handleProxyCheck}
+                        loading={this.state.isProxyTesting}
                       >
                         {intl.formatMessage(messages.proxyCheck)}
                       </Button>
                       <div className="mt-[8px] text-[12px] text-[#999]">
-                        {intl.formatMessage(messages.clickCheckDesc)}
+                        {intl.formatMessage(messages.proxyCheckDesc)}
                       </div>
                     </div>
                   </>
@@ -1156,7 +1223,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                 {this.state.bindForm.cookieAutoFill && (
                   <div className="flex flex-col">
                     <Textarea
-                      className="!w-[406px] min-h-[148px] !border-[#dcdcdc] !p-[12px] self-end"
+                      className="w-full min-h-[148px] !border-[#dcdcdc] !p-[12px] self-end"
                       placeholder={intl.formatMessage(
                         messages.cookiePlaceholder,
                       )}

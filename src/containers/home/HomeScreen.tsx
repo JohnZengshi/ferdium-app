@@ -22,6 +22,12 @@ import {
 import { SectionHeader } from '../../components/home/SectionHeader';
 import { StepItem } from '../../components/home/StepItem';
 import type { RealStores } from '../../stores';
+import {
+  calculateOnboardingProgress,
+  getOnboardingProgress,
+  getStepStatus,
+  updateOnboardingStep,
+} from '../../helpers/onboarding-helpers';
 import StrategyConfigScreen from './StrategyConfigScreen';
 import {
   type EmployeeResume,
@@ -41,6 +47,7 @@ interface HomeScreenState {
   isAutoReply: boolean;
   viewMode: 'dashboard' | 'strategy';
   dialogEmployee: EmployeeResume | null;
+  step1Completed: boolean;
 }
 
 @inject('stores')
@@ -49,10 +56,13 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   constructor(props: IHomeScreenProps) {
     super(props);
 
+    const onboardingProgress = getOnboardingProgress();
+
     this.state = {
       isAutoReply: false,
       viewMode: 'dashboard',
       dialogEmployee: null,
+      step1Completed: onboardingProgress.step1Completed,
     };
   }
 
@@ -80,7 +90,32 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     await this.props.stores!.digitalHuman.fetchDigitalHumans();
     // Fetch initial session statuses for the social account overview
     await this.props.stores!.whatsappAutomation.fetchAllSessionStatuses();
+    // Check account binding status
+    await this.checkStep1Completion();
   }
+
+  /**
+   * Check if step 1 (account binding) is completed
+   */
+  checkStep1Completion = async (): Promise<void> => {
+    const { whatsappAutomation } = this.props.stores!;
+
+    try {
+      const isBinding = await whatsappAutomation.hasAnyAccountBinding();
+
+      if (isBinding && !this.state.step1Completed) {
+        // Mark step 1 as completed
+        this.setState({ step1Completed: true });
+        updateOnboardingStep(1, true);
+      } else if (!isBinding && this.state.step1Completed) {
+        // If account is unbound, revert step 1
+        this.setState({ step1Completed: false });
+        updateOnboardingStep(1, false);
+      }
+    } catch (error) {
+      console.error('Failed to check step 1 completion:', error);
+    }
+  };
 
   handleAutoReplyChange = (val: boolean): void => {
     this.setState({ isAutoReply: val });
@@ -437,7 +472,9 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                     </span>
                     <div className="mx-[12px] w-[91px]">
                       <Progress
-                        percentage={57}
+                        percentage={calculateOnboardingProgress(
+                          getOnboardingProgress(),
+                        )}
                         color="var(--td-brand-color)"
                         trackColor="var(--td-border-level-1-color)"
                         strokeWidth={4}
@@ -445,7 +482,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                       />
                     </div>
                     <span className="text-[14px] font-medium leading-[20px] text-primary">
-                      80%
+                      {calculateOnboardingProgress(getOnboardingProgress())}%
                     </span>
                   </div>
                 </div>
@@ -455,28 +492,28 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                     stepNumber={1}
                     title={intl.formatMessage(messages.step1Title)}
                     description={intl.formatMessage(messages.step1Desc)}
-                    status="completed"
+                    status={getStepStatus(1, getOnboardingProgress())}
                     isLast={false}
                   />
                   <StepItem
                     stepNumber={2}
                     title={intl.formatMessage(messages.step2Title)}
                     description={intl.formatMessage(messages.step2Desc)}
-                    status="current"
+                    status={getStepStatus(2, getOnboardingProgress())}
                     isLast={false}
                   />
                   <StepItem
                     stepNumber={3}
                     title={intl.formatMessage(messages.step3Title)}
                     description={intl.formatMessage(messages.step3Desc)}
-                    status="pending"
+                    status={getStepStatus(3, getOnboardingProgress())}
                     isLast={false}
                   />
                   <StepItem
                     stepNumber={4}
                     title={intl.formatMessage(messages.step4Title)}
                     description={intl.formatMessage(messages.step4Desc)}
-                    status="pending"
+                    status={getStepStatus(4, getOnboardingProgress())}
                     isLast
                   />
                 </div>

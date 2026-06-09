@@ -23,6 +23,7 @@ import {
 import {
   deleteSessionsIdSettings,
   getSessions,
+  getSessionsId,
   getSessionsIdQr,
   postSessions,
   postSessionsIdAction,
@@ -203,6 +204,88 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     } catch (error) {
       debug('Error fetching all session statuses:', error);
     }
+  }
+
+  /**
+   * Check if account binding is complete for a service.
+   * Returns true only if both AKG and Ferdium are logged in with the same account.
+   * @param serviceId - Service ID to check
+   */
+  @action async checkAccountBinding(serviceId: string): Promise<boolean> {
+    debug('checkAccountBinding called for', serviceId);
+
+    // Ensure we're authenticated before making API calls
+    const authenticated = await this._ensureAuthenticated();
+    if (!authenticated) {
+      debug('Cannot check account binding: authentication failed');
+      return false;
+    }
+
+    try {
+      // Check AKG session status and account info
+      const response = await getSessionsId(serviceId);
+
+      if (response.status !== 200) {
+        debug('Failed to get session details, status:', response.status);
+        return false;
+      }
+
+      const sessionData = response.data;
+
+      // Check if AKG is connected and has account info
+      const isAkgLoggedIn =
+        sessionData.status?.toUpperCase() === 'CONNECTED' &&
+        sessionData.hasInstance === true &&
+        sessionData.me !== null &&
+        sessionData.me !== undefined;
+
+      if (!isAkgLoggedIn) {
+        debug('AKG not logged in for service', serviceId);
+        return false;
+      }
+
+      // Check if Ferdium Service is ready
+      const service = this._getService(serviceId);
+      if (!service) {
+        debug('Service not found:', serviceId);
+        return false;
+      }
+
+      const isFerdiumReady =
+        service.isEnabled &&
+        service.isAttached &&
+        service.webview !== null &&
+        !service.isLoading;
+
+      if (!isFerdiumReady) {
+        debug('Ferdium service not ready for', serviceId);
+        return false;
+      }
+
+      debug('Account binding complete for', serviceId);
+      return true;
+    } catch (error) {
+      debug('Error checking account binding:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Check if any WhatsApp service has completed account binding.
+   * Returns true if at least one service is fully bound.
+   */
+  @action async hasAnyAccountBinding(): Promise<boolean> {
+    const services = this.whatsAppServices;
+    if (services.length === 0) {
+      return false;
+    }
+
+    // Check all services in parallel to avoid await-in-loop
+    const results = await Promise.all(
+      services.map(service => this.checkAccountBinding(service.id)),
+    );
+
+    return results.some(Boolean);
   }
 
   // ========== REACTIONS ========= //

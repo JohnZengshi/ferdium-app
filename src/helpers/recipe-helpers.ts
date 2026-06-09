@@ -1,7 +1,8 @@
 /* eslint-disable import/no-import-module-exports */
 /* eslint-disable global-require */
-import { parse } from 'node:path';
-import { userDataRecipesPath } from '../environment-remote';
+import { join, parse } from 'node:path';
+import { existsSync } from 'fs-extra';
+import { isDevMode, userDataRecipesPath } from '../environment-remote';
 
 export const getRecipeDirectory = (id: string = ''): string => {
   return userDataRecipesPath(id);
@@ -31,4 +32,15 @@ export const loadRecipeConfig = (recipeId: string) => {
   }
 };
 
-module.paths.unshift(getDevRecipeDirectory(), getRecipeDirectory());
+const recipesPaths = [getDevRecipeDirectory(), getRecipeDirectory()];
+
+if (isDevMode) {
+  // In dev mode, search the project's recipes source directory first
+  // so changes to recipes/recipes/whatsapp/ take effect immediately
+  const projectRecipesBase = join(__dirname, '..', '..', 'recipes', 'recipes');
+  if (existsSync(projectRecipesBase)) {
+    recipesPaths.unshift(projectRecipesBase);
+  }
+}
+
+module.paths.unshift(...recipesPaths);

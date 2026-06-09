@@ -1,10 +1,12 @@
 /* eslint-disable import/no-import-module-exports */
+import { tmpdir } from 'node:os';
 /* eslint-disable global-require */
 import { join } from 'node:path';
 import {
   type PathOrFileDescriptor,
   copySync,
   ensureDirSync,
+  mkdtempSync,
   pathExistsSync,
   readJsonSync,
   readdirSync,
@@ -13,6 +15,7 @@ import {
   writeFileSync,
 } from 'fs-extra';
 import ms from 'ms';
+import semver from 'semver';
 import tar from 'tar';
 
 import RecipeModel, { type IRecipe } from '../../models/Recipe';
@@ -363,6 +366,7 @@ export default class ServerApi {
 
   // Recipes
   async getInstalledRecipes() {
+    await this._syncAsarRecipesToUserData();
     const recipesDirectory = getRecipeDirectory();
     const paths = readdirSync(recipesDirectory).filter(
       file =>
@@ -493,6 +497,82 @@ export default class ServerApi {
     }
 
     return id;
+  }
+
+  /**
+   * Sync recipes from internal ASAR archive to user data directory.
+   * Used to upgrade built-in recipes when a new app version is installed
+   * and contains newer recipe versions.
+   */
+  async _syncAsarRecipesToUserData() {
+    const recipesDirectory = userDataRecipesPath();
+    const asarDir = asarRecipesPath();
+
+    if (!pathExistsSync(asarDir)) {
+      return;
+    }
+
+    const archiveFiles = readdirSync(asarDir).filter(
+      f => f.endsWith('.tar.gz') && f !== 'recipe.tar.gz',
+    );
+
+    await Promise.all(
+      archiveFiles.map(async file => {
+        const recipeId = file.replace('.tar.gz', '');
+        const archivePath = join(asarDir, file);
+        const userDataRecipePath = join(recipesDirectory, recipeId);
+        const userDataPackageJsonPath = join(
+          userDataRecipePath,
+          'package.json',
+        );
+
+        try {
+          // Extract just package.json to a temp dir to read its version
+          const tempVersionDir = mkdtempSync(
+            join(tmpdir(), `ferdium-recipe-ver-${recipeId}-`),
+          );
+          await tar.x({
+            file: archivePath,
+            cwd: tempVersionDir,
+          });
+          const asarPackage = readJsonSync(
+            join(tempVersionDir, 'package.json'),
+          );
+          removeSync(tempVersionDir);
+
+          if (
+            !pathExistsSync(userDataPackageJsonPath) ||
+            semver.gt(
+              asarPackage.version,
+              readJsonSync(userDataPackageJsonPath).version,
+            )
+          ) {
+            debug(
+              `[ServerApi] Updating recipe ${recipeId} from ASAR: ${
+                pathExistsSync(userDataPackageJsonPath)
+                  ? readJsonSync(userDataPackageJsonPath).version
+                  : 'missing'
+              } -> ${asarPackage.version}`,
+            );
+            if (pathExistsSync(userDataRecipePath)) {
+              removeSync(userDataRecipePath);
+            }
+            ensureDirSync(userDataRecipePath);
+            await tar.x({
+              file: archivePath,
+              cwd: userDataRecipePath,
+              unlink: true,
+              onwarn: (w: string) => debug('warn', recipeId, w),
+            });
+          }
+        } catch (error) {
+          debug(
+            `[ServerApi] Failed to sync recipe ${recipeId} from ASAR`,
+            error,
+          );
+        }
+      }),
+    );
   }
 
   // Health Check

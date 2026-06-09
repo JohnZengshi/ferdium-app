@@ -11,6 +11,7 @@ import type { ApiInterface } from '../api';
 import appearance from '../features/appearance';
 import basicAuth from '../features/basicAuth';
 import communityRecipes from '../features/communityRecipes';
+import customerProfile from '../features/customerProfile';
 import publishDebugInfo from '../features/publishDebugInfo';
 import quickSwitch from '../features/quickSwitch';
 import serviceProxy from '../features/serviceProxy';
@@ -90,5 +91,6 @@ export default class FeaturesStore extends TypedStore {
     todos(this.stores, this.actions);
     appearance(this.stores);
     whatsappAutomation(this.stores, this.actions);
+    customerProfile(this.stores, this.actions);
   }
 }

@@ -1,3 +1,4 @@
+import type CustomerProfileStore from '../features/customerProfile/store';
 import type WhatsAppAutomationStore from '../features/whatsappAutomation/store';
 import type Workspace from '../features/workspaces/models/Workspace';
 import type Recipe from '../models/Recipe';
@@ -15,6 +16,7 @@ import type ServicesStore from '../stores/ServicesStore';
 export interface FerdiumStores {
   app: AppStore;
   communityRecipes: CommunityRecipesStore;
+  customerProfile: CustomerProfileStore;
   features: FeaturesStore;
   globalError: GlobalErrorStore;
   recipePreviews: RecipePreviewsStore;
@@ -33,6 +35,7 @@ export interface FerdiumStores {
 export interface Stores {
   app: AppStore;
   communityRecipes: CommunityRecipesStore;
+  customerProfile: CustomerProfileStore;
   features: FeaturesStore;
   globalError: GlobalErrorStore;
   recipePreviews: RecipePreviewsStore;

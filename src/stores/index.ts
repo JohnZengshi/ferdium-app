@@ -2,6 +2,7 @@ import type { RouterStore } from '@superwf/mobx-react-router';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
 import { communityRecipesStore } from '../features/communityRecipes';
+import { customerProfileStore } from '../features/customerProfile';
 import { todosStore } from '../features/todos';
 import { whatsappAutomationStore } from '../features/whatsappAutomation';
 import { workspaceStore } from '../features/workspaces';
@@ -33,6 +34,7 @@ export interface RealStores {
   communityRecipes: typeof communityRecipesStore;
   todos: typeof todosStore;
   whatsappAutomation: typeof whatsappAutomationStore;
+  customerProfile: typeof customerProfileStore;
   digitalHuman: DigitalHumanStore;
 }
 
@@ -58,6 +60,7 @@ export default (
     communityRecipes: communityRecipesStore,
     todos: todosStore,
     whatsappAutomation: whatsappAutomationStore,
+    customerProfile: customerProfileStore,
     digitalHuman: new DigitalHumanStore(stores, api, actions),
   });
 

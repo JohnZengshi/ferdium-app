@@ -213,6 +213,8 @@ export type PostSessionsBody = {
   name: string;
   /** Unique session ID (auto-generated if not provided) */
   sessionId?: string;
+  /** Optional SOCKS5/HTTP proxy URL for WhatsApp connection */
+  proxyUrl?: string;
 };
 
 export type GetSessionsIdQr200 = {
@@ -298,6 +300,8 @@ export type GetSessionsId200 = Session & {
 export type PatchSessionsIdSettingsBodyConfig = {
   readReceipts?: boolean;
   rejectCalls?: boolean;
+  /** SOCKS5/HTTP proxy URL for WhatsApp connection */
+  proxyUrl?: string;
 };
 
 export type PatchSessionsIdSettingsBody = {

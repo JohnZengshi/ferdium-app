@@ -2,10 +2,10 @@ import { observer } from 'mobx-react';
 /* eslint-disable react/no-unstable-nested-components */
 import {
   type ReactElement,
+  useCallback,
+  useEffect,
   useMemo,
   useState,
-  useEffect,
-  useCallback,
 } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { RefreshIcon, SearchIcon } from 'tdesign-icons-react';
@@ -17,14 +17,14 @@ import {
   Table,
   Tag,
 } from 'tdesign-react';
-import AvatarCell from '../../components/ui/AvatarCell';
-import FilterToolbar from '../../components/ui/FilterToolbar';
-import { listCustomerProfilesApiV1OwnersCustomerProfilesGet } from '../../agent-flow-cs/api/generated/owners/owners';
 import type {
   AppApiSchemasOwnersCustomerProfileListResponse,
   CustomerProfileResponse,
   ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import { listCustomerProfilesApiV1OwnersCustomerProfilesGet } from '../../agent-flow-cs/api/generated/owners/owners';
+import AvatarCell from '../../components/ui/AvatarCell';
+import FilterToolbar from '../../components/ui/FilterToolbar';
 
 const messages = defineMessages({
   colId: { id: 'userProfile.col.id', defaultMessage: '序号' },
@@ -169,9 +169,9 @@ function UserProfileScreen(): ReactElement {
         await listCustomerProfilesApiV1OwnersCustomerProfilesGet(params);
       const body =
         result.data as AppApiSchemasOwnersCustomerProfileListResponse;
-      const items = (
-        body.items || []
-      ).map(profile => mapProfileToFanProfile(profile));
+      const items = (body.items || []).map(profile =>
+        mapProfileToFanProfile(profile),
+      );
       setData(items);
       setTotal(body.total);
     } catch {

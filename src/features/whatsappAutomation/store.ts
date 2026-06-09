@@ -163,6 +163,48 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     this.isFeatureActive = false;
   }
 
+  /**
+   * Fetch all sessions from the API and update sessionStatuses Map.
+   * Used by HomeScreen to refresh the social account overview.
+   */
+  @action async fetchAllSessionStatuses(): Promise<void> {
+    debug('fetchAllSessionStatuses called');
+
+    // Ensure we're authenticated before making API calls
+    const authenticated = await this._ensureAuthenticated();
+    if (!authenticated) {
+      debug('Cannot fetch sessions: authentication failed');
+      return;
+    }
+
+    try {
+      const response = await getSessions();
+
+      if (response.status === 200) {
+        const sessions: Session[] = response.data;
+        debug(`Fetched ${sessions.length} sessions from API`);
+
+        // Update sessionStatuses Map with current status
+        runInAction(() => {
+          for (const session of sessions) {
+            if (session.sessionId) {
+              const normalizedStatus =
+                session.status?.toUpperCase() ?? 'DISCONNECTED';
+              this.sessionStatuses.set(session.sessionId, normalizedStatus);
+              debug(
+                `Updated status for ${session.sessionId}: ${normalizedStatus}`,
+              );
+            }
+          }
+        });
+      } else {
+        debug('Failed to fetch sessions, response status:', response.status);
+      }
+    } catch (error) {
+      debug('Error fetching all session statuses:', error);
+    }
+  }
+
   // ========== REACTIONS ========= //
 
   _detectWhatsAppServices = (): void => {

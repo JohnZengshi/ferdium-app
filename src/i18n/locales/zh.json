@@ -854,6 +854,8 @@
   "userProfile.view": "查看",
   "homeScreen.autoReplyEnabled": "自动回复已开启",
   "homeScreen.autoReplyDisabled": "自动回复已关闭",
+  "homeScreen.refreshSuccess": "会话状态刷新成功",
+  "homeScreen.refreshError": "会话状态刷新失败",
   "homeScreen.type": "类型",
   "homeScreen.totalCount": "总数量",
   "homeScreen.online": "在线",

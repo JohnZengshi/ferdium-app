@@ -585,5 +585,9 @@
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdium 工作区让您专注于当前重要的事务。设置不同的服务组合，随时轻松切换。</p><p>您决定何时何地需要哪些服务，帮助您掌握工作节奏——或随时轻松从工作中抽身。</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "编辑工作区设置",
   "workspaces.switchingIndicator.allServices": "所有服务",
-  "workspaces.switchingIndicator.switchingTo": "正在切换到"
+  "workspaces.switchingIndicator.switchingTo": "正在切换到",
+  "homeScreen.autoReplyEnabled": "自动回复已开启",
+  "homeScreen.autoReplyDisabled": "自动回复已关闭",
+  "homeScreen.refreshSuccess": "会话状态刷新成功",
+  "homeScreen.refreshError": "会话状态刷新失败"
 }

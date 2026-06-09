@@ -78,6 +78,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
   async componentDidMount(): Promise<void> {
     await this.props.stores!.digitalHuman.fetchDigitalHumans();
+    // Fetch initial session statuses for the social account overview
+    await this.props.stores!.whatsappAutomation.fetchAllSessionStatuses();
   }
 
   handleAutoReplyChange = (val: boolean): void => {
@@ -88,6 +90,18 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         ? intl!.formatMessage(messages.autoReplyEnabled)
         : intl!.formatMessage(messages.autoReplyDisabled),
     );
+  };
+
+  handleRefreshSocialAccounts = async (): Promise<void> => {
+    const { whatsappAutomation } = this.props.stores!;
+    const { intl } = this.props;
+
+    try {
+      await whatsappAutomation.fetchAllSessionStatuses();
+      MessagePlugin.success(intl.formatMessage(messages.refreshSuccess));
+    } catch {
+      MessagePlugin.error(intl.formatMessage(messages.refreshError));
+    }
   };
 
   renderSocialAccountTable(): ReactElement {
@@ -106,16 +120,16 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       const status = whatsappAutomation.sessionStatuses.get(s.id);
       if (status === 'CONNECTED') onlineCount += 1;
       else if (status === 'DISCONNECTED') offlineCount += 1;
-      else errorCount += 1;
+      else if (status) errorCount += 1;
     });
 
     const data = [
       {
         type: 'Whats',
-        total: totalCount || 10,
-        online: onlineCount || 3,
-        offline: offlineCount || 7,
-        error: errorCount || 2,
+        total: totalCount,
+        online: onlineCount,
+        offline: offlineCount,
+        error: errorCount,
       },
     ];
 
@@ -394,7 +408,10 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                       {intl.formatMessage(messages.socialAccountOverview)}
                     </h2>
                   </div>
-                  <RefreshIcon className="h-[22px] w-[22px] cursor-pointer text-primary" />
+                  <RefreshIcon
+                    className="h-[22px] w-[22px] cursor-pointer text-primary hover:text-brand transition-colors"
+                    onClick={this.handleRefreshSocialAccounts}
+                  />
                 </div>
 
                 {this.renderSocialAccountTable()}

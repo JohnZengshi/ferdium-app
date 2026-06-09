@@ -36,6 +36,14 @@ export const messages = defineMessages({
     id: 'homeScreen.autoReplyDisabled',
     defaultMessage: 'Auto reply disabled',
   },
+  refreshSuccess: {
+    id: 'homeScreen.refreshSuccess',
+    defaultMessage: 'Session status refreshed successfully',
+  },
+  refreshError: {
+    id: 'homeScreen.refreshError',
+    defaultMessage: 'Failed to refresh session status',
+  },
 
   // ─── Social account table ───
   type: { id: 'homeScreen.type', defaultMessage: 'Type' },

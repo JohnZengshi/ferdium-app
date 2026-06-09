@@ -391,6 +391,8 @@
   "homeScreen.onboardingTitle": "Onboarding Guide",
   "homeScreen.online": "Online",
   "homeScreen.precisionMarketing": "Precision Marketing",
+  "homeScreen.refreshError": "Failed to refresh session status",
+  "homeScreen.refreshSuccess": "Session status refreshed successfully",
   "homeScreen.resume": "Resume",
   "homeScreen.roleAfterSalesExpert": "After-Sales Support Expert",
   "homeScreen.roleBusinessDevElite": "Business Development Elite",

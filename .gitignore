@@ -407,3 +407,4 @@ server*.log
 
 # pnpm store directory
 .pnpm-store/
+openapi-docs.json

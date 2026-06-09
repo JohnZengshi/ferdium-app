@@ -43,6 +43,7 @@ import {
   type SidebarItem,
   SidebarMenu,
 } from '../../components/home/SidebarMenu';
+import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 
 const messages = defineMessages({
   createPersonaProfile: {
@@ -415,6 +416,7 @@ const KnowledgeScreen: React.FC = () => {
     setIsSaving(true);
     try {
       const request = buildDigitalHumanRequest(formData);
+      let isNewCreation = false;
       if (editingId) {
         const updateRequest: DigitalHumanUpdateRequest = request;
         const response =
@@ -431,6 +433,7 @@ const KnowledgeScreen: React.FC = () => {
         if (response.status !== 200) {
           throw new Error('Failed to create digital human');
         }
+        isNewCreation = true;
       }
 
       await MessagePlugin.success({
@@ -438,6 +441,12 @@ const KnowledgeScreen: React.FC = () => {
         placement: 'bottom',
       });
       await fetchDigitalHumans();
+
+      // Update onboarding progress when creating a new persona profile
+      if (isNewCreation) {
+        updateOnboardingStep(2, true);
+      }
+
       handleBack();
     } catch {
       await MessagePlugin.error(intl.formatMessage(messages.saveFailed));

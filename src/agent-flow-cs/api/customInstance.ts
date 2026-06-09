@@ -5,6 +5,7 @@
  * Returns ORval-compatible format: { data, status, headers }.
  */
 import { getAccessToken } from './auth';
+import { getApiKey } from '../../whatsapp-automation/api/auth';
 
 type OrvalResponse<T> = {
   data: T;
@@ -23,13 +24,24 @@ export const useCustomInstance = <T>(
     process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.179:8000';
   const actualUrl = url.replace(/^https?:\/\/[^/]+/, AGENT_FLOW_CS_BASE);
 
-  const accessToken = getAccessToken();
+  // agent-flow-cs supports two auth methods:
+  //   1. Bearer JWT (own token from /api/v1/auth/login)
+  //   2. X-AKG-Api-Key (WA-AKG wag_… key, looked up via AKG DB)
+  // Sending a wag_ key as Bearer fails JWT decode → 401.
+  // Strategy: prioritize Bearer JWT when available; never send a wag_ key as Bearer.
+  // If bearerToken exists AND is NOT an AKG key, use it as Bearer.
+  // Otherwise use the AKG key in header.
+  const bearerToken = getAccessToken();
+  const akgApiKey = getApiKey();
+  const isAkgKey = bearerToken?.startsWith('wag_');
+
   const config: RequestInit & { signal?: AbortSignal } = {
     ...options,
     signal: options?.signal ?? controller.signal,
     headers: {
+      ...(!isAkgKey && bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
+      ...(akgApiKey ? { 'X-AKG-Api-Key': akgApiKey } : {}),
       ...options?.headers,
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       'Content-Type': 'application/json',
     },
   };

@@ -11,7 +11,11 @@
  */
 
 import { ipcRenderer } from 'electron';
-import { API_KEY_STORAGE_KEY, WA_USER_EMAIL_STORAGE_KEY } from '../constants';
+import {
+  API_KEY_STORAGE_KEY,
+  WA_USER_EMAIL_STORAGE_KEY,
+  WA_USER_ID_STORAGE_KEY,
+} from '../constants';
 import { switchLocalStorageProfile } from '../profileStorage';
 
 const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
@@ -41,10 +45,17 @@ function markFerdiumLoggedInForWaAkg(): void {
   window.localStorage.setItem('authToken', 'wa-akg');
 }
 
-function setWaAkgIdentity(email: string): void {
+function setWaAkgIdentity(email: string, userId?: string): void {
   switchLocalStorageProfile(email);
   window.localStorage.setItem(WA_USER_EMAIL_STORAGE_KEY, email);
-  (window as any).ferdium?.stores?.user?.setWaAkgEmail?.(email);
+  if (userId) {
+    window.localStorage.setItem(WA_USER_ID_STORAGE_KEY, userId);
+  }
+  const { user } = (window as any).ferdium?.stores || {};
+  user?.setWaAkgEmail?.(email);
+  if (userId) {
+    user?.setWaAkgUserId?.(userId);
+  }
   (window as any).ferdium?.stores?.settings?.reloadFileSystemSettings?.();
 }
 
@@ -330,7 +341,7 @@ export const initializeAuth = async (
         console.error('[WhatsApp Automation] Session check failed', session);
         return null;
       }
-      setWaAkgIdentity(session.user.email);
+      setWaAkgIdentity(session.user.email, session.user.id);
       authenticatedEmail = session.user.email;
 
       // eslint-disable-next-line no-console

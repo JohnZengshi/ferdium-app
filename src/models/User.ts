@@ -12,6 +12,7 @@ interface IUser {
   isSubscriptionOwner: boolean;
   team: object;
   waAkgEmail?: string | null;
+  waAkgUserId?: string | null;
 }
 
 // TODO: Need to cleanup these fields since we have removed the tiers of the paid plans from Ferdium
@@ -42,6 +43,8 @@ export default class User {
 
   @observable waAkgEmail: string | null = null;
 
+  @observable waAkgUserId: string | null = null;
+
   constructor(data: IUser) {
     makeObservable(this);
 
@@ -67,5 +70,6 @@ export default class User {
 
     this.team = data.team || this.team;
     this.waAkgEmail = data.waAkgEmail || this.waAkgEmail;
+    this.waAkgUserId = data.waAkgUserId || this.waAkgUserId;
   }
 }

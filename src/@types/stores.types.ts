@@ -1,3 +1,4 @@
+import type WhatsAppAutomationStore from '../features/whatsappAutomation/store';
 import type Workspace from '../features/workspaces/models/Workspace';
 import type Recipe from '../models/Recipe';
 import type Service from '../models/Service';
@@ -23,7 +24,7 @@ export interface FerdiumStores {
   todos: TodosStore;
   ui: UIStore;
   user: UserStore;
-  whatsappAutomation: any;
+  whatsappAutomation: WhatsAppAutomationStore;
   workspaces: WorkspacesStore;
 }
 
@@ -41,7 +42,7 @@ export interface Stores {
   todos: TodosStore;
   ui: UIStore;
   user: UserStore;
-  whatsappAutomation: any;
+  whatsappAutomation: WhatsAppAutomationStore;
   workspaces: WorkspacesStore;
 }
 
@@ -208,27 +209,7 @@ interface RouterStore {
   replace: () => void;
 }
 
-interface ServicesStore extends TypedStore {
-  clearCacheRequest: () => void;
-  createServiceRequest: CachedRequest;
-  deleteServiceRequest: () => void;
-  allServicesRequest: CachedRequest;
-  filterNeedle: string;
-  lastUsedServices: () => void;
-  reorderServicesRequest: () => void;
-  serviceMaintenanceTick: () => void;
-  updateServiceRequest: () => void;
-  active: () => void;
-  activeSettings: () => void;
-  all: Service[];
-  allDisplayed: () => void;
-  allDisplayedUnordered: () => void;
-  enabled: () => void;
-  filtered: () => void;
-  isTodosServiceActive: () => void;
-  isTodosServiceAdded: () => void;
-  mainModuleBadge: number | '•' | null;
-}
+import type ServicesStore from '../stores/ServicesStore';
 
 // TODO: Create actual type based on the default config in config.ts
 interface ISettings {
@@ -309,6 +290,7 @@ interface UserStore extends TypedStore {
   WA_AKG_LOGIN_ROUTE: '/auth/wa-akg/login';
   WELCOME_ROUTE: '/auth/welcome';
   waAkgEmail: string | null;
+  waAkgUserId: string | null;
   accountType: () => void;
   authToken: () => void;
   deleteAccountRequest: () => void;

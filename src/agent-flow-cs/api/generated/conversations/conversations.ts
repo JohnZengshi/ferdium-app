@@ -9,119 +9,161 @@ import type {
   AppApiSchemasConversationResponse,
   AppApiSchemasMessageResponse,
   ConversationCreateRequest,
-  HTTPValidationError,
+  ConversationUpdateRequest,
+  HTTPValidationError
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listConversationsApiV1ConversationsGetResponse200 = {
-  data: AppApiSchemasConversationResponse[];
-  status: 200;
-};
+  data: AppApiSchemasConversationResponse[]
+  status: 200
+}
 
-export type listConversationsApiV1ConversationsGetResponseSuccess =
-  listConversationsApiV1ConversationsGetResponse200 & {
-    headers: Headers;
-  };
-export type listConversationsApiV1ConversationsGetResponse =
-  listConversationsApiV1ConversationsGetResponseSuccess;
+export type listConversationsApiV1ConversationsGetResponseSuccess = (listConversationsApiV1ConversationsGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type listConversationsApiV1ConversationsGetResponse = (listConversationsApiV1ConversationsGetResponseSuccess)
 
 export const getListConversationsApiV1ConversationsGetUrl = () => {
-  return `http://10.0.0.179:8000/api/v1/conversations`;
-};
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/conversations`
+}
 
 /**
  * 列出当前用户可见的会话（owner 俯视旗下全部，member 只看自己）。
  * @summary List Conversations
  */
-export const listConversationsApiV1ConversationsGet = async (
-  options?: RequestInit,
-): Promise<listConversationsApiV1ConversationsGetResponse> => {
-  return useCustomInstance<listConversationsApiV1ConversationsGetResponse>(
-    getListConversationsApiV1ConversationsGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listConversationsApiV1ConversationsGet = async ( options?: RequestInit): Promise<listConversationsApiV1ConversationsGetResponse> => {
+
+  return useCustomInstance<listConversationsApiV1ConversationsGetResponse>(getListConversationsApiV1ConversationsGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type createConversationApiV1ConversationsPostResponse200 = {
-  data: AppApiSchemasConversationResponse;
-  status: 200;
-};
+  data: AppApiSchemasConversationResponse
+  status: 200
+}
 
 export type createConversationApiV1ConversationsPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createConversationApiV1ConversationsPostResponseSuccess = (createConversationApiV1ConversationsPostResponse200) & {
+  headers: Headers;
+};
+export type createConversationApiV1ConversationsPostResponseError = (createConversationApiV1ConversationsPostResponse422) & {
+  headers: Headers;
 };
 
-export type createConversationApiV1ConversationsPostResponseSuccess =
-  createConversationApiV1ConversationsPostResponse200 & {
-    headers: Headers;
-  };
-export type createConversationApiV1ConversationsPostResponseError =
-  createConversationApiV1ConversationsPostResponse422 & {
-    headers: Headers;
-  };
-
-export type createConversationApiV1ConversationsPostResponse =
-  | createConversationApiV1ConversationsPostResponseSuccess
-  | createConversationApiV1ConversationsPostResponseError;
+export type createConversationApiV1ConversationsPostResponse = (createConversationApiV1ConversationsPostResponseSuccess | createConversationApiV1ConversationsPostResponseError)
 
 export const getCreateConversationApiV1ConversationsPostUrl = () => {
-  return `http://10.0.0.179:8000/api/v1/conversations`;
-};
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/conversations`
+}
 
 /**
  * 子账号为客户创建会话线程。
  * @summary Create Conversation
  */
-export const createConversationApiV1ConversationsPost = async (
-  conversationCreateRequest: ConversationCreateRequest,
-  options?: RequestInit,
-): Promise<createConversationApiV1ConversationsPostResponse> => {
-  return useCustomInstance<createConversationApiV1ConversationsPostResponse>(
-    getCreateConversationApiV1ConversationsPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(conversationCreateRequest),
-    },
-  );
+export const createConversationApiV1ConversationsPost = async (conversationCreateRequest: ConversationCreateRequest, options?: RequestInit): Promise<createConversationApiV1ConversationsPostResponse> => {
+
+  return useCustomInstance<createConversationApiV1ConversationsPostResponse>(getCreateConversationApiV1ConversationsPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(conversationCreateRequest)
+  }
+);}
+
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200 = {
+  data: AppApiSchemasConversationResponse
+  status: 200
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200) & {
+  headers: Headers;
+};
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422) & {
+  headers: Headers;
 };
 
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200 =
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError)
+
+export const getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl = (conversationId: string,) => {
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}`
+}
+
+/**
+ * 切换会话绑定的数字人，下一轮对话立即生效。
+ * @summary Update Conversation Digital Human
+ */
+export const updateConversationDigitalHumanApiV1ConversationsConversationIdPatch = async (conversationId: string,
+    conversationUpdateRequest: ConversationUpdateRequest, options?: RequestInit): Promise<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse> => {
+
+  return useCustomInstance<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse>(getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl(conversationId),
   {
-    data: AppApiSchemasMessageResponse;
-    status: 200;
-  };
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(conversationUpdateRequest)
+  }
+);}
 
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess =
-  agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200 & {
-    headers: Headers;
-  };
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError =
-  agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 & {
-    headers: Headers;
-  };
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200 = {
+  data: AppApiSchemasMessageResponse
+  status: 200
+}
 
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse =
-  | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess
-  | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError;
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
 
-export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (
-  conversationId: string,
-) => {
-  return `http://10.0.0.179:8000/api/v1/conversations/${conversationId}/agent-reply`;
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200) & {
+  headers: Headers;
 };
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422) & {
+  headers: Headers;
+};
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError)
+
+export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (conversationId: string,) => {
+
+
+
+
+  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/agent-reply`
+}
 
 /**
  * 人工坐席在接管期间以代表身份回复客户，绕过 Agent 图。
@@ -130,20 +172,16 @@ export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (
  * 对于 WhatsApp 会话，回复会通过 WA-AKG 外发至客户。
  * @summary Agent Reply
  */
-export const agentReplyApiV1ConversationsConversationIdAgentReplyPost = async (
-  conversationId: string,
-  agentReplyRequest: AgentReplyRequest,
-  options?: RequestInit,
-): Promise<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse> => {
-  return useCustomInstance<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse>(
-    getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl(
-      conversationId,
-    ),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(agentReplyRequest),
-    },
-  );
-};
+export const agentReplyApiV1ConversationsConversationIdAgentReplyPost = async (conversationId: string,
+    agentReplyRequest: AgentReplyRequest, options?: RequestInit): Promise<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse> => {
+
+  return useCustomInstance<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse>(getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl(conversationId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(agentReplyRequest)
+  }
+);}
+
+

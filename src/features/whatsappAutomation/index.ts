@@ -1,4 +1,6 @@
 import WhatsAppAutomationStore from './store';
+import type { Stores } from '../../@types/stores.types';
+import type { Actions } from '../../actions/lib/actions';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:whatsapp-automation:init',
@@ -7,8 +9,8 @@ const debug = require('../../preload-safe-debug')(
 export const whatsappAutomationStore = new WhatsAppAutomationStore();
 
 export default function initWhatsAppAutomation(
-  stores: { whatsappAutomation?: any },
-  actions: any,
+  stores: Stores,
+  actions: Actions,
 ) {
   debug('[WA-AKG] initWhatsAppAutomation called');
   // eslint-disable-next-line no-param-reassign

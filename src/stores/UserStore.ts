@@ -15,6 +15,7 @@ import NextAuthProvider from '../lib/auth/providers/NextAuthProvider';
 import {
   API_KEY_STORAGE_KEY,
   WA_USER_EMAIL_STORAGE_KEY,
+  WA_USER_ID_STORAGE_KEY,
 } from '../whatsapp-automation/constants';
 import { saveLocalStorageProfile } from '../whatsapp-automation/profileStorage';
 import CachedRequest from './lib/CachedRequest';
@@ -102,6 +103,10 @@ export default class UserStore extends TypedStore {
 
   @observable waAkgEmail: string | null = localStorage.getItem(
     WA_USER_EMAIL_STORAGE_KEY,
+  );
+
+  @observable waAkgUserId: string | null = localStorage.getItem(
+    WA_USER_ID_STORAGE_KEY,
   );
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
@@ -298,8 +303,11 @@ export default class UserStore extends TypedStore {
     window.localStorage.removeItem(API_KEY_STORAGE_KEY);
     localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
     window.localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
+    localStorage.removeItem(WA_USER_ID_STORAGE_KEY);
+    window.localStorage.removeItem(WA_USER_ID_STORAGE_KEY);
 
     this.waAkgEmail = null;
+    this.waAkgUserId = null;
 
     this.getUserInfoRequest.invalidate().reset();
     this.authToken = null;
@@ -494,6 +502,15 @@ export default class UserStore extends TypedStore {
       localStorage.setItem(WA_USER_EMAIL_STORAGE_KEY, email);
     } else {
       localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
+    }
+  }
+
+  @action setWaAkgUserId(userId: string | null): void {
+    this.waAkgUserId = userId;
+    if (userId) {
+      localStorage.setItem(WA_USER_ID_STORAGE_KEY, userId);
+    } else {
+      localStorage.removeItem(WA_USER_ID_STORAGE_KEY);
     }
   }
 

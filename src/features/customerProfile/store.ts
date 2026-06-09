@@ -7,11 +7,11 @@ import {
 } from 'mobx';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';
-import { listCustomerProfilesApiV1CustomerProfilesGet } from '../../agent-flow-cs/api/generated/customer-profiles/customer-profiles';
 import type {
   CustomerProfileResponse,
   ListCustomerProfilesApiV1CustomerProfilesGetParams,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import { listCustomerProfilesApiV1CustomerProfilesGet } from '../../agent-flow-cs/api/generated/customer-profiles/customer-profiles';
 import FeatureStore from '../utils/FeatureStore';
 
 const debug = require('../../preload-safe-debug')(

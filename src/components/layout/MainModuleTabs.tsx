@@ -8,6 +8,7 @@ import {
   HomeFilledIcon,
   HomeIcon,
 } from 'tdesign-icons-react';
+import { Badge } from 'tdesign-react';
 
 import {
   type WrappedComponentProps,
@@ -86,15 +87,21 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
                   navigationStore.setModule(mod.id);
                 }}
               >
-                {isActive ? (
-                  <span className="flex items-center justify-center w-[48px] h-[48px] rounded-full bg-brand-light text-brand">
-                    {mod.activeIcon}
-                  </span>
-                ) : (
-                  <span className="flex items-center justify-center w-[48px] h-[48px] text-secondary">
-                    {mod.inactiveIcon}
-                  </span>
-                )}
+                <Badge
+                  count={mod.id === 'service-type' ? badge : null}
+                  size="small"
+                  offset={[0, 0]}
+                >
+                  {isActive ? (
+                    <span className="flex items-center justify-center w-[48px] h-[48px] rounded-full bg-brand-light text-brand">
+                      {mod.activeIcon}
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center w-[48px] h-[48px] text-secondary">
+                      {mod.inactiveIcon}
+                    </span>
+                  )}
+                </Badge>
                 <span
                   className={`text-[12px] leading-5 whitespace-nowrap ${isActive ? 'text-brand' : 'text-secondary'}`}
                 >
@@ -108,11 +115,6 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
                     )[mod.id],
                   )}
                 </span>
-                {mod.id === 'service-type' && badge != null && (
-                  <span className="absolute top-0 right-0 flex items-center justify-center min-w-[12px] h-[12px] text-[9px] text-text-anti/90 bg-error rounded-full leading-[15px] translate-x-[2px] -translate-y-[2px]">
-                    {badge}
-                  </span>
-                )}
               </button>
             );
           })}

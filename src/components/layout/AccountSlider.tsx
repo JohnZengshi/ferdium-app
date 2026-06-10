@@ -665,7 +665,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         proxyPort: '',
         proxyUser: '',
         proxyPassword: '',
-        cookieAutoFill: true,
+        cookieAutoFill: false,
         cookie: '',
       },
       editingService: null,
@@ -806,7 +806,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           proxyPort: proxy.port || '',
           proxyUser: proxy.user || '',
           proxyPassword: proxy.password || '',
-          cookieAutoFill: true,
+          cookieAutoFill: false,
           cookie: '',
         },
       });
@@ -823,7 +823,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           proxyPort: '',
           proxyUser: '',
           proxyPassword: '',
-          cookieAutoFill: true,
+          cookieAutoFill: false,
           cookie: '',
         },
       });
@@ -874,6 +874,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         serviceData: {
           name: bindForm.remark || 'WhatsApp',
           proxy,
+          isHibernationEnabled: true,
         },
         redirect: false,
       });

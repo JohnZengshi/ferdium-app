@@ -711,16 +711,28 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
   debug('Received open-browser-window', url);
 });
 
+// Track which partitions already have an onBeforeSendHeaders listener registered.
+// Without this guard, repeated calls to modifyRequestHeaders (e.g. when a service
+// re-attaches) would create redundant listeners even though Electron replaces handlers
+// for identical filters — defensive measure to avoid wasted session API calls.
+const registeredHeaderPartitions = new Set<string>();
+
 ipcMain.on(
   'modifyRequestHeaders',
   (_e, { modifiedRequestHeaders, serviceId }) => {
-    debug(
-      `Received modifyRequestHeaders ${modifiedRequestHeaders} for serviceId ${serviceId}`,
-    );
+    debug(`Received modifyRequestHeaders for serviceId ${serviceId}`);
+
+    const partitionKey = `persist:service-${serviceId}`;
+    if (registeredHeaderPartitions.has(partitionKey)) {
+      debug(`Skipping duplicate modifyRequestHeaders for ${partitionKey}`);
+      return;
+    }
+    registeredHeaderPartitions.add(partitionKey);
+
     for (const headerFilterSet of modifiedRequestHeaders) {
       const { headers, requestFilters } = headerFilterSet;
       session
-        .fromPartition(`persist:service-${serviceId}`)
+        .fromPartition(partitionKey)
         .webRequest.onBeforeSendHeaders(requestFilters, (details, callback) => {
           for (const key in headers) {
             if (Object.prototype.hasOwnProperty.call(headers, key)) {

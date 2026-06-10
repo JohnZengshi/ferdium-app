@@ -144,9 +144,9 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
         width: 96,
         fixed: 'left',
         align: 'center',
-        cell: ({ row }) => (
+        cell: ({ rowIndex }) => (
           <span className="text-[14px] leading-[22px] text-primary">
-            {row.id}
+            {rowIndex + 1}
           </span>
         ),
       },

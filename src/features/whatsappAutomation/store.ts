@@ -629,8 +629,16 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             el.style.opacity = '0';
             setTimeout(function() { el.remove(); }, 300);
           }
+          // Remove injected event listeners and restore pushState
+          if (window.__waAkgQrListeners) {
+            document.removeEventListener('keydown', window.__waAkgQrListeners.keydown, true);
+            window.removeEventListener('popstate', window.__waAkgQrListeners.popstate);
+            window.removeEventListener('message', window.__waAkgQrListeners.message);
+            delete window.__waAkgQrListeners;
+          }
           if (window.__waAkgOriginalPushState) {
             history.pushState = window.__waAkgOriginalPushState;
+            delete window.__waAkgOriginalPushState;
           }
         } catch(e) {
           console.error('[WA-AKG] Error removing QR modal:', e);
@@ -758,7 +766,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     }
   };
 
-  _fetchAndShowQrCode = async (serviceId: string) => {
+  _fetchAndShowQrCode = async (serviceId: string, attempt = 1) => {
+    if (attempt > 6) {
+      debug('Max attempts reached for QR code fetch, stopping');
+      return;
+    }
     try {
       debug('Fetching QR code from WA-AKG for service', serviceId);
 
@@ -772,14 +784,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           debug('QR code fetched successfully, injecting into webview');
           this._injectQrModal({ serviceId, base64 });
         } else {
-          debug('QR API returned no base64 data, retrying in 2s');
+          debug(`QR API returned no base64 data, retrying ${attempt}/6`);
           runInAction(() => {
             this.errorMessages.set(serviceId, 'No QR data available yet');
           });
-          await new Promise(resolve => {
+          await new Promise<void>(resolve => {
             setTimeout(resolve, 2000);
           });
-          this._fetchAndShowQrCode(serviceId);
+          this._fetchAndShowQrCode(serviceId, attempt + 1);
         }
       } else {
         debug('QR API returned status:', qrResponse.status);
@@ -1149,7 +1161,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     if (!service?.webview) return;
 
     const { color, label } = this._statusStyle(status);
-    // Escape for JS string literal
     const escColor = color.replaceAll("'", "\\'");
     const escLabel = label.replaceAll("'", "\\'");
 
@@ -1190,6 +1201,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     attempt = 1,
   ) => {
     if (attempt > 5) return;
+    const service = this._getService(serviceId);
+    if (!service?.webview) return;
     this._injectOrUpdateStatusIndicator(serviceId, status);
     setTimeout(
       () => this._injectStatusWhenReady(serviceId, status, attempt + 1),
@@ -1311,28 +1324,51 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     document.body.appendChild(modal);
 
     // Block navigation/close while QR is showing
-    document.addEventListener('keydown', function(e) {
+    var _keydownHandler = function(e) {
       e.stopPropagation();
       e.preventDefault();
-    }, true);
+    };
+    document.addEventListener('keydown', _keydownHandler, true);
+
     window.__waAkgOriginalPushState = history.pushState.bind(history);
     history.pushState = function() {};
-    window.addEventListener('popstate', function() {
+
+    var _popstateHandler = function() {
       history.pushState(null, '', location.href);
-    });
+    };
+    window.addEventListener('popstate', _popstateHandler);
 
     // Listen for connection notification from host
-    window.addEventListener('message', function(event) {
+    var _messageHandler = function(event) {
       if (event.data && event.data.type === 'wa-akg:session-connected') {
         var body = document.getElementById('waa-body');
         if (!body) return;
         body.innerHTML = '<div style=\"text-align:center;padding:20px;\"><div style=\"font-size:48px;margin-bottom:12px;\">&#10004;&#65039;</div><p style=\"color:#00a884;font-weight:600;font-size:16px;\">Connected!</p></div>';
         setTimeout(function() {
           modal.style.opacity = '0';
-          setTimeout(function() { modal.remove(); }, 500);
+          setTimeout(function() {
+            modal.remove();
+            // Self-cleanup: remove all injected QR modal listeners
+            document.removeEventListener('keydown', _keydownHandler, true);
+            window.removeEventListener('popstate', _popstateHandler);
+            window.removeEventListener('message', _messageHandler);
+            if (window.__waAkgOriginalPushState) {
+              history.pushState = window.__waAkgOriginalPushState;
+            }
+            delete window.__waAkgQrListeners;
+            delete window.__waAkgOriginalPushState;
+          }, 500);
         }, 1000);
       }
-    });
+    };
+    window.addEventListener('message', _messageHandler);
+
+    // Store references for external cleanup (from _removeQrModal)
+    window.__waAkgQrListeners = {
+      keydown: _keydownHandler,
+      popstate: _popstateHandler,
+      message: _messageHandler,
+    };
 
     // Show QR code
     var bodyEl = document.getElementById('waa-body');

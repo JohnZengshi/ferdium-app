@@ -372,15 +372,22 @@ export default class ServerApi {
       file =>
         statSync(join(recipesDirectory, file)).isDirectory() &&
         file !== 'temp' &&
-        file !== 'dev',
+        file !== 'dev' &&
+        pathExistsSync(join(recipesDirectory, file, 'index.js')),
     );
 
     this.recipes = paths
       .map(id => {
-        // eslint-disable-next-line import/no-dynamic-require
-        const Recipe = require(id)(RecipeModel);
-        return new Recipe(loadRecipeConfig(id));
+        try {
+          // eslint-disable-next-line import/no-dynamic-require
+          const Recipe = require(join(recipesDirectory, id))(RecipeModel);
+          return new Recipe(loadRecipeConfig(id));
+        } catch (error) {
+          console.error(`[ServerApi] Failed to load recipe: ${id}`, error);
+          return null;
+        }
       })
+      .filter(Boolean)
       .filter(recipe => recipe.id);
 
     // @ts-expect-error Type 'boolean' is not assignable to type 'ConcatArray<IRecipe>'.
@@ -558,12 +565,21 @@ export default class ServerApi {
               removeSync(userDataRecipePath);
             }
             ensureDirSync(userDataRecipePath);
-            await tar.x({
-              file: archivePath,
-              cwd: userDataRecipePath,
-              unlink: true,
-              onwarn: (w: string) => debug('warn', recipeId, w),
-            });
+            try {
+              await tar.x({
+                file: archivePath,
+                cwd: userDataRecipePath,
+                unlink: true,
+                onwarn: (w: string) => debug('warn', recipeId, w),
+              });
+            } catch (extractError) {
+              // Clean up the empty dir left behind by ensureDirSync so it
+              // doesn't cause "require(...) is not a function" on next load.
+              if (pathExistsSync(userDataRecipePath)) {
+                removeSync(userDataRecipePath);
+              }
+              throw extractError;
+            }
           }
         } catch (error) {
           debug(
@@ -672,14 +688,15 @@ export default class ServerApi {
       const paths = readdirSync(recipesDirectory).filter(
         file =>
           statSync(join(recipesDirectory, file)).isDirectory() &&
-          file !== 'temp',
+          file !== 'temp' &&
+          pathExistsSync(join(recipesDirectory, file, 'index.js')),
       );
 
       const recipes: IRecipe[] = paths
         .map(id => {
           try {
             // eslint-disable-next-line import/no-dynamic-require
-            const Recipe = require(id)(RecipeModel);
+            const Recipe = require(join(recipesDirectory, id))(RecipeModel);
 
             return new Recipe(loadRecipeConfig(id));
           } catch (error) {

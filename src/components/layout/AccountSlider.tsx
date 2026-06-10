@@ -41,43 +41,43 @@ import type { RealStores } from '../../stores';
 const messages = defineMessages({
   personaSales: {
     id: 'accountSlider.personaSales',
-    defaultMessage: '销售人设',
+    defaultMessage: 'Sales Persona',
   },
   personaSupport: {
     id: 'accountSlider.personaSupport',
-    defaultMessage: '客服人设',
+    defaultMessage: 'Support Persona',
   },
   personaOperation: {
     id: 'accountSlider.personaOperation',
-    defaultMessage: '运营人设',
+    defaultMessage: 'Operations Persona',
   },
   tabAll: {
     id: 'accountSlider.tabAll',
-    defaultMessage: '全部',
+    defaultMessage: 'All',
   },
   tabOnline: {
     id: 'accountSlider.tabOnline',
-    defaultMessage: '在线',
+    defaultMessage: 'Online',
   },
   tabOffline: {
     id: 'accountSlider.tabOffline',
-    defaultMessage: '离线',
+    defaultMessage: 'Offline',
   },
   tabError: {
     id: 'accountSlider.tabError',
-    defaultMessage: '异常',
+    defaultMessage: 'Error',
   },
   statusError: {
     id: 'accountSlider.statusError',
-    defaultMessage: '异常',
+    defaultMessage: 'Error',
   },
   statusOffline: {
     id: 'accountSlider.statusOffline',
-    defaultMessage: '离线',
+    defaultMessage: 'Offline',
   },
   bindAccount: {
     id: 'accountSlider.bindAccount',
-    defaultMessage: '绑定账号',
+    defaultMessage: 'Bind Account',
   },
   personaFallback: {
     id: 'accountSlider.personaFallback',
@@ -85,19 +85,19 @@ const messages = defineMessages({
   },
   bindPersona: {
     id: 'accountSlider.bindPersona',
-    defaultMessage: '绑定',
+    defaultMessage: 'Bind',
   },
   bindPersonaDialogTitle: {
     id: 'accountSlider.bindPersonaDialogTitle',
-    defaultMessage: '绑定社交账号人设资料',
+    defaultMessage: 'Bind Social Account Persona Profile',
   },
   selectPersona: {
     id: 'accountSlider.selectPersona',
-    defaultMessage: '选择人设',
+    defaultMessage: 'Select Persona',
   },
   selectPersonaPlaceholder: {
     id: 'accountSlider.selectPersonaPlaceholder',
-    defaultMessage: '请选择人设',
+    defaultMessage: 'Please select a persona',
   },
   personaHint: {
     id: 'accountSlider.personaHint',
@@ -106,59 +106,59 @@ const messages = defineMessages({
   },
   confirmText: {
     id: 'accountSlider.confirmText',
-    defaultMessage: '确认',
+    defaultMessage: 'Confirm',
   },
   selectPersonaFirst: {
     id: 'accountSlider.selectPersonaFirst',
-    defaultMessage: '请先选择人设',
+    defaultMessage: 'Please select a persona first',
   },
   bindPersonaSuccess: {
     id: 'accountSlider.bindPersonaSuccess',
-    defaultMessage: '人设绑定成功',
+    defaultMessage: 'Persona bound successfully',
   },
   bindPersonaFailed: {
     id: 'accountSlider.bindPersonaFailed',
-    defaultMessage: '人设绑定失败',
+    defaultMessage: 'Failed to bind persona',
   },
   bindAccountDialogTitle: {
     id: 'accountSlider.bindAccountDialogTitle',
-    defaultMessage: '绑定账号',
+    defaultMessage: 'Bind Account',
   },
   basicSettings: {
     id: 'accountSlider.basicSettings',
-    defaultMessage: '基础设置',
+    defaultMessage: 'Basic Settings',
   },
   accountRemark: {
     id: 'accountSlider.accountRemark',
-    defaultMessage: '账号备注',
+    defaultMessage: 'Account Notes',
   },
   accountRemarkPlaceholder: {
     id: 'accountSlider.accountRemarkPlaceholder',
-    defaultMessage: '请输入内容',
+    defaultMessage: 'Enter notes here',
   },
   proxyHostPlaceholder: {
     id: 'accountSlider.proxyHostPlaceholder',
-    defaultMessage: '例如： http://127.0.0.1',
+    defaultMessage: 'e.g. http://127.0.0.1',
   },
   proxyPortPlaceholder: {
     id: 'accountSlider.proxyPortPlaceholder',
-    defaultMessage: '例如 8080',
+    defaultMessage: 'e.g. 8080',
   },
   proxyUserPlaceholder: {
     id: 'accountSlider.proxyUserPlaceholder',
-    defaultMessage: '如有填写此处',
+    defaultMessage: 'Fill in if applicable',
   },
   proxyPasswordPlaceholder: {
     id: 'accountSlider.proxyPasswordPlaceholder',
-    defaultMessage: '如有填写此处',
+    defaultMessage: 'Fill in if applicable',
   },
   proxyType: {
     id: 'accountSlider.proxyType',
-    defaultMessage: '代理类型',
+    defaultMessage: 'Proxy Type',
   },
   autoFillPlaceholder: {
     id: 'accountSlider.autoFillPlaceholder',
-    defaultMessage: '粘贴ip信息到这里会自动解析下面格式',
+    defaultMessage: 'Paste IP info here — it will auto-fill the fields below',
   },
   cookieAutoFillPlaceholder: {
     id: 'accountSlider.cookieAutoFillPlaceholder',
@@ -167,55 +167,55 @@ const messages = defineMessages({
   },
   proxyCheckDesc: {
     id: 'accountSlider.proxyCheckDesc',
-    defaultMessage: '设置代理后请先检测',
+    defaultMessage: 'Test your proxy after configuring it',
   },
   cookieHint: {
     id: 'accountSlider.cookieHint',
-    defaultMessage: '用于登录会话时使用',
+    defaultMessage: 'Used for login session persistence',
   },
   proxySettings: {
     id: 'accountSlider.proxySettings',
-    defaultMessage: '代理设置',
+    defaultMessage: 'Proxy Settings',
   },
   proxyAutoFill: {
     id: 'accountSlider.proxyAutoFill',
-    defaultMessage: '代理自动填充',
+    defaultMessage: 'Auto-Fill Proxy',
   },
   proxyHost: {
     id: 'accountSlider.proxyHost',
-    defaultMessage: '地址',
+    defaultMessage: 'Host',
   },
   proxyPort: {
     id: 'accountSlider.proxyPort',
-    defaultMessage: '端口',
+    defaultMessage: 'Port',
   },
   proxyUser: {
     id: 'accountSlider.proxyUser',
-    defaultMessage: '用户名',
+    defaultMessage: 'Username',
   },
   proxyPassword: {
     id: 'accountSlider.proxyPassword',
-    defaultMessage: '密码',
+    defaultMessage: 'Password',
   },
   proxyCheck: {
     id: 'accountSlider.proxyCheck',
-    defaultMessage: '点击检测',
+    defaultMessage: 'Test Connection',
   },
   cookieSettings: {
     id: 'accountSlider.cookieSettings',
-    defaultMessage: 'Cookie设置',
+    defaultMessage: 'Cookie Settings',
   },
   cookieAutoFill: {
     id: 'accountSlider.cookieAutoFill',
-    defaultMessage: 'Cookie自动填充',
+    defaultMessage: 'Auto-Fill Cookie',
   },
   cookiePlaceholder: {
     id: 'accountSlider.cookiePlaceholder',
-    defaultMessage: '请输入Cookie内容',
+    defaultMessage: 'Enter cookie content',
   },
   proxyRestartInfo: {
     id: 'accountSlider.proxyRestartInfo',
-    defaultMessage: '修改代理设置后，需重新启动软件生效',
+    defaultMessage: 'Proxy changes take effect after restart',
   },
   proxyRiskWarning: {
     id: 'accountSlider.proxyRiskWarning',
@@ -223,19 +223,20 @@ const messages = defineMessages({
   },
   autoFillLabel: {
     id: 'accountSlider.autoFillLabel',
-    defaultMessage: '自动填充',
+    defaultMessage: 'Auto-Fill',
   },
   clickCheckDesc: {
     id: 'accountSlider.clickCheckDesc',
-    defaultMessage: '代理自动填充功能，开启后，绑定账号将自动获取代理内容',
+    defaultMessage:
+      'When enabled, proxy auto-fill will fetch proxy details automatically during account binding',
   },
   cancel: {
     id: 'accountSlider.cancel',
-    defaultMessage: '取消',
+    defaultMessage: 'Cancel',
   },
   confirm: {
     id: 'accountSlider.confirm',
-    defaultMessage: '确认',
+    defaultMessage: 'Confirm',
   },
 });
 

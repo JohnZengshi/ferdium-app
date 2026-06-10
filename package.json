@@ -252,7 +252,8 @@
       "sqlite3"
     ],
     "patchedDependencies": {
-      "tdesign-react@1.17.0": "patches/tdesign-react@1.17.0.patch"
+      "tdesign-react@1.17.0": "patches/tdesign-react@1.17.0.patch",
+      "@code-inspector/core": "patches/@code-inspector__core.patch"
     }
   },
   "overrides": {

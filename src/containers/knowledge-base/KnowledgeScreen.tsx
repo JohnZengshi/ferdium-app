@@ -48,55 +48,55 @@ import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 const messages = defineMessages({
   createPersonaProfile: {
     id: 'knowledgeScreen.createPersonaProfile',
-    defaultMessage: '创建人设资料',
+    defaultMessage: 'Create Persona Profile',
   },
   editPersonaProfile: {
     id: 'knowledgeScreen.editPersonaProfile',
-    defaultMessage: '编辑人设资料',
+    defaultMessage: 'Edit Persona Profile',
   },
   serialNumber: {
     id: 'knowledgeScreen.serialNumber',
-    defaultMessage: '序号',
+    defaultMessage: 'No.',
   },
   personaRemark: {
     id: 'knowledgeScreen.personaRemark',
-    defaultMessage: '人设备注',
+    defaultMessage: 'Persona Note',
   },
   name: {
     id: 'knowledgeScreen.name',
-    defaultMessage: '姓名',
+    defaultMessage: 'Name',
   },
   age: {
     id: 'knowledgeScreen.age',
-    defaultMessage: '年龄',
+    defaultMessage: 'Age',
   },
   gender: {
     id: 'knowledgeScreen.gender',
-    defaultMessage: '性别',
+    defaultMessage: 'Gender',
   },
   occupation: {
     id: 'knowledgeScreen.occupation',
-    defaultMessage: '职业',
+    defaultMessage: 'Occupation',
   },
   familyStatus: {
     id: 'knowledgeScreen.familyStatus',
-    defaultMessage: '家庭情况',
+    defaultMessage: 'Family Status',
   },
   participation: {
     id: 'knowledgeScreen.participation',
-    defaultMessage: '项目参与度',
+    defaultMessage: 'Project Involvement',
   },
   actions: {
     id: 'knowledgeScreen.actions',
-    defaultMessage: '操作',
+    defaultMessage: 'Actions',
   },
   view: {
     id: 'knowledgeScreen.view',
-    defaultMessage: '查看',
+    defaultMessage: 'View',
   },
   edit: {
     id: 'knowledgeScreen.edit',
-    defaultMessage: '编辑',
+    defaultMessage: 'Edit',
   },
   description: {
     id: 'knowledgeScreen.description',
@@ -105,59 +105,59 @@ const messages = defineMessages({
   },
   inputPlaceholder: {
     id: 'knowledgeScreen.inputPlaceholder',
-    defaultMessage: '请输入内容',
+    defaultMessage: 'Please enter',
   },
   datePlaceholder: {
     id: 'knowledgeScreen.datePlaceholder',
-    defaultMessage: '请选择日期',
+    defaultMessage: 'Select a date',
   },
   selectPlaceholder: {
     id: 'knowledgeScreen.selectPlaceholder',
-    defaultMessage: '请选择内容',
+    defaultMessage: 'Select an option',
   },
   save: {
     id: 'knowledgeScreen.save',
-    defaultMessage: '保存',
+    defaultMessage: 'Save',
   },
   smartImport: {
     id: 'knowledgeScreen.smartImport',
-    defaultMessage: '智能导入',
+    defaultMessage: 'Smart Import',
   },
   smartImportAndRecognize: {
     id: 'knowledgeScreen.smartImportAndRecognize',
-    defaultMessage: '识别并导入',
+    defaultMessage: 'Recognize & Import',
   },
   smartImportSuccess: {
     id: 'knowledgeScreen.smartImportSuccess',
-    defaultMessage: '智能导入成功',
+    defaultMessage: 'Smart import successful',
   },
   saveSuccess: {
     id: 'knowledgeScreen.saveSuccess',
-    defaultMessage: '保存成功',
+    defaultMessage: 'Saved successfully',
   },
   loadFailed: {
     id: 'knowledgeScreen.loadFailed',
-    defaultMessage: '获取人设列表失败',
+    defaultMessage: 'Failed to load persona list',
   },
   saveFailed: {
     id: 'knowledgeScreen.saveFailed',
-    defaultMessage: '保存失败',
+    defaultMessage: 'Save failed',
   },
   nameRequired: {
     id: 'knowledgeScreen.nameRequired',
-    defaultMessage: '请输入姓名',
+    defaultMessage: 'Please enter a name',
   },
   male: {
     id: 'knowledgeScreen.male',
-    defaultMessage: '男',
+    defaultMessage: 'Male',
   },
   female: {
     id: 'knowledgeScreen.female',
-    defaultMessage: '女',
+    defaultMessage: 'Female',
   },
   socialAccountPersona: {
     id: 'knowledgeScreen.socialAccountPersona',
-    defaultMessage: '社交账号人设',
+    defaultMessage: 'Social Account Persona',
   },
   smartImportPlaceholder: {
     id: 'knowledgeScreen.smartImportPlaceholder',

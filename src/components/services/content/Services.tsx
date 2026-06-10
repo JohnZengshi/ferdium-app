@@ -15,11 +15,11 @@ import ServiceView from './ServiceView';
 const messages = defineMessages({
   noAccountsTitle: {
     id: 'services.noAccountsTitle',
-    defaultMessage: '暂无账号',
+    defaultMessage: 'No Accounts Yet',
   },
   noAccountsDescription: {
     id: 'services.noAccountsDescription',
-    defaultMessage: '绑定账号后将在这里显示聊天数据',
+    defaultMessage: 'Once you link an account, your chat data will appear here',
   },
   login: {
     id: 'services.login',

@@ -8,6 +8,9 @@ overrides:
   usocket: _EXCLUDED_
 
 patchedDependencies:
+  '@code-inspector/core':
+    hash: 218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16
+    path: patches/@code-inspector__core.patch
   tdesign-react@1.17.0:
     hash: 7ef5f1e23e95eeaf16f26c16a3f93a9d60025ee86cc79d15f8ae649c329d9a9c
     path: patches/tdesign-react@1.17.0.patch
@@ -8924,7 +8927,7 @@ snapshots:
   '@biomejs/cli-win32-x64@1.6.1':
     optional: true
 
-  '@code-inspector/core@1.5.1':
+  '@code-inspector/core@1.5.1(patch_hash=218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16)':
     dependencies:
       '@vue/compiler-dom': 3.5.35
       chalk: 4.1.2
@@ -8936,33 +8939,33 @@ snapshots:
 
   '@code-inspector/esbuild@1.5.1':
     dependencies:
-      '@code-inspector/core': 1.5.1
+      '@code-inspector/core': 1.5.1(patch_hash=218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16)
     transitivePeerDependencies:
       - supports-color
 
   '@code-inspector/mako@1.5.1':
     dependencies:
-      '@code-inspector/core': 1.5.1
+      '@code-inspector/core': 1.5.1(patch_hash=218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16)
     transitivePeerDependencies:
       - supports-color
 
   '@code-inspector/turbopack@1.5.1':
     dependencies:
-      '@code-inspector/core': 1.5.1
+      '@code-inspector/core': 1.5.1(patch_hash=218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16)
       '@code-inspector/webpack': 1.5.1
     transitivePeerDependencies:
       - supports-color
 
   '@code-inspector/vite@1.5.1':
     dependencies:
-      '@code-inspector/core': 1.5.1
+      '@code-inspector/core': 1.5.1(patch_hash=218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16)
       chalk: 4.1.1
     transitivePeerDependencies:
       - supports-color
 
   '@code-inspector/webpack@1.5.1':
     dependencies:
-      '@code-inspector/core': 1.5.1
+      '@code-inspector/core': 1.5.1(patch_hash=218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16)
     transitivePeerDependencies:
       - supports-color
 
@@ -11771,7 +11774,7 @@ snapshots:
 
   code-inspector-plugin@1.5.1:
     dependencies:
-      '@code-inspector/core': 1.5.1
+      '@code-inspector/core': 1.5.1(patch_hash=218d48095f7fbef3908e64128f61629ee5e1ea608ea0bc1329b4d97fb8bc5a16)
       '@code-inspector/esbuild': 1.5.1
       '@code-inspector/mako': 1.5.1
       '@code-inspector/turbopack': 1.5.1

@@ -33,103 +33,104 @@ import type DigitalHumanStore from '../../../stores/DigitalHumanStore';
 const messages = defineMessages({
   validationNameRequired: {
     id: 'digitalHumanForm.validation.nameRequired',
-    defaultMessage: '请输入数字人名称',
+    defaultMessage: 'Please enter a digital human name',
   },
   validationNameLength: {
     id: 'digitalHumanForm.validation.nameLength',
-    defaultMessage: '名称长度为1-64字符',
+    defaultMessage: 'Name must be 1-64 characters',
   },
   validationPersonaPromptMax: {
     id: 'digitalHumanForm.validation.personaPromptMax',
-    defaultMessage: '人设描述最多2000字符',
+    defaultMessage: 'Persona description is limited to 2000 characters',
   },
   validationKnowledgeCollectionMax: {
     id: 'digitalHumanForm.validation.knowledgeCollectionMax',
-    defaultMessage: '知识库集合名称最多128字符',
+    defaultMessage: 'Knowledge collection name is limited to 128 characters',
   },
   toastCreateSuccess: {
     id: 'digitalHumanForm.toast.createSuccess',
-    defaultMessage: '创建成功',
+    defaultMessage: 'Created successfully',
   },
   toastCreateFailed: {
     id: 'digitalHumanForm.toast.createFailed',
-    defaultMessage: '创建失败',
+    defaultMessage: 'Creation failed',
   },
   headerEdit: {
     id: 'digitalHumanForm.header.edit',
-    defaultMessage: '编辑数字人',
+    defaultMessage: 'Edit Digital Human',
   },
   headerCreate: {
     id: 'digitalHumanForm.header.create',
-    defaultMessage: '创建数字人',
+    defaultMessage: 'Create Digital Human',
   },
   btnSave: {
     id: 'digitalHumanForm.btn.save',
-    defaultMessage: '保存',
+    defaultMessage: 'Save',
   },
   btnCreate: {
     id: 'digitalHumanForm.btn.create',
-    defaultMessage: '创建',
+    defaultMessage: 'Create',
   },
   labelName: {
     id: 'digitalHumanForm.label.name',
-    defaultMessage: '数字人名称',
+    defaultMessage: 'Digital Human Name',
   },
   placeholderName: {
     id: 'digitalHumanForm.placeholder.name',
-    defaultMessage: '请输入数字人名称',
+    defaultMessage: 'Please enter a digital human name',
   },
   labelAccountHandle: {
     id: 'digitalHumanForm.label.accountHandle',
-    defaultMessage: '账号句柄',
+    defaultMessage: 'Account Handle',
   },
   placeholderAccountHandle: {
     id: 'digitalHumanForm.placeholder.accountHandle',
-    defaultMessage: '例如：@customer_service',
+    defaultMessage: 'e.g. @customer_service',
   },
   labelPlatform: {
     id: 'digitalHumanForm.label.platform',
-    defaultMessage: '平台',
+    defaultMessage: 'Platform',
   },
   labelAvatarUrl: {
     id: 'digitalHumanForm.label.avatarUrl',
-    defaultMessage: '头像URL',
+    defaultMessage: 'Avatar URL',
   },
   labelPersonaPrompt: {
     id: 'digitalHumanForm.label.personaPrompt',
-    defaultMessage: '人设描述',
+    defaultMessage: 'Persona Description',
   },
   placeholderPersonaPrompt: {
     id: 'digitalHumanForm.placeholder.personaPrompt',
-    defaultMessage: '用自然语言描述数字人的性格、语气、专业领域...',
+    defaultMessage:
+      'Describe the digital human\u2019s personality, tone, and expertise in natural language...',
   },
   labelKnowledgeCollection: {
     id: 'digitalHumanForm.label.knowledgeCollection',
-    defaultMessage: '知识库集合',
+    defaultMessage: 'Knowledge Collection',
   },
   placeholderKnowledgeCollection: {
     id: 'digitalHumanForm.placeholder.knowledgeCollection',
-    defaultMessage: '关联的Milvus集合名称',
+    defaultMessage: 'Associated Milvus collection name',
   },
   labelVoice: {
     id: 'digitalHumanForm.label.voice',
-    defaultMessage: '语音配置',
+    defaultMessage: 'Voice Config',
   },
   placeholderVoice: {
     id: 'digitalHumanForm.placeholder.voice',
-    defaultMessage: '语音合成配置（可选）',
+    defaultMessage: 'TTS configuration (optional)',
   },
   labelStatus: {
     id: 'digitalHumanForm.label.status',
-    defaultMessage: '状态',
+    defaultMessage: 'Status',
   },
   selectOptionActive: {
     id: 'digitalHumanForm.selectOption.active',
-    defaultMessage: '活跃',
+    defaultMessage: 'Active',
   },
   selectOptionInactive: {
     id: 'digitalHumanForm.selectOption.inactive',
-    defaultMessage: '未激活',
+    defaultMessage: 'Inactive',
   },
 });
 

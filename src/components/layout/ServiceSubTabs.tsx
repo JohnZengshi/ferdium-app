@@ -12,9 +12,12 @@ import { navigationStore } from '../../stores/NavigationStore';
 import type { ServiceSubTab } from '../../stores/NavigationStore';
 
 const messages = defineMessages({
-  tabMessages: { id: 'serviceSubTabs.messages', defaultMessage: '消息' },
-  tabAccount: { id: 'serviceSubTabs.account', defaultMessage: '账号管理' },
-  tabProfile: { id: 'serviceSubTabs.profile', defaultMessage: '用户画像' },
+  tabMessages: { id: 'serviceSubTabs.messages', defaultMessage: 'Messages' },
+  tabAccount: {
+    id: 'serviceSubTabs.account',
+    defaultMessage: 'Account Management',
+  },
+  tabProfile: { id: 'serviceSubTabs.profile', defaultMessage: 'User Profile' },
   whatsappHeader: {
     id: 'serviceSubTabs.whatsappHeader',
     defaultMessage: 'Whatsapp',

@@ -24,19 +24,19 @@ const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 const messages = defineMessages({
   userFriendlyError: {
     id: 'dynamicLogin.userFriendlyError',
-    defaultMessage: '登录失败，请检查网络连接或稍后重试',
+    defaultMessage: 'Login failed. Check your network or try again later',
   },
   heading: {
     id: 'dynamicLogin.heading',
-    defaultMessage: '欢迎来到拓客！',
+    defaultMessage: 'Welcome to Tuoke!',
   },
   rememberPassword: {
     id: 'dynamicLogin.rememberPassword',
-    defaultMessage: '记住密码',
+    defaultMessage: 'Remember Password',
   },
   enterApp: {
     id: 'dynamicLogin.enterApp',
-    defaultMessage: '进入拓客',
+    defaultMessage: 'Enter Tuoke',
   },
 });
 
@@ -315,7 +315,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                 <span className="auth__link-secondary leading-[22px] text-secondary">
                   {intl.formatMessage({
                     id: 'dynamicLogin.link.signup.prefix',
-                    defaultMessage: '没有账号吗 ? ',
+                    defaultMessage: 'Don\u2019t have an account? ',
                   })}
                 </span>
                 <Link
@@ -324,7 +324,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                 >
                   {intl.formatMessage({
                     id: 'dynamicLogin.link.signup',
-                    defaultMessage: '注册新账号',
+                    defaultMessage: 'Sign up',
                   })}
                 </Link>
               </div>

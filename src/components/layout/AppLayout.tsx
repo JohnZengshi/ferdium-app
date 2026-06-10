@@ -59,19 +59,19 @@ const messages = defineMessages({
   },
   moduleHome: {
     id: 'appLayout.moduleHome',
-    defaultMessage: '首页',
+    defaultMessage: 'Home',
   },
   moduleServiceType: {
     id: 'appLayout.moduleServiceType',
-    defaultMessage: 'WA工具',
+    defaultMessage: 'WA Tools',
   },
   moduleKnowledgeBase: {
     id: 'appLayout.moduleKnowledgeBase',
-    defaultMessage: '资料库',
+    defaultMessage: 'Knowledge Base',
   },
   moduleSettings: {
     id: 'appLayout.moduleSettings',
-    defaultMessage: '设置',
+    defaultMessage: 'Settings',
   },
   settingsTooltip: {
     id: 'appLayout.settingsTooltip',

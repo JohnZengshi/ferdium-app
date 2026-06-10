@@ -4,9 +4,9 @@ import { CheckCircleFilledIcon, CircleIcon } from 'tdesign-icons-react';
 import { Button, Card, Progress } from 'tdesign-react';
 
 const messages = defineMessages({
-  title: { id: 'onboardingGuide.title', defaultMessage: '新手引导' },
-  dismiss: { id: 'onboardingGuide.dismiss', defaultMessage: '完成并隐藏' },
-  progress: { id: 'onboardingGuide.progress', defaultMessage: '完成进度' },
+  title: { id: 'onboardingGuide.title', defaultMessage: 'Getting Started' },
+  dismiss: { id: 'onboardingGuide.dismiss', defaultMessage: 'Done — Hide' },
+  progress: { id: 'onboardingGuide.progress', defaultMessage: 'Progress' },
 });
 
 interface OnboardingStep {

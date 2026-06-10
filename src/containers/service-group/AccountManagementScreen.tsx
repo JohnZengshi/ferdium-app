@@ -17,38 +17,47 @@ import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
 import type Service from '../../models/Service';
 
 const messages = defineMessages({
-  colId: { id: 'accountMgmt.col.id', defaultMessage: '序号' },
+  colId: { id: 'accountMgmt.col.id', defaultMessage: '#' },
   colAccountInfo: {
     id: 'accountMgmt.col.accountInfo',
-    defaultMessage: '账号信息',
+    defaultMessage: 'Account Info',
   },
-  colStatus: { id: 'accountMgmt.col.status', defaultMessage: '状态' },
-  colPersona: { id: 'accountMgmt.col.persona', defaultMessage: '账号人设' },
-  colNote: { id: 'accountMgmt.col.note', defaultMessage: '账号备注' },
-  colAutoChat: { id: 'accountMgmt.col.autoChat', defaultMessage: '自动聊天' },
-  colProxy: { id: 'accountMgmt.col.proxy', defaultMessage: '代理 IP' },
-  colCreatedAt: { id: 'accountMgmt.col.createdAt', defaultMessage: '创建时间' },
-  statusOnline: { id: 'accountMgmt.status.online', defaultMessage: '在线' },
-  statusOffline: { id: 'accountMgmt.status.offline', defaultMessage: '离线' },
-  autoChatOn: { id: 'accountMgmt.autoChat.on', defaultMessage: '开启' },
-  autoChatOff: { id: 'accountMgmt.autoChat.off', defaultMessage: '关闭' },
+  colStatus: { id: 'accountMgmt.col.status', defaultMessage: 'Status' },
+  colPersona: { id: 'accountMgmt.col.persona', defaultMessage: 'Persona' },
+  colNote: { id: 'accountMgmt.col.note', defaultMessage: 'Notes' },
+  colAutoChat: { id: 'accountMgmt.col.autoChat', defaultMessage: 'Auto Chat' },
+  colProxy: { id: 'accountMgmt.col.proxy', defaultMessage: 'Proxy IP' },
+  colCreatedAt: {
+    id: 'accountMgmt.col.createdAt',
+    defaultMessage: 'Created At',
+  },
+  statusOnline: { id: 'accountMgmt.status.online', defaultMessage: 'Online' },
+  statusOffline: {
+    id: 'accountMgmt.status.offline',
+    defaultMessage: 'Offline',
+  },
+  autoChatOn: { id: 'accountMgmt.autoChat.on', defaultMessage: 'On' },
+  autoChatOff: { id: 'accountMgmt.autoChat.off', defaultMessage: 'Off' },
   autoChatHealthy: {
     id: 'accountMgmt.autoChat.healthy',
-    defaultMessage: '健康',
+    defaultMessage: 'Healthy',
   },
-  filterStatus: { id: 'accountMgmt.filterStatus', defaultMessage: '状态' },
+  filterStatus: { id: 'accountMgmt.filterStatus', defaultMessage: 'Status' },
   filterPlaceholder: {
     id: 'accountMgmt.filterPlaceholder',
-    defaultMessage: '请选择内容状态',
+    defaultMessage: 'Select content status',
   },
-  filterPersona: { id: 'accountMgmt.filterPersona', defaultMessage: '人设' },
-  search: { id: 'accountMgmt.search', defaultMessage: '搜索' },
-  reset: { id: 'accountMgmt.reset', defaultMessage: '重置' },
+  filterPersona: { id: 'accountMgmt.filterPersona', defaultMessage: 'Persona' },
+  search: { id: 'accountMgmt.search', defaultMessage: 'Search' },
+  reset: { id: 'accountMgmt.reset', defaultMessage: 'Reset' },
   selectedItems: {
     id: 'accountMgmt.selectedItems',
-    defaultMessage: '已选 2 项',
+    defaultMessage: '2 items selected',
   },
-  moreActions: { id: 'accountMgmt.moreActions', defaultMessage: '更多操作' },
+  moreActions: {
+    id: 'accountMgmt.moreActions',
+    defaultMessage: 'More Actions',
+  },
 });
 
 interface Account {

@@ -27,47 +27,50 @@ import AvatarCell from '../../components/ui/AvatarCell';
 import FilterToolbar from '../../components/ui/FilterToolbar';
 
 const messages = defineMessages({
-  colId: { id: 'userProfile.col.id', defaultMessage: '序号' },
+  colId: { id: 'userProfile.col.id', defaultMessage: 'No.' },
   colFanAccount: {
     id: 'userProfile.col.fanAccount',
-    defaultMessage: '粉丝账号',
+    defaultMessage: 'Fan Account',
   },
-  colRegion: { id: 'userProfile.col.region', defaultMessage: '所在地区' },
-  colGender: { id: 'userProfile.col.gender', defaultMessage: '性别' },
-  colStage: { id: 'userProfile.col.stage', defaultMessage: '当前阶段' },
-  colTag: { id: 'userProfile.col.tag', defaultMessage: '标签' },
+  colRegion: { id: 'userProfile.col.region', defaultMessage: 'Region' },
+  colGender: { id: 'userProfile.col.gender', defaultMessage: 'Gender' },
+  colStage: { id: 'userProfile.col.stage', defaultMessage: 'Current Stage' },
+  colTag: { id: 'userProfile.col.tag', defaultMessage: 'Tag' },
   colIntentLevel: {
     id: 'userProfile.col.intentLevel',
-    defaultMessage: '意向等级',
+    defaultMessage: 'Intent Level',
   },
   colChatSummary: {
     id: 'userProfile.col.chatSummary',
-    defaultMessage: '聊天摘要',
+    defaultMessage: 'Chat Summary',
   },
   colServiceNote: {
     id: 'userProfile.col.serviceNote',
-    defaultMessage: '客服备注',
+    defaultMessage: 'Agent Notes',
   },
-  colOwner: { id: 'userProfile.col.owner', defaultMessage: '归属账号' },
-  view: { id: 'userProfile.view', defaultMessage: '查看' },
+  colOwner: { id: 'userProfile.col.owner', defaultMessage: 'Owning Account' },
+  view: { id: 'userProfile.view', defaultMessage: 'View' },
   searchPlaceholder: {
     id: 'userProfile.searchPlaceholder',
-    defaultMessage: '粉丝姓名。手机号',
+    defaultMessage: 'Fan name, phone number',
   },
-  filterStatus: { id: 'userProfile.filterStatus', defaultMessage: '状态' },
+  filterStatus: { id: 'userProfile.filterStatus', defaultMessage: 'Status' },
   filterPlaceholder: {
     id: 'userProfile.filterPlaceholder',
-    defaultMessage: '请选择内容状态',
+    defaultMessage: 'Select status',
   },
-  filterPersona: { id: 'userProfile.filterPersona', defaultMessage: '人设' },
-  search: { id: 'userProfile.search', defaultMessage: '搜索' },
-  reset: { id: 'userProfile.reset', defaultMessage: '重置' },
+  filterPersona: { id: 'userProfile.filterPersona', defaultMessage: 'Persona' },
+  search: { id: 'userProfile.search', defaultMessage: 'Search' },
+  reset: { id: 'userProfile.reset', defaultMessage: 'Reset' },
   selectedItems: {
     id: 'userProfile.selectedItems',
-    defaultMessage: '已选 2 项',
+    defaultMessage: '2 selected',
   },
-  moreActions: { id: 'userProfile.moreActions', defaultMessage: '更多操作' },
-  vipLabel: { id: 'avatarCell.vipLabel', defaultMessage: '重粉' },
+  moreActions: {
+    id: 'userProfile.moreActions',
+    defaultMessage: 'More Actions',
+  },
+  vipLabel: { id: 'avatarCell.vipLabel', defaultMessage: 'VIP' },
 });
 
 interface FanProfile {

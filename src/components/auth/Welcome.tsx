@@ -11,17 +11,17 @@ import Link from '../ui/Link';
 const messages = defineMessages({
   usernamePlaceholder: {
     id: 'welcome.usernamePlaceholder',
-    defaultMessage: '请输入用户名',
+    defaultMessage: 'Enter your username',
   },
   passwordPlaceholder: {
     id: 'welcome.passwordPlaceholder',
-    defaultMessage: '请输入密码',
+    defaultMessage: 'Enter your password',
   },
   rememberPassword: {
     id: 'welcome.rememberPassword',
-    defaultMessage: '记住密码',
+    defaultMessage: 'Remember password',
   },
-  enterApp: { id: 'welcome.enterApp', defaultMessage: '进入拓客' },
+  enterApp: { id: 'welcome.enterApp', defaultMessage: 'Enter Tuoke' },
 });
 
 interface IProps {

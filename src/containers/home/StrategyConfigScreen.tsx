@@ -22,23 +22,23 @@ import SecuritySettingsTab from './tabs/SecuritySettingsTab';
 const messages = defineMessages({
   title: {
     id: 'strategyConfig.title',
-    defaultMessage: '设置策略',
+    defaultMessage: 'Strategy Settings',
   },
   resume: {
     id: 'strategyConfig.resume',
-    defaultMessage: '员工简历',
+    defaultMessage: 'Employee Resume',
   },
   security: {
     id: 'strategyConfig.security',
-    defaultMessage: '安全边界设置',
+    defaultMessage: 'Safety Boundary Settings',
   },
   handover: {
     id: 'strategyConfig.handover',
-    defaultMessage: '人工接管规则',
+    defaultMessage: 'Human Handover Rules',
   },
   notifications: {
     id: 'strategyConfig.notifications',
-    defaultMessage: '通知记录',
+    defaultMessage: 'Notification History',
   },
 });
 

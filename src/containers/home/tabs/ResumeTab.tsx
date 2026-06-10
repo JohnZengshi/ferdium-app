@@ -18,183 +18,190 @@ import { FolderOpenIcon, LockOnIcon, UserIcon } from 'tdesign-icons-react';
 const messages = defineMessages({
   stageSectionTitle: {
     id: 'resumeTab.stageSectionTitle',
-    defaultMessage: '适用阶段',
+    defaultMessage: 'Applicable Stages',
   },
   stageIdentityQuestioning: {
     id: 'resumeTab.stageIdentityQuestioning',
-    defaultMessage: '身份质疑阶段',
+    defaultMessage: 'Identity Questioning Stage',
   },
   stageProductObjection: {
     id: 'resumeTab.stageProductObjection',
-    defaultMessage: '产品异议阶段',
+    defaultMessage: 'Product Objection Stage',
   },
   stageRiskConcern: {
     id: 'resumeTab.stageRiskConcern',
-    defaultMessage: '风险顾虑阶段',
+    defaultMessage: 'Risk Concern Stage',
   },
   stageDigitalReply: {
     id: 'resumeTab.stageDigitalReply',
-    defaultMessage: '数字员工回复',
+    defaultMessage: 'Digital Employee Reply',
   },
   stageComplaintRefund: {
     id: 'resumeTab.stageComplaintRefund',
-    defaultMessage: '投诉/退款阶段',
+    defaultMessage: 'Complaint / Refund Stage',
   },
   stageHighIntentConversion: {
     id: 'resumeTab.stageHighIntentConversion',
-    defaultMessage: '高意向转化阶段',
+    defaultMessage: 'High-Intent Conversion Stage',
   },
   stageBusinessStartup: {
     id: 'resumeTab.stageBusinessStartup',
-    defaultMessage: '业务启动期',
+    defaultMessage: 'Business Startup',
   },
   stageFastExpansion: {
     id: 'resumeTab.stageFastExpansion',
-    defaultMessage: '快速扩张期',
+    defaultMessage: 'Rapid Expansion',
   },
   stageEcosystemIntegration: {
     id: 'resumeTab.stageEcosystemIntegration',
-    defaultMessage: '生态融合与战略升级期',
+    defaultMessage: 'Ecosystem Integration & Strategic Upgrade',
   },
   roleLabel: {
     id: 'resumeTab.roleLabel',
-    defaultMessage: '职位：{role}',
+    defaultMessage: 'Role: {role}',
   },
   defaultRole: {
     id: 'resumeTab.defaultRole',
-    defaultMessage: '接管助手',
+    defaultMessage: 'Handover Assistant',
   },
   skillsSectionTitle: {
     id: 'resumeTab.skillsSectionTitle',
-    defaultMessage: '具备技能',
+    defaultMessage: 'Skills',
   },
   defaultSkillRiskDetection: {
     id: 'resumeTab.defaultSkillRiskDetection',
-    defaultMessage: '识别风险',
+    defaultMessage: 'Risk Detection',
   },
   defaultSkillAnomalyWarning: {
     id: 'resumeTab.defaultSkillAnomalyWarning',
-    defaultMessage: '预警异常',
+    defaultMessage: 'Anomaly Alerting',
   },
   defaultSkillHandover: {
     id: 'resumeTab.defaultSkillHandover',
-    defaultMessage: '人工接管',
+    defaultMessage: 'Human Handover',
   },
   profileSectionTitle: {
     id: 'resumeTab.profileSectionTitle',
-    defaultMessage: '个人介绍',
+    defaultMessage: 'About',
   },
   reviewSectionTitle: {
     id: 'resumeTab.reviewSectionTitle',
-    defaultMessage: '客户评价',
+    defaultMessage: 'Client Reviews',
   },
   reviewConversionRate: {
     id: 'resumeTab.reviewConversionRate',
-    defaultMessage: '客户转化率提升了',
+    defaultMessage: 'Customer conversion rate increased by',
   },
   reviewConversionRateSuffix: {
     id: 'resumeTab.reviewConversionRateSuffix',
-    defaultMessage: '，月均新增成交额超过2000w元',
+    defaultMessage: ', with monthly new deal volume exceeding ¥20M',
   },
   reviewSatisfaction: {
     id: 'resumeTab.reviewSatisfaction',
-    defaultMessage: '满意度评分从85分提升至98.5分，客户复购率增长',
+    defaultMessage:
+      'Satisfaction score rose from 85 to 98.5, and customer repurchase rate grew',
   },
   reviewConsultationVolume: {
     id: 'resumeTab.reviewConsultationVolume',
-    defaultMessage: '累计处理客户咨询超过230w次，帮助企业节省人力成本',
+    defaultMessage:
+      'Handled over 2.3M customer inquiries, helping enterprises save on labor costs',
   },
   costSavingsTitle: {
     id: 'resumeTab.costSavingsTitle',
-    defaultMessage: '成本节约数据',
+    defaultMessage: 'Cost Savings',
   },
   costAxisLabel: {
     id: 'resumeTab.costAxisLabel',
-    defaultMessage: '成本节约（万元）',
+    defaultMessage: 'Cost Savings (¥10K)',
   },
   costTotalSavings: {
     id: 'resumeTab.costTotalSavings',
-    defaultMessage: '总成本节约',
+    defaultMessage: 'Total Cost Savings',
   },
   costDisputeDuration: {
     id: 'resumeTab.costDisputeDuration',
-    defaultMessage: '纠纷处理时长缩短',
+    defaultMessage: 'Dispute Resolution Time Reduced',
   },
   enterpriseSME: {
     id: 'resumeTab.enterpriseSME',
-    defaultMessage: '中小型企业',
+    defaultMessage: 'SMEs',
   },
   enterpriseLarge: {
     id: 'resumeTab.enterpriseLarge',
-    defaultMessage: '大型企业',
+    defaultMessage: 'Large Enterprises',
   },
   enterpriseExtraLarge: {
     id: 'resumeTab.enterpriseExtraLarge',
-    defaultMessage: '超大型企业',
+    defaultMessage: 'Enterprise Giants',
   },
   efficiencySectionTitle: {
     id: 'resumeTab.efficiencySectionTitle',
-    defaultMessage: '效率提升数据',
+    defaultMessage: 'Efficiency Gains',
   },
   effCustomerWorkHour: {
     id: 'resumeTab.effCustomerWorkHour',
-    defaultMessage: '节省客户工作时间',
+    defaultMessage: 'Customer Work Hours Saved',
   },
   effOperationEfficiency: {
     id: 'resumeTab.effOperationEfficiency',
-    defaultMessage: '平均企业运营效率',
+    defaultMessage: 'Avg Enterprise Operational Efficiency',
   },
   effProcessAutomation: {
     id: 'resumeTab.effProcessAutomation',
-    defaultMessage: '流程自动化完成率',
+    defaultMessage: 'Process Automation Rate',
   },
   effHighRiskInterception: {
     id: 'resumeTab.effHighRiskInterception',
-    defaultMessage: '高风险拦截成功率',
+    defaultMessage: 'High-Risk Interception Rate',
   },
   coreCompetencyTitle: {
     id: 'resumeTab.coreCompetencyTitle',
-    defaultMessage: '核心能力',
+    defaultMessage: 'Core Capabilities',
   },
   compRiskIdentification: {
     id: 'resumeTab.compRiskIdentification',
-    defaultMessage: '风险识别',
+    defaultMessage: 'Risk Identification',
   },
   compBoundaryControl: {
     id: 'resumeTab.compBoundaryControl',
-    defaultMessage: '边界控制',
+    defaultMessage: 'Boundary Control',
   },
   compHumanHandover: {
     id: 'resumeTab.compHumanHandover',
-    defaultMessage: '人工接管触发',
+    defaultMessage: 'Human Handover Trigger',
   },
   compHighIntentAlert: {
     id: 'resumeTab.compHighIntentAlert',
-    defaultMessage: '高意向预警',
+    defaultMessage: 'High-Intent Alert',
   },
   compSessionPause: {
     id: 'resumeTab.compSessionPause',
-    defaultMessage: '会话暂停控制',
+    defaultMessage: 'Session Pause Control',
   },
   compRiskIdentificationDesc: {
     id: 'resumeTab.compRiskIdentificationDesc',
-    defaultMessage: '实时监测会话内容，智能识别潜在风险和异常行为',
+    defaultMessage:
+      'Real-time conversation monitoring to intelligently detect potential risks and unusual behavior',
   },
   compBoundaryControlDesc: {
     id: 'resumeTab.compBoundaryControlDesc',
-    defaultMessage: '严格限定数字员工的行为边界和权限范围',
+    defaultMessage:
+      "Strictly defines the digital employee's behavior boundaries and permissions",
   },
   compHumanHandoverDesc: {
     id: 'resumeTab.compHumanHandoverDesc',
-    defaultMessage: '当风险等级超过阈值时，自动触发人工接管流程',
+    defaultMessage:
+      'Auto-triggers human handover when risk levels exceed the threshold',
   },
   compHighIntentAlertDesc: {
     id: 'resumeTab.compHighIntentAlertDesc',
-    defaultMessage: '识别高意向客户并通知人工跟进，提升成交效率',
+    defaultMessage:
+      'Identifies high-intent customers and notifies human agents to follow up, boosting conversion',
   },
   compSessionPauseDesc: {
     id: 'resumeTab.compSessionPauseDesc',
-    defaultMessage: '在特定场景下自动暂停会话，等待人工介入处理',
+    defaultMessage:
+      'Auto-pauses conversations in specific scenarios, waiting for human intervention',
   },
   defaultProfile: {
     id: 'resumeTab.defaultProfile',

@@ -4,8 +4,8 @@ import { CheckCircleFilledIcon } from 'tdesign-icons-react';
 import { Tag } from 'tdesign-react';
 
 const messages = defineMessages({
-  completed: { id: 'stepItem.completed', defaultMessage: '已完成' },
-  pending: { id: 'stepItem.pending', defaultMessage: '待设置' },
+  completed: { id: 'stepItem.completed', defaultMessage: 'Done' },
+  pending: { id: 'stepItem.pending', defaultMessage: 'Not Set' },
 });
 
 interface StepItemProps {

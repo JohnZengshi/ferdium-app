@@ -1,34 +1,26 @@
-import {
-  type ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import {
   AddIcon,
-  CalendarIcon,
   ChevronLeftIcon,
   EditIcon,
   FileIcon,
   FolderIcon,
-  GenderMaleIcon,
   HomeIcon,
+  UploadIcon,
   UserIcon,
   UsergroupIcon,
   WorkIcon,
 } from 'tdesign-icons-react';
 import {
+  Avatar,
   Button,
   DatePicker,
   Input,
   MessagePlugin,
   Pagination,
   Select,
-  Table,
 } from 'tdesign-react';
-import type { PrimaryTableCol } from 'tdesign-react';
 import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
@@ -164,6 +156,18 @@ const messages = defineMessages({
     defaultMessage:
       '输入文本到此处，将自动识别人设信息\n\n例：Amy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可；企业级 / 大客户项目需持续跟进交付、验收与长期合作维护。销售为项目客户侧第一责任人，统筹对外沟通与商务推进。\n\nAmy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接...',
   },
+  editPersona: {
+    id: 'knowledgeScreen.editPersona',
+    defaultMessage: '编辑人设',
+  },
+  clickToSetAvatar: {
+    id: 'knowledgeScreen.clickToSetAvatar',
+    defaultMessage: '点击设置头像',
+  },
+  changeAvatar: {
+    id: 'knowledgeScreen.changeAvatar',
+    defaultMessage: '更换头像',
+  },
 });
 
 interface PersonaRecord {
@@ -184,6 +188,10 @@ interface FormData {
   remark: string;
   age: string;
   gender: string;
+  birthday: string;
+  country: string;
+  language: string;
+  city: string;
   family: string;
   occupation: string;
   participation: string;
@@ -194,6 +202,10 @@ const INITIAL_FORM_DATA: FormData = {
   remark: '',
   age: '',
   gender: '',
+  birthday: '',
+  country: '',
+  language: '',
+  city: '',
   family: '',
   occupation: '',
   participation: '',
@@ -234,6 +246,10 @@ const digitalHumanToFormData = (
   remark: getConfigString(digitalHuman.persona_config, 'remark'),
   age: getConfigString(digitalHuman.persona_config, 'age'),
   gender: getConfigString(digitalHuman.persona_config, 'gender'),
+  birthday: getConfigString(digitalHuman.persona_config, 'birthday'),
+  country: getConfigString(digitalHuman.persona_config, 'country'),
+  language: getConfigString(digitalHuman.persona_config, 'language'),
+  city: getConfigString(digitalHuman.persona_config, 'city'),
   family: getConfigString(digitalHuman.persona_config, 'family'),
   occupation: getConfigString(digitalHuman.persona_config, 'occupation'),
   participation: getConfigString(digitalHuman.persona_config, 'participation'),
@@ -258,6 +274,10 @@ const buildDigitalHumanRequest = (
     remark: data.remark,
     age: data.age,
     gender: data.gender,
+    birthday: data.birthday,
+    country: data.country,
+    language: data.language,
+    city: data.city,
     family: data.family,
     occupation: data.occupation,
     participation: data.participation,
@@ -265,21 +285,6 @@ const buildDigitalHumanRequest = (
   persona_prompt: buildPersonaPrompt(data),
   status: 'active',
 });
-
-const FormLabel = ({
-  icon,
-  text,
-}: {
-  icon: ReactElement;
-  text: string;
-}): ReactElement => (
-  <div className="mb-[8px] flex items-center gap-[8px]">
-    <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand-light text-brand">
-      {icon}
-    </div>
-    <span className="text-[14px] font-bold text-primary">{text}</span>
-  </div>
-);
 
 const KnowledgeScreen: React.FC = () => {
   const intl = useIntl();
@@ -293,7 +298,6 @@ const KnowledgeScreen: React.FC = () => {
     AppApiSchemasDigitalHumanResponse[]
   >([]);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const genderOptions = useMemo(
@@ -316,14 +320,11 @@ const KnowledgeScreen: React.FC = () => {
   );
 
   const fetchDigitalHumans = useCallback(async () => {
-    setIsLoading(true);
     try {
       const response = await listDigitalHumansApiV1DigitalHumansGet();
       setDigitalHumans(response.data);
     } catch {
       await MessagePlugin.error(intl.formatMessage(messages.loadFailed));
-    } finally {
-      setIsLoading(false);
     }
   }, [intl]);
 
@@ -351,11 +352,6 @@ const KnowledgeScreen: React.FC = () => {
     [digitalHumans],
   );
 
-  const pagedTableData = useMemo(
-    () => tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize),
-    [currentPage, pageSize, tableData],
-  );
-
   const handlePageChange = useCallback(
     (pageInfo: { current: number; pageSize: number }) => {
       setCurrentPage(pageInfo.current);
@@ -375,12 +371,6 @@ const KnowledgeScreen: React.FC = () => {
     setView('list');
     setEditingId(null);
     setFormData(INITIAL_FORM_DATA);
-  }, []);
-
-  const handleView = useCallback((record: PersonaRecord) => {
-    setEditingId(record.id);
-    setFormData(digitalHumanToFormData(record.source));
-    setView('create');
   }, []);
 
   const handleEditPersona = useCallback((record: PersonaRecord) => {
@@ -454,80 +444,6 @@ const KnowledgeScreen: React.FC = () => {
     }
   }, [editingId, fetchDigitalHumans, formData, handleBack, intl]);
 
-  const columns: PrimaryTableCol<PersonaRecord>[] = useMemo(
-    () => [
-      {
-        colKey: 'index',
-        title: intl.formatMessage(messages.serialNumber),
-        width: 80,
-        align: 'center',
-      },
-      {
-        colKey: 'remark',
-        title: intl.formatMessage(messages.personaRemark),
-        width: 220,
-        ellipsis: true,
-      },
-      {
-        colKey: 'name',
-        title: intl.formatMessage(messages.name),
-        width: 140,
-        ellipsis: true,
-      },
-      {
-        colKey: 'age',
-        title: intl.formatMessage(messages.age),
-        width: 100,
-      },
-      {
-        colKey: 'gender',
-        title: intl.formatMessage(messages.gender),
-        width: 100,
-      },
-      {
-        colKey: 'occupation',
-        title: intl.formatMessage(messages.occupation),
-        width: 140,
-      },
-      {
-        colKey: 'familyStatus',
-        title: intl.formatMessage(messages.familyStatus),
-        width: 120,
-      },
-      {
-        colKey: 'participation',
-        title: intl.formatMessage(messages.participation),
-        width: 120,
-      },
-      {
-        colKey: 'op',
-        title: intl.formatMessage(messages.actions),
-        width: 140,
-        fixed: 'right',
-        // eslint-disable-next-line react/no-unstable-nested-components
-        cell: ({ row }) => (
-          <div className="flex items-center gap-[16px]">
-            <button
-              type="button"
-              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
-              onClick={() => handleView(row)}
-            >
-              {intl.formatMessage(messages.view)}
-            </button>
-            <button
-              type="button"
-              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:underline"
-              onClick={() => handleEditPersona(row)}
-            >
-              {intl.formatMessage(messages.edit)}
-            </button>
-          </div>
-        ),
-      },
-    ],
-    [intl, handleView, handleEditPersona],
-  );
-
   return (
     <div className="flex min-h-0 flex-1 bg-page">
       <SidebarMenu
@@ -536,42 +452,79 @@ const KnowledgeScreen: React.FC = () => {
         onItemClick={() => {}}
       />
       {view === 'list' ? (
-        <div className="flex-1 min-w-0 p-[24px]">
-          <div className="rounded-[4px] bg-container p-[24px]">
-            <div className="flex items-center">
-              <Button
-                theme="primary"
-                className="!h-[32px] !rounded-[2px] !px-[12px]"
-                onClick={handleCreate}
+        <div className="flex-1 min-w-0 p-[32px]">
+          {/* 顶部区域：创建按钮 + 说明文字 */}
+          <div className="flex items-center mb-[24px]">
+            <Button
+              theme="primary"
+              className="!h-[32px] !rounded-[3px] !bg-[#0F5FE8] hover:!bg-[#0B5FEA] !px-[14px]"
+              onClick={handleCreate}
+            >
+              <div className="flex items-center gap-[6px]">
+                <AddIcon size="14px" />
+                <span className="text-[14px] font-normal">
+                  {intl.formatMessage(messages.createPersonaProfile)}
+                </span>
+              </div>
+            </Button>
+            <span className="ml-[16px] text-[14px] text-[#8C8C8C]">
+              {intl.formatMessage(messages.description)}
+            </span>
+          </div>
+
+          {/* 卡片网格区域 */}
+          <div className="flex flex-wrap gap-[24px]">
+            {tableData.map(record => (
+              <div
+                key={record.id}
+                className="flex flex-col items-center w-[262px] h-[300px] bg-[#F3F7FF] rounded-[9px] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
               >
-                <div className="flex items-center gap-[8px]">
-                  <AddIcon />
-                  <span>
-                    {intl.formatMessage(messages.createPersonaProfile)}
-                  </span>
+                {/* 头像区域 */}
+                <div className="mt-[24px]">
+                  {record.source.avatar_url ? (
+                    <Avatar
+                      size="120px"
+                      image={record.source.avatar_url}
+                      className="!border-[3px] !border-[#DDEBFF] !rounded-full"
+                    />
+                  ) : (
+                    <div className="w-[120px] h-[120px] rounded-full bg-[#F2F2F2] flex flex-col items-center justify-center gap-[8px] cursor-pointer">
+                      <UploadIcon size="24px" className="text-[#9E9E9E]" />
+                      <span className="text-[13px] text-[#9E9E9E]">
+                        {intl.formatMessage(messages.clickToSetAvatar)}
+                      </span>
+                    </div>
+                  )}
                 </div>
-              </Button>
-              <span className="ml-[12px] text-[12px] text-secondary">
-                {intl.formatMessage(messages.description)}
-              </span>
-            </div>
 
-            <div className="mt-[24px]">
-              <Table
-                data={pagedTableData}
-                columns={columns}
-                rowKey="id"
-                loading={isLoading}
-                bordered
-                hover
-                stripe={false}
-                tableLayout="fixed"
-                resizable
-                lazyLoad
-                className="[&_.t-table__header]:!bg-secondary-container [&_.t-table__header-th]:!h-[40px] [&_.t-table__header-th]:!border-b [&_.t-table__header-th]:!border-solid [&_.t-table__header-th]:!border-line [&_.t-table__header-th]:!text-[14px] [&_.t-table__header-th]:!font-normal [&_.t-table__header-th]:!text-primary [&_.t-table__body-td]:!h-[56px] [&_.t-table__body-td]:!border-b [&_.t-table__body-td]:!border-solid [&_.t-table__body-td]:!border-line [&_.t-table__body-td]:!p-0"
-              />
-            </div>
+                {/* 人设名称 */}
+                <div className="mt-[23px] text-[18px] font-semibold text-[#222222] text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                  {record.name}
+                </div>
 
+                {/* 描述信息 */}
+                <div className="mt-[11px] text-[14px] text-[#4F4F4F] text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                  {record.remark || '美国WhatsApp手机号的人设'}
+                </div>
+
+                {/* 编辑按钮 */}
+                <div className="mt-[25px]">
+                  <Button
+                    theme="primary"
+                    className="!w-[89px] !h-[32px] !rounded-[4px] !bg-[#0F5FE8] hover:!bg-[#0B5FEA]"
+                    onClick={() => handleEditPersona(record)}
+                  >
+                    <span className="text-[14px] font-normal">
+                      {intl.formatMessage(messages.editPersona)}
+                    </span>
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 分页器 */}
+          {tableData.length > 0 && (
             <div className="mt-[24px] flex items-center justify-between">
               <Pagination
                 total={tableData.length}
@@ -584,7 +537,7 @@ const KnowledgeScreen: React.FC = () => {
                 className="[&_.t-pagination__select]:!w-[100px]"
               />
             </div>
-          </div>
+          )}
         </div>
       ) : (
         <div className="flex flex-1 flex-col">
@@ -605,145 +558,424 @@ const KnowledgeScreen: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex flex-1 gap-[40px] p-[24px]">
-            <div className="max-w-[600px] flex-1 rounded-[4px] bg-container p-[24px]">
-              <div className="mb-[24px]">
-                <FormLabel
-                  icon={<UserIcon size="14px" />}
-                  text={intl.formatMessage(messages.name)}
-                />
-                <Input
-                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
-                  value={formData.name}
-                  onChange={v => handleFormChange('name', v)}
-                  className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
-                />
-              </div>
-
-              <div className="mb-[24px]">
-                <FormLabel
-                  icon={<EditIcon size="14px" />}
-                  text={intl.formatMessage(messages.personaRemark)}
-                />
-                <Input
-                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
-                  value={formData.remark}
-                  onChange={v => handleFormChange('remark', v)}
-                  className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
-                />
-              </div>
-
-              <div className="mb-[24px] flex gap-[16px]">
-                <div className="flex-1">
-                  <FormLabel
-                    icon={<CalendarIcon size="14px" />}
-                    text={intl.formatMessage(messages.age)}
-                  />
-                  <DatePicker
-                    placeholder={intl.formatMessage(messages.datePlaceholder)}
-                    value={formData.age}
-                    onChange={value =>
-                      handleFormChange('age', String(value ?? ''))
-                    }
-                    className="!h-[36px] !w-full !rounded-[2px] [&_.t-input]:!h-[36px] [&_.t-input]:!border-line [&_.t-input]:!rounded-[2px]"
-                  />
-                </div>
-                <div className="flex-1">
-                  <FormLabel
-                    icon={<GenderMaleIcon size="14px" />}
-                    text={intl.formatMessage(messages.gender)}
-                  />
-                  <Select
-                    placeholder={intl.formatMessage(messages.selectPlaceholder)}
-                    options={genderOptions}
-                    value={formData.gender}
-                    onChange={value =>
-                      handleFormChange('gender', String(value ?? ''))
-                    }
-                    className="!w-full [&_.t-select__trigger]:!h-[36px] [&_.t-input]:!rounded-[2px] [&_.t-input]:!border-line"
-                  />
+          <div className="flex flex-1 gap-[48px] p-[20px] pl-[80px] pr-[32px] bg-white">
+            {/* 左侧区域：关键词描述 + 快速标签 + AI生成 */}
+            <div className="flex-[0.36] min-w-[420px] max-w-[560px]">
+              {/* 页面标题区 */}
+              <div className="mb-[70px] flex items-start gap-[16px]">
+                <h2 className="text-[34px] font-bold text-[#1677FF] leading-[44px] m-0">
+                  人设账号
+                </h2>
+                <div className="w-[170px] h-[140px] rounded-[8px] bg-[#F0F5FF] flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#86909C] text-[13px]">
+                    蓝色 AI 资料插画占位
+                  </span>
                 </div>
               </div>
 
-              <div className="mb-[24px]">
-                <FormLabel
-                  icon={<HomeIcon size="14px" />}
-                  text={intl.formatMessage(messages.familyStatus)}
-                />
+              {/* 关键词描述卡片 */}
+              <div className="bg-white rounded-[8px] border border-solid border-[#E5E6EB] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-[24px] mb-[16px]">
+                <div className="flex items-center gap-[8px] h-[24px] mb-[18px]">
+                  <FileIcon size="20px" className="text-[#1677FF]" />
+                  <span className="text-[16px] font-semibold text-[#1F2329] leading-[22px]">
+                    关键词描述
+                  </span>
+                </div>
                 <textarea
-                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
-                  value={formData.family}
-                  onChange={e => handleFormChange('family', e.target.value)}
-                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line bg-special-component p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
+                  placeholder="例：25岁女性，菲律宾人，喜欢旅游和美食，性格开朗，销售深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可用于WhatsApp账号。"
+                  value={smartImportText}
+                  onChange={e => handleSmartImportTextChange(e.target.value)}
+                  className="h-[148px] w-full resize-none rounded-[6px] border-none bg-[#F7F8FA] p-[18px] text-[14px] leading-[24px] text-[#1F2329] outline-none placeholder:text-[#A8ABB2]"
                 />
+
+                {/* 快速标签区 */}
+                <div className="mt-[24px]">
+                  <div className="flex items-center gap-[8px] h-[22px] mb-[16px]">
+                    <EditIcon size="20px" className="text-[#1677FF]" />
+                    <span className="text-[16px] font-semibold text-[#1F2329] leading-[22px]">
+                      快速标签
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-[12px_14px]">
+                    {[
+                      '女性',
+                      '男性',
+                      '年轻人',
+                      '商务风',
+                      '旅行爱好者',
+                      '美食爱好者',
+                      '社交爱好者',
+                      '东南亚',
+                      '欧美',
+                      '商务风',
+                      '高活跃社交账号',
+                      '社交爱好者',
+                    ].map(tag => {
+                      const isSelected = tag === '高活跃社交账号';
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          className={`h-[32px] px-[14px] rounded-[4px] border cursor-pointer text-[14px] leading-[32px] ${
+                            isSelected
+                              ? 'bg-[#E8F3FF] border-solid border-[#1677FF] text-[#1677FF]'
+                              : 'bg-[#F2F3F5] border-transparent text-[#1F2329]'
+                          }`}
+                        >
+                          {tag}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 操作按钮区 */}
+                <div className="mt-[24px] flex gap-[24px]">
+                  <Button
+                    theme="primary"
+                    className="!w-[280px] !h-[42px] !rounded-[4px] !bg-gradient-to-r !from-[#1677FF] !to-[#25D6E8] hover:!opacity-90"
+                    onClick={handleSmartImport}
+                  >
+                    <div className="flex items-center gap-[8px]">
+                      <span className="text-[16px]">🪄</span>
+                      <span className="text-[15px] font-medium">
+                        AI一键生成
+                      </span>
+                    </div>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    theme="default"
+                    className="!w-[200px] !h-[42px] !rounded-[4px] !border-[#E5E6EB] !text-[#4E5969]"
+                  >
+                    <div className="flex items-center gap-[8px]">
+                      <span className="text-[16px] text-[#86909C]">↻</span>
+                      <span className="text-[15px] font-normal">重新生成</span>
+                    </div>
+                  </Button>
+                </div>
               </div>
 
-              <div className="mb-[24px]">
-                <FormLabel
-                  icon={<WorkIcon size="14px" />}
-                  text={intl.formatMessage(messages.occupation)}
-                />
-                <Input
-                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
-                  value={formData.occupation}
-                  onChange={v => handleFormChange('occupation', v)}
-                  className="!h-[36px] !rounded-[2px] [&_.t-input]:!border-line"
-                />
-              </div>
-
-              <div className="mb-[24px]">
-                <FormLabel
-                  icon={<FolderIcon size="14px" />}
-                  text={intl.formatMessage(messages.participation)}
-                />
-                <textarea
-                  placeholder={intl.formatMessage(messages.inputPlaceholder)}
-                  value={formData.participation}
-                  onChange={e =>
-                    handleFormChange('participation', e.target.value)
-                  }
-                  className="!h-[80px] w-full resize-y rounded-[2px] border border-solid border-line bg-special-component p-[8px] text-[14px] text-primary outline-none placeholder:text-secondary"
-                />
-              </div>
-
-              <div className="mt-[32px] flex justify-center">
-                <Button
-                  theme="primary"
-                  loading={isSaving}
-                  className="!h-[36px] !w-[80px] !rounded-[2px]"
-                  onClick={handleSave}
-                >
-                  {intl.formatMessage(messages.save)}
-                </Button>
+              {/* AI生成进度卡片 */}
+              <div className="bg-white rounded-[8px] border border-solid border-[#E5E6EB] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-[28px_36px]">
+                <div className="flex items-start gap-[24px]">
+                  <div className="w-[50px] h-[50px] rounded-[12px] bg-gradient-to-br from-[#1677FF] to-[#25D6E8] flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-[24px]">🪄</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-[15px] font-semibold text-[#1F2329] leading-[22px] mb-[6px]">
+                      AI正在疯狂思考中....
+                    </div>
+                    <div className="text-[13px] text-[#86909C] leading-[20px] mb-[14px]">
+                      正在生成姓名、生日、职业、家庭情况、兴趣爱好和社交资料等，打造专属于你的人设....
+                    </div>
+                    <div className="flex items-center gap-[12px]">
+                      <div className="w-[360px] h-[6px] rounded-full bg-[#E5E6EB] overflow-hidden">
+                        <div className="h-full w-[80%] bg-gradient-to-r from-[#1677FF] to-[#25D6E8] rounded-full" />
+                      </div>
+                      <span className="text-[14px] text-[#4E5969] flex-shrink-0">
+                        80%
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="flex-1 rounded-[4px] bg-container p-[24px]">
-              <div className="mb-[16px] flex items-center gap-[8px]">
-                <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-brand-light text-brand">
-                  <FileIcon size="14px" />
+            {/* 右侧区域：资料编辑区 */}
+            <div className="flex-1 min-w-[640px]">
+              {/* 人设备注 */}
+              <div className="bg-white rounded-[8px] border border-solid border-[#E5E6EB] shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-[24px] mb-[16px]">
+                <div className="flex items-center justify-between h-[28px] mb-[18px]">
+                  <div className="flex items-center gap-[8px]">
+                    <UserIcon size="20px" className="text-[#1677FF]" />
+                    <span className="text-[16px] font-semibold text-[#1F2329]">
+                      人设备注
+                    </span>
+                  </div>
+                  <Button
+                    size="small"
+                    variant="outline"
+                    className="!bg-[#F0F5FF] !text-[#1677FF] !border-none !h-[32px] !px-[14px] !rounded-[4px]"
+                  >
+                    <div className="flex items-center gap-[4px]">
+                      <span className="text-[15px]">🪄</span>
+                      <span className="text-[14px]">AI填充</span>
+                    </div>
+                  </Button>
                 </div>
-                <span className="text-[16px] font-bold text-primary">
-                  {intl.formatMessage(messages.smartImport)}
-                </span>
+                <textarea
+                  placeholder="输入关于此人设的内部备注...."
+                  value={formData.remark}
+                  onChange={e => handleFormChange('remark', e.target.value)}
+                  className="h-[94px] w-full resize-none rounded-[2px] border border-solid border-[#DCDCDC] p-[14px_16px] text-[14px] text-[#1F2329] outline-none placeholder:text-[#BFBFBF]"
+                />
               </div>
 
-              <textarea
-                placeholder={intl.formatMessage(
-                  messages.smartImportPlaceholder,
-                )}
-                value={smartImportText}
-                onChange={e => handleSmartImportTextChange(e.target.value)}
-                className="h-[140px] w-full resize-y rounded-[4px] border border-solid border-brand bg-special-component p-[12px] text-[12px] leading-[1.5] text-secondary outline-none placeholder:text-secondary"
-              />
+              {/* 基础信息 */}
+              <div className="bg-white rounded-[8px] border border-solid border-[#E5E6EB] shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-[24px] mb-[16px]">
+                <div className="flex items-center justify-between h-[28px] mb-[18px]">
+                  <div className="flex items-center gap-[8px]">
+                    <UsergroupIcon size="20px" className="text-[#1677FF]" />
+                    <span className="text-[16px] font-semibold text-[#1F2329]">
+                      基础信息
+                    </span>
+                  </div>
+                  <Button
+                    size="small"
+                    variant="outline"
+                    className="!bg-[#F0F5FF] !text-[#1677FF] !border-none !h-[32px] !px-[14px] !rounded-[4px]"
+                  >
+                    <div className="flex items-center gap-[4px]">
+                      <span className="text-[15px]">🪄</span>
+                      <span className="text-[14px]">AI优化</span>
+                    </div>
+                  </Button>
+                </div>
+                <div className="grid grid-cols-2 gap-x-[56px] gap-y-[18px]">
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      姓名{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Name)
+                      </span>
+                    </div>
+                    <Input
+                      placeholder={intl.formatMessage(
+                        messages.inputPlaceholder,
+                      )}
+                      value={formData.name}
+                      onChange={v => handleFormChange('name', v)}
+                      className="!h-[42px] !rounded-[3px] [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      性别{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Gender)
+                      </span>
+                    </div>
+                    <Select
+                      placeholder={intl.formatMessage(
+                        messages.selectPlaceholder,
+                      )}
+                      options={genderOptions}
+                      value={formData.gender}
+                      onChange={value =>
+                        handleFormChange('gender', String(value ?? ''))
+                      }
+                      className="!w-full [&_.t-select__trigger]:!h-[42px] [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      出生日期{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Birthday)
+                      </span>
+                    </div>
+                    <DatePicker
+                      placeholder={intl.formatMessage(messages.datePlaceholder)}
+                      className="!h-[42px] !w-full [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      年龄{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Age)
+                      </span>
+                    </div>
+                    <Input
+                      placeholder={intl.formatMessage(
+                        messages.inputPlaceholder,
+                      )}
+                      value={formData.age}
+                      onChange={v => handleFormChange('age', v)}
+                      className="!h-[42px] !rounded-[3px] [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      国家/地区{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Country)
+                      </span>
+                    </div>
+                    <Input
+                      placeholder={intl.formatMessage(
+                        messages.inputPlaceholder,
+                      )}
+                      value={formData.country}
+                      onChange={v => handleFormChange('country', v)}
+                      className="!h-[42px] !rounded-[3px] [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      语言{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Language)
+                      </span>
+                    </div>
+                    <Input
+                      placeholder={intl.formatMessage(
+                        messages.inputPlaceholder,
+                      )}
+                      value={formData.language}
+                      onChange={v => handleFormChange('language', v)}
+                      className="!h-[42px] !rounded-[3px] [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                </div>
+              </div>
 
-              <div className="mt-[16px] flex justify-end">
+              {/* 生活背景 */}
+              <div className="bg-white rounded-[8px] border border-solid border-[#E5E6EB] shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-[24px] mb-[16px]">
+                <div className="flex items-center justify-between h-[28px] mb-[18px]">
+                  <div className="flex items-center gap-[8px]">
+                    <HomeIcon size="20px" className="text-[#1677FF]" />
+                    <span className="text-[16px] font-semibold text-[#1F2329]">
+                      生活背景
+                    </span>
+                  </div>
+                  <Button
+                    size="small"
+                    variant="outline"
+                    className="!bg-[#F0F5FF] !text-[#1677FF] !border-none !h-[32px] !px-[14px] !rounded-[4px]"
+                  >
+                    <div className="flex items-center gap-[4px]">
+                      <span className="text-[15px]">🪄</span>
+                      <span className="text-[14px]">AI填充</span>
+                    </div>
+                  </Button>
+                </div>
+                <div className="space-y-[18px]">
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      所在城市{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (City)
+                      </span>
+                    </div>
+                    <Input
+                      placeholder={intl.formatMessage(
+                        messages.inputPlaceholder,
+                      )}
+                      value={formData.city}
+                      onChange={v => handleFormChange('city', v)}
+                      className="!h-[42px] !rounded-[3px] [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      家庭情况{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Family)
+                      </span>
+                    </div>
+                    <textarea
+                      placeholder="例：单身，与一只猫生活"
+                      value={formData.family}
+                      onChange={e => handleFormChange('family', e.target.value)}
+                      className="h-[96px] w-full resize-none rounded-[3px] border border-solid border-[#DCDCDC] p-[14px] text-[14px] text-[#1F2329] outline-none placeholder:text-[#BFBFBF]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* 职业与项目背景 */}
+              <div className="bg-white rounded-[8px] border border-solid border-[#E5E6EB] shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-[24px] mb-[16px]">
+                <div className="flex items-center justify-between h-[28px] mb-[18px]">
+                  <div className="flex items-center gap-[8px]">
+                    <WorkIcon size="20px" className="text-[#1677FF]" />
+                    <span className="text-[16px] font-semibold text-[#1F2329]">
+                      职业与项目背景
+                    </span>
+                  </div>
+                  <Button
+                    size="small"
+                    variant="outline"
+                    className="!bg-[#F0F5FF] !text-[#1677FF] !border-none !h-[32px] !px-[14px] !rounded-[4px]"
+                  >
+                    <div className="flex items-center gap-[4px]">
+                      <span className="text-[15px]">🪄</span>
+                      <span className="text-[14px]">AI填充</span>
+                    </div>
+                  </Button>
+                </div>
+                <div className="space-y-[18px]">
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      职业{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Occupation)
+                      </span>
+                    </div>
+                    <Input
+                      placeholder={intl.formatMessage(
+                        messages.inputPlaceholder,
+                      )}
+                      value={formData.occupation}
+                      onChange={v => handleFormChange('occupation', v)}
+                      className="!h-[42px] !rounded-[3px] [&_.t-input]:!border-[#DCDCDC]"
+                    />
+                  </div>
+                  <div>
+                    <div className="block text-[14px] font-semibold text-[#1F2329] mb-[8px]">
+                      项目中的主要工作项目{' '}
+                      <span className="text-[12px] font-normal text-[#4E5969]">
+                        (Main work in project)
+                      </span>
+                    </div>
+                    <textarea
+                      placeholder="例：Space 目前与 Kraken 交易所有战略合作关系，主要在Kraken交易所平台上负责团队建设和市场营销。"
+                      value={formData.participation}
+                      onChange={e =>
+                        handleFormChange('participation', e.target.value)
+                      }
+                      className="h-[94px] w-full resize-none rounded-[3px] border border-solid border-[#DCDCDC] p-[14px_16px] text-[14px] text-[#1F2329] outline-none placeholder:text-[#BFBFBF]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* 人设照片 */}
+              <div className="bg-white rounded-[8px] border border-solid border-[#E5E6EB] shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-[24px] mb-[16px]">
+                <div className="flex items-center gap-[8px] h-[28px] mb-[18px]">
+                  <FolderIcon size="20px" className="text-[#1677FF]" />
+                  <span className="text-[16px] font-semibold text-[#1F2329]">
+                    人设照片
+                  </span>
+                </div>
+                <div className="flex flex-col gap-[12px]">
+                  <button
+                    type="button"
+                    className="w-[128px] h-[128px] rounded-[2px] border border-dashed border-[#DCDCDC] bg-[#F7F8FA] flex flex-col items-center justify-center gap-[8px] cursor-pointer hover:border-[#1677FF]"
+                  >
+                    <span className="text-[30px] text-[#8C8C8C] leading-none font-light">
+                      +
+                    </span>
+                    <span className="text-[12px] text-[#8C8C8C]">
+                      点击上传图片
+                    </span>
+                  </button>
+                  <span className="text-[12px] text-[#A8ABB2]">
+                    支持上传JPG、PNG格式的人设照片
+                  </span>
+                </div>
+              </div>
+
+              {/* 保存按钮 */}
+              <div className="flex justify-end">
                 <Button
                   theme="primary"
-                  className="!h-[36px] !w-[100px] !rounded-[2px]"
-                  onClick={handleSmartImport}
+                  loading={isSaving}
+                  className="!h-[40px] !w-[120px] !rounded-[6px]"
+                  onClick={handleSave}
                 >
-                  {intl.formatMessage(messages.smartImportAndRecognize)}
+                  {intl.formatMessage(messages.save)}
                 </Button>
               </div>
             </div>

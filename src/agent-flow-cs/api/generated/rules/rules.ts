@@ -8,217 +8,220 @@ import type {
   AgentRuleCreateRequest,
   AgentRuleResponse,
   AgentRuleUpdateRequest,
-  HTTPValidationError
+  HTTPValidationError,
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listRulesApiV1RulesGetResponse200 = {
-  data: AgentRuleResponse[]
-  status: 200
-}
-
-export type listRulesApiV1RulesGetResponseSuccess = (listRulesApiV1RulesGetResponse200) & {
-  headers: Headers;
+  data: AgentRuleResponse[];
+  status: 200;
 };
-;
 
-export type listRulesApiV1RulesGetResponse = (listRulesApiV1RulesGetResponseSuccess)
+export type listRulesApiV1RulesGetResponseSuccess =
+  listRulesApiV1RulesGetResponse200 & {
+    headers: Headers;
+  };
+export type listRulesApiV1RulesGetResponse =
+  listRulesApiV1RulesGetResponseSuccess;
 
 export const getListRulesApiV1RulesGetUrl = () => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/rules`
-}
+  return `http://10.0.0.205:8000/api/v1/rules`;
+};
 
 /**
  * 列出当前子账号的全部 Agent 规则。
  * @summary List Rules
  */
-export const listRulesApiV1RulesGet = async ( options?: RequestInit): Promise<listRulesApiV1RulesGetResponse> => {
-
-  return useCustomInstance<listRulesApiV1RulesGetResponse>(getListRulesApiV1RulesGetUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const listRulesApiV1RulesGet = async (
+  options?: RequestInit,
+): Promise<listRulesApiV1RulesGetResponse> => {
+  return useCustomInstance<listRulesApiV1RulesGetResponse>(
+    getListRulesApiV1RulesGetUrl(),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type createRuleApiV1RulesPostResponse201 = {
-  data: AgentRuleResponse
-  status: 201
-}
+  data: AgentRuleResponse;
+  status: 201;
+};
 
 export type createRuleApiV1RulesPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type createRuleApiV1RulesPostResponseSuccess = (createRuleApiV1RulesPostResponse201) & {
-  headers: Headers;
-};
-export type createRuleApiV1RulesPostResponseError = (createRuleApiV1RulesPostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type createRuleApiV1RulesPostResponse = (createRuleApiV1RulesPostResponseSuccess | createRuleApiV1RulesPostResponseError)
+export type createRuleApiV1RulesPostResponseSuccess =
+  createRuleApiV1RulesPostResponse201 & {
+    headers: Headers;
+  };
+export type createRuleApiV1RulesPostResponseError =
+  createRuleApiV1RulesPostResponse422 & {
+    headers: Headers;
+  };
+
+export type createRuleApiV1RulesPostResponse =
+  | createRuleApiV1RulesPostResponseSuccess
+  | createRuleApiV1RulesPostResponseError;
 
 export const getCreateRuleApiV1RulesPostUrl = () => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/rules`
-}
+  return `http://10.0.0.205:8000/api/v1/rules`;
+};
 
 /**
  * 创建当前子账号的 Agent 规则。
  * @summary Create Rule
  */
-export const createRuleApiV1RulesPost = async (agentRuleCreateRequest: AgentRuleCreateRequest, options?: RequestInit): Promise<createRuleApiV1RulesPostResponse> => {
-
-  return useCustomInstance<createRuleApiV1RulesPostResponse>(getCreateRuleApiV1RulesPostUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(agentRuleCreateRequest)
-  }
-);}
-
+export const createRuleApiV1RulesPost = async (
+  agentRuleCreateRequest: AgentRuleCreateRequest,
+  options?: RequestInit,
+): Promise<createRuleApiV1RulesPostResponse> => {
+  return useCustomInstance<createRuleApiV1RulesPostResponse>(
+    getCreateRuleApiV1RulesPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(agentRuleCreateRequest),
+    },
+  );
+};
 
 export type getRuleApiV1RulesRuleIdGetResponse200 = {
-  data: AgentRuleResponse
-  status: 200
-}
+  data: AgentRuleResponse;
+  status: 200;
+};
 
 export type getRuleApiV1RulesRuleIdGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type getRuleApiV1RulesRuleIdGetResponseSuccess = (getRuleApiV1RulesRuleIdGetResponse200) & {
-  headers: Headers;
-};
-export type getRuleApiV1RulesRuleIdGetResponseError = (getRuleApiV1RulesRuleIdGetResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type getRuleApiV1RulesRuleIdGetResponse = (getRuleApiV1RulesRuleIdGetResponseSuccess | getRuleApiV1RulesRuleIdGetResponseError)
+export type getRuleApiV1RulesRuleIdGetResponseSuccess =
+  getRuleApiV1RulesRuleIdGetResponse200 & {
+    headers: Headers;
+  };
+export type getRuleApiV1RulesRuleIdGetResponseError =
+  getRuleApiV1RulesRuleIdGetResponse422 & {
+    headers: Headers;
+  };
 
-export const getGetRuleApiV1RulesRuleIdGetUrl = (ruleId: string,) => {
+export type getRuleApiV1RulesRuleIdGetResponse =
+  | getRuleApiV1RulesRuleIdGetResponseSuccess
+  | getRuleApiV1RulesRuleIdGetResponseError;
 
-
-
-
-  return `http://10.0.0.205:8000/api/v1/rules/${ruleId}`
-}
+export const getGetRuleApiV1RulesRuleIdGetUrl = (ruleId: string) => {
+  return `http://10.0.0.205:8000/api/v1/rules/${ruleId}`;
+};
 
 /**
  * 获取当前子账号的一条 Agent 规则。
  * @summary Get Rule
  */
-export const getRuleApiV1RulesRuleIdGet = async (ruleId: string, options?: RequestInit): Promise<getRuleApiV1RulesRuleIdGetResponse> => {
-
-  return useCustomInstance<getRuleApiV1RulesRuleIdGetResponse>(getGetRuleApiV1RulesRuleIdGetUrl(ruleId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getRuleApiV1RulesRuleIdGet = async (
+  ruleId: string,
+  options?: RequestInit,
+): Promise<getRuleApiV1RulesRuleIdGetResponse> => {
+  return useCustomInstance<getRuleApiV1RulesRuleIdGetResponse>(
+    getGetRuleApiV1RulesRuleIdGetUrl(ruleId),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type updateRuleApiV1RulesRuleIdPatchResponse200 = {
-  data: AgentRuleResponse
-  status: 200
-}
+  data: AgentRuleResponse;
+  status: 200;
+};
 
 export type updateRuleApiV1RulesRuleIdPatchResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type updateRuleApiV1RulesRuleIdPatchResponseSuccess = (updateRuleApiV1RulesRuleIdPatchResponse200) & {
-  headers: Headers;
-};
-export type updateRuleApiV1RulesRuleIdPatchResponseError = (updateRuleApiV1RulesRuleIdPatchResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type updateRuleApiV1RulesRuleIdPatchResponse = (updateRuleApiV1RulesRuleIdPatchResponseSuccess | updateRuleApiV1RulesRuleIdPatchResponseError)
+export type updateRuleApiV1RulesRuleIdPatchResponseSuccess =
+  updateRuleApiV1RulesRuleIdPatchResponse200 & {
+    headers: Headers;
+  };
+export type updateRuleApiV1RulesRuleIdPatchResponseError =
+  updateRuleApiV1RulesRuleIdPatchResponse422 & {
+    headers: Headers;
+  };
 
-export const getUpdateRuleApiV1RulesRuleIdPatchUrl = (ruleId: string,) => {
+export type updateRuleApiV1RulesRuleIdPatchResponse =
+  | updateRuleApiV1RulesRuleIdPatchResponseSuccess
+  | updateRuleApiV1RulesRuleIdPatchResponseError;
 
-
-
-
-  return `http://10.0.0.205:8000/api/v1/rules/${ruleId}`
-}
+export const getUpdateRuleApiV1RulesRuleIdPatchUrl = (ruleId: string) => {
+  return `http://10.0.0.205:8000/api/v1/rules/${ruleId}`;
+};
 
 /**
  * 修改当前子账号的一条 Agent 规则。
  * @summary Update Rule
  */
-export const updateRuleApiV1RulesRuleIdPatch = async (ruleId: string,
-    agentRuleUpdateRequest: AgentRuleUpdateRequest, options?: RequestInit): Promise<updateRuleApiV1RulesRuleIdPatchResponse> => {
-
-  return useCustomInstance<updateRuleApiV1RulesRuleIdPatchResponse>(getUpdateRuleApiV1RulesRuleIdPatchUrl(ruleId),
-  {
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(agentRuleUpdateRequest)
-  }
-);}
-
+export const updateRuleApiV1RulesRuleIdPatch = async (
+  ruleId: string,
+  agentRuleUpdateRequest: AgentRuleUpdateRequest,
+  options?: RequestInit,
+): Promise<updateRuleApiV1RulesRuleIdPatchResponse> => {
+  return useCustomInstance<updateRuleApiV1RulesRuleIdPatchResponse>(
+    getUpdateRuleApiV1RulesRuleIdPatchUrl(ruleId),
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(agentRuleUpdateRequest),
+    },
+  );
+};
 
 export type deleteRuleApiV1RulesRuleIdDeleteResponse204 = {
-  data: void
-  status: 204
-}
+  data: void;
+  status: 204;
+};
 
 export type deleteRuleApiV1RulesRuleIdDeleteResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type deleteRuleApiV1RulesRuleIdDeleteResponseSuccess = (deleteRuleApiV1RulesRuleIdDeleteResponse204) & {
-  headers: Headers;
-};
-export type deleteRuleApiV1RulesRuleIdDeleteResponseError = (deleteRuleApiV1RulesRuleIdDeleteResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type deleteRuleApiV1RulesRuleIdDeleteResponse = (deleteRuleApiV1RulesRuleIdDeleteResponseSuccess | deleteRuleApiV1RulesRuleIdDeleteResponseError)
+export type deleteRuleApiV1RulesRuleIdDeleteResponseSuccess =
+  deleteRuleApiV1RulesRuleIdDeleteResponse204 & {
+    headers: Headers;
+  };
+export type deleteRuleApiV1RulesRuleIdDeleteResponseError =
+  deleteRuleApiV1RulesRuleIdDeleteResponse422 & {
+    headers: Headers;
+  };
 
-export const getDeleteRuleApiV1RulesRuleIdDeleteUrl = (ruleId: string,) => {
+export type deleteRuleApiV1RulesRuleIdDeleteResponse =
+  | deleteRuleApiV1RulesRuleIdDeleteResponseSuccess
+  | deleteRuleApiV1RulesRuleIdDeleteResponseError;
 
-
-
-
-  return `http://10.0.0.205:8000/api/v1/rules/${ruleId}`
-}
+export const getDeleteRuleApiV1RulesRuleIdDeleteUrl = (ruleId: string) => {
+  return `http://10.0.0.205:8000/api/v1/rules/${ruleId}`;
+};
 
 /**
  * 删除当前子账号的一条 Agent 规则。
  * @summary Delete Rule
  */
-export const deleteRuleApiV1RulesRuleIdDelete = async (ruleId: string, options?: RequestInit): Promise<deleteRuleApiV1RulesRuleIdDeleteResponse> => {
-
-  return useCustomInstance<deleteRuleApiV1RulesRuleIdDeleteResponse>(getDeleteRuleApiV1RulesRuleIdDeleteUrl(ruleId),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
+export const deleteRuleApiV1RulesRuleIdDelete = async (
+  ruleId: string,
+  options?: RequestInit,
+): Promise<deleteRuleApiV1RulesRuleIdDeleteResponse> => {
+  return useCustomInstance<deleteRuleApiV1RulesRuleIdDeleteResponse>(
+    getDeleteRuleApiV1RulesRuleIdDeleteUrl(ruleId),
+    {
+      ...options,
+      method: 'DELETE',
+    },
+  );
+};

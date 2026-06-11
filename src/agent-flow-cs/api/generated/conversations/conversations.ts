@@ -12,160 +12,173 @@ import type {
   ConversationUpdateRequest,
   HTTPValidationError,
   PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams,
-  ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams
+  ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams,
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listConversationsApiV1ConversationsGetResponse200 = {
-  data: AppApiSchemasConversationResponse[]
-  status: 200
-}
-
-export type listConversationsApiV1ConversationsGetResponseSuccess = (listConversationsApiV1ConversationsGetResponse200) & {
-  headers: Headers;
+  data: AppApiSchemasConversationResponse[];
+  status: 200;
 };
-;
 
-export type listConversationsApiV1ConversationsGetResponse = (listConversationsApiV1ConversationsGetResponseSuccess)
+export type listConversationsApiV1ConversationsGetResponseSuccess =
+  listConversationsApiV1ConversationsGetResponse200 & {
+    headers: Headers;
+  };
+export type listConversationsApiV1ConversationsGetResponse =
+  listConversationsApiV1ConversationsGetResponseSuccess;
 
 export const getListConversationsApiV1ConversationsGetUrl = () => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/conversations`
-}
+  return `http://10.0.0.205:8000/api/v1/conversations`;
+};
 
 /**
  * 列出当前用户可见的会话（owner 俯视旗下全部，member 只看自己）。
  * @summary List Conversations
  */
-export const listConversationsApiV1ConversationsGet = async ( options?: RequestInit): Promise<listConversationsApiV1ConversationsGetResponse> => {
-
-  return useCustomInstance<listConversationsApiV1ConversationsGetResponse>(getListConversationsApiV1ConversationsGetUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const listConversationsApiV1ConversationsGet = async (
+  options?: RequestInit,
+): Promise<listConversationsApiV1ConversationsGetResponse> => {
+  return useCustomInstance<listConversationsApiV1ConversationsGetResponse>(
+    getListConversationsApiV1ConversationsGetUrl(),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type createConversationApiV1ConversationsPostResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
+  data: AppApiSchemasConversationResponse;
+  status: 200;
+};
 
 export type createConversationApiV1ConversationsPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type createConversationApiV1ConversationsPostResponseSuccess = (createConversationApiV1ConversationsPostResponse200) & {
-  headers: Headers;
-};
-export type createConversationApiV1ConversationsPostResponseError = (createConversationApiV1ConversationsPostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type createConversationApiV1ConversationsPostResponse = (createConversationApiV1ConversationsPostResponseSuccess | createConversationApiV1ConversationsPostResponseError)
+export type createConversationApiV1ConversationsPostResponseSuccess =
+  createConversationApiV1ConversationsPostResponse200 & {
+    headers: Headers;
+  };
+export type createConversationApiV1ConversationsPostResponseError =
+  createConversationApiV1ConversationsPostResponse422 & {
+    headers: Headers;
+  };
+
+export type createConversationApiV1ConversationsPostResponse =
+  | createConversationApiV1ConversationsPostResponseSuccess
+  | createConversationApiV1ConversationsPostResponseError;
 
 export const getCreateConversationApiV1ConversationsPostUrl = () => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/conversations`
-}
+  return `http://10.0.0.205:8000/api/v1/conversations`;
+};
 
 /**
  * 子账号为客户创建会话线程。
  * @summary Create Conversation
  */
-export const createConversationApiV1ConversationsPost = async (conversationCreateRequest: ConversationCreateRequest, options?: RequestInit): Promise<createConversationApiV1ConversationsPostResponse> => {
+export const createConversationApiV1ConversationsPost = async (
+  conversationCreateRequest: ConversationCreateRequest,
+  options?: RequestInit,
+): Promise<createConversationApiV1ConversationsPostResponse> => {
+  return useCustomInstance<createConversationApiV1ConversationsPostResponse>(
+    getCreateConversationApiV1ConversationsPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(conversationCreateRequest),
+    },
+  );
+};
 
-  return useCustomInstance<createConversationApiV1ConversationsPostResponse>(getCreateConversationApiV1ConversationsPostUrl(),
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200 =
   {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(conversationCreateRequest)
-  }
-);}
+    data: AppApiSchemasConversationResponse;
+    status: 200;
+  };
 
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess =
+  updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200 & {
+    headers: Headers;
+  };
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError =
+  updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 & {
+    headers: Headers;
+  };
 
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse =
 
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200) & {
-  headers: Headers;
-};
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422) & {
-  headers: Headers;
-};
+    | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess
+    | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError;
 
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError)
-
-export const getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}`
-}
+export const getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl =
+  (conversationId: string) => {
+    return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}`;
+  };
 
 /**
  * 切换会话绑定的数字人，下一轮对话立即生效。
  * @summary Update Conversation Digital Human
  */
-export const updateConversationDigitalHumanApiV1ConversationsConversationIdPatch = async (conversationId: string,
-    conversationUpdateRequest: ConversationUpdateRequest, options?: RequestInit): Promise<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse> => {
+export const updateConversationDigitalHumanApiV1ConversationsConversationIdPatch =
+  async (
+    conversationId: string,
+    conversationUpdateRequest: ConversationUpdateRequest,
+    options?: RequestInit,
+  ): Promise<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse> => {
+    return useCustomInstance<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse>(
+      getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl(
+        conversationId,
+      ),
+      {
+        ...options,
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', ...options?.headers },
+        body: JSON.stringify(conversationUpdateRequest),
+      },
+    );
+  };
 
-  return useCustomInstance<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse>(getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl(conversationId),
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200 =
   {
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(conversationUpdateRequest)
-  }
-);}
+    data: AppApiSchemasMessageResponse;
+    status: 200;
+  };
 
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200 = {
-  data: AppApiSchemasMessageResponse
-  status: 200
-}
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess =
+  agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200 & {
+    headers: Headers;
+  };
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError =
+  agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 & {
+    headers: Headers;
+  };
 
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse =
+  | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess
+  | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError;
 
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200) & {
-  headers: Headers;
+export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (
+  conversationId: string,
+) => {
+  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/agent-reply`;
 };
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422) & {
-  headers: Headers;
-};
-
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError)
-
-export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/agent-reply`
-}
 
 /**
  * 人工坐席在接管期间以代表身份回复客户，绕过 Agent 图。
@@ -174,45 +187,54 @@ export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (c
  * 对于 WhatsApp 会话，回复会通过 WA-AKG 外发至客户。
  * @summary Agent Reply
  */
-export const agentReplyApiV1ConversationsConversationIdAgentReplyPost = async (conversationId: string,
-    agentReplyRequest: AgentReplyRequest, options?: RequestInit): Promise<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse> => {
+export const agentReplyApiV1ConversationsConversationIdAgentReplyPost = async (
+  conversationId: string,
+  agentReplyRequest: AgentReplyRequest,
+  options?: RequestInit,
+): Promise<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse> => {
+  return useCustomInstance<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse>(
+    getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl(
+      conversationId,
+    ),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(agentReplyRequest),
+    },
+  );
+};
 
-  return useCustomInstance<agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse>(getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl(conversationId),
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse200 =
   {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(agentReplyRequest)
-  }
-);}
+    data: AppApiSchemasConversationResponse;
+    status: 200;
+  };
 
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponseSuccess =
+  pauseConversationApiV1ConversationsConversationIdPausePatchResponse200 & {
+    headers: Headers;
+  };
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponseError =
+  pauseConversationApiV1ConversationsConversationIdPausePatchResponse422 & {
+    headers: Headers;
+  };
 
-export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse =
 
-export type pauseConversationApiV1ConversationsConversationIdPausePatchResponseSuccess = (pauseConversationApiV1ConversationsConversationIdPausePatchResponse200) & {
-  headers: Headers;
-};
-export type pauseConversationApiV1ConversationsConversationIdPausePatchResponseError = (pauseConversationApiV1ConversationsConversationIdPausePatchResponse422) & {
-  headers: Headers;
-};
+    | pauseConversationApiV1ConversationsConversationIdPausePatchResponseSuccess
+    | pauseConversationApiV1ConversationsConversationIdPausePatchResponseError;
 
-export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse = (pauseConversationApiV1ConversationsConversationIdPausePatchResponseSuccess | pauseConversationApiV1ConversationsConversationIdPausePatchResponseError)
-
-export const getPauseConversationApiV1ConversationsConversationIdPausePatchUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/pause`
-}
+export const getPauseConversationApiV1ConversationsConversationIdPausePatchUrl =
+  (conversationId: string) => {
+    return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/pause`;
+  };
 
 /**
  * 手动暂停 Agent 自动回复（立即中断进行中的 turn）。
@@ -223,44 +245,52 @@ export const getPauseConversationApiV1ConversationsConversationIdPausePatchUrl =
  * - 恢复后，暂停期间的消息作为上下文参与下一轮决策
  * @summary Pause Conversation
  */
-export const pauseConversationApiV1ConversationsConversationIdPausePatch = async (conversationId: string, options?: RequestInit): Promise<pauseConversationApiV1ConversationsConversationIdPausePatchResponse> => {
+export const pauseConversationApiV1ConversationsConversationIdPausePatch =
+  async (
+    conversationId: string,
+    options?: RequestInit,
+  ): Promise<pauseConversationApiV1ConversationsConversationIdPausePatchResponse> => {
+    return useCustomInstance<pauseConversationApiV1ConversationsConversationIdPausePatchResponse>(
+      getPauseConversationApiV1ConversationsConversationIdPausePatchUrl(
+        conversationId,
+      ),
+      {
+        ...options,
+        method: 'PATCH',
+      },
+    );
+  };
 
-  return useCustomInstance<pauseConversationApiV1ConversationsConversationIdPausePatchResponse>(getPauseConversationApiV1ConversationsConversationIdPausePatchUrl(conversationId),
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse200 =
   {
-    ...options,
-    method: 'PATCH'
+    data: AppApiSchemasConversationResponse;
+    status: 200;
+  };
 
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponseSuccess =
+  resumeConversationApiV1ConversationsConversationIdResumePatchResponse200 & {
+    headers: Headers;
+  };
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponseError =
+  resumeConversationApiV1ConversationsConversationIdResumePatchResponse422 & {
+    headers: Headers;
+  };
 
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse =
 
-export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
+    | resumeConversationApiV1ConversationsConversationIdResumePatchResponseSuccess
+    | resumeConversationApiV1ConversationsConversationIdResumePatchResponseError;
 
-export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type resumeConversationApiV1ConversationsConversationIdResumePatchResponseSuccess = (resumeConversationApiV1ConversationsConversationIdResumePatchResponse200) & {
-  headers: Headers;
-};
-export type resumeConversationApiV1ConversationsConversationIdResumePatchResponseError = (resumeConversationApiV1ConversationsConversationIdResumePatchResponse422) & {
-  headers: Headers;
-};
-
-export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse = (resumeConversationApiV1ConversationsConversationIdResumePatchResponseSuccess | resumeConversationApiV1ConversationsConversationIdResumePatchResponseError)
-
-export const getResumeConversationApiV1ConversationsConversationIdResumePatchUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/resume`
-}
+export const getResumeConversationApiV1ConversationsConversationIdResumePatchUrl =
+  (conversationId: string) => {
+    return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/resume`;
+  };
 
 /**
  * 手动恢复 Agent 自动回复能力。
@@ -268,52 +298,67 @@ export const getResumeConversationApiV1ConversationsConversationIdResumePatchUrl
  * 恢复后 Agent 不会自动回复，需等待下一条客户消息触发正常流程。
  * @summary Resume Conversation
  */
-export const resumeConversationApiV1ConversationsConversationIdResumePatch = async (conversationId: string, options?: RequestInit): Promise<resumeConversationApiV1ConversationsConversationIdResumePatchResponse> => {
+export const resumeConversationApiV1ConversationsConversationIdResumePatch =
+  async (
+    conversationId: string,
+    options?: RequestInit,
+  ): Promise<resumeConversationApiV1ConversationsConversationIdResumePatchResponse> => {
+    return useCustomInstance<resumeConversationApiV1ConversationsConversationIdResumePatchResponse>(
+      getResumeConversationApiV1ConversationsConversationIdResumePatchUrl(
+        conversationId,
+      ),
+      {
+        ...options,
+        method: 'PATCH',
+      },
+    );
+  };
 
-  return useCustomInstance<resumeConversationApiV1ConversationsConversationIdResumePatchResponse>(getResumeConversationApiV1ConversationsConversationIdResumePatchUrl(conversationId),
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse200 =
   {
-    ...options,
-    method: 'PATCH'
+    data: AppApiSchemasConversationResponse;
+    status: 200;
+  };
 
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseSuccess =
+  pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse200 & {
+    headers: Headers;
+  };
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseError =
+  pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse422 & {
+    headers: Headers;
+  };
 
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse =
 
-export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
+    | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseSuccess
+    | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseError;
 
-export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
+export const getPauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchUrl =
+  (
+    customerId: string,
+    params?: PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams,
+  ) => {
+    const normalizedParams = new URLSearchParams();
 
-export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseSuccess = (pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse200) & {
-  headers: Headers;
-};
-export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseError = (pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse422) & {
-  headers: Headers;
-};
+    Object.entries(params || {}).forEach(([key, value]) => {
+      if (value !== undefined) {
+        normalizedParams.append(key, value === null ? 'null' : String(value));
+      }
+    });
 
-export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse = (pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseSuccess | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseError)
+    const stringifiedParams = normalizedParams.toString();
 
-export const getPauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchUrl = (customerId: string,
-    params?: PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/pause?${stringifiedParams}` : `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/pause`
-}
+    return stringifiedParams.length > 0
+      ? `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/pause?${stringifiedParams}`
+      : `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/pause`;
+  };
 
 /**
  * 按客户 ID 暂停 Agent 自动回复（前端通过 customer_id 直接操作）。
@@ -324,53 +369,69 @@ export const getPauseConversationByCustomerApiV1ConversationsByCustomerCustomerI
  * - 恢复后，暂停期间的消息作为上下文参与下一轮决策
  * @summary Pause Conversation By Customer
  */
-export const pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatch = async (customerId: string,
-    params?: PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams, options?: RequestInit): Promise<pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse> => {
+export const pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatch =
+  async (
+    customerId: string,
+    params?: PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams,
+    options?: RequestInit,
+  ): Promise<pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse> => {
+    return useCustomInstance<pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse>(
+      getPauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchUrl(
+        customerId,
+        params,
+      ),
+      {
+        ...options,
+        method: 'PATCH',
+      },
+    );
+  };
 
-  return useCustomInstance<pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse>(getPauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchUrl(customerId,params),
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse200 =
   {
-    ...options,
-    method: 'PATCH'
+    data: AppApiSchemasConversationResponse;
+    status: 200;
+  };
 
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
 
-  }
-);}
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseSuccess =
+  resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse200 & {
+    headers: Headers;
+  };
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseError =
+  resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse422 & {
+    headers: Headers;
+  };
 
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse =
 
-export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
+    | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseSuccess
+    | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseError;
 
-export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
+export const getResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchUrl =
+  (
+    customerId: string,
+    params?: ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams,
+  ) => {
+    const normalizedParams = new URLSearchParams();
 
-export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseSuccess = (resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse200) & {
-  headers: Headers;
-};
-export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseError = (resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse422) & {
-  headers: Headers;
-};
+    Object.entries(params || {}).forEach(([key, value]) => {
+      if (value !== undefined) {
+        normalizedParams.append(key, value === null ? 'null' : String(value));
+      }
+    });
 
-export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse = (resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseSuccess | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseError)
+    const stringifiedParams = normalizedParams.toString();
 
-export const getResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchUrl = (customerId: string,
-    params?: ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/resume?${stringifiedParams}` : `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/resume`
-}
+    return stringifiedParams.length > 0
+      ? `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/resume?${stringifiedParams}`
+      : `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/resume`;
+  };
 
 /**
  * 按客户 ID 恢复 Agent 自动回复能力。
@@ -378,16 +439,20 @@ export const getResumeConversationByCustomerApiV1ConversationsByCustomerCustomer
  * 恢复后 Agent 不会自动回复，需等待下一条客户消息触发正常流程。
  * @summary Resume Conversation By Customer
  */
-export const resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatch = async (customerId: string,
-    params?: ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams, options?: RequestInit): Promise<resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse> => {
-
-  return useCustomInstance<resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse>(getResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchUrl(customerId,params),
-  {
-    ...options,
-    method: 'PATCH'
-
-
-  }
-);}
-
-
+export const resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatch =
+  async (
+    customerId: string,
+    params?: ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams,
+    options?: RequestInit,
+  ): Promise<resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse> => {
+    return useCustomInstance<resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse>(
+      getResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchUrl(
+        customerId,
+        params,
+      ),
+      {
+        ...options,
+        method: 'PATCH',
+      },
+    );
+  };

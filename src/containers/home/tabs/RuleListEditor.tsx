@@ -1,4 +1,3 @@
-import { AddIcon } from 'tdesign-icons-react';
 import {
   type ReactElement,
   useCallback,
@@ -7,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import { AddIcon } from 'tdesign-icons-react';
 import { Loading, MessagePlugin } from 'tdesign-react';
 import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
 import type { AgentRuleResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';

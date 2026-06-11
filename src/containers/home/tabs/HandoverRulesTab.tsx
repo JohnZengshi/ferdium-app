@@ -1,6 +1,6 @@
-import { CheckIcon, CloseIcon, NotificationIcon } from 'tdesign-icons-react';
 import type { ReactElement } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import { CheckIcon, CloseIcon, NotificationIcon } from 'tdesign-icons-react';
 import RuleListEditor from './RuleListEditor';
 
 const messages = defineMessages({

@@ -462,9 +462,9 @@ const RuleListEditor = ({
               ref={node => {
                 itemRefs.current[rule.localId] = node;
               }}
-              className="flex min-h-[88px] items-start"
+              className="flex min-h-[52px] items-center"
             >
-              <div className="flex min-w-[88px] flex-shrink-0 items-center gap-[8px] pt-[18px]">
+              <div className="flex min-w-[88px] flex-shrink-0 items-center gap-[8px]">
                 <div className="h-[18px] w-[4px] flex-shrink-0 rounded-[2px] bg-brand" />
                 <span className="min-w-[76px] text-right text-[15px] font-medium leading-[22px] text-primary">
                   {rule.name}
@@ -473,22 +473,24 @@ const RuleListEditor = ({
 
               <div className="ml-[16px] flex-1">
                 <div
-                  className={`flex min-h-[88px] rounded-[8px] bg-container transition-all duration-200 ${
+                  className={`flex h-[44px] items-center rounded-[8px] bg-container transition-all duration-200 ${
                     isActive
                       ? 'border-[1.5px] border-brand shadow-[0_0_0_3px_rgba(37,99,235,0.08)]'
                       : 'border border-line'
                   }`}
                 >
-                  <textarea
+                  <input
+                    type="text"
                     value={rule.content}
                     onChange={event =>
                       handleRuleChange(rule.localId, event.target.value)
                     }
                     placeholder={intl.formatMessage(messages.placeholder)}
                     onFocus={() => setActiveRuleId(rule.localId)}
-                    className="min-h-[88px] flex-1 resize-none rounded-[8px] border-none bg-transparent px-[16px] py-[14px] text-[15px] font-normal leading-[24px] text-primary outline-none placeholder:text-placeholder"
+                    className="h-full flex-1 rounded-[8px] border-none bg-transparent px-[16px] text-[15px] font-normal text-primary outline-none placeholder:text-placeholder"
+                    style={{ lineHeight: '44px' }}
                   />
-                  <div className="flex items-start pr-[12px] pt-[12px]">
+                  <div className="flex items-center pr-[12px]">
                     {isActive ? (
                       <button
                         type="button"

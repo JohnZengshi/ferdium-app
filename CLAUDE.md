@@ -24,6 +24,10 @@ pnpm lint                 # ESLint with zero warnings allowed (--max-warnings 0)
 pnpm lint:fix             # ESLint with auto-fix + cache
 pnpm prepare-code         # Full pre-commit check: typecheck + lint:fix + biome + prettier + translations
 pnpm build                # Production build: esbuild + electron-builder
+
+pnpm test:e2e             # Playwright end-to-end tests
+pnpm test:e2e:ui          # Playwright E2E with UI mode
+pnpm test:e2e:debug       # Playwright E2E with debugger
 ```
 
 ## Git Hooks
@@ -47,12 +51,17 @@ All stores are in `src/stores/` and initialized together in `src/stores/index.ts
 | `AppStore` | Global app state, timers, focus |
 | `ServicesStore` | Service instances lifecycle, unread counts |
 | `RecipesStore` | Available recipe templates |
+| `RecipePreviewsStore` | Recipe preview browsing and search |
+| `RequestStore` | API request lifecycle, error tracking, local server port |
 | `UserStore` | Authentication and user profile |
 | `SettingsStore` | App settings persistence |
 | `UIStore` | UI state (sidebar, theme) |
 | `FeaturesStore` | Feature flags |
+| `NavigationStore` | Active module/tab navigation state |
+| `GlobalErrorStore` | Global error collection and display |
+| `DigitalHumanStore` | Digital human management (create, assign, list) |
 
-Feature-specific stores: `workspaceStore`, `communityRecipesStore`, `todosStore` (in `src/features/`)
+Feature-specific stores: `workspaceStore`, `communityRecipesStore`, `todosStore`, `whatsappAutomationStore`, `customerProfileStore` (in `src/features/`)
 
 ### API Layer
 
@@ -82,16 +91,20 @@ Each feature in `src/features/` is self-contained with its own store, components
 - `serviceProxy` - Per-service proxy configuration
 - `appearance` - Theme/accent color management
 - `communityRecipes` - Community recipe browser
+- `whatsappAutomation` - WhatsApp multi-account automation
+- `customerProfile` - Customer profile management
 
 ### Key Directories
 
-- `src/components/` - React UI components (organized by feature area: auth, settings, services, layout)
+- `src/components/` - React UI components (organized by feature area: auth, settings, services, layout, home, util)
 - `src/actions/` - MobX action dispatchers
 - `src/helpers/` - Utility functions (URL, validation, userAgent, i18n)
 - `src/themes/` - Theme configs (dark, default, legacy)
 - `src/i18n/` - Translations (managed via `pnpm manage-translations`)
 - `src/electron/` - Main process utilities (IPC API, Settings, deep linking)
 - `src/lib/` - System integrations (Menu, Tray, TouchBar, DBus)
+- `src/agent-flow-cs/` - Agent Flow CS API client (generated from OpenAPI spec via orval)
+- `src/whatsapp-automation/` - WhatsApp automation API client and profile storage
 
 ### Build System
 
@@ -99,23 +112,25 @@ Uses **esbuild** (`esbuild.mjs`) for bundling. Compiles TS/TSX to CommonJS, proc
 
 ### Styling
 
-**Style priority**: TailwindCSS > SCSS > MUI theme.
+**Style priority**: TailwindCSS > SCSS > react-jss theme.
 
-- **TailwindCSS** (`src/styles/tailwind.css`): Primary styling tool for page/component layout and utility classes. **MUST** use Tailwind utility classes (`className`) instead of inline `style={}` props for all layout and visual styling. Inline `style={}` is only acceptable for dynamic runtime values (e.g., animating transforms, computed positions). Hardcoded CSS values in `style={}` are forbidden — use Tailwind arbitrary values (`p-[40px]`, `text-[var(--x)]`) or theme tokens instead.
+- **TDesign React** (`tdesign-react` + `tdesign-icons-react`): Primary UI component library providing base components (buttons, modals, tabs, inputs, selects, badges, etc.). Use TDesign components as the foundation for all UI elements.
+- **TailwindCSS** (`src/styles/tailwind.css`): Utility layer for layout, spacing, and visual adjustments on top of TDesign. **MUST** use Tailwind utility classes (`className`) instead of inline `style={}` props for all layout and visual styling. Inline `style={}` is only acceptable for dynamic runtime values (e.g., animating transforms, computed positions). Hardcoded CSS values in `style={}` are forbidden — use Tailwind arbitrary values (`p-[40px]`, `text-[var(--x)]`) or theme tokens instead.
   - Preflight (CSS reset) is disabled to avoid conflicts with existing SCSS globals.
   - Only `@tailwind utilities;` is used — no base or components resets.
   - Config in `tailwind.config.js`.
 - **SCSS** (`src/styles/`): Legacy static layout and structural styles. Do NOT add new SCSS files for component styling — use TailwindCSS instead.
-- **MUI 5 + Emotion**: Component library and CSS-in-JS for MUI component customization. Themes defined in `src/themes/`.
+- **react-jss theme** (`src/themes/`): Theme definitions (dark, default, legacy) providing design tokens and component style rules via ThemeProvider.
 - **User customization**: `USER_DATA/Ferdium/config/custom.css` for end-user CSS overrides.
 
 ## Testing
 
-Jest with `esbuild-runner/jest` transform. Tests in `src/` (colocated) and `test/` directories. Node test environment. Internal server tests currently skipped (see `jest.config.js`).
+- **Unit tests**: Jest with `esbuild-runner/jest` transform. Tests in `src/` (colocated) and `test/` directories. Node test environment. Internal server tests currently skipped (see `jest.config.js`).
+- **E2E tests**: Playwright (`pnpm test:e2e`). Config in `playwright.config.ts`, results in `test-results/`.
 
 ## Code Quality
 
-- ESLint: Airbnb + TypeScript + React + Unicorn + Sonar configs. Zero warnings policy.
+- ESLint: Airbnb + React (jsx-runtime + @eslint-react) + Jest + Unicorn + Sonar + Prettier configs. Zero warnings policy.
 - Biome: Secondary linter for import organization.
 - Prettier: Single quotes, arrow parens avoided.
 - TypeScript: Strict mode with decorators enabled (for MobX).

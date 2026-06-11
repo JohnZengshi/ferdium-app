@@ -43,7 +43,7 @@ const AvatarCell = ({
           />
         </div>
       ) : (
-        <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-component text-[13px] font-medium text-secondary">
+        <div className="flex h-[32px] min-w-[32px] items-center justify-center rounded-full bg-component text-[13px] font-medium text-secondary">
           {title.slice(0, 1)}
         </div>
       )}

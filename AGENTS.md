@@ -88,6 +88,8 @@ src/components/
 │   └── tabs/         # Tabbar、TabItem、TabBarSortableList
 ├── auth/             # 认证组件
 ├── layout/           # 布局（AppLayout、Sidebar）
+├── home/             # 首页组件
+├── util/             # 工具组件
 └── downloadManager/  # 下载管理
 ```
 
@@ -107,10 +109,15 @@ src/components/
 | `AppStore` | 全局应用状态、定时器、焦点管理 |
 | `ServicesStore` | 服务实例生命周期、未读计数 |
 | `RecipesStore` | 可用 recipe 模板 |
+| `RecipePreviewsStore` | Recipe 预览浏览与搜索 |
+| `RequestStore` | API 请求生命周期、错误追踪、本地服务端口 |
 | `UserStore` | 用户认证和资料 |
 | `SettingsStore` | 应用设置持久化 |
 | `UIStore` | UI 状态（侧边栏、主题） |
 | `FeaturesStore` | 功能开关 |
+| `NavigationStore` | 活跃模块/标签页导航状态 |
+| `GlobalErrorStore` | 全局错误收集与展示 |
+| `DigitalHumanStore` | 数字人管理（创建、分配、列表） |
 
 **Actions**（`src/actions/`）：
 
@@ -214,11 +221,13 @@ internal-server/
 | todos | `features/todos/` | 内置待办面板（独立 WebView） |
 | basicAuth | `features/basicAuth/` | WebView HTTP 基本认证 |
 | quickSwitch | `features/quickSwitch/` | Cmd+K 服务快速切换 |
-| appearance | `features/appearance/` | 主题/强调色管理（扇出 26） |
+| appearance | `features/appearance/` | 主题/强调色管理 |
 | serviceProxy | `features/serviceProxy/` | 每服务代理配置 |
 | communityRecipes | `features/communityRecipes/` | 社区 recipe 浏览器 |
 | webControls | `features/webControls/` | WebView 导航控制 |
 | publishDebugInfo | `features/publishDebugInfo/` | 调试信息发布 |
+| whatsappAutomation | `features/whatsappAutomation/` | WhatsApp 多账号自动化 |
+| customerProfile | `features/customerProfile/` | 客户资料管理（CRUD、分配） |
 
 **规则**：
 - 使用 `FeatureStore.ts` 基类 + `ActionBinding.ts` 工具
@@ -424,6 +433,8 @@ ferdium-app/
 │   ├── electron/             # 主进程工具
 │   ├── lib/                  # 系统集成
 │   ├── internal-server/      # 嵌入式 AdonisJS 服务端
+│   ├── agent-flow-cs/        # Agent Flow CS API 客户端（OpenAPI + orval 生成）
+│   ├── whatsapp-automation/  # WhatsApp 自动化 API 客户端
 │   ├── helpers/              # 工具函数
 │   ├── styles/               # SCSS 样式系统
 │   ├── themes/               # 主题配置
@@ -439,6 +450,7 @@ ferdium-app/
 ├── esbuild.mjs               # 构建配置
 ├── tsconfig.json             # TS 配置（strict）
 ├── jest.config.js            # 测试配置
+├── playwright.config.ts      # E2E 测试配置
 ├── electron-builder.yml      # 打包配置
 ├── commitlint.config.js      # 提交规范
 ├── package.json              # 依赖管理

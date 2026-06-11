@@ -31,7 +31,10 @@ if (typeof window === 'undefined') {
 }
 
 // Mock localStorage
-if (typeof localStorage === 'undefined') {
+if (
+  typeof localStorage === 'undefined' ||
+  typeof localStorage.clear !== 'function'
+) {
   const store: Record<string, string> = {};
   (global as any).localStorage = {
     getItem: (key: string) => store[key] ?? null,

@@ -937,11 +937,24 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
-            const count = allServices.filter(service =>
-              isServiceMatchingTab(waStatuses.get(service.id), tab.id),
-            ).length;
+            const unreadCount = allServices
+              .filter(service =>
+                isServiceMatchingTab(waStatuses.get(service.id), tab.id),
+              )
+              .reduce(
+                (sum, service) =>
+                  sum +
+                  service.unreadDirectMessageCount +
+                  service.unreadIndirectMessageCount,
+                0,
+              );
             return (
-              <Badge key={tab.id} count={count} size="small" offset={[10, 0]}>
+              <Badge
+                key={tab.id}
+                count={unreadCount || null}
+                size="small"
+                offset={[10, 0]}
+              >
                 <Button
                   className="h-[32px] px-[12px]"
                   theme="default"

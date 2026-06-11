@@ -5,6 +5,7 @@ import {
   defineMessages,
   injectIntl,
 } from 'react-intl';
+import { Badge } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
 import type { RealStores } from '../../stores';
 
@@ -81,7 +82,7 @@ class ServiceSubTabs extends Component<
 
   render(): ReactElement {
     const { isCollapsed } = this.state;
-    const { intl } = this.props;
+    const { intl, stores } = this.props;
     return (
       <nav
         className={`flex flex-col h-full bg-container border-r border-solid border-line overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}
@@ -120,6 +121,8 @@ class ServiceSubTabs extends Component<
         >
           {SUB_TABS.map(tab => {
             const isActive = navigationStore.activeServiceTab === tab.id;
+            const badge =
+              tab.id === 'messages' ? stores?.services.mainModuleBadge : null;
             return (
               <button
                 key={tab.id}
@@ -137,18 +140,20 @@ class ServiceSubTabs extends Component<
                   navigationStore.setServiceTab(tab.id);
                 }}
               >
-                <span
-                  className={`flex items-center justify-center w-[20px] h-[20px] ${isActive ? 'text-brand' : 'text-secondary'}`}
-                  style={{
-                    maskImage: `url(${isActive ? tab.iconActive : tab.icon})`,
-                    maskSize: 'contain',
-                    maskRepeat: 'no-repeat',
-                    WebkitMaskImage: `url(${isActive ? tab.iconActive : tab.icon})`,
-                    WebkitMaskSize: 'contain',
-                    WebkitMaskRepeat: 'no-repeat',
-                    backgroundColor: 'currentColor',
-                  }}
-                />
+                <Badge count={badge} maxCount={99} offset={[2, -2]}>
+                  <span
+                    className={`flex items-center justify-center w-[20px] h-[20px] ${isActive ? 'text-brand' : 'text-secondary'}`}
+                    style={{
+                      maskImage: `url(${isActive ? tab.iconActive : tab.icon})`,
+                      maskSize: 'contain',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskImage: `url(${isActive ? tab.iconActive : tab.icon})`,
+                      WebkitMaskSize: 'contain',
+                      WebkitMaskRepeat: 'no-repeat',
+                      backgroundColor: 'currentColor',
+                    }}
+                  />
+                </Badge>
                 {!isCollapsed && (
                   <span className="flex-1 text-[14px] leading-[22px] whitespace-nowrap">
                     {intl.formatMessage(

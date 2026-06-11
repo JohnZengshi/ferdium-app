@@ -183,6 +183,8 @@ pnpm prepare-code
 
 # End-to-end tests (Playwright)
 pnpm test:e2e
+pnpm test:e2e:ui     # Playwright with UI mode
+pnpm test:e2e:debug  # Playwright with debugger
 ```
 
 ### Styleguide

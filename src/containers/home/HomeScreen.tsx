@@ -75,7 +75,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
   handleOpenResume = (employee: any): void => {
     const { intl } = this.props;
-    const resume = getEmployeeResumes(intl)[employee.id];
+    const lookupId = employee.mockId || employee.id;
+    const resume = getEmployeeResumes(intl)[lookupId];
     if (resume) {
       this.setState({ dialogEmployee: resume });
     }
@@ -387,6 +388,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
     const displayEmployees: {
       id: string;
+      mockId: string;
       name: string;
       role: string;
       avatar: string;
@@ -395,6 +397,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       hasBadge?: boolean;
     }[] = MOCK_EMPLOYEES.map(emp => ({
       id: emp.id,
+      mockId: emp.id,
       name: emp.name,
       role: intl.formatMessage({
         id: emp.roleKey,

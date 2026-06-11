@@ -9,14 +9,14 @@
  */
 export interface AdminCreateRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
   /** @pattern ^(super_admin|operator)$ */
   role?: string;
@@ -28,14 +28,14 @@ export interface AdminCreateRequest {
  */
 export interface AdminLoginRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -54,9 +54,9 @@ export interface AdminLoginResponse {
  */
 export interface AdminPasswordResetRequest {
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   new_password: string;
 }
 
@@ -126,6 +126,79 @@ export interface AgentReplyRequest {
   sender_name?: string | null;
 }
 
+export type AgentRuleCreateRequestRuleType = typeof AgentRuleCreateRequestRuleType[keyof typeof AgentRuleCreateRequestRuleType];
+
+
+export const AgentRuleCreateRequestRuleType = {
+  safety_boundary: 'safety_boundary',
+  handoff_policy: 'handoff_policy',
+} as const;
+
+/**
+ * 子账号创建自然语言 Agent 规则。
+ */
+export interface AgentRuleCreateRequest {
+  rule_type: AgentRuleCreateRequestRuleType;
+  /**
+     * @minLength 1
+     * @maxLength 128
+     */
+  name: string;
+  /**
+     * @minLength 1
+     * @maxLength 4000
+     */
+  content: string;
+  enabled?: boolean;
+  /**
+     * @minimum 0
+     * @maximum 1000
+     */
+  priority?: number;
+}
+
+export type AgentRuleResponseRuleType = typeof AgentRuleResponseRuleType[keyof typeof AgentRuleResponseRuleType];
+
+
+export const AgentRuleResponseRuleType = {
+  safety_boundary: 'safety_boundary',
+  handoff_policy: 'handoff_policy',
+} as const;
+
+/**
+ * 序列化后的 Agent 规则响应。
+ */
+export interface AgentRuleResponse {
+  id: string;
+  owner_user_id: string;
+  rule_type: AgentRuleResponseRuleType;
+  name: string;
+  content: string;
+  enabled: boolean;
+  priority: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export type AgentRuleUpdateRequestRuleType = typeof AgentRuleUpdateRequestRuleType[keyof typeof AgentRuleUpdateRequestRuleType] | null;
+
+
+export const AgentRuleUpdateRequestRuleType = {
+  safety_boundary: 'safety_boundary',
+  handoff_policy: 'handoff_policy',
+} as const;
+
+/**
+ * 子账号修改自然语言 Agent 规则。
+ */
+export interface AgentRuleUpdateRequest {
+  rule_type?: AgentRuleUpdateRequestRuleType;
+  name?: string | null;
+  content?: string | null;
+  enabled?: boolean | null;
+  priority?: number | null;
+}
+
 export interface AssignRequest {
   user_id: string;
   assign?: boolean;
@@ -171,8 +244,8 @@ export interface BodyUploadDocumentApiV1OwnersKnowledgeUploadPost {
   domain?: string | null;
 }
 
-export type CampaignScheduleRequestScheduleKind =
-  (typeof CampaignScheduleRequestScheduleKind)[keyof typeof CampaignScheduleRequestScheduleKind];
+export type CampaignScheduleRequestScheduleKind = typeof CampaignScheduleRequestScheduleKind[keyof typeof CampaignScheduleRequestScheduleKind];
+
 
 export const CampaignScheduleRequestScheduleKind = {
   once: 'once',
@@ -195,20 +268,20 @@ export interface CampaignScheduleRequest {
  */
 export interface CampaignTaskCreateRequest {
   /**
-   * @minLength 1
-   * @maxLength 128
-   */
+     * @minLength 1
+     * @maxLength 128
+     */
   name: string;
   digital_human_id: string;
   /**
-   * @minItems 1
-   * @maxItems 500
-   */
+     * @minItems 1
+     * @maxItems 500
+     */
   conversation_ids: string[];
   /**
-   * @minLength 1
-   * @maxLength 2000
-   */
+     * @minLength 1
+     * @maxLength 2000
+     */
   text: string;
   schedule: CampaignScheduleRequest;
 }
@@ -239,19 +312,8 @@ export interface CampaignTaskRunResponse {
   created_at: string;
 }
 
-export type ChatRequestProvider =
-  (typeof ChatRequestProvider)[keyof typeof ChatRequestProvider];
+export type ChatRequestSourceType = typeof ChatRequestSourceType[keyof typeof ChatRequestSourceType];
 
-export const ChatRequestProvider = {
-  openai: 'openai',
-  claude: 'claude',
-  gemini: 'gemini',
-  deepseek: 'deepseek',
-  ark: 'ark',
-} as const;
-
-export type ChatRequestSourceType =
-  (typeof ChatRequestSourceType)[keyof typeof ChatRequestSourceType];
 
 export const ChatRequestSourceType = {
   unknown: 'unknown',
@@ -270,7 +332,6 @@ export interface ChatRequest {
   customer_id: string;
   /** @minLength 1 */
   message: string;
-  provider?: ChatRequestProvider;
   account_id?: string | null;
   platform?: string;
   lead_source?: string | null;
@@ -286,9 +347,9 @@ export interface ReplyMessage {
   /** @minLength 1 */
   content: string;
   /**
-   * @minimum 0
-   * @maximum 8000
-   */
+     * @minimum 0
+     * @maximum 8000
+     */
   delay_ms: number;
 }
 
@@ -314,6 +375,7 @@ export interface ConversationBriefResponse {
   owner_user_id: string;
   customer_id?: string | null;
   platform?: string | null;
+  wa_session_id?: string;
   digital_human_id?: string | null;
   title: string;
   status: string;
@@ -342,6 +404,7 @@ export interface AppApiSchemasOwnersConversationResponse {
   digital_human_name: string | null;
   customer_id: string | null;
   platform: string;
+  wa_session_id?: string;
   title: string;
   status: string;
   message_count?: number;
@@ -381,9 +444,9 @@ export interface DailyTrend {
  */
 export interface ConversationTrendsResponse {
   /**
-   * @minimum 1
-   * @maximum 90
-   */
+     * @minimum 1
+     * @maximum 90
+     */
   days: number;
   trends?: DailyTrend[];
 }
@@ -469,9 +532,7 @@ export interface DashboardStats {
   customer_profile_count: number;
 }
 
-export type DigitalHumanAdminUpdateRequestPersonaConfig = {
-  [key: string]: unknown;
-} | null;
+export type DigitalHumanAdminUpdateRequestPersonaConfig = { [key: string]: unknown } | null;
 
 /**
  * 管理员跨租户修改数字人请求体（全部字段可选，仅更新传入字段）。
@@ -486,7 +547,7 @@ export interface DigitalHumanAdminUpdateRequest {
   persona_config?: DigitalHumanAdminUpdateRequestPersonaConfig;
   persona_prompt?: string | null;
   knowledge_collection?: string | null;
-  default_provider?: string | null;
+  knowledge_domain?: string | null;
   status?: string | null;
 }
 
@@ -502,8 +563,8 @@ export interface DigitalHumanBriefResponse {
   created_at: string;
 }
 
-export type PersonaConfigEmojiFreq =
-  (typeof PersonaConfigEmojiFreq)[keyof typeof PersonaConfigEmojiFreq];
+export type PersonaConfigEmojiFreq = typeof PersonaConfigEmojiFreq[keyof typeof PersonaConfigEmojiFreq];
+
 
 export const PersonaConfigEmojiFreq = {
   低: '低',
@@ -526,17 +587,17 @@ export interface PersonaConfig {
   /** @maxLength 64 */
   signature?: string;
   /**
-   * 人设描述，直接注入给 Agent 作为本轮角色设定
-   * @maxLength 2000
-   */
+     * 人设描述，直接注入给 Agent 作为本轮角色设定
+     * @maxLength 2000
+     */
   persona_prompt?: string;
 }
 
 export interface DigitalHumanCreate {
   /**
-   * @minLength 1
-   * @maxLength 64
-   */
+     * @minLength 1
+     * @maxLength 64
+     */
   name: string;
   avatar_url?: string | null;
   voice?: string | null;
@@ -544,23 +605,20 @@ export interface DigitalHumanCreate {
   platform?: string | null;
   persona_config?: PersonaConfig;
   knowledge_collection?: string | null;
-  /** @maxLength 32 */
-  default_provider?: string;
+  knowledge_domain?: string | null;
   is_enabled?: boolean;
 }
 
-export type DigitalHumanCreateRequestPersonaConfig = {
-  [key: string]: unknown;
-} | null;
+export type DigitalHumanCreateRequestPersonaConfig = { [key: string]: unknown } | null;
 
 /**
  * 创建数字人配置的请求体。
  */
 export interface DigitalHumanCreateRequest {
   /**
-   * @minLength 1
-   * @maxLength 64
-   */
+     * @minLength 1
+     * @maxLength 64
+     */
   name: string;
   avatar_url?: string | null;
   voice?: string | null;
@@ -570,13 +628,12 @@ export interface DigitalHumanCreateRequest {
   /** 自然语言人设描述，作为 prompt 注入消息合成和各专家 Agent，深度影响回复风格与角色演绎 */
   persona_prompt?: string | null;
   knowledge_collection?: string | null;
-  default_provider?: string;
+  knowledge_domain?: string | null;
   status?: string;
 }
 
-export type PersonaConfigPatchEmojiFreq =
-  | (typeof PersonaConfigPatchEmojiFreq)[keyof typeof PersonaConfigPatchEmojiFreq]
-  | null;
+export type PersonaConfigPatchEmojiFreq = typeof PersonaConfigPatchEmojiFreq[keyof typeof PersonaConfigPatchEmojiFreq] | null;
+
 
 export const PersonaConfigPatchEmojiFreq = {
   低: '低',
@@ -605,14 +662,12 @@ export interface DigitalHumanUpdate {
   platform?: string | null;
   persona_config?: PersonaConfigPatch | null;
   knowledge_collection?: string | null;
-  default_provider?: string | null;
+  knowledge_domain?: string | null;
   is_enabled?: boolean | null;
   status?: string | null;
 }
 
-export type DigitalHumanUpdateRequestPersonaConfig = {
-  [key: string]: unknown;
-} | null;
+export type DigitalHumanUpdateRequestPersonaConfig = { [key: string]: unknown } | null;
 
 /**
  * 更新数字人配置的请求体（所有字段可选）。
@@ -626,7 +681,7 @@ export interface DigitalHumanUpdateRequest {
   persona_config?: DigitalHumanUpdateRequestPersonaConfig;
   persona_prompt?: string | null;
   knowledge_collection?: string | null;
-  default_provider?: string | null;
+  knowledge_domain?: string | null;
   status?: string | null;
 }
 
@@ -643,11 +698,11 @@ export interface EnterpriseCodeResponse {
  */
 export interface EnterpriseCodeSetRequest {
   /**
-   * 企业唯一标识符，仅限 1-10 个英文字母（a-z, A-Z）
-   * @minLength 1
-   * @maxLength 10
-   * @pattern ^[a-zA-Z]{1,10}$
-   */
+     * 企业唯一标识符，仅限 1-10 个英文字母（a-z, A-Z）
+     * @minLength 1
+     * @maxLength 10
+     * @pattern ^[a-zA-Z]{1,10}$
+     */
   enterprise_code: string;
 }
 
@@ -674,42 +729,38 @@ export interface FollowupStateResponse {
  */
 export interface FollowupStrategyRequest {
   /**
-   * @minLength 1
-   * @maxLength 500
-   */
+     * @minLength 1
+     * @maxLength 500
+     */
   goal: string;
   /**
-   * @minLength 1
-   * @maxLength 500
-   */
+     * @minLength 1
+     * @maxLength 500
+     */
   product_or_campaign: string;
   /** @maxItems 20 */
   forbidden_points?: string[];
   /**
-   * @minimum 1
-   * @maximum 10
-   */
+     * @minimum 1
+     * @maximum 10
+     */
   max_followups?: number;
   /**
-   * @minimum 300
-   * @maximum 2592000
-   */
+     * @minimum 300
+     * @maximum 2592000
+     */
   min_interval_seconds?: number;
   /**
-   * @minimum 1
-   * @maximum 365
-   */
+     * @minimum 1
+     * @maximum 365
+     */
   valid_days?: number;
 }
-
-export type ValidationErrorCtx = { [key: string]: unknown };
 
 export interface ValidationError {
   loc: (string | number)[];
   msg: string;
   type: string;
-  input?: unknown;
-  ctx?: ValidationErrorCtx;
 }
 
 export interface HTTPValidationError {
@@ -735,9 +786,9 @@ export interface HandoffBriefResponse {
 export interface HandoffCreateRequest {
   conversation_id: string;
   /**
-   * @minLength 1
-   * @maxLength 256
-   */
+     * @minLength 1
+     * @maxLength 256
+     */
   reason: string;
 }
 
@@ -851,16 +902,16 @@ export type KnowledgeSearchRequestFilters = { [key: string]: unknown } | null;
  */
 export interface KnowledgeSearchRequest {
   /**
-   * @minLength 1
-   * @maxLength 512
-   */
+     * @minLength 1
+     * @maxLength 512
+     */
   query: string;
   domain?: string | null;
   collection?: string | null;
   /**
-   * @minimum 1
-   * @maximum 20
-   */
+     * @minimum 1
+     * @maximum 20
+     */
   top_k?: number;
   filters?: KnowledgeSearchRequestFilters;
 }
@@ -894,14 +945,14 @@ export interface KnowledgeUploadResponse {
  */
 export interface LoginRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -930,15 +981,15 @@ export interface MemberBriefResponse {
  */
 export interface MemberCreateRequest {
   /**
-   * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
-   * @minLength 3
-   * @maxLength 52
-   */
+     * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
+     * @minLength 3
+     * @maxLength 52
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -999,7 +1050,7 @@ export interface MemoryExportResponse {
   memories?: MemoryRecordResponse[];
 }
 
-export type MemoryMetricsResponseCounters = { [key: string]: number };
+export type MemoryMetricsResponseCounters = {[key: string]: number};
 
 /**
  * Long-term memory operation counters.
@@ -1090,14 +1141,14 @@ export interface NodeTrace {
  */
 export interface OwnerCreateRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -1163,36 +1214,36 @@ export interface PlatformStatsResponse {
  */
 export interface RegisterRequest {
   /**
-   * @minLength 3
-   * @maxLength 64
-   */
+     * @minLength 3
+     * @maxLength 64
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
 export interface ResetPasswordRequest {
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   new_password: string;
 }
 
 export interface SubAccountCreate {
   /**
-   * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
-   * @minLength 1
-   * @maxLength 52
-   */
+     * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
+     * @minLength 1
+     * @maxLength 52
+     */
   username: string;
   /**
-   * @minLength 6
-   * @maxLength 128
-   */
+     * @minLength 6
+     * @maxLength 128
+     */
   password: string;
 }
 
@@ -1225,6 +1276,45 @@ export interface TurnTrace {
 export interface TraceResponse {
   conversation_id: string;
   turns?: TurnTrace[];
+}
+
+/**
+ * LLM 翻译请求体。
+ */
+export interface TranslateRequest {
+  /**
+     * 要翻译的原始文本
+     * @minLength 1
+     * @maxLength 50000
+     */
+  text: string;
+  /**
+     * 目标语言
+     * @minLength 1
+     * @maxLength 64
+     */
+  target_language: string;
+  /** 上下文语境 */
+  context?: string | null;
+  /** 指定模型，不传则取 LLM_MODEL_TRANSLATE 环境变量或全局默认模型 */
+  model?: string | null;
+  /**
+     * 采样温度
+     * @minimum 0
+     * @maximum 2
+     */
+  temperature?: number;
+}
+
+/**
+ * LLM 翻译响应体。
+ */
+export interface TranslateResponse {
+  /**
+     * 翻译结果
+     * @minLength 0
+     */
+  translated_text: string;
 }
 
 /**
@@ -1285,6 +1375,7 @@ export interface AppApiSchemasConversationResponse {
   owner_user_id: string;
   customer_id?: string | null;
   platform?: string | null;
+  wa_session_id?: string;
   digital_human_id?: string | null;
   title: string;
   status: string;
@@ -1317,9 +1408,7 @@ export interface AppApiSchemasDigitalHumanListResponse {
   limit: number;
 }
 
-export type AppApiSchemasDigitalHumanResponsePersonaConfig = {
-  [key: string]: unknown;
-};
+export type AppApiSchemasDigitalHumanResponsePersonaConfig = { [key: string]: unknown };
 
 /**
  * 序列化后的数字人响应。
@@ -1335,7 +1424,7 @@ export interface AppApiSchemasDigitalHumanResponse {
   persona_config?: AppApiSchemasDigitalHumanResponsePersonaConfig;
   persona_prompt?: string | null;
   knowledge_collection?: string | null;
-  default_provider?: string;
+  knowledge_domain?: string | null;
   status?: string;
   created_by?: string | null;
   created_at: string;
@@ -1358,9 +1447,9 @@ export interface AppApiSchemasMessageResponse {
  */
 export interface AppApiSchemasWhatsAppBindRequest {
   /**
-   * @minLength 1
-   * @maxLength 128
-   */
+     * @minLength 1
+     * @maxLength 128
+     */
   session_id: string;
   /** 要绑定的数字人ID，不传则自动选取；无分配时先创建未配置绑定 */
   digital_human_id?: string | null;
@@ -1381,9 +1470,7 @@ export interface AppApiSchemasOwnersCustomerProfileListResponse {
   total: number;
 }
 
-export type AppApiSchemasOwnersDigitalHumanResponsePersonaConfig = {
-  [key: string]: unknown;
-};
+export type AppApiSchemasOwnersDigitalHumanResponsePersonaConfig = { [key: string]: unknown };
 
 export interface AppApiSchemasOwnersDigitalHumanResponse {
   id: string;
@@ -1394,7 +1481,7 @@ export interface AppApiSchemasOwnersDigitalHumanResponse {
   platform: string | null;
   persona_config: AppApiSchemasOwnersDigitalHumanResponsePersonaConfig;
   knowledge_collection: string | null;
-  default_provider: string;
+  knowledge_domain: string | null;
   is_enabled: boolean;
   status: string;
   creator_user_id: string;
@@ -1415,336 +1502,337 @@ export interface AppApiSchemasOwnersDigitalHumanListResponse {
  */
 export interface AppApiSchemasOwnersWhatsAppBindRequest {
   /**
-   * @minLength 1
-   * @maxLength 128
-   */
+     * @minLength 1
+     * @maxLength 128
+     */
   session_id: string;
   /** 要绑定的数字人ID。不传则自动选取；无分配时先创建未配置绑定。 */
   digital_human_id?: string | null;
 }
 
 export type ListAdminsApiV1AdminAdminsGetParams = {
-  offset?: number;
-  limit?: number;
+offset?: number;
+limit?: number;
 };
 
 export type ListOwnersApiV1AdminAccountsOwnersGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  search?: string | null;
-  is_active?: boolean | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+search?: string | null;
+is_active?: boolean | null;
 };
 
 export type ListConversationsApiV1AdminOverviewConversationsGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  owner_user_id?: string | null;
-  platform?: string | null;
-  status?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+owner_user_id?: string | null;
+platform?: string | null;
+status?: string | null;
 };
 
 export type ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  creator_user_id?: string | null;
-  status?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+creator_user_id?: string | null;
+status?: string | null;
 };
 
-export type ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams =
-  {
-    /**
-     * @minimum 0
-     */
-    offset?: number;
-    /**
-     * @minimum 1
-     * @maximum 200
-     */
-    limit?: number;
-  };
+export type ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams = {
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+};
 
 export type ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  search?: string | null;
-  owner_user_id?: string | null;
-  platform?: string | null;
-  intent_level?: string | null;
-  customer_value?: string | null;
-  engagement?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+search?: string | null;
+owner_user_id?: string | null;
+platform?: string | null;
+intent_level?: string | null;
+customer_value?: string | null;
+engagement?: string | null;
 };
 
 export type ListHandoffsApiV1AdminOverviewHandoffsGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  status?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+status?: string | null;
 };
 
 export type GetConversationTrendsApiV1AdminStatsTrendsGetParams = {
-  /**
-   * @minimum 1
-   * @maximum 90
-   */
-  days?: number;
+/**
+ * @minimum 1
+ * @maximum 90
+ */
+days?: number;
 };
 
 export type GetAgentStatsApiV1AdminStatsAgentStatsGetParams = {
-  /**
-   * @minimum 50
-   * @maximum 2000
-   */
-  max_scan?: number;
+/**
+ * @minimum 50
+ * @maximum 2000
+ */
+max_scan?: number;
 };
 
 export type ListAuditLogsApiV1AdminAuditAuditLogsGetParams = {
-  /**
-   * @minimum 0
-   */
-  offset?: number;
-  /**
-   * @minimum 1
-   * @maximum 200
-   */
-  limit?: number;
-  admin_id?: string | null;
-  action?: string | null;
-  target_type?: string | null;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+admin_id?: string | null;
+action?: string | null;
+target_type?: string | null;
 };
 
 export type GetConversationTraceApiV1ChatConversationIdTraceGetParams = {
-  /**
-   * 返回最近 N 轮，0 表示全部
-   * @minimum 0
-   */
-  turns?: number;
+/**
+ * 返回最近 N 轮，0 表示全部
+ * @minimum 0
+ */
+turns?: number;
+};
+
+export type PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams = {
+/**
+ * 平台标识
+ */
+platform?: string;
+};
+
+export type ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams = {
+/**
+ * 平台标识
+ */
+platform?: string;
 };
 
 export type ListCustomerProfilesApiV1CustomerProfilesGetParams = {
-  digital_human_id?: string | null;
-  platform?: string | null;
-  intent_level?: string | null;
-  customer_value?: string | null;
-  search?: string | null;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @minimum 1
-   * @maximum 100
-   */
-  page_size?: number;
+digital_human_id?: string | null;
+platform?: string | null;
+intent_level?: string | null;
+customer_value?: string | null;
+search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
 };
 
-export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams =
-  {
-    /**
-     * 被分配的子账号 id
-     */
-    user_id: string;
-  };
+export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams = {
+/**
+ * 被分配的子账号 id
+ */
+user_id: string;
+};
 
-export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost201 =
-  { [key: string]: string };
+export type AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost201 = {[key: string]: string};
 
-export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams =
-  {
-    /**
-     * 被撤回的子账号 id
-     */
-    user_id: string;
-  };
+export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams = {
+/**
+ * 被撤回的子账号 id
+ */
+user_id: string;
+};
 
-export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200 =
-  { [key: string]: string };
+export type UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200 = {[key: string]: string};
 
-export type ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200 =
-  { [key: string]: string[] };
+export type ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200 = {[key: string]: string[]};
 
 export type ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams = {
-  account_id: string;
-  owner_user_id: string;
-  platform?: string | null;
+account_id: string;
+owner_user_id: string;
+platform?: string | null;
 };
 
-export type DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams =
-  {
-    account_id: string;
-    owner_user_id: string;
-    platform?: string | null;
-  };
-
-export type ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams =
-  {
-    account_id: string;
-    owner_user_id: string;
-    platform?: string | null;
-    /**
-     * @minimum 1
-     */
-    page?: number;
-    /**
-     * @minimum 1
-     * @maximum 200
-     */
-    page_size?: number;
-  };
-
-export type WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200 = {
-  [key: string]: unknown;
+export type DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams = {
+account_id: string;
+owner_user_id: string;
+platform?: string | null;
 };
+
+export type ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams = {
+account_id: string;
+owner_user_id: string;
+platform?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+page_size?: number;
+};
+
+export type WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200 = { [key: string]: unknown };
 
 export type GetWhatsappBindingApiV1WhatsappBindGetParams = {
-  session_id?: string | null;
+session_id?: string | null;
 };
 
 export type ListDigitalHumansApiV1OwnersDigitalHumansGetParams = {
-  search?: string | null;
-  status?: string;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @minimum 1
-   * @maximum 100
-   */
-  page_size?: number;
+search?: string | null;
+status?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
 };
 
-export type AssignDigitalHumanApiV1OwnersDigitalHumansDhIdAssignPost200 = {
-  [key: string]: boolean;
-};
+export type AssignDigitalHumanApiV1OwnersDigitalHumansDhIdAssignPost200 = {[key: string]: boolean};
 
 export type ListSubAccountsApiV1OwnersSubAccountsGetParams = {
-  search?: string | null;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @minimum 1
-   * @maximum 100
-   */
-  page_size?: number;
+search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
 };
 
-export type ResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPost200 = {
-  [key: string]: boolean;
-};
+export type ResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPost200 = {[key: string]: boolean};
 
 export type ListConversationsApiV1OwnersConversationsGetParams = {
-  owner_user_id?: string | null;
-  digital_human_id?: string | null;
-  platform?: string | null;
-  status?: string | null;
-  search?: string | null;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @minimum 1
-   * @maximum 100
-   */
-  page_size?: number;
+owner_user_id?: string | null;
+digital_human_id?: string | null;
+platform?: string | null;
+status?: string | null;
+search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
 };
 
-export type GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetParams =
-  {
-    /**
-     * 上一页返回的 next_cursor
-     */
-    before?: string | null;
-    /**
-     * @minimum 1
-     * @maximum 100
-     */
-    limit?: number;
-  };
+export type GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetParams = {
+/**
+ * 上一页返回的 next_cursor
+ */
+before?: string | null;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+};
 
 export type ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams = {
-  owner_user_id?: string | null;
-  digital_human_id?: string | null;
-  platform?: string | null;
-  intent_level?: string | null;
-  customer_value?: string | null;
-  search?: string | null;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @minimum 1
-   * @maximum 100
-   */
-  page_size?: number;
+owner_user_id?: string | null;
+digital_human_id?: string | null;
+platform?: string | null;
+intent_level?: string | null;
+customer_value?: string | null;
+search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
 };
 
 export type ListDocumentsApiV1OwnersKnowledgeDocumentsGetParams = {
-  collection?: string | null;
-  domain?: string | null;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @minimum 1
-   * @maximum 100
-   */
-  page_size?: number;
+collection?: string | null;
+domain?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
 };
 
 export type DeleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteParams = {
-  collection?: string | null;
+collection?: string | null;
+domain?: string | null;
 };
 
 export type ListAuditLogsApiV1OwnersAuditLogsGetParams = {
-  action?: string | null;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @minimum 1
-   * @maximum 100
-   */
-  page_size?: number;
+action?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
 };
 
-export type HealthzHealthzGet200 = { [key: string]: string };
+export type HealthzHealthzGet200 = {[key: string]: string};
+

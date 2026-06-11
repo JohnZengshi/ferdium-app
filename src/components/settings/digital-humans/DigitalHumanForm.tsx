@@ -167,7 +167,6 @@ class DigitalHumanForm extends Component<
         persona_config: undefined,
         persona_prompt: undefined,
         knowledge_collection: undefined,
-        default_provider: 'openai',
         status: 'active',
       },
     };
@@ -187,8 +186,6 @@ class DigitalHumanForm extends Component<
           persona_prompt: this.props.digitalHuman.persona_prompt || undefined,
           knowledge_collection:
             this.props.digitalHuman.knowledge_collection || undefined,
-          default_provider:
-            this.props.digitalHuman.default_provider || 'openai',
           status: this.props.digitalHuman.status || 'active',
         },
       });
@@ -346,21 +343,6 @@ class DigitalHumanForm extends Component<
               value={formData.avatar_url || ''}
               placeholder="https://..."
               onChange={value => this.handleFieldChange('avatar_url', value)}
-            />
-          </Form.FormItem>
-
-          <Form.FormItem label="LLM Provider" name="default_provider">
-            <Select
-              value={formData.default_provider || 'openai'}
-              options={[
-                { label: 'OpenAI', value: 'openai' },
-                { label: 'Claude', value: 'claude' },
-                { label: 'Gemini', value: 'gemini' },
-                { label: 'DeepSeek', value: 'deepseek' },
-              ]}
-              onChange={value =>
-                this.handleFieldChange('default_provider', value)
-              }
             />
           </Form.FormItem>
 

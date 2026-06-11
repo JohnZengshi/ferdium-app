@@ -214,11 +214,6 @@ class DigitalHumansScreen extends Component<WithIntlProps, State> {
         },
       },
       {
-        colKey: 'default_provider',
-        title: 'LLM Provider',
-        width: 120,
-      },
-      {
         colKey: 'created_at',
         title: intl.formatMessage(messages.createdAtColumn),
         width: 180,

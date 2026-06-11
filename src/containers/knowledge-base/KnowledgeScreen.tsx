@@ -263,7 +263,6 @@ const buildDigitalHumanRequest = (
     participation: data.participation,
   },
   persona_prompt: buildPersonaPrompt(data),
-  default_provider: 'openai',
   status: 'active',
 });
 

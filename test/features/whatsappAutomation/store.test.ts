@@ -104,6 +104,10 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
     store = new WhatsAppAutomationStore();
 
     const mockStores = {
+      services: {
+        allDisplayed: [],
+        one: jest.fn(),
+      },
       settings: {
         all: {
           app: mockSettingsStore,

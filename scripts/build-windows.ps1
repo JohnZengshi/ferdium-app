@@ -123,7 +123,8 @@ if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $
   }
 
   Write-Host "Changing your msvs_version on npm to [$ACTUAL_MSVST_VERSION]"
-  npm config set msvs_version $ACTUAL_MSVST_VERSION
+  $env:GYP_MSVS_VERSION = $ACTUAL_MSVST_VERSION
+  Add-Content -Path "$env:USERPROFILE\.npmrc" -Value "msvs_version=$ACTUAL_MSVST_VERSION" -NoNewline -ErrorAction SilentlyContinue
 }
 
 

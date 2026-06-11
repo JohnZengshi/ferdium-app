@@ -20,9 +20,9 @@ import {
 import type {
   AppApiSchemasOwnersCustomerProfileListResponse,
   CustomerProfileResponse,
-  ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams,
+  ListCustomerProfilesApiV1CustomerProfilesGetParams,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
-import { listCustomerProfilesApiV1OwnersCustomerProfilesGet } from '../../agent-flow-cs/api/generated/owners/owners';
+import { listCustomerProfilesApiV1CustomerProfilesGet } from '../../agent-flow-cs/api/generated/customer-profiles/customer-profiles';
 import AvatarCell from '../../components/ui/AvatarCell';
 import FilterToolbar from '../../components/ui/FilterToolbar';
 
@@ -160,7 +160,7 @@ function UserProfileScreen(): ReactElement {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const params: ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams = {
+      const params: ListCustomerProfilesApiV1CustomerProfilesGetParams = {
         page,
         page_size: pageSize,
       };
@@ -168,8 +168,7 @@ function UserProfileScreen(): ReactElement {
       if (filterStatus) params.intent_level = filterStatus;
       if (filterPersona) params.customer_value = filterPersona;
 
-      const result =
-        await listCustomerProfilesApiV1OwnersCustomerProfilesGet(params);
+      const result = await listCustomerProfilesApiV1CustomerProfilesGet(params);
       const body =
         result.data as AppApiSchemasOwnersCustomerProfileListResponse;
       const items = (body.items || []).map(profile =>
@@ -216,7 +215,7 @@ function UserProfileScreen(): ReactElement {
         width: 220,
         cell: ({ row }) => (
           <AvatarCell
-            title={row.username}
+            title={row.id}
             subtitle={row.phone}
             isVIP={row.isVIP}
             vipLabel={intl.formatMessage(messages.vipLabel)}

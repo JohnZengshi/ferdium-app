@@ -220,8 +220,15 @@ if ((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains 
     fail_with_docs "Unsupported MSVS Tools version: $ACTUAL_MSVST_VERSION"
   }
 
-  Write-Host "  Setting npm msvs_version to [$ACTUAL_MSVST_VERSION]"
-  npm config set msvs_version $ACTUAL_MSVST_VERSION
+  Write-Host "  Setting msvs_version to [$ACTUAL_MSVST_VERSION] via .npmrc"
+  # npm 10+ removed msvs_version as a valid option, write directly to .npmrc instead
+  $npmrcPath = "$USERHOME\.npmrc"
+  $npmrcContent = @"
+msvs_version=$ACTUAL_MSVST_VERSION
+"@
+  Add-Content -Path $npmrcPath -Value "msvs_version=$ACTUAL_MSVST_VERSION" -NoNewline -ErrorAction SilentlyContinue
+  # Also set for node-gyp directly via environment variable
+  $env:GYP_MSVS_VERSION = $ACTUAL_MSVST_VERSION
 }
 Write-Host "  [OK] Visual Studio Build Tools ready"
 
@@ -359,7 +366,12 @@ if (-not (Test-Path $BUILD_INFO_FILE)) {
   fail_with_docs "buildInfo.json not found at $BUILD_INFO_FILE"
 }
 $BUILD_INFO = Get-Content $BUILD_INFO_FILE | ConvertFrom-Json
-Write-Host "  [OK] App built successfully (version: $APP_VERSION, arch: $Arch)"
+
+# Compute a sortable build number: total commits on HEAD.
+# Monotonically increasing - every new commit adds 1, so a larger number = newer.
+$BUILD_INFO | Add-Member -NotePropertyName 'buildNumber' -NotePropertyValue (& git -C $PROJECT_ROOT rev-list --count HEAD) -Force
+
+Write-Host "  [OK] App built successfully (version: $APP_VERSION, build: $($BUILD_INFO.buildNumber), arch: $Arch)"
 Write-Host "  Unpacked app: $UNPACKED_DIR"
 
 # -----------------------------------------------------------------------------
@@ -390,6 +402,8 @@ $ISS_OUTPUT = "$PROJECT_ROOT\scripts\ferdium-setup.generated.iss"
 $issContent = Get-Content $ISS_TEMPLATE -Raw
 $issContent = $issContent.Replace('{#AppVersion}', $APP_VERSION)
 $issContent = $issContent.Replace('{#AppVersionNumeric}', ($APP_VERSION -replace '-.*$', ''))
+$issContent = $issContent.Replace('{#AppBuildNumber}', $BUILD_INFO.buildNumber)
+$issContent = $issContent.Replace('{#AppGitHash}', $BUILD_INFO.gitHashShort)
 $issContent = $issContent.Replace('{#AppArch}', $Arch)
 $issContent = $issContent.Replace('{#AppSourcePath}', "..\out\win-unpacked\")
 Set-Content -Path $ISS_OUTPUT -Value $issContent
@@ -411,7 +425,7 @@ Remove-Item $ISS_OUTPUT -Force -ErrorAction SilentlyContinue
 # -----------------------------------------------------------------------------
 Write-Step "Verifying installer"
 
-$INSTALLER_NAME = "Ferdium-win-AutoSetup-$APP_VERSION-$Arch.exe"
+$INSTALLER_NAME = "Ferdium-win-AutoSetup-$APP_VERSION-$($BUILD_INFO.buildNumber)-$Arch.exe"
 $INSTALLER_PATH = "$OUT_DIR\$INSTALLER_NAME"
 
 if (-not (Test-Path $INSTALLER_PATH)) {
@@ -453,10 +467,12 @@ Write-Host "************************************************************" -Foreg
 Write-Host "  BUILD SUCCESSFUL!" -ForegroundColor Green
 Write-Host "************************************************************" -ForegroundColor Green
 Write-Host ""
-Write-Host "  Installer: $INSTALLER_NAME" -ForegroundColor Green
-Write-Host "  Version  : $APP_VERSION" -ForegroundColor Green
-Write-Host "  Arch     : $Arch" -ForegroundColor Green
-Write-Host "  Size     : $([math]::Round($INSTALLER_SIZE, 2)) MB" -ForegroundColor Green
+Write-Host "  Installer  : $INSTALLER_NAME" -ForegroundColor Green
+Write-Host "  Version    : $APP_VERSION" -ForegroundColor Green
+Write-Host "  Build #    : $($BUILD_INFO.buildNumber)" -ForegroundColor Green
+Write-Host "  Git Hash   : $($BUILD_INFO.gitHashShort)" -ForegroundColor Green
+Write-Host "  Arch       : $Arch" -ForegroundColor Green
+Write-Host "  Size       : $([math]::Round($INSTALLER_SIZE, 2)) MB" -ForegroundColor Green
 Write-Host ""
 Write-Host "  Full path: $INSTALLER_PATH" -ForegroundColor Green
 Write-Host ""

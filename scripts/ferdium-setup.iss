@@ -9,6 +9,8 @@
 #define MyAppURL "https://ferdium.org/"
 #define MyAppExeName "Ferdium.exe"
 #define MyAppArch "{#AppArch}"
+#define MyAppGitHash "{#AppGitHash}"
+#define MyAppBuildNumber "{#AppBuildNumber}"
 
 [Setup]
 ; App metadata
@@ -25,7 +27,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=..\out
-OutputBaseFilename=Ferdium-win-AutoSetup-{#MyAppVersion}-{#MyAppArch}
+OutputBaseFilename=Ferdium-win-AutoSetup-{#MyAppVersion}-{#MyAppBuildNumber}-{#MyAppArch}
 
 ; Compression & performance
 Compression=lzma2/ultra64

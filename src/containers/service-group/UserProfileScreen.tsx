@@ -11,7 +11,9 @@ import { defineMessages, useIntl } from 'react-intl';
 import { RefreshIcon, SearchIcon } from 'tdesign-icons-react';
 import {
   Button,
+  Dialog,
   Input,
+  MessagePlugin,
   type PrimaryTableCol,
   Select,
   Table,
@@ -46,7 +48,7 @@ const messages = defineMessages({
   },
   colServiceNote: {
     id: 'userProfile.col.serviceNote',
-    defaultMessage: 'Agent Notes',
+    defaultMessage: 'Next Action',
   },
   colOwner: { id: 'userProfile.col.owner', defaultMessage: 'Owning Account' },
   view: { id: 'userProfile.view', defaultMessage: 'View' },
@@ -54,12 +56,15 @@ const messages = defineMessages({
     id: 'userProfile.searchPlaceholder',
     defaultMessage: 'Fan name, phone number',
   },
-  filterStatus: { id: 'userProfile.filterStatus', defaultMessage: 'Status' },
+  filterStatus: { id: 'userProfile.filterStatus', defaultMessage: 'Intent' },
   filterPlaceholder: {
     id: 'userProfile.filterPlaceholder',
-    defaultMessage: 'Select status',
+    defaultMessage: 'Please select',
   },
-  filterPersona: { id: 'userProfile.filterPersona', defaultMessage: 'Persona' },
+  filterPersona: {
+    id: 'userProfile.filterPersona',
+    defaultMessage: 'Customer Value',
+  },
   search: { id: 'userProfile.search', defaultMessage: 'Search' },
   reset: { id: 'userProfile.reset', defaultMessage: 'Reset' },
   selectedItems: {
@@ -71,6 +76,14 @@ const messages = defineMessages({
     defaultMessage: 'More Actions',
   },
   vipLabel: { id: 'avatarCell.vipLabel', defaultMessage: 'VIP' },
+  summaryDialogTitle: {
+    id: 'userProfile.summaryDialogTitle',
+    defaultMessage: 'Chat Summary',
+  },
+  summaryEmpty: {
+    id: 'userProfile.summaryEmpty',
+    defaultMessage: 'No summary yet',
+  },
 });
 
 interface FanProfile {
@@ -85,7 +98,9 @@ interface FanProfile {
   tag: string;
   tagColor: 'orange' | 'red';
   intentLevel: string;
-  intentColor: 'green' | 'red';
+  intentColor: 'green' | 'orange' | 'red';
+  conversationSummary: string;
+  nextAction: string;
   ownerUsername: string;
   ownerPhone: string;
 }
@@ -100,46 +115,96 @@ const TAG_COLOR_MAP: Record<string, 'warning' | 'danger'> = {
 };
 const INTENT_CLASS_MAP: Record<string, string> = {
   green: 'text-success',
+  orange: 'text-warning',
   red: 'text-error',
 };
 const INTENT_DOT_MAP: Record<string, string> = {
   green: 'bg-success',
+  orange: 'bg-warning',
   red: 'bg-error',
 };
 
+function normalizeDisplayValue(value?: string | null): string {
+  if (!value || value === 'unknown') {
+    return '—';
+  }
+
+  return value;
+}
+
+function formatListValue(
+  list?: unknown[],
+  emptyFallback = '—',
+  separator = '、',
+): string {
+  if (!Array.isArray(list) || list.length === 0) {
+    return emptyFallback;
+  }
+
+  return list
+    .map(item => String(item).trim())
+    .filter(Boolean)
+    .join(separator);
+}
+
+function formatIntentLevel(value?: string | null): string {
+  switch (value) {
+    case 'high': {
+      return '高意向';
+    }
+    case 'medium': {
+      return '中意向';
+    }
+    case 'low': {
+      return '低意向';
+    }
+    default: {
+      return '—';
+    }
+  }
+}
+
+function getIntentColor(value?: string | null): 'green' | 'orange' | 'red' {
+  switch (value) {
+    case 'high': {
+      return 'green';
+    }
+    case 'medium': {
+      return 'orange';
+    }
+    default: {
+      return 'red';
+    }
+  }
+}
+
+function isHighCustomerValue(value?: string | null): boolean {
+  return value === 'high' || value === '高价值';
+}
+
 function mapProfileToFanProfile(profile: CustomerProfileResponse): FanProfile {
-  const stage = profile.customer_value || '—';
-  const stageColor: 'blue' | 'orange' = stage.includes('高')
-    ? 'blue'
-    : 'orange';
-
-  const firstTag =
-    Array.isArray(profile.tags) && profile.tags.length > 0
-      ? String(profile.tags[0])
-      : '—';
-  const tagColor: 'orange' | 'red' = firstTag.includes('不匹配')
-    ? 'red'
-    : 'orange';
-
-  const intentLevel = profile.intent_level || '—';
-  const intentColor: 'green' | 'red' =
-    intentLevel.includes('高') || intentLevel.toLowerCase().includes('high')
-      ? 'green'
-      : 'red';
+  const stage = formatListValue(profile.purchase_signals);
+  const stageColor: 'blue' | 'orange' = stage === '—' ? 'orange' : 'blue';
+  const tag = formatListValue(profile.tags);
+  const tagColor: 'orange' | 'red' = tag.includes('不匹配') ? 'red' : 'orange';
+  const intentLevel = formatIntentLevel(profile.intent_level);
+  const intentColor = getIntentColor(profile.intent_level);
 
   return {
     id: profile.customer_id || profile.id,
     username: profile.nickname || '—',
     phone: '',
-    isVIP: profile.customer_value === '高价值',
-    region: profile.region || '—',
-    gender: profile.gender || '—',
+    isVIP: isHighCustomerValue(profile.customer_value),
+    region: normalizeDisplayValue(profile.region),
+    gender: normalizeDisplayValue(profile.gender),
     stage,
     stageColor,
-    tag: firstTag,
+    tag,
     tagColor,
     intentLevel,
     intentColor,
+    conversationSummary: profile.conversation_summary || '',
+    nextAction: normalizeDisplayValue(profile.next_action),
     ownerUsername: profile.owner_username || '—',
     ownerPhone: '',
   };
@@ -156,6 +221,8 @@ function UserProfileScreen(): ReactElement {
   const [searchText, setSearchText] = useState('');
   const [filterStatus, setFilterStatus] = useState<string | undefined>();
   const [filterPersona, setFilterPersona] = useState<string | undefined>();
+  const [summaryDialogVisible, setSummaryDialogVisible] = useState(false);
+  const [activeSummary, setActiveSummary] = useState('');
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -189,16 +256,38 @@ function UserProfileScreen(): ReactElement {
   }, [fetchData]);
 
   const handleSearch = useCallback(() => {
-    setPage(1);
+    if (page !== 1) {
+      setPage(1);
+      return;
+    }
+
     fetchData();
-  }, [fetchData]);
+  }, [fetchData, page]);
 
   const handleReset = useCallback(() => {
     setSearchText('');
     setFilterStatus(undefined);
     setFilterPersona(undefined);
-    setPage(1);
-  }, []);
+    if (page !== 1) {
+      setPage(1);
+      return;
+    }
+
+    fetchData();
+  }, [fetchData, page]);
+
+  const handleViewSummary = useCallback(
+    (summary: string) => {
+      if (!summary.trim()) {
+        MessagePlugin.warning(intl.formatMessage(messages.summaryEmpty));
+        return;
+      }
+
+      setActiveSummary(summary);
+      setSummaryDialogVisible(true);
+    },
+    [intl],
+  );
 
   const columns = useMemo<PrimaryTableCol<FanProfile>[]>(
     () => [
@@ -216,7 +305,7 @@ function UserProfileScreen(): ReactElement {
         cell: ({ row }) => (
           <AvatarCell
             title={row.id}
-            subtitle={row.phone}
+            subtitle={row.username === '—' ? row.phone : row.username}
             isVIP={row.isVIP}
             vipLabel={intl.formatMessage(messages.vipLabel)}
           />
@@ -289,8 +378,21 @@ function UserProfileScreen(): ReactElement {
         colKey: 'chatSummary',
         title: intl.formatMessage(messages.colChatSummary),
         width: 120,
-        cell: () => (
-          <span className="cursor-pointer text-[14px] leading-[22px] text-brand">
+        cell: ({ row }) => (
+          <span
+            role="button"
+            tabIndex={0}
+            className="cursor-pointer text-[14px] leading-[22px] text-brand"
+            onClick={() => {
+              handleViewSummary(row.conversationSummary);
+            }}
+            onKeyDown={event => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleViewSummary(row.conversationSummary);
+              }
+            }}
+          >
             {intl.formatMessage(messages.view)}
           </span>
         ),
@@ -298,10 +400,13 @@ function UserProfileScreen(): ReactElement {
       {
         colKey: 'serviceNote',
         title: intl.formatMessage(messages.colServiceNote),
-        width: 120,
-        cell: () => (
-          <span className="cursor-pointer text-[14px] leading-[22px] text-brand">
-            {intl.formatMessage(messages.view)}
+        width: 220,
+        cell: ({ row }) => (
+          <span
+            className="block truncate text-[14px] leading-[22px] text-primary"
+            title={row.nextAction}
+          >
+            {row.nextAction}
           </span>
         ),
       },
@@ -315,7 +420,7 @@ function UserProfileScreen(): ReactElement {
         ),
       },
     ],
-    [intl, page, pageSize],
+    [handleViewSummary, intl, page, pageSize],
   );
 
   return (
@@ -341,10 +446,9 @@ function UserProfileScreen(): ReactElement {
                 onChange={val => setFilterStatus(val as string)}
                 clearable
                 options={[
-                  { label: '高意向', value: '高意向' },
-                  { label: '低意向', value: '低意向' },
-                  { label: '新增线索', value: '新增线索' },
-                  { label: '不匹配', value: '不匹配' },
+                  { label: '高意向', value: 'high' },
+                  { label: '中意向', value: 'medium' },
+                  { label: '低意向', value: 'low' },
                 ]}
               />
               <span className="text-[14px] leading-[22px] text-primary">
@@ -357,9 +461,9 @@ function UserProfileScreen(): ReactElement {
                 onChange={val => setFilterPersona(val as string)}
                 clearable
                 options={[
-                  { label: '高价值', value: '高价值' },
-                  { label: '中价值', value: '中价值' },
-                  { label: '低价值', value: '低价值' },
+                  { label: '高价值', value: 'high' },
+                  { label: '中价值', value: 'medium' },
+                  { label: '低价值', value: 'low' },
                 ]}
               />
               <Button theme="primary" onClick={handleSearch}>
@@ -378,7 +482,7 @@ function UserProfileScreen(): ReactElement {
           rightContent={
             <>
               <span className="text-[14px] leading-[22px] text-secondary">
-                {intl.formatMessage(messages.selectedItems)}
+                {intl.formatMessage(messages.selectedItems, { count: 0 })}
               </span>
               <Button
                 theme="primary"
@@ -419,6 +523,22 @@ function UserProfileScreen(): ReactElement {
           resizable
           lazyLoad
         />
+
+        <Dialog
+          visible={summaryDialogVisible}
+          header={intl.formatMessage(messages.summaryDialogTitle)}
+          footer={false}
+          closeOnOverlayClick
+          destroyOnClose
+          onClose={() => {
+            setSummaryDialogVisible(false);
+            setActiveSummary('');
+          }}
+        >
+          <div className="max-h-[50vh] overflow-y-auto whitespace-pre-wrap break-words text-[14px] leading-[22px] text-primary">
+            {activeSummary}
+          </div>
+        </Dialog>
 
         <div className="flex-1 bg-container" />
       </div>

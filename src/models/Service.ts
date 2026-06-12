@@ -5,6 +5,8 @@ import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import type ElectronWebView from 'react-electron-web-view';
 
 import { v4 as uuidV4 } from 'uuid';
+import * as conversationsApi from '../agent-flow-cs/api/generated/conversations/conversations';
+import * as translateApi from '../agent-flow-cs/api/generated/translate/translate';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { isMac } from '../environment';
@@ -20,6 +22,11 @@ const debug = require('../preload-safe-debug')('Ferdium:Service');
 // Global registry for active partitions
 // This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
 const activePartitions = new Set<string>();
+
+// 全局去重：防止旧 Service 实例残留监听器时，同一 wa-ai 请求被处理多次
+// 模块级锁：确保同一 requestId 只触发一次 HTTP 请求，无论有多少个 listener
+const waAiRequestInFlight = new Set<string>();
+const waAiRequestRecentlyHandled = new Set<string>();
 
 interface DarkReaderInterface {
   brightness: number;
@@ -38,6 +45,17 @@ export default class Service {
   timer: NodeJS.Timeout | null = null;
 
   events = {};
+
+  // 防止 webview / preload 层重复绑定监听器时，同一 requestId 被重复转发
+  handledWaAiRequestIds = new Set<string>();
+
+  // 业务级去重锁：防止短时间内对同一接口发送相同参数的重复请求
+  lastApiCallFingerprint = '';
+
+  lastApiCallTime = 0;
+
+  // 防止 initializeWebViewEvents 被多次调用导致重复绑定事件监听器
+  webviewEventsInitialized = false;
 
   @observable isAttached: boolean = false;
 
@@ -414,6 +432,9 @@ export default class Service {
   }
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
+    if (this.webviewEventsInitialized) return;
+    this.webviewEventsInitialized = true;
+
     const webviewWebContents = webContents.fromId(
       this.webview.getWebContentsId(),
     );
@@ -454,6 +475,75 @@ export default class Service {
             ),
           ),
         );
+      } else if (e.channel === 'wa-ai-api-request') {
+        const { requestId, api, method, args } = e.args[0] as {
+          requestId: string;
+          api: 'conversations' | 'translate';
+          method: string;
+          args: unknown[];
+        };
+
+        // 模块级全局锁：确保同一 requestId 只触发一次 HTTP 请求
+        if (
+          waAiRequestInFlight.has(requestId) ||
+          waAiRequestRecentlyHandled.has(requestId)
+        ) {
+          debug(
+            'Duplicate wa-ai-api-request ignored (global lock):',
+            requestId,
+          );
+          return;
+        }
+        waAiRequestInFlight.add(requestId);
+
+        try {
+          const apiModule =
+            api === 'conversations' ? conversationsApi : translateApi;
+          const apiMethod = (apiModule as Record<string, unknown>)[method];
+
+          if (typeof apiMethod !== 'function') {
+            throw new TypeError(`Method ${method} not found in module ${api}`);
+          }
+
+          const enhancedArgs = [...args];
+
+          // 为 pause/resume conversation 接口注入 wa_session_id（Ferdium 服务会话 ID）
+          if (
+            (method.includes('pauseConversationByCustomer') ||
+              method.includes('resumeConversationByCustomer')) && // args 格式: [customerId, params]
+            enhancedArgs.length >= 2 &&
+            typeof enhancedArgs[1] === 'object'
+          ) {
+            (enhancedArgs[1] as Record<string, unknown>).wa_session_id =
+              this.id;
+          }
+
+          const result = await (
+            apiMethod as (...fnArgs: unknown[]) => Promise<unknown>
+          )(...enhancedArgs);
+
+          this.webview.send('wa-ai-api-response-host', {
+            requestId,
+            success: true,
+            result,
+          });
+        } catch (error: unknown) {
+          this.webview.send('wa-ai-api-response-host', {
+            requestId,
+            success: false,
+            error: error instanceof Error ? error.message : String(error),
+          });
+        } finally {
+          // 请求完成后清理锁，防止内存泄漏
+          waAiRequestInFlight.delete(requestId);
+          waAiRequestRecentlyHandled.add(requestId);
+
+          // 保留最近处理过的请求，防止重复处理，但限制大小
+          if (waAiRequestRecentlyHandled.size > 100) {
+            const firstId = waAiRequestRecentlyHandled.values().next().value;
+            if (firstId) waAiRequestRecentlyHandled.delete(firstId);
+          }
+        }
       } else {
         handleIPCMessage({
           serviceId: this.id,

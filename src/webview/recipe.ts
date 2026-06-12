@@ -138,6 +138,34 @@ ipcRenderer.sendToHost(
   screenShareJs,
 );
 
+// ─── Agent Flow CS API Bridge ───
+// 模块级守卫：确保 preload 脚本即使被多次加载，监听器也只注册一次
+if (!(window as any).__waAiPreloadBridgeRegistered) {
+  (window as any).__waAiPreloadBridgeRegistered = true;
+
+  // 转发主世界 (overlay.js) 的 API 请求到宿主进程 (Service.ts)
+  // Verify origin: only accept messages from the same window (self-origin)
+  window.addEventListener('message', event => {
+    if (event.source !== window) return;
+    if (event.origin !== window.location.origin) return;
+    if (event.data?.type === 'wa-ai-api-request') {
+      ipcRenderer.sendToHost('wa-ai-api-request', event.data.payload);
+    }
+  });
+
+  // 接收宿主进程的 API 响应，转发回主世界 (overlay.js)
+  // 注意：host channel 与 window.postMessage.type 分离，避免同名回环
+  ipcRenderer.on('wa-ai-api-response-host', (_event, payload) => {
+    window.postMessage(
+      {
+        type: 'wa-ai-api-response',
+        payload,
+      },
+      window.location.origin,
+    );
+  });
+}
+
 class RecipeController {
   @observable settings: {
     overrideSpellcheckerLanguage: boolean;

@@ -25,7 +25,11 @@ import type {
 import { getWhatsappBindingApiV1WhatsappBindGet } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import AvatarCell from '../../components/ui/AvatarCell';
 import FilterToolbar from '../../components/ui/FilterToolbar';
-import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
+import {
+  type MappedAccountStatus,
+  type WhatsAppSessionStatus,
+  getMappedStatus,
+} from '../../features/whatsappAutomation/helpers';
 import type Service from '../../models/Service';
 import { getSessions } from '../../whatsapp-automation/api/generated/sessions/sessions';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
@@ -52,6 +56,10 @@ const messages = defineMessages({
     id: 'accountMgmt.status.error',
     defaultMessage: 'Error',
   },
+  statusUnknown: {
+    id: 'accountMgmt.status.unknown',
+    defaultMessage: 'Unknown',
+  },
   personaUnbound: {
     id: 'accountMgmt.persona.unbound',
     defaultMessage: 'Unbound',
@@ -59,6 +67,7 @@ const messages = defineMessages({
   proxyLocal: {
     id: 'accountMgmt.proxy.local',
     defaultMessage: 'Local Direct',
+  },
   },
   filterStatus: { id: 'accountMgmt.filterStatus', defaultMessage: 'Status' },
   filterPlaceholder: {
@@ -89,7 +98,7 @@ interface Account {
   id: string;
   username: string;
   phone: string;
-  status: 'online' | 'offline' | 'error' | 'unknown';
+  status: MappedAccountStatus;
   persona: string;
   proxy: string;
   createdAt: string;
@@ -132,7 +141,7 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
   const [filterStatus, setFilterStatus] = useState<string | undefined>();
 
   const allServices: Service[] = stores?.services?.all ?? [];
-  const waStatuses: Map<string, string> =
+  const waStatuses: Map<string, WhatsAppSessionStatus> =
     stores?.whatsappAutomation?.sessionStatuses ?? new Map();
   const digitalHumans: AppApiSchemasDigitalHumanResponse[] =
     stores?.digitalHumans?.digitalHumans ?? [];
@@ -192,27 +201,7 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
     () =>
       allServices.map(service => {
         const waStatus = waStatuses.get(service.id);
-        let status: Account['status'] = 'offline';
-        switch (waStatus) {
-          case WA_SESSION_STATUS.CONNECTED: {
-            status = 'online';
-
-            break;
-          }
-          case WA_SESSION_STATUS.DISCONNECTED: {
-            break;
-          }
-          case WA_SESSION_STATUS.LOGGED_OUT:
-          case WA_SESSION_STATUS.STOPPED:
-          case WA_SESSION_STATUS.SERVER_ERROR: {
-            status = 'error';
-
-            break;
-          }
-          default: {
-            break;
-          }
-        }
+        const status = getMappedStatus(waStatus);
 
         const proxyValue = formatProxy(service.proxy);
         const createdAt = sessionCreatedAtMap.get(service.id) ?? '';
@@ -267,25 +256,58 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
         title: intl.formatMessage(messages.colStatus),
         width: 100,
         cell: ({ row }) => {
-          let theme: 'success' | 'warning' | 'danger' = 'warning';
-          let message = messages.statusOffline;
-          if (row.status === 'online') {
-            theme = 'success';
-            message = messages.statusOnline;
-          } else if (row.status === 'error') {
-            theme = 'danger';
-            message = messages.statusError;
+          switch (row.status) {
+            case 'online': {
+              const theme = 'success';
+              const statusTextKey = 'statusOnline';
+              return (
+                <Tag
+                  variant="outline"
+                  theme={theme}
+                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                >
+                  {intl.formatMessage(messages[statusTextKey])}
+                </Tag>
+              );
+            }
+            case 'offline': {
+              const theme = 'warning';
+              const statusTextKey = 'statusOffline';
+              return (
+                <Tag
+                  variant="outline"
+                  theme={theme}
+                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                >
+                  {intl.formatMessage(messages[statusTextKey])}
+                </Tag>
+              );
+            }
+            case 'error': {
+              const theme = 'danger';
+              const statusTextKey = 'statusError';
+              return (
+                <Tag
+                  variant="outline"
+                  theme={theme}
+                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                >
+                  {intl.formatMessage(messages[statusTextKey])}
+                </Tag>
+              );
+            }
+            default: {
+              return (
+                <Tag
+                  variant="outline"
+                  theme="default"
+                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                >
+                  {intl.formatMessage(messages.statusUnknown)}
+                </Tag>
+              );
+            }
           }
-
-          return (
-            <Tag
-              variant="outline"
-              theme={theme}
-              className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
-            >
-              {intl.formatMessage(message)}
-            </Tag>
-          );
         },
       },
       {

@@ -301,7 +301,7 @@ function UserProfileScreen(): ReactElement {
       {
         colKey: 'username',
         title: intl.formatMessage(messages.colFanAccount),
-        width: 220,
+        width: 'auto',
         cell: ({ row }) => (
           <AvatarCell
             title={row.id}
@@ -340,6 +340,8 @@ function UserProfileScreen(): ReactElement {
             variant="outline"
             theme={STAGE_COLOR_MAP[row.stageColor]}
             className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+            maxWidth={80}
+            title={row.stage}
           >
             {row.stage}
           </Tag>
@@ -354,6 +356,8 @@ function UserProfileScreen(): ReactElement {
             variant="outline"
             theme={TAG_COLOR_MAP[row.tagColor]}
             className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+            maxWidth={80}
+            title={row.tag}
           >
             {row.tag}
           </Tag>

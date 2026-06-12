@@ -34,7 +34,10 @@ import {
   switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 
-import { WA_SESSION_STATUS } from '../../features/whatsappAutomation/constants';
+import {
+  type WhatsAppSessionStatus,
+  getMappedStatus,
+} from '../../features/whatsappAutomation/helpers';
 import type Service from '../../models/Service';
 import type { RealStores } from '../../stores';
 
@@ -288,32 +291,6 @@ interface BindAccountFormValues {
   cookieAutoFill: boolean;
   cookie: string;
 }
-
-type WhatsAppSessionStatus =
-  | (typeof WA_SESSION_STATUS)[keyof typeof WA_SESSION_STATUS]
-  | undefined;
-
-const getMappedStatus = (
-  sessionStatus: WhatsAppSessionStatus,
-): 'online' | 'offline' | 'error' | 'unknown' => {
-  switch (sessionStatus) {
-    case WA_SESSION_STATUS.CONNECTED: {
-      return 'online';
-    }
-    case WA_SESSION_STATUS.DISCONNECTED: {
-      return 'offline';
-    }
-    case WA_SESSION_STATUS.LOGGED_OUT:
-    case WA_SESSION_STATUS.STOPPED:
-    case WA_SESSION_STATUS.SERVER_ERROR: {
-      return 'error';
-    }
-    default: {
-      return 'unknown';
-    }
-  }
-};
-
 const getStatusTag = (
   sessionStatus: WhatsAppSessionStatus,
   intl: IntlShape,
@@ -1014,11 +991,11 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         <Drawer
           header={
             <div className="flex items-center justify-between w-full h-full">
-              <span className="text-[18px] font-semibold text-[#1f2329]">
+              <span className="text-[18px] font-semibold text-primary">
                 {intl.formatMessage(messages.bindAccountDialogTitle)}
               </span>
               <CloseIcon
-                className="w-[16px] h-[16px] text-[#666] cursor-pointer"
+                className="w-[16px] h-[16px] text-secondary cursor-pointer"
                 onClick={this.closeBindDrawer}
               />
             </div>
@@ -1032,18 +1009,18 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           closeBtn={false}
           className="[&_.t-drawer__body]:!p-0"
           footer={
-            <div className="flex items-center justify-end h-full px-[24px] gap-[12px] border-t border-[#e7e7e7]">
+            <div className="flex items-center justify-end h-full px-[24px] gap-[12px] border-t border-line">
               <Button
                 theme="default"
                 variant="base"
-                className="!w-[80px] !h-[40px] !bg-[#F2F3F5] !text-[#333] border-none"
+                className="!w-[80px] !h-[40px] !bg-secondary-container !text-primary border-none"
                 onClick={this.closeBindDrawer}
               >
                 {intl.formatMessage(messages.cancel)}
               </Button>
               <Button
                 theme="primary"
-                className="!w-[88px] !h-[40px] !bg-[#0052D9]"
+                className="!w-[88px] !h-[40px] !bg-brand"
                 onClick={this.handleBindConfirm}
               >
                 {intl.formatMessage(messages.confirm)}
@@ -1054,23 +1031,23 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           <div className="flex flex-col h-full">
             <div className="flex-1 overflow-y-auto px-[24px] pt-[28px] pb-[32px]">
               <div className="mb-[40px]">
-                <div className="text-[16px] font-semibold text-[#1f2329] mb-[24px]">
+                <div className="text-[16px] font-semibold text-primary mb-[24px]">
                   {intl.formatMessage(messages.basicSettings)}
                 </div>
                 <div className="flex items-start gap-x-[12px] mb-[20px]">
-                  <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                  <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                     {intl.formatMessage(messages.accountRemark)}
                   </div>
                   <div className="relative w-[406px]">
                     <Input
-                      className="!h-[40px] !border-[#dcdcdc]"
+                      className="!h-[40px] !border-line"
                       placeholder={intl.formatMessage(
                         messages.accountRemarkPlaceholder,
                       )}
                       value={this.state.bindForm.remark}
                       onChange={val => this.handleBindFormChange('remark', val)}
                     />
-                    <span className="absolute right-[12px] top-[10px] text-[12px] text-[#0052d9]">
+                    <span className="absolute right-[12px] top-[10px] text-[12px] text-brand">
                       {this.state.bindForm.remark.length}/10
                     </span>
                   </div>
@@ -1079,7 +1056,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
               <div className="mb-[40px]">
                 <div className="flex items-center gap-x-[12px] mb-[24px]">
-                  <span className="text-[16px] font-semibold text-[#1f2329]">
+                  <span className="text-[16px] font-semibold text-primary">
                     {intl.formatMessage(messages.proxySettings)}
                   </span>
                   <Switch
@@ -1090,8 +1067,8 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                   />
                   {!this.state.bindForm.proxyAutoFill && (
                     <div className="flex items-center gap-x-[4px]">
-                      <ErrorCircleFilledIcon className="w-[16px] h-[16px] text-[#ed7b2f]" />
-                      <span className="text-[12px] text-[#999]">
+                      <ErrorCircleFilledIcon className="w-[16px] h-[16px] text-warning" />
+                      <span className="text-[12px] text-placeholder">
                         {intl.formatMessage(messages.proxyRiskWarning)}
                       </span>
                     </div>
@@ -1101,28 +1078,23 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                 {this.state.bindForm.proxyAutoFill && (
                   <>
                     <div className="flex items-start gap-x-[12px] mb-[20px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.autoFillLabel)}
                       </div>
-                      <div className="w-[406px]">
-                        <Textarea
-                          className="!h-[132px] !border-[#dcdcdc] !p-[12px]"
-                          placeholder={intl.formatMessage(
-                            messages.autoFillPlaceholder,
-                          )}
-                          value={this.state.bindForm.proxyAutoFillContent}
-                          onChange={val =>
-                            this.handleBindFormChange(
-                              'proxyAutoFillContent',
-                              val,
-                            )
-                          }
-                        />
-                      </div>
+                      <Textarea
+                        className="!h-[132px] !border-line !p-[12px] w-full"
+                        placeholder={intl.formatMessage(
+                          messages.autoFillPlaceholder,
+                        )}
+                        value={this.state.bindForm.proxyAutoFillContent}
+                        onChange={val =>
+                          this.handleBindFormChange('proxyAutoFillContent', val)
+                        }
+                      />
                     </div>
 
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyType)}
                       </div>
                       <Select
@@ -1142,11 +1114,11 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                     </div>
 
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyHost)}
                       </div>
                       <Input
-                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        className="!w-[406px] !h-[40px] !border-line"
                         placeholder={intl.formatMessage(
                           messages.proxyHostPlaceholder,
                         )}
@@ -1158,11 +1130,11 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                     </div>
 
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyPort)}
                       </div>
                       <Input
-                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        className="!w-[406px] !h-[40px] !border-line"
                         placeholder={intl.formatMessage(
                           messages.proxyPortPlaceholder,
                         )}
@@ -1174,11 +1146,11 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                     </div>
 
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyUser)}
                       </div>
                       <Input
-                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        className="!w-[406px] !h-[40px] !border-line"
                         placeholder={intl.formatMessage(
                           messages.proxyUserPlaceholder,
                         )}
@@ -1190,12 +1162,12 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                     </div>
 
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-[#333]">
+                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyPassword)}
                       </div>
                       <Input
                         type="password"
-                        className="!w-[406px] !h-[40px] !border-[#dcdcdc]"
+                        className="!w-[406px] !h-[40px] !border-line"
                         placeholder={intl.formatMessage(
                           messages.proxyPasswordPlaceholder,
                         )}
@@ -1208,13 +1180,13 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
                     <div className="ml-[94px]">
                       <Button
-                        className="!w-[118px] !h-[40px] !bg-[#0052D9] !text-white !font-medium"
+                        className="!w-[118px] !h-[40px] !bg-brand !text-white !font-medium"
                         onClick={this.handleProxyCheck}
                         loading={this.state.isProxyTesting}
                       >
                         {intl.formatMessage(messages.proxyCheck)}
                       </Button>
-                      <div className="mt-[8px] text-[12px] text-[#999]">
+                      <div className="mt-[8px] text-[12px] text-placeholder">
                         {intl.formatMessage(messages.proxyCheckDesc)}
                       </div>
                     </div>
@@ -1224,7 +1196,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
               <div>
                 <div className="flex items-center justify-start gap-[12px] w-full mb-[24px]">
-                  <span className="text-[16px] font-semibold text-[#1f2329]">
+                  <span className="text-[16px] font-semibold text-primary">
                     {intl.formatMessage(messages.cookieSettings)}
                   </span>
                   <Switch
@@ -1238,14 +1210,14 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                 {this.state.bindForm.cookieAutoFill && (
                   <div className="flex flex-col">
                     <Textarea
-                      className="w-full min-h-[148px] !border-[#dcdcdc] !p-[12px] self-end"
+                      className="w-full min-h-[148px] !border-line !p-[12px] self-end"
                       placeholder={intl.formatMessage(
                         messages.cookiePlaceholder,
                       )}
                       value={this.state.bindForm.cookie}
                       onChange={val => this.handleBindFormChange('cookie', val)}
                     />
-                    <div className="mt-[8px] text-[12px] text-[#999] self-end w-[406px]">
+                    <div className="mt-[8px] text-[12px] text-placeholder self-end">
                       {intl.formatMessage(messages.cookieHint)}
                     </div>
                   </div>

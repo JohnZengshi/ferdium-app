@@ -20,6 +20,7 @@
   "accountMgmt.status.offline": "离线",
   "accountMgmt.status.online": "在线",
   "accountMgmt.status.error": "异常",
+  "accountMgmt.status.unknown": "未知",
   "accountMgmt.persona.unbound": "未绑定",
   "accountMgmt.proxy.local": "本地直连",
   "accountMgmt.filter.all": "全部",
@@ -1184,5 +1185,14 @@
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdium 工作区帮您聚焦当前重要事务。设置不同服务组，随时轻松切换。</p><p>您决定何时、何地使用哪些服务，助您专注工作或轻松切换。</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "编辑工作区设置",
   "workspaces.switchingIndicator.allServices": "所有服务",
-  "workspaces.switchingIndicator.switchingTo": "正在切换到"
+  "workspaces.switchingIndicator.switchingTo": "正在切换到",
+  "ruleListEditor.confirm": "确认",
+  "ruleListEditor.contentRequired": "请输入规则内容",
+  "ruleListEditor.delete": "删除",
+  "ruleListEditor.deleteSuccess": "删除成功",
+  "ruleListEditor.empty": "暂无内容，点击下方按钮添加",
+  "ruleListEditor.loading": "加载中...",
+  "ruleListEditor.loadingMore": "加载更多中...",
+  "ruleListEditor.placeholder": "请输入内容",
+  "ruleListEditor.saveSuccess": "保存成功"
 }

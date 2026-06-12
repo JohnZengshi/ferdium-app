@@ -7,99 +7,94 @@
 import type {
   AppApiSchemasMessageResponse,
   HTTPValidationError,
-  MessageCreateRequest,
+  MessageCreateRequest
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type createMessageApiV1MessagesPostResponse200 = {
-  data: AppApiSchemasMessageResponse;
-  status: 200;
-};
+  data: AppApiSchemasMessageResponse
+  status: 200
+}
 
 export type createMessageApiV1MessagesPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createMessageApiV1MessagesPostResponseSuccess = (createMessageApiV1MessagesPostResponse200) & {
+  headers: Headers;
+};
+export type createMessageApiV1MessagesPostResponseError = (createMessageApiV1MessagesPostResponse422) & {
+  headers: Headers;
 };
 
-export type createMessageApiV1MessagesPostResponseSuccess =
-  createMessageApiV1MessagesPostResponse200 & {
-    headers: Headers;
-  };
-export type createMessageApiV1MessagesPostResponseError =
-  createMessageApiV1MessagesPostResponse422 & {
-    headers: Headers;
-  };
-
-export type createMessageApiV1MessagesPostResponse =
-  | createMessageApiV1MessagesPostResponseSuccess
-  | createMessageApiV1MessagesPostResponseError;
+export type createMessageApiV1MessagesPostResponse = (createMessageApiV1MessagesPostResponseSuccess | createMessageApiV1MessagesPostResponseError)
 
 export const getCreateMessageApiV1MessagesPostUrl = () => {
-  return `http://10.0.0.228:8000/api/v1/messages`;
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/messages`
+}
 
 /**
  * 持久化一条会话消息。
  * @summary Create Message
  */
-export const createMessageApiV1MessagesPost = async (
-  messageCreateRequest: MessageCreateRequest,
-  options?: RequestInit,
-): Promise<createMessageApiV1MessagesPostResponse> => {
-  return useCustomInstance<createMessageApiV1MessagesPostResponse>(
-    getCreateMessageApiV1MessagesPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(messageCreateRequest),
-    },
-  );
-};
+export const createMessageApiV1MessagesPost = async (messageCreateRequest: MessageCreateRequest, options?: RequestInit): Promise<createMessageApiV1MessagesPostResponse> => {
+
+  return useCustomInstance<createMessageApiV1MessagesPostResponse>(getCreateMessageApiV1MessagesPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(messageCreateRequest)
+  }
+);}
+
 
 export type listMessagesApiV1MessagesConversationIdGetResponse200 = {
-  data: AppApiSchemasMessageResponse[];
-  status: 200;
-};
+  data: AppApiSchemasMessageResponse[]
+  status: 200
+}
 
 export type listMessagesApiV1MessagesConversationIdGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponseSuccess = (listMessagesApiV1MessagesConversationIdGetResponse200) & {
+  headers: Headers;
+};
+export type listMessagesApiV1MessagesConversationIdGetResponseError = (listMessagesApiV1MessagesConversationIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type listMessagesApiV1MessagesConversationIdGetResponseSuccess =
-  listMessagesApiV1MessagesConversationIdGetResponse200 & {
-    headers: Headers;
-  };
-export type listMessagesApiV1MessagesConversationIdGetResponseError =
-  listMessagesApiV1MessagesConversationIdGetResponse422 & {
-    headers: Headers;
-  };
+export type listMessagesApiV1MessagesConversationIdGetResponse = (listMessagesApiV1MessagesConversationIdGetResponseSuccess | listMessagesApiV1MessagesConversationIdGetResponseError)
 
-export type listMessagesApiV1MessagesConversationIdGetResponse =
-  | listMessagesApiV1MessagesConversationIdGetResponseSuccess
-  | listMessagesApiV1MessagesConversationIdGetResponseError;
+export const getListMessagesApiV1MessagesConversationIdGetUrl = (conversationId: string,) => {
 
-export const getListMessagesApiV1MessagesConversationIdGetUrl = (
-  conversationId: string,
-) => {
-  return `http://10.0.0.228:8000/api/v1/messages/${conversationId}`;
-};
+
+
+
+  return `http://10.0.0.179:8000/api/v1/messages/${conversationId}`
+}
 
 /**
  * 返回某个会话已持久化的消息记录。
  * @summary List Messages
  */
-export const listMessagesApiV1MessagesConversationIdGet = async (
-  conversationId: string,
-  options?: RequestInit,
-): Promise<listMessagesApiV1MessagesConversationIdGetResponse> => {
-  return useCustomInstance<listMessagesApiV1MessagesConversationIdGetResponse>(
-    getListMessagesApiV1MessagesConversationIdGetUrl(conversationId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listMessagesApiV1MessagesConversationIdGet = async (conversationId: string, options?: RequestInit): Promise<listMessagesApiV1MessagesConversationIdGetResponse> => {
+
+  return useCustomInstance<listMessagesApiV1MessagesConversationIdGetResponse>(getListMessagesApiV1MessagesConversationIdGetUrl(conversationId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

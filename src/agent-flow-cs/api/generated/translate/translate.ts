@@ -7,53 +7,51 @@
 import type {
   HTTPValidationError,
   TranslateRequest,
-  TranslateResponse,
+  TranslateResponse
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type translateApiV1TranslatePostResponse200 = {
-  data: TranslateResponse;
-  status: 200;
-};
+  data: TranslateResponse
+  status: 200
+}
 
 export type translateApiV1TranslatePostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type translateApiV1TranslatePostResponseSuccess = (translateApiV1TranslatePostResponse200) & {
+  headers: Headers;
+};
+export type translateApiV1TranslatePostResponseError = (translateApiV1TranslatePostResponse422) & {
+  headers: Headers;
 };
 
-export type translateApiV1TranslatePostResponseSuccess =
-  translateApiV1TranslatePostResponse200 & {
-    headers: Headers;
-  };
-export type translateApiV1TranslatePostResponseError =
-  translateApiV1TranslatePostResponse422 & {
-    headers: Headers;
-  };
-
-export type translateApiV1TranslatePostResponse =
-  | translateApiV1TranslatePostResponseSuccess
-  | translateApiV1TranslatePostResponseError;
+export type translateApiV1TranslatePostResponse = (translateApiV1TranslatePostResponseSuccess | translateApiV1TranslatePostResponseError)
 
 export const getTranslateApiV1TranslatePostUrl = () => {
-  return `http://10.0.0.228:8000/api/v1/translate/`;
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/translate/`
+}
 
 /**
  * 通过 OpenRouter 执行翻译，支持指定模型。
  * @summary Translate
  */
-export const translateApiV1TranslatePost = async (
-  translateRequest: TranslateRequest,
-  options?: RequestInit,
-): Promise<translateApiV1TranslatePostResponse> => {
-  return useCustomInstance<translateApiV1TranslatePostResponse>(
-    getTranslateApiV1TranslatePostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(translateRequest),
-    },
-  );
-};
+export const translateApiV1TranslatePost = async (translateRequest: TranslateRequest, options?: RequestInit): Promise<translateApiV1TranslatePostResponse> => {
+
+  return useCustomInstance<translateApiV1TranslatePostResponse>(getTranslateApiV1TranslatePostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(translateRequest)
+  }
+);}
+
+

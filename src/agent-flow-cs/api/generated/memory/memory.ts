@@ -12,219 +12,185 @@ import type {
   MemoryDeleteResponse,
   MemoryExportResponse,
   MemoryMetricsResponse,
-  MemoryRetentionCleanupResponse,
+  MemoryRetentionCleanupResponse
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getMemoryMetricsApiV1MemoryMetricsGetResponse200 = {
-  data: MemoryMetricsResponse;
-  status: 200;
-};
+  data: MemoryMetricsResponse
+  status: 200
+}
 
-export type getMemoryMetricsApiV1MemoryMetricsGetResponseSuccess =
-  getMemoryMetricsApiV1MemoryMetricsGetResponse200 & {
-    headers: Headers;
-  };
-export type getMemoryMetricsApiV1MemoryMetricsGetResponse =
-  getMemoryMetricsApiV1MemoryMetricsGetResponseSuccess;
+export type getMemoryMetricsApiV1MemoryMetricsGetResponseSuccess = (getMemoryMetricsApiV1MemoryMetricsGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse = (getMemoryMetricsApiV1MemoryMetricsGetResponseSuccess)
 
 export const getGetMemoryMetricsApiV1MemoryMetricsGetUrl = () => {
-  return `http://10.0.0.228:8000/api/v1/memory/metrics`;
-};
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/memory/metrics`
+}
 
 /**
  * Return process-local memory operation counters.
  * @summary Get Memory Metrics
  */
-export const getMemoryMetricsApiV1MemoryMetricsGet = async (
-  options?: RequestInit,
-): Promise<getMemoryMetricsApiV1MemoryMetricsGetResponse> => {
-  return useCustomInstance<getMemoryMetricsApiV1MemoryMetricsGetResponse>(
-    getGetMemoryMetricsApiV1MemoryMetricsGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getMemoryMetricsApiV1MemoryMetricsGet = async ( options?: RequestInit): Promise<getMemoryMetricsApiV1MemoryMetricsGetResponse> => {
+
+  return useCustomInstance<getMemoryMetricsApiV1MemoryMetricsGetResponse>(getGetMemoryMetricsApiV1MemoryMetricsGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse200 = {
-  data: MemoryExportResponse;
-  status: 200;
-};
+  data: MemoryExportResponse
+  status: 200
+}
 
 export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseSuccess = (exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse200) & {
+  headers: Headers;
+};
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseError = (exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseSuccess =
-  exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse200 & {
-    headers: Headers;
-  };
-export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseError =
-  exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse422 & {
-    headers: Headers;
-  };
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse = (exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseSuccess | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseError)
 
-export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse =
-  | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseSuccess
-  | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseError;
-
-export const getExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetUrl = (
-  customerId: string,
-  params: ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams,
-) => {
+export const getExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetUrl = (customerId: string,
+    params: ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}`
-    : `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}`;
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}`
+}
 
 /**
  * Export a customer's long-term memory records.
  * @summary Export Customer Memory
  */
-export const exportCustomerMemoryApiV1MemoryCustomersCustomerIdGet = async (
-  customerId: string,
-  params: ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams,
-  options?: RequestInit,
-): Promise<exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse> => {
-  return useCustomInstance<exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse>(
-    getExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetUrl(
-      customerId,
-      params,
-    ),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const exportCustomerMemoryApiV1MemoryCustomersCustomerIdGet = async (customerId: string,
+    params: ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams, options?: RequestInit): Promise<exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse> => {
+
+  return useCustomInstance<exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse>(getExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetUrl(customerId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse200 = {
+  data: MemoryDeleteResponse
+  status: 200
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseSuccess = (deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse200) & {
+  headers: Headers;
+};
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseError = (deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse422) & {
+  headers: Headers;
 };
 
-export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse200 =
-  {
-    data: MemoryDeleteResponse;
-    status: 200;
-  };
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse = (deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseSuccess | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseError)
 
-export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getDeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteUrl = (customerId: string,
+    params: DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams,) => {
+  const normalizedParams = new URLSearchParams();
 
-export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseSuccess =
-  deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse200 & {
-    headers: Headers;
-  };
-export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseError =
-  deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse422 & {
-    headers: Headers;
-  };
+  Object.entries(params || {}).forEach(([key, value]) => {
 
-export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse =
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
 
-    | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseSuccess
-    | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseError;
+  const stringifiedParams = normalizedParams.toString();
 
-export const getDeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteUrl =
-  (
-    customerId: string,
-    params: DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams,
-  ) => {
-    const normalizedParams = new URLSearchParams();
-
-    Object.entries(params || {}).forEach(([key, value]) => {
-      if (value !== undefined) {
-        normalizedParams.append(key, value === null ? 'null' : String(value));
-      }
-    });
-
-    const stringifiedParams = normalizedParams.toString();
-
-    return stringifiedParams.length > 0
-      ? `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}`
-      : `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}`;
-  };
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}`
+}
 
 /**
  * Delete a customer's long-term memory records.
  * @summary Delete Customer Memory Endpoint
  */
-export const deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDelete =
-  async (
-    customerId: string,
-    params: DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams,
-    options?: RequestInit,
-  ): Promise<deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse> => {
-    return useCustomInstance<deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse>(
-      getDeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteUrl(
-        customerId,
-        params,
-      ),
-      {
-        ...options,
-        method: 'DELETE',
-      },
-    );
-  };
+export const deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDelete = async (customerId: string,
+    params: DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams, options?: RequestInit): Promise<deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse> => {
 
-export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse200 =
+  return useCustomInstance<deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse>(getDeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteUrl(customerId,params),
   {
-    data: string;
-    status: 200;
-  };
+    ...options,
+    method: 'DELETE'
 
-export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
 
-export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseSuccess =
-  exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse200 & {
-    headers: Headers;
-  };
-export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseError =
-  exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse422 & {
-    headers: Headers;
-  };
+  }
+);}
 
-export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse =
 
-    | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseSuccess
-    | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseError;
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse200 = {
+  data: string
+  status: 200
+}
 
-export const getExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetUrl =
-  (
-    customerId: string,
-    params: ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams,
-  ) => {
-    const normalizedParams = new URLSearchParams();
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
 
-    Object.entries(params || {}).forEach(([key, value]) => {
-      if (value !== undefined) {
-        normalizedParams.append(key, value === null ? 'null' : String(value));
-      }
-    });
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseSuccess = (exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse200) & {
+  headers: Headers;
+};
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseError = (exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse422) & {
+  headers: Headers;
+};
 
-    const stringifiedParams = normalizedParams.toString();
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse = (exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseSuccess | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseError)
 
-    return stringifiedParams.length > 0
-      ? `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}/export/markdown?${stringifiedParams}`
-      : `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}/export/markdown`;
-  };
+export const getExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetUrl = (customerId: string,
+    params: ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}/export/markdown?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}/export/markdown`
+}
 
 /**
  * Export customer memory as human-readable Markdown.
@@ -233,53 +199,52 @@ export const getExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExport
  * 支持分页参数 page / page_size。
  * @summary Export Customer Memory Markdown
  */
-export const exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGet =
-  async (
-    customerId: string,
-    params: ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams,
-    options?: RequestInit,
-  ): Promise<exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse> => {
-    return useCustomInstance<exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse>(
-      getExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetUrl(
-        customerId,
-        params,
-      ),
-      {
-        ...options,
-        method: 'GET',
-      },
-    );
-  };
+export const exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGet = async (customerId: string,
+    params: ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams, options?: RequestInit): Promise<exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse> => {
+
+  return useCustomInstance<exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse>(getExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetUrl(customerId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse200 = {
-  data: MemoryRetentionCleanupResponse;
-  status: 200;
+  data: MemoryRetentionCleanupResponse
+  status: 200
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseSuccess = (runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse200) & {
+  headers: Headers;
 };
+;
 
-export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseSuccess =
-  runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse200 & {
-    headers: Headers;
-  };
-export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse =
-  runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseSuccess;
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse = (runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseSuccess)
 
-export const getRunMemoryRetentionCleanupApiV1MemoryRetentionRunPostUrl =
-  () => {
-    return `http://10.0.0.228:8000/api/v1/memory/retention/run`;
-  };
+export const getRunMemoryRetentionCleanupApiV1MemoryRetentionRunPostUrl = () => {
+
+
+
+
+  return `http://10.0.0.179:8000/api/v1/memory/retention/run`
+}
 
 /**
  * Run the configured long-term memory retention cleanup.
  * @summary Run Memory Retention Cleanup
  */
-export const runMemoryRetentionCleanupApiV1MemoryRetentionRunPost = async (
-  options?: RequestInit,
-): Promise<runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse> => {
-  return useCustomInstance<runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse>(
-    getRunMemoryRetentionCleanupApiV1MemoryRetentionRunPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-    },
-  );
-};
+export const runMemoryRetentionCleanupApiV1MemoryRetentionRunPost = async ( options?: RequestInit): Promise<runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse> => {
+
+  return useCustomInstance<runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse>(getRunMemoryRetentionCleanupApiV1MemoryRetentionRunPostUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+

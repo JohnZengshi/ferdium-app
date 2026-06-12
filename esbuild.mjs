@@ -77,7 +77,9 @@ const copyManualAssets = ({ isDev = false } = {}) => {
     fs.mkdirSync(stylesDir, { recursive: true });
   }
 
-  fs.copyFileSync('package.json', `${outDir}/package.json`);
+  const pkgJson = fsPkg.readJsonSync('package.json');
+  delete pkgJson.devDependencies;
+  fsPkg.writeJsonSync(`${outDir}/package.json`, pkgJson, { spaces: 2 });
   fs.copyFileSync('electron-builder.npmrc', `${outDir}/.npmrc`);
 
   // Copy patches directory for pnpm patch support

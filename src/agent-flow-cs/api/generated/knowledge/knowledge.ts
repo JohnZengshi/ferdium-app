@@ -36,7 +36,7 @@ export type knowledgeSearchApiV1KnowledgeSearchPostResponse =
   | knowledgeSearchApiV1KnowledgeSearchPostResponseError;
 
 export const getKnowledgeSearchApiV1KnowledgeSearchPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/knowledge/search`;
+  return `http://10.0.0.228:8000/api/v1/knowledge/search`;
 };
 
 /**

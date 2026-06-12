@@ -28,7 +28,7 @@ export type listMembersApiV1AccountsMembersGetResponse =
   listMembersApiV1AccountsMembersGetResponseSuccess;
 
 export const getListMembersApiV1AccountsMembersGetUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members`;
+  return `http://10.0.0.228:8000/api/v1/accounts/members`;
 };
 
 /**
@@ -71,7 +71,7 @@ export type createMemberApiV1AccountsMembersPostResponse =
   | createMemberApiV1AccountsMembersPostResponseError;
 
 export const getCreateMemberApiV1AccountsMembersPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members`;
+  return `http://10.0.0.228:8000/api/v1/accounts/members`;
 };
 
 /**
@@ -119,7 +119,7 @@ export type getMemberApiV1AccountsMembersMemberIdGetResponse =
 export const getGetMemberApiV1AccountsMembersMemberIdGetUrl = (
   memberId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`;
+  return `http://10.0.0.228:8000/api/v1/accounts/members/${memberId}`;
 };
 
 /**
@@ -165,7 +165,7 @@ export type updateMemberApiV1AccountsMembersMemberIdPatchResponse =
 export const getUpdateMemberApiV1AccountsMembersMemberIdPatchUrl = (
   memberId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`;
+  return `http://10.0.0.228:8000/api/v1/accounts/members/${memberId}`;
 };
 
 /**
@@ -214,7 +214,7 @@ export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse =
 export const getDeleteMemberApiV1AccountsMembersMemberIdDeleteUrl = (
   memberId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/accounts/members/${memberId}`;
+  return `http://10.0.0.228:8000/api/v1/accounts/members/${memberId}`;
 };
 
 /**
@@ -250,7 +250,7 @@ export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse =
 
 export const getOverviewConversationsApiV1AccountsOverviewConversationsGetUrl =
   () => {
-    return `http://10.0.0.205:8000/api/v1/accounts/overview/conversations`;
+    return `http://10.0.0.228:8000/api/v1/accounts/overview/conversations`;
   };
 
 /**
@@ -285,7 +285,7 @@ export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse =
 
 export const getOverviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetUrl =
   () => {
-    return `http://10.0.0.205:8000/api/v1/accounts/overview/digital-humans`;
+    return `http://10.0.0.228:8000/api/v1/accounts/overview/digital-humans`;
   };
 
 /**

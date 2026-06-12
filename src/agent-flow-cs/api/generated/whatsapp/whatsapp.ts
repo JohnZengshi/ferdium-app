@@ -41,7 +41,7 @@ export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse =
 export const getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl = (
   sessionId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/webhooks/${sessionId}`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/webhooks/${sessionId}`;
 };
 
 /**
@@ -85,7 +85,7 @@ export type createWhatsappBindingApiV1WhatsappBindPostResponse =
   | createWhatsappBindingApiV1WhatsappBindPostResponseError;
 
 export const getCreateWhatsappBindingApiV1WhatsappBindPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/bind`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/bind`;
 };
 
 /**
@@ -147,8 +147,8 @@ export const getGetWhatsappBindingApiV1WhatsappBindGetUrl = (
   const stringifiedParams = normalizedParams.toString();
 
   return stringifiedParams.length > 0
-    ? `http://10.0.0.205:8000/api/v1/whatsapp/bind?${stringifiedParams}`
-    : `http://10.0.0.205:8000/api/v1/whatsapp/bind`;
+    ? `http://10.0.0.228:8000/api/v1/whatsapp/bind?${stringifiedParams}`
+    : `http://10.0.0.228:8000/api/v1/whatsapp/bind`;
 };
 
 /**
@@ -195,7 +195,7 @@ export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse =
 
 export const getSwitchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchUrl =
   () => {
-    return `http://10.0.0.205:8000/api/v1/whatsapp/bind`;
+    return `http://10.0.0.228:8000/api/v1/whatsapp/bind`;
   };
 
 /**

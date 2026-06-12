@@ -28,7 +28,7 @@ export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse =
   listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess;
 
 export const getListCampaignTasksApiV1WhatsappCampaignTasksGetUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks`;
 };
 
 /**
@@ -71,7 +71,7 @@ export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse =
   | createCampaignTaskApiV1WhatsappCampaignTasksPostResponseError;
 
 export const getCreateCampaignTaskApiV1WhatsappCampaignTasksPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks`;
 };
 
 /**
@@ -119,7 +119,7 @@ export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse =
 export const getGetCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetUrl = (
   taskId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}`;
 };
 
 /**
@@ -167,7 +167,7 @@ export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse =
 export const getDeleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteUrl = (
   taskId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}`;
 };
 
 /**
@@ -215,7 +215,7 @@ export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse =
 
 export const getPauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostUrl =
   (taskId: string) => {
-    return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/pause`;
+    return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}/pause`;
   };
 
 /**
@@ -264,7 +264,7 @@ export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse
 
 export const getResumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostUrl =
   (taskId: string) => {
-    return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/resume`;
+    return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}/resume`;
   };
 
 /**
@@ -315,7 +315,7 @@ export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse 
 
 export const getListCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetUrl =
   (taskId: string) => {
-    return `http://10.0.0.205:8000/api/v1/whatsapp/campaign-tasks/${taskId}/runs`;
+    return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}/runs`;
   };
 
 /**
@@ -364,7 +364,7 @@ export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse =
 export const getConfigureFollowupApiV1WhatsappFollowupsConversationIdPutUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}`;
 };
 
 /**
@@ -415,7 +415,7 @@ export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse =
 export const getGetFollowupApiV1WhatsappFollowupsConversationIdGetUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}`;
 };
 
 /**
@@ -463,7 +463,7 @@ export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse =
 
 export const getPauseFollowupApiV1WhatsappFollowupsConversationIdPausePostUrl =
   (conversationId: string) => {
-    return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/pause`;
+    return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}/pause`;
   };
 
 /**
@@ -514,7 +514,7 @@ export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse
 
 export const getResumeFollowupApiV1WhatsappFollowupsConversationIdResumePostUrl =
   (conversationId: string) => {
-    return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/resume`;
+    return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}/resume`;
   };
 
 /**
@@ -565,7 +565,7 @@ export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse =
 export const getStopFollowupApiV1WhatsappFollowupsConversationIdStopPostUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/whatsapp/followups/${conversationId}/stop`;
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}/stop`;
 };
 
 /**

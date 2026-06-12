@@ -36,7 +36,7 @@ export type createMessageApiV1MessagesPostResponse =
   | createMessageApiV1MessagesPostResponseError;
 
 export const getCreateMessageApiV1MessagesPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/messages`;
+  return `http://10.0.0.228:8000/api/v1/messages`;
 };
 
 /**
@@ -84,7 +84,7 @@ export type listMessagesApiV1MessagesConversationIdGetResponse =
 export const getListMessagesApiV1MessagesConversationIdGetUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/messages/${conversationId}`;
+  return `http://10.0.0.228:8000/api/v1/messages/${conversationId}`;
 };
 
 /**

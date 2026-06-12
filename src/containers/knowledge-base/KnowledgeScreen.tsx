@@ -619,23 +619,23 @@ const KnowledgeScreen: React.FC = () => {
 
                     <div className="mt-[12px] flex flex-wrap gap-x-[8px] gap-y-[8px]">
                       {[
-                        '女性',
-                        '男性',
-                        '年轻人',
-                        '商务风',
-                        '旅行爱好者',
-                        '美食爱好者',
-                        '社交爱好者',
-                        '东南亚',
-                        '欧美',
-                        '商务风',
-                        '高活跃社交账号',
-                        '社交爱好者',
+                        { key: 'female', label: '女性' },
+                        { key: 'male', label: '男性' },
+                        { key: 'young', label: '年轻人' },
+                        { key: 'business-1', label: '商务风' },
+                        { key: 'travel', label: '旅行爱好者' },
+                        { key: 'food', label: '美食爱好者' },
+                        { key: 'social-1', label: '社交爱好者' },
+                        { key: 'sea', label: '东南亚' },
+                        { key: 'west', label: '欧美' },
+                        { key: 'business-2', label: '商务风' },
+                        { key: 'active', label: '高活跃社交账号' },
+                        { key: 'social-2', label: '社交爱好者' },
                       ].map(tag => {
-                        const isSelected = tag === '高活跃社交账号';
+                        const isSelected = tag.key === 'active';
                         return (
                           <button
-                            key={tag}
+                            key={tag.key}
                             type="button"
                             className={`h-[28px] rounded-[4px] px-[12px] text-[12px] leading-[28px] border-none cursor-pointer ${
                               isSelected
@@ -643,7 +643,7 @@ const KnowledgeScreen: React.FC = () => {
                                 : 'bg-component text-primary'
                             }`}
                           >
-                            {tag}
+                            {tag.label}
                           </button>
                         );
                       })}

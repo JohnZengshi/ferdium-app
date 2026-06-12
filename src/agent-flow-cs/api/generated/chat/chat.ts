@@ -38,7 +38,7 @@ export type chatSyncApiV1ChatSyncPostResponse =
   | chatSyncApiV1ChatSyncPostResponseError;
 
 export const getChatSyncApiV1ChatSyncPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/chat/sync`;
+  return `http://10.0.0.228:8000/api/v1/chat/sync`;
 };
 
 /**
@@ -98,8 +98,8 @@ export const getGetConversationTraceApiV1ChatConversationIdTraceGetUrl = (
   const stringifiedParams = normalizedParams.toString();
 
   return stringifiedParams.length > 0
-    ? `http://10.0.0.205:8000/api/v1/chat/${conversationId}/trace?${stringifiedParams}`
-    : `http://10.0.0.205:8000/api/v1/chat/${conversationId}/trace`;
+    ? `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace?${stringifiedParams}`
+    : `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace`;
 };
 
 /**
@@ -147,7 +147,7 @@ export type chatStreamApiV1ChatStreamPostResponse =
   | chatStreamApiV1ChatStreamPostResponseError;
 
 export const getChatStreamApiV1ChatStreamPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/chat/stream`;
+  return `http://10.0.0.228:8000/api/v1/chat/stream`;
 };
 
 /**

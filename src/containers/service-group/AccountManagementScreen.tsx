@@ -68,7 +68,6 @@ const messages = defineMessages({
     id: 'accountMgmt.proxy.local',
     defaultMessage: 'Local Direct',
   },
-  },
   filterStatus: { id: 'accountMgmt.filterStatus', defaultMessage: 'Status' },
   filterPlaceholder: {
     id: 'accountMgmt.filterPlaceholder',

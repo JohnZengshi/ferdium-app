@@ -1,6 +1,7 @@
-import type { ReactElement } from 'react';
+import { type ReactElement, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { CheckIcon, CloseIcon, NotificationIcon } from 'tdesign-icons-react';
+import { Button, Dialog, Input, MessagePlugin } from 'tdesign-react';
 import RuleListEditor from './RuleListEditor';
 
 const messages = defineMessages({
@@ -34,10 +35,6 @@ const messages = defineMessages({
     defaultMessage:
       'When a rule is triggered, alerts will be pushed to the bound channel for timely handling.',
   },
-  whatsappBot: {
-    id: 'handoverRulesTab.whatsappBot',
-    defaultMessage: 'WhatsApp Bot',
-  },
   telegramBot: {
     id: 'handoverRulesTab.telegramBot',
     defaultMessage: 'Telegram Bot',
@@ -50,22 +47,138 @@ const messages = defineMessages({
     id: 'handoverRulesTab.unbound',
     defaultMessage: 'Unbound',
   },
-  rebind: {
-    id: 'handoverRulesTab.rebind',
-    defaultMessage: 'Rebind',
-  },
   goBind: {
     id: 'handoverRulesTab.goBind',
     defaultMessage: 'Bind',
+  },
+  unbind: {
+    id: 'handoverRulesTab.unbind',
+    defaultMessage: 'Unbind',
+  },
+  edit: {
+    id: 'handoverRulesTab.edit',
+    defaultMessage: 'Edit',
   },
   addRule: {
     id: 'handoverRulesTab.addRule',
     defaultMessage: 'Add handover rule',
   },
+  bindDialogTitle: {
+    id: 'handoverRulesTab.bindDialogTitle',
+    defaultMessage: 'Telegram Bot Settings',
+  },
+  editDialogTitle: {
+    id: 'handoverRulesTab.editDialogTitle',
+    defaultMessage: 'Edit Telegram Bot',
+  },
+  botTokenLabel: {
+    id: 'handoverRulesTab.botTokenLabel',
+    defaultMessage: 'Bot Token',
+  },
+  botTokenPlaceholder: {
+    id: 'handoverRulesTab.botTokenPlaceholder',
+    defaultMessage: 'Enter your Telegram Bot Token',
+  },
+  chatIdLabel: {
+    id: 'handoverRulesTab.chatIdLabel',
+    defaultMessage: 'Chat ID',
+  },
+  chatIdPlaceholder: {
+    id: 'handoverRulesTab.chatIdPlaceholder',
+    defaultMessage: 'Enter your Telegram Chat ID',
+  },
+  test: {
+    id: 'handoverRulesTab.test',
+    defaultMessage: 'Test',
+  },
+  confirm: {
+    id: 'handoverRulesTab.confirm',
+    defaultMessage: 'Confirm',
+  },
+  cancel: {
+    id: 'handoverRulesTab.cancel',
+    defaultMessage: 'Cancel',
+  },
+  testSuccess: {
+    id: 'handoverRulesTab.testSuccess',
+    defaultMessage: 'Test successful, notification channel works!',
+  },
+  testFailed: {
+    id: 'handoverRulesTab.testFailed',
+    defaultMessage: 'Test failed, please check Bot Token and Chat ID.',
+  },
+  bindSuccess: {
+    id: 'handoverRulesTab.bindSuccess',
+    defaultMessage: 'Telegram Bot bound successfully!',
+  },
+  unbindSuccess: {
+    id: 'handoverRulesTab.unbindSuccess',
+    defaultMessage: 'Telegram Bot unbound successfully!',
+  },
+  unbindConfirmTitle: {
+    id: 'handoverRulesTab.unbindConfirmTitle',
+    defaultMessage: 'Unbind Telegram Bot',
+  },
+  unbindConfirmContent: {
+    id: 'handoverRulesTab.unbindConfirmContent',
+    defaultMessage:
+      'Are you sure you want to unbind the Telegram Bot? Notifications will no longer be sent.',
+  },
+  unbindConfirmYes: {
+    id: 'handoverRulesTab.unbindConfirmYes',
+    defaultMessage: 'Yes, unbind',
+  },
 });
 
 const HandoverRulesTab = (): ReactElement => {
   const intl = useIntl();
+
+  const [bound, setBound] = useState(false);
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [unbindConfirmVisible, setUnbindConfirmVisible] = useState(false);
+  const [botToken, setBotToken] = useState('');
+  const [chatId, setChatId] = useState('');
+  const [editMode, setEditMode] = useState(false);
+
+  const handleBind = (): void => {
+    setEditMode(false);
+    setBotToken('');
+    setChatId('');
+    setDialogVisible(true);
+  };
+
+  const handleEdit = (): void => {
+    setEditMode(true);
+    setDialogVisible(true);
+  };
+
+  const handleUnbind = (): void => {
+    setUnbindConfirmVisible(true);
+  };
+
+  const confirmUnbind = (): void => {
+    setBound(false);
+    setBotToken('');
+    setChatId('');
+    setUnbindConfirmVisible(false);
+    MessagePlugin.success(intl.formatMessage(messages.unbindSuccess));
+  };
+
+  const handleTest = (): void => {
+    // TODO: 실제 Telegram API 호출로 대체
+    if (botToken && chatId) {
+      MessagePlugin.success(intl.formatMessage(messages.testSuccess));
+    } else {
+      MessagePlugin.error(intl.formatMessage(messages.testFailed));
+    }
+  };
+
+  const handleConfirm = (): void => {
+    // TODO: 실제 API 저장 로직으로 대체
+    setBound(true);
+    setDialogVisible(false);
+    MessagePlugin.success(intl.formatMessage(messages.bindSuccess));
+  };
 
   return (
     <div
@@ -118,48 +231,6 @@ const HandoverRulesTab = (): ReactElement => {
         </p>
 
         <div className="mt-[24px] flex gap-[24px]">
-          <div className="relative flex-1 overflow-hidden rounded-[12px] bg-success-light p-[24px]">
-            <div className="pointer-events-none absolute right-0 top-0 h-full w-[40%] opacity-[0.08]">
-              <svg viewBox="0 0 200 160" className="h-full w-full">
-                <path
-                  d="M200 160C160 100 120 120 80 80S40 20 0 40V160H200Z"
-                  style={{ fill: 'var(--td-success-color)' }}
-                />
-              </svg>
-            </div>
-
-            <div className="flex h-[48px] w-[48px] items-center justify-center rounded-[12px] bg-success">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path
-                  d="M14 3C7.92487 3 3 7.92487 3 14C3 16.5 3.8 18.8 5.2 20.7L4 25L8.5 23.5C10.3 24.5 12.2 25 14 25C20.0751 25 25 20.0751 25 14C25 7.92487 20.0751 3 14 3Z"
-                  fill="white"
-                />
-                <path
-                  d="M10.5 11C10.5 11 10.5 9.5 11.5 9.5C12.5 9.5 13.5 11 14 12C14.5 11 15.5 9.5 16.5 9.5C17.5 9.5 17.5 11 17.5 11C17.5 12.5 16 14 16 14C16 14 17 15.5 16.5 17C16 18.5 14 19 14 19C14 19 12 18.5 11.5 17C11 15.5 12 14 12 14C12 14 10.5 12.5 10.5 11Z"
-                  style={{ fill: 'var(--td-success-color)' }}
-                />
-              </svg>
-            </div>
-
-            <span className="mt-[16px] block text-[16px] font-medium leading-[22px] text-primary">
-              {intl.formatMessage(messages.whatsappBot)}
-            </span>
-
-            <div className="mt-[12px] inline-flex h-[28px] items-center gap-[4px] rounded-[6px] bg-success-light px-[10px]">
-              <CheckIcon size="16px" className="text-success-active" />
-              <span className="text-[13px] font-medium leading-none text-success-active">
-                {intl.formatMessage(messages.bound)}
-              </span>
-            </div>
-
-            <button
-              type="button"
-              className="absolute bottom-[24px] right-[24px] flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-brand bg-container text-[13px] font-medium text-brand"
-            >
-              {intl.formatMessage(messages.rebind)}
-            </button>
-          </div>
-
           <div className="relative flex-1 overflow-hidden rounded-[12px] bg-brand-light p-[24px]">
             <div className="pointer-events-none absolute right-0 top-0 h-full w-[40%] opacity-[0.08]">
               <svg viewBox="0 0 200 160" className="h-full w-full">
@@ -183,19 +254,54 @@ const HandoverRulesTab = (): ReactElement => {
               {intl.formatMessage(messages.telegramBot)}
             </span>
 
-            <div className="mt-[12px] inline-flex h-[28px] items-center gap-[4px] rounded-[6px] bg-secondary-container px-[10px]">
-              <CloseIcon size="16px" className="text-placeholder" />
-              <span className="text-[13px] font-medium leading-none text-placeholder">
-                {intl.formatMessage(messages.unbound)}
-              </span>
+            <div
+              className={`mt-[12px] inline-flex h-[28px] items-center gap-[4px] rounded-[6px] px-[10px] ${
+                bound ? 'bg-success-light' : 'bg-secondary-container'
+              }`}
+            >
+              {bound ? (
+                <>
+                  <CheckIcon size="16px" className="text-success-active" />
+                  <span className="text-[13px] font-medium leading-none text-success-active">
+                    {intl.formatMessage(messages.bound)}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <CloseIcon size="16px" className="text-placeholder" />
+                  <span className="text-[13px] font-medium leading-none text-placeholder">
+                    {intl.formatMessage(messages.unbound)}
+                  </span>
+                </>
+              )}
             </div>
 
-            <button
-              type="button"
-              className="absolute bottom-[24px] right-[24px] flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[13px] font-medium text-text-anti"
-            >
-              {intl.formatMessage(messages.goBind)}
-            </button>
+            {bound ? (
+              <div className="absolute bottom-[24px] right-[24px] flex gap-[8px]">
+                <button
+                  type="button"
+                  onClick={handleUnbind}
+                  className="flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-error bg-container text-[13px] font-medium text-error"
+                >
+                  {intl.formatMessage(messages.unbind)}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleEdit}
+                  className="flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-brand bg-container text-[13px] font-medium text-brand"
+                >
+                  {intl.formatMessage(messages.edit)}
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={handleBind}
+                className="absolute bottom-[24px] right-[24px] flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[13px] font-medium text-text-anti"
+              >
+                {intl.formatMessage(messages.goBind)}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -205,6 +311,77 @@ const HandoverRulesTab = (): ReactElement => {
         namePrefix="规则"
         ruleType="handoff_policy"
       />
+
+      {/* Bind/Edit Dialog */}
+      <Dialog
+        header={intl.formatMessage(
+          editMode ? messages.editDialogTitle : messages.bindDialogTitle,
+        )}
+        visible={dialogVisible}
+        onClose={() => setDialogVisible(false)}
+        footer={
+          <div className="flex justify-end gap-[8px]">
+            <Button variant="outline" onClick={() => setDialogVisible(false)}>
+              {intl.formatMessage(messages.cancel)}
+            </Button>
+            <Button variant="outline" theme="primary" onClick={handleTest}>
+              {intl.formatMessage(messages.test)}
+            </Button>
+            <Button theme="primary" onClick={handleConfirm}>
+              {intl.formatMessage(messages.confirm)}
+            </Button>
+          </div>
+        }
+        destroyOnClose
+      >
+        <div className="flex flex-col gap-[16px] pt-[8px]">
+          <div>
+            <div className="mb-[6px] text-[14px] font-medium text-primary">
+              {intl.formatMessage(messages.botTokenLabel)}
+            </div>
+            <Input
+              placeholder={intl.formatMessage(messages.botTokenPlaceholder)}
+              value={botToken}
+              onChange={(val: string) => setBotToken(val)}
+            />
+          </div>
+          <div>
+            <div className="mb-[6px] text-[14px] font-medium text-primary">
+              {intl.formatMessage(messages.chatIdLabel)}
+            </div>
+            <Input
+              placeholder={intl.formatMessage(messages.chatIdPlaceholder)}
+              value={chatId}
+              onChange={(val: string) => setChatId(val)}
+            />
+          </div>
+        </div>
+      </Dialog>
+
+      {/* Unbind Confirm Dialog */}
+      <Dialog
+        header={intl.formatMessage(messages.unbindConfirmTitle)}
+        visible={unbindConfirmVisible}
+        onClose={() => setUnbindConfirmVisible(false)}
+        footer={
+          <div className="flex justify-end gap-[8px]">
+            <Button
+              variant="outline"
+              onClick={() => setUnbindConfirmVisible(false)}
+            >
+              {intl.formatMessage(messages.cancel)}
+            </Button>
+            <Button theme="danger" onClick={confirmUnbind}>
+              {intl.formatMessage(messages.unbindConfirmYes)}
+            </Button>
+          </div>
+        }
+        destroyOnClose
+      >
+        <p className="text-[14px] text-primary">
+          {intl.formatMessage(messages.unbindConfirmContent)}
+        </p>
+      </Dialog>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import {
   AddIcon,
@@ -170,6 +170,10 @@ const messages = defineMessages({
     id: 'knowledgeScreen.changeAvatar',
     defaultMessage: '更换头像',
   },
+  emptyKeywordError: {
+    id: 'knowledgeScreen.emptyKeywordError',
+    defaultMessage: '请输入关键词描述后再生成',
+  },
 });
 
 interface PersonaRecord {
@@ -211,6 +215,37 @@ const INITIAL_FORM_DATA: FormData = {
   family: '',
   occupation: '',
   participation: '',
+};
+
+interface MockPersonaData {
+  description: string;
+  fields: Partial<FormData>;
+}
+
+const MOCK_PERSONA: MockPersonaData = {
+  description:
+    'Amy，25岁女性，菲律宾马尼拉人。性格开朗活泼，热爱旅游和美食。' +
+    '目前从事销售工作，深度参与项目全流程，负责线索挖掘、客户对接、' +
+    '客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。' +
+    '标准化项目成交后衔接售后即可；企业级/大客户项目需持续跟进交付、' +
+    '验收与长期合作维护。销售为项目客户侧第一责任人，统筹对外沟通与商务推进。' +
+    '单身，与一只猫生活在马尼拉市中心。',
+  fields: {
+    name: 'Amy',
+    age: '25',
+    gender: 'female',
+    birthday: '2001-03-15',
+    country: 'Philippines',
+    language: 'English / Filipino',
+    city: 'Manila',
+    family: '单身，与一只猫生活',
+    occupation: '销售',
+    participation:
+      '深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、' +
+      '产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可；' +
+      '企业级/大客户项目需持续跟进交付、验收与长期合作维护。' +
+      '销售为项目客户侧第一责任人，统筹对外沟通与商务推进。',
+  },
 };
 
 const getConfigString = (
@@ -301,6 +336,10 @@ const KnowledgeScreen: React.FC = () => {
   >([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [hasGenerated, setHasGenerated] = useState(false);
+  const [streamProgress, setStreamProgress] = useState(0);
+  const streamTimerRef = useRef<number | null>(null);
 
   const genderOptions = useMemo(
     () => [
@@ -309,6 +348,30 @@ const KnowledgeScreen: React.FC = () => {
     ],
     [intl],
   );
+
+  const completionPercent = useMemo(() => {
+    let percent = 0;
+
+    // 基础信息: 30% (6 fields × 5%)
+    if (formData.name.trim()) percent += 5;
+    if (formData.gender.trim()) percent += 5;
+    if (formData.birthday.trim()) percent += 5;
+    if (formData.age.trim()) percent += 5;
+    if (formData.country.trim()) percent += 5;
+    if (formData.language.trim()) percent += 5;
+
+    // 生活背景: 20% (2 fields × 10%)
+    if (formData.city.trim()) percent += 10;
+    if (formData.family.trim()) percent += 10;
+
+    // 职业与项目背景: 50% (职业 20%, 项目 30%)
+    if (formData.occupation.trim()) percent += 20;
+    if (formData.participation.trim()) percent += 30;
+
+    // 人设备注和人设照片不参与计算
+
+    return percent;
+  }, [formData]);
 
   const sidebarItems: SidebarItem[] = useMemo(
     () => [
@@ -333,6 +396,15 @@ const KnowledgeScreen: React.FC = () => {
   useEffect(() => {
     fetchDigitalHumans();
   }, [fetchDigitalHumans]);
+
+  useEffect(
+    () => () => {
+      if (streamTimerRef.current) {
+        cancelAnimationFrame(streamTimerRef.current);
+      }
+    },
+    [],
+  );
 
   const tableData = useMemo<PersonaRecord[]>(
     () =>
@@ -367,12 +439,20 @@ const KnowledgeScreen: React.FC = () => {
     setFormData(INITIAL_FORM_DATA);
     setSmartImportText('');
     setView('create');
+    if (streamTimerRef.current) cancelAnimationFrame(streamTimerRef.current);
+    setIsGenerating(false);
+    setHasGenerated(false);
+    setStreamProgress(0);
   }, []);
 
   const handleBack = useCallback(() => {
     setView('list');
     setEditingId(null);
     setFormData(INITIAL_FORM_DATA);
+    if (streamTimerRef.current) cancelAnimationFrame(streamTimerRef.current);
+    setIsGenerating(false);
+    setHasGenerated(false);
+    setStreamProgress(0);
   }, []);
 
   const handleEditPersona = useCallback((record: PersonaRecord) => {
@@ -392,11 +472,45 @@ const KnowledgeScreen: React.FC = () => {
     setSmartImportText(value);
   }, []);
 
-  const handleSmartImport = useCallback(async () => {
-    await MessagePlugin.success(
-      intl.formatMessage(messages.smartImportSuccess),
-    );
-  }, [intl]);
+  const handleSmartImport = useCallback(() => {
+    if (!smartImportText.trim()) {
+      MessagePlugin.error(intl.formatMessage(messages.emptyKeywordError));
+      return;
+    }
+
+    if (isGenerating) return;
+
+    if (streamTimerRef.current) {
+      cancelAnimationFrame(streamTimerRef.current);
+    }
+
+    setIsGenerating(true);
+    setStreamProgress(0);
+
+    let progress = 0;
+    streamTimerRef.current = window.setInterval(() => {
+      progress += 5;
+      if (progress >= 100) {
+        progress = 100;
+        if (streamTimerRef.current) {
+          window.clearInterval(streamTimerRef.current);
+        }
+        streamTimerRef.current = null;
+        setStreamProgress(100);
+        setIsGenerating(false);
+        setHasGenerated(true);
+
+        setSmartImportText(MOCK_PERSONA.description);
+        setFormData(prev => ({
+          ...prev,
+          ...MOCK_PERSONA.fields,
+          remark: prev.remark,
+        }));
+      } else {
+        setStreamProgress(progress);
+      }
+    }, 100);
+  }, [intl, isGenerating, smartImportText]);
 
   const handleSave = useCallback(async () => {
     if (!formData.name.trim()) {
@@ -562,9 +676,14 @@ const KnowledgeScreen: React.FC = () => {
             <div className="flex items-center gap-[12px]">
               <span className="text-[12px] text-primary">资料完成度</span>
               <div className="h-[4px] w-[170px] rounded-full bg-component overflow-hidden">
-                <div className="h-full w-[80%] rounded-full bg-brand" />
+                <div
+                  className="h-full rounded-full bg-brand transition-all duration-300"
+                  style={{ width: `${completionPercent}%` }}
+                />
               </div>
-              <span className="text-[12px] text-primary">80%</span>
+              <span className="text-[12px] text-primary">
+                {completionPercent}%
+              </span>
             </div>
           </div>
 
@@ -577,7 +696,9 @@ const KnowledgeScreen: React.FC = () => {
                 <div className="flex h-[108px] items-center justify-between">
                   <div>
                     <h2 className="m-0 text-[24px] font-bold leading-[34px]">
-                      <span className="text-primary">创建</span>
+                      <span className="text-primary">
+                        {editingId ? '编辑' : '创建'}
+                      </span>
                       <span className="text-brand">人设账号</span>
                       <span className="text-primary">资料</span>
                     </h2>
@@ -654,7 +775,12 @@ const KnowledgeScreen: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleSmartImport}
-                      className="flex h-[40px] w-[271px] items-center justify-center gap-[8px] rounded-[4px] border-none hover:brightness-105 transition-all cursor-pointer"
+                      disabled={isGenerating}
+                      className={`flex h-[40px] w-[271px] items-center justify-center gap-[8px] rounded-[4px] border-none transition-all ${
+                        isGenerating
+                          ? 'opacity-50 cursor-not-allowed'
+                          : 'hover:brightness-105 cursor-pointer'
+                      }`}
                       style={{
                         background:
                           'linear-gradient(90deg, #1D6BFF 0%, #38CFF4 100%)',
@@ -667,12 +793,30 @@ const KnowledgeScreen: React.FC = () => {
                     </button>
                     <button
                       type="button"
-                      className="group flex h-[40px] w-[158px] items-center justify-center gap-[8px] rounded-[4px] border border-solid border-line bg-container hover:border-brand transition-all"
+                      onClick={handleSmartImport}
+                      disabled={!hasGenerated || isGenerating}
+                      className={`group flex h-[40px] w-[158px] items-center justify-center gap-[8px] rounded-[4px] border border-solid transition-all ${
+                        !hasGenerated || isGenerating
+                          ? 'border-line bg-component opacity-40 cursor-not-allowed'
+                          : 'border-line bg-container hover:border-brand cursor-pointer'
+                      }`}
                     >
-                      <span className="text-[16px] text-primary group-hover:text-brand">
+                      <span
+                        className={`text-[16px] ${
+                          !hasGenerated || isGenerating
+                            ? 'text-placeholder'
+                            : 'text-primary group-hover:text-brand'
+                        }`}
+                      >
                         ↻
                       </span>
-                      <span className="text-[14px] font-medium leading-[20px] text-primary group-hover:text-brand">
+                      <span
+                        className={`text-[14px] font-medium leading-[20px] ${
+                          !hasGenerated || isGenerating
+                            ? 'text-placeholder'
+                            : 'text-primary group-hover:text-brand'
+                        }`}
+                      >
                         重新生成
                       </span>
                     </button>
@@ -680,51 +824,67 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 {/* AI 生成进度卡片 */}
-                <div className="w-[517px] h-[106px] rounded-[8px] border border-solid border-line bg-container p-[16px_24px] box-border">
-                  <div className="flex items-start gap-[16px]">
-                    <div className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center rounded-[10px]">
-                      <img
-                        src={aiStars}
-                        alt="AI生成中"
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-[14px] font-semibold text-primary">
-                        AI正在疯狂思考中.....
+                {isGenerating && (
+                  <div className="w-[517px] h-[106px] rounded-[8px] border border-solid border-line bg-container p-[16px_24px] box-border">
+                    <div className="flex items-start gap-[16px]">
+                      <div className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center rounded-[10px]">
+                        <img
+                          src={aiStars}
+                          alt="AI生成中"
+                          className="h-full w-full object-contain"
+                        />
                       </div>
-                      <div className="mt-[4px] text-[12px] leading-[20px] text-secondary">
-                        正在生成姓名、生日、职业、家庭情况、兴趣爱好和社交资料等，打造专属于你的人设.....
-                      </div>
-                      <div className="mt-[8px] flex items-center gap-[10px]">
-                        <div className="h-[4px] flex-1 overflow-hidden rounded-full bg-component">
-                          <div className="h-full w-[80%] rounded-full bg-gradient-to-r from-[#2F6BFF] to-[#36D0F4]" />
+                      <div className="flex-1">
+                        <div className="text-[14px] font-semibold text-primary">
+                          AI正在疯狂思考中.....
                         </div>
-                        <span className="text-[12px] text-primary">80%</span>
+                        <div className="mt-[4px] text-[12px] leading-[20px] text-secondary">
+                          正在生成姓名、生日、职业、家庭情况、兴趣爱好和社交资料等，打造专属于你的人设.....
+                        </div>
+                        <div className="mt-[8px] flex items-center gap-[8px]">
+                          <div className="flex-1">
+                            <div
+                              style={{
+                                height: '8px',
+                                width: '100%',
+                                borderRadius: '9999px',
+                                overflow: 'hidden',
+                                backgroundColor: '#e5e7eb',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: `${Math.round(streamProgress)}%`,
+                                  height: '8px',
+                                  background:
+                                    'linear-gradient(to right, #2F6BFF, #36D0F4)',
+                                  borderRadius: '9999px',
+                                  transition: 'width 0.1s linear',
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <div className="text-[12px] text-primary whitespace-nowrap">
+                            {Math.round(streamProgress)}%
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {/* 右侧区域：资料编辑区 */}
               <div className="flex-1 min-w-[0] flex flex-col gap-[16px]">
                 {/* 人设备注 */}
                 <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
-                  <div className="flex items-center justify-between mb-[12px]">
+                  <div className="mb-[12px]">
                     <div className="flex items-center gap-[8px]">
                       <UserIcon size="18px" className="text-brand" />
                       <span className="text-[14px] font-semibold text-primary">
                         人设备注
                       </span>
                     </div>
-                    <Button
-                      size="small"
-                      variant="outline"
-                      className="!bg-brand-light !text-brand !border-none !h-[28px] !px-[12px] !rounded-[4px] !text-[12px]"
-                    >
-                      <span>🪄 AI填充</span>
-                    </Button>
                   </div>
                   <textarea
                     placeholder="输入关于此人设的内部备注...."
@@ -736,20 +896,11 @@ const KnowledgeScreen: React.FC = () => {
 
                 {/* 基础信息 */}
                 <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
-                  <div className="flex items-center justify-between mb-[12px]">
-                    <div className="flex items-center gap-[8px]">
-                      <UsergroupIcon size="18px" className="text-brand" />
-                      <span className="text-[14px] font-semibold text-primary">
-                        基础信息
-                      </span>
-                    </div>
-                    <Button
-                      size="small"
-                      variant="outline"
-                      className="!bg-brand-light !text-brand !border-none !h-[28px] !px-[12px] !rounded-[4px] !text-[12px]"
-                    >
-                      <span>🪄 AI优化</span>
-                    </Button>
+                  <div className="flex items-center gap-[8px] mb-[12px]">
+                    <UsergroupIcon size="18px" className="text-brand" />
+                    <span className="text-[14px] font-semibold text-primary">
+                      基础信息
+                    </span>
                   </div>
                   <div className="grid grid-cols-2 gap-x-[24px] gap-y-[16px]">
                     <div>
@@ -798,6 +949,13 @@ const KnowledgeScreen: React.FC = () => {
                         placeholder={intl.formatMessage(
                           messages.datePlaceholder,
                         )}
+                        value={formData.birthday || undefined}
+                        onChange={value => {
+                          handleFormChange(
+                            'birthday',
+                            value ? String(value) : '',
+                          );
+                        }}
                         className="!h-[36px] !w-full [&_.t-input]:!border-component-border"
                       />
                     </div>
@@ -854,20 +1012,11 @@ const KnowledgeScreen: React.FC = () => {
 
                 {/* 生活背景 */}
                 <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
-                  <div className="flex items-center justify-between mb-[12px]">
-                    <div className="flex items-center gap-[8px]">
-                      <HomeIcon size="18px" className="text-brand" />
-                      <span className="text-[14px] font-semibold text-primary">
-                        生活背景
-                      </span>
-                    </div>
-                    <Button
-                      size="small"
-                      variant="outline"
-                      className="!bg-brand-light !text-brand !border-none !h-[28px] !px-[12px] !rounded-[4px] !text-[12px]"
-                    >
-                      <span>🪄 AI填充</span>
-                    </Button>
+                  <div className="flex items-center gap-[8px] mb-[12px]">
+                    <HomeIcon size="18px" className="text-brand" />
+                    <span className="text-[14px] font-semibold text-primary">
+                      生活背景
+                    </span>
                   </div>
                   <div className="space-y-[16px]">
                     <div className="w-[320px]">
@@ -907,20 +1056,11 @@ const KnowledgeScreen: React.FC = () => {
 
                 {/* 职业与项目背景 */}
                 <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
-                  <div className="flex items-center justify-between mb-[12px]">
-                    <div className="flex items-center gap-[8px]">
-                      <WorkIcon size="18px" className="text-brand" />
-                      <span className="text-[14px] font-semibold text-primary">
-                        职业与项目背景
-                      </span>
-                    </div>
-                    <Button
-                      size="small"
-                      variant="outline"
-                      className="!bg-brand-light !text-brand !border-none !h-[28px] !px-[12px] !rounded-[4px] !text-[12px]"
-                    >
-                      <span>🪄 AI填充</span>
-                    </Button>
+                  <div className="flex items-center gap-[8px] mb-[12px]">
+                    <WorkIcon size="18px" className="text-brand" />
+                    <span className="text-[14px] font-semibold text-primary">
+                      职业与项目背景
+                    </span>
                   </div>
                   <div className="space-y-[16px]">
                     <div className="w-[320px]">

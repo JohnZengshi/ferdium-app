@@ -8,99 +8,94 @@ import type {
   HTTPValidationError,
   LoginRequest,
   LoginResponse,
-  RegisterRequest,
+  RegisterRequest
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type registerApiV1AuthRegisterPostResponse200 = {
-  data: LoginResponse;
-  status: 200;
-};
+  data: LoginResponse
+  status: 200
+}
 
 export type registerApiV1AuthRegisterPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type registerApiV1AuthRegisterPostResponseSuccess = (registerApiV1AuthRegisterPostResponse200) & {
+  headers: Headers;
+};
+export type registerApiV1AuthRegisterPostResponseError = (registerApiV1AuthRegisterPostResponse422) & {
+  headers: Headers;
 };
 
-export type registerApiV1AuthRegisterPostResponseSuccess =
-  registerApiV1AuthRegisterPostResponse200 & {
-    headers: Headers;
-  };
-export type registerApiV1AuthRegisterPostResponseError =
-  registerApiV1AuthRegisterPostResponse422 & {
-    headers: Headers;
-  };
-
-export type registerApiV1AuthRegisterPostResponse =
-  | registerApiV1AuthRegisterPostResponseSuccess
-  | registerApiV1AuthRegisterPostResponseError;
+export type registerApiV1AuthRegisterPostResponse = (registerApiV1AuthRegisterPostResponseSuccess | registerApiV1AuthRegisterPostResponseError)
 
 export const getRegisterApiV1AuthRegisterPostUrl = () => {
-  return `http://10.0.0.228:8000/api/v1/auth/register`;
-};
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/auth/register`
+}
 
 /**
  * 注册主账号（owner）。子账号只能由主账号通过受保护接口创建。
  * @summary Register
  */
-export const registerApiV1AuthRegisterPost = async (
-  registerRequest: RegisterRequest,
-  options?: RequestInit,
-): Promise<registerApiV1AuthRegisterPostResponse> => {
-  return useCustomInstance<registerApiV1AuthRegisterPostResponse>(
-    getRegisterApiV1AuthRegisterPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(registerRequest),
-    },
-  );
-};
+export const registerApiV1AuthRegisterPost = async (registerRequest: RegisterRequest, options?: RequestInit): Promise<registerApiV1AuthRegisterPostResponse> => {
+
+  return useCustomInstance<registerApiV1AuthRegisterPostResponse>(getRegisterApiV1AuthRegisterPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(registerRequest)
+  }
+);}
+
 
 export type loginApiV1AuthLoginPostResponse200 = {
-  data: LoginResponse;
-  status: 200;
-};
+  data: LoginResponse
+  status: 200
+}
 
 export type loginApiV1AuthLoginPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type loginApiV1AuthLoginPostResponseSuccess = (loginApiV1AuthLoginPostResponse200) & {
+  headers: Headers;
+};
+export type loginApiV1AuthLoginPostResponseError = (loginApiV1AuthLoginPostResponse422) & {
+  headers: Headers;
 };
 
-export type loginApiV1AuthLoginPostResponseSuccess =
-  loginApiV1AuthLoginPostResponse200 & {
-    headers: Headers;
-  };
-export type loginApiV1AuthLoginPostResponseError =
-  loginApiV1AuthLoginPostResponse422 & {
-    headers: Headers;
-  };
-
-export type loginApiV1AuthLoginPostResponse =
-  | loginApiV1AuthLoginPostResponseSuccess
-  | loginApiV1AuthLoginPostResponseError;
+export type loginApiV1AuthLoginPostResponse = (loginApiV1AuthLoginPostResponseSuccess | loginApiV1AuthLoginPostResponseError)
 
 export const getLoginApiV1AuthLoginPostUrl = () => {
-  return `http://10.0.0.228:8000/api/v1/auth/login`;
-};
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/auth/login`
+}
 
 /**
  * 登录已有账号；用户名或密码错误返回 401（不再自动创建用户）。
  * @summary Login
  */
-export const loginApiV1AuthLoginPost = async (
-  loginRequest: LoginRequest,
-  options?: RequestInit,
-): Promise<loginApiV1AuthLoginPostResponse> => {
-  return useCustomInstance<loginApiV1AuthLoginPostResponse>(
-    getLoginApiV1AuthLoginPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(loginRequest),
-    },
-  );
-};
+export const loginApiV1AuthLoginPost = async (loginRequest: LoginRequest, options?: RequestInit): Promise<loginApiV1AuthLoginPostResponse> => {
+
+  return useCustomInstance<loginApiV1AuthLoginPostResponse>(getLoginApiV1AuthLoginPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(loginRequest)
+  }
+);}
+
+

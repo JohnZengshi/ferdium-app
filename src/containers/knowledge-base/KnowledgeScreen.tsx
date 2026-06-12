@@ -35,6 +35,8 @@ import {
   SidebarMenu,
 } from '../../components/home/SidebarMenu';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
+import { getAccessToken } from '../../agent-flow-cs/api/auth';
+import { getApiKey } from '../../whatsapp-automation/api/auth';
 
 const aiIllustration = 'assets/images/ai-illustration.png';
 const aiStars = 'assets/images/ai-stars.png';
@@ -217,37 +219,6 @@ const INITIAL_FORM_DATA: FormData = {
   participation: '',
 };
 
-interface MockPersonaData {
-  description: string;
-  fields: Partial<FormData>;
-}
-
-const MOCK_PERSONA: MockPersonaData = {
-  description:
-    'Amy，25岁女性，菲律宾马尼拉人。性格开朗活泼，热爱旅游和美食。' +
-    '目前从事销售工作，深度参与项目全流程，负责线索挖掘、客户对接、' +
-    '客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。' +
-    '标准化项目成交后衔接售后即可；企业级/大客户项目需持续跟进交付、' +
-    '验收与长期合作维护。销售为项目客户侧第一责任人，统筹对外沟通与商务推进。' +
-    '单身，与一只猫生活在马尼拉市中心。',
-  fields: {
-    name: 'Amy',
-    age: '25',
-    gender: 'female',
-    birthday: '2001-03-15',
-    country: 'Philippines',
-    language: 'English / Filipino',
-    city: 'Manila',
-    family: '单身，与一只猫生活',
-    occupation: '销售',
-    participation:
-      '深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、' +
-      '产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可；' +
-      '企业级/大客户项目需持续跟进交付、验收与长期合作维护。' +
-      '销售为项目客户侧第一责任人，统筹对外沟通与商务推进。',
-  },
-};
-
 const getConfigString = (
   config: AppApiSchemasDigitalHumanResponse['persona_config'],
   key: keyof FormData,
@@ -339,7 +310,8 @@ const KnowledgeScreen: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
   const [streamProgress, setStreamProgress] = useState(0);
-  const streamTimerRef = useRef<number | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const genderOptions = useMemo(
     () => [
@@ -399,9 +371,7 @@ const KnowledgeScreen: React.FC = () => {
 
   useEffect(
     () => () => {
-      if (streamTimerRef.current) {
-        cancelAnimationFrame(streamTimerRef.current);
-      }
+      abortControllerRef.current?.abort();
     },
     [],
   );
@@ -438,8 +408,9 @@ const KnowledgeScreen: React.FC = () => {
     setEditingId(null);
     setFormData(INITIAL_FORM_DATA);
     setSmartImportText('');
+    setSelectedTags([]);
     setView('create');
-    if (streamTimerRef.current) cancelAnimationFrame(streamTimerRef.current);
+    abortControllerRef.current?.abort();
     setIsGenerating(false);
     setHasGenerated(false);
     setStreamProgress(0);
@@ -449,7 +420,7 @@ const KnowledgeScreen: React.FC = () => {
     setView('list');
     setEditingId(null);
     setFormData(INITIAL_FORM_DATA);
-    if (streamTimerRef.current) cancelAnimationFrame(streamTimerRef.current);
+    abortControllerRef.current?.abort();
     setIsGenerating(false);
     setHasGenerated(false);
     setStreamProgress(0);
@@ -472,45 +443,163 @@ const KnowledgeScreen: React.FC = () => {
     setSmartImportText(value);
   }, []);
 
+  const handleTagToggle = useCallback(
+    (tagKey: string) => {
+      setSelectedTags(prev =>
+        prev.includes(tagKey)
+          ? prev.filter(k => k !== tagKey)
+          : [...prev, tagKey],
+      );
+    },
+    [],
+  );
+
   const handleSmartImport = useCallback(() => {
-    if (!smartImportText.trim()) {
+    const trimmedText = smartImportText.trim();
+    if (!trimmedText) {
       MessagePlugin.error(intl.formatMessage(messages.emptyKeywordError));
       return;
     }
 
     if (isGenerating) return;
 
-    if (streamTimerRef.current) {
-      cancelAnimationFrame(streamTimerRef.current);
-    }
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
     setIsGenerating(true);
     setStreamProgress(0);
 
-    let progress = 0;
-    streamTimerRef.current = window.setInterval(() => {
-      progress += 5;
-      if (progress >= 100) {
-        progress = 100;
-        if (streamTimerRef.current) {
-          window.clearInterval(streamTimerRef.current);
-        }
-        streamTimerRef.current = null;
-        setStreamProgress(100);
-        setIsGenerating(false);
-        setHasGenerated(true);
+    const url = 'http://10.0.0.179:8000/api/v1/digital-humans/generate';
 
-        setSmartImportText(MOCK_PERSONA.description);
-        setFormData(prev => ({
-          ...prev,
-          ...MOCK_PERSONA.fields,
-          remark: prev.remark,
-        }));
-      } else {
-        setStreamProgress(progress);
-      }
-    }, 100);
-  }, [intl, isGenerating, smartImportText]);
+    const bearerToken = getAccessToken();
+    const akgApiKey = getApiKey();
+    const isAkgKey = bearerToken?.startsWith('wag_');
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (!isAkgKey && bearerToken) {
+      headers['Authorization'] = `Bearer ${bearerToken}`;
+    }
+    if (akgApiKey) {
+      headers['X-AKG-Api-Key'] = akgApiKey;
+    }
+
+    fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        keywords: trimmedText,
+        tags: selectedTags,
+      }),
+      signal: controller.signal,
+    })
+      .then(async response => {
+        if (!response.ok) {
+          const errorBody = await response.text().catch(() => '');
+          throw new Error(
+            `生成失败 (${response.status}): ${errorBody || response.statusText}`,
+          );
+        }
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('无法获取响应流');
+
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        const FIELD_MAP: Record<string, string> = {
+          project_work: 'participation',
+        };
+
+        const VALID_FIELDS = new Set([
+          'name', 'remark', 'age', 'gender', 'birthday',
+          'country', 'language', 'city', 'family',
+          'occupation', 'participation',
+        ]);
+
+        const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+        const readStream = (): Promise<void> => {
+          if (controller.signal.aborted) {
+            return Promise.reject(new DOMException('Aborted', 'AbortError'));
+          }
+          return reader.read().then(async ({ done, value }) => {
+            if (done) {
+              setStreamProgress(100);
+              setHasGenerated(true);
+              return;
+            }
+
+            buffer += decoder.decode(value, { stream: true });
+
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            // 先把所有事件解析出来
+            const events: any[] = [];
+            for (const line of lines) {
+              if (!line.startsWith('data:')) continue;
+              const jsonStr = line.slice(5).trim();
+              if (!jsonStr) continue;
+              try {
+                events.push(JSON.parse(jsonStr));
+              } catch { /* skip */ }
+            }
+
+            // 逐个处理，progress 更新间加延时让 React 渲染动画
+            for (const data of events) {
+              // progress 事件
+              if (data.type === 'progress' && data.progress !== undefined) {
+                setStreamProgress(data.progress);
+                await sleep(80);
+              }
+
+              // field 事件 → 即时填充表单
+              if (data.type === 'field') {
+                const formField = FIELD_MAP[data.field] ?? data.field;
+                if (VALID_FIELDS.has(formField)) {
+                  const v = data.value !== undefined ? String(data.value) : '';
+                  setFormData(prev => ({ ...prev, [formField]: v }));
+                }
+              }
+
+              // complete 事件 → 最终全量数据覆盖
+              if (data.type === 'complete' && data.persona) {
+                setStreamProgress(100);
+                setHasGenerated(true);
+                const updates: Record<string, string> = {};
+                for (const [key, val] of Object.entries(data.persona)) {
+                  const formField = FIELD_MAP[key] ?? key;
+                  if (VALID_FIELDS.has(formField)) {
+                    updates[formField] = String(val ?? '');
+                  }
+                }
+                if (Object.keys(updates).length > 0) {
+                  setFormData(prev => ({ ...prev, ...updates }));
+                }
+                return; // 停止读取
+              }
+            }
+
+            return readStream();
+          });
+        };
+
+        return readStream();
+      })
+      .catch((err: Error) => {
+        if (err.name === 'AbortError') return;
+        MessagePlugin.error(err.message || '生成失败');
+      })
+      .finally(() => {
+        setIsGenerating(false);
+        if (abortControllerRef.current === controller) {
+          abortControllerRef.current = null;
+        }
+      });
+  }, [intl, isGenerating, smartImportText, selectedTags]);
 
   const handleSave = useCallback(async () => {
     if (!formData.name.trim()) {
@@ -753,12 +842,13 @@ const KnowledgeScreen: React.FC = () => {
                         { key: 'active', label: '高活跃社交账号' },
                         { key: 'social-2', label: '社交爱好者' },
                       ].map(tag => {
-                        const isSelected = tag.key === 'active';
+                        const isSelected = selectedTags.includes(tag.key);
                         return (
                           <button
                             key={tag.key}
                             type="button"
-                            className={`h-[28px] rounded-[4px] px-[12px] text-[12px] leading-[28px] border-none cursor-pointer ${
+                            onClick={() => handleTagToggle(tag.key)}
+                            className={`h-[28px] rounded-[4px] px-[12px] text-[12px] leading-[28px] border-none cursor-pointer transition-colors ${
                               isSelected
                                 ? 'bg-brand-light text-brand'
                                 : 'bg-component text-primary'

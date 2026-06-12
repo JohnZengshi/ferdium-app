@@ -2,8 +2,9 @@
 import { Component, type ReactElement } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { defineMessages, injectIntl } from 'react-intl';
+import { ipcRenderer } from 'electron';
 import { ChatBubble1FilledIcon, SendIcon } from 'tdesign-icons-react';
-import { DateRangePicker, Pagination, Select, Table } from 'tdesign-react';
+import { MessagePlugin, Pagination, Table } from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
 
 const messages = defineMessages({
@@ -43,58 +44,6 @@ const messages = defineMessages({
     id: 'notificationsTab.col.actions',
     defaultMessage: 'Actions',
   },
-  filterNotificationTime: {
-    id: 'notificationsTab.filter.notificationTime',
-    defaultMessage: 'Notify time',
-  },
-  filterSocialMedia: {
-    id: 'notificationsTab.filter.socialMedia',
-    defaultMessage: 'Social media',
-  },
-  filterStatus: {
-    id: 'notificationsTab.filter.status',
-    defaultMessage: 'Status',
-  },
-  filterAll: {
-    id: 'notificationsTab.filter.all',
-    defaultMessage: 'All',
-  },
-  filterWhatsApp: {
-    id: 'notificationsTab.filter.whatsapp',
-    defaultMessage: 'WhatsApp',
-  },
-  filterTelegram: {
-    id: 'notificationsTab.filter.telegram',
-    defaultMessage: 'Telegram',
-  },
-  filterRead: {
-    id: 'notificationsTab.filter.read',
-    defaultMessage: 'Read',
-  },
-  filterUnread: {
-    id: 'notificationsTab.filter.unread',
-    defaultMessage: 'Unread',
-  },
-  startDate: {
-    id: 'notificationsTab.filter.startDate',
-    defaultMessage: 'Start date',
-  },
-  endDate: {
-    id: 'notificationsTab.filter.endDate',
-    defaultMessage: 'End date',
-  },
-  selectStatus: {
-    id: 'notificationsTab.filter.selectStatus',
-    defaultMessage: 'Select status',
-  },
-  btnSearch: {
-    id: 'notificationsTab.btn.search',
-    defaultMessage: 'Search',
-  },
-  btnReset: {
-    id: 'notificationsTab.btn.reset',
-    defaultMessage: 'Reset',
-  },
   btnMarkAllRead: {
     id: 'notificationsTab.btn.markAllRead',
     defaultMessage: 'Mark all read',
@@ -103,9 +52,17 @@ const messages = defineMessages({
     id: 'notificationsTab.btn.exportSelected',
     defaultMessage: 'Export selected',
   },
+  btnExportAll: {
+    id: 'notificationsTab.btn.exportAll',
+    defaultMessage: 'Export all',
+  },
   selectedItems: {
     id: 'notificationsTab.selected.items',
     defaultMessage: '{count} selected',
+  },
+  noSelectionWarning: {
+    id: 'notificationsTab.warning.noSelection',
+    defaultMessage: 'Please select the content to export',
   },
   platformWhatsapp: {
     id: 'notificationsTab.platform.whatsapp',
@@ -299,7 +256,54 @@ class NotificationsTab extends Component<
 
   handleMarkAllRead = (): void => {};
 
-  handleExport = (): void => {};
+  handleExportSelected = (): void => {
+    const { intl } = this.props;
+    const { selectedRowIds } = this.state;
+    if (selectedRowIds.length === 0) {
+      MessagePlugin.warning(intl.formatMessage(messages.noSelectionWarning));
+      return;
+    }
+    const records = MOCK_DATA.filter(r => selectedRowIds.includes(r.id));
+    this.downloadCSV(records, 'notifications_selected.csv');
+  };
+
+  handleExportAll = (): void => {
+    this.downloadCSV(MOCK_DATA, 'notifications_all.csv');
+  };
+
+  downloadCSV = (records: NotificationRecord[], filename: string): void => {
+    const headers = [
+      'ID',
+      'Time',
+      'Platform',
+      'Account',
+      'User',
+      'Content',
+      'Rule',
+      'Status',
+    ];
+    const csvRows = records.map(r =>
+      [
+        r.id,
+        r.time,
+        r.platform,
+        r.account,
+        r.user,
+        r.triggerContent,
+        r.rule,
+        r.status,
+      ]
+        .map(cell => `"${String(cell).replace(/"/g, '""')}"`)
+        .join(','),
+    );
+    const csvContent = [headers.join(','), ...csvRows].join('\n');
+    const base64 = btoa(unescape(encodeURIComponent(csvContent)));
+    const dataUri = `data:text/csv;base64,${base64}`;
+    ipcRenderer.send('download-file', {
+      content: dataUri,
+      fileOptions: { name: filename },
+    });
+  };
 
   handleViewConversation = (): void => {};
 
@@ -436,78 +440,11 @@ class NotificationsTab extends Component<
     const { intl } = this.props;
     const someSelected = selectedRowIds.length > 0;
 
-    const socialOptions = [
-      { label: intl.formatMessage(messages.filterAll), value: 'all' },
-      { label: 'WhatsApp', value: 'whatsapp' },
-      { label: 'Telegram', value: 'telegram' },
-    ];
-
-    const statusOptions = [
-      { label: intl.formatMessage(messages.filterAll), value: 'all' },
-      { label: intl.formatMessage(messages.filterRead), value: 'read' },
-      { label: intl.formatMessage(messages.filterUnread), value: 'unread' },
-    ];
-
     return (
       <div
         className="mx-auto w-full px-[24px] pt-[24px]"
         style={{ maxWidth: '1440px' }}
       >
-        <div className="flex h-[56px] items-center gap-[20px]">
-          <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-secondary">
-              {intl.formatMessage(messages.filterNotificationTime)}
-            </span>
-            <DateRangePicker
-              mode="date"
-              placeholder={[
-                intl.formatMessage(messages.startDate),
-                intl.formatMessage(messages.endDate),
-              ]}
-              style={{ width: 260, height: 32 }}
-              className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-            />
-          </div>
-
-          <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-secondary">
-              {intl.formatMessage(messages.filterSocialMedia)}
-            </span>
-            <Select
-              style={{ width: 160 }}
-              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-              placeholder={intl.formatMessage(messages.selectStatus)}
-              options={socialOptions}
-            />
-          </div>
-
-          <div className="flex items-center gap-[8px]">
-            <span className="text-[14px] font-normal text-secondary">
-              {intl.formatMessage(messages.filterStatus)}
-            </span>
-            <Select
-              style={{ width: 160 }}
-              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-              placeholder={intl.formatMessage(messages.selectStatus)}
-              options={statusOptions}
-            />
-          </div>
-
-          <button
-            type="button"
-            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[14px] font-medium text-text-anti"
-          >
-            {intl.formatMessage(messages.btnSearch)}
-          </button>
-
-          <button
-            type="button"
-            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container text-[14px] font-medium text-secondary"
-          >
-            {intl.formatMessage(messages.btnReset)}
-          </button>
-        </div>
-
         <div className="mt-[16px] flex h-[44px] items-center gap-[12px]">
           <button
             type="button"
@@ -519,10 +456,18 @@ class NotificationsTab extends Component<
 
           <button
             type="button"
-            onClick={this.handleExport}
+            onClick={this.handleExportSelected}
             className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
           >
             {intl.formatMessage(messages.btnExportSelected)}
+          </button>
+
+          <button
+            type="button"
+            onClick={this.handleExportAll}
+            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
+          >
+            {intl.formatMessage(messages.btnExportAll)}
           </button>
 
           {someSelected && (

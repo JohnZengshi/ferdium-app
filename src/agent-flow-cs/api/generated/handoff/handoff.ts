@@ -46,7 +46,7 @@ export const getListMemberHandoffsApiV1HandoffGetUrl = (params?: ListMemberHando
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/handoff?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/handoff`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/handoff?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/handoff`
 }
 
 /**
@@ -89,7 +89,7 @@ export const getCreateHandoffApiV1HandoffPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/handoff`
+  return `http://10.0.0.228:8000/api/v1/handoff`
 }
 
 /**
@@ -132,7 +132,7 @@ export const getListHandoffsApiV1HandoffConversationIdGetUrl = (conversationId: 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}`
+  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}`
 }
 
 /**
@@ -175,7 +175,7 @@ export const getResolveHandoffApiV1HandoffConversationIdResolvePostUrl = (conver
 
 
 
-  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}/resolve`
+  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}/resolve`
 }
 
 /**
@@ -219,7 +219,7 @@ export const getCloseHandoffApiV1HandoffConversationIdClosePostUrl = (conversati
 
 
 
-  return `http://10.0.0.179:8000/api/v1/handoff/${conversationId}/close`
+  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}/close`
 }
 
 /**

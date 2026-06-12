@@ -39,7 +39,7 @@ export const getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl = (sessionI
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/webhooks/${sessionId}`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/webhooks/${sessionId}`
 }
 
 /**
@@ -82,7 +82,7 @@ export const getCreateWhatsappBindingApiV1WhatsappBindPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/bind`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/bind`
 }
 
 /**
@@ -135,7 +135,7 @@ export const getGetWhatsappBindingApiV1WhatsappBindGetUrl = (params?: GetWhatsap
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/whatsapp/bind?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/whatsapp/bind`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/whatsapp/bind?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/whatsapp/bind`
 }
 
 /**
@@ -178,7 +178,7 @@ export const getSwitchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchUrl = () 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/bind`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/bind`
 }
 
 /**

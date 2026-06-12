@@ -27,7 +27,7 @@ export const getHealthzHealthzGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/healthz`
+  return `http://10.0.0.228:8000/healthz`
 }
 
 /**

@@ -37,7 +37,7 @@ export const getRegisterApiV1AuthRegisterPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/auth/register`
+  return `http://10.0.0.228:8000/api/v1/auth/register`
 }
 
 /**
@@ -80,7 +80,7 @@ export const getLoginApiV1AuthLoginPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/auth/login`
+  return `http://10.0.0.228:8000/api/v1/auth/login`
 }
 
 /**

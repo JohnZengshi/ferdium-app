@@ -36,7 +36,7 @@ export const getCreateMessageApiV1MessagesPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/messages`
+  return `http://10.0.0.228:8000/api/v1/messages`
 }
 
 /**
@@ -79,7 +79,7 @@ export const getListMessagesApiV1MessagesConversationIdGetUrl = (conversationId:
 
 
 
-  return `http://10.0.0.179:8000/api/v1/messages/${conversationId}`
+  return `http://10.0.0.228:8000/api/v1/messages/${conversationId}`
 }
 
 /**

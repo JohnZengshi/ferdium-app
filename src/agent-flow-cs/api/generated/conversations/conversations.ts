@@ -10,154 +10,12 @@ import type {
   AppApiSchemasMessageResponse,
   ConversationCreateRequest,
   ConversationUpdateRequest,
-  GetConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetParams,
   HTTPValidationError,
   PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams,
   ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
-
-export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
-
-export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponseSuccess = (getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse200) & {
-  headers: Headers;
-};
-export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponseError = (getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse422) & {
-  headers: Headers;
-};
-
-export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse = (getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponseSuccess | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponseError)
-
-export const getGetConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetUrl = (customerId: string,
-    params?: GetConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/conversations/by-customer/${customerId}?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/conversations/by-customer/${customerId}`
-}
-
-/**
- * 按客户 ID 查询会话当前状态（status：active/handoff/paused）。
- *
- * member 维度：仅定位当前 member 名下的客户会话；owner 请用按会话 ID 的接口。
- * @summary Get Conversation By Customer
- */
-export const getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGet = async (customerId: string,
-    params?: GetConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetParams, options?: RequestInit): Promise<getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse> => {
-
-  return useCustomInstance<getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse>(getGetConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetUrl(customerId,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-export type getConversationApiV1ConversationsConversationIdGetResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
-
-export type getConversationApiV1ConversationsConversationIdGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type getConversationApiV1ConversationsConversationIdGetResponseSuccess = (getConversationApiV1ConversationsConversationIdGetResponse200) & {
-  headers: Headers;
-};
-export type getConversationApiV1ConversationsConversationIdGetResponseError = (getConversationApiV1ConversationsConversationIdGetResponse422) & {
-  headers: Headers;
-};
-
-export type getConversationApiV1ConversationsConversationIdGetResponse = (getConversationApiV1ConversationsConversationIdGetResponseSuccess | getConversationApiV1ConversationsConversationIdGetResponseError)
-
-export const getGetConversationApiV1ConversationsConversationIdGetUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.179:8000/api/v1/conversations/${conversationId}`
-}
-
-/**
- * 按会话 ID 查询单个会话当前状态（status：active/handoff/paused）。
- * @summary Get Conversation
- */
-export const getConversationApiV1ConversationsConversationIdGet = async (conversationId: string, options?: RequestInit): Promise<getConversationApiV1ConversationsConversationIdGetResponse> => {
-
-  return useCustomInstance<getConversationApiV1ConversationsConversationIdGetResponse>(getGetConversationApiV1ConversationsConversationIdGetUrl(conversationId),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200 = {
-  data: AppApiSchemasConversationResponse
-  status: 200
-}
-
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200) & {
-  headers: Headers;
-};
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422) & {
-  headers: Headers;
-};
-
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError)
-
-export const getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl = (conversationId: string,) => {
-
-
-
-
-  return `http://10.0.0.179:8000/api/v1/conversations/${conversationId}`
-}
-
-/**
- * 切换会话绑定的数字人，下一轮对话立即生效。
- * @summary Update Conversation Digital Human
- */
-export const updateConversationDigitalHumanApiV1ConversationsConversationIdPatch = async (conversationId: string,
-    conversationUpdateRequest: ConversationUpdateRequest, options?: RequestInit): Promise<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse> => {
-
-  return useCustomInstance<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse>(getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl(conversationId),
-  {
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(conversationUpdateRequest)
-  }
-);}
-
 
 export type listConversationsApiV1ConversationsGetResponse200 = {
   data: AppApiSchemasConversationResponse[]
@@ -176,7 +34,7 @@ export const getListConversationsApiV1ConversationsGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/conversations`
+  return `http://10.0.0.228:8000/api/v1/conversations`
 }
 
 /**
@@ -219,7 +77,7 @@ export const getCreateConversationApiV1ConversationsPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/conversations`
+  return `http://10.0.0.228:8000/api/v1/conversations`
 }
 
 /**
@@ -234,6 +92,50 @@ export const createConversationApiV1ConversationsPost = async (conversationCreat
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(conversationCreateRequest)
+  }
+);}
+
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200 = {
+  data: AppApiSchemasConversationResponse
+  status: 200
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200) & {
+  headers: Headers;
+};
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422) & {
+  headers: Headers;
+};
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError)
+
+export const getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl = (conversationId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}`
+}
+
+/**
+ * 切换会话绑定的数字人，下一轮对话立即生效。
+ * @summary Update Conversation Digital Human
+ */
+export const updateConversationDigitalHumanApiV1ConversationsConversationIdPatch = async (conversationId: string,
+    conversationUpdateRequest: ConversationUpdateRequest, options?: RequestInit): Promise<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse> => {
+
+  return useCustomInstance<updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse>(getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl(conversationId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(conversationUpdateRequest)
   }
 );}
 
@@ -262,7 +164,7 @@ export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (c
 
 
 
-  return `http://10.0.0.179:8000/api/v1/conversations/${conversationId}/agent-reply`
+  return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}/agent-reply`
 }
 
 /**
@@ -309,7 +211,7 @@ export const getPauseConversationApiV1ConversationsConversationIdPausePatchUrl =
 
 
 
-  return `http://10.0.0.179:8000/api/v1/conversations/${conversationId}/pause`
+  return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}/pause`
 }
 
 /**
@@ -357,7 +259,7 @@ export const getResumeConversationApiV1ConversationsConversationIdResumePatchUrl
 
 
 
-  return `http://10.0.0.179:8000/api/v1/conversations/${conversationId}/resume`
+  return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}/resume`
 }
 
 /**
@@ -410,7 +312,7 @@ export const getPauseConversationByCustomerApiV1ConversationsByCustomerCustomerI
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/conversations/by-customer/${customerId}/pause?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/conversations/by-customer/${customerId}/pause`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/pause?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/pause`
 }
 
 /**
@@ -467,7 +369,7 @@ export const getResumeConversationByCustomerApiV1ConversationsByCustomerCustomer
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/conversations/by-customer/${customerId}/resume?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/conversations/by-customer/${customerId}/resume`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/resume?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/resume`
 }
 
 /**

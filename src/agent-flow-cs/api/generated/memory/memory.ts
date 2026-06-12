@@ -34,7 +34,7 @@ export const getGetMemoryMetricsApiV1MemoryMetricsGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/memory/metrics`
+  return `http://10.0.0.228:8000/api/v1/memory/metrics`
 }
 
 /**
@@ -85,7 +85,7 @@ export const getExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetUrl = (cust
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}`
 }
 
 /**
@@ -137,7 +137,7 @@ export const getDeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDelete
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}`
 }
 
 /**
@@ -189,7 +189,7 @@ export const getExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExport
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}/export/markdown?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/memory/customers/${customerId}/export/markdown`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}/export/markdown?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/memory/customers/${customerId}/export/markdown`
 }
 
 /**
@@ -229,7 +229,7 @@ export const getRunMemoryRetentionCleanupApiV1MemoryRetentionRunPostUrl = () => 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/memory/retention/run`
+  return `http://10.0.0.228:8000/api/v1/memory/retention/run`
 }
 
 /**

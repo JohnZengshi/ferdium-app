@@ -46,7 +46,7 @@ export const getListRulesApiV1RulesGetUrl = (params?: ListRulesApiV1RulesGetPara
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/rules?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/rules`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/rules?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/rules`
 }
 
 /**
@@ -89,7 +89,7 @@ export const getCreateRuleApiV1RulesPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/rules`
+  return `http://10.0.0.228:8000/api/v1/rules`
 }
 
 /**
@@ -132,7 +132,7 @@ export const getGetRuleApiV1RulesRuleIdGetUrl = (ruleId: string,) => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/rules/${ruleId}`
+  return `http://10.0.0.228:8000/api/v1/rules/${ruleId}`
 }
 
 /**
@@ -175,7 +175,7 @@ export const getUpdateRuleApiV1RulesRuleIdPatchUrl = (ruleId: string,) => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/rules/${ruleId}`
+  return `http://10.0.0.228:8000/api/v1/rules/${ruleId}`
 }
 
 /**
@@ -219,7 +219,7 @@ export const getDeleteRuleApiV1RulesRuleIdDeleteUrl = (ruleId: string,) => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/rules/${ruleId}`
+  return `http://10.0.0.228:8000/api/v1/rules/${ruleId}`
 }
 
 /**

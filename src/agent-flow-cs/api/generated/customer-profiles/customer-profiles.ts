@@ -43,7 +43,7 @@ export const getListCustomerProfilesApiV1CustomerProfilesGetUrl = (params?: List
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/customer-profiles?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/customer-profiles`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/customer-profiles?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/customer-profiles`
 }
 
 /**

@@ -38,7 +38,7 @@ export const getChatSyncApiV1ChatSyncPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/chat/sync`
+  return `http://10.0.0.228:8000/api/v1/chat/sync`
 }
 
 /**
@@ -89,7 +89,7 @@ export const getGetConversationTraceApiV1ChatConversationIdTraceGetUrl = (conver
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/chat/${conversationId}/trace?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/chat/${conversationId}/trace`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace`
 }
 
 /**
@@ -133,7 +133,7 @@ export const getChatStreamApiV1ChatStreamPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/chat/stream`
+  return `http://10.0.0.228:8000/api/v1/chat/stream`
 }
 
 /**

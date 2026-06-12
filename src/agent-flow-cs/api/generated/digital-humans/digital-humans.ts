@@ -9,7 +9,6 @@ import type {
   AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPost201,
   AssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostParams,
   DigitalHumanCreateRequest,
-  DigitalHumanGenerateRequest,
   DigitalHumanUpdateRequest,
   HTTPValidationError,
   ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200,
@@ -18,53 +17,6 @@ import type {
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
-
-export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse200 = {
-  data: unknown
-  status: 200
-}
-
-export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponseSuccess = (generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse200) & {
-  headers: Headers;
-};
-export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponseError = (generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse422) & {
-  headers: Headers;
-};
-
-export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse = (generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponseSuccess | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponseError)
-
-export const getGenerateDigitalHumanPersonaApiV1DigitalHumansGeneratePostUrl = () => {
-
-
-
-
-  return `http://10.0.0.179:8000/api/v1/digital-humans/generate`
-}
-
-/**
- * AI 一键生成数字人人设（SSE 流式返回）。
- *
- * 接收关键词描述和标签，调用 LLM 生成完整的数字人人设资料，
- * 通过 SSE 流式返回进度和生成结果，不持久化。
- * 用户确认后可调用 POST /digital-humans 保存。
- * @summary Generate Digital Human Persona
- */
-export const generateDigitalHumanPersonaApiV1DigitalHumansGeneratePost = async (digitalHumanGenerateRequest: DigitalHumanGenerateRequest, options?: RequestInit): Promise<generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse> => {
-
-  return useCustomInstance<generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse>(getGenerateDigitalHumanPersonaApiV1DigitalHumansGeneratePostUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(digitalHumanGenerateRequest)
-  }
-);}
-
 
 export type listDigitalHumansApiV1DigitalHumansGetResponse200 = {
   data: AppApiSchemasDigitalHumanResponse[]
@@ -83,7 +35,7 @@ export const getListDigitalHumansApiV1DigitalHumansGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/digital-humans`
+  return `http://10.0.0.228:8000/api/v1/digital-humans`
 }
 
 /**
@@ -126,7 +78,7 @@ export const getCreateDigitalHumanApiV1DigitalHumansPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/digital-humans`
+  return `http://10.0.0.228:8000/api/v1/digital-humans`
 }
 
 /**
@@ -169,7 +121,7 @@ export const getGetDigitalHumanApiV1DigitalHumansDigitalHumanIdGetUrl = (digital
 
 
 
-  return `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}`
+  return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}`
 }
 
 /**
@@ -212,7 +164,7 @@ export const getUpdateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutUrl = (digi
 
 
 
-  return `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}`
+  return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}`
 }
 
 /**
@@ -256,7 +208,7 @@ export const getDeleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteUrl = (d
 
 
 
-  return `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}`
+  return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}`
 }
 
 /**
@@ -307,7 +259,7 @@ export const getAssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPos
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
 }
 
 /**
@@ -359,7 +311,7 @@ export const getUnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsD
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
 }
 
 /**
@@ -403,7 +355,7 @@ export const getListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssig
 
 
 
-  return `http://10.0.0.179:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
+  return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments`
 }
 
 /**

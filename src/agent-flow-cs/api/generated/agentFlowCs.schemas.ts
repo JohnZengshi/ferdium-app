@@ -562,16 +562,6 @@ export interface DigitalHumanAdminUpdateRequest {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   status?: string | null;
-  gender?: string | null;
-  birthday?: string | null;
-  age?: number | null;
-  country?: string | null;
-  language?: string | null;
-  city?: string | null;
-  family?: string | null;
-  occupation?: string | null;
-  project_work?: string | null;
-  persona_notes?: string | null;
 }
 
 /**
@@ -653,33 +643,6 @@ export interface DigitalHumanCreateRequest {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   status?: string;
-  gender?: string | null;
-  birthday?: string | null;
-  age?: number | null;
-  country?: string | null;
-  language?: string | null;
-  city?: string | null;
-  family?: string | null;
-  occupation?: string | null;
-  project_work?: string | null;
-  persona_notes?: string | null;
-}
-
-/**
- * AI 一键生成数字人人设的请求体。
- */
-export interface DigitalHumanGenerateRequest {
-  /**
-     * 自然语言关键词描述，如「25岁女性，菲律宾真人，喜欢旅游，擅长营销」
-     * @minLength 1
-     * @maxLength 2000
-     */
-  keywords: string;
-  /**
-     * 快速标签，如 ['女性', '年轻人', '旅行爱好者']
-     * @maxItems 20
-     */
-  tags?: string[];
 }
 
 export type PersonaConfigPatchEmojiFreq = typeof PersonaConfigPatchEmojiFreq[keyof typeof PersonaConfigPatchEmojiFreq] | null;
@@ -733,16 +696,6 @@ export interface DigitalHumanUpdateRequest {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   status?: string | null;
-  gender?: string | null;
-  birthday?: string | null;
-  age?: number | null;
-  country?: string | null;
-  language?: string | null;
-  city?: string | null;
-  family?: string | null;
-  occupation?: string | null;
-  project_work?: string | null;
-  persona_notes?: string | null;
 }
 
 /**
@@ -817,10 +770,14 @@ export interface FollowupStrategyRequest {
   valid_days?: number;
 }
 
+export type ValidationErrorCtx = { [key: string]: unknown };
+
 export interface ValidationError {
   loc: (string | number)[];
   msg: string;
   type: string;
+  input?: unknown;
+  ctx?: ValidationErrorCtx;
 }
 
 export interface HTTPValidationError {
@@ -1488,16 +1445,6 @@ export interface AppApiSchemasDigitalHumanResponse {
   status?: string;
   created_by?: string | null;
   created_at: string;
-  gender?: string | null;
-  birthday?: string | null;
-  age?: number | null;
-  country?: string | null;
-  language?: string | null;
-  city?: string | null;
-  family?: string | null;
-  occupation?: string | null;
-  project_work?: string | null;
-  persona_notes?: string | null;
 }
 
 /**
@@ -1721,17 +1668,6 @@ export type GetConversationTraceApiV1ChatConversationIdTraceGetParams = {
  * @minimum 0
  */
 turns?: number;
-};
-
-export type GetConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetParams = {
-/**
- * 平台标识
- */
-platform?: string;
-/**
- * WhatsApp session 标识；多 session 下建议显式传入
- */
-wa_session_id?: string | null;
 };
 
 export type PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams = {

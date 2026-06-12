@@ -36,7 +36,7 @@ export const getTranslateApiV1TranslatePostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/translate/`
+  return `http://10.0.0.228:8000/api/v1/translate/`
 }
 
 /**

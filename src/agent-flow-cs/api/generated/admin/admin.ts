@@ -76,7 +76,7 @@ export const getAdminLoginApiV1AdminAuthLoginPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/auth/login`
+  return `http://10.0.0.228:8000/api/v1/admin/auth/login`
 }
 
 /**
@@ -126,7 +126,7 @@ export const getListAdminsApiV1AdminAdminsGetUrl = (params?: ListAdminsApiV1Admi
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/admins?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/admins`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/admins?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/admins`
 }
 
 /**
@@ -169,7 +169,7 @@ export const getCreateAdminApiV1AdminAdminsPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/admins`
+  return `http://10.0.0.228:8000/api/v1/admin/admins`
 }
 
 /**
@@ -212,7 +212,7 @@ export const getGetAdminApiV1AdminAdminsAdminIdGetUrl = (adminId: string,) => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}`
+  return `http://10.0.0.228:8000/api/v1/admin/admins/${adminId}`
 }
 
 /**
@@ -255,7 +255,7 @@ export const getUpdateAdminApiV1AdminAdminsAdminIdPatchUrl = (adminId: string,) 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}`
+  return `http://10.0.0.228:8000/api/v1/admin/admins/${adminId}`
 }
 
 /**
@@ -299,7 +299,7 @@ export const getResetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/admins/${adminId}/reset-password`
+  return `http://10.0.0.228:8000/api/v1/admin/admins/${adminId}/reset-password`
 }
 
 /**
@@ -343,7 +343,7 @@ export const getCreateOwnerApiV1AdminAccountsOwnersPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners`
+  return `http://10.0.0.228:8000/api/v1/admin/accounts/owners`
 }
 
 /**
@@ -393,7 +393,7 @@ export const getListOwnersApiV1AdminAccountsOwnersGetUrl = (params?: ListOwnersA
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/accounts/owners?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/accounts/owners`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/accounts/owners?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/accounts/owners`
 }
 
 /**
@@ -436,7 +436,7 @@ export const getGetOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetUrl = (owne
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}`
+  return `http://10.0.0.228:8000/api/v1/admin/accounts/owners/${ownerId}`
 }
 
 /**
@@ -479,7 +479,7 @@ export const getSuspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchUrl = (ow
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/suspend`
+  return `http://10.0.0.228:8000/api/v1/admin/accounts/owners/${ownerId}/suspend`
 }
 
 /**
@@ -523,7 +523,7 @@ export const getSuspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/members/${memberId}/suspend`
+  return `http://10.0.0.228:8000/api/v1/admin/accounts/members/${memberId}/suspend`
 }
 
 /**
@@ -568,7 +568,7 @@ export const getResetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberI
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/members/${memberId}/reset-password`
+  return `http://10.0.0.228:8000/api/v1/admin/accounts/owners/${ownerId}/members/${memberId}/reset-password`
 }
 
 /**
@@ -613,7 +613,7 @@ export const getResetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPo
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/accounts/owners/${ownerId}/reset-password`
+  return `http://10.0.0.228:8000/api/v1/admin/accounts/owners/${ownerId}/reset-password`
 }
 
 /**
@@ -664,7 +664,7 @@ export const getListConversationsApiV1AdminOverviewConversationsGetUrl = (params
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/conversations?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/conversations`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/overview/conversations?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/overview/conversations`
 }
 
 /**
@@ -707,7 +707,7 @@ export const getGetConversationApiV1AdminOverviewConversationsConversationIdGetU
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}`
+  return `http://10.0.0.228:8000/api/v1/admin/overview/conversations/${conversationId}`
 }
 
 /**
@@ -757,7 +757,7 @@ export const getListDigitalHumansApiV1AdminOverviewDigitalHumansGetUrl = (params
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/digital-humans?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/digital-humans`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/overview/digital-humans?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/overview/digital-humans`
 }
 
 /**
@@ -808,7 +808,7 @@ export const getListMessagesApiV1AdminOverviewConversationsConversationIdMessage
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/messages?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/messages`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/overview/conversations/${conversationId}/messages?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/overview/conversations/${conversationId}/messages`
 }
 
 /**
@@ -852,7 +852,7 @@ export const getAdminAgentReplyApiV1AdminOverviewConversationsConversationIdAgen
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/overview/conversations/${conversationId}/agent-reply`
+  return `http://10.0.0.228:8000/api/v1/admin/overview/conversations/${conversationId}/agent-reply`
 }
 
 /**
@@ -905,7 +905,7 @@ export const getListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetUrl = (
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/overview/customer-profiles?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/overview/customer-profiles`
 }
 
 /**
@@ -948,7 +948,7 @@ export const getGetCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGet
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/overview/customer-profiles/${profileId}`
+  return `http://10.0.0.228:8000/api/v1/admin/overview/customer-profiles/${profileId}`
 }
 
 /**
@@ -998,7 +998,7 @@ export const getListHandoffsApiV1AdminOverviewHandoffsGetUrl = (params?: ListHan
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/overview/handoffs?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/overview/handoffs`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/overview/handoffs?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/overview/handoffs`
 }
 
 /**
@@ -1041,7 +1041,7 @@ export const getAdminResolveHandoffApiV1AdminOverviewHandoffsConversationIdResol
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/overview/handoffs/${conversationId}/resolve`
+  return `http://10.0.0.228:8000/api/v1/admin/overview/handoffs/${conversationId}/resolve`
 }
 
 /**
@@ -1085,7 +1085,7 @@ export const getAdminCloseHandoffApiV1AdminOverviewHandoffsConversationIdClosePo
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/overview/handoffs/${conversationId}/close`
+  return `http://10.0.0.228:8000/api/v1/admin/overview/handoffs/${conversationId}/close`
 }
 
 /**
@@ -1122,7 +1122,7 @@ export const getGetPlatformStatsApiV1AdminStatsGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/stats`
+  return `http://10.0.0.228:8000/api/v1/admin/stats`
 }
 
 /**
@@ -1172,7 +1172,7 @@ export const getGetConversationTrendsApiV1AdminStatsTrendsGetUrl = (params?: Get
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/stats/trends?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/stats/trends`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/stats/trends?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/stats/trends`
 }
 
 /**
@@ -1222,7 +1222,7 @@ export const getGetAgentStatsApiV1AdminStatsAgentStatsGetUrl = (params?: GetAgen
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/stats/agent-stats?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/stats/agent-stats`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/stats/agent-stats?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/stats/agent-stats`
 }
 
 /**
@@ -1272,7 +1272,7 @@ export const getListAuditLogsApiV1AdminAuditAuditLogsGetUrl = (params?: ListAudi
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/admin/audit/audit-logs?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/admin/audit/audit-logs`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/audit/audit-logs?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/audit/audit-logs`
 }
 
 /**
@@ -1315,7 +1315,7 @@ export const getGetConversationTraceApiV1AdminAuditConversationsConversationIdTr
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/audit/conversations/${conversationId}/trace`
+  return `http://10.0.0.228:8000/api/v1/admin/audit/conversations/${conversationId}/trace`
 }
 
 /**
@@ -1358,7 +1358,7 @@ export const getStreamConversationTraceApiV1AdminAuditConversationsConversationI
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/audit/conversations/${conversationId}/trace/stream`
+  return `http://10.0.0.228:8000/api/v1/admin/audit/conversations/${conversationId}/trace/stream`
 }
 
 /**
@@ -1405,7 +1405,7 @@ export const getGetDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetUrl
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/digital-humans/${digitalHumanId}`
+  return `http://10.0.0.228:8000/api/v1/admin/digital-humans/${digitalHumanId}`
 }
 
 /**
@@ -1448,7 +1448,7 @@ export const getUpdateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/digital-humans/${digitalHumanId}`
+  return `http://10.0.0.228:8000/api/v1/admin/digital-humans/${digitalHumanId}`
 }
 
 /**
@@ -1485,7 +1485,7 @@ export const getHealthCheckApiV1AdminHealthGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/health`
+  return `http://10.0.0.228:8000/api/v1/admin/health`
 }
 
 /**
@@ -1524,7 +1524,7 @@ export const getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/admin/memory/overview`
+  return `http://10.0.0.228:8000/api/v1/admin/memory/overview`
 }
 
 /**

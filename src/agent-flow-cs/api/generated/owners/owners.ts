@@ -76,7 +76,7 @@ export const getListDigitalHumansApiV1OwnersDigitalHumansGetUrl = (params?: List
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/digital-humans?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/digital-humans`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/digital-humans?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/digital-humans`
 }
 
 /**
@@ -118,7 +118,7 @@ export const getCreateDigitalHumanApiV1OwnersDigitalHumansPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/digital-humans`
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans`
 }
 
 /**
@@ -160,7 +160,7 @@ export const getGetDigitalHumanApiV1OwnersDigitalHumansDhIdGetUrl = (dhId: strin
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/digital-humans/${dhId}`
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans/${dhId}`
 }
 
 /**
@@ -202,7 +202,7 @@ export const getUpdateDigitalHumanApiV1OwnersDigitalHumansDhIdPutUrl = (dhId: st
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/digital-humans/${dhId}`
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans/${dhId}`
 }
 
 /**
@@ -245,7 +245,7 @@ export const getDeleteDigitalHumanApiV1OwnersDigitalHumansDhIdDeleteUrl = (dhId:
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/digital-humans/${dhId}`
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans/${dhId}`
 }
 
 /**
@@ -287,7 +287,7 @@ export const getAssignDigitalHumanApiV1OwnersDigitalHumansDhIdAssignPostUrl = (d
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/digital-humans/${dhId}/assign`
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans/${dhId}/assign`
 }
 
 /**
@@ -330,7 +330,7 @@ export const getListAssigneesApiV1OwnersDigitalHumansDhIdAssigneesGetUrl = (dhId
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/digital-humans/${dhId}/assignees`
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans/${dhId}/assignees`
 }
 
 /**
@@ -379,7 +379,7 @@ export const getListSubAccountsApiV1OwnersSubAccountsGetUrl = (params?: ListSubA
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/sub-accounts?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/sub-accounts`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/sub-accounts?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/sub-accounts`
 }
 
 /**
@@ -421,7 +421,7 @@ export const getCreateSubAccountApiV1OwnersSubAccountsPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/sub-accounts`
+  return `http://10.0.0.228:8000/api/v1/owners/sub-accounts`
 }
 
 /**
@@ -463,7 +463,7 @@ export const getResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPostUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/sub-accounts/${userId}/reset-password`
+  return `http://10.0.0.228:8000/api/v1/owners/sub-accounts/${userId}/reset-password`
 }
 
 /**
@@ -506,7 +506,7 @@ export const getToggleSubAccountApiV1OwnersSubAccountsUserIdTogglePostUrl = (use
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/sub-accounts/${userId}/toggle`
+  return `http://10.0.0.228:8000/api/v1/owners/sub-accounts/${userId}/toggle`
 }
 
 /**
@@ -548,7 +548,7 @@ export const getDeleteSubAccountApiV1OwnersSubAccountsUserIdDeleteUrl = (userId:
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/sub-accounts/${userId}`
+  return `http://10.0.0.228:8000/api/v1/owners/sub-accounts/${userId}`
 }
 
 /**
@@ -597,7 +597,7 @@ export const getBindWhatsappApiV1OwnersSubAccountsUserIdWhatsappBindPostUrl = (u
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/sub-accounts/${userId}/whatsapp-bind`
+  return `http://10.0.0.228:8000/api/v1/owners/sub-accounts/${userId}/whatsapp-bind`
 }
 
 /**
@@ -653,7 +653,7 @@ export const getListConversationsApiV1OwnersConversationsGetUrl = (params?: List
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/conversations?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/conversations`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/conversations?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/conversations`
 }
 
 /**
@@ -703,7 +703,7 @@ export const getGetConversationMessagesApiV1OwnersConversationsConvIdMessagesGet
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/conversations/${convId}/messages?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/conversations/${convId}/messages`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/conversations/${convId}/messages?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/conversations/${convId}/messages`
 }
 
 /**
@@ -753,7 +753,7 @@ export const getListCustomerProfilesApiV1OwnersCustomerProfilesGetUrl = (params?
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/customer-profiles?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/customer-profiles`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/customer-profiles?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/customer-profiles`
 }
 
 /**
@@ -795,7 +795,7 @@ export const getUploadDocumentApiV1OwnersKnowledgeUploadPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/knowledge/upload`
+  return `http://10.0.0.228:8000/api/v1/owners/knowledge/upload`
 }
 
 /**
@@ -856,7 +856,7 @@ export const getListDocumentsApiV1OwnersKnowledgeDocumentsGetUrl = (params?: Lis
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/knowledge/documents?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/knowledge/documents`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/knowledge/documents?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/knowledge/documents`
 }
 
 /**
@@ -907,7 +907,7 @@ export const getDeleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteUrl = (doc
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/knowledge/documents/${docId}?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/knowledge/documents/${docId}`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}`
 }
 
 /**
@@ -944,7 +944,7 @@ export const getListCollectionsApiV1OwnersKnowledgeCollectionsGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/knowledge/collections`
+  return `http://10.0.0.228:8000/api/v1/owners/knowledge/collections`
 }
 
 /**
@@ -980,7 +980,7 @@ export const getDashboardStatsApiV1OwnersDashboardStatsGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/dashboard/stats`
+  return `http://10.0.0.228:8000/api/v1/owners/dashboard/stats`
 }
 
 /**
@@ -1029,7 +1029,7 @@ export const getListAuditLogsApiV1OwnersAuditLogsGetUrl = (params?: ListAuditLog
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.179:8000/api/v1/owners/audit-logs?${stringifiedParams}` : `http://10.0.0.179:8000/api/v1/owners/audit-logs`
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/audit-logs?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/audit-logs`
 }
 
 /**
@@ -1071,7 +1071,7 @@ export const getGetConversationTraceApiV1OwnersConversationsConversationIdTraceG
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/conversations/${conversationId}/trace`
+  return `http://10.0.0.228:8000/api/v1/owners/conversations/${conversationId}/trace`
 }
 
 /**
@@ -1114,7 +1114,7 @@ export const getStreamConversationTraceApiV1OwnersConversationsConversationIdTra
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/conversations/${conversationId}/trace/stream`
+  return `http://10.0.0.228:8000/api/v1/owners/conversations/${conversationId}/trace/stream`
 }
 
 /**
@@ -1154,7 +1154,7 @@ export const getGetEnterpriseCodeApiV1OwnersEnterpriseCodeGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/enterprise-code`
+  return `http://10.0.0.228:8000/api/v1/owners/enterprise-code`
 }
 
 /**
@@ -1197,7 +1197,7 @@ export const getSetEnterpriseCodeApiV1OwnersEnterpriseCodePutUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/owners/enterprise-code`
+  return `http://10.0.0.228:8000/api/v1/owners/enterprise-code`
 }
 
 /**

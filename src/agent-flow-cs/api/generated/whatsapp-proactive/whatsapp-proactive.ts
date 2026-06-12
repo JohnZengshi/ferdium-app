@@ -32,7 +32,7 @@ export const getListCampaignTasksApiV1WhatsappCampaignTasksGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/campaign-tasks`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks`
 }
 
 /**
@@ -75,7 +75,7 @@ export const getCreateCampaignTaskApiV1WhatsappCampaignTasksPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/campaign-tasks`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks`
 }
 
 /**
@@ -118,7 +118,7 @@ export const getGetCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetUrl = (taskId:
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/campaign-tasks/${taskId}`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}`
 }
 
 /**
@@ -161,7 +161,7 @@ export const getDeleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteUrl = (t
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/campaign-tasks/${taskId}`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}`
 }
 
 /**
@@ -204,7 +204,7 @@ export const getPauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/campaign-tasks/${taskId}/pause`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}/pause`
 }
 
 /**
@@ -247,7 +247,7 @@ export const getResumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostUrl 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/campaign-tasks/${taskId}/resume`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}/resume`
 }
 
 /**
@@ -290,7 +290,7 @@ export const getListCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetUrl =
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/campaign-tasks/${taskId}/runs`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/campaign-tasks/${taskId}/runs`
 }
 
 /**
@@ -333,7 +333,7 @@ export const getConfigureFollowupApiV1WhatsappFollowupsConversationIdPutUrl = (c
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/followups/${conversationId}`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}`
 }
 
 /**
@@ -377,7 +377,7 @@ export const getGetFollowupApiV1WhatsappFollowupsConversationIdGetUrl = (convers
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/followups/${conversationId}`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}`
 }
 
 /**
@@ -420,7 +420,7 @@ export const getPauseFollowupApiV1WhatsappFollowupsConversationIdPausePostUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/followups/${conversationId}/pause`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}/pause`
 }
 
 /**
@@ -463,7 +463,7 @@ export const getResumeFollowupApiV1WhatsappFollowupsConversationIdResumePostUrl 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/followups/${conversationId}/resume`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}/resume`
 }
 
 /**
@@ -506,7 +506,7 @@ export const getStopFollowupApiV1WhatsappFollowupsConversationIdStopPostUrl = (c
 
 
 
-  return `http://10.0.0.179:8000/api/v1/whatsapp/followups/${conversationId}/stop`
+  return `http://10.0.0.228:8000/api/v1/whatsapp/followups/${conversationId}/stop`
 }
 
 /**

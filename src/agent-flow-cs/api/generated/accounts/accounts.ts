@@ -32,7 +32,7 @@ export const getListMembersApiV1AccountsMembersGetUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/accounts/members`
+  return `http://10.0.0.228:8000/api/v1/accounts/members`
 }
 
 /**
@@ -75,7 +75,7 @@ export const getCreateMemberApiV1AccountsMembersPostUrl = () => {
 
 
 
-  return `http://10.0.0.179:8000/api/v1/accounts/members`
+  return `http://10.0.0.228:8000/api/v1/accounts/members`
 }
 
 /**
@@ -118,7 +118,7 @@ export const getGetMemberApiV1AccountsMembersMemberIdGetUrl = (memberId: string,
 
 
 
-  return `http://10.0.0.179:8000/api/v1/accounts/members/${memberId}`
+  return `http://10.0.0.228:8000/api/v1/accounts/members/${memberId}`
 }
 
 /**
@@ -161,7 +161,7 @@ export const getUpdateMemberApiV1AccountsMembersMemberIdPatchUrl = (memberId: st
 
 
 
-  return `http://10.0.0.179:8000/api/v1/accounts/members/${memberId}`
+  return `http://10.0.0.228:8000/api/v1/accounts/members/${memberId}`
 }
 
 /**
@@ -205,7 +205,7 @@ export const getDeleteMemberApiV1AccountsMembersMemberIdDeleteUrl = (memberId: s
 
 
 
-  return `http://10.0.0.179:8000/api/v1/accounts/members/${memberId}`
+  return `http://10.0.0.228:8000/api/v1/accounts/members/${memberId}`
 }
 
 /**
@@ -242,7 +242,7 @@ export const getOverviewConversationsApiV1AccountsOverviewConversationsGetUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/accounts/overview/conversations`
+  return `http://10.0.0.228:8000/api/v1/accounts/overview/conversations`
 }
 
 /**
@@ -278,7 +278,7 @@ export const getOverviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetUrl = 
 
 
 
-  return `http://10.0.0.179:8000/api/v1/accounts/overview/digital-humans`
+  return `http://10.0.0.228:8000/api/v1/accounts/overview/digital-humans`
 }
 
 /**

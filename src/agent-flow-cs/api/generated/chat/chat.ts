@@ -9,146 +9,162 @@ import type {
   ChatResponse,
   GetConversationTraceApiV1ChatConversationIdTraceGetParams,
   HTTPValidationError,
-  TraceResponse
+  TraceResponse,
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type chatSyncApiV1ChatSyncPostResponse200 = {
-  data: ChatResponse
-  status: 200
-}
+  data: ChatResponse;
+  status: 200;
+};
 
 export type chatSyncApiV1ChatSyncPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type chatSyncApiV1ChatSyncPostResponseSuccess = (chatSyncApiV1ChatSyncPostResponse200) & {
-  headers: Headers;
-};
-export type chatSyncApiV1ChatSyncPostResponseError = (chatSyncApiV1ChatSyncPostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type chatSyncApiV1ChatSyncPostResponse = (chatSyncApiV1ChatSyncPostResponseSuccess | chatSyncApiV1ChatSyncPostResponseError)
+export type chatSyncApiV1ChatSyncPostResponseSuccess =
+  chatSyncApiV1ChatSyncPostResponse200 & {
+    headers: Headers;
+  };
+export type chatSyncApiV1ChatSyncPostResponseError =
+  chatSyncApiV1ChatSyncPostResponse422 & {
+    headers: Headers;
+  };
+
+export type chatSyncApiV1ChatSyncPostResponse =
+  | chatSyncApiV1ChatSyncPostResponseSuccess
+  | chatSyncApiV1ChatSyncPostResponseError;
 
 export const getChatSyncApiV1ChatSyncPostUrl = () => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/chat/sync`
-}
+  return `http://10.0.0.228:8000/api/v1/chat/sync`;
+};
 
 /**
  * 处理同步聊天请求，并持久化对话双方消息。
  * @summary Chat Sync
  */
-export const chatSyncApiV1ChatSyncPost = async (chatRequest: ChatRequest, options?: RequestInit): Promise<chatSyncApiV1ChatSyncPostResponse> => {
-
-  return useCustomInstance<chatSyncApiV1ChatSyncPostResponse>(getChatSyncApiV1ChatSyncPostUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(chatRequest)
-  }
-);}
-
+export const chatSyncApiV1ChatSyncPost = async (
+  chatRequest: ChatRequest,
+  options?: RequestInit,
+): Promise<chatSyncApiV1ChatSyncPostResponse> => {
+  return useCustomInstance<chatSyncApiV1ChatSyncPostResponse>(
+    getChatSyncApiV1ChatSyncPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(chatRequest),
+    },
+  );
+};
 
 export type getConversationTraceApiV1ChatConversationIdTraceGetResponse200 = {
-  data: TraceResponse
-  status: 200
-}
+  data: TraceResponse;
+  status: 200;
+};
 
 export type getConversationTraceApiV1ChatConversationIdTraceGetResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type getConversationTraceApiV1ChatConversationIdTraceGetResponseSuccess = (getConversationTraceApiV1ChatConversationIdTraceGetResponse200) & {
-  headers: Headers;
-};
-export type getConversationTraceApiV1ChatConversationIdTraceGetResponseError = (getConversationTraceApiV1ChatConversationIdTraceGetResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type getConversationTraceApiV1ChatConversationIdTraceGetResponse = (getConversationTraceApiV1ChatConversationIdTraceGetResponseSuccess | getConversationTraceApiV1ChatConversationIdTraceGetResponseError)
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponseSuccess =
+  getConversationTraceApiV1ChatConversationIdTraceGetResponse200 & {
+    headers: Headers;
+  };
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponseError =
+  getConversationTraceApiV1ChatConversationIdTraceGetResponse422 & {
+    headers: Headers;
+  };
 
-export const getGetConversationTraceApiV1ChatConversationIdTraceGetUrl = (conversationId: string,
-    params?: GetConversationTraceApiV1ChatConversationIdTraceGetParams,) => {
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse =
+  | getConversationTraceApiV1ChatConversationIdTraceGetResponseSuccess
+  | getConversationTraceApiV1ChatConversationIdTraceGetResponseError;
+
+export const getGetConversationTraceApiV1ChatConversationIdTraceGetUrl = (
+  conversationId: string,
+  params?: GetConversationTraceApiV1ChatConversationIdTraceGetParams,
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
+      normalizedParams.append(key, value === null ? 'null' : String(value));
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace`
-}
+  return stringifiedParams.length > 0
+    ? `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace?${stringifiedParams}`
+    : `http://10.0.0.228:8000/api/v1/chat/${conversationId}/trace`;
+};
 
 /**
  * 查询指定会话的 Agent 调用链路。
  * @summary Get Conversation Trace
  */
-export const getConversationTraceApiV1ChatConversationIdTraceGet = async (conversationId: string,
-    params?: GetConversationTraceApiV1ChatConversationIdTraceGetParams, options?: RequestInit): Promise<getConversationTraceApiV1ChatConversationIdTraceGetResponse> => {
-
-  return useCustomInstance<getConversationTraceApiV1ChatConversationIdTraceGetResponse>(getGetConversationTraceApiV1ChatConversationIdTraceGetUrl(conversationId,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getConversationTraceApiV1ChatConversationIdTraceGet = async (
+  conversationId: string,
+  params?: GetConversationTraceApiV1ChatConversationIdTraceGetParams,
+  options?: RequestInit,
+): Promise<getConversationTraceApiV1ChatConversationIdTraceGetResponse> => {
+  return useCustomInstance<getConversationTraceApiV1ChatConversationIdTraceGetResponse>(
+    getGetConversationTraceApiV1ChatConversationIdTraceGetUrl(
+      conversationId,
+      params,
+    ),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type chatStreamApiV1ChatStreamPostResponse200 = {
-  data: unknown
-  status: 200
-}
+  data: unknown;
+  status: 200;
+};
 
 export type chatStreamApiV1ChatStreamPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type chatStreamApiV1ChatStreamPostResponseSuccess = (chatStreamApiV1ChatStreamPostResponse200) & {
-  headers: Headers;
-};
-export type chatStreamApiV1ChatStreamPostResponseError = (chatStreamApiV1ChatStreamPostResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type chatStreamApiV1ChatStreamPostResponse = (chatStreamApiV1ChatStreamPostResponseSuccess | chatStreamApiV1ChatStreamPostResponseError)
+export type chatStreamApiV1ChatStreamPostResponseSuccess =
+  chatStreamApiV1ChatStreamPostResponse200 & {
+    headers: Headers;
+  };
+export type chatStreamApiV1ChatStreamPostResponseError =
+  chatStreamApiV1ChatStreamPostResponse422 & {
+    headers: Headers;
+  };
+
+export type chatStreamApiV1ChatStreamPostResponse =
+  | chatStreamApiV1ChatStreamPostResponseSuccess
+  | chatStreamApiV1ChatStreamPostResponseError;
 
 export const getChatStreamApiV1ChatStreamPostUrl = () => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/chat/stream`
-}
+  return `http://10.0.0.228:8000/api/v1/chat/stream`;
+};
 
 /**
  * SSE 流式聊天端点。
  * @summary Chat Stream
  */
-export const chatStreamApiV1ChatStreamPost = async (chatRequest: ChatRequest, options?: RequestInit): Promise<chatStreamApiV1ChatStreamPostResponse> => {
-
-  return useCustomInstance<chatStreamApiV1ChatStreamPostResponse>(getChatStreamApiV1ChatStreamPostUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(chatRequest)
-  }
-);}
-
-
+export const chatStreamApiV1ChatStreamPost = async (
+  chatRequest: ChatRequest,
+  options?: RequestInit,
+): Promise<chatStreamApiV1ChatStreamPostResponse> => {
+  return useCustomInstance<chatStreamApiV1ChatStreamPostResponse>(
+    getChatStreamApiV1ChatStreamPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(chatRequest),
+    },
+  );
+};

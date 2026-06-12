@@ -7,7 +7,6 @@ import {
   FileIcon,
   FolderIcon,
   HomeIcon,
-  UploadIcon,
   UserIcon,
   UsergroupIcon,
   WorkIcon,
@@ -491,12 +490,12 @@ const KnowledgeScreen: React.FC = () => {
                       className="!border-[3px] !border-line !rounded-full"
                     />
                   ) : (
-                    <div className="w-[120px] h-[120px] rounded-full bg-component flex flex-col items-center justify-center gap-[8px] cursor-pointer">
-                      <UploadIcon size="24px" className="text-placeholder" />
-                      <span className="text-[13px] text-placeholder">
-                        {intl.formatMessage(messages.clickToSetAvatar)}
-                      </span>
-                    </div>
+                    <Avatar
+                      size="120px"
+                      className="!border-[3px] !border-line !rounded-full !bg-brand !text-white !text-[48px] !font-semibold"
+                    >
+                      {record.name.charAt(0).toUpperCase()}
+                    </Avatar>
                   )}
                 </div>
 

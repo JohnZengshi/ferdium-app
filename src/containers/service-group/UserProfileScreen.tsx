@@ -479,24 +479,7 @@ function UserProfileScreen(): ReactElement {
               </Button>
             </>
           }
-          rightContent={
-            <>
-              <span className="text-[14px] leading-[22px] text-secondary">
-                {intl.formatMessage(messages.selectedItems, { count: 0 })}
-              </span>
-              <Button
-                theme="primary"
-                variant="text"
-                className="!rounded-[8px] !bg-brand-light !px-[14px] !text-brand"
-              >
-                {intl.formatMessage(messages.moreActions)}
-              </Button>
-              <RefreshIcon
-                className="cursor-pointer text-[20px] text-primary"
-                onClick={() => fetchData()}
-              />
-            </>
-          }
+          rightContent={null}
         />
 
         <Table

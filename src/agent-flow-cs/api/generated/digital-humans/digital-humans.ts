@@ -31,7 +31,7 @@ export type listDigitalHumansApiV1DigitalHumansGetResponse =
   listDigitalHumansApiV1DigitalHumansGetResponseSuccess;
 
 export const getListDigitalHumansApiV1DigitalHumansGetUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans`;
+  return `http://10.0.0.228:8000/api/v1/digital-humans`;
 };
 
 /**
@@ -74,7 +74,7 @@ export type createDigitalHumanApiV1DigitalHumansPostResponse =
   | createDigitalHumanApiV1DigitalHumansPostResponseError;
 
 export const getCreateDigitalHumanApiV1DigitalHumansPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans`;
+  return `http://10.0.0.228:8000/api/v1/digital-humans`;
 };
 
 /**
@@ -122,7 +122,7 @@ export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse =
 export const getGetDigitalHumanApiV1DigitalHumansDigitalHumanIdGetUrl = (
   digitalHumanId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`;
+  return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}`;
 };
 
 /**
@@ -168,7 +168,7 @@ export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse =
 export const getUpdateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutUrl = (
   digitalHumanId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`;
+  return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}`;
 };
 
 /**
@@ -219,7 +219,7 @@ export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse =
 export const getDeleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteUrl = (
   digitalHumanId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}`;
+  return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}`;
 };
 
 /**
@@ -283,8 +283,8 @@ export const getAssignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPos
     const stringifiedParams = normalizedParams.toString();
 
     return stringifiedParams.length > 0
-      ? `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}`
-      : `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
+      ? `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}`
+      : `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
   };
 
 /**
@@ -351,8 +351,8 @@ export const getUnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsD
     const stringifiedParams = normalizedParams.toString();
 
     return stringifiedParams.length > 0
-      ? `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}`
-      : `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
+      ? `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments?${stringifiedParams}`
+      : `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
   };
 
 /**
@@ -405,7 +405,7 @@ export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmen
 
 export const getListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetUrl =
   (digitalHumanId: string) => {
-    return `http://10.0.0.205:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
+    return `http://10.0.0.228:8000/api/v1/digital-humans/${digitalHumanId}/assignments`;
   };
 
 /**

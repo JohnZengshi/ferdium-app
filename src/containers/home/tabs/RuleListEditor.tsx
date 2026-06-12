@@ -9,12 +9,81 @@ import { defineMessages, useIntl } from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
 import { Loading, MessagePlugin } from 'tdesign-react';
 import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
-import type { AgentRuleResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
-import {
-  createRuleApiV1RulesPost,
-  deleteRuleApiV1RulesRuleIdDelete,
-  updateRuleApiV1RulesRuleIdPatch,
-} from '../../../agent-flow-cs/api/generated/rules/rules';
+
+// 后端 /api/v1/rules 已从 OpenAPI spec 中移除，本地保留类型和请求函数
+interface AgentRuleResponse {
+  id: string;
+  owner_user_id: string;
+  rule_type: 'safety_boundary' | 'handoff_policy';
+  name: string;
+  content: string;
+  enabled: boolean;
+  priority: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface AgentRuleCreateRequest {
+  rule_type: 'safety_boundary' | 'handoff_policy';
+  name: string;
+  content: string;
+  enabled?: boolean;
+  priority?: number;
+}
+
+interface AgentRuleUpdateRequest {
+  rule_type?: 'safety_boundary' | 'handoff_policy' | null;
+  name?: string | null;
+  content?: string | null;
+  enabled?: boolean | null;
+  priority?: number | null;
+}
+
+const RULES_BASE = '/api/v1/rules';
+
+const createRuleApiV1RulesPost = async (
+  body: AgentRuleCreateRequest,
+  options?: RequestInit,
+) =>
+  useCustomInstance<{
+    data: AgentRuleResponse;
+    status: number;
+    headers: Headers;
+  }>(`${RULES_BASE}`, {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(body),
+  });
+
+const updateRuleApiV1RulesRuleIdPatch = async (
+  ruleId: string,
+  body: AgentRuleUpdateRequest,
+  options?: RequestInit,
+) =>
+  useCustomInstance<{
+    data: AgentRuleResponse;
+    status: number;
+    headers: Headers;
+  }>(`${RULES_BASE}/${ruleId}`, {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(body),
+  });
+
+const deleteRuleApiV1RulesRuleIdDelete = async (
+  ruleId: string,
+  options?: RequestInit,
+) =>
+  useCustomInstance<{
+    data: undefined;
+    status: number;
+    headers: Headers;
+  }>(`${RULES_BASE}/${ruleId}`, {
+    ...options,
+    method: 'DELETE',
+  });
 
 const PAGE_SIZE = 20;
 
@@ -201,7 +270,7 @@ const listRulesByType = async (
   });
 
   return useCustomInstance<RuleListResponse>(
-    `http://10.0.0.205:8000/api/v1/rules?${searchParams.toString()}`,
+    `${RULES_BASE}?${searchParams.toString()}`,
     {
       method: 'GET',
     },

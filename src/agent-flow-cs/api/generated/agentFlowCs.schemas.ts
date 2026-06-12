@@ -126,80 +126,6 @@ export interface AgentReplyRequest {
   sender_name?: string | null;
 }
 
-export type AgentRuleCreateRequestRuleType =
-  (typeof AgentRuleCreateRequestRuleType)[keyof typeof AgentRuleCreateRequestRuleType];
-
-export const AgentRuleCreateRequestRuleType = {
-  safety_boundary: 'safety_boundary',
-  handoff_policy: 'handoff_policy',
-} as const;
-
-/**
- * 子账号创建自然语言 Agent 规则。
- */
-export interface AgentRuleCreateRequest {
-  rule_type: AgentRuleCreateRequestRuleType;
-  /**
-   * @minLength 1
-   * @maxLength 128
-   */
-  name: string;
-  /**
-   * @minLength 1
-   * @maxLength 4000
-   */
-  content: string;
-  enabled?: boolean;
-  /**
-   * @minimum 0
-   * @maximum 1000
-   */
-  priority?: number;
-}
-
-export type AgentRuleResponseRuleType =
-  (typeof AgentRuleResponseRuleType)[keyof typeof AgentRuleResponseRuleType];
-
-export const AgentRuleResponseRuleType = {
-  safety_boundary: 'safety_boundary',
-  handoff_policy: 'handoff_policy',
-} as const;
-
-/**
- * 序列化后的 Agent 规则响应。
- */
-export interface AgentRuleResponse {
-  id: string;
-  owner_user_id: string;
-  rule_type: AgentRuleResponseRuleType;
-  name: string;
-  content: string;
-  enabled: boolean;
-  priority: number;
-  created_at: string;
-  updated_at: string;
-}
-
-export type AgentRuleUpdateRequestRuleType =
-  | (typeof AgentRuleUpdateRequestRuleType)[keyof typeof AgentRuleUpdateRequestRuleType]
-  | null;
-
-export const AgentRuleUpdateRequestRuleType = {
-  safety_boundary: 'safety_boundary',
-  handoff_policy: 'handoff_policy',
-} as const;
-
-/**
- * 子账号修改自然语言 Agent 规则。
- */
-export interface AgentRuleUpdateRequest {
-  rule_type?: AgentRuleUpdateRequestRuleType;
-  name?: string | null;
-  content?: string | null;
-  enabled?: boolean | null;
-  priority?: number | null;
-}
-
 export interface AssignRequest {
   user_id: string;
   assign?: boolean;
@@ -765,10 +691,14 @@ export interface FollowupStrategyRequest {
   valid_days?: number;
 }
 
+export type ValidationErrorCtx = { [key: string]: unknown };
+
 export interface ValidationError {
   loc: (string | number)[];
   msg: string;
   type: string;
+  input?: unknown;
+  ctx?: ValidationErrorCtx;
 }
 
 export interface HTTPValidationError {

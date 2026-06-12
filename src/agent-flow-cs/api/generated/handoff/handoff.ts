@@ -37,7 +37,7 @@ export type createHandoffApiV1HandoffPostResponse =
   | createHandoffApiV1HandoffPostResponseError;
 
 export const getCreateHandoffApiV1HandoffPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/handoff`;
+  return `http://10.0.0.228:8000/api/v1/handoff`;
 };
 
 /**
@@ -85,7 +85,7 @@ export type listHandoffsApiV1HandoffConversationIdGetResponse =
 export const getListHandoffsApiV1HandoffConversationIdGetUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/handoff/${conversationId}`;
+  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}`;
 };
 
 /**
@@ -131,7 +131,7 @@ export type resolveHandoffApiV1HandoffConversationIdResolvePostResponse =
 export const getResolveHandoffApiV1HandoffConversationIdResolvePostUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/handoff/${conversationId}/resolve`;
+  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}/resolve`;
 };
 
 /**
@@ -180,7 +180,7 @@ export type closeHandoffApiV1HandoffConversationIdClosePostResponse =
 export const getCloseHandoffApiV1HandoffConversationIdClosePostUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/handoff/${conversationId}/close`;
+  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}/close`;
 };
 
 /**

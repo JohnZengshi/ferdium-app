@@ -19,7 +19,7 @@ export type healthzHealthzGetResponseSuccess = healthzHealthzGetResponse200 & {
 export type healthzHealthzGetResponse = healthzHealthzGetResponseSuccess;
 
 export const getHealthzHealthzGetUrl = () => {
-  return `http://10.0.0.205:8000/healthz`;
+  return `http://10.0.0.228:8000/healthz`;
 };
 
 /**

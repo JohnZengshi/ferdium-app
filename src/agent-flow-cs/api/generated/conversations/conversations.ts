@@ -30,7 +30,7 @@ export type listConversationsApiV1ConversationsGetResponse =
   listConversationsApiV1ConversationsGetResponseSuccess;
 
 export const getListConversationsApiV1ConversationsGetUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/conversations`;
+  return `http://10.0.0.228:8000/api/v1/conversations`;
 };
 
 /**
@@ -73,7 +73,7 @@ export type createConversationApiV1ConversationsPostResponse =
   | createConversationApiV1ConversationsPostResponseError;
 
 export const getCreateConversationApiV1ConversationsPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/conversations`;
+  return `http://10.0.0.228:8000/api/v1/conversations`;
 };
 
 /**
@@ -123,7 +123,7 @@ export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchR
 
 export const getUpdateConversationDigitalHumanApiV1ConversationsConversationIdPatchUrl =
   (conversationId: string) => {
-    return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}`;
+    return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}`;
   };
 
 /**
@@ -177,7 +177,7 @@ export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse =
 export const getAgentReplyApiV1ConversationsConversationIdAgentReplyPostUrl = (
   conversationId: string,
 ) => {
-  return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/agent-reply`;
+  return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}/agent-reply`;
 };
 
 /**
@@ -233,7 +233,7 @@ export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse 
 
 export const getPauseConversationApiV1ConversationsConversationIdPausePatchUrl =
   (conversationId: string) => {
-    return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/pause`;
+    return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}/pause`;
   };
 
 /**
@@ -289,7 +289,7 @@ export type resumeConversationApiV1ConversationsConversationIdResumePatchRespons
 
 export const getResumeConversationApiV1ConversationsConversationIdResumePatchUrl =
   (conversationId: string) => {
-    return `http://10.0.0.205:8000/api/v1/conversations/${conversationId}/resume`;
+    return `http://10.0.0.228:8000/api/v1/conversations/${conversationId}/resume`;
   };
 
 /**
@@ -356,8 +356,8 @@ export const getPauseConversationByCustomerApiV1ConversationsByCustomerCustomerI
     const stringifiedParams = normalizedParams.toString();
 
     return stringifiedParams.length > 0
-      ? `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/pause?${stringifiedParams}`
-      : `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/pause`;
+      ? `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/pause?${stringifiedParams}`
+      : `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/pause`;
   };
 
 /**
@@ -429,8 +429,8 @@ export const getResumeConversationByCustomerApiV1ConversationsByCustomerCustomer
     const stringifiedParams = normalizedParams.toString();
 
     return stringifiedParams.length > 0
-      ? `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/resume?${stringifiedParams}`
-      : `http://10.0.0.205:8000/api/v1/conversations/by-customer/${customerId}/resume`;
+      ? `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/resume?${stringifiedParams}`
+      : `http://10.0.0.228:8000/api/v1/conversations/by-customer/${customerId}/resume`;
   };
 
 /**

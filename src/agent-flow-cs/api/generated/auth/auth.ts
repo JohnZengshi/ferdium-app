@@ -37,7 +37,7 @@ export type registerApiV1AuthRegisterPostResponse =
   | registerApiV1AuthRegisterPostResponseError;
 
 export const getRegisterApiV1AuthRegisterPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/auth/register`;
+  return `http://10.0.0.228:8000/api/v1/auth/register`;
 };
 
 /**
@@ -83,7 +83,7 @@ export type loginApiV1AuthLoginPostResponse =
   | loginApiV1AuthLoginPostResponseError;
 
 export const getLoginApiV1AuthLoginPostUrl = () => {
-  return `http://10.0.0.205:8000/api/v1/auth/login`;
+  return `http://10.0.0.228:8000/api/v1/auth/login`;
 };
 
 /**

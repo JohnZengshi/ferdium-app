@@ -243,7 +243,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
       <div
         className="auth__container w-full"
         // Force this login box to stay in light mode regardless of global theme
-        {...{'theme-mode': 'light'}}
+        {...{ 'theme-mode': 'light' }}
       >
         <div className="auth__form-wrapper flex flex-col">
           <div className="mb-[32px]">

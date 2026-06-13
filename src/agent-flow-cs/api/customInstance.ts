@@ -65,12 +65,16 @@ export const useCustomInstance = <T>(
       return payload as T;
     }
 
-    const errorMessage = body.message || body.error || response.statusText;
+    const errorMessage =
+      body.message || body.error || body.detail || response.statusText;
 
     const error = new Error(errorMessage);
     (error as any).status = response.status;
     (error as any).statusText = response.statusText;
     (error as any).url = response.url;
+    (error as any).detail = body.detail;
+    (error as any).code = body.code;
+    (error as any).body = body;
 
     throw error;
   });

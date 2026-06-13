@@ -507,10 +507,11 @@ export default class Service {
 
           const enhancedArgs = [...args];
 
-          // 为 pause/resume conversation 接口注入 wa_session_id（Ferdium 服务会话 ID）
+          // 为 pause/resume/get-by-customer conversation 接口注入 wa_session_id（Ferdium 服务会话 ID）
           if (
             (method.includes('pauseConversationByCustomer') ||
-              method.includes('resumeConversationByCustomer')) && // args 格式: [customerId, params]
+              method.includes('resumeConversationByCustomer') ||
+              method.includes('getConversationByCustomer')) && // args 格式: [customerId, params]
             enhancedArgs.length >= 2 &&
             typeof enhancedArgs[1] === 'object'
           ) {

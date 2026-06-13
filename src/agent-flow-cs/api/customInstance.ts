@@ -22,7 +22,10 @@ export const useCustomInstance = <T>(
   // Replace the hardcoded base URL with the actual backend URL from .env
   const AGENT_FLOW_CS_BASE =
     process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.179:8000';
-  const actualUrl = url.replace(/^https?:\/\/[^/]+/, AGENT_FLOW_CS_BASE);
+  // Handle both absolute URLs (replace host) and relative paths (prepend base)
+  const actualUrl = /^https?:\/\//.test(url)
+    ? url.replace(/^https?:\/\/[^/]+/, AGENT_FLOW_CS_BASE)
+    : `${AGENT_FLOW_CS_BASE.replace(/\/+$/, '')}${url}`;
 
   // agent-flow-cs supports two auth methods:
   //   1. Bearer JWT (own token from /api/v1/auth/login)

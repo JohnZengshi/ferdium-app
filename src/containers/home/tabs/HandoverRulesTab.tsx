@@ -1,7 +1,15 @@
-import { type ReactElement, useState } from 'react';
+import { type ReactElement, useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { CheckIcon, CloseIcon, NotificationIcon } from 'tdesign-icons-react';
+import { NotificationIcon } from 'tdesign-icons-react';
 import { Button, Dialog, Input, MessagePlugin } from 'tdesign-react';
+import type { TelegramBotResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import {
+  createBotApiV1TelegramBotsPost,
+  deleteBotApiV1TelegramBotsBotIdDelete,
+  listBotsApiV1TelegramBotsGet,
+  testBotApiV1TelegramBotsBotIdTestPost,
+  updateBotApiV1TelegramBotsBotIdPatch,
+} from '../../../agent-flow-cs/api/generated/telegram-bots/telegram-bots';
 import RuleListEditor from './RuleListEditor';
 
 const messages = defineMessages({
@@ -38,14 +46,6 @@ const messages = defineMessages({
   telegramBot: {
     id: 'handoverRulesTab.telegramBot',
     defaultMessage: 'Telegram Bot',
-  },
-  bound: {
-    id: 'handoverRulesTab.bound',
-    defaultMessage: 'Bound',
-  },
-  unbound: {
-    id: 'handoverRulesTab.unbound',
-    defaultMessage: 'Unbound',
   },
   goBind: {
     id: 'handoverRulesTab.goBind',
@@ -128,20 +128,64 @@ const messages = defineMessages({
     id: 'handoverRulesTab.unbindConfirmYes',
     defaultMessage: 'Yes, unbind',
   },
+  nameLabel: {
+    id: 'handoverRulesTab.nameLabel',
+    defaultMessage: 'Bot Name',
+  },
+  namePlaceholder: {
+    id: 'handoverRulesTab.namePlaceholder',
+    defaultMessage: 'Enter a name for this bot',
+  },
+  saveFailed: {
+    id: 'handoverRulesTab.saveFailed',
+    defaultMessage: 'Operation failed, please try again.',
+  },
+  deleteFailed: {
+    id: 'handoverRulesTab.deleteFailed',
+    defaultMessage: 'Unbind failed, please try again.',
+  },
 });
 
 const HandoverRulesTab = (): ReactElement => {
   const intl = useIntl();
 
-  const [bound, setBound] = useState(false);
+  const [currentBot, setCurrentBot] = useState<TelegramBotResponse | null>(
+    null,
+  );
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [testing, setTesting] = useState(false);
+
   const [dialogVisible, setDialogVisible] = useState(false);
   const [unbindConfirmVisible, setUnbindConfirmVisible] = useState(false);
+  const [botName, setBotName] = useState('');
   const [botToken, setBotToken] = useState('');
   const [chatId, setChatId] = useState('');
   const [editMode, setEditMode] = useState(false);
 
+  const bound = currentBot !== null;
+
+  const fetchBotList = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await listBotsApiV1TelegramBotsGet({ limit: 1 });
+      if (res.status === 200 && res.data.items && res.data.items.length > 0) {
+        setCurrentBot(res.data.items[0]);
+      }
+    } catch {
+      // silently ignore — treat as unbound
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchBotList();
+  }, [fetchBotList]);
+
   const handleBind = (): void => {
     setEditMode(false);
+    setBotName('');
     setBotToken('');
     setChatId('');
     setDialogVisible(true);
@@ -149,6 +193,9 @@ const HandoverRulesTab = (): ReactElement => {
 
   const handleEdit = (): void => {
     setEditMode(true);
+    setBotName(currentBot?.name ?? '');
+    setBotToken('');
+    setChatId(currentBot?.chat_id ?? '');
     setDialogVisible(true);
   };
 
@@ -156,28 +203,75 @@ const HandoverRulesTab = (): ReactElement => {
     setUnbindConfirmVisible(true);
   };
 
-  const confirmUnbind = (): void => {
-    setBound(false);
-    setBotToken('');
-    setChatId('');
-    setUnbindConfirmVisible(false);
-    MessagePlugin.success(intl.formatMessage(messages.unbindSuccess));
-  };
-
-  const handleTest = (): void => {
-    // TODO: 실제 Telegram API 호출로 대체
-    if (botToken && chatId) {
-      MessagePlugin.success(intl.formatMessage(messages.testSuccess));
-    } else {
-      MessagePlugin.error(intl.formatMessage(messages.testFailed));
+  const confirmUnbind = async (): Promise<void> => {
+    if (!currentBot) return;
+    try {
+      const res = await deleteBotApiV1TelegramBotsBotIdDelete(currentBot.id);
+      if (res.status === 204) {
+        setCurrentBot(null);
+        setBotName('');
+        setBotToken('');
+        setChatId('');
+        setUnbindConfirmVisible(false);
+        MessagePlugin.success(intl.formatMessage(messages.unbindSuccess));
+      }
+    } catch {
+      MessagePlugin.error(intl.formatMessage(messages.deleteFailed));
     }
   };
 
-  const handleConfirm = (): void => {
-    // TODO: 실제 API 저장 로직으로 대체
-    setBound(true);
-    setDialogVisible(false);
-    MessagePlugin.success(intl.formatMessage(messages.bindSuccess));
+  const handleTest = async (): Promise<void> => {
+    if (!currentBot) return;
+    setTesting(true);
+    try {
+      const res = await testBotApiV1TelegramBotsBotIdTestPost(currentBot.id);
+      if (res.status === 200 && res.data.success) {
+        MessagePlugin.success(intl.formatMessage(messages.testSuccess));
+      } else {
+        MessagePlugin.error(
+          (res.status === 200 && res.data.error) ||
+            intl.formatMessage(messages.testFailed),
+        );
+      }
+    } catch {
+      MessagePlugin.error(intl.formatMessage(messages.testFailed));
+    } finally {
+      setTesting(false);
+    }
+  };
+
+  const handleConfirm = async (): Promise<void> => {
+    if (!botName.trim() || !botToken.trim() || !chatId.trim()) return;
+    setSaving(true);
+    try {
+      if (editMode && currentBot) {
+        const res = await updateBotApiV1TelegramBotsBotIdPatch(currentBot.id, {
+          name: botName.trim(),
+          bot_token: botToken.trim(),
+          chat_id: chatId.trim(),
+        });
+        if (res.status === 200) {
+          setCurrentBot(res.data);
+          setDialogVisible(false);
+          MessagePlugin.success(intl.formatMessage(messages.bindSuccess));
+        }
+      } else {
+        const res = await createBotApiV1TelegramBotsPost({
+          name: botName.trim(),
+          bot_token: botToken.trim(),
+          chat_id: chatId.trim(),
+        });
+        if (res.status === 201) {
+          setCurrentBot(res.data);
+          setDialogVisible(false);
+          MessagePlugin.success(intl.formatMessage(messages.bindSuccess));
+        }
+      }
+    } catch {
+      MessagePlugin.error(intl.formatMessage(messages.saveFailed));
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -254,29 +348,11 @@ const HandoverRulesTab = (): ReactElement => {
               {intl.formatMessage(messages.telegramBot)}
             </span>
 
-            <div
-              className={`mt-[12px] inline-flex h-[28px] items-center gap-[4px] rounded-[6px] px-[10px] ${
-                bound ? 'bg-success-light' : 'bg-secondary-container'
-              }`}
-            >
-              {bound ? (
-                <>
-                  <CheckIcon size="16px" className="text-success-active" />
-                  <span className="text-[13px] font-medium leading-none text-success-active">
-                    {intl.formatMessage(messages.bound)}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <CloseIcon size="16px" className="text-placeholder" />
-                  <span className="text-[13px] font-medium leading-none text-placeholder">
-                    {intl.formatMessage(messages.unbound)}
-                  </span>
-                </>
-              )}
-            </div>
-
-            {bound ? (
+            {loading ? (
+              <div className="absolute bottom-[24px] right-[24px]">
+                <div className="h-[32px] w-[88px] animate-pulse rounded-[6px] bg-secondary-container" />
+              </div>
+            ) : bound ? (
               <div className="absolute bottom-[24px] right-[24px] flex gap-[8px]">
                 <button
                   type="button"
@@ -321,13 +397,28 @@ const HandoverRulesTab = (): ReactElement => {
         onClose={() => setDialogVisible(false)}
         footer={
           <div className="flex justify-end gap-[8px]">
-            <Button variant="outline" onClick={() => setDialogVisible(false)}>
+            <Button
+              variant="outline"
+              disabled={saving || testing}
+              onClick={() => setDialogVisible(false)}
+            >
               {intl.formatMessage(messages.cancel)}
             </Button>
-            <Button variant="outline" theme="primary" onClick={handleTest}>
+            <Button
+              variant="outline"
+              theme="primary"
+              disabled={!editMode || !currentBot || saving || testing}
+              loading={testing}
+              onClick={handleTest}
+            >
               {intl.formatMessage(messages.test)}
             </Button>
-            <Button theme="primary" onClick={handleConfirm}>
+            <Button
+              theme="primary"
+              disabled={saving || testing}
+              loading={saving}
+              onClick={handleConfirm}
+            >
               {intl.formatMessage(messages.confirm)}
             </Button>
           </div>
@@ -337,6 +428,16 @@ const HandoverRulesTab = (): ReactElement => {
         <div className="flex flex-col gap-[16px] pt-[8px]">
           <div>
             <div className="mb-[6px] text-[14px] font-medium text-primary">
+              {intl.formatMessage(messages.nameLabel)}
+            </div>
+            <Input
+              placeholder={intl.formatMessage(messages.namePlaceholder)}
+              value={botName}
+              onChange={(val: string) => setBotName(val)}
+            />
+          </div>
+          <div>
+            <div className="mb-[6px] text-[14px] font-medium text-primary">
               {intl.formatMessage(messages.botTokenLabel)}
             </div>
             <Input
@@ -344,6 +445,11 @@ const HandoverRulesTab = (): ReactElement => {
               value={botToken}
               onChange={(val: string) => setBotToken(val)}
             />
+            {editMode && (
+              <div className="mt-[4px] text-[12px] text-placeholder">
+                {currentBot?.bot_token}
+              </div>
+            )}
           </div>
           <div>
             <div className="mb-[6px] text-[14px] font-medium text-primary">

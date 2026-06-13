@@ -7,65 +7,58 @@
 import type {
   AppApiSchemasOwnersCustomerProfileListResponse,
   HTTPValidationError,
-  ListCustomerProfilesApiV1CustomerProfilesGetParams,
+  ListCustomerProfilesApiV1CustomerProfilesGetParams
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listCustomerProfilesApiV1CustomerProfilesGetResponse200 = {
-  data: AppApiSchemasOwnersCustomerProfileListResponse;
-  status: 200;
-};
+  data: AppApiSchemasOwnersCustomerProfileListResponse
+  status: 200
+}
 
 export type listCustomerProfilesApiV1CustomerProfilesGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess = (listCustomerProfilesApiV1CustomerProfilesGetResponse200) & {
+  headers: Headers;
+};
+export type listCustomerProfilesApiV1CustomerProfilesGetResponseError = (listCustomerProfilesApiV1CustomerProfilesGetResponse422) & {
+  headers: Headers;
 };
 
-export type listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess =
-  listCustomerProfilesApiV1CustomerProfilesGetResponse200 & {
-    headers: Headers;
-  };
-export type listCustomerProfilesApiV1CustomerProfilesGetResponseError =
-  listCustomerProfilesApiV1CustomerProfilesGetResponse422 & {
-    headers: Headers;
-  };
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse = (listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess | listCustomerProfilesApiV1CustomerProfilesGetResponseError)
 
-export type listCustomerProfilesApiV1CustomerProfilesGetResponse =
-  | listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess
-  | listCustomerProfilesApiV1CustomerProfilesGetResponseError;
-
-export const getListCustomerProfilesApiV1CustomerProfilesGetUrl = (
-  params?: ListCustomerProfilesApiV1CustomerProfilesGetParams,
-) => {
+export const getListCustomerProfilesApiV1CustomerProfilesGetUrl = (params?: ListCustomerProfilesApiV1CustomerProfilesGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.228:8000/api/v1/customer-profiles?${stringifiedParams}`
-    : `http://10.0.0.228:8000/api/v1/customer-profiles`;
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/customer-profiles?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/customer-profiles`
+}
 
 /**
  * 查询当前子账号名下的客户画像，支持过滤和搜索。
  * @summary List Customer Profiles
  */
-export const listCustomerProfilesApiV1CustomerProfilesGet = async (
-  params?: ListCustomerProfilesApiV1CustomerProfilesGetParams,
-  options?: RequestInit,
-): Promise<listCustomerProfilesApiV1CustomerProfilesGetResponse> => {
-  return useCustomInstance<listCustomerProfilesApiV1CustomerProfilesGetResponse>(
-    getListCustomerProfilesApiV1CustomerProfilesGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listCustomerProfilesApiV1CustomerProfilesGet = async (params?: ListCustomerProfilesApiV1CustomerProfilesGetParams, options?: RequestInit): Promise<listCustomerProfilesApiV1CustomerProfilesGetResponse> => {
+
+  return useCustomInstance<listCustomerProfilesApiV1CustomerProfilesGetResponse>(getListCustomerProfilesApiV1CustomerProfilesGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

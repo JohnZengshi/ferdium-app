@@ -443,16 +443,13 @@ const KnowledgeScreen: React.FC = () => {
     setSmartImportText(value);
   }, []);
 
-  const handleTagToggle = useCallback(
-    (tagKey: string) => {
-      setSelectedTags(prev =>
-        prev.includes(tagKey)
-          ? prev.filter(k => k !== tagKey)
-          : [...prev, tagKey],
-      );
-    },
-    [],
-  );
+  const handleTagToggle = useCallback((tagKey: string) => {
+    setSelectedTags(prev =>
+      prev.includes(tagKey)
+        ? prev.filter(k => k !== tagKey)
+        : [...prev, tagKey],
+    );
+  }, []);
 
   const handleSmartImport = useCallback(() => {
     const trimmedText = smartImportText.trim();
@@ -514,9 +511,17 @@ const KnowledgeScreen: React.FC = () => {
         };
 
         const VALID_FIELDS = new Set([
-          'name', 'remark', 'age', 'gender', 'birthday',
-          'country', 'language', 'city', 'family',
-          'occupation', 'participation',
+          'name',
+          'remark',
+          'age',
+          'gender',
+          'birthday',
+          'country',
+          'language',
+          'city',
+          'family',
+          'occupation',
+          'participation',
         ]);
 
         const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
@@ -545,7 +550,9 @@ const KnowledgeScreen: React.FC = () => {
               if (!jsonStr) continue;
               try {
                 events.push(JSON.parse(jsonStr));
-              } catch { /* skip */ }
+              } catch {
+                /* skip */
+              }
             }
 
             // 逐个处理，progress 更新间加延时让 React 渲染动画
@@ -560,7 +567,7 @@ const KnowledgeScreen: React.FC = () => {
               if (data.type === 'field') {
                 const formField = FIELD_MAP[data.field] ?? data.field;
                 if (VALID_FIELDS.has(formField)) {
-                  const v = data.value !== undefined ? String(data.value) : '';
+                  const v = data.value === undefined ? '' : String(data.value);
                   setFormData(prev => ({ ...prev, [formField]: v }));
                 }
               }
@@ -589,9 +596,9 @@ const KnowledgeScreen: React.FC = () => {
 
         return readStream();
       })
-      .catch((err: Error) => {
-        if (err.name === 'AbortError') return;
-        MessagePlugin.error(err.message || '生成失败');
+      .catch((error: Error) => {
+        if (error.name === 'AbortError') return;
+        MessagePlugin.error(error.message || '生成失败');
       })
       .finally(() => {
         setIsGenerating(false);

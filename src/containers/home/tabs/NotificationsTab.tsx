@@ -293,7 +293,7 @@ class NotificationsTab extends Component<
         r.rule,
         r.status,
       ]
-        .map(cell => `"${String(cell).replace(/"/g, '""')}"`)
+        .map(cell => `"${String(cell).replaceAll('"', '""')}"`)
         .join(','),
     );
     const csvContent = [headers.join(','), ...csvRows].join('\n');

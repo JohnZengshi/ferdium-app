@@ -7,6 +7,7 @@ import type ElectronWebView from 'react-electron-web-view';
 import { v4 as uuidV4 } from 'uuid';
 import * as conversationsApi from '../agent-flow-cs/api/generated/conversations/conversations';
 import * as translateApi from '../agent-flow-cs/api/generated/translate/translate';
+import * as whatsappApi from '../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { isMac } from '../environment';
@@ -467,90 +468,144 @@ export default class Service {
     }
 
     this.webview.addEventListener('ipc-message', async e => {
-      if (e.channel === 'inject-js-unsafe') {
-        await Promise.all(
-          e.args.map(script =>
-            this.webview.executeJavaScript(
-              `"use strict"; (() => { ${script} })();`,
+      switch (e.channel) {
+        case 'inject-js-unsafe': {
+          await Promise.all(
+            e.args.map(script =>
+              this.webview.executeJavaScript(
+                `"use strict"; (() => { ${script} })();`,
+              ),
             ),
-          ),
-        );
-      } else if (e.channel === 'wa-ai-api-request') {
-        const { requestId, api, method, args } = e.args[0] as {
-          requestId: string;
-          api: 'conversations' | 'translate';
-          method: string;
-          args: unknown[];
-        };
-
-        // 模块级全局锁：确保同一 requestId 只触发一次 HTTP 请求
-        if (
-          waAiRequestInFlight.has(requestId) ||
-          waAiRequestRecentlyHandled.has(requestId)
-        ) {
-          debug(
-            'Duplicate wa-ai-api-request ignored (global lock):',
-            requestId,
           );
-          return;
+
+          break;
         }
-        waAiRequestInFlight.add(requestId);
+        case 'wa-ai-api-request': {
+          const { requestId, api, method, args } = e.args[0] as {
+            requestId: string;
+            api: 'conversations' | 'translate' | 'whatsapp';
+            method: string;
+            args: unknown[];
+          };
 
-        try {
-          const apiModule =
-            api === 'conversations' ? conversationsApi : translateApi;
-          const apiMethod = (apiModule as Record<string, unknown>)[method];
-
-          if (typeof apiMethod !== 'function') {
-            throw new TypeError(`Method ${method} not found in module ${api}`);
-          }
-
-          const enhancedArgs = [...args];
-
-          // 为 pause/resume/get-by-customer conversation 接口注入 wa_session_id（Ferdium 服务会话 ID）
+          // 模块级全局锁：确保同一 requestId 只触发一次 HTTP 请求
           if (
-            (method.includes('pauseConversationByCustomer') ||
-              method.includes('resumeConversationByCustomer') ||
-              method.includes('getConversationByCustomer')) && // args 格式: [customerId, params]
-            enhancedArgs.length >= 2 &&
-            typeof enhancedArgs[1] === 'object'
+            waAiRequestInFlight.has(requestId) ||
+            waAiRequestRecentlyHandled.has(requestId)
           ) {
-            (enhancedArgs[1] as Record<string, unknown>).wa_session_id =
-              this.id;
+            debug(
+              'Duplicate wa-ai-api-request ignored (global lock):',
+              requestId,
+            );
+            return;
+          }
+          waAiRequestInFlight.add(requestId);
+
+          try {
+            const apiModule =
+              api === 'conversations'
+                ? conversationsApi
+                : api === 'whatsapp'
+                  ? whatsappApi
+                  : translateApi;
+            const apiMethod = (apiModule as Record<string, unknown>)[method];
+
+            if (typeof apiMethod !== 'function') {
+              throw new TypeError(
+                `Method ${method} not found in module ${api}`,
+              );
+            }
+
+            const enhancedArgs = [...args];
+
+            // 为 pause/resume/get-by-customer conversation 接口注入 wa_session_id（Ferdium 服务会话 ID）
+            if (
+              (method.includes('pauseConversationByCustomer') ||
+                method.includes('resumeConversationByCustomer') ||
+                method.includes('getConversationByCustomer')) && // args 格式: [customerId, params]
+              enhancedArgs.length >= 2 &&
+              typeof enhancedArgs[1] === 'object'
+            ) {
+              (enhancedArgs[1] as Record<string, unknown>).wa_session_id =
+                this.id;
+            }
+
+            if (api === 'whatsapp' && method.includes('getWhatsappBinding')) {
+              if (
+                enhancedArgs.length === 0 ||
+                typeof enhancedArgs[0] !== 'object' ||
+                enhancedArgs[0] === null
+              ) {
+                enhancedArgs[0] = {};
+              }
+              (enhancedArgs[0] as Record<string, unknown>).session_id = this.id;
+            }
+
+            const result = await (
+              apiMethod as (...fnArgs: unknown[]) => Promise<unknown>
+            )(...enhancedArgs);
+
+            this.webview.send('wa-ai-api-response-host', {
+              requestId,
+              success: true,
+              result,
+            });
+          } catch (error: unknown) {
+            const errorObj =
+              error instanceof Error ? error : new Error(String(error));
+            const errorDetail = {
+              status: (errorObj as any).status as number | undefined,
+              statusText: (errorObj as any).statusText as string | undefined,
+              detail: (errorObj as any).detail as string | undefined,
+              code: (errorObj as any).code as string | undefined,
+              url: (errorObj as any).url as string | undefined,
+            };
+
+            this.webview.send('wa-ai-api-response-host', {
+              requestId,
+              success: false,
+              error: errorObj.message,
+              errorDetail,
+            });
+          } finally {
+            // 请求完成后清理锁，防止内存泄漏
+            waAiRequestInFlight.delete(requestId);
+            waAiRequestRecentlyHandled.add(requestId);
+
+            // 保留最近处理过的请求，防止重复处理，但限制大小
+            if (waAiRequestRecentlyHandled.size > 100) {
+              const firstId = waAiRequestRecentlyHandled.values().next().value;
+              if (firstId) waAiRequestRecentlyHandled.delete(firstId);
+            }
           }
 
-          const result = await (
-            apiMethod as (...fnArgs: unknown[]) => Promise<unknown>
-          )(...enhancedArgs);
-
-          this.webview.send('wa-ai-api-response-host', {
-            requestId,
-            success: true,
-            result,
-          });
-        } catch (error: unknown) {
-          this.webview.send('wa-ai-api-response-host', {
-            requestId,
-            success: false,
-            error: error instanceof Error ? error.message : String(error),
-          });
-        } finally {
-          // 请求完成后清理锁，防止内存泄漏
-          waAiRequestInFlight.delete(requestId);
-          waAiRequestRecentlyHandled.add(requestId);
-
-          // 保留最近处理过的请求，防止重复处理，但限制大小
-          if (waAiRequestRecentlyHandled.size > 100) {
-            const firstId = waAiRequestRecentlyHandled.values().next().value;
-            if (firstId) waAiRequestRecentlyHandled.delete(firstId);
-          }
+          break;
         }
-      } else {
-        handleIPCMessage({
-          serviceId: this.id,
-          channel: e.channel,
-          args: e.args,
-        });
+        case 'wa-ai-toast-request': {
+          const payload = (e.args[0] ?? {}) as {
+            theme?: 'error' | 'warning' | 'success' | 'info';
+            message?: string;
+          };
+
+          window.dispatchEvent(
+            new CustomEvent('wa-ai-toast', {
+              detail: {
+                theme: payload.theme ?? 'error',
+                message: payload.message ?? '接口错误',
+                serviceId: this.id,
+              },
+            }),
+          );
+
+          break;
+        }
+        default: {
+          handleIPCMessage({
+            serviceId: this.id,
+            channel: e.channel,
+            args: e.args,
+          });
+        }
       }
     });
 

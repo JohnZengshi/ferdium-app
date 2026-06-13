@@ -12,6 +12,7 @@ import injectSheet, { type WithStylesProps } from 'react-jss';
 
 import { mdiCog, mdiFlash, mdiPowerPlug } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
+import { MessagePlugin } from 'tdesign-react';
 import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
@@ -148,6 +149,50 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       shouldShowServicesUpdatedInfoBar: true,
     };
   }
+
+  componentDidMount() {
+    window.addEventListener(
+      'wa-ai-toast',
+      this._handleWaAiToast as EventListener,
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      'wa-ai-toast',
+      this._handleWaAiToast as EventListener,
+    );
+  }
+
+  _handleWaAiToast = (event: CustomEvent) => {
+    const { theme, message, detail } = event.detail as {
+      theme?: string;
+      message?: string;
+      detail?: string;
+    };
+    const text = detail || message || '接口错误';
+
+    switch (theme) {
+      case 'warning': {
+        MessagePlugin.warning(text, 4000);
+
+        break;
+      }
+      case 'success': {
+        MessagePlugin.success(text, 4000);
+
+        break;
+      }
+      case 'info': {
+        MessagePlugin.info(text, 4000);
+
+        break;
+      }
+      default: {
+        MessagePlugin.error(text, 4000);
+      }
+    }
+  };
 
   render() {
     const {

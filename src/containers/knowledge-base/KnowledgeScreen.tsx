@@ -20,6 +20,7 @@ import {
   Pagination,
   Select,
 } from 'tdesign-react';
+import { getAccessToken } from '../../agent-flow-cs/api/auth';
 import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
@@ -35,7 +36,6 @@ import {
   SidebarMenu,
 } from '../../components/home/SidebarMenu';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
-import { getAccessToken } from '../../agent-flow-cs/api/auth';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 
 const aiIllustration = 'assets/images/ai-illustration.png';

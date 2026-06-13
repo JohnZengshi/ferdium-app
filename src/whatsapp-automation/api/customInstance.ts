@@ -23,7 +23,10 @@ export const useCustomInstance = <T>(
   // Generated API files hardcode http://localhost:3000 — replace the host
   // with the actual backend URL from .env
   const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
-  const actualUrl = url.replace(/^https?:\/\/[^/]+/, WA_AKG_BASE);
+  // Handle both absolute URLs (replace host) and relative paths (prepend base)
+  const actualUrl = /^https?:\/\//.test(url)
+    ? url.replace(/^https?:\/\/[^/]+/, WA_AKG_BASE)
+    : `${WA_AKG_BASE.replace(/\/+$/, '')}${url}`;
 
   const apiKey = getApiKey();
   const config: RequestInit & { signal?: AbortSignal } = {

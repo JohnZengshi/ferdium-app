@@ -76,11 +76,16 @@ class AuthLayout extends Component<IProps, IState> {
         )}
         <div className="auth relative flex min-h-screen overflow-hidden">
           <div className="auth__background pointer-events-none absolute inset-0 z-0 overflow-hidden">
-            <img
-              alt=""
+            <video
+              autoPlay
               className="auth__background-image h-full w-full object-cover"
-              src="./assets/images/login-bg.png"
-            />
+              loop
+              muted
+              playsInline
+              poster="./assets/images/login-bg.png"
+            >
+              <source src="./assets/videos/login-bg.mp4" type="video/mp4" />
+            </video>
             <div className="pointer-events-none absolute left-0 top-0 h-full">
               <img
                 alt=""

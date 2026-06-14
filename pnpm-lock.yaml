@@ -329,6 +329,9 @@ importers:
       '@types/react-transition-group':
         specifier: 4.4.11
         version: 4.4.11
+      '@types/recharts':
+        specifier: 2.0.1
+        version: 2.0.1(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(redux@5.0.1)
       '@types/route-parser':
         specifier: 0.1.7
         version: 0.1.7
@@ -2002,6 +2005,10 @@ packages:
     resolution: {integrity: sha512-gi3S+aUi6kpkF5vdhUsnkwbiSEIU/BEJyD7kBy2SudWBUuKmJk8AQKE0OVcQQeEy40Azh0lV6uynxlikYIJuwg==}
     peerDependencies:
       '@types/react': '*'
+
+  '@types/recharts@2.0.1':
+    resolution: {integrity: sha512-/cFs7oiafzByUwBSWA1IzE6FW+ppPwQAWsDTadSgVOwzveY9MESpyLHyyHY0SfPPKLW4+4qVNYHPXd0rFiC8vg==}
+    deprecated: This is a stub types definition. recharts provides its own type definitions, so you do not need this installed.
 
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
@@ -10258,6 +10265,16 @@ snapshots:
   '@types/reactcss@1.2.13(@types/react@18.3.12)':
     dependencies:
       '@types/react': 18.3.12
+
+  '@types/recharts@2.0.1(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(redux@5.0.1)':
+    dependencies:
+      recharts: 3.8.1(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(redux@5.0.1)
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
+      - react-dom
+      - react-is
+      - redux
 
   '@types/responselike@1.0.3':
     dependencies:

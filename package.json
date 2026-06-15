@@ -1,13 +1,13 @@
 {
-  "name": "ferdium",
-  "productName": "Ferdium",
-  "desktopName": "ferdium.desktop",
-  "appId": "org.ferdium.ferdium-app",
+  "name": "aitalk",
+  "productName": "AITALK",
+  "desktopName": "aitalk.desktop",
+  "appId": "com.lzxl.aitalk",
   "version": "7.1.3-nightly.3",
-  "description": "Messaging app for WhatsApp, Slack, Telegram, Hangouts and many many more.",
-  "author": "Ferdium Contributors <hello@ferdium.org> (https://ferdium.org/)",
+  "description": "AITALK - AI-powered messaging platform",
+  "author": "LZXL Team",
   "license": "Apache-2.0",
-  "copyright": "org.ferdium",
+  "copyright": "LZXL",
   "main": "index.js",
   "homepage": "https://github.com/ferdium/ferdium-app",
   "repository": "https://github.com/ferdium/ferdium-app.git",
@@ -252,8 +252,7 @@
       "sqlite3"
     ],
     "patchedDependencies": {
-      "tdesign-react@1.17.0": "patches/tdesign-react@1.17.0.patch",
-      "@code-inspector/core": "patches/@code-inspector__core.patch"
+      "tdesign-react@1.17.0": "patches/tdesign-react@1.17.0.patch"
     }
   },
   "overrides": {

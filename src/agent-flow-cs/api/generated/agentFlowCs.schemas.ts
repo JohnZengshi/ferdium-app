@@ -821,14 +821,10 @@ export interface FollowupStrategyRequest {
   valid_days?: number;
 }
 
-export type ValidationErrorCtx = { [key: string]: unknown };
-
 export interface ValidationError {
   loc: (string | number)[];
   msg: string;
   type: string;
-  input?: unknown;
-  ctx?: ValidationErrorCtx;
 }
 
 export interface HTTPValidationError {
@@ -1384,22 +1380,13 @@ export interface TelegramBotListResponse {
 }
 
 /**
- * sendMessage 测试结果。
- */
-export interface TelegramBotTestChatResult {
-  success: boolean;
-  message_id?: number | null;
-  error?: string | null;
-}
-
-/**
- * 连通性测试响应。
+ * 连通性测试响应 — 向目标群发送测试消息。
  */
 export interface TelegramBotTestResponse {
   success: boolean;
+  message_id?: number | null;
   bot_username?: string | null;
   error?: string | null;
-  chat_test?: TelegramBotTestChatResult | null;
 }
 
 /**
@@ -1411,6 +1398,22 @@ export interface TelegramBotUpdateRequest {
   chat_id?: string | null;
   is_active?: boolean | null;
   description?: string | null;
+}
+
+/**
+ * 创建前验证请求 — 用 token + chat_id 发测试消息。
+ */
+export interface TelegramBotVerifyTokenRequest {
+  /**
+     * @minLength 1
+     * @maxLength 255
+     */
+  bot_token: string;
+  /**
+     * @minLength 1
+     * @maxLength 128
+     */
+  chat_id: string;
 }
 
 /**

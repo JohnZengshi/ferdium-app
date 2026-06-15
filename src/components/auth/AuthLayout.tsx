@@ -141,12 +141,74 @@ class AuthLayout extends Component<IProps, IState> {
               />
             </div>
             <div className="flex flex-1 items-center justify-start">
-              <div className="w-full max-w-[400px] ml-[138px]">
+              <div className="w-full max-w-[400px] ml-[7.2vw]">
                 <div className="auth__layout">
                   {/* eslint-disable-next-line @eslint-react/no-clone-element */}
                   {cloneElement(children, { error })}
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Right-side title group — adaptive, centered within right content area */}
+          <div
+            className="absolute right-[4vw] top-[9vh] z-10 w-[52vw] min-w-[760px] max-w-[980px] text-center"
+            aria-hidden="true"
+          >
+            {/* Main title: clamp(42px, 3.6vw, 72px), 700, line-height 1.15 */}
+            <h1
+              style={{
+                fontSize: 'clamp(42px, 3.6vw, 72px)',
+                fontWeight: 700,
+                lineHeight: 1.15,
+                color: '#004BC8',
+                fontFamily: '"Microsoft YaHei", "PingFang SC", sans-serif',
+                letterSpacing: 0,
+              }}
+            >
+              开启智能一体化管理体验
+            </h1>
+
+            {/* Subtitle row: flex center, gap clamp(12px, 1.2vw, 24px) */}
+            <div
+              className="flex items-center justify-center"
+              style={{
+                marginTop: 'clamp(18px, 2.2vh, 30px)',
+                gap: 'clamp(12px, 1.2vw, 24px)',
+              }}
+            >
+              {/* Left decorative line: flex: 1, max-width 170px */}
+              <div
+                className="h-[1px] shrink-0"
+                style={{
+                  flex: 1,
+                  maxWidth: '170px',
+                  backgroundColor: 'rgba(0, 75, 200, 0.7)',
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 'clamp(18px, 1.35vw, 26px)',
+                  fontWeight: 600,
+                  lineHeight: 1.3,
+                  color: '#004BC8',
+                  fontFamily: '"Microsoft YaHei", "PingFang SC", sans-serif',
+                  letterSpacing: 0,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                企业级 <span style={{ color: '#F6A04A' }}>AI 数字员工</span>{' '}
+                多账号统一管理平台
+              </span>
+              {/* Right decorative line: flex: 1, max-width 170px */}
+              <div
+                className="h-[1px] shrink-0"
+                style={{
+                  flex: 1,
+                  maxWidth: '170px',
+                  backgroundColor: 'rgba(0, 75, 200, 0.7)',
+                }}
+              />
             </div>
           </div>
         </div>

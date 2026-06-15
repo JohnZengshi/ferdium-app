@@ -157,19 +157,11 @@ class ServiceView extends Component<IProps, IState> {
           // eslint-disable-next-line react/jsx-no-useless-fragment
           <>
             {service.isHibernating ? (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}
-              >
+              <div className="flex h-full w-full flex-col items-center justify-center text-center">
                 <span
                   role="img"
                   aria-label="Sleeping Emoji"
-                  style={{ fontSize: 42 }}
+                  className="text-[42px]"
                 >
                   😴
                 </span>

@@ -9,6 +9,7 @@ import {
   listBotsApiV1TelegramBotsGet,
   testBotApiV1TelegramBotsBotIdTestPost,
   updateBotApiV1TelegramBotsBotIdPatch,
+  verifyTokenApiV1TelegramBotsVerifyTokenPost,
 } from '../../../agent-flow-cs/api/generated/telegram-bots/telegram-bots';
 import RuleListEditor from './RuleListEditor';
 
@@ -221,16 +222,31 @@ const HandoverRulesTab = (): ReactElement => {
   };
 
   const handleTest = async (): Promise<void> => {
-    if (!currentBot) return;
     setTesting(true);
     try {
-      const res = await testBotApiV1TelegramBotsBotIdTestPost(currentBot.id);
-      if (res.status === 200 && res.data.success) {
+      let success = false;
+      let errorMsg: string | null | undefined = null;
+
+      if (botToken.trim() && chatId.trim()) {
+        // 有 token + chatId → 调 verify-token（新建/编辑均可）
+        const res = await verifyTokenApiV1TelegramBotsVerifyTokenPost({
+          bot_token: botToken.trim(),
+          chat_id: chatId.trim(),
+        });
+        success = res.status === 200 && res.data.success;
+        errorMsg = res.status === 200 ? res.data.error : null;
+      } else if (editMode && currentBot) {
+        // 编辑模式未改 token → 用已有 botId 测试
+        const res = await testBotApiV1TelegramBotsBotIdTestPost(currentBot.id);
+        success = res.status === 200 && res.data.success;
+        errorMsg = res.status === 200 ? res.data.error : null;
+      }
+
+      if (success) {
         MessagePlugin.success(intl.formatMessage(messages.testSuccess));
       } else {
         MessagePlugin.error(
-          (res.status === 200 && res.data.error) ||
-            intl.formatMessage(messages.testFailed),
+          errorMsg || intl.formatMessage(messages.testFailed),
         );
       }
     } catch {
@@ -394,6 +410,7 @@ const HandoverRulesTab = (): ReactElement => {
           editMode ? messages.editDialogTitle : messages.bindDialogTitle,
         )}
         visible={dialogVisible}
+        closeOnOverlayClick={false}
         onClose={() => setDialogVisible(false)}
         footer={
           <div className="flex justify-end gap-[8px]">
@@ -407,7 +424,12 @@ const HandoverRulesTab = (): ReactElement => {
             <Button
               variant="outline"
               theme="primary"
-              disabled={!editMode || !currentBot || saving || testing}
+              disabled={
+                (!(botToken.trim() && chatId.trim()) &&
+                  !(editMode && currentBot)) ||
+                saving ||
+                testing
+              }
               loading={testing}
               onClick={handleTest}
             >

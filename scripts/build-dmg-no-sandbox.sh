@@ -3,6 +3,14 @@
 # AITALK DMG 打包脚本 (无沙盒限制版本)
 # 用途：构建可访问系统文件的 DMG 安装包供内部测试使用
 # 输出：out/AITALK-darwin-{version}-{arch}.dmg
+#
+# 使用方法:
+#   ./scripts/build-dmg-no-sandbox.sh [mac-uni|mac-sep]
+#
+# 参数说明:
+#   mac-uni  - 生成单个 Universal 通用包 (x64 + arm64 合并，体积较大)
+#   mac-sep  - 生成两个独立安装包 (x64 和 arm64 分开，默认)
+#   无参数   - 自动检测当前架构，仅构建当前平台版本
 
 set -e
 
@@ -10,11 +18,35 @@ set -e
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
+
+# 解析参数
+BUILD_MODE="${1:-auto}"
 
 echo -e "${GREEN}========================================${NC}"
 echo -e "${GREEN}AITALK DMG 打包 (无沙盒限制版本)${NC}"
 echo -e "${GREEN}========================================${NC}"
+
+# 显示打包模式
+case "$BUILD_MODE" in
+    mac-uni)
+        echo -e "${BLUE}打包模式: Universal (x64 + arm64 合并)${NC}"
+        ;;
+    mac-sep)
+        echo -e "${BLUE}打包模式: Separate (x64 和 arm64 分开)${NC}"
+        ;;
+    auto)
+        echo -e "${BLUE}打包模式: Auto (仅当前架构)${NC}"
+        ;;
+    *)
+        echo -e "${RED}错误: 无效的参数 '$BUILD_MODE'${NC}"
+        echo -e "${YELLOW}使用方法: $0 [mac-uni|mac-sep]${NC}"
+        echo -e "  mac-uni  - 生成单个 Universal 通用包"
+        echo -e "  mac-sep  - 生成两个独立安装包"
+        exit 1
+        ;;
+esac
 
 # 检查是否在项目根目录
 if [ ! -f "package.json" ] || [ ! -f "electron-builder.yml" ]; then
@@ -178,29 +210,47 @@ echo -e "\n${GREEN}[5/6] 构建应用代码...${NC}"
 pnpm run build
 
 # 6. 打包 DMG (仅 macOS)
-echo -e "\n${GREEN}[6/6] 打包 DMG 镜像 (仅当前架构)...${NC}"
+echo -e "\n${GREEN}[6/6] 打包 DMG 镜像...${NC}"
 
-# 检测当前架构
-ARCH=$(uname -m)
-if [ "$ARCH" = "arm64" ]; then
-    echo -e "${YELLOW}检测到 Apple Silicon (ARM64)，仅构建 arm64 版本${NC}"
-    ARCH_ARG="--arm64"
-else
-    echo -e "${YELLOW}检测到 Intel (x64)，仅构建 x64 版本${NC}"
-    ARCH_ARG="--x64"
-fi
+# 根据打包模式决定架构参数
+case "$BUILD_MODE" in
+    mac-uni)
+        echo -e "${YELLOW}构建 Universal 通用包 (x64 + arm64)...${NC}"
+        ARCH_ARG="--universal"
+        ;;
+    mac-sep)
+        echo -e "${YELLOW}构建独立双架构包 (x64 和 arm64)...${NC}"
+        ARCH_ARG="--x64 --arm64"
+        ;;
+    auto)
+        # 检测当前架构
+        ARCH=$(uname -m)
+        if [ "$ARCH" = "arm64" ]; then
+            echo -e "${YELLOW}检测到 Apple Silicon (ARM64)，仅构建 arm64 版本${NC}"
+            ARCH_ARG="--arm64"
+        else
+            echo -e "${YELLOW}检测到 Intel (x64)，仅构建 x64 版本${NC}"
+            ARCH_ARG="--x64"
+        fi
+        ;;
+esac
 
 # 恢复原始 entitlements 文件
 cleanup() {
     echo -e "\n${YELLOW}恢复原始 entitlements 配置...${NC}"
-    mv build-helpers/entitlements.mas.plist.bak build-helpers/entitlements.mas.plist
-    mv build-helpers/entitlements.mas.inherit.plist.bak build-helpers/entitlements.mas.inherit.plist
+    if [ -f build-helpers/entitlements.mas.plist.bak ]; then
+        mv build-helpers/entitlements.mas.plist.bak build-helpers/entitlements.mas.plist
+    fi
+    if [ -f build-helpers/entitlements.mas.inherit.plist.bak ]; then
+        mv build-helpers/entitlements.mas.inherit.plist.bak build-helpers/entitlements.mas.inherit.plist
+    fi
 }
 
 # 设置 trap 在脚本退出时恢复原始文件
 trap cleanup EXIT
 
-# 执行打包 (仅 DMG 目标，跳过 notarization，仅当前架构)
+# 执行打包 (仅 DMG 目标，跳过 notarization)
+echo -e "${YELLOW}执行 electron-builder...${NC}"
 CSC_IDENTITY_AUTO_DISCOVERY=false pnpm exec electron-builder --mac dmg $ARCH_ARG --config.mac.notarize=false
 
 echo -e "\n${GREEN}========================================${NC}"
@@ -209,15 +259,27 @@ echo -e "${GREEN}========================================${NC}"
 
 # 显示输出文件
 echo -e "\n${YELLOW}输出文件位置:${NC}"
-ls -lh out/*.dmg 2>/dev/null || echo -e "${RED}未找到 DMG 文件${NC}"
+if ls out/*.dmg 1> /dev/null 2>&1; then
+    ls -lh out/*.dmg
+    echo ""
+    echo -e "${GREEN}共生成 $(ls out/*.dmg | wc -l | xargs) 个 DMG 文件${NC}"
+else
+    echo -e "${RED}未找到 DMG 文件${NC}"
+fi
 
 echo -e "\n${YELLOW}使用说明:${NC}"
 echo -e "1. 将 DMG 文件分发给测试人员"
 echo -e "2. 测试人员双击 DMG 文件挂载磁盘镜像"
-echo -e "3. 将 Ferdium.app 拖到 Applications 文件夹"
+echo -e "3. 将 AITALK.app 拖到 Applications 文件夹"
 echo -e "4. 首次运行时，如果系统提示无法打开，请执行:"
-echo -e "   ${GREEN}sudo xattr -cr /Applications/Ferdium.app${NC}"
+echo -e "   ${GREEN}sudo xattr -cr /Applications/AITALK.app${NC}"
 echo -e "   ${GREEN}sudo spctl --master-disable${NC} (临时禁用 Gatekeeper)"
 echo -e "   或者: 系统偏好设置 → 隐私与安全性 → 点击 '仍要打开'"
+echo -e ""
+echo -e "${YELLOW}架构说明:${NC}"
+echo -e "  • Universal (mac-uni): 单个包支持 Intel 和 Apple Silicon，体积约 2 倍"
+echo -e "  • Separate (mac-sep): 两个独立包，用户根据自己的芯片下载对应版本"
+echo -e "  • x64: Intel 芯片 Mac"
+echo -e "  • arm64: Apple Silicon (M1/M2/M3) Mac"
 echo -e ""
 echo -e "${YELLOW}注意: 此版本没有沙盒限制，仅供内部测试使用！${NC}"

@@ -1,4 +1,4 @@
-# Ferdium DMG 打包说明 (无沙盒限制版本)
+# AITALK DMG 打包说明 (无沙盒限制版本)
 
 ## 快速开始
 
@@ -6,8 +6,24 @@
 
 ```bash
 cd ~/Documents/LZXL/ais/ferdium-app
+
+# 仅打包当前架构 (自动检测)
 ./scripts/build-dmg-no-sandbox.sh
+
+# 生成 Universal 通用包 (x64 + arm64 合并)
+./scripts/build-dmg-no-sandbox.sh mac-uni
+
+# 生成独立双架构包 (x64 和 arm64 分开)
+./scripts/build-dmg-no-sandbox.sh mac-sep
 ```
+
+**打包模式说明：**
+
+| 模式 | 参数 | 输出 | 体积 | 适用场景 |
+|------|------|------|------|----------|
+| **自动** | 无参数 | 1 个 DMG (当前架构) | 小 | 本地快速测试 |
+| **Universal** | `mac-uni` | 1 个 DMG (包含 x64 + arm64) | 大 (~2倍) | 测试人员无需区分芯片 |
+| **Separate** | `mac-sep` | 2 个 DMG (x64 和 arm64 分开) | 各自正常 | 按芯片分发，节省带宽 |
 
 脚本会自动：
 - ✅ 备份原始 entitlements 配置
@@ -22,10 +38,18 @@ cd ~/Documents/LZXL/ais/ferdium-app
 打包完成后，DMG 文件位于：
 
 ```
-out/Ferdium-darwin-{version}-{arch}.dmg
+# Universal 模式
+out/AITALK-darwin-{version}-universal.dmg
+
+# Separate 模式
+out/AITALK-darwin-{version}-x64.dmg
+out/AITALK-darwin-{version}-arm64.dmg
+
+# Auto 模式 (根据当前机器架构)
+out/AITALK-darwin-{version}-{arch}.dmg
 ```
 
-例如：`out/Ferdium-darwin-7.1.3-nightly.3-arm64.dmg`
+例如：`out/AITALK-darwin-7.1.3-nightly.3-arm64.dmg`
 
 ---
 
@@ -33,21 +57,26 @@ out/Ferdium-darwin-{version}-{arch}.dmg
 
 ### 给测试人员的安装说明
 
-1. **挂载 DMG 文件**
-   - 双击 `Ferdium-darwin-*.dmg` 文件
+1. **选择合适的版本**
+   - **Intel Mac (x64)**: 下载 `*-x64.dmg` 文件
+   - **Apple Silicon Mac (M1/M2/M3, arm64)**: 下载 `*-arm64.dmg` 文件
+   - **Universal 版本**: 任何 Mac 都可以使用 `*-universal.dmg`
+
+2. **挂载 DMG 文件**
+   - 双击 `AITALK-darwin-*.dmg` 文件
    - 系统会自动挂载磁盘镜像并打开安装窗口
 
-2. **安装应用**
-   - 将 `Ferdium.app` 拖到 `Applications` 文件夹图标上
+3. **安装应用**
+   - 将 `AITALK.app` 拖到 `Applications` 文件夹图标上
    - 等待复制完成
 
-3. **首次运行**
+4. **首次运行**
    - 打开 `启动台` 或 `Applications` 文件夹
-   - 找到并点击 `Ferdium` 图标
+   - 找到并点击 `AITALK` 图标
 
-4. **处理安全提示**
+5. **处理安全提示**
 
-   如果系统提示"无法打开 Ferdium.app，因为无法验证开发者"：
+   如果系统提示"无法打开 AITALK.app，因为无法验证开发者"：
 
    **方法一：通过系统偏好设置允许 (推荐)**
    ```
@@ -59,7 +88,7 @@ out/Ferdium-darwin-{version}-{arch}.dmg
 
    **方法二：通过终端移除隔离属性**
    ```bash
-   sudo xattr -cr /Applications/Ferdium.app
+   sudo xattr -cr /Applications/AITALK.app
    ```
 
    **方法三：临时禁用 Gatekeeper (不推荐)**
@@ -115,7 +144,7 @@ macOS App Sandbox 默认限制应用访问：
 
 ## 故障排查
 
-### 问题 1: "无法打开 Ferdium.app，因为它来自身份不明的开发者"
+### 问题 1: "无法打开 AITALK.app，因为它来自身份不明的开发者"
 
 **原因**: 应用未经过 Apple 公证
 
@@ -159,8 +188,19 @@ pnpm run setup:recipes
 2. 查看应用崩溃报告：`~/Library/Logs/DiagnosticReports/`
 3. 尝试从终端启动查看详细错误：
    ```bash
-   /Applications/Ferdium.app/Contents/MacOS/Ferdium
+   /Applications/AITALK.app/Contents/MacOS/AITALK
    ```
+
+---
+
+### 问题 5: Universal 包体积过大
+
+**原因**: Universal 包包含了 x64 和 arm64 两个架构的二进制文件
+
+**解决方案**: 使用 `mac-sep` 模式分别打包，让用户根据自己的芯片选择下载
+```bash
+./scripts/build-dmg-no-sandbox.sh mac-sep
+```
 
 ---
 
@@ -199,19 +239,27 @@ pnpm run build:dmg:no-sandbox
 
 ```bash
 # 查看应用签名信息
-codesign -dv --verbose=4 /Applications/Ferdium.app
+codesign -dv --verbose=4 /Applications/AITALK.app
 
 # 查看应用权限配置
-codesign -d --entitlements :- /Applications/Ferdium.app
+codesign -d --entitlements :- /Applications/AITALK.app
 
 # 检查应用是否通过 Gatekeeper
-spctl -a -v /Applications/Ferdium.app
+spctl -a -v /Applications/AITALK.app
 
 # 手动移除隔离属性
-xattr -d com.apple.quarantine /Applications/Ferdium.app
+xattr -d com.apple.quarantine /Applications/AITALK.app
 
 # 递归移除所有扩展属性
-sudo xattr -cr /Applications/Ferdium.app
+sudo xattr -cr /Applications/AITALK.app
+
+# 查看当前 Mac 芯片架构
+uname -m
+# 输出 arm64 = Apple Silicon (M1/M2/M3)
+# 输出 x86_64 = Intel
+
+# 查看应用支持的架构
+lipo -info /Applications/AITALK.app/Contents/MacOS/AITALK
 ```
 
 ---

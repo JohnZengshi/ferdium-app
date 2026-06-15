@@ -27,7 +27,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=..\out
-OutputBaseFilename=Ferdium-win-AutoSetup-{#MyAppVersion}-{#MyAppBuildNumber}-{#MyAppArch}
+OutputBaseFilename={#MyAppName}-win-AutoSetup-{#MyAppVersion}-{#MyAppBuildNumber}-{#MyAppArch}
 
 ; Compression & performance
 Compression=lzma2/ultra64

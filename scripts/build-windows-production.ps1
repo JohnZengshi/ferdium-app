@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  One-click production build script for Ferdium on Windows.
+  One-click production build script for $PRODUCT_NAME on Windows.
   Builds the app and packages it into an Inno Setup installer (no code signing).
 
 .DESCRIPTION
@@ -12,7 +12,7 @@
     5. Packages the unpacked app into an Inno Setup installer
     6. Verifies the build hash matches the latest commit
 
-  Output: .\out\Ferdium-win-AutoSetup-{version}-{arch}.exe
+  Output: .\out\$PRODUCT_NAME-win-AutoSetup-{version}-{arch}.exe
 
 .PARAMETER Arch
   Target architecture: "x64" (default) or "arm64".
@@ -26,6 +26,11 @@
 .PARAMETER InnoSetupPath
   Path to ISCC.exe. Auto-detected if not specified.
 
+.PARAMETER SkipVer
+  Skip the strict recipe version check in `pnpm package`.
+  Useful for local builds where you don't want to bump recipe versions.
+  Equivalent to setting `$env:FERDIUM_DEV = "1"`.
+
 .EXAMPLE
   .\scripts\build-windows-production.ps1
 
@@ -34,6 +39,9 @@
 
 .EXAMPLE
   .\scripts\build-windows-production.ps1 -SkipTests -SkipRecipes
+
+.EXAMPLE
+  .\scripts\build-windows-production.ps1 -SkipVer
 #>
 
 param(
@@ -44,7 +52,9 @@ param(
 
   [switch]$SkipTests = $false,
 
-  [string]$InnoSetupPath = ""
+  [string]$InnoSetupPath = "",
+
+  [switch]$SkipVer = $false
 )
 
 # -----------------------------------------------------------------------------
@@ -60,6 +70,11 @@ $env:ELECTRON_CACHE = "$USERHOME\.cache\electron"
 $env:ELECTRON_BUILDER_CACHE = "$USERHOME\.cache\electron-builder"
 $env:CSC_IDENTITY_AUTO_DISCOVERY = $false
 $env:CI = $true
+
+if ($SkipVer) {
+  $env:FERDIUM_DEV = "1"
+  Write-Host "  [SKIP] Recipe version check disabled (FERDIUM_DEV=1)" -ForegroundColor Yellow
+}
 
 # -----------------------------------------------------------------------------
 #                        Utility Functions
@@ -160,6 +175,12 @@ if (-not $Arch) {
   }
 }
 Write-Host "  [OK] Target architecture: $Arch"
+
+# Read package info for version and product name
+$PACKAGE_JSON = Get-Content "$PROJECT_ROOT\package.json" | ConvertFrom-Json
+$APP_VERSION = $PACKAGE_JSON.version
+$PRODUCT_NAME = $PACKAGE_JSON.productName
+Write-Host "  [OK] Product name: $PRODUCT_NAME, App version: $APP_VERSION"
 
 # -----------------------------------------------------------------------------
 #        Step 2: Optional clean (set $env:CLEAN = "true")
@@ -354,13 +375,12 @@ if (-not (Test-Path $UNPACKED_DIR)) {
 }
 
 # Verify the main executable exists
-$MAIN_EXE = "$UNPACKED_DIR\Ferdium.exe"
+$MAIN_EXE = "$UNPACKED_DIR\$PRODUCT_NAME.exe"
 if (-not (Test-Path $MAIN_EXE)) {
   fail_with_docs "Main executable not found at $MAIN_EXE"
 }
 
 # Read build info for version
-$APP_VERSION = (Get-Content "$PROJECT_ROOT\package.json" | ConvertFrom-Json).version
 $BUILD_INFO_FILE = "$BUILD_DIR\buildInfo.json"
 if (-not (Test-Path $BUILD_INFO_FILE)) {
   fail_with_docs "buildInfo.json not found at $BUILD_INFO_FILE"
@@ -400,6 +420,8 @@ $ISS_OUTPUT = "$PROJECT_ROOT\scripts\ferdium-setup.generated.iss"
 
 # Read the template and replace placeholders
 $issContent = Get-Content $ISS_TEMPLATE -Raw
+$issContent = $issContent.Replace('{#MyAppName}', $PRODUCT_NAME)
+$issContent = $issContent.Replace('{#MyAppExeName}', "$PRODUCT_NAME.exe")
 $issContent = $issContent.Replace('{#AppVersion}', $APP_VERSION)
 $issContent = $issContent.Replace('{#AppVersionNumeric}', ($APP_VERSION -replace '-.*$', ''))
 $issContent = $issContent.Replace('{#AppBuildNumber}', $BUILD_INFO.buildNumber)
@@ -425,12 +447,12 @@ Remove-Item $ISS_OUTPUT -Force -ErrorAction SilentlyContinue
 # -----------------------------------------------------------------------------
 Write-Step "Verifying installer"
 
-$INSTALLER_NAME = "Ferdium-win-AutoSetup-$APP_VERSION-$($BUILD_INFO.buildNumber)-$Arch.exe"
+$INSTALLER_NAME = "$PRODUCT_NAME-win-AutoSetup-$APP_VERSION-$($BUILD_INFO.buildNumber)-$Arch.exe"
 $INSTALLER_PATH = "$OUT_DIR\$INSTALLER_NAME"
 
 if (-not (Test-Path $INSTALLER_PATH)) {
   # Try to find the installer with a different naming pattern
-  $INSTALLER_PATH = Get-ChildItem -Path $OUT_DIR -Filter "Ferdium-win-AutoSetup-*.exe" | Select-Object -First 1
+  $INSTALLER_PATH = Get-ChildItem -Path $OUT_DIR -Filter "$PRODUCT_NAME-win-AutoSetup-*.exe" | Select-Object -First 1
   if (-not $INSTALLER_PATH) {
     fail_with_docs "Installer not found in $OUT_DIR!"
   }

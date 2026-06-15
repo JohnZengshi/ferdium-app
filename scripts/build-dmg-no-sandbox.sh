@@ -212,6 +212,11 @@ pnpm run build
 # 6. 打包 DMG (仅 macOS)
 echo -e "\n${GREEN}[6/6] 打包 DMG 镜像...${NC}"
 
+# 获取构建号 (HEAD 提交总数)
+BUILD_NUMBER=$(git rev-list --count HEAD)
+export BUILD_NUMBER
+echo -e "${YELLOW}✓ 构建号: ${BUILD_NUMBER}${NC}"
+
 # 根据打包模式决定架构参数
 case "$BUILD_MODE" in
     mac-uni)
@@ -251,7 +256,16 @@ trap cleanup EXIT
 
 # 执行打包 (仅 DMG 目标，跳过 notarization)
 echo -e "${YELLOW}执行 electron-builder...${NC}"
-CSC_IDENTITY_AUTO_DISCOVERY=false pnpm exec electron-builder --mac dmg $ARCH_ARG --config.mac.notarize=false
+CSC_IDENTITY_AUTO_DISCOVERY=false pnpm exec electron-builder --mac dmg $ARCH_ARG --config.mac.notarize=false --publish never
+
+for DMG_FILE in out/*.dmg; do
+    [ -f "$DMG_FILE" ] || continue
+    BASENAME=$(basename "$DMG_FILE")
+    NAME="${BASENAME%.*}"
+    NEW_NAME="${NAME}-${BUILD_NUMBER}.dmg"
+    mv "$DMG_FILE" "out/$NEW_NAME"
+    echo -e "${GREEN}✓ 已重命名文件为: $NEW_NAME${NC}"
+done
 
 echo -e "\n${GREEN}========================================${NC}"
 echo -e "${GREEN}✓ 打包完成！${NC}"
@@ -262,7 +276,7 @@ echo -e "\n${YELLOW}输出文件位置:${NC}"
 if ls out/*.dmg 1> /dev/null 2>&1; then
     ls -lh out/*.dmg
     echo ""
-    echo -e "${GREEN}共生成 $(ls out/*.dmg | wc -l | xargs) 个 DMG 文件${NC}"
+    echo -e "${GREEN}共生成 $(ls out/*.dmg | wc -l | xargs) 个 DMG 文件 (构建号: ${BUILD_NUMBER})${NC}"
 else
     echo -e "${RED}未找到 DMG 文件${NC}"
 fi

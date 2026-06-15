@@ -561,22 +561,6 @@ const KnowledgeScreen: React.FC = () => {
             }
 
             // 逐个处理，progress 更新间加延时让 React 渲染动画
-<<<<<<< HEAD
-            /* eslint-disable no-await-in-loop */
-            for (const data of events) {
-              // progress 事件
-              if (data.type === 'progress' && data.progress !== undefined) {
-                setStreamProgress(data.progress);
-                await sleep(80);
-              }
-
-              // field 事件 → 即时填充表单
-              if (data.type === 'field') {
-                const formField = FIELD_MAP[data.field] ?? data.field;
-                if (VALID_FIELDS.has(formField)) {
-                  const v = data.value === undefined ? '' : String(data.value);
-                  setFormData(prev => ({ ...prev, [formField]: v }));
-=======
             const processEvents = async () => {
               for (const data of events) {
                 // progress 事件
@@ -584,7 +568,6 @@ const KnowledgeScreen: React.FC = () => {
                   setStreamProgress(data.progress);
                   // eslint-disable-next-line no-await-in-loop
                   await sleep(80);
->>>>>>> 23c42a9d5 (fix(knowledge): 修复 KnowledgeScreen lint 错误)
                 }
 
                 // field 事件 → 即时填充表单
@@ -596,18 +579,6 @@ const KnowledgeScreen: React.FC = () => {
                     setFormData(prev => ({ ...prev, [formField]: v }));
                   }
                 }
-<<<<<<< HEAD
-                if (Object.keys(updates).length > 0) {
-                  setFormData(prev => ({ ...prev, ...updates }));
-                }
-                return; // 停止读取
-              }
-            }
-            /* eslint-enable no-await-in-loop */
-
-            // eslint-disable-next-line consistent-return
-            return readStream();
-=======
 
                 // complete 事件 → 最终全量数据覆盖
                 if (data.type === 'complete' && data.persona) {
@@ -639,7 +610,6 @@ const KnowledgeScreen: React.FC = () => {
               return readStream();
             });
             /* eslint-enable consistent-return */
->>>>>>> 23c42a9d5 (fix(knowledge): 修复 KnowledgeScreen lint 错误)
           });
         };
 

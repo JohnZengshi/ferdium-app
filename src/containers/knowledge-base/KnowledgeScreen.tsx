@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import EmptyState from '../../components/ui/EmptyState';
 import {
   AddIcon,
   ChevronLeftIcon,
@@ -180,6 +181,14 @@ const messages = defineMessages({
   emptyKeywordError: {
     id: 'knowledgeScreen.emptyKeywordError',
     defaultMessage: '请输入关键词描述后再生成',
+  },
+  noPersonasTitle: {
+    id: 'knowledgeScreen.noPersonasTitle',
+    defaultMessage: 'No Persona Profiles Yet',
+  },
+  noPersonasDescription: {
+    id: 'knowledgeScreen.noPersonasDescription',
+    defaultMessage: 'Create your first persona profile to get started',
   },
 });
 
@@ -683,7 +692,7 @@ const KnowledgeScreen: React.FC = () => {
         onItemClick={() => {}}
       />
       {view === 'list' ? (
-        <div className="flex-1 min-w-0 p-[32px]">
+        <div className="flex flex-col flex-1 min-w-0 p-[32px]">
           {/* 顶部区域：创建按钮 + 说明文字 */}
           <div className="flex items-center mb-[24px]">
             <Button
@@ -704,8 +713,17 @@ const KnowledgeScreen: React.FC = () => {
           </div>
 
           {/* 卡片网格区域 */}
-          <div className="flex flex-wrap gap-[24px]">
-            {tableData.map(record => (
+          {tableData.length === 0 ? (
+            <div className="flex flex-1 items-center justify-center">
+              <EmptyState
+                imageSrc="./assets/images/empty-accounts.svg"
+                title={intl.formatMessage(messages.noPersonasTitle)}
+                description={intl.formatMessage(messages.noPersonasDescription)}
+              />
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-[24px]">
+              {tableData.map(record => (
               <div
                 key={record.id}
                 className="flex flex-col items-center w-[262px] h-[300px] bg-secondary-container rounded-[9px] shadow-sm"
@@ -753,6 +771,7 @@ const KnowledgeScreen: React.FC = () => {
               </div>
             ))}
           </div>
+          )}
 
           {/* 分页器 */}
           {tableData.length > 0 && (

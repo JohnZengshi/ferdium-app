@@ -10,6 +10,7 @@ import {
 import withStyles, { type WithStylesProps } from 'react-jss';
 import type Service from '../../../models/Service';
 import Appear from '../../ui/effects/Appear';
+import EmptyState from '../../ui/EmptyState';
 import ServiceView from './ServiceView';
 
 const messages = defineMessages({
@@ -46,37 +47,6 @@ const styles = {
   emptyAccountLayer: {
     height: '100%',
     width: '100%',
-  },
-  emptyAccountContent: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    transform: 'translateY(52px)',
-  },
-  emptyAccountState: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 12,
-  },
-  emptyAccountImage: {
-    height: 210,
-    width: 260,
-    marginBottom: 18,
-  },
-  emptyAccountTitle: {
-    color: '#6B7280',
-    fontSize: 16,
-    fontWeight: 400,
-    lineHeight: '24px',
-    margin: 0,
-  },
-  emptyAccountDescription: {
-    color: '#9CA3AF',
-    fontSize: 16,
-    fontWeight: 400,
-    lineHeight: '24px',
-    margin: 0,
   },
 };
 
@@ -161,21 +131,12 @@ class Services extends Component<IProps, IState> {
             <div
               className={`services__no-service ${classes.emptyAccountLayer}`}
             >
-              <div className={classes.emptyAccountContent}>
-                <img
-                  src="./assets/images/empty-accounts.svg"
-                  alt=""
-                  className={classes.emptyAccountImage}
-                />
-                <div className={classes.emptyAccountState}>
-                  <p className={classes.emptyAccountTitle}>
-                    {intl.formatMessage(messages.noAccountsTitle)}
-                  </p>
-                  <p className={classes.emptyAccountDescription}>
-                    {intl.formatMessage(messages.noAccountsDescription)}
-                  </p>
-                </div>
-              </div>
+              <EmptyState
+                imageSrc="./assets/images/empty-accounts.svg"
+                title={intl.formatMessage(messages.noAccountsTitle)}
+                description={intl.formatMessage(messages.noAccountsDescription)}
+                className="translate-y-[52px]"
+              />
             </div>
           </Appear>
         )}

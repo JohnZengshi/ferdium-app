@@ -1180,7 +1180,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
                     <div className="ml-[94px]">
                       <Button
-                        className="!w-[118px] !h-[40px] !bg-brand !text-white !font-medium"
+                        className="min-w-[118px] !h-[40px] !bg-brand !text-white !font-medium"
                         onClick={this.handleProxyCheck}
                         loading={this.state.isProxyTesting}
                       >

@@ -532,7 +532,7 @@
   "login.tokenExpired": "Your session expired, please login again.",
   "mainModuleTabs.aiAssistant": "AI Assistant",
   "mainModuleTabs.home": "Home",
-  "mainModuleTabs.knowledgeBase": "Knowledge Base",
+  "mainModuleTabs.knowledgeBase": "Knowledge",
   "mainModuleTabs.serviceType": "WA Tools",
   "menu.Todoss.closeTodosDrawer": "Close Todos drawer",
   "menu.Todoss.openTodosDrawer": "Open Todos drawer",

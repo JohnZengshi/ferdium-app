@@ -52,7 +52,7 @@ const messages = defineMessages({
   },
   knowledgeBase: {
     id: 'mainModuleTabs.knowledgeBase',
-    defaultMessage: 'Knowledge Base',
+    defaultMessage: 'Knowledge',
   },
   aiAssistant: {
     id: 'mainModuleTabs.aiAssistant',

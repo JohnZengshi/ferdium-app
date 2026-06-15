@@ -120,11 +120,14 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
           })}
         </div>
 
-        <img
-          src="./assets/images/sidebar-ai-bot.png"
-          alt={intl.formatMessage(messages.aiAssistant)}
-          className="w-[40px]"
-        />
+        {false && (
+          <img
+            src="./assets/images/sidebar-ai-bot.png"
+            alt={intl.formatMessage(messages.aiAssistant)}
+            className="w-[40px]"
+          />
+        )}
+        <div className="w-[40px]" />
       </nav>
     );
   }

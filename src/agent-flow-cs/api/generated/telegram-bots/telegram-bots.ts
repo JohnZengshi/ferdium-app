@@ -12,6 +12,7 @@ import type {
   TelegramBotResponse,
   TelegramBotTestResponse,
   TelegramBotUpdateRequest,
+  TelegramBotVerifyTokenRequest,
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
@@ -251,6 +252,52 @@ export const deleteBotApiV1TelegramBotsBotIdDelete = async (
     {
       ...options,
       method: 'DELETE',
+    },
+  );
+};
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse200 = {
+  data: TelegramBotTestResponse;
+  status: 200;
+};
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse422 = {
+  data: HTTPValidationError;
+  status: 422;
+};
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponseSuccess =
+  verifyTokenApiV1TelegramBotsVerifyTokenPostResponse200 & {
+    headers: Headers;
+  };
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponseError =
+  verifyTokenApiV1TelegramBotsVerifyTokenPostResponse422 & {
+    headers: Headers;
+  };
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse =
+  | verifyTokenApiV1TelegramBotsVerifyTokenPostResponseSuccess
+  | verifyTokenApiV1TelegramBotsVerifyTokenPostResponseError;
+
+export const getVerifyTokenApiV1TelegramBotsVerifyTokenPostUrl = () => {
+  return `http://10.0.0.228:8000/api/v1/telegram-bots/verify-token`;
+};
+
+/**
+ * 创建前验证：用 token + chat_id 发送测试消息（无需 bot_id）。
+ * @summary Verify Token
+ */
+export const verifyTokenApiV1TelegramBotsVerifyTokenPost = async (
+  telegramBotVerifyTokenRequest: TelegramBotVerifyTokenRequest,
+  options?: RequestInit,
+): Promise<verifyTokenApiV1TelegramBotsVerifyTokenPostResponse> => {
+  return useCustomInstance<verifyTokenApiV1TelegramBotsVerifyTokenPostResponse>(
+    getVerifyTokenApiV1TelegramBotsVerifyTokenPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(telegramBotVerifyTokenRequest),
     },
   );
 };

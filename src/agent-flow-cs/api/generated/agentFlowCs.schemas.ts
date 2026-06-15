@@ -829,10 +829,14 @@ export interface FollowupStrategyRequest {
   valid_days?: number;
 }
 
+export type ValidationErrorCtx = { [key: string]: unknown };
+
 export interface ValidationError {
   loc: (string | number)[];
   msg: string;
   type: string;
+  input?: unknown;
+  ctx?: ValidationErrorCtx;
 }
 
 export interface HTTPValidationError {
@@ -1413,14 +1417,14 @@ export interface TelegramBotUpdateRequest {
  */
 export interface TelegramBotVerifyTokenRequest {
   /**
-     * @minLength 1
-     * @maxLength 255
-     */
+   * @minLength 1
+   * @maxLength 255
+   */
   bot_token: string;
   /**
-     * @minLength 1
-     * @maxLength 128
-     */
+   * @minLength 1
+   * @maxLength 128
+   */
   chat_id: string;
 }
 

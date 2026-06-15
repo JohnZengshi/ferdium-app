@@ -2,7 +2,6 @@ import { type ReactElement, useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { NotificationIcon } from 'tdesign-icons-react';
 import { Button, Dialog, Input, MessagePlugin } from 'tdesign-react';
-import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
 import type { TelegramBotResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import {
   createBotApiV1TelegramBotsPost,
@@ -10,6 +9,7 @@ import {
   listBotsApiV1TelegramBotsGet,
   testBotApiV1TelegramBotsBotIdTestPost,
   updateBotApiV1TelegramBotsBotIdPatch,
+  verifyTokenApiV1TelegramBotsVerifyTokenPost,
 } from '../../../agent-flow-cs/api/generated/telegram-bots/telegram-bots';
 import RuleListEditor from './RuleListEditor';
 
@@ -147,31 +147,6 @@ const messages = defineMessages({
   },
 });
 
-type VerifyTokenResponse = {
-  success: boolean;
-  error?: string | null;
-};
-
-type VerifyTokenApiResponse = {
-  data: VerifyTokenResponse;
-  status: number;
-  headers: Headers;
-};
-
-const verifyToken = async (params: {
-  bot_token: string;
-  chat_id: string;
-}): Promise<VerifyTokenApiResponse> => {
-  return useCustomInstance<VerifyTokenApiResponse>(
-    '/api/v1/telegram-bots/verify-token',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-    },
-  );
-};
-
 const HandoverRulesTab = (): ReactElement => {
   const intl = useIntl();
 
@@ -254,7 +229,7 @@ const HandoverRulesTab = (): ReactElement => {
 
       if (botToken.trim() && chatId.trim()) {
         // 有 token + chatId → 调 verify-token（新建/编辑均可）
-        const res = await verifyToken({
+        const res = await verifyTokenApiV1TelegramBotsVerifyTokenPost({
           bot_token: botToken.trim(),
           chat_id: chatId.trim(),
         });

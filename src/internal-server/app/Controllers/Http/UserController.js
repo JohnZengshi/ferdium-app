@@ -39,7 +39,7 @@ const DEFAULT_USER_DATA = {
   email: '',
   emailValidated: true,
   features: {},
-  firstname: 'Ferdium',
+  firstname: 'Aitalk',
   id: '82c1cf9d-ab58-4da2-b55e-aaa41d2142d8',
   isSubscriptionOwner: true,
   lastname: 'Application',
@@ -218,7 +218,7 @@ class UserController {
     }
 
     return response.send(
-      'Your account has been imported. You can now use your Franz account in Ferdium.',
+      'Your account has been imported. You can now use your Franz account in Aitalk.',
     );
   }
 
@@ -230,8 +230,8 @@ class UserController {
     const workspaces = allWorkspaces.toJSON();
 
     const exportData = {
-      username: 'Ferdium',
-      mail: 'internal@ferdium.org',
+      username: 'Aitalk',
+      mail: 'internal@aitalk.local',
       services,
       workspaces,
     };

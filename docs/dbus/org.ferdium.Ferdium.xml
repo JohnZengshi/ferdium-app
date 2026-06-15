@@ -3,28 +3,28 @@
 "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
   <!--
-    org.ferdium.Ferdium:
+    org.aitalk.Ferdium:
     @short_description: Control Ferdium from the desktop
 
     Interface for accessing Ferdium notification state, allowing notification
     counts to be displayed in the desktop (e.g., on a status bar) and updating
     the muted state of notifications.
 
-    The #org.ferdium.UnreadDirectMessageCount,
-    #org.ferdium.UnreadIndirectMessageCount, and #org.ferdium.UnreadServices
+    The #org.aitalk.UnreadDirectMessageCount,
+    #org.aitalk.UnreadIndirectMessageCount, and #org.aitalk.UnreadServices
     are affected by notification muting and hiding settings of Ferdium.
-    In particular, they are not updated if #org.ferdium.Muted is #TRUE.
+    In particular, they are not updated if #org.aitalk.Muted is #TRUE.
     Moreover, services with muted notifications or hidden indirect message
     counts will not appear in the respective counts.
     This behavior is consistent with the behavior of the Ferdium tray icon.
   -->
-  <interface name="org.ferdium.Ferdium">
+  <interface name="org.aitalk.Ferdium">
     <!--
       ToggleMute:
 
       Toggles the muted state of notifications.
 
-      Use the #org.ferdium.Ferdium.Muted property to get or set the current
+      Use the #org.aitalk.Ferdium.Muted property to get or set the current
       muted state.
     -->
     <method name="ToggleMute" />

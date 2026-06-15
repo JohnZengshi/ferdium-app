@@ -17,13 +17,13 @@ const isWin = process.platform === 'win32';
 
 const PORT = Number.parseInt(process.argv[2], 10) || 8080;
 
-// Always check these Ferdium-related ports
+// Always check these Aitalk-related ports
 const PORTS = [
   { port: PORT, label: 'user-specified / esbuild dev server' },
   { port: 35_729, label: 'esbuild/gulp-livereload' },
-  { port: 46_569, label: 'Ferdium internal server' },
-  { port: 4000, label: 'Ferdium todos frontend' },
-  { port: 3000, label: 'Ferdium dev API' },
+  { port: 46_569, label: 'Aitalk internal server' },
+  { port: 4000, label: 'Aitalk todos frontend' },
+  { port: 3000, label: 'Aitalk dev API' },
 ];
 
 // -------------------------------------------------------------------
@@ -149,7 +149,7 @@ function freePort(port, label) {
 // Main
 // -------------------------------------------------------------------
 process.stdout.write(
-  `\n  kill-port — freeing port ${PORT} and Ferdium-related ports\n\n`,
+  `\n  kill-port — freeing port ${PORT} and Aitalk-related ports\n\n`,
 );
 
 for (const { port, label } of PORTS) {

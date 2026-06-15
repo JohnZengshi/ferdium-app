@@ -64,7 +64,7 @@ export const importExportURL = () => {
 export const serverBase = () => {
   const serverType = resolveServer();
   const noServerFerdi = 'You are using Ferdi without a server';
-  const noServerFerdium = 'You are using Ferdium without a server';
+  const noServerAitalk = 'You are using Aitalk without a server';
 
   let terms;
   switch (serverType) {
@@ -76,7 +76,7 @@ export const serverBase = () => {
       terms = LIVE_FERDIUM_API;
       break;
     }
-    case noServerFerdium: {
+    case noServerAitalk: {
       terms = LIVE_FERDIUM_API;
       break;
     }
@@ -91,7 +91,7 @@ export const serverBase = () => {
 export const serverName = (): string => {
   const serverType = resolveServer();
   const noServerFerdi = 'You are using Ferdi without a server';
-  const noServerFerdium = 'You are using Ferdium without a server';
+  const noServerAitalk = 'You are using Aitalk without a server';
 
   let nameServer;
   switch (serverType) {
@@ -107,7 +107,7 @@ export const serverName = (): string => {
       nameServer = 'No';
       break;
     }
-    case noServerFerdium: {
+    case noServerAitalk: {
       nameServer = 'No';
       break;
     }

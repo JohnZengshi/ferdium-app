@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "ignore": [".understand-anything"]
+  },
   "formatter": {
     "enabled": false
   },
@@ -7,7 +10,7 @@
     "enabled": true
   },
   "linter": {
-    "ignore": ["build", "build-e2e", ".tmp", "coverage", "node_modules", "recipes", "*.json", "src/whatsapp-automation/api/generated", "src/agent-flow-cs/api/generated"],
+    "ignore": ["build", "build-e2e", ".tmp", "coverage", "node_modules", "recipes", "*.json", "src/whatsapp-automation/api/generated", "src/agent-flow-cs/api/generated", ".understand-anything"],
     "rules": {
       "style": {
         "noNonNullAssertion": "off",

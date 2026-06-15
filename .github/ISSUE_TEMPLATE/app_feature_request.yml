@@ -1,5 +1,5 @@
 name: App - Feature Request
-description: Suggest an idea for the Ferdium app
+description: Suggest an idea for the Aitalk app
 labels: ["enhancement :sparkles:"]
 body:
   - type: markdown

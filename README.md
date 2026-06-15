@@ -9,7 +9,7 @@
     </a>
 </p>
 
-# Ferdium
+# Aitalk
 
 [![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
 [![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
@@ -19,12 +19,12 @@
 ![GitHub all releases downloads](https://img.shields.io/github/downloads/ferdium/ferdium-app/total?label=Total%20Releases%20Downloaded&color=ac72b0)
 ![GitHub downloads (by tag)](https://img.shields.io/github/downloads/ferdium/ferdium-app/latest/total?color=blue)
 
-[![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Ferdium&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
+[![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Aitalk&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href='#contributors-'><img src='https://img.shields.io/badge/contributors-330-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-- [Ferdium](#ferdium)
+- [Aitalk](#aitalk)
   - [Screenshots](#screenshots)
   - [Download](#download)
   - [Migrating from Ferdi](#migrating-from-ferdi)
@@ -34,7 +34,7 @@
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
-Ferdium is a desktop app that helps you organize how you use your favourite apps by combining them into one application. It is based on Franz - a software already used by thousands of people - with the difference that Ferdium gives you many additional features and doesn't restrict its usage! Furthermore, Ferdium is compatible with your existing Franz account, so you can continue right where you left off. Please find out more about Ferdium and its features on [ferdium.org](https://ferdium.org).
+Aitalk is a desktop app that helps you organize how you use your favourite apps by combining them into one application. It is based on Franz - a software already used by thousands of people - with the difference that Aitalk gives you many additional features and doesn't restrict its usage! Furthermore, Aitalk is compatible with your existing Franz account, so you can continue right where you left off. Please find out more about Aitalk and its features on [ferdium.org](https://ferdium.org).
 
 ## Screenshots
 
@@ -43,10 +43,10 @@ Ferdium is a desktop app that helps you organize how you use your favourite apps
 <p align="center">
 <img alt="Keep all your messaging services in one place." src="./branding/screenshots/hero.png">
 <em>"Keep all your messaging services in one place."</em>
-<img alt="Order your services with Ferdium Workspaces." src="./branding/screenshots/workspaces.png">
-<em>"Order your services with Ferdium Workspaces."</em>
-<img alt="Always keep your Todos list open with Ferdium Todos." src="./branding/screenshots/todos.png">
-<em>"Always keep your Todos list open with Ferdium Todos."</em>
+<img alt="Order your services with Aitalk Workspaces." src="./branding/screenshots/workspaces.png">
+<em>"Order your services with Aitalk Workspaces."</em>
+<img alt="Always keep your Todos list open with Aitalk Todos." src="./branding/screenshots/todos.png">
+<em>"Always keep your Todos list open with Aitalk Todos."</em>
 <img alt="Supporting all your services." src="./branding/screenshots/service-store.png">
 <em>"Supporting all your services."</em>
 </p>
@@ -62,11 +62,11 @@ _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium
 
 ## Migrating from Ferdi
 
-If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following scripts](./scripts/migration) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations. (.ps1 for PowerShell/Windows users and .sh for UNIX (Linux and MacOS users). For a more detailed explanation, please see [MIGRATION.md](docs/MIGRATION.md)
+If you are a pre-existing user of Ferdi, and are thinking of switching to Aitalk, you might want to run [the following scripts](./scripts/migration) to migrate your existing Ferdi profile such that Aitalk can pick up the configurations. (.ps1 for PowerShell/Windows users and .sh for UNIX (Linux and MacOS users). For a more detailed explanation, please see [MIGRATION.md](docs/MIGRATION.md)
 
 ## Styling
 
-You can style Ferdium's UI with the `USER_DATA/Ferdium/config/custom.css` file.
+You can style Aitalk's UI with the `USER_DATA/Aitalk/config/custom.css` file.
 
 > **Note**
 >

@@ -16,7 +16,7 @@ RUN apt-get update -y \
   && gem install dotenv -v 2.8.1 --no-document \
   && gem install fpm --no-document
 
-WORKDIR /usr/src/ferdium
+WORKDIR /usr/src/aitalk
 
 COPY package*.json ./
 COPY .npmrc ./
@@ -27,11 +27,11 @@ RUN pnpm i
 
 COPY . .
 
-WORKDIR /usr/src/ferdium/recipes
+WORKDIR /usr/src/aitalk/recipes
 
 RUN pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 
-WORKDIR /usr/src/ferdium
+WORKDIR /usr/src/aitalk
 
 RUN arch="$(dpkg --print-architecture)"; \
         case "$arch" in \
@@ -44,8 +44,8 @@ RUN arch="$(dpkg --print-architecture)"; \
 
 FROM docker.io/library/busybox:latest
 
-WORKDIR /ferdium
+WORKDIR /aitalk
 
-COPY --from=builder /usr/src/ferdium/out/* /ferdium/
+COPY --from=builder /usr/src/aitalk/out/* /aitalk/
 
-VOLUME [ "/ferdium-out" ]
+VOLUME [ "/aitalk-out" ]

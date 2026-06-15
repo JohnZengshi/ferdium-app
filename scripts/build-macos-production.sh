@@ -40,7 +40,7 @@ npx electron-builder --mac dmg --"$ARCH" --publish never -c.mac.identity=null
 DMG_FILE=$(find "$OUT_DIR" -name "*.dmg" -print -quit)
 [[ -z "$DMG_FILE" ]] && fail "DMG 构建失败，未找到产物。"
 
-NEW_DMG_NAME="Ferdium-mac-bundle-${APP_VERSION}-${BUILD_NUMBER}-${ARCH}.dmg"
+NEW_DMG_NAME="Aitalk-mac-bundle-${APP_VERSION}-${BUILD_NUMBER}-${ARCH}.dmg"
 mv "$DMG_FILE" "$OUT_DIR/$NEW_DMG_NAME"
 
 ok "产物已生成: out/$NEW_DMG_NAME"

@@ -1,12 +1,12 @@
-# Contributing to Ferdium 7
+# Contributing to Aitalk 7
 
-:tada: First off, thanks for taking the time and your effort to make Ferdium better! :tada:
+:tada: First off, thanks for taking the time and your effort to make Aitalk better! :tada:
 
 ## Table of contents
 
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Contributing to Ferdium 7](#contributing-to-ferdium-7)
+- [Contributing to Aitalk 7](#contributing-to-aitalk-7)
   - [Table of contents](#table-of-contents)
   - [Code of Conduct](#code-of-conduct)
   - [What should I know before I get started?](#what-should-i-know-before-i-get-started)
@@ -34,7 +34,7 @@
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Ferdium Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+This project and everyone participating in it is governed by the [Aitalk Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.org).
 
 ## What should I know before I get started?
@@ -103,7 +103,7 @@ It is important you execute the last command to get the required submodule (`fer
 
 ### Run the script
 
-Run the following script to install all dependencies, and build Ferdium.
+Run the following script to install all dependencies, and build Aitalk.
 
 ```bash
 # On Unix
@@ -132,18 +132,18 @@ DATE=`date +"%Y-%b-%d-%H-%M"`
 mkdir -p ~/Downloads/$DATE
 docker run -e GIT_SHA=`git rev-parse --short HEAD` -v ~/Downloads/$DATE:/ferdium-out -it ferdium-package-`uname -m` sh
 # inside the container:
-mv /ferdium/Ferdium-*.AppImage /ferdium-out/Ferdium-$GIT_SHA.AppImage
-mv /ferdium/ferdium-*.tar.gz /ferdium-out/Ferdium-$GIT_SHA.tar.gz
-mv /ferdium/ferdium-*.x86_64.rpm /ferdium-out/Ferdium-x86_64-$GIT_SHA.rpm
-mv /ferdium/ferdium_*_amd64.deb /ferdium-out/Ferdium-amd64-$GIT_SHA.deb
-mv /ferdium/ferdium-*.freebsd /ferdium-out/Ferdium-$GIT_SHA.freebsd
-mv /ferdium/ferdium /ferdium-out/Ferdium-$GIT_SHA
+mv /ferdium/Aitalk-*.AppImage /ferdium-out/Aitalk-$GIT_SHA.AppImage
+mv /ferdium/ferdium-*.tar.gz /ferdium-out/Aitalk-$GIT_SHA.tar.gz
+mv /ferdium/ferdium-*.x86_64.rpm /ferdium-out/Aitalk-x86_64-$GIT_SHA.rpm
+mv /ferdium/ferdium_*_amd64.deb /ferdium-out/Aitalk-amd64-$GIT_SHA.deb
+mv /ferdium/ferdium-*.freebsd /ferdium-out/Aitalk-$GIT_SHA.freebsd
+mv /ferdium/ferdium /ferdium-out/Aitalk-$GIT_SHA
 mv /ferdium/latest-linux.yml /ferdium-out/latest-linux-$GIT_SHA.yml
 ```
 
 ### Development commands
 
-Ferdium uses **esbuild** for bundling and **Electron** for the app runtime. The following commands are available:
+Aitalk uses **esbuild** for bundling and **Electron** for the app runtime. The following commands are available:
 
 ```bash
 # Start esbuild in watch mode (serves on http://127.0.0.1:8080)
@@ -155,7 +155,7 @@ pnpm start
 # Full dev setup: esbuild watch + Electron launch (waits for the dev server)
 pnpm start:all-dev
 
-# Same as start:all-dev but with DEBUG=Ferdium:* logging
+# Same as start:all-dev but with DEBUG=Aitalk:* logging
 pnpm debug
 
 # Fresh start: rebuild recipes + kill stale port + esbuild + Electron

@@ -38,6 +38,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
+import { migrateUserData } from './electron/dataMigration';
 import handleDeepLink from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
@@ -572,7 +573,9 @@ app.commandLine.appendSwitch('disable-features', 'CrossOriginOpenerPolicy');
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
+app.on('ready', async () => {
+  await migrateUserData();
+
   // force app to live in /Applications
   enforceMacOSAppLocation();
 
@@ -595,15 +598,15 @@ app.on('ready', () => {
         arguments: `${extraArgs}--reset-window`,
         iconPath,
         iconIndex: 0,
-        title: 'Move Ferdium to Current Display',
-        description: 'Restore the position and size of Ferdium',
+        title: 'Move Aitalk to Current Display',
+        description: 'Restore the position and size of Aitalk',
       },
       {
         program: process.execPath,
         arguments: `${extraArgs}--quit`,
         iconPath,
         iconIndex: 0,
-        title: 'Quit Ferdium',
+        title: 'Quit Aitalk',
         description: '',
       },
     ]);
@@ -885,7 +888,7 @@ app.on('before-quit', event => {
     selection = dialog.showMessageBoxSync(mainWindow!, {
       type: 'question',
       message: 'Quit',
-      detail: 'Do you really want to quit Ferdium?',
+      detail: 'Do you really want to quit Aitalk?',
       buttons: ['Yes', 'No'],
     });
   }

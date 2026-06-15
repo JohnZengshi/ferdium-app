@@ -178,11 +178,11 @@ export const menuItems = defineMessages({
   },
   reloadFerdium: {
     id: 'menu.view.reloadFerdium',
-    defaultMessage: 'Reload Ferdium',
+    defaultMessage: 'Reload Aitalk',
   },
   lockFerdium: {
     id: 'menu.view.lockFerdium',
-    defaultMessage: 'Lock Ferdium',
+    defaultMessage: 'Lock Aitalk',
   },
   reloadTodos: {
     id: 'menu.view.reloadTodos',
@@ -222,7 +222,7 @@ export const menuItems = defineMessages({
   },
   debugInfoCopiedHeadline: {
     id: 'menu.help.debugInfoCopiedHeadline',
-    defaultMessage: 'Ferdium Debug Information',
+    defaultMessage: 'Aitalk Debug Information',
   },
   debugInfoCopiedBody: {
     id: 'menu.help.debugInfoCopiedBody',
@@ -262,7 +262,7 @@ export const menuItems = defineMessages({
   },
   about: {
     id: 'menu.app.about',
-    defaultMessage: 'About Ferdium',
+    defaultMessage: 'About Aitalk',
   },
   checkForUpdates: {
     id: 'menu.app.checkForUpdates',
@@ -983,8 +983,8 @@ class FranzMenu implements StoresProps {
         dialog
           .showMessageBox({
             type: 'info',
-            title: 'Ferdium',
-            message: 'Ferdium',
+            title: 'Aitalk',
+            message: 'Aitalk',
             detail: aboutAppDetails,
             buttons: [
               intl.formatMessage(menuItems.ok),

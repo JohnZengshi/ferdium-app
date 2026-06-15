@@ -1,4 +1,4 @@
-# ✅ Ferdium 无沙盒版本 - 最终交付
+# ✅ AITALK 无沙盒版本 - 最终交付
 
 ## 任务完成状态
 
@@ -17,7 +17,7 @@
 ```
 ferdium-app/
 ├── out/
-│   ├── Ferdium-mac-7.1.3-nightly.3-x64.dmg  (183 MB) 核心安装包
+│   ├── AITALK-mac-7.1.3-nightly.3-x64.dmg  (183 MB) 核心安装包
 │   └── 安装指南.md                           (3.2 KB) 必读！快速开始
 ├── GATEKEEPER_FIX.md                          (3.6 KB) 必读！解决安全提示
 └── scripts/
@@ -25,7 +25,7 @@ ferdium-app/
 ```
 
 **最小分发包** (必需):
-- `Ferdium-mac-7.1.3-nightly.3-x64.dmg`
+- `AITALK-mac-7.1.3-nightly.3-x64.dmg`
 - `安装指南.md`
 - `GATEKEEPER_FIX.md`
 - `fix-gatekeeper.sh` (如果测试人员有项目访问权限)
@@ -43,13 +43,13 @@ ferdium-app/
 - App Sandbox 已禁用 (`app-sandbox: false`)
 - 应用可以访问系统文件和目录
 - 完整文件系统读写权限
-- **验证**: `codesign -d --entitlements :- /Applications/Ferdium.app | grep app-sandbox`
+- **验证**: `codesign -d --entitlements :- /Applications/AITALK.app | grep app-sandbox`
 
 ### 2. ✅ DMG 分发
 - 标准 DMG 格式，双击挂载
 - 拖放安装到 Applications 文件夹
 - 包含背景图和图标
-- **文件**: `out/Ferdium-mac-7.1.3-nightly.3-x64.dmg` (183 MB)
+- **文件**: `out/AITALK-mac-7.1.3-nightly.3-x64.dmg` (183 MB)
 
 ### 3. ✅ 首次运行提示解决方案
 - 提供自动修复脚本 (`fix-gatekeeper.sh`)
@@ -64,7 +64,7 @@ ferdium-app/
 测试人员安装后会看到：
 ```
 已阻止恶意软件并移到废纸篓
-未打开"Ferdium.app"，因其包含恶意软件。
+未打开"AITALK.app"，因其包含恶意软件。
 ```
 
 ### 解决方案
@@ -77,10 +77,10 @@ cd ~/Documents/LZXL/ais/ferdium-app
 
 **方法 2: 手动修复**
 ```bash
-mv ~/.Trash/Ferdium.app /Applications/
-sudo xattr -cr /Applications/Ferdium.app
-sudo spctl --add /Applications/Ferdium.app
-open /Applications/Ferdium.app
+mv ~/.Trash/AITALK.app /Applications/
+sudo xattr -cr /Applications/AITALK.app
+sudo spctl --add /Applications/AITALK.app
+open /Applications/AITALK.app
 ```
 
 **根本原因**: 应用未经 Apple 公证 (需要 $99/年开发者账号)
@@ -104,7 +104,7 @@ open /Applications/Ferdium.app
 - **签名身份**: Apple Development (slmkqv21400@hotmail.com)
 - **Hardened Runtime**: ✅ 启用
 - **公证**: ❌ 跳过 (内部测试)
-- **验证命令**: `codesign -dv /Applications/Ferdium.app`
+- **验证命令**: `codesign -dv /Applications/AITALK.app`
 
 ### 构建环境
 - Node.js: 22.18.0
@@ -132,7 +132,7 @@ nvm use 22.18.0
 ./scripts/verify-dmg.sh
 ```
 
-输出: `out/Ferdium-mac-7.1.3-nightly.3-x64.dmg`
+输出: `out/AITALK-mac-7.1.3-nightly.3-x64.dmg`
 
 ### 测试人员: 安装
 

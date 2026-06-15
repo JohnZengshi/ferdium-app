@@ -1,4 +1,4 @@
-# Ferdium 无沙盒版本打包 - 完成总结
+# AITALK 无沙盒版本打包 - 完成总结
 
 ## ✅ 任务完成
 
@@ -7,7 +7,7 @@
 ## 📦 交付清单
 
 ### 1. 可执行文件
-- **DMG 安装包**: `out/Ferdium-mac-7.1.3-nightly.3-x64.dmg` (183 MB)
+- **DMG 安装包**: `out/AITALK-mac-7.1.3-nightly.3-x64.dmg` (183 MB)
   - ✅ 无沙盒限制 (`app-sandbox: false`)
   - ✅ 完整文件系统访问权限
   - ✅ 代码签名完整
@@ -91,7 +91,7 @@ cd ~/Documents/LZXL/ais/ferdium-app
 
 将以下文件打包发送：
 ```
-out/Ferdium-mac-7.1.3-nightly.3-x64.dmg
+out/AITALK-mac-7.1.3-nightly.3-x64.dmg
 out/交付说明.md
 out/测试验证清单.md
 ```

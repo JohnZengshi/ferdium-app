@@ -78,14 +78,14 @@ export default class DBus {
 
     try {
       this.bus = sessionBus();
-      await this.bus.requestName('org.ferdium.Ferdium', 0);
+      await this.bus.requestName('org.aitalk.Aitalk', 0);
     } catch {
       // Error connecting to the bus.
       return;
     }
 
     this.ferdium = new Ferdium(this);
-    this.bus.export('/org/ferdium', this.ferdium);
+    this.bus.export('/org/aitalk', this.ferdium);
 
     // HACK Hook onto the MessageBus to track StatusNotifierWatchers
     // @ts-expect-error Property '_addMatch' does not exist on type 'MessageBus'.

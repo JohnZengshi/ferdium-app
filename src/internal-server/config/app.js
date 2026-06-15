@@ -13,7 +13,7 @@ module.exports = {
   |
   */
 
-  name: Env.get('APP_NAME', 'Ferdium Internal Server'),
+  name: Env.get('APP_NAME', 'Aitalk Internal Server'),
 
   /*
   |--------------------------------------------------------------------------

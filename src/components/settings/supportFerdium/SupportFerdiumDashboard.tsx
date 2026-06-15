@@ -4,7 +4,7 @@ import { FERDIUM_TRANSLATION } from '../../../config';
 const messages = defineMessages({
   headline: {
     id: 'settings.supportFerdium.headline',
-    defaultMessage: 'About Ferdium',
+    defaultMessage: 'About Aitalk',
   },
   aboutIntro: {
     id: 'settings.supportFerdium.aboutIntro',
@@ -13,7 +13,7 @@ const messages = defineMessages({
   about: {
     id: 'settings.supportFerdium.about',
     defaultMessage:
-      'The development of Ferdium is done by contributors. People who use Ferdium like you. They maintain, fix, and improve Ferdium in their spare time.',
+      'The development of Aitalk is done by contributors. People who use Aitalk like you. They maintain, fix, and improve Aitalk in their spare time.',
   },
 });
 

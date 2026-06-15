@@ -1,0 +1,9 @@
+# Biome ignore file
+
+# Ignore large generated files
+.understand-anything/knowledge-graph.json
+.understand-anything/intermediate/assembled-graph.json
+.understand-anything/tmp/ua-tour-input.json
+
+# Ignore generated script with lint error
+.understand-anything/tmp/build-import-map.mjs

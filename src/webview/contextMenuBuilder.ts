@@ -227,7 +227,7 @@ const contextMenuStringTable: ContextMenuStringTable = {
   openInBrowser: () =>
     getTranslatedTextSync('contextMenu.openInBrowser', 'Open in Browser'),
   openInFerdium: () =>
-    getTranslatedTextSync('contextMenu.openInFerdium', 'Open in Ferdium'),
+    getTranslatedTextSync('contextMenu.openInFerdium', 'Open in Aitalk'),
   copyLinkUrl: () =>
     getTranslatedTextSync('contextMenu.copyLinkUrl', 'Copy Link'),
   copyImageUrl: () =>

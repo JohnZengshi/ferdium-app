@@ -53,7 +53,7 @@ const executablePath = isMac
     ? process.env.PORTABLE_EXECUTABLE_FILE
     : process.execPath;
 const autoLauncher = new AutoLaunch({
-  name: 'Ferdium',
+  name: 'AITALK',
   path: executablePath,
 });
 
@@ -358,7 +358,7 @@ export default class AppStore extends TypedStore {
           'app.welcomeNotification.title',
           // `Welcome to Ferdium ${ferdiumVersion}`,
           // { version: ferdiumVersion },
-          `Welcome to Ferdium ${ferdiumVersion.split('.')[0]}`,
+          `Welcome to AITALK ${ferdiumVersion.split('.')[0]}`,
           { version: ferdiumVersion.split('.')[0] },
         ),
         {

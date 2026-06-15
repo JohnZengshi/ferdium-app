@@ -42,7 +42,7 @@ export const prepareLocalToken = async (requestData: {
   const existingToken = localServerToken();
   if (existingToken) {
     // eslint-disable-next-line no-param-reassign
-    requestData.headers['X-Ferdium-Local-Token'] = existingToken;
+    requestData.headers['X-Aitalk-Local-Token'] = existingToken;
     return;
   }
 
@@ -52,7 +52,7 @@ export const prepareLocalToken = async (requestData: {
     const result = await ipcRenderer.invoke('getLocalServerToken');
     if (result?.token) {
       // eslint-disable-next-line no-param-reassign
-      requestData.headers['X-Ferdium-Local-Token'] = result.token;
+      requestData.headers['X-Aitalk-Local-Token'] = result.token;
       return;
     }
   } catch {
@@ -73,7 +73,7 @@ export const prepareLocalToken = async (requestData: {
   const delayedToken = localServerToken();
   if (delayedToken) {
     // eslint-disable-next-line no-param-reassign
-    requestData.headers['X-Ferdium-Local-Token'] = delayedToken;
+    requestData.headers['X-Aitalk-Local-Token'] = delayedToken;
   }
 };
 

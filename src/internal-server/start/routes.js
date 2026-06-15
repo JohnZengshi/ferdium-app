@@ -32,13 +32,13 @@ async function validateToken(clientToken, response, next) {
   return response.forbidden();
 }
 
-const OnlyAllowFerdium = async ({ request, response }, next) => {
+const OnlyAllowAitalk = async ({ request, response }, next) => {
   const version = request.header('X-Franz-Version');
   if (!version) {
     return response.forbidden();
   }
 
-  const clientToken = request.header('X-Ferdium-Local-Token');
+  const clientToken = request.header('X-Aitalk-Local-Token');
   return validateToken(clientToken, response, next);
 };
 
@@ -47,10 +47,10 @@ const RequireTokenInQS = async ({ request, response }, next) => {
   return validateToken(clientToken, response, next);
 };
 
-const FERDIUM_LOCAL_TOKEN_COOKIE = 'ferdium-local-token';
+const AITALK_LOCAL_TOKEN_COOKIE = 'aitalk-local-token';
 
 const RequireAuthenticatedBrowser = async ({ request, response }, next) => {
-  const clientToken = request.cookie(FERDIUM_LOCAL_TOKEN_COOKIE);
+  const clientToken = request.cookie(AITALK_LOCAL_TOKEN_COOKIE);
   return validateToken(clientToken, response, next);
 };
 
@@ -60,7 +60,7 @@ Route.get('health', ({ response }) =>
     api: 'success',
     db: 'success',
   }),
-).middleware(OnlyAllowFerdium);
+).middleware(OnlyAllowAitalk);
 
 // API is grouped under '/v1/' route
 Route.group(() => {
@@ -97,7 +97,7 @@ Route.group(() => {
   Route.get('workspace', 'WorkspaceController.list');
 })
   .prefix(API_VERSION)
-  .middleware(OnlyAllowFerdium);
+  .middleware(OnlyAllowAitalk);
 
 Route.group(() => {
   Route.get('icon/:id', 'ImageController.icon');
@@ -121,7 +121,7 @@ Route.group(() => {
 
 Route.get('token/:token', ({ params: { token }, response }) => {
   if (validateToken(token)) {
-    response.cookie(FERDIUM_LOCAL_TOKEN_COOKIE, token, {
+    response.cookie(AITALK_LOCAL_TOKEN_COOKIE, token, {
       httpOnly: true,
       sameSite: true,
       path: '/',

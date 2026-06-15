@@ -16,7 +16,7 @@ function run(desc, command, cwd = process.cwd()) {
 }
 
 console.log('========================================');
-console.log('  Ferdium Recipes Setup');
+console.log('  Aitalk Recipes Setup');
 console.log('========================================\n');
 
 // Step 1: Pull git submodule

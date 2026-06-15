@@ -1,5 +1,5 @@
 name: App - Bug report
-description: Report a bug in the Ferdium app
+description: Report a bug in the Aitalk app
 labels: ["bug :beetle:"]
 body:
   - type: markdown
@@ -18,8 +18,8 @@ body:
           required: true
   - type: input
     attributes:
-      label: Ferdium Version
-      description: What version of Ferdium are you using?
+      label: Aitalk Version
+      description: What version of Aitalk are you using?
       placeholder: 6.0.0-nightly.7
     validations:
       required: true
@@ -53,8 +53,8 @@ body:
       required: true
   - type: input
     attributes:
-      label: Last Known Working Ferdium version
-      description: What is the last version of Ferdium this worked in, if applicable?
+      label: Last Known Working Aitalk version
+      description: What is the last version of Aitalk this worked in, if applicable?
       placeholder: 6.0.0-nightly.7
   - type: textarea
     attributes:
@@ -82,7 +82,7 @@ body:
   - type: input
     attributes:
       label: Debug link
-      description: Please get your debug link via Ferdium's "Help" > "Publish Debug Information", then share your link with us
+      description: Please get your debug link via Aitalk's "Help" > "Publish Debug Information", then share your link with us
     validations:
       required: false
   - type: textarea

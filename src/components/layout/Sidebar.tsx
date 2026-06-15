@@ -66,15 +66,15 @@ const messages = defineMessages({
   },
   openTodosDrawer: {
     id: 'sidebar.openTodosDrawer',
-    defaultMessage: 'Open Ferdium Todos',
+    defaultMessage: 'Open Aitalk Todos',
   },
   closeTodosDrawer: {
     id: 'sidebar.closeTodosDrawer',
-    defaultMessage: 'Close Ferdium Todos',
+    defaultMessage: 'Close Aitalk Todos',
   },
   lockFerdium: {
     id: 'sidebar.lockFerdium',
-    defaultMessage: 'Lock Ferdium',
+    defaultMessage: 'Lock Aitalk',
   },
 });
 

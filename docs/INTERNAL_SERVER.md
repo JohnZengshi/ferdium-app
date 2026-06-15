@@ -2,9 +2,9 @@
     <img src="../src/internal-server/public/images/logo.png" alt="" width="300"/>
 </p>
 
-# Ferdium Internal Server
+# Aitalk Internal Server
 
-Ferdium ships with an embedded **AdonisJS 5** server in `src/internal-server/`. It powers the local/accountless mode and stores app configuration in a local SQLite database instead of requiring a remote Ferdium server.
+Aitalk ships with an embedded **AdonisJS 5** server in `src/internal-server/`. It powers the local/accountless mode and stores app configuration in a local SQLite database instead of requiring a remote Aitalk server.
 
 ## What it does
 
@@ -19,7 +19,7 @@ The internal server is used to:
 
 The server entrypoint is `src/internal-server/start.ts`.
 
-At startup Ferdium:
+At startup Aitalk:
 
 1. sets `ENV_PATH` to `src/internal-server/env.ini`;
 2. ensures a writable SQLite database exists at `<user data path>/server.sqlite`;
@@ -30,7 +30,7 @@ This means the checked-in `env.ini` is a template/default config, while the actu
 
 ## Key differences from the hosted server flow
 
-Compared with using a hosted Ferdium server, the embedded server:
+Compared with using a hosted Aitalk server, the embedded server:
 
 - is bundled with the desktop app;
 - runs locally on `localhost`;
@@ -44,7 +44,7 @@ Default configuration lives in `src/internal-server/env.ini`.
 
 Notable values currently checked into the repository:
 
-- `APP_NAME=Ferdium Internal Server`
+- `APP_NAME=Aitalk Internal Server`
 - `DB_CONNECTION=sqlite`
 - `IS_CREATION_ENABLED=true`
 - `CONNECT_WITH_FRANZ=true`
@@ -57,7 +57,7 @@ Because accountless data is stored locally, there is no automatic cloud sync in 
 
 To back up or migrate local data:
 
-1. open Ferdium;
+1. open Aitalk;
 2. go to `Help > Import/Export Configuration Data`;
 3. export your data from the page opened in the browser;
 4. keep the exported file somewhere safe.

@@ -10,6 +10,7 @@
 - **Styling overhaul**: TailwindCSS adopted as the primary styling tool (SCSS reserved for legacy layouts)
 - **Internal server**: Rewritten as a modern AdonisJS 5 application with SQLite
 - **New features**: Workspaces, community recipes browser, per-service proxy, appearance customization, todos
+- **Rebranding**: Renamed app from Ferdium to Aitalk
 
 For detailed release history, see the [releases page](https://github.com/ferdium/ferdium-app/releases).
 

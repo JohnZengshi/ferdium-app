@@ -28,7 +28,7 @@ const messages = defineMessages({
   },
   heading: {
     id: 'dynamicLogin.heading',
-    defaultMessage: 'Welcome to Tuoke!',
+    defaultMessage: 'AI Chat 拓客销售系统',
   },
   rememberPassword: {
     id: 'dynamicLogin.rememberPassword',

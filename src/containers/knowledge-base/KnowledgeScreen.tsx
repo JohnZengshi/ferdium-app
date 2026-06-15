@@ -21,6 +21,7 @@ import {
   Select,
 } from 'tdesign-react';
 import { getAccessToken } from '../../agent-flow-cs/api/auth';
+import { AGENT_FLOW_CS_BASE } from '../../agent-flow-cs/api/customInstance';
 import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
@@ -184,11 +185,11 @@ const messages = defineMessages({
   },
   noPersonasTitle: {
     id: 'knowledgeScreen.noPersonasTitle',
-    defaultMessage: 'No Persona Profiles Yet',
+    defaultMessage: '暂无人设资料',
   },
   noPersonasDescription: {
     id: 'knowledgeScreen.noPersonasDescription',
-    defaultMessage: 'Create your first persona profile to get started',
+    defaultMessage: '创建您的第一个人设资料以开始使用',
   },
 });
 
@@ -481,7 +482,7 @@ const KnowledgeScreen: React.FC = () => {
     setIsGenerating(true);
     setStreamProgress(0);
 
-    const url = 'http://10.0.0.179:8000/api/v1/digital-humans/generate';
+    const url = `${AGENT_FLOW_CS_BASE.replace(/\/+$/, '')}/api/v1/digital-humans/generate`;
 
     const bearerToken = getAccessToken();
     const akgApiKey = getApiKey();

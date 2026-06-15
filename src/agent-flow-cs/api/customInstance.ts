@@ -7,6 +7,9 @@ import { getApiKey } from '../../whatsapp-automation/api/auth';
  */
 import { getAccessToken } from './auth';
 
+export const AGENT_FLOW_CS_BASE =
+  process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.179:8000';
+
 type OrvalResponse<T> = {
   data: T;
   status: number;
@@ -20,8 +23,6 @@ export const useCustomInstance = <T>(
   const controller = new AbortController();
 
   // Replace the hardcoded base URL with the actual backend URL from .env
-  const AGENT_FLOW_CS_BASE =
-    process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.179:8000';
   // Handle both absolute URLs (replace host) and relative paths (prepend base)
   const actualUrl = /^https?:\/\//.test(url)
     ? url.replace(/^https?:\/\/[^/]+/, AGENT_FLOW_CS_BASE)

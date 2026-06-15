@@ -41,9 +41,9 @@ import { getApiKey } from '../../whatsapp-automation/api/auth';
 const aiIllustration = 'assets/images/ai-illustration.png';
 const aiStars = 'assets/images/ai-stars.png';
 
-const sleep = (ms: number): Promise<void> =>
-  new Promise(r => {
-    setTimeout(r, ms);
+const sleep = (ms: number) =>
+  new Promise<void>(resolve => {
+    setTimeout(resolve, ms);
   });
 
 const messages = defineMessages({
@@ -533,7 +533,7 @@ const KnowledgeScreen: React.FC = () => {
           if (controller.signal.aborted) {
             return Promise.reject(new DOMException('Aborted', 'AbortError'));
           }
-          return reader.read().then(async ({ done, value }) => {
+          return reader.read().then(({ done, value }) => {
             if (done) {
               setStreamProgress(100);
               setHasGenerated(true);
@@ -561,6 +561,7 @@ const KnowledgeScreen: React.FC = () => {
             }
 
             // 逐个处理，progress 更新间加延时让 React 渲染动画
+<<<<<<< HEAD
             /* eslint-disable no-await-in-loop */
             for (const data of events) {
               // progress 事件
@@ -575,20 +576,27 @@ const KnowledgeScreen: React.FC = () => {
                 if (VALID_FIELDS.has(formField)) {
                   const v = data.value === undefined ? '' : String(data.value);
                   setFormData(prev => ({ ...prev, [formField]: v }));
+=======
+            const processEvents = async () => {
+              for (const data of events) {
+                // progress 事件
+                if (data.type === 'progress' && data.progress !== undefined) {
+                  setStreamProgress(data.progress);
+                  // eslint-disable-next-line no-await-in-loop
+                  await sleep(80);
+>>>>>>> 23c42a9d5 (fix(knowledge): 修复 KnowledgeScreen lint 错误)
                 }
-              }
 
-              // complete 事件 → 最终全量数据覆盖
-              if (data.type === 'complete' && data.persona) {
-                setStreamProgress(100);
-                setHasGenerated(true);
-                const updates: Record<string, string> = {};
-                for (const [key, val] of Object.entries(data.persona)) {
-                  const formField = FIELD_MAP[key] ?? key;
+                // field 事件 → 即时填充表单
+                if (data.type === 'field') {
+                  const formField = FIELD_MAP[data.field] ?? data.field;
                   if (VALID_FIELDS.has(formField)) {
-                    updates[formField] = String(val ?? '');
+                    const v =
+                      data.value === undefined ? '' : String(data.value);
+                    setFormData(prev => ({ ...prev, [formField]: v }));
                   }
                 }
+<<<<<<< HEAD
                 if (Object.keys(updates).length > 0) {
                   setFormData(prev => ({ ...prev, ...updates }));
                 }
@@ -599,6 +607,39 @@ const KnowledgeScreen: React.FC = () => {
 
             // eslint-disable-next-line consistent-return
             return readStream();
+=======
+
+                // complete 事件 → 最终全量数据覆盖
+                if (data.type === 'complete' && data.persona) {
+                  setStreamProgress(100);
+                  setHasGenerated(true);
+                  const updates: Record<string, string> = {};
+                  for (const [key, val] of Object.entries(data.persona)) {
+                    const formField = FIELD_MAP[key] ?? key;
+                    if (VALID_FIELDS.has(formField)) {
+                      updates[formField] = String(val ?? '');
+                    }
+                  }
+                  if (Object.keys(updates).length > 0) {
+                    setFormData(prev => ({ ...prev, ...updates }));
+                  }
+                  return 'done';
+                }
+              }
+
+              return 'continue';
+            };
+
+            /* eslint-disable consistent-return */
+            return processEvents().then(status => {
+              if (status === 'done') {
+                return;
+              }
+
+              return readStream();
+            });
+            /* eslint-enable consistent-return */
+>>>>>>> 23c42a9d5 (fix(knowledge): 修复 KnowledgeScreen lint 错误)
           });
         };
 

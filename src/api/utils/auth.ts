@@ -60,7 +60,16 @@ export const prepareLocalToken = async (requestData: {
   }
 
   // Fallback 2: wait for observable (handles slow first-time server startup)
-  await when(() => !!localServerToken(), { timeout: 15_000 });
+  try {
+    await when(() => !!localServerToken(), { timeout: 15_000 });
+  } catch {
+    // Timed out waiting for local server token; proceed without it.
+    // The server will reject the request if the token is truly required,
+    // but this prevents an unhandled WHEN_TIMEOUT from breaking the
+    // entire request chain (e.g. health checks on the auth screen).
+    return;
+  }
+
   const delayedToken = localServerToken();
   if (delayedToken) {
     // eslint-disable-next-line no-param-reassign

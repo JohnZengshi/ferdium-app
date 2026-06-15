@@ -41,6 +41,11 @@ import { getApiKey } from '../../whatsapp-automation/api/auth';
 const aiIllustration = 'assets/images/ai-illustration.png';
 const aiStars = 'assets/images/ai-stars.png';
 
+const sleep = (ms: number): Promise<void> =>
+  new Promise(r => {
+    setTimeout(r, ms);
+  });
+
 const messages = defineMessages({
   createPersonaProfile: {
     id: 'knowledgeScreen.createPersonaProfile',
@@ -524,8 +529,6 @@ const KnowledgeScreen: React.FC = () => {
           'participation',
         ]);
 
-        const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
-
         const readStream = (): Promise<void> => {
           if (controller.signal.aborted) {
             return Promise.reject(new DOMException('Aborted', 'AbortError'));
@@ -545,17 +548,20 @@ const KnowledgeScreen: React.FC = () => {
             // 先把所有事件解析出来
             const events: any[] = [];
             for (const line of lines) {
-              if (!line.startsWith('data:')) continue;
-              const jsonStr = line.slice(5).trim();
-              if (!jsonStr) continue;
-              try {
-                events.push(JSON.parse(jsonStr));
-              } catch {
-                /* skip */
+              if (line.startsWith('data:')) {
+                const jsonStr = line.slice(5).trim();
+                if (jsonStr) {
+                  try {
+                    events.push(JSON.parse(jsonStr));
+                  } catch {
+                    /* skip */
+                  }
+                }
               }
             }
 
             // 逐个处理，progress 更新间加延时让 React 渲染动画
+            /* eslint-disable no-await-in-loop */
             for (const data of events) {
               // progress 事件
               if (data.type === 'progress' && data.progress !== undefined) {
@@ -589,7 +595,9 @@ const KnowledgeScreen: React.FC = () => {
                 return; // 停止读取
               }
             }
+            /* eslint-enable no-await-in-loop */
 
+            // eslint-disable-next-line consistent-return
             return readStream();
           });
         };

@@ -492,6 +492,8 @@
   "knowledgeScreen.male": "Male",
   "knowledgeScreen.name": "Name",
   "knowledgeScreen.nameRequired": "Please enter a name",
+  "knowledgeScreen.noPersonasDescription": "Create your first persona profile to get started",
+  "knowledgeScreen.noPersonasTitle": "No Persona Profiles Yet",
   "knowledgeScreen.occupation": "Occupation",
   "knowledgeScreen.participation": "Project Involvement",
   "knowledgeScreen.personaRemark": "Persona Note",

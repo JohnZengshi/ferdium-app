@@ -9,8 +9,8 @@ import {
 } from 'react-intl';
 import withStyles, { type WithStylesProps } from 'react-jss';
 import type Service from '../../../models/Service';
-import Appear from '../../ui/effects/Appear';
 import EmptyState from '../../ui/EmptyState';
+import Appear from '../../ui/effects/Appear';
 import ServiceView from './ServiceView';
 
 const messages = defineMessages({

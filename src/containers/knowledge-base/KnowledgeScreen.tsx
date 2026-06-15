@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import EmptyState from '../../components/ui/EmptyState';
 import {
   AddIcon,
   ChevronLeftIcon,
@@ -36,6 +35,7 @@ import {
   type SidebarItem,
   SidebarMenu,
 } from '../../components/home/SidebarMenu';
+import EmptyState from '../../components/ui/EmptyState';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 
@@ -724,53 +724,53 @@ const KnowledgeScreen: React.FC = () => {
           ) : (
             <div className="flex flex-wrap gap-[24px]">
               {tableData.map(record => (
-              <div
-                key={record.id}
-                className="flex flex-col items-center w-[262px] h-[300px] bg-secondary-container rounded-[9px] shadow-sm"
-              >
-                {/* 头像区域 */}
-                <div className="mt-[24px]">
-                  {record.source.avatar_url ? (
-                    <Avatar
-                      size="120px"
-                      image={record.source.avatar_url}
-                      className="!border-[3px] !border-line !rounded-full"
-                    />
-                  ) : (
-                    <Avatar
-                      size="120px"
-                      className="!border-[3px] !border-line !rounded-full !bg-brand !text-white !text-[48px] !font-semibold"
+                <div
+                  key={record.id}
+                  className="flex flex-col items-center w-[262px] h-[300px] bg-secondary-container rounded-[9px] shadow-sm"
+                >
+                  {/* 头像区域 */}
+                  <div className="mt-[24px]">
+                    {record.source.avatar_url ? (
+                      <Avatar
+                        size="120px"
+                        image={record.source.avatar_url}
+                        className="!border-[3px] !border-line !rounded-full"
+                      />
+                    ) : (
+                      <Avatar
+                        size="120px"
+                        className="!border-[3px] !border-line !rounded-full !bg-brand !text-white !text-[48px] !font-semibold"
+                      >
+                        {record.name.charAt(0).toUpperCase()}
+                      </Avatar>
+                    )}
+                  </div>
+
+                  {/* 人设名称 */}
+                  <div className="mt-[23px] text-[18px] font-semibold text-primary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                    {record.name}
+                  </div>
+
+                  {/* 描述信息 */}
+                  <div className="mt-[11px] text-[14px] text-secondary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                    {record.remark || '美国WhatsApp手机号的人设'}
+                  </div>
+
+                  {/* 编辑按钮 */}
+                  <div className="mt-[25px]">
+                    <Button
+                      theme="primary"
+                      className="!w-[89px] !h-[32px] !rounded-[4px] !bg-brand hover:!bg-brand-hover"
+                      onClick={() => handleEditPersona(record)}
                     >
-                      {record.name.charAt(0).toUpperCase()}
-                    </Avatar>
-                  )}
+                      <span className="text-[14px] font-normal">
+                        {intl.formatMessage(messages.editPersona)}
+                      </span>
+                    </Button>
+                  </div>
                 </div>
-
-                {/* 人设名称 */}
-                <div className="mt-[23px] text-[18px] font-semibold text-primary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
-                  {record.name}
-                </div>
-
-                {/* 描述信息 */}
-                <div className="mt-[11px] text-[14px] text-secondary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
-                  {record.remark || '美国WhatsApp手机号的人设'}
-                </div>
-
-                {/* 编辑按钮 */}
-                <div className="mt-[25px]">
-                  <Button
-                    theme="primary"
-                    className="!w-[89px] !h-[32px] !rounded-[4px] !bg-brand hover:!bg-brand-hover"
-                    onClick={() => handleEditPersona(record)}
-                  >
-                    <span className="text-[14px] font-normal">
-                      {intl.formatMessage(messages.editPersona)}
-                    </span>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
           )}
 
           {/* 分页器 */}

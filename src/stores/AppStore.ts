@@ -18,6 +18,7 @@ import { v4 as uuidV4 } from 'uuid';
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
+import { needsToken } from '../api/apiBase';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import {
   electronVersion,
@@ -302,9 +303,14 @@ export default class AppStore extends TypedStore {
 
     this.locale = this._getDefaultLocale();
 
-    setTimeout(() => {
-      this._healthCheck();
-    }, 1000);
+    // For local server mode, health check is triggered by the
+    // 'localServerPort' IPC event (see RequestStore.setup) once the
+    // server is actually listening. For remote servers, fire after 1s.
+    if (!needsToken()) {
+      setTimeout(() => {
+        this._healthCheck();
+      }, 1000);
+    }
 
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 

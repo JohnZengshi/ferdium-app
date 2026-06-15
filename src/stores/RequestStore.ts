@@ -46,6 +46,8 @@ export default class RequestStore extends TypedStore {
 
     ipcRenderer.on('localServerPort', (_, data) => {
       this.setData(data);
+      // Trigger health check now that the local server is ready
+      this.stores.app._healthCheck();
     });
   }
 

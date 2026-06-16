@@ -49,7 +49,7 @@ const getAssetBase64 = (assetPath: string): string => {
     const buffer = readFileSync(fullPath);
     return `data:image/png;base64,${buffer.toString('base64')}`;
   } catch (error) {
-    console.error(
+    debug(
       '[WA-AKG] Error reading asset for base64 conversion:',
       assetPath,
       error,
@@ -669,6 +669,24 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       });
   };
 
+  @action _injectSuccessModal = (serviceId: string) => {
+    const service = this._getService(serviceId);
+    if (!service?.webview) {
+      debug('Cannot inject success modal - no webview for service', serviceId);
+      return;
+    }
+
+    const successGifBase64 = getAssetBase64(
+      '../../assets/images/whatsapp/success-animation.gif',
+    );
+
+    const script = this._buildSuccessModalScript(successGifBase64);
+
+    service.webview.executeJavaScript(script).catch((error: Error) => {
+      debug('Success modal injection failed:', error);
+    });
+  };
+
   _scheduleRetryInjection = (
     serviceId: string,
     base64: string,
@@ -728,7 +746,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             delete window.__waAkgOriginalPushState;
           }
         } catch(e) {
-          console.error('[WA-AKG] Error removing QR modal:', e);
+          debug('[WA-AKG] Error removing QR modal:', e);
         }
       })();
     `,
@@ -1015,7 +1033,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     });
 
     socket.on('connect_error', err => {
-      console.error(
+      debug(
         `[WA-AKG] Socket.IO connect error for ${serviceId}:`,
         err.message,
       );
@@ -1091,6 +1109,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         debug(`Session ${serviceId} connected via Socket.IO!`);
         // Ensure QR modal is removed if present
         this._removeQrModal({ serviceId });
+        // Inject success modal
+        this._injectSuccessModal(serviceId);
         // Notify the webview
         this._notifySessionConnected(serviceId);
         // Update status
@@ -1185,7 +1205,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     bar.style.color = '${escColor}';
     bar.style.display = 'block';
   } catch(e) {
-    console.error('[WA-AKG] Error updating modal status:', e);
+    debug('[WA-AKG] Error updating modal status:', e);
   }
 })();
 `;
@@ -1320,7 +1340,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         try {
           window.postMessage({ type: 'wa-akg:session-connected', serviceId: '${service.id}' }, '*');
         } catch(e) {
-          console.error('[WA-AKG] Error sending session connected:', e);
+          debug('[WA-AKG] Error sending session connected:', e);
         }
       })();
     `;
@@ -1410,26 +1430,19 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     /* ── Listen for connection notification from host ── */
     var _messageHandler = function(event) {
       if (event.data && event.data.type === 'wa-akg:session-connected') {
-        var body = document.getElementById('waa-body');
-        if (!body) return;
-        body.innerHTML = '<div style=\"text-align:center;font-size:48px;\">&#10004;&#65039;</div>';
-        var desc = modal.querySelector('.waa-desc');
-        if (desc) desc.textContent = '连接成功';
+        modal.style.opacity = '0';
+        modal.style.transition = 'opacity 0.5s';
         setTimeout(function() {
-          modal.style.opacity = '0';
-          modal.style.transition = 'opacity 0.5s';
-          setTimeout(function() {
-            modal.remove();
-            document.removeEventListener('keydown', _keydownHandler, true);
-            window.removeEventListener('popstate', _popstateHandler);
-            window.removeEventListener('message', _messageHandler);
-            if (window.__waAkgOriginalPushState) {
-              history.pushState = window.__waAkgOriginalPushState;
-            }
-            delete window.__waAkgQrListeners;
-            delete window.__waAkgOriginalPushState;
-          }, 500);
-        }, 1000);
+          modal.remove();
+          document.removeEventListener('keydown', _keydownHandler, true);
+          window.removeEventListener('popstate', _popstateHandler);
+          window.removeEventListener('message', _messageHandler);
+          if (window.__waAkgOriginalPushState) {
+            history.pushState = window.__waAkgOriginalPushState;
+          }
+          delete window.__waAkgQrListeners;
+          delete window.__waAkgOriginalPushState;
+        }, 500);
       }
     };
     window.addEventListener('message', _messageHandler);
@@ -1441,11 +1454,93 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       message: _messageHandler,
     };
 
-    console.log('[WA-AKG] QR auth modal injected for service', SERVICE_ID);
+    debug('[WA-AKG] QR auth modal injected for service', SERVICE_ID);
   } catch(e) {
-    console.error('[WA-AKG] QR modal injection error:', e);
+    debug('[WA-AKG] QR modal injection error:', e);
   }
 })();
-`;
+    `;
+  };
+
+  /**
+   * Build the HTML and CSS for the WA-AKG connection success modal.
+   * This is injected directly into the webview.
+   */
+  _buildSuccessModalScript = (successGifBase64: string): string => {
+    const escapedSuccessGif = successGifBase64
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
+
+    return `
+(function() {
+  try {
+    if (document.getElementById('wa-akg-success-modal')) return;
+
+    var SUCCESS_GIF = '${escapedSuccessGif}';
+
+    /* ── Inject styles ── */
+    var s = document.createElement('style');
+    s.textContent = [
+      '.waas-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:2147483647;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}',
+      '.waas-wrapper{display:flex;flex-direction:column;align-items:center}',
+      '.waas-card{position:relative;width:465px;height:540px;border-radius:12px;background:#FFFFFF;box-shadow:0 8px 24px rgba(0,0,0,0.12)}',
+      '.waas-gif-container{position:absolute;top:35px;left:0;width:465px;height:260px;display:flex;justify-content:center;align-items:center;overflow:hidden}',
+      '.waas-gif{width:100%;height:auto;object-fit:contain}',
+      '.waas-main-text{position:absolute;top:365px;left:0;width:100%;text-align:center;color:#111111;font-size:28px;font-weight:700;line-height:36px;margin:0;padding:0 48px;box-sizing:border-box}',
+      '.waas-close-btn{margin-top:20px;width:40px;height:40px;border-radius:50%;border:4px solid #fff;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;outline:none}',
+      '.waas-close-btn:hover{opacity:0.8}',
+      '.waas-close-btn svg{width:20px;height:20px;stroke:#fff;stroke-width:4;stroke-linecap:round}'
+    ].join('');
+    document.head.appendChild(s);
+
+    /* ── Build modal DOM ── */
+    var modal = document.createElement('div');
+    modal.id = 'wa-akg-success-modal';
+
+    modal.innerHTML =
+      '<div class=\"waas-overlay\">' +
+        '<div class=\"waas-wrapper\">' +
+          '<div class=\"waas-card\">' +
+            '<div class=\"waas-gif-container\">' +
+              '<img src=\"' + SUCCESS_GIF + '\" alt=\"Success Animation\" class=\"waas-gif\"/>' +
+            '</div>' +
+            '<p class=\"waas-main-text\">恭喜你可以使用数字员工啦~</p>' +
+          '</div>' +
+          '<button class=\"waas-close-btn\" id=\"waas-close-btn\" aria-label=\"Close\">' +
+            '<svg viewBox=\"0 0 24 24\" fill=\"none\">' +
+              '<line x1=\"4\" y1=\"4\" x2=\"20\" y2=\"20\"/>' +
+              '<line x1=\"20\" y1=\"4\" x2=\"4\" y2=\"20\"/>' +
+            '</svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    /* ── Close button handler ── */
+    var closeBtn = document.getElementById('waas-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        modal.style.opacity = '0';
+        modal.style.transition = 'opacity 0.3s';
+        setTimeout(function() { modal.remove(); }, 300);
+      });
+    }
+
+    debug('[WA-AKG] Success modal injected');
+  } catch(e) {
+    debug('[WA-AKG] Success modal injection error:', e);
+  }
+})();
+    `;
+  };
+
+  /** Remove the WA-AKG connection success modal from the DOM. */
+  _removeSuccessModal = (): void => {
+    const modal = document.querySelector('#wa-akg-success-modal');
+    if (modal) {
+      modal.remove();
+      debug('[WA-AKG] Success modal removed');
+    }
   };
 }

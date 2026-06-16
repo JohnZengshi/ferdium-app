@@ -98,7 +98,7 @@
   "editDrawer.proxyPassword": "密码",
   "editDrawer.proxyPasswordPlaceholder": "如有请填写",
   "editDrawer.proxyCheck": "测试连接",
-  "editDrawer.proxyCheckDesc": "配置代理后测试连接",
+  "editDrawer.proxyCheckDesc": "通过访问 WhatsApp Web 测试代理连接",
   "editDrawer.cookieSettings": "Cookie设置",
   "editDrawer.cookieAutoFill": "Cookie自动填充",
   "editDrawer.cookiePlaceholder": "请输入Cookie内容",

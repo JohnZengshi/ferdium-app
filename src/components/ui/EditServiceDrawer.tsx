@@ -89,7 +89,7 @@ const messages = defineMessages({
   },
   proxyCheckDesc: {
     id: 'editDrawer.proxyCheckDesc',
-    defaultMessage: 'Test your proxy after configuring it',
+    defaultMessage: 'Test proxy by accessing WhatsApp Web',
   },
   cookieSettings: {
     id: 'editDrawer.cookieSettings',
@@ -231,11 +231,13 @@ export default function EditServiceDrawer({
     }
     setIsProxyTesting(true);
     try {
-      const result = await ipcRenderer.invoke('proxy-test', {
+      const result = await ipcRenderer.invoke('proxy-test-request', {
         host: proxyHost,
         port: Number.parseInt(proxyPort, 10),
         protocol: proxyType,
-        timeout: 5000,
+        user: proxyUser || undefined,
+        password: proxyPassword || undefined,
+        timeout: 10_000,
       });
       if (result.reachable) {
         const label = result.protocol === 'socks5' ? 'SOCKS5' : 'HTTP';
@@ -259,7 +261,7 @@ export default function EditServiceDrawer({
     } finally {
       setIsProxyTesting(false);
     }
-  }, [proxyHost, proxyPort, proxyType, intl]);
+  }, [proxyHost, proxyPort, proxyType, proxyUser, proxyPassword, intl]);
 
   const handleConfirm = () => {
     const proxy: ServiceProxy = proxyEnabled

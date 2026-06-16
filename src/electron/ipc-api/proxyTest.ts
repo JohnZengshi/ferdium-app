@@ -100,7 +100,7 @@ async function testProxyViaRequest(
         String(Math.ceil(timeout / 1000)),
         '-x',
         proxyArg,
-        'https://www.google.com/generate_204',
+        'https://web.whatsapp.com/',
       ],
       { timeout, maxBuffer: 1024 * 1024 },
     );

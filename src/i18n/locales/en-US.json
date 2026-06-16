@@ -201,7 +201,7 @@
   "editDrawer.cookiePlaceholder": "Enter cookie content",
   "editDrawer.cookieSettings": "Cookie Settings",
   "editDrawer.proxyCheck": "Test Connection",
-  "editDrawer.proxyCheckDesc": "Test your proxy after configuring it",
+  "editDrawer.proxyCheckDesc": "Test proxy by accessing WhatsApp Web",
   "editDrawer.proxyErrorMessage": "{label} proxy connection failed: {error}",
   "editDrawer.proxyHost": "Host",
   "editDrawer.proxyHostPlaceholder": "e.g. http://127.0.0.1",

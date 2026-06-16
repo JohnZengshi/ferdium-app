@@ -45,8 +45,25 @@ const AvatarCell = ({
           />
         </div>
       ) : (
-        <div className="flex h-[32px] min-w-[32px] items-center justify-center rounded-full bg-component text-[13px] font-medium text-secondary">
-          {title.slice(0, 1)}
+        <div className="flex h-[32px] min-w-[32px] items-center justify-center rounded-full bg-component text-secondary">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
+              fill="transparent"
+            />
+            <path
+              d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
+              strokeLinecap="square"
+              strokeWidth="2"
+              stroke="currentColor"
+            />
+          </svg>
         </div>
       )}
       <div className="flex min-w-0 flex-col">

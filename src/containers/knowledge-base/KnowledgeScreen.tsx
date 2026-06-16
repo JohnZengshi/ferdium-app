@@ -972,10 +972,28 @@ const KnowledgeScreen: React.FC = () => {
                     ) : (
                       <Avatar
                         size="120px"
-                        className="!border-[3px] !border-line !rounded-full !bg-brand !text-white !text-[48px] !font-semibold"
-                      >
-                        {record.name.charAt(0).toUpperCase()}
-                      </Avatar>
+                        icon={
+                          <svg
+                            width="48"
+                            height="48"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
+                              fill="transparent"
+                            />
+                            <path
+                              d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
+                              strokeLinecap="square"
+                              strokeWidth="2"
+                              stroke="currentColor"
+                            />
+                          </svg>
+                        }
+                        className="!border-[3px] !border-line !rounded-full !bg-brand !text-white"
+                      />
                     )}
                   </div>
 

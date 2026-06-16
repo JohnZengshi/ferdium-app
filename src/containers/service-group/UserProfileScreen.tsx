@@ -333,13 +333,15 @@ function UserProfileScreen(): ReactElement {
         title: intl.formatMessage(messages.colId),
         width: 64,
         align: 'center',
+        fixed: 'left',
         cell: ({ rowIndex }) => rowIndex + 1 + (page - 1) * pageSize,
       },
       {
         colKey: 'username',
         title: intl.formatMessage(messages.colFanAccount),
-        width: 220,
+        width: 300,
         ellipsis: true,
+        fixed: 'left',
         cell: ({ row }) => (
           <AvatarCell
             title={row.id}

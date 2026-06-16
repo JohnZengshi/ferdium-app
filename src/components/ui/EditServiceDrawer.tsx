@@ -131,6 +131,10 @@ const messages = defineMessages({
     id: 'editDrawer.proxyTestFailedMessage',
     defaultMessage: 'Test failed, please check proxy config',
   },
+  proxyWhatsAppRequestFailed: {
+    id: 'editDrawer.proxyWhatsAppRequestFailed',
+    defaultMessage: 'Failed to access WhatsApp through proxy',
+  },
 });
 
 interface ParsedProxy {
@@ -248,13 +252,20 @@ export default function EditServiceDrawer({
           }),
         );
       } else {
-        const label = proxyType === 'socks5' ? 'SOCKS5' : 'HTTP';
-        MessagePlugin.error(
-          intl.formatMessage(messages.proxyErrorMessage, {
+        // Handle specific error codes
+        let errorMessage: string;
+        if (result.error === 'WHATSAPP_REQUEST_FAILED') {
+          errorMessage = intl.formatMessage(
+            messages.proxyWhatsAppRequestFailed,
+          );
+        } else {
+          const label = proxyType === 'socks5' ? 'SOCKS5' : 'HTTP';
+          errorMessage = intl.formatMessage(messages.proxyErrorMessage, {
             label,
             error: result.error || 'Check host and port',
-          }),
-        );
+          });
+        }
+        MessagePlugin.error(errorMessage);
       }
     } catch {
       MessagePlugin.error(intl.formatMessage(messages.proxyTestFailedMessage));

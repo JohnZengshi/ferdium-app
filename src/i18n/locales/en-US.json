@@ -213,6 +213,7 @@
   "editDrawer.proxySettings": "Proxy Settings",
   "editDrawer.proxySuccessMessage": "{label} proxy connected (latency: {latency}ms)",
   "editDrawer.proxyTestFailedMessage": "Test failed, please check proxy config",
+  "editDrawer.proxyWhatsAppRequestFailed": "Failed to access WhatsApp through proxy",
   "editDrawer.proxyType": "Proxy Type",
   "editDrawer.proxyUser": "Username",
   "editDrawer.proxyUserPlaceholder": "Fill in if applicable",

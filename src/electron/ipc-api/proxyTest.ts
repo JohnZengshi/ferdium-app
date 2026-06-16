@@ -175,7 +175,7 @@ export default () => {
           reachable: false,
           latency: connResult.latency,
           protocol,
-          error: `代理服务器可达但请求失败: ${requestResult.error || '未知错误'}`,
+          error: 'WHATSAPP_REQUEST_FAILED',
         };
       }
 

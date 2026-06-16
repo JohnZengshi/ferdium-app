@@ -236,10 +236,15 @@ const runEsbuild = async () => {
     define: envDefines,
     plugins: [
       sassPlugin({
-      quietDeps: true,
-      silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
-      cache: true,
-    }),
+        quietDeps: true,
+        silenceDeprecations: [
+          'import',
+          'global-builtin',
+          'color-functions',
+          'if-function',
+        ],
+        cache: true,
+      }),
       ...staticAssets(),
       ...(isDev
         ? [

@@ -8,8 +8,8 @@ import {
 import { defineMessages, useIntl } from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
 import { Loading, MessagePlugin } from 'tdesign-react';
-import { updateOnboardingStep } from '../../../helpers/onboarding-helpers';
 import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
+import { updateOnboardingStep } from '../../../helpers/onboarding-helpers';
 
 // 后端 /api/v1/rules 已从 OpenAPI spec 中移除，本地保留类型和请求函数
 interface AgentRuleResponse {

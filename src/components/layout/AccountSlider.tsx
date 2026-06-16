@@ -27,13 +27,13 @@ import {
   Textarea,
 } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
-import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
   createWhatsappBindingApiV1WhatsappBindPost,
   getWhatsappBindingApiV1WhatsappBindGet,
   switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
+import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 
 import {
   type WhatsAppSessionStatus,

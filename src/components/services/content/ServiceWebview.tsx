@@ -22,6 +22,7 @@ interface IProps {
 @observer
 class ServiceWebview extends Component<IProps> {
   @observable webview: ElectronWebView | null = null;
+
   private _didStopLoadingWebview: ElectronWebView | null = null;
 
   constructor(props: IProps) {

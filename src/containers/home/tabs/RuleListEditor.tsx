@@ -8,6 +8,7 @@ import {
 import { defineMessages, useIntl } from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
 import { Loading, MessagePlugin } from 'tdesign-react';
+import { updateOnboardingStep } from '../../../helpers/onboarding-helpers';
 import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
 
 // 后端 /api/v1/rules 已从 OpenAPI spec 中移除，本地保留类型和请求函数
@@ -485,6 +486,10 @@ const RuleListEditor = ({
               ),
             );
             setPersistedCount(previous => previous + 1);
+
+            // Mark onboarding step 3 (set alert rules) as completed
+            updateOnboardingStep(3, true);
+            window.dispatchEvent(new Event('onboarding-step-updated'));
           }
         } else if (rule.id) {
           const response = await updateRuleApiV1RulesRuleIdPatch(rule.id, {

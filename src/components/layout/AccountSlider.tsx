@@ -27,6 +27,7 @@ import {
   Textarea,
 } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
+import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
   createWhatsappBindingApiV1WhatsappBindPost,
@@ -550,6 +551,12 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                             intl.formatMessage(messages.bindPersonaSuccess),
                           );
                           confirmDia.hide();
+
+                          // Mark onboarding step 4 (bind persona to account) as completed
+                          updateOnboardingStep(4, true);
+                          window.dispatchEvent(
+                            new Event('onboarding-step-updated'),
+                          );
                         } catch (error) {
                           const message =
                             error instanceof Error

@@ -49,6 +49,7 @@ interface HomeScreenState {
   viewMode: 'dashboard' | 'strategy';
   dialogEmployee: EmployeeResume | null;
   step1Completed: boolean;
+  onboardingVersion: number;
 }
 
 @inject('stores')
@@ -66,6 +67,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       viewMode: 'dashboard',
       dialogEmployee: null,
       step1Completed: onboardingProgress.step1Completed,
+      onboardingVersion: 0,
     };
   }
 
@@ -97,6 +99,13 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     // Check account binding status
     await this.checkStep1Completion();
 
+    // Listen for onboarding step updates from other components
+    // (e.g. RuleListEditor, AccountSlider) to refresh progress display
+    window.addEventListener(
+      'onboarding-step-updated',
+      this.handleOnboardingStepUpdated,
+    );
+
     // Set up reaction to monitor session status changes
     this._statusReactionDisposer = reaction(
       () => {
@@ -120,7 +129,17 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       this._statusReactionDisposer();
       this._statusReactionDisposer = undefined;
     }
+    // Clean up onboarding event listener
+    window.removeEventListener(
+      'onboarding-step-updated',
+      this.handleOnboardingStepUpdated,
+    );
   }
+
+  handleOnboardingStepUpdated = (): void => {
+    // Force re-render to pick up latest onboarding progress from localStorage
+    this.setState(prev => ({ onboardingVersion: prev.onboardingVersion + 1 }));
+  };
 
   /**
    * Check if step 1 (account binding) is completed

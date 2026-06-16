@@ -504,7 +504,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 {this.renderSocialAccountTable()}
               </div>
 
-              <div className="flex h-[509px] w-[647px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
+              <div className="flex min-h-[509px] w-[647px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
                 <div className="flex h-[55px] items-start justify-between">
                   <div className="flex items-start">
                     <div className="relative h-[32px] w-[32px] flex-shrink-0">
@@ -570,12 +570,12 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                   />
                 </div>
 
-                <div className="mt-[24px] min-h-[66px] w-full rounded-[6px] bg-brand-light px-[34px] py-[15px]">
+                <div className="mt-[24px] w-full flex-shrink-0 rounded-[6px] bg-brand-light px-[34px] py-[15px]">
                   <div className="flex items-start gap-[10px]">
                     <div className="mt-[9px] flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-brand text-[12px] font-semibold leading-none text-text-anti">
                       i
                     </div>
-                    <p className="max-w-[501px] text-[14px] font-medium leading-[22px] text-primary">
+                    <p className="flex-1 text-[14px] font-medium leading-[22px] text-primary">
                       {intl.formatMessage(messages.setupInfoText)}
                     </p>
                   </div>

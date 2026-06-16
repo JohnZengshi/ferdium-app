@@ -184,7 +184,7 @@ const messages = defineMessages({
   },
   editPersona: {
     id: 'knowledgeScreen.editPersona',
-    defaultMessage: 'Edit Persona',
+    defaultMessage: 'Edit',
   },
   clickToSetAvatar: {
     id: 'knowledgeScreen.clickToSetAvatar',
@@ -208,7 +208,7 @@ const messages = defineMessages({
   },
   defaultRemarkFallback: {
     id: 'knowledgeScreen.defaultRemarkFallback',
-    defaultMessage: 'US WhatsApp account persona',
+    defaultMessage: 'remark persona',
   },
   completionRate: {
     id: 'knowledgeScreen.completionRate',

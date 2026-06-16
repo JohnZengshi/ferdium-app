@@ -8,6 +8,8 @@ import {
   runInAction,
 } from 'mobx';
 import { type Socket, io } from 'socket.io-client';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';
 import { createActionBindings } from '../utils/ActionBinding';
@@ -34,9 +36,28 @@ import authManager from '../../lib/auth/AuthManager';
 import { clearApiKey, getApiKey } from '../../whatsapp-automation/api/auth';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
+import { asarPath } from '../../helpers/asar-helpers';
+
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:whatsapp-automation:store',
 );
+
+const getAssetBase64 = (assetPath: string): string => {
+  try {
+    const fullPath = asarPath(join(__dirname, assetPath));
+    debug('Reading asset from path:', fullPath);
+    const buffer = readFileSync(fullPath);
+    return `data:image/png;base64,${buffer.toString('base64')}`;
+  } catch (error) {
+    console.error(
+      '[WA-AKG] Error reading asset for base64 conversion:',
+      assetPath,
+      error,
+    );
+    debug('Error reading asset for base64 conversion:', assetPath, error);
+    return '';
+  }
+};
 
 const normalizeWaMe = (
   me: Record<string, unknown> | null | undefined,
@@ -610,15 +631,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   @action _injectQrModal = ({
     serviceId,
     base64,
-    sessionName,
-    sessionId,
-    sessionStatus,
+    backgroundBase64,
   }: {
     serviceId: string;
     base64: string;
-    sessionName?: string;
-    sessionId?: string;
-    sessionStatus?: string;
+    backgroundBase64?: string;
   }) => {
     const service = this._getService(serviceId);
     if (!service?.webview) {
@@ -634,9 +651,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const script = this._buildQrModalScript(
       serviceId,
       base64,
-      sessionName,
-      sessionId,
-      sessionStatus,
+      backgroundBase64 || '',
     );
 
     // Inject via executeJavaScript (only working path from renderer to webview)
@@ -650,16 +665,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       .catch((error: Error) => {
         debug('QR modal injection failed:', error);
         // Retry if the webview hasn't loaded yet or hit a transient error
-        this._scheduleRetryInjection(serviceId, base64, sessionName, sessionId);
+        this._scheduleRetryInjection(serviceId, base64, backgroundBase64);
       });
   };
 
   _scheduleRetryInjection = (
     serviceId: string,
     base64: string,
-    sessionName?: string,
-    sessionId?: string,
-    sessionStatus?: string,
+    backgroundBase64?: string,
   ) => {
     const retryCount = this._retryCounts.get(serviceId) || 0;
     if (retryCount >= this._maxRetries) {
@@ -684,9 +697,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       this._injectQrModal({
         serviceId,
         base64,
-        sessionName,
-        sessionId,
-        sessionStatus,
+        backgroundBase64,
       });
     }, this._retryIntervalMs);
   };
@@ -855,10 +866,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       if (qrResponse.status === 200) {
         const qrData = qrResponse.data;
         const base64 = qrData.base64 || '';
+        const backgroundBase64 = getAssetBase64(
+          '../../assets/images/whatsapp/qr-modal-background.png',
+        );
 
         if (base64) {
           debug('QR code fetched successfully, injecting into webview');
-          this._injectQrModal({ serviceId, base64 });
+          this._injectQrModal({ serviceId, base64, backgroundBase64 });
         } else {
           debug(`QR API returned no base64 data, retrying ${attempt}/6`);
           runInAction(() => {
@@ -890,18 +904,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   };
 
   /** Fetch fresh QR from REST, then inject or update the modal image. */
-  _fetchAndUpdateQr = async (
-    serviceId: string,
-    sessionName?: string,
-    sessionId?: string,
-    sessionStatus?: string,
-    attempt = 1,
-  ) => {
+  _fetchAndUpdateQr = async (serviceId: string, attempt = 1) => {
     try {
       const qrResponse = await getSessionsIdQr(serviceId);
       if (qrResponse.status !== 200) return;
       const { base64 } = qrResponse.data;
       if (!base64) return;
+      const backgroundBase64 = getAssetBase64(
+        '../../assets/images/whatsapp/qr-modal-background.png',
+      );
 
       const service = this._getService(serviceId);
       if (!service?.webview) {
@@ -926,9 +937,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             this._injectQrModal({
               serviceId,
               base64,
-              sessionName,
-              sessionId,
-              sessionStatus,
+              backgroundBase64,
             });
           }
         })
@@ -936,9 +945,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           this._injectQrModal({
             serviceId,
             base64,
-            sessionName,
-            sessionId,
-            sessionStatus,
+            backgroundBase64,
           });
         });
     } catch (error) {
@@ -953,13 +960,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         await new Promise(resolve => {
           setTimeout(resolve, this._qrFetchRetryDelayMs);
         });
-        await this._fetchAndUpdateQr(
-          serviceId,
-          sessionName,
-          sessionId,
-          sessionStatus,
-          attempt + 1,
-        );
+        await this._fetchAndUpdateQr(serviceId, attempt + 1);
         return;
       }
       debug('Error updating QR:', error);
@@ -1082,13 +1083,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           this.errorMessages.set(serviceId, undefined);
         });
         // Fetch new QR and update the existing modal (if any)
-        const info = this.sessionInfo.get(serviceId);
-        this._fetchAndUpdateQr(
-          serviceId,
-          info?.sessionName,
-          info?.sessionId,
-          status,
-        );
+        this._fetchAndUpdateQr(serviceId);
         break;
       }
 
@@ -1340,32 +1335,17 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   _buildQrModalScript = (
     serviceId: string,
     base64: string,
-    sessionName?: string,
-    sessionId?: string,
-    sessionStatus?: string,
+    backgroundBase64: string,
   ): string => {
-    // Uses template literal escaping specific to inject context
     const escapedServiceId = serviceId
       .replaceAll('\\', '\\\\')
       .replaceAll("'", "\\'");
     const escapedBase64 = base64
       .replaceAll('\\', '\\\\')
       .replaceAll("'", "\\'");
-    const escapedSessionName = (sessionName || '')
+    const escapedBg = backgroundBase64
       .replaceAll('\\', '\\\\')
       .replaceAll("'", "\\'");
-    const escapedSessionId = (sessionId || '')
-      .replaceAll('\\', '\\\\')
-      .replaceAll("'", "\\'");
-    const escapedSessionStatus = (sessionStatus || '')
-      .replaceAll('\\', '\\\\')
-      .replaceAll("'", "\\'");
-
-    const statusStyle = sessionStatus ? this._statusStyle(sessionStatus) : null;
-    const statusColor = statusStyle?.color ?? '#9E9E9E';
-    const statusLabel = statusStyle?.label ?? '';
-    const escapedStatusColor = statusColor.replaceAll("'", "\\'");
-    const escapedStatusLabel = statusLabel.replaceAll("'", "\\'");
 
     return `
 (function() {
@@ -1374,62 +1354,45 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
     var SERVICE_ID = '${escapedServiceId}';
     var BASE64_QR = '${escapedBase64}';
-    var SESSION_NAME = '${escapedSessionName}';
-    var SESSION_ID = '${escapedSessionId}';
-    var SESSION_STATUS = '${escapedSessionStatus}';
-    var STATUS_COLOR = '${escapedStatusColor}';
-    var STATUS_LABEL = '${escapedStatusLabel}';
-    
-    var SESSION_DISPLAY = SESSION_NAME || SESSION_ID || SERVICE_ID;
-    var SESSION_META = [];
-    if (SESSION_NAME) SESSION_META.push('Name: ' + SESSION_NAME);
-    if (SESSION_ID) SESSION_META.push('Session ID: ' + SESSION_ID);
-    if (!SESSION_NAME && !SESSION_ID) SESSION_META.push('Service ID: ' + SERVICE_ID);
-    
-    var SESSION_META_HTML = SESSION_META.map(function(line) {
-      return '<div class=\"waa-session-line\">' + line + '</div>';
-    }).join('');
-    
-    var SESSION_INFO_HTML = '<div class=\"waa-session-info\"><div class=\"waa-session-label\">Session</div><div class=\"waa-session-value\">' + SESSION_DISPLAY + '</div>' + SESSION_META_HTML + '</div>';
-    var STATUS_HTML = SESSION_STATUS ? '<div class=\"waa-status-bar\" style=\"color:' + STATUS_COLOR + '\">' + STATUS_LABEL + '</div>' : '';
+    var BG_IMAGE = '${escapedBg}';
 
-    // Inject styles
+    /* ── Inject styles ── */
     var s = document.createElement('style');
     s.textContent = [
-      '@keyframes waa-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}',
-      '.waa-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:flex;align-items:center;justify-content:center;z-index:2147483647}',
-      '.waa-card{background:#1f2c33;border-radius:12px;padding:32px;text-align:center;max-width:400px;width:90%;color:#fff}',
-      '.waa-logo{margin-bottom:12px}',
-      '.waa-title{font-size:20px;font-weight:600;margin:0 0 8px;color:#e9edef}',
-      '.waa-session-info{margin:12px 0 16px;padding:12px;background:rgba(255,255,255,0.05);border-radius:8px;border:1px solid rgba(255,255,255,0.1);text-align:left}',
-      '.waa-session-label{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#00E676;margin-bottom:4px;font-weight:700}',
-      '.waa-session-value{font-size:15px;color:#fff;font-weight:600;margin-bottom:8px;word-break:break-all}',
-      '.waa-session-line{font-size:12px;color:#8696a0;font-family:monospace;word-break:break-all}',
-      '.waa-status-bar{margin:16px 0;font-size:14px;font-weight:600;padding:8px;background:rgba(255,255,255,0.05);border-radius:6px}',
-      '.waa-body{margin:20px 0;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center}',
-      '.waa-subtitle{font-size:14px;color:#8696a0;margin:8px 0 0}',
-      '.waa-qrimg{width:256px;height:256px;border-radius:4px;image-rendering:pixelated}',
-      '.waa-footer{font-size:12px;color:#667781;margin-top:16px}'
+      '.waa-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:2147483647;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}',
+      '.waa-wrapper{display:flex;flex-direction:column;align-items:center}',
+      '.waa-card{position:relative;width:465px;height:577px;border-radius:12px;overflow:hidden;background:#fff}',
+      '.waa-card-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-size:100% 100%;background-position:center;background-repeat:no-repeat}',
+      '.waa-title{position:absolute;left:48px;top:58px;color:#FFFFFF;font-size:28px;font-weight:700;line-height:36px;margin:0;z-index:2}',
+      '.waa-qr-box{position:absolute;left:50%;top:225px;transform:translateX(-50%);width:216px;height:216px;border-radius:8px;border:1px solid #E1E1E1;background:#FFFFFF;display:flex;align-items:center;justify-content:center;z-index:2}',
+      '.waa-qrimg{width:256px;height:256px;image-rendering:pixelated}',
+      '.waa-desc{position:absolute;left:50%;top:479px;transform:translateX(-50%);color:#111111;font-size:26px;font-weight:600;line-height:34px;text-align:center;white-space:nowrap;margin:0;z-index:2}'
     ].join('');
     document.head.appendChild(s);
 
-    // Create modal
+    /* ── Build modal DOM ── */
     var modal = document.createElement('div');
     modal.id = 'wa-akg-qr-modal';
-    modal.innerHTML = '<div class=\"waa-overlay\"><div class=\"waa-card\">' +
-      '<div class=\"waa-logo\"><svg viewBox=\"0 0 39 39\" width=\"26\" height=\"26\"><path fill=\"#00E676\" d=\"M10.7 32.8l.6.3c2.5 1.5 5.3 2.2 8.1 2.2 8.8 0 16-7.2 16-16 0-4.2-1.7-8.3-4.7-11.3s-7-4.7-11.3-4.7c-8.8 0-16 7.2-15.9 16.1 0 3 .9 5.9 2.4 8.4l.4.6-1.6 5.9 6-1.5z\"/><path fill=\"#fff\" d=\"M32.4 6.4C29 2.9 24.3 1 19.5 1 9.3 1 1.1 9.3 1.2 19.4c0 3.2.9 6.3 2.4 9.1L1 38l9.7-2.5c2.7 1.5 5.7 2.2 8.7 2.2 10.1 0 18.3-8.3 18.3-18.4 0-4.9-1.9-9.5-5.3-12.9zM19.5 34.6c-2.7 0-5.4-.7-7.7-2.1l-.6-.3-5.8 1.5L6.9 28l-.4-.6c-1.5-2.4-2.3-5.2-2.3-8 0-8.4 6.8-15.2 15.2-15.2 4.1 0 7.9 1.6 10.8 4.5 2.9 2.9 4.5 6.8 4.5 10.9-.1 8.4-6.9 15.2-15.2 15.2zm8.4-11.4c-.5-.3-2.7-1.3-3.1-1.5-.4-.2-.7-.2-1 .2-.3.5-1.2 1.5-1.5 1.8-.3.3-.5.3-1 .1-.5-.3-2-1-3.8-2.3-1.4-1-2.3-2.2-2.6-2.6-.3-.3-.1-.5.2-.7.2-.2.5-.5.7-.8.2-.3.3-.5.5-.8.2-.3.1-.6 0-.8-.1-.3-1-2.4-1.4-3.3-.4-.9-.7-.8-1-.8-.3 0-.6 0-.9 0-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.8 0 2.2 1.6 4.4 1.9 4.7.2.3 3.2 4.9 7.8 6.8 1.1.5 1.9.7 2.6.9 1.1.3 2.1.2 2.9.2.9 0 2.6-.7 3-1.3.4-.7.4-1.2.3-1.3-.2-.3-.4-.5-.8-.7z\"/></svg></div>' +
-      '<h2 class=\"waa-title\">Link Your WhatsApp</h2>' +
-      SESSION_INFO_HTML +
-      STATUS_HTML +
-      '<div class=\"waa-body\" id=\"waa-body\">' +
-      '  <div class=\"waa-spinner\"></div>' +
-      '  <p class=\"waa-subtitle\">Loading QR code...</p>' +
-      '</div>' +
-      '<p class=\"waa-footer\">Open WhatsApp on your phone to scan the QR code</p>' +
-      '</div></div>';
+
+    var cardBgStyle = BG_IMAGE ? 'background-image:url(\\'' + BG_IMAGE + '\\');' : '';
+
+    modal.innerHTML =
+      '<div class=\"waa-overlay\">' +
+        '<div class=\"waa-wrapper\">' +
+          '<div class=\"waa-card\">' +
+            '<div class=\"waa-card-bg\" style=\"' + cardBgStyle + '\"></div>' +
+            '<h2 class=\"waa-title\">扫码验证</h2>' +
+            '<div class=\"waa-qr-box\" id=\"waa-body\">' +
+              (BASE64_QR ? '<img src=\"' + BASE64_QR + '\" alt=\"QR Code\" class=\"waa-qrimg\"/>' : '') +
+            '</div>' +
+            '<p class=\"waa-desc\">扫码关联你的AI数字员工</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
     document.body.appendChild(modal);
 
-    // Block navigation/close while QR is showing
+    /* ── Block navigation while QR is showing ── */
     var _keydownHandler = function(e) {
       e.stopPropagation();
       e.preventDefault();
@@ -1444,17 +1407,19 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     };
     window.addEventListener('popstate', _popstateHandler);
 
-    // Listen for connection notification from host
+    /* ── Listen for connection notification from host ── */
     var _messageHandler = function(event) {
       if (event.data && event.data.type === 'wa-akg:session-connected') {
         var body = document.getElementById('waa-body');
         if (!body) return;
-        body.innerHTML = '<div style=\"text-align:center;padding:20px;\"><div style=\"font-size:48px;margin-bottom:12px;\">&#10004;&#65039;</div><p style=\"color:#00a884;font-weight:600;font-size:16px;\">Connected!</p></div>';
+        body.innerHTML = '<div style=\"text-align:center;font-size:48px;\">&#10004;&#65039;</div>';
+        var desc = modal.querySelector('.waa-desc');
+        if (desc) desc.textContent = '连接成功';
         setTimeout(function() {
           modal.style.opacity = '0';
+          modal.style.transition = 'opacity 0.5s';
           setTimeout(function() {
             modal.remove();
-            // Self-cleanup: remove all injected QR modal listeners
             document.removeEventListener('keydown', _keydownHandler, true);
             window.removeEventListener('popstate', _popstateHandler);
             window.removeEventListener('message', _messageHandler);
@@ -1469,20 +1434,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     };
     window.addEventListener('message', _messageHandler);
 
-    // Store references for external cleanup (from _removeQrModal)
+    /* ── Store references for external cleanup (_removeQrModal) ── */
     window.__waAkgQrListeners = {
       keydown: _keydownHandler,
       popstate: _popstateHandler,
       message: _messageHandler,
     };
 
-    // Show QR code
-    var bodyEl = document.getElementById('waa-body');
-    if (bodyEl && BASE64_QR) {
-      bodyEl.innerHTML = '<img src=\"' + BASE64_QR + '\" alt=\"QR Code\" class=\"waa-qrimg\"/><p class=\"waa-subtitle\">Scan this QR code with your WhatsApp mobile app</p>';
-    }
-
-    debug('QR auth modal injected for service', SERVICE_ID);
+    console.log('[WA-AKG] QR auth modal injected for service', SERVICE_ID);
   } catch(e) {
     console.error('[WA-AKG] QR modal injection error:', e);
   }

@@ -3,7 +3,14 @@ import { ipcRenderer } from 'electron';
 import { type ReactElement, useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { ChatBubble1FilledIcon } from 'tdesign-icons-react';
-import { Loading, MessagePlugin, Pagination, Table } from 'tdesign-react';
+import {
+  DateRangePicker,
+  Loading,
+  MessagePlugin,
+  Pagination,
+  Select,
+  Table,
+} from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
 import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
 
@@ -88,6 +95,58 @@ const messages = defineMessages({
     id: 'notificationsTab.error.load',
     defaultMessage: 'Failed to load notification records',
   },
+  filterNotificationTime: {
+    id: 'notificationsTab.filter.notificationTime',
+    defaultMessage: 'Notify time',
+  },
+  filterSocialMedia: {
+    id: 'notificationsTab.filter.socialMedia',
+    defaultMessage: 'Social media',
+  },
+  filterStatus: {
+    id: 'notificationsTab.filter.status',
+    defaultMessage: 'Status',
+  },
+  filterAll: {
+    id: 'notificationsTab.filter.all',
+    defaultMessage: 'All',
+  },
+  filterWhatsApp: {
+    id: 'notificationsTab.filter.whatsapp',
+    defaultMessage: 'WhatsApp',
+  },
+  filterTelegram: {
+    id: 'notificationsTab.filter.telegram',
+    defaultMessage: 'Telegram',
+  },
+  filterRead: {
+    id: 'notificationsTab.filter.read',
+    defaultMessage: 'Read',
+  },
+  filterUnread: {
+    id: 'notificationsTab.filter.unread',
+    defaultMessage: 'Unread',
+  },
+  startDate: {
+    id: 'notificationsTab.filter.startDate',
+    defaultMessage: 'Start date',
+  },
+  endDate: {
+    id: 'notificationsTab.filter.endDate',
+    defaultMessage: 'End date',
+  },
+  selectStatus: {
+    id: 'notificationsTab.filter.selectStatus',
+    defaultMessage: 'Select status',
+  },
+  btnSearch: {
+    id: 'notificationsTab.btn.search',
+    defaultMessage: 'Search',
+  },
+  btnReset: {
+    id: 'notificationsTab.btn.reset',
+    defaultMessage: 'Reset',
+  },
 });
 
 /** 接口 /api/v1/handoff 返回的记录字段 */
@@ -161,6 +220,8 @@ const NotificationsTab = (): ReactElement => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<(string | number)[]>(
     [],
   );
+  const [socialFilter, setSocialFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const loadRecords = useCallback(
     async (page: number) => {
@@ -200,6 +261,16 @@ const NotificationsTab = (): ReactElement => {
   const handleSelectChange = useCallback((keys: (string | number)[]) => {
     setSelectedRowKeys(keys);
   }, []);
+
+  const handleSearch = useCallback((): void => {
+    loadRecords(1).catch(() => {});
+  }, [loadRecords]);
+
+  const handleReset = useCallback((): void => {
+    setSocialFilter('all');
+    setStatusFilter('all');
+    loadRecords(1).catch(() => {});
+  }, [loadRecords]);
 
   const handleMarkAllRead = useCallback((): void => {}, []);
 
@@ -329,6 +400,82 @@ const NotificationsTab = (): ReactElement => {
       className="mx-auto w-full px-[24px] pt-[24px]"
       style={{ maxWidth: '1440px' }}
     >
+      <div className="flex h-[56px] items-center gap-[20px]">
+        <div className="flex items-center gap-[8px]">
+          <span className="text-[14px] font-normal text-secondary">
+            {intl.formatMessage(messages.filterNotificationTime)}
+          </span>
+          <DateRangePicker
+            mode="date"
+            placeholder={[
+              intl.formatMessage(messages.startDate),
+              intl.formatMessage(messages.endDate),
+            ]}
+            style={{ width: 260, height: 32 }}
+            className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
+          />
+        </div>
+
+        <div className="flex items-center gap-[8px]">
+          <span className="text-[14px] font-normal text-secondary">
+            {intl.formatMessage(messages.filterSocialMedia)}
+          </span>
+          <Select
+            style={{ width: 160 }}
+            className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
+            placeholder={intl.formatMessage(messages.selectStatus)}
+            options={[
+              { label: intl.formatMessage(messages.filterAll), value: 'all' },
+              { label: 'WhatsApp', value: 'whatsapp' },
+              // { label: 'Telegram', value: 'telegram' },
+            ]}
+            value={socialFilter}
+            onChange={value => {
+              if (typeof value === 'string') setSocialFilter(value);
+            }}
+          />
+        </div>
+
+        <div className="flex items-center gap-[8px]">
+          <span className="text-[14px] font-normal text-secondary">
+            {intl.formatMessage(messages.filterStatus)}
+          </span>
+          <Select
+            style={{ width: 160 }}
+            className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
+            placeholder={intl.formatMessage(messages.selectStatus)}
+            options={[
+              { label: intl.formatMessage(messages.filterAll), value: 'all' },
+              { label: intl.formatMessage(messages.filterRead), value: 'read' },
+              {
+                label: intl.formatMessage(messages.filterUnread),
+                value: 'unread',
+              },
+            ]}
+            value={statusFilter}
+            onChange={value => {
+              if (typeof value === 'string') setStatusFilter(value);
+            }}
+          />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleSearch}
+          className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[14px] font-medium text-text-anti"
+        >
+          {intl.formatMessage(messages.btnSearch)}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleReset}
+          className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container text-[14px] font-medium text-secondary"
+        >
+          {intl.formatMessage(messages.btnReset)}
+        </button>
+      </div>
+
       <div className="mt-[16px] flex h-[44px] items-center gap-[12px]">
         <button
           type="button"

@@ -310,11 +310,8 @@ class ResumeTab extends Component<IProps> {
           </span>
         </div>
 
-        <div className="relative z-10 mb-[19px] mt-auto flex flex-col items-center">
-          <span className="mb-[12px] text-[18px] font-semibold leading-[26px] text-primary">
-            {intl.formatMessage(messages.skillsSectionTitle)}
-          </span>
-          <div className="flex flex-wrap justify-center gap-[12px] px-[20px]">
+        <div className="relative z-10 mb-0 mt-auto flex w-full flex-col items-center bg-gradient-to-t from-white/95 via-white/80 to-transparent pb-[19px] pt-[40px]">
+          <div className="flex flex-nowrap items-center justify-center gap-[8px] px-[12px]">
             {[
               intl.formatMessage(messages.defaultSkillRiskDetection),
               intl.formatMessage(messages.defaultSkillAnomalyWarning),
@@ -322,7 +319,7 @@ class ResumeTab extends Component<IProps> {
             ].map(skill => (
               <span
                 key={skill}
-                className="inline-flex h-[38px] items-center justify-center rounded-[19px] border border-solid border-brand bg-container px-[16px] text-[14px] font-medium text-brand"
+                className="inline-flex h-[30px] flex-shrink-0 items-center justify-center whitespace-nowrap rounded-[15px] border border-solid border-brand bg-container/90 px-[12px] text-[12px] font-medium text-brand"
               >
                 {skill}
               </span>

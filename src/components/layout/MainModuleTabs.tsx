@@ -48,7 +48,7 @@ const messages = defineMessages({
   },
   serviceType: {
     id: 'mainModuleTabs.serviceType',
-    defaultMessage: 'WA Tools',
+    defaultMessage: 'Whats',
   },
   knowledgeBase: {
     id: 'mainModuleTabs.knowledgeBase',

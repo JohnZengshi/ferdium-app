@@ -984,6 +984,8 @@
   "settings.navigation.availableServices": "可用服务",
   "settings.navigation.exitSession": "退出会话",
   "settings.navigation.logout": "退出登录",
+  "settings.navigation.logoutConfirmTitle": "退出登录",
+  "settings.navigation.logoutConfirmContent": "退出登录不会掉号，确认要退出登录吗？",
   "settings.navigation.releaseNotes": "更新日志",
   "settings.navigation.supportFerdium": "关于 AITALK",
   "settings.navigation.team": "团队管理",

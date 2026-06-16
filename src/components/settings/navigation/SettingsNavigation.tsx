@@ -6,6 +6,7 @@ import {
   injectIntl,
 } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import { DialogPlugin } from 'tdesign-react';
 import type { StoresProps } from '../../../@types/ferdium-components.types';
 import {
   LIVE_FERDIUM_API,
@@ -51,6 +52,14 @@ const messages = defineMessages({
     id: 'settings.navigation.exitSession',
     defaultMessage: 'Exit session',
   },
+  logoutConfirmTitle: {
+    id: 'settings.navigation.logoutConfirmTitle',
+    defaultMessage: '退出登录',
+  },
+  logoutConfirmContent: {
+    id: 'settings.navigation.logoutConfirmContent',
+    defaultMessage: '退出登录不会掉号，确认要退出登录吗？',
+  },
 });
 
 interface IProps extends Partial<StoresProps>, WrappedComponentProps {
@@ -62,22 +71,37 @@ interface IProps extends Partial<StoresProps>, WrappedComponentProps {
 @observer
 class SettingsNavigation extends Component<IProps> {
   handleLogout(): void {
-    const isUsingWithoutAccount =
-      this.props.stores!.settings.app.server === LOCAL_SERVER;
+    const { intl } = this.props;
+    this.props.actions!.ui.closeSettings();
+    const confirmDia = DialogPlugin.confirm({
+      header: intl.formatMessage(messages.logoutConfirmTitle),
+      body: intl.formatMessage(messages.logoutConfirmContent),
+      placement: 'center',
+      onConfirm: () => {
+        const isUsingWithoutAccount =
+          this.props.stores!.settings.app.server === LOCAL_SERVER;
 
-    if (isUsingWithoutAccount) {
-      // Reset server back to Ferdium API
-      this.props.actions!.settings.update({
-        type: 'app',
-        data: {
-          server: LIVE_FERDIUM_API,
-        },
-      });
-    }
-    this.props.stores!.user.isLoggingOut = true;
+        if (isUsingWithoutAccount) {
+          // Reset server back to Ferdium API
+          this.props.actions!.settings.update({
+            type: 'app',
+            data: {
+              server: LIVE_FERDIUM_API,
+            },
+          });
+        }
+        this.props.stores!.user.isLoggingOut = true;
 
-    this.props.actions!.user.logout();
-    this.props.stores!.router.push(this.props.stores!.user.WA_AKG_LOGIN_ROUTE);
+        this.props.actions!.user.logout();
+        this.props.stores!.router.push(
+          this.props.stores!.user.WA_AKG_LOGIN_ROUTE,
+        );
+        confirmDia.hide();
+      },
+      onClose: () => {
+        confirmDia.hide();
+      },
+    });
   }
 
   render() {

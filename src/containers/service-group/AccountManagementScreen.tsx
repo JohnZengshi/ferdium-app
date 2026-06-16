@@ -20,6 +20,7 @@ import type {
   AppApiSchemasDigitalHumanResponse,
   WhatsAppBindingResponse,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import { getWhatsappBindingApiV1WhatsappBindGet } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import AvatarCell from '../../components/ui/AvatarCell';
 import FilterToolbar from '../../components/ui/FilterToolbar';
@@ -140,8 +141,6 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
   const allServices: Service[] = stores?.services?.all ?? [];
   const waStatuses: Map<string, WhatsAppSessionStatus> =
     stores?.whatsappAutomation?.sessionStatuses ?? new Map();
-  const digitalHumans: AppApiSchemasDigitalHumanResponse[] =
-    stores?.digitalHumans?.digitalHumans ?? [];
 
   // Fetch session creation times from WA API
   const fetchSessionTimes = useCallback(async () => {
@@ -162,37 +161,57 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
     }
   }, []);
 
-  // Fetch persona bindings from agent-flow-cs API
-  const fetchPersonaBindings = useCallback(async () => {
+  const fetchAllPersonaBindings = useCallback(async () => {
+    let digitalHumanList: AppApiSchemasDigitalHumanResponse[] = [];
     try {
-      const response = await getWhatsappBindingApiV1WhatsappBindGet();
-      if (response.status === 200) {
-        const binding = response.data as WhatsAppBindingResponse | null;
-        if (binding?.session_id && binding.digital_human_id) {
-          const dh = digitalHumans.find(d => d.id === binding.digital_human_id);
-          if (dh) {
-            setPersonaNameMap(prev => {
-              const next = new Map(prev);
-              next.set(binding.session_id, dh.name);
-              return next;
-            });
-          }
-        }
-      }
+      const listRes = await listDigitalHumansApiV1DigitalHumansGet();
+      digitalHumanList = listRes.data;
     } catch {
-      // Silently ignore errors
+      return;
     }
-  }, [digitalHumans]);
+
+    const results = await Promise.all(
+      allServices.map(async service => {
+        try {
+          const response = await getWhatsappBindingApiV1WhatsappBindGet({
+            session_id: service.id,
+          });
+          if (response.status === 200) {
+            const binding = response.data as WhatsAppBindingResponse | null;
+            if (binding?.digital_human_id) {
+              const dh = digitalHumanList.find(
+                d => d.id === binding.digital_human_id,
+              );
+              if (dh) {
+                return [service.id, dh.name] as const;
+              }
+            }
+          }
+        } catch {
+          // Silently ignore errors
+        }
+        return null;
+      }),
+    );
+
+    const map = new Map<string, string>();
+    for (const result of results) {
+      if (result) {
+        map.set(result[0], result[1]);
+      }
+    }
+    setPersonaNameMap(map);
+  }, [allServices]);
 
   useEffect(() => {
     fetchSessionTimes();
   }, [fetchSessionTimes]);
 
   useEffect(() => {
-    if (digitalHumans.length > 0) {
-      fetchPersonaBindings();
+    if (allServices.length > 0) {
+      fetchAllPersonaBindings();
     }
-  }, [fetchPersonaBindings, digitalHumans.length]);
+  }, [fetchAllPersonaBindings, allServices.length]);
 
   const data: Account[] = useMemo(
     () =>

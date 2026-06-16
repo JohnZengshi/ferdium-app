@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 /* eslint-disable no-useless-escape */
 import {
   action,
@@ -8,8 +10,6 @@ import {
   runInAction,
 } from 'mobx';
 import { type Socket, io } from 'socket.io-client';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';
 import { createActionBindings } from '../utils/ActionBinding';

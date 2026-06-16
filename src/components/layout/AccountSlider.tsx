@@ -1,5 +1,5 @@
 import { Menu, dialog, app as electronApp } from '@electron/remote';
-import { ipcRenderer, clipboard } from 'electron';
+import { clipboard, ipcRenderer } from 'electron';
 import { inject, observer } from 'mobx-react';
 import { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';

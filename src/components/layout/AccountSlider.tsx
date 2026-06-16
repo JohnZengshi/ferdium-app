@@ -528,13 +528,17 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                       ),
                       cancelBtn: intl.formatMessage(messages.cancel),
                       body: (
-                        <Form colon labelWidth={130} className="py-[16px]">
+                        <Form
+                          colon
+                          labelWidth={130}
+                          labelAlign="left"
+                          className="py-[16px]"
+                        >
                           <Form.FormItem
                             label={intl.formatMessage(messages.selectPersona)}
                             name="persona"
                           >
                             <Select
-                              className="!w-full"
                               placeholder={intl.formatMessage(
                                 messages.selectPersonaPlaceholder,
                               )}

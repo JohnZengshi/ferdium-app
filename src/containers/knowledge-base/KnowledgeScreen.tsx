@@ -104,7 +104,7 @@ const messages = defineMessages({
   description: {
     id: 'knowledgeScreen.description',
     defaultMessage:
-      '人设资料是您社交账号的信息资料，与账号绑定后，数字员工会以账号的人设进行聊天',
+      'Persona profile contains your social account information. Once linked to an account, the digital employee will chat using the account\'s persona.',
   },
   inputPlaceholder: {
     id: 'knowledgeScreen.inputPlaceholder',
@@ -165,31 +165,31 @@ const messages = defineMessages({
   smartImportPlaceholder: {
     id: 'knowledgeScreen.smartImportPlaceholder',
     defaultMessage:
-      '输入文本到此处，将自动识别人设信息\n\n例：Amy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可；企业级 / 大客户项目需持续跟进交付、验收与长期合作维护。销售为项目客户侧第一责任人，统筹对外沟通与商务推进。\n\nAmy，是一个24未婚未育的女销售，销售深度参与项目全流程，负责线索挖掘、客户对接...',
+      'Paste text here to automatically recognize persona information\n\nExample: Amy is a 24-year-old unmarried female sales representative who is deeply involved in the entire project process, responsible for lead generation, client engagement, relationship management, needs analysis, product presentation, objection handling, and business negotiation, leading project signing and implementation.\n\nAmy is a 24-year-old unmarried female sales representative...',
   },
   editPersona: {
     id: 'knowledgeScreen.editPersona',
-    defaultMessage: '编辑人设',
+    defaultMessage: 'Edit Persona',
   },
   clickToSetAvatar: {
     id: 'knowledgeScreen.clickToSetAvatar',
-    defaultMessage: '点击设置头像',
+    defaultMessage: 'Click to set avatar',
   },
   changeAvatar: {
     id: 'knowledgeScreen.changeAvatar',
-    defaultMessage: '更换头像',
+    defaultMessage: 'Change Avatar',
   },
   emptyKeywordError: {
     id: 'knowledgeScreen.emptyKeywordError',
-    defaultMessage: '请输入关键词描述后再生成',
+    defaultMessage: 'Please enter keyword description before generating',
   },
   noPersonasTitle: {
     id: 'knowledgeScreen.noPersonasTitle',
-    defaultMessage: '暂无人设资料',
+    defaultMessage: 'No Persona Profiles',
   },
   noPersonasDescription: {
     id: 'knowledgeScreen.noPersonasDescription',
-    defaultMessage: '创建您的第一个人设资料以开始使用',
+    defaultMessage: 'Create your first persona profile to get started',
   },
 });
 

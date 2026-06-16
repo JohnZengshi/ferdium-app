@@ -147,6 +147,9 @@ const INTENT_DOT_MAP: Record<string, string> = {
   orange: 'bg-warning',
   red: 'bg-error',
 };
+const USER_PROFILE_TABLE_CONTENT_WIDTH = '1460px';
+const TABLE_TEXT_CLASS =
+  'block overflow-hidden text-ellipsis whitespace-nowrap text-[14px] leading-[22px] text-primary';
 
 function normalizeDisplayValue(value?: string | null): string {
   if (!value || value === 'unknown') {
@@ -335,13 +338,15 @@ function UserProfileScreen(): ReactElement {
       {
         colKey: 'username',
         title: intl.formatMessage(messages.colFanAccount),
-        width: 'auto',
+        width: 220,
+        ellipsis: true,
         cell: ({ row }) => (
           <AvatarCell
             title={row.id}
             subtitle={row.username === '—' ? row.phone : row.username}
             isVIP={row.isVIP}
             vipLabel={intl.formatMessage(messages.vipLabel)}
+            className="w-full"
           />
         ),
       },
@@ -350,7 +355,7 @@ function UserProfileScreen(): ReactElement {
         title: intl.formatMessage(messages.colRegion),
         width: 120,
         cell: ({ row }) => (
-          <span className="text-[14px] leading-[22px] text-primary">
+          <span className={TABLE_TEXT_CLASS} title={row.region}>
             {row.region}
           </span>
         ),
@@ -360,7 +365,7 @@ function UserProfileScreen(): ReactElement {
         title: intl.formatMessage(messages.colGender),
         width: 100,
         cell: ({ row }) => (
-          <span className="text-[14px] leading-[22px] text-primary">
+          <span className={TABLE_TEXT_CLASS} title={row.gender}>
             {row.gender}
           </span>
         ),
@@ -368,13 +373,14 @@ function UserProfileScreen(): ReactElement {
       {
         colKey: 'stage',
         title: intl.formatMessage(messages.colStage),
-        width: 140,
+        width: 160,
+        ellipsis: true,
         cell: ({ row }) => (
           <Tag
             variant="outline"
             theme={STAGE_COLOR_MAP[row.stageColor]}
             className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
-            maxWidth={80}
+            maxWidth={120}
             title={row.stage}
           >
             {row.stage}
@@ -384,13 +390,14 @@ function UserProfileScreen(): ReactElement {
       {
         colKey: 'tag',
         title: intl.formatMessage(messages.colTag),
-        width: 140,
+        width: 160,
+        ellipsis: true,
         cell: ({ row }) => (
           <Tag
             variant="outline"
             theme={TAG_COLOR_MAP[row.tagColor]}
             className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
-            maxWidth={80}
+            maxWidth={120}
             title={row.tag}
           >
             {row.tag}
@@ -400,27 +407,31 @@ function UserProfileScreen(): ReactElement {
       {
         colKey: 'intentLevel',
         title: intl.formatMessage(messages.colIntentLevel),
-        width: 120,
+        width: 140,
+        ellipsis: true,
         cell: ({ row }) => (
           <div
-            className={`flex items-center gap-[8px] text-[14px] leading-[22px] ${INTENT_CLASS_MAP[row.intentColor]}`}
+            className={`flex items-center gap-[8px] overflow-hidden whitespace-nowrap text-[14px] leading-[22px] ${INTENT_CLASS_MAP[row.intentColor]}`}
           >
             <span
-              className={`h-[8px] w-[8px] rounded-full ${INTENT_DOT_MAP[row.intentColor]}`}
+              className={`h-[8px] w-[8px] shrink-0 rounded-full ${INTENT_DOT_MAP[row.intentColor]}`}
             />
-            <span>{row.intentLevel}</span>
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+              {row.intentLevel}
+            </span>
           </div>
         ),
       },
       {
         colKey: 'chatSummary',
         title: intl.formatMessage(messages.colChatSummary),
-        width: 120,
+        width: 140,
+        ellipsis: true,
         cell: ({ row }) => (
           <span
             role="button"
             tabIndex={0}
-            className="cursor-pointer text-[14px] leading-[22px] text-brand"
+            className="inline-flex whitespace-nowrap text-[14px] leading-[22px] text-brand"
             onClick={() => {
               handleViewSummary(row.conversationSummary);
             }}
@@ -440,10 +451,7 @@ function UserProfileScreen(): ReactElement {
         title: intl.formatMessage(messages.colServiceNote),
         width: 220,
         cell: ({ row }) => (
-          <span
-            className="block truncate text-[14px] leading-[22px] text-primary"
-            title={row.nextAction}
-          >
+          <span className={TABLE_TEXT_CLASS} title={row.nextAction}>
             {row.nextAction}
           </span>
         ),
@@ -451,10 +459,14 @@ function UserProfileScreen(): ReactElement {
       {
         colKey: 'owner',
         title: intl.formatMessage(messages.colOwner),
-        width: 200,
+        width: 220,
         fixed: 'right',
         cell: ({ row }) => (
-          <AvatarCell title={row.ownerUsername} subtitle={row.ownerPhone} />
+          <AvatarCell
+            title={row.ownerUsername}
+            subtitle={row.ownerPhone}
+            className="w-full"
+          />
         ),
       },
     ],
@@ -548,6 +560,7 @@ function UserProfileScreen(): ReactElement {
           stripe={false}
           hover
           loading={loading}
+          className="[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:align-middle"
           pagination={{
             current: page,
             pageSize,
@@ -560,6 +573,7 @@ function UserProfileScreen(): ReactElement {
             setPage(pageInfo.current);
             setPageSize(pageInfo.pageSize);
           }}
+          tableContentWidth={USER_PROFILE_TABLE_CONTENT_WIDTH}
           tableLayout="fixed"
           resizable
           lazyLoad

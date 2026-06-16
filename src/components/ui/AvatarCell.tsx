@@ -33,7 +33,9 @@ const AvatarCell = ({
 }: AvatarCellProps & WrappedComponentProps): ReactElement => {
   const displayVipLabel = vipLabel || intl.formatMessage(messages.vipLabel);
   return (
-    <div className={`flex items-center gap-[12px] py-[2px] ${className}`}>
+    <div
+      className={`flex min-w-0 items-center gap-[12px] py-[2px] ${className}`}
+    >
       {avatarUrl ? (
         <div className="h-[32px] w-[32px] overflow-hidden rounded-full border-[1px] border-line">
           <img
@@ -47,9 +49,12 @@ const AvatarCell = ({
           {title.slice(0, 1)}
         </div>
       )}
-      <div className="flex flex-col">
-        <div className="flex items-center gap-[6px]">
-          <span className="text-[14px] leading-[22px] text-primary font-medium">
+      <div className="flex min-w-0 flex-col">
+        <div className="flex min-w-0 items-center gap-[6px]">
+          <span
+            className="block overflow-hidden text-ellipsis whitespace-nowrap text-[14px] font-medium leading-[22px] text-primary"
+            title={title}
+          >
             {title}
           </span>
           {isVIP && (
@@ -63,7 +68,10 @@ const AvatarCell = ({
           )}
         </div>
         {subtitle && (
-          <span className="text-[12px] leading-[20px] text-secondary">
+          <span
+            className="block overflow-hidden text-ellipsis whitespace-nowrap text-[12px] leading-[20px] text-secondary"
+            title={subtitle}
+          >
             {subtitle}
           </span>
         )}

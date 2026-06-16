@@ -210,6 +210,8 @@ const formatDateTime = (iso: string): string => {
     return iso;
   }
 };
+const NOTIFICATIONS_TABLE_CLASS =
+  '[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:!h-[52px] [&_.t-table__body-td]:align-middle';
 
 const NotificationsTab = (): ReactElement => {
   const intl = useIntl();
@@ -302,25 +304,25 @@ const NotificationsTab = (): ReactElement => {
     {
       colKey: 'id',
       title: intl.formatMessage(messages.account),
-      width: 160,
+      width: 140,
       ellipsis: true,
     },
     {
       colKey: 'conversation_id',
       title: intl.formatMessage(messages.conversation),
-      width: 160,
+      width: 140,
       ellipsis: true,
     },
     {
       colKey: 'reason',
       title: intl.formatMessage(messages.triggerContent),
-      width: 220,
+      width: 160,
       ellipsis: true,
     },
     {
       colKey: 'source',
       title: intl.formatMessage(messages.rule),
-      width: 180,
+      width: 120,
       ellipsis: true,
     },
     {
@@ -350,7 +352,7 @@ const NotificationsTab = (): ReactElement => {
     {
       colKey: 'platform',
       title: intl.formatMessage(messages.platform),
-      width: 130,
+      width: 96,
       cell: () => (
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-success">
@@ -365,7 +367,7 @@ const NotificationsTab = (): ReactElement => {
     {
       colKey: 'created_at',
       title: intl.formatMessage(messages.time),
-      width: 160,
+      width: 132,
       ellipsis: true,
       cell: ({ row }) => {
         const r = row as HandoffRecord;
@@ -379,8 +381,7 @@ const NotificationsTab = (): ReactElement => {
     {
       colKey: 'op',
       title: intl.formatMessage(messages.actions),
-      width: 84,
-      fixed: 'right',
+      width: 96,
       cell: () => (
         <button
           type="button"
@@ -522,13 +523,12 @@ const NotificationsTab = (): ReactElement => {
             rowKey="id"
             selectedRowKeys={selectedRowKeys}
             onSelectChange={handleSelectChange}
-            tableLayout="fixed"
-            resizable
+            tableLayout="auto"
             hover
             stripe={false}
             bordered
             size="medium"
-            className="[&_.t-table__header]:!bg-secondary-container [&_.t-table__header-th]:!border-b [&_.t-table__header-th]:!border-solid [&_.t-table__header-th]:!border-line [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__header-th]:!text-placeholder [&_.t-table__body-td]:!h-[52px]"
+            className={NOTIFICATIONS_TABLE_CLASS}
           />
         )}
 

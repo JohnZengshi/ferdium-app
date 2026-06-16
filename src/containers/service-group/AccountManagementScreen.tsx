@@ -5,7 +5,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -13,7 +12,6 @@ import { RefreshIcon } from 'tdesign-icons-react';
 import {
   Button,
   type PrimaryTableCol,
-  type PrimaryTableRef,
   Select,
   Table,
   Tag,
@@ -121,6 +119,8 @@ const formatProxy = (proxy: unknown): string => {
 
   return config.port ? `${config.host}:${config.port}` : config.host;
 };
+const ACCOUNT_MANAGEMENT_TABLE_CLASS =
+  '[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:align-middle';
 
 interface IProps {
   stores?: any;
@@ -128,8 +128,6 @@ interface IProps {
 
 function AccountManagementScreen({ stores }: IProps): ReactElement {
   const intl = useIntl();
-  const [tableLayout] = useState<'fixed'>('fixed');
-  const tableRef = useRef<PrimaryTableRef>(null);
 
   const [sessionCreatedAtMap, setSessionCreatedAtMap] = useState<
     Map<string, string>
@@ -418,18 +416,15 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
         />
 
         <Table
-          ref={tableRef}
           data={filteredData}
           columns={columns}
           rowKey="id"
           bordered
           stripe={false}
           hover
-          maxHeight="calc(100vh - 360px)"
-          tableLayout={tableLayout}
-          tableContentWidth={tableLayout === 'fixed' ? undefined : '1200px'}
-          resizable
+          tableLayout="auto"
           lazyLoad
+          className={ACCOUNT_MANAGEMENT_TABLE_CLASS}
           pagination={{
             current: 1,
             pageSize: 20,

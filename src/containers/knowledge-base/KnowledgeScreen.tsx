@@ -390,6 +390,10 @@ const messages = defineMessages({
     id: 'knowledgeScreen.deletePersona',
     defaultMessage: 'Delete',
   },
+  cancel: {
+    id: 'knowledgeScreen.cancel',
+    defaultMessage: 'Cancel',
+  },
   confirmSave: {
     id: 'knowledgeScreen.confirmSave',
     defaultMessage: 'Save',
@@ -1470,8 +1474,9 @@ const KnowledgeScreen: React.FC = () => {
                 variant="outline"
                 theme="default"
                 className="!h-[32px] !w-[88px] !rounded-[4px] !bg-component !text-primary !border-none !text-[14px]"
+                onClick={handleBack}
               >
-                {intl.formatMessage(messages.deletePersona)}
+                {intl.formatMessage(messages.cancel)}
               </Button>
               <Button
                 theme="primary"
@@ -1479,7 +1484,7 @@ const KnowledgeScreen: React.FC = () => {
                 className="!h-[32px] !w-[88px] !rounded-[4px] !bg-brand !text-[14px]"
                 onClick={handleSave}
               >
-                {intl.formatMessage(messages.confirmSave)}
+                {intl.formatMessage(messages.save)}
               </Button>
             </div>
           </div>

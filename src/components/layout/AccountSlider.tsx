@@ -106,7 +106,7 @@ const messages = defineMessages({
   personaHint: {
     id: 'accountSlider.personaHint',
     defaultMessage:
-      '提示：如没有人设资料，请在左侧菜单人设管理中添加资料后进行绑定',
+      '提示：如没有人设资料，请在左侧菜单资料库中社交人设中添加资料后进行绑定',
   },
   confirmText: {
     id: 'accountSlider.confirmText',
@@ -497,13 +497,17 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                       header: intl.formatMessage(
                         messages.bindPersonaDialogTitle,
                       ),
+                      cancelBtn: intl.formatMessage(
+                        messages.cancel,
+                      ),
                       body: (
-                        <Form colon labelWidth={80} className="py-[16px]">
+                        <Form colon labelWidth={130} className="py-[16px]">
                           <Form.FormItem
                             label={intl.formatMessage(messages.selectPersona)}
                             name="persona"
                           >
                             <Select
+                              className="!w-full"
                               placeholder={intl.formatMessage(
                                 messages.selectPersonaPlaceholder,
                               )}

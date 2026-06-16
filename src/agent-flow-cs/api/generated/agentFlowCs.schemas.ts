@@ -901,6 +901,34 @@ export interface HandoffResponse {
 }
 
 /**
+ * 人工接管记录（主账号俯视，含会话和子账号上下文）。
+ */
+export interface HandoffWithContextResponse {
+  id: string;
+  conversation_id: string;
+  reason: string;
+  status: string;
+  source: string;
+  risk_level: string;
+  conversation_title: string;
+  customer_id?: string | null;
+  member_username?: string | null;
+  member_user_id?: string | null;
+  platform: string;
+  digital_human_name?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * 人工接管分页列表（主账号俯视）。
+ */
+export interface HandoffWithContextListResponse {
+  items: HandoffWithContextResponse[];
+  total: number;
+}
+
+/**
  * 单个依赖服务的健康状态。
  */
 export interface ServiceHealth {
@@ -922,10 +950,76 @@ export interface HealthCheckResponse {
 }
 
 /**
- * 知识库集合信息。
+ * Admin: 将集合分配给主账号。
  */
-export interface KnowledgeCollectionItem {
+export interface KnowledgeAssignRequest {
+  owner_id: string;
+}
+
+/**
+ * 分配操作响应。
+ */
+export interface KnowledgeAssignmentResponse {
+  id: string;
+  collection_id: string;
+  collection_name: string;
+  owner_id: string;
+  is_active: boolean;
+  created_at: string;
+}
+
+/**
+ * Admin: 创建共享知识库集合。
+ */
+export interface KnowledgeCollectionCreateRequest {
+  /**
+   * @minLength 1
+   * @maxLength 128
+   */
+  display_name: string;
+  description?: string | null;
+}
+
+/**
+ * 知识库集合详情（admin 视图）。
+ */
+export interface KnowledgeCollectionResponse {
+  id?: string | null;
+  display_name: string;
+  rag_collection_name: string;
+  source: string;
+  description?: string | null;
+  document_count?: number;
+  is_deleted?: boolean;
+  creator_admin_id?: string | null;
+  owner_id?: string | null;
+  owner_username?: string | null;
+  assignment_count?: number | null;
+  assigned_owner_usernames?: string[];
+  created_at?: string | null;
+  updated_at?: string | null;
+}
+
+/**
+ * 知识库集合分页列表。
+ */
+export interface KnowledgeCollectionListResponse {
+  items?: KnowledgeCollectionResponse[];
+  /** @minimum 0 */
+  total: number;
+  /** @minimum 0 */
+  offset: number;
+  /** @minimum 1 */
+  limit: number;
+}
+
+/**
+ * Owner 视图的集合信息（含来源标签）。
+ */
+export interface KnowledgeCollectionOwnerResponse {
   name: string;
+  display_name?: string | null;
+  source?: string | null;
   document_count?: number;
 }
 
@@ -969,6 +1063,42 @@ export interface KnowledgeDocumentResponse {
   chunk_id?: string;
   domain?: string;
   metadata?: KnowledgeDocumentResponseMetadata;
+}
+
+/**
+ * 知识库概览统计。
+ */
+export interface KnowledgeOverviewResponse {
+  total_collections?: number;
+  admin_shared_count?: number;
+  owner_selfbuilt_count?: number;
+  total_assignments?: number;
+  assigned_owner_count?: number;
+}
+
+/**
+ * Owner: 创建自建知识库集合。
+ */
+export interface KnowledgeOwnerCollectionCreateRequest {
+  /**
+   * @minLength 1
+   * @maxLength 128
+   */
+  display_name: string;
+  description?: string | null;
+}
+
+/**
+ * Owner 创建集合后的响应。
+ */
+export interface KnowledgeOwnerCollectionCreateResponse {
+  id: string;
+  display_name: string;
+  rag_collection_name: string;
+  source: string;
+  description?: string | null;
+  document_count?: number;
+  created_at: string;
 }
 
 export type KnowledgeSearchRequestFilters = { [key: string]: unknown } | null;
@@ -1508,6 +1638,21 @@ export interface WhatsAppBindingResponse {
 }
 
 /**
+ * Owner 工作流全局开关状态响应。
+ */
+export interface WorkflowSettingsResponse {
+  agent_workflow_enabled: boolean;
+  updated_at: string;
+}
+
+/**
+ * 更新 Owner 工作流全局开关。
+ */
+export interface WorkflowSettingsUpdate {
+  agent_workflow_enabled: boolean;
+}
+
+/**
  * 审计日志分页列表响应。
  */
 export interface AppApiAdminAuditAuditLogListResponse {
@@ -1827,6 +1972,21 @@ export type ListAuditLogsApiV1AdminAuditAuditLogsGetParams = {
   target_type?: string | null;
 };
 
+export type ListCollectionsApiV1AdminKnowledgeCollectionsGetParams = {
+  /**
+   * @minimum 0
+   */
+  offset?: number;
+  /**
+   * @minimum 1
+   * @maximum 200
+   */
+  limit?: number;
+  source?: string | null;
+  owner_id?: string | null;
+  search?: string | null;
+};
+
 export type GetConversationTraceApiV1ChatConversationIdTraceGetParams = {
   /**
    * 返回最近 N 轮，0 表示全部
@@ -2027,6 +2187,20 @@ export type GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetPara
      */
     limit?: number;
   };
+
+export type ListHandoffsApiV1OwnersHandoffsGetParams = {
+  status?: string | null;
+  search?: string | null;
+  /**
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * @minimum 1
+   * @maximum 100
+   */
+  page_size?: number;
+};
 
 export type ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams = {
   owner_user_id?: string | null;

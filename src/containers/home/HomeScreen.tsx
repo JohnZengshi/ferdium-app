@@ -20,6 +20,10 @@ import {
   Progress,
   Switch,
 } from 'tdesign-react';
+import {
+  getWorkflowApiV1AgentWorkflowGet,
+  updateWorkflowApiV1AgentWorkflowPut,
+} from '../../agent-flow-cs/api/generated/agent-workflow/agent-workflow';
 import { SectionHeader } from '../../components/home/SectionHeader';
 import { StepItem } from '../../components/home/StepItem';
 import {
@@ -93,6 +97,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   };
 
   async componentDidMount(): Promise<void> {
+    await this.fetchWorkflow();
     await this.props.stores!.digitalHuman.fetchDigitalHumans();
     // Fetch initial session statuses for the social account overview
     await this.props.stores!.whatsappAutomation.fetchAllSessionStatuses();
@@ -122,6 +127,15 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       { delay: 500 }, // Debounce to avoid too frequent checks
     );
   }
+
+  fetchWorkflow = async (): Promise<void> => {
+    try {
+      const response = await getWorkflowApiV1AgentWorkflowGet();
+      this.setState({ isAutoReply: response.data.agent_workflow_enabled });
+    } catch (error) {
+      console.error('Failed to fetch workflow settings:', error);
+    }
+  };
 
   componentWillUnmount(): void {
     // Clean up reaction
@@ -169,14 +183,32 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     }
   };
 
-  handleAutoReplyChange = (val: boolean): void => {
+  handleAutoReplyChange = async (val: boolean): Promise<void> => {
+    // Optimistic UI update
+    const previousState = this.state.isAutoReply;
     this.setState({ isAutoReply: val });
     const { intl } = this.props;
-    MessagePlugin.success(
-      val
-        ? intl!.formatMessage(messages.autoReplyEnabled)
-        : intl!.formatMessage(messages.autoReplyDisabled),
-    );
+
+    try {
+      await updateWorkflowApiV1AgentWorkflowPut({
+        agent_workflow_enabled: val,
+      });
+      MessagePlugin.success(
+        val
+          ? intl!.formatMessage(messages.autoReplyEnabled)
+          : intl!.formatMessage(messages.autoReplyDisabled),
+      );
+    } catch (error) {
+      // Revert on error
+      this.setState({ isAutoReply: previousState });
+      MessagePlugin.error(
+        intl!.formatMessage({
+          id: 'home.autoReplyError',
+          defaultMessage: 'Failed to update auto-reply settings',
+        }),
+      );
+      console.error('Failed to update workflow settings:', error);
+    }
   };
 
   handleRefreshSocialAccounts = async (): Promise<void> => {

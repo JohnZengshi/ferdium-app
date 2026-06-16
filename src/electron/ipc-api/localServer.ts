@@ -77,6 +77,9 @@ export default (params: { mainWindow: BrowserWindow }) => {
       }
 
       if (!localServerStarted) {
+        // Set flag immediately to prevent race condition
+        localServerStarted = true;
+
         setWaAkgProfileEmail(data?.waAkgEmail);
 
         // Find next unused port for server
@@ -86,8 +89,14 @@ export default (params: { mainWindow: BrowserWindow }) => {
           port += 1;
         }
         token = randomBytes(256 / 8).toString('base64url');
-        await server(userDataPath(), port, token);
-        localServerStarted = true;
+
+        try {
+          await server(userDataPath(), port, token);
+        } catch (error) {
+          // Reset flag on failure so retry is possible
+          localServerStarted = false;
+          throw error;
+        }
       }
 
       // Send local server parameters to the renderer even if the server is already running.

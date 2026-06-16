@@ -24,15 +24,19 @@ import type {
   EnterpriseCodeSetRequest,
   GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetParams,
   HTTPValidationError,
-  KnowledgeCollectionItem,
+  HandoffWithContextListResponse,
+  KnowledgeCollectionOwnerResponse,
   KnowledgeDeleteResponse,
   KnowledgeDocumentListResponse,
+  KnowledgeOwnerCollectionCreateRequest,
+  KnowledgeOwnerCollectionCreateResponse,
   KnowledgeUploadResponse,
   ListAuditLogsApiV1OwnersAuditLogsGetParams,
   ListConversationsApiV1OwnersConversationsGetParams,
   ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams,
   ListDigitalHumansApiV1OwnersDigitalHumansGetParams,
   ListDocumentsApiV1OwnersKnowledgeDocumentsGetParams,
+  ListHandoffsApiV1OwnersHandoffsGetParams,
   ListSubAccountsApiV1OwnersSubAccountsGetParams,
   ResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPost200,
   ResetPasswordRequest,
@@ -812,6 +816,64 @@ export const getConversationMessagesApiV1OwnersConversationsConvIdMessagesGet =
     );
   };
 
+export type listHandoffsApiV1OwnersHandoffsGetResponse200 = {
+  data: HandoffWithContextListResponse;
+  status: 200;
+};
+
+export type listHandoffsApiV1OwnersHandoffsGetResponse422 = {
+  data: HTTPValidationError;
+  status: 422;
+};
+
+export type listHandoffsApiV1OwnersHandoffsGetResponseSuccess =
+  listHandoffsApiV1OwnersHandoffsGetResponse200 & {
+    headers: Headers;
+  };
+export type listHandoffsApiV1OwnersHandoffsGetResponseError =
+  listHandoffsApiV1OwnersHandoffsGetResponse422 & {
+    headers: Headers;
+  };
+
+export type listHandoffsApiV1OwnersHandoffsGetResponse =
+  | listHandoffsApiV1OwnersHandoffsGetResponseSuccess
+  | listHandoffsApiV1OwnersHandoffsGetResponseError;
+
+export const getListHandoffsApiV1OwnersHandoffsGetUrl = (
+  params?: ListHandoffsApiV1OwnersHandoffsGetParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `http://10.0.0.228:8000/api/v1/owners/handoffs?${stringifiedParams}`
+    : `http://10.0.0.228:8000/api/v1/owners/handoffs`;
+};
+
+/**
+ * 主账号查看旗下全部子账号的人工接管记录（分页，支持按状态过滤和搜索）。
+ * @summary List Handoffs
+ */
+export const listHandoffsApiV1OwnersHandoffsGet = async (
+  params?: ListHandoffsApiV1OwnersHandoffsGetParams,
+  options?: RequestInit,
+): Promise<listHandoffsApiV1OwnersHandoffsGetResponse> => {
+  return useCustomInstance<listHandoffsApiV1OwnersHandoffsGetResponse>(
+    getListHandoffsApiV1OwnersHandoffsGetUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
+
 export type listCustomerProfilesApiV1OwnersCustomerProfilesGetResponse200 = {
   data: AppApiSchemasOwnersCustomerProfileListResponse;
   status: 200;
@@ -1062,7 +1124,7 @@ export const deleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDelete = async (
 };
 
 export type listCollectionsApiV1OwnersKnowledgeCollectionsGetResponse200 = {
-  data: KnowledgeCollectionItem[];
+  data: KnowledgeCollectionOwnerResponse[];
   status: 200;
 };
 
@@ -1078,7 +1140,13 @@ export const getListCollectionsApiV1OwnersKnowledgeCollectionsGetUrl = () => {
 };
 
 /**
- * 列出知识库中可用的 collection。
+ * 列出知识库中可用的 collection（含来源标签）。
+ *
+ * 来源分为：
+ * - 'default': 配置的默认集合
+ * - 'admin': 超管分配的共享集合
+ * - 'owner': 自建集合
+ * - 'digital_human': 数字人引用的集合（未在 KnowledgeCollection 表中注册）
  * @summary List Collections
  */
 export const listCollectionsApiV1OwnersKnowledgeCollectionsGet = async (
@@ -1089,6 +1157,52 @@ export const listCollectionsApiV1OwnersKnowledgeCollectionsGet = async (
     {
       ...options,
       method: 'GET',
+    },
+  );
+};
+
+export type createCollectionApiV1OwnersKnowledgeCollectionsPostResponse201 = {
+  data: KnowledgeOwnerCollectionCreateResponse;
+  status: 201;
+};
+
+export type createCollectionApiV1OwnersKnowledgeCollectionsPostResponse422 = {
+  data: HTTPValidationError;
+  status: 422;
+};
+
+export type createCollectionApiV1OwnersKnowledgeCollectionsPostResponseSuccess =
+  createCollectionApiV1OwnersKnowledgeCollectionsPostResponse201 & {
+    headers: Headers;
+  };
+export type createCollectionApiV1OwnersKnowledgeCollectionsPostResponseError =
+  createCollectionApiV1OwnersKnowledgeCollectionsPostResponse422 & {
+    headers: Headers;
+  };
+
+export type createCollectionApiV1OwnersKnowledgeCollectionsPostResponse =
+  | createCollectionApiV1OwnersKnowledgeCollectionsPostResponseSuccess
+  | createCollectionApiV1OwnersKnowledgeCollectionsPostResponseError;
+
+export const getCreateCollectionApiV1OwnersKnowledgeCollectionsPostUrl = () => {
+  return `http://10.0.0.228:8000/api/v1/owners/knowledge/collections`;
+};
+
+/**
+ * 主账号自建知识库集合（创建后自动拥有使用权限）。
+ * @summary Create Collection
+ */
+export const createCollectionApiV1OwnersKnowledgeCollectionsPost = async (
+  knowledgeOwnerCollectionCreateRequest: KnowledgeOwnerCollectionCreateRequest,
+  options?: RequestInit,
+): Promise<createCollectionApiV1OwnersKnowledgeCollectionsPostResponse> => {
+  return useCustomInstance<createCollectionApiV1OwnersKnowledgeCollectionsPostResponse>(
+    getCreateCollectionApiV1OwnersKnowledgeCollectionsPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(knowledgeOwnerCollectionCreateRequest),
     },
   );
 };

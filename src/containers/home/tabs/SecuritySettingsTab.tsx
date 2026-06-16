@@ -28,6 +28,10 @@ const messages = defineMessages({
     id: 'securitySettingsTab.addCondition',
     defaultMessage: 'Add condition',
   },
+  namePrefix: {
+    id: 'securitySettingsTab.namePrefix',
+    defaultMessage: 'Boundary',
+  },
 });
 
 const SecuritySettingsTab = (): ReactElement => {
@@ -62,7 +66,7 @@ const SecuritySettingsTab = (): ReactElement => {
 
       <RuleListEditor
         addLabel={intl.formatMessage(messages.addCondition)}
-        namePrefix="边界"
+        namePrefix={intl.formatMessage(messages.namePrefix)}
         ruleType="safety_boundary"
       />
     </div>

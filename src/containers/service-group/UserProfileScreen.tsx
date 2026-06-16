@@ -478,6 +478,7 @@ function UserProfileScreen(): ReactElement {
                 {intl.formatMessage(messages.filterStatus)}
               </span>
               <Select
+                key={`intent-select-${intl.locale}`}
                 className="!w-[160px]"
                 placeholder={intl.formatMessage(messages.filterPlaceholder)}
                 value={filterStatus}
@@ -502,6 +503,7 @@ function UserProfileScreen(): ReactElement {
                 {intl.formatMessage(messages.filterPersona)}
               </span>
               <Select
+                key={`value-select-${intl.locale}`}
                 className="!w-[160px]"
                 placeholder={intl.formatMessage(messages.filterPlaceholder)}
                 value={filterPersona}

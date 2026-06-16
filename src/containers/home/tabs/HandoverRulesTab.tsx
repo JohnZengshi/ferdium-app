@@ -145,6 +145,10 @@ const messages = defineMessages({
     id: 'handoverRulesTab.deleteFailed',
     defaultMessage: 'Unbind failed, please try again.',
   },
+  namePrefix: {
+    id: 'handoverRulesTab.namePrefix',
+    defaultMessage: 'Rule',
+  },
 });
 
 const HandoverRulesTab = (): ReactElement => {
@@ -400,7 +404,7 @@ const HandoverRulesTab = (): ReactElement => {
 
       <RuleListEditor
         addLabel={intl.formatMessage(messages.addRule)}
-        namePrefix="规则"
+        namePrefix={intl.formatMessage(messages.namePrefix)}
         ruleType="handoff_policy"
       />
 

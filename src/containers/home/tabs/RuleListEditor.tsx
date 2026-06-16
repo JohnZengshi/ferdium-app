@@ -91,39 +91,51 @@ const PAGE_SIZE = 20;
 const messages = defineMessages({
   placeholder: {
     id: 'ruleListEditor.placeholder',
-    defaultMessage: '请输入内容',
+    defaultMessage: 'Please enter content',
   },
   confirm: {
     id: 'ruleListEditor.confirm',
-    defaultMessage: '确认',
+    defaultMessage: 'Confirm',
   },
   delete: {
     id: 'ruleListEditor.delete',
-    defaultMessage: '删除',
+    defaultMessage: 'Delete',
   },
   loading: {
     id: 'ruleListEditor.loading',
-    defaultMessage: '加载中...',
+    defaultMessage: 'Loading...',
   },
   loadingMore: {
     id: 'ruleListEditor.loadingMore',
-    defaultMessage: '加载更多中...',
+    defaultMessage: 'Loading more...',
   },
   empty: {
     id: 'ruleListEditor.empty',
-    defaultMessage: '暂无内容，点击下方按钮添加',
+    defaultMessage: 'No content yet. Click the button below to add',
   },
   saveSuccess: {
     id: 'ruleListEditor.saveSuccess',
-    defaultMessage: '保存成功',
+    defaultMessage: 'Saved successfully',
   },
   deleteSuccess: {
     id: 'ruleListEditor.deleteSuccess',
-    defaultMessage: '删除成功',
+    defaultMessage: 'Deleted successfully',
   },
   contentRequired: {
     id: 'ruleListEditor.contentRequired',
-    defaultMessage: '请输入规则内容',
+    defaultMessage: 'Please enter rule content',
+  },
+  loadFailed: {
+    id: 'ruleListEditor.loadFailed',
+    defaultMessage: 'Failed to load rules',
+  },
+  saveFailed: {
+    id: 'ruleListEditor.saveFailed',
+    defaultMessage: 'Failed to save rule',
+  },
+  deleteFailed: {
+    id: 'ruleListEditor.deleteFailed',
+    defaultMessage: 'Failed to delete rule',
   },
 });
 
@@ -149,6 +161,7 @@ interface EditableRule {
   isSaving: boolean;
   localId: string;
   name: string;
+  sequence: number | null;
   savedContent: string;
 }
 
@@ -209,20 +222,26 @@ const extractSequence = (name: string, prefix: string): number | null => {
     return null;
   }
 
-  return fromChineseNumber(name.slice(prefix.length));
+  const suffix = name.slice(prefix.length);
+  const cnResult = fromChineseNumber(suffix);
+  if (cnResult !== null) {
+    return cnResult;
+  }
+
+  // Try Western number (e.g. "Boundary 1" → 1, "Boundary 2" → 2)
+  if (/^\d+$/.test(suffix)) {
+    return Number.parseInt(suffix, 10);
+  }
+
+  return null;
 };
 
-const getNextAvailableSequence = (
-  items: EditableRule[],
-  prefix: string,
-): number => {
+const getNextAvailableSequence = (items: EditableRule[]): number => {
   const used = new Set<number>();
 
   for (const item of items) {
-    const sequence = extractSequence(item.name, prefix);
-
-    if (sequence && sequence > 0) {
-      used.add(sequence);
+    if (item.sequence && item.sequence > 0) {
+      used.add(item.sequence);
     }
   }
 
@@ -235,15 +254,30 @@ const getNextAvailableSequence = (
   return candidate;
 };
 
-const mapRuleResponse = (rule: AgentRuleResponse): EditableRule => ({
-  content: rule.content,
-  id: rule.id,
-  isDraft: false,
-  isSaving: false,
-  localId: rule.id,
-  name: rule.name,
-  savedContent: rule.content,
-});
+const mapRuleResponse = (rule: AgentRuleResponse): EditableRule => {
+  // Try to extract numeric sequence from stored name
+  // Supports: "边界1", "Boundary1", "规则1", "Rule1" etc.
+  let sequence: number | null = null;
+  const allPrefixes = ['边界', 'Boundary', '规则', 'Rule'];
+  for (const prefix of allPrefixes) {
+    const extracted = extractSequence(rule.name, prefix);
+    if (extracted !== null) {
+      sequence = extracted;
+      break;
+    }
+  }
+
+  return {
+    content: rule.content,
+    id: rule.id,
+    isDraft: false,
+    isSaving: false,
+    localId: rule.id,
+    name: rule.name,
+    sequence,
+    savedContent: rule.content,
+  };
+};
 
 const normalizeRulesPayload = (
   payload: RuleListResponse['data'],
@@ -315,14 +349,16 @@ const RuleListEditor = ({
       } catch (error) {
         setHasMore(false);
         MessagePlugin.error(
-          error instanceof Error ? error.message : 'Failed to load rules',
+          error instanceof Error
+            ? error.message
+            : intl.formatMessage(messages.loadFailed),
         );
       } finally {
         setIsInitialLoading(false);
         setIsLoadingMore(false);
       }
     },
-    [ruleType],
+    [intl, ruleType],
   );
 
   useEffect(() => {
@@ -333,8 +369,8 @@ const RuleListEditor = ({
   }, [loadRules]);
 
   useEffect(() => {
-    setNextSequence(getNextAvailableSequence(rules, namePrefix));
-  }, [namePrefix, rules]);
+    setNextSequence(getNextAvailableSequence(rules));
+  }, [rules]);
 
   useEffect(() => {
     if (!activeRuleId) {
@@ -404,7 +440,6 @@ const RuleListEditor = ({
 
   const handleAddRule = useCallback(() => {
     const localId = `draft-${Date.now()}-${nextSequence}`;
-    const name = `${namePrefix}${nextSequence}`;
 
     setRules(previous => [
       ...previous,
@@ -413,7 +448,8 @@ const RuleListEditor = ({
         isDraft: true,
         isSaving: false,
         localId,
-        name,
+        name: `${namePrefix}${nextSequence}`,
+        sequence: nextSequence,
         savedContent: '',
       },
     ]);
@@ -446,7 +482,9 @@ const RuleListEditor = ({
         MessagePlugin.success(intl.formatMessage(messages.deleteSuccess));
       } catch (error) {
         MessagePlugin.error(
-          error instanceof Error ? error.message : 'Failed to delete rule',
+          error instanceof Error
+            ? error.message
+            : intl.formatMessage(messages.deleteFailed),
         );
       }
     },
@@ -473,7 +511,7 @@ const RuleListEditor = ({
           const response = await createRuleApiV1RulesPost({
             content: trimmedContent,
             enabled: true,
-            name: rule.name,
+            name: `${namePrefix}${rule.sequence}`,
             priority: 0,
             rule_type: ruleType,
           });
@@ -494,7 +532,7 @@ const RuleListEditor = ({
         } else if (rule.id) {
           const response = await updateRuleApiV1RulesRuleIdPatch(rule.id, {
             content: trimmedContent,
-            name: rule.name,
+            name: `${namePrefix}${rule.sequence}`,
             rule_type: ruleType,
           });
 
@@ -517,11 +555,13 @@ const RuleListEditor = ({
           ),
         );
         MessagePlugin.error(
-          error instanceof Error ? error.message : 'Failed to save rule',
+          error instanceof Error
+            ? error.message
+            : intl.formatMessage(messages.saveFailed),
         );
       }
     },
-    [intl, ruleType],
+    [intl, namePrefix, ruleType],
   );
 
   return (
@@ -541,7 +581,7 @@ const RuleListEditor = ({
               <div className="flex min-w-[88px] flex-shrink-0 items-center gap-[8px]">
                 <div className="h-[18px] w-[4px] flex-shrink-0 rounded-[2px] bg-brand" />
                 <span className="min-w-[76px] text-right text-[15px] font-medium leading-[22px] text-primary">
-                  {rule.name}
+                  {rule.sequence ? `${namePrefix}${rule.sequence}` : rule.name}
                 </span>
               </div>
 

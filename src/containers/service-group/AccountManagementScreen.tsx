@@ -391,6 +391,7 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
                 {intl.formatMessage(messages.filterStatus)}
               </span>
               <Select
+                key={`status-select-${intl.locale}`}
                 className="!w-[160px]"
                 placeholder={intl.formatMessage(messages.filterPlaceholder)}
                 value={filterStatus ?? ''}

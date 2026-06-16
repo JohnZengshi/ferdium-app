@@ -394,6 +394,7 @@ class DigitalHumanForm extends Component<
             name="status"
           >
             <Select
+              key={`status-select-${intl.locale}`}
               value={formData.status || 'active'}
               options={[
                 {

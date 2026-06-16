@@ -321,49 +321,25 @@ const messages = defineMessages({
     id: 'knowledgeScreen.fieldName',
     defaultMessage: 'Name',
   },
-  fieldNameEn: {
-    id: 'knowledgeScreen.fieldNameEn',
-    defaultMessage: '(Name)',
-  },
   fieldGender: {
     id: 'knowledgeScreen.fieldGender',
     defaultMessage: 'Gender',
-  },
-  fieldGenderEn: {
-    id: 'knowledgeScreen.fieldGenderEn',
-    defaultMessage: '(Gender)',
   },
   fieldBirthday: {
     id: 'knowledgeScreen.fieldBirthday',
     defaultMessage: 'Birthday',
   },
-  fieldBirthdayEn: {
-    id: 'knowledgeScreen.fieldBirthdayEn',
-    defaultMessage: '(Birthday)',
-  },
   fieldAge: {
     id: 'knowledgeScreen.fieldAge',
     defaultMessage: 'Age',
-  },
-  fieldAgeEn: {
-    id: 'knowledgeScreen.fieldAgeEn',
-    defaultMessage: '(Age)',
   },
   fieldCountry: {
     id: 'knowledgeScreen.fieldCountry',
     defaultMessage: 'Country/Region',
   },
-  fieldCountryEn: {
-    id: 'knowledgeScreen.fieldCountryEn',
-    defaultMessage: '(Country)',
-  },
   fieldLanguage: {
     id: 'knowledgeScreen.fieldLanguage',
     defaultMessage: 'Language',
-  },
-  fieldLanguageEn: {
-    id: 'knowledgeScreen.fieldLanguageEn',
-    defaultMessage: '(Language)',
   },
   sectionLifeBackground: {
     id: 'knowledgeScreen.sectionLifeBackground',
@@ -373,17 +349,9 @@ const messages = defineMessages({
     id: 'knowledgeScreen.fieldCity',
     defaultMessage: 'City',
   },
-  fieldCityEn: {
-    id: 'knowledgeScreen.fieldCityEn',
-    defaultMessage: '(City)',
-  },
   fieldFamily: {
     id: 'knowledgeScreen.fieldFamily',
     defaultMessage: 'Family Status',
-  },
-  fieldFamilyEn: {
-    id: 'knowledgeScreen.fieldFamilyEn',
-    defaultMessage: '(Family)',
   },
   familyPlaceholder: {
     id: 'knowledgeScreen.familyPlaceholder',
@@ -397,17 +365,9 @@ const messages = defineMessages({
     id: 'knowledgeScreen.fieldOccupation',
     defaultMessage: 'Occupation',
   },
-  fieldOccupationEn: {
-    id: 'knowledgeScreen.fieldOccupationEn',
-    defaultMessage: '(Occupation)',
-  },
   fieldMainWork: {
     id: 'knowledgeScreen.fieldMainWork',
     defaultMessage: 'Main Work in Project',
-  },
-  fieldMainWorkEn: {
-    id: 'knowledgeScreen.fieldMainWorkEn',
-    defaultMessage: '(Main work in project)',
   },
   mainWorkPlaceholder: {
     id: 'knowledgeScreen.mainWorkPlaceholder',
@@ -437,6 +397,18 @@ const messages = defineMessages({
   generateFailed: {
     id: 'knowledgeScreen.generateFailed',
     defaultMessage: 'Generation failed',
+  },
+  updateFailed: {
+    id: 'knowledgeScreen.updateFailed',
+    defaultMessage: 'Failed to update persona',
+  },
+  createFailed: {
+    id: 'knowledgeScreen.createFailed',
+    defaultMessage: 'Failed to create persona',
+  },
+  readStreamFailed: {
+    id: 'knowledgeScreen.readStreamFailed',
+    defaultMessage: 'Failed to read AI response',
   },
 });
 
@@ -770,7 +742,8 @@ const KnowledgeScreen: React.FC = () => {
         }
 
         const reader = response.body?.getReader();
-        if (!reader) throw new Error('Failed to read response stream');
+        if (!reader)
+          throw new Error(intl.formatMessage(messages.readStreamFailed));
 
         const decoder = new TextDecoder();
         let buffer = '';
@@ -911,13 +884,13 @@ const KnowledgeScreen: React.FC = () => {
             updateRequest,
           );
         if (response.status !== 200) {
-          throw new Error('Failed to update digital human');
+          throw new Error(intl.formatMessage(messages.updateFailed));
         }
       } else {
         const response =
           await createDigitalHumanApiV1DigitalHumansPost(request);
         if (response.status !== 200) {
-          throw new Error('Failed to create digital human');
+          throw new Error(intl.formatMessage(messages.createFailed));
         }
         isNewCreation = true;
       }
@@ -1296,10 +1269,7 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="grid grid-cols-2 gap-x-[24px] gap-y-[16px]">
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldName)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldNameEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldName)}
                       </div>
                       <Input
                         placeholder={intl.formatMessage(
@@ -1312,10 +1282,7 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldGender)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldGenderEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldGender)}
                       </div>
                       <Select
                         placeholder={intl.formatMessage(
@@ -1331,10 +1298,7 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldBirthday)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldBirthdayEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldBirthday)}
                       </div>
                       <DatePicker
                         placeholder={intl.formatMessage(
@@ -1352,10 +1316,7 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldAge)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldAgeEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldAge)}
                       </div>
                       <Input
                         placeholder={intl.formatMessage(
@@ -1368,10 +1329,7 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldCountry)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldCountryEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldCountry)}
                       </div>
                       <Input
                         placeholder={intl.formatMessage(
@@ -1384,10 +1342,7 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldLanguage)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldLanguageEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldLanguage)}
                       </div>
                       <Input
                         placeholder={intl.formatMessage(
@@ -1412,10 +1367,7 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="space-y-[16px]">
                     <div className="w-[320px]">
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldCity)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldCityEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldCity)}
                       </div>
                       <Input
                         placeholder={intl.formatMessage(
@@ -1428,10 +1380,7 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldFamily)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldFamilyEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldFamily)}
                       </div>
                       <textarea
                         placeholder={intl.formatMessage(
@@ -1458,10 +1407,7 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="space-y-[16px]">
                     <div className="w-[320px]">
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldOccupation)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldOccupationEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldOccupation)}
                       </div>
                       <Input
                         placeholder={intl.formatMessage(
@@ -1474,10 +1420,7 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        {intl.formatMessage(messages.fieldMainWork)}{' '}
-                        <span className="font-normal text-secondary">
-                          {intl.formatMessage(messages.fieldMainWorkEn)}
-                        </span>
+                        {intl.formatMessage(messages.fieldMainWork)}
                       </div>
                       <textarea
                         placeholder={intl.formatMessage(

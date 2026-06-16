@@ -28,15 +28,23 @@ const messages = defineMessages({
   },
   heading: {
     id: 'dynamicLogin.heading',
-    defaultMessage: 'AI Chat 拓客销售系统',
+    defaultMessage: 'Welcome to AITalk',
   },
   rememberPassword: {
     id: 'dynamicLogin.rememberPassword',
     defaultMessage: 'Remember Password',
   },
+  emailPlaceholder: {
+    id: 'dynamicLogin.emailPlaceholder',
+    defaultMessage: 'Email address',
+  },
+  passwordPlaceholder: {
+    id: 'dynamicLogin.passwordPlaceholder',
+    defaultMessage: 'Password',
+  },
   enterApp: {
     id: 'dynamicLogin.enterApp',
-    defaultMessage: 'Enter Tuoke',
+    defaultMessage: 'Login',
   },
 });
 
@@ -222,13 +230,20 @@ class DynamicLogin extends Component<DynamicLoginProps> {
       const inputType = getFieldInputType(field.type);
       const $field = this.form.$(field.id);
 
+      let placeholder = field.placeholder || field.label;
+      if (field.type === AuthFieldType.EMAIL) {
+        placeholder = intl.formatMessage(messages.emailPlaceholder);
+      } else if (field.type === AuthFieldType.PASSWORD) {
+        placeholder = intl.formatMessage(messages.passwordPlaceholder);
+      }
+
       return (
         <div key={field.id} className="auth__field w-full">
           <Input
             value={$field.value}
             onChange={(val: string) => $field.set(val)}
             type={inputType as InputType}
-            placeholder={field.placeholder || field.label}
+            placeholder={placeholder}
             className={customInputClass}
             prefixIcon={getFieldIcon(field.type)}
           />

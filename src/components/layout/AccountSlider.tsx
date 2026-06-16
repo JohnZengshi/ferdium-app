@@ -1,5 +1,5 @@
 import { Menu, dialog, app as electronApp } from '@electron/remote';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, clipboard } from 'electron';
 import { inject, observer } from 'mobx-react';
 import { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
@@ -360,6 +360,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
         const unread =
           service.unreadDirectMessageCount + service.unreadIndirectMessageCount;
         const statusTag = getStatusTag(waStatus, intl);
+        const personaLabel = intl.formatMessage(messages.personaFallback);
         const presenceColor = (() => {
           switch (getMappedStatus(waStatus)) {
             case 'online': {
@@ -466,8 +467,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               </div>
               <div className="flex items-center gap-[4px]">
                 <span className="text-[14px] text-secondary leading-[22px]">
-                  {service.recipe?.name ||
-                    intl.formatMessage(messages.personaFallback)}
+                  {personaLabel}
                 </span>
                 <Button
                   variant="outline"
@@ -691,13 +691,22 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
   };
 
   handleContextMenu = (service: Service) => {
-    const { actions } = this.props;
+    const { actions, stores } = this.props;
+    const waMe = stores?.whatsappAutomation?.sessionInfo.get(service.id)?.me;
 
-    const menuTemplate = [
+    const menuTemplate: any[] = [
       {
         label: service.name || service.recipe.name,
         enabled: false,
       },
+      ...(waMe?.jid
+        ? [
+            {
+              label: `Copy JID (${waMe.jid})`,
+              click: () => clipboard.writeText(waMe.jid!),
+            },
+          ]
+        : []),
       { type: 'separator' as const },
       {
         label: 'Reload',

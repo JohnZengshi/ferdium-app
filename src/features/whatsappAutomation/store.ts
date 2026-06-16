@@ -38,6 +38,26 @@ const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:whatsapp-automation:store',
 );
 
+const normalizeWaMe = (
+  me: Record<string, unknown> | null | undefined,
+): { jid?: string; pushName?: string } | undefined =>
+  me
+    ? {
+        jid:
+          typeof me.id === 'string'
+            ? me.id
+            : typeof me.jid === 'string'
+              ? me.jid
+              : undefined,
+        pushName:
+          typeof me.name === 'string'
+            ? me.name
+            : typeof me.pushName === 'string'
+              ? me.pushName
+              : undefined,
+      }
+    : undefined;
+
 export default class WhatsAppAutomationStore extends FeatureStore {
   @observable stores: Stores | null = null;
 
@@ -73,9 +93,16 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   @observable qrCodes = new Map<string, string | undefined>();
 
-  _sessionInfo = new Map<
+  @observable sessionInfo = new Map<
     string,
-    { sessionName?: string; sessionId?: string }
+    {
+      sessionName?: string;
+      sessionId?: string;
+      me?: {
+        jid?: string;
+        pushName?: string;
+      };
+    }
   >();
 
   @observable isLoadingQr = new Map<string, boolean>();
@@ -203,6 +230,52 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       }
     } catch (error) {
       debug('Error fetching all session statuses:', error);
+    }
+  }
+
+  @action async _refreshSessionDetails(serviceId: string): Promise<void> {
+    debug('_refreshSessionDetails called for', serviceId);
+
+    const authenticated = await this._ensureAuthenticated();
+    if (!authenticated) {
+      debug('Cannot refresh session details: authentication failed');
+      return;
+    }
+
+    try {
+      const response = await getSessionsId(serviceId);
+
+      if (response.status !== 200) {
+        debug(
+          'Failed to get session details, status:',
+          response.status,
+          'for',
+          serviceId,
+        );
+        return;
+      }
+
+      const detail = response.data;
+      const me = detail.me as Record<string, unknown> | null | undefined;
+      const normalized = normalizeWaMe(me);
+
+      runInAction(() => {
+        const existing = this.sessionInfo.get(serviceId) ?? {};
+        this.sessionInfo.set(serviceId, {
+          ...existing,
+          sessionName: detail.name,
+          sessionId: detail.sessionId,
+          me: normalized,
+        });
+
+        if (detail.status) {
+          this.sessionStatuses.set(serviceId, detail.status.toUpperCase());
+        }
+      });
+
+      debug(`Refreshed session details for ${serviceId}:`, normalized);
+    } catch (error) {
+      debug('Error refreshing session details:', error);
     }
   }
 
@@ -430,7 +503,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         if (matchingSession) {
           const normalizedStatus: string =
             matchingSession.status?.toUpperCase() ?? '';
-          this._sessionInfo.set(serviceId, {
+          this.sessionInfo.set(serviceId, {
             sessionName: matchingSession.name,
             sessionId: matchingSession.sessionId,
           });
@@ -449,6 +522,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
             this._injectStatusWhenReady(serviceId, WA_SESSION_STATUS.CONNECTED);
             this._notifySessionConnected(serviceId);
+            this._refreshSessionDetails(serviceId).catch(error => {
+              debug('Error refreshing session details after connect:', error);
+            });
           } else {
             debug(
               `Session ${serviceId} status: ${normalizedStatus}, starting & fetching QR...`,
@@ -742,7 +818,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         // Start the session to get QR
         await postSessionsIdAction(serviceId, 'start');
 
-        this._sessionInfo.set(serviceId, {
+        this.sessionInfo.set(serviceId, {
           sessionName: createResponse.data?.name,
           sessionId: createResponse.data?.sessionId,
         });
@@ -1006,7 +1082,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           this.errorMessages.set(serviceId, undefined);
         });
         // Fetch new QR and update the existing modal (if any)
-        const info = this._sessionInfo.get(serviceId);
+        const info = this.sessionInfo.get(serviceId);
         this._fetchAndUpdateQr(
           serviceId,
           info?.sessionName,
@@ -1030,6 +1106,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         runInAction(() => {
           this.isLoadingQr.set(serviceId, false);
           this.errorMessages.set(serviceId, undefined);
+        });
+        this._refreshSessionDetails(serviceId).catch(error => {
+          debug('Error refreshing session details after connect:', error);
         });
         break;
       }
@@ -1085,7 +1164,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   @action _cleanUpSessionState = (serviceId: string) => {
     this._initializedServices.delete(serviceId);
     this._retryCounts.delete(serviceId);
-    this._sessionInfo.delete(serviceId);
+    this.sessionInfo.delete(serviceId);
     this._socketConnectWaiters.delete(serviceId);
     this._stopSocketIoForSession(serviceId);
     this.sessionStatuses.delete(serviceId);

@@ -499,8 +499,8 @@ export const ICON_SIZES = {
 export const iconSizeBias = 20;
 
 export const DEFAULT_WINDOW_OPTIONS = {
-  width: 800,
-  height: 600,
+  width: 1470,
+  height: 900,
   x: 0,
   y: 0,
 };
@@ -542,7 +542,7 @@ export const DEFAULT_APP_SETTINGS = {
   reloadAfterResumeTime: 10,
   enableSystemTray: true,
   startMinimized: false,
-  confirmOnQuit: false,
+  confirmOnQuit: true,
   minimizeToSystemTray: false,
   closeToSystemTray: false,
   privateNotifications: false,

@@ -375,7 +375,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                             path: 'app',
                           })
                         }
-                        className="ml-2 sidebar__button sidebar__button--settings"
+                        className="ml-2 p-3 -m-3 sidebar__button sidebar__button--settings"
                         data-tooltip-id="tooltip-sidebar-button"
                         data-tooltip-content={intl.formatMessage(
                           messages.settingsTooltip,

@@ -105,12 +105,14 @@ class SettingsNavigation extends Component<IProps> {
   }
 
   render() {
-    const { serviceCount, workspaceCount, stores, intl } = this.props;
+    // const { serviceCount , workspaceCount, stores, intl } = this.props;
+    const { stores, intl } = this.props;
     const isUsingWithoutAccount = stores!.settings.app.server === LOCAL_SERVER;
     const isUsingFranzServer = stores!.settings.app.server === LIVE_FRANZ_API;
 
     return (
       <div className="settings-navigation">
+        {/* HIDDEN: Available services
         <NavLink
           to="/settings/recipes"
           className={({ isActive }) =>
@@ -121,6 +123,8 @@ class SettingsNavigation extends Component<IProps> {
         >
           {intl.formatMessage(messages.availableServices)}
         </NavLink>
+        */}
+        {/* HIDDEN: Your services
         <NavLink
           to="/settings/services"
           className={({ isActive }) =>
@@ -132,6 +136,8 @@ class SettingsNavigation extends Component<IProps> {
           {intl.formatMessage(messages.yourServices)}{' '}
           <span className="badge">{serviceCount}</span>
         </NavLink>
+        */}
+        {/* HIDDEN: Your workspaces
         <NavLink
           to="/settings/workspaces"
           className={({ isActive }) =>
@@ -143,6 +149,7 @@ class SettingsNavigation extends Component<IProps> {
           {intl.formatMessage(messages.yourWorkspaces)}{' '}
           <span className="badge">{workspaceCount}</span>
         </NavLink>
+        */}
         {!isUsingWithoutAccount && (
           <NavLink
             to="/settings/user"
@@ -185,6 +192,7 @@ class SettingsNavigation extends Component<IProps> {
               <span className="update-available">•</span>
             )}
         </NavLink>
+        {/* HIDDEN: Release Notes
         <NavLink
           to="/settings/releasenotes"
           className={({ isActive }) =>
@@ -195,6 +203,8 @@ class SettingsNavigation extends Component<IProps> {
         >
           {intl.formatMessage(messages.releaseNotes)}
         </NavLink>
+        */}
+        {/* HIDDEN: About Aitalk
         <NavLink
           to="/settings/support"
           className={({ isActive }) =>
@@ -205,6 +215,7 @@ class SettingsNavigation extends Component<IProps> {
         >
           {intl.formatMessage(messages.supportFerdium)}
         </NavLink>
+        */}
         <span className="settings-navigation__expander" />
         <button
           type="button"

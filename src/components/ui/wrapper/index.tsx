@@ -6,7 +6,7 @@ interface IProps extends WithStylesProps<typeof styles> {
   children: ReactNode;
   className?: string;
   identifier: string;
-  // eslint-disable-next-line react/no-unused-prop-types
+
   noMargin?: boolean;
 }
 

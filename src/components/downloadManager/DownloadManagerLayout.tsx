@@ -24,7 +24,7 @@ const messages = defineMessages({
 
 interface IProps extends WrappedComponentProps {
   actions?: Actions;
-  // eslint-disable-next-line react/no-unused-prop-types
+
   children?: React.ReactNode;
 }
 

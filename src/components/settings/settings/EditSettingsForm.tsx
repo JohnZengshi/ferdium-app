@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, react/no-unused-class-component-methods, sonar/no-dead-store, @eslint-react/no-unused-class-component-members */
 import { systemPreferences } from '@electron/remote';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
 import { ipcRenderer } from 'electron';
@@ -562,19 +563,19 @@ class EditSettingsForm extends Component<IProps, IState> {
               >
                 {intl.formatMessage(messages.headlineGeneral)}
               </H5>
-              <H5
-                id="services"
-                className={
-                  this.state.activeSetttingsTab === 'services'
-                    ? 'badge badge--primary'
-                    : 'badge'
-                }
-                onClick={() => {
-                  this.setActiveSettingsTab('services');
-                }}
-              >
-                {intl.formatMessage(messages.headlineServices)}
-              </H5>
+              {/* <H5
+                  id=\"services\"
+                  className={
+                    this.state.activeSetttingsTab === 'services'
+                      ? 'badge badge--primary'
+                      : 'badge'
+                  }
+                  onClick={() => {
+                    this.setActiveSettingsTab('services');
+                  }}
+                >
+                  {intl.formatMessage(messages.headlineServices)}
+                </H5> */}
               <H5
                 id="appearance"
                 className={
@@ -614,7 +615,7 @@ class EditSettingsForm extends Component<IProps, IState> {
               >
                 {intl.formatMessage(messages.headlineLanguage)}
               </H5>
-              <H5
+              {/* <H5
                 id="advanced"
                 className={
                   this.state.activeSetttingsTab === 'advanced'
@@ -626,8 +627,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                 }}
               >
                 {intl.formatMessage(messages.headlineAdvanced)}
-              </H5>
-              <H5
+              </H5> */}
+              {/* <H5
                 id="updates"
                 className={
                   this.state.activeSetttingsTab === 'updates'
@@ -645,7 +646,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                     showServicesUpdatedInfoBar) && (
                     <span className="update-available">•</span>
                   )}
-              </H5>
+              </H5> */}
             </div>
 
             {/* General */}
@@ -656,7 +657,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                 </H2>
                 <Toggle {...form.$('autoLaunchOnStart').bind()} />
                 <Toggle {...form.$('runInBackground').bind()} />
-                <Toggle {...form.$('confirmOnQuit').bind()} />
+                {/* <Toggle {...form.$('confirmOnQuit').bind()} /> */}
                 <Toggle {...form.$('enableSystemTray').bind()} />
                 {reloadAfterResume && <Hr />}
                 <Toggle {...form.$('reloadAfterResume').bind()} />
@@ -674,9 +675,9 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <Toggle {...form.$('closeToSystemTray').bind()} />
                 )}
 
-                <Toggle {...form.$('keepAllWorkspacesLoaded').bind()} />
+                {/* <Toggle {...form.$('keepAllWorkspacesLoaded').bind()} /> */}
 
-                {isTodosActivated && <Hr />}
+                {/* {isTodosActivated && <Hr />}
                 <Toggle {...form.$('enableTodos').bind()} />
                 {isTodosActivated && (
                   <div>
@@ -704,7 +705,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                     )}
                   </div>
                 )}
-                {isTodosActivated && <Hr />}
+                {isTodosActivated && <Hr />} */}
 
                 {scheduledDNDEnabled && <Hr />}
                 <Toggle {...form.$('scheduledDNDEnabled').bind()} />
@@ -762,9 +763,9 @@ class EditSettingsForm extends Component<IProps, IState> {
             )}
 
             {/* Services */}
-            {this.state.activeSetttingsTab === 'services' && (
+            {/* {this.state.activeSetttingsTab === 'services' && (
               <div>
-                <H2 className="settings__section_header">
+                <H2 className=\"settings__section_header\">
                   {intl.formatMessage(messages.sectionServiceIconsSettings)}
                 </H2>
 
@@ -793,13 +794,13 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <HrSections />
 
-                <H2 className="settings__section_header">
+                <H2 className=\"settings__section_header\">
                   {intl.formatMessage(messages.sectionHibernation)}
                 </H2>
                 <Select field={form.$('hibernationStrategy')} />
                 <Toggle {...form.$('hibernateOnStartup').bind()} />
                 <p
-                  className="settings__message"
+                  className=\"settings__message\"
                   style={{
                     borderTop: 0,
                     marginTop: 0,
@@ -816,17 +817,17 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <HrSections />
 
-                <H2 className="settings__section_header">
+                <H2 className=\"settings__section_header\">
                   {intl.formatMessage(messages.sectionSandboxes)}
                   <span
-                    className="badge badge--success"
+                    className=\"badge badge--success\"
                     style={{ margin: '1rem' }}
                   >
                     beta
                   </span>
                 </H2>
                 <p
-                  className="settings__message"
+                  className=\"settings__message\"
                   style={{
                     borderTop: 0,
                     marginTop: 0,
@@ -839,13 +840,12 @@ class EditSettingsForm extends Component<IProps, IState> {
                   </span>
                 </p>
                 <Toggle {...form.$('sandboxServices').bind()} />
-                {/* @ts-expect-error */}
                 {sandboxServices && <SandboxServiceTabs />}
-                <p className="settings__help">
+                <p className=\"settings__help\">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>
               </div>
-            )}
+            )} */}
 
             {/* Appearance */}
             {this.state.activeSetttingsTab === 'appearance' && (
@@ -891,7 +891,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   />
                 )}
 
-                <HrSections />
+                {/* <HrSections />
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionAccentColorSettings)}
                 </H2>
@@ -928,8 +928,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                       this.submit(e);
                     }}
                   />
-                </div>
-                <HrSections />
+                </div> */}
+                {/* <HrSections />
 
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionSidebarSettings)}
@@ -959,7 +959,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Toggle {...form.$('useCompactWorkspaceDrawer').bind()} />
 
-                <Toggle {...form.$('hideAllServicesWorkspace').bind()} />
+                <Toggle {...form.$('hideAllServicesWorkspace').bind()} /> */}
               </div>
             )}
 
@@ -976,7 +976,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <Toggle {...form.$('notifyTaskBarOnMessage').bind()} />
                 )}
 
-                <Toggle {...form.$('isTwoFactorAutoCatcherEnabled').bind()} />
+                {/* <Toggle {...form.$('isTwoFactorAutoCatcherEnabled').bind()} />
 
                 {isTwoFactorAutoCatcherEnabled && (
                   <Input
@@ -985,9 +985,9 @@ class EditSettingsForm extends Component<IProps, IState> {
                   />
                 )}
 
-                <Hr />
+                <Hr /> */}
 
-                <Select field={form.$('webRTCIPHandlingPolicy')} />
+                {/* <Select field={form.$('webRTCIPHandlingPolicy')} />
 
                 <Toggle {...form.$('sentry').bind()} />
                 <p className="settings__help">
@@ -1006,9 +1006,9 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>
 
-                <Hr />
+                <Hr /> */}
 
-                <Toggle {...form.$('isLockingFeatureEnabled').bind()} />
+                {/* <Toggle {...form.$('isLockingFeatureEnabled').bind()} />
                 {isLockingFeatureEnabled && (
                   <>
                     {isMac && systemPreferences.canPromptTouchID() && (
@@ -1050,7 +1050,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                       lockShortcut: `${lockFerdiumShortcutKey(false)}`,
                     })}
                   </span>
-                </p>
+                </p> */}
               </div>
             )}
 
@@ -1081,7 +1081,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Hr />
 
-                <Toggle {...form.$('enableTranslator').bind()} />
+                {/* <Toggle {...form.$('enableTranslator').bind()} />
 
                 {form.$('enableTranslator').value && (
                   <Select field={form.$('translatorEngine')} />
@@ -1100,14 +1100,13 @@ class EditSettingsForm extends Component<IProps, IState> {
                 >
                   {intl.formatMessage(messages.translationHelp)}{' '}
                   <Icon icon={mdiOpenInNew} />
-                </a>
+                </a> */}
               </div>
             )}
 
-            {/* Advanced */}
-            {this.state.activeSetttingsTab === 'advanced' && (
+            {/* {this.state.activeSetttingsTab === 'advanced' && (
               <div>
-                <H2 className="settings__section_header">
+                <H2 className="settings__section-header">
                   {intl.formatMessage(messages.sectionAdvanced)}
                 </H2>
 
@@ -1304,10 +1303,10 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <Toggle {...form.$('activateServiceUsesAlt').bind()} />
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Updates */}
-            {this.state.activeSetttingsTab === 'updates' && (
+            {/* {this.state.activeSetttingsTab === 'updates' && (
               <div>
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionUpdates)}
@@ -1416,7 +1415,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   </a>
                 </p>
               </div>
-            )}
+            )} */}
           </form>
         </div>
       </div>

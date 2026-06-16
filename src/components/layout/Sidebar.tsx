@@ -85,7 +85,7 @@ interface IProps extends WrappedComponentProps {
   showServiceNameSetting: boolean;
   showMessageBadgesEvenWhenMuted: boolean;
   isAppMuted: boolean;
-  // eslint-disable-next-line react/no-unused-prop-types
+
   isMenuCollapsed: boolean;
   isWorkspaceDrawerOpen: boolean;
   isTodosServiceActive: boolean;
@@ -96,7 +96,7 @@ interface IProps extends WrappedComponentProps {
   toggleCollapseMenu: () => void;
   openSettings: (args: { path: string }) => void;
   openDownloads: (args: { path: string }) => void;
-  // eslint-disable-next-line react/no-unused-prop-types
+
   closeSettings: () => void;
   setActive: (args: { serviceId: string }) => void;
   reorder: (args: { oldIndex: number; newIndex: number }) => void;

@@ -142,7 +142,7 @@ module.exports = {
     'react/function-component-definition': 0,
     'react/default-props-match-prop-types': 0,
     'react/require-default-props': 0,
-    'react/no-unused-prop-types': 1,
+    'react/no-unused-prop-types': 0,
     'react/no-deprecated': 1,
 // eslint-plugin-jsx-a11y
     'jsx-a11y/click-events-have-key-events': 1,

@@ -38,7 +38,6 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
-import { migrateUserData } from './electron/dataMigration';
 import handleDeepLink from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
@@ -574,8 +573,6 @@ app.commandLine.appendSwitch('disable-features', 'CrossOriginOpenerPolicy');
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  await migrateUserData();
-
   // force app to live in /Applications
   enforceMacOSAppLocation();
 

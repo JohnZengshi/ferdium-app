@@ -1445,7 +1445,23 @@ export default class ServicesStore extends TypedStore {
       const isMuted = isAppMuted || service.isMuted;
 
       if (isAttached && service.webview) {
-        service.webview.audioMuted = isMuted;
+        try {
+          service.webview.audioMuted = isMuted;
+        } catch {
+          // eslint-disable-next-line unicorn/consistent-function-scoping
+          const applyMute = () => {
+            try {
+              if (service.webview) {
+                service.webview.audioMuted = isMuted;
+              }
+            } catch {
+              // no-op
+            }
+          };
+          service.webview.addEventListener('dom-ready', applyMute, {
+            once: true,
+          });
+        }
       }
     }
   }

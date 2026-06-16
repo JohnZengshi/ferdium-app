@@ -222,8 +222,7 @@ interface ResumeTabProps {
     title: string;
     description: string;
     iconBg: string;
-    iconColor: string;
-    iconText: string;
+    iconSrc: string;
   }[];
   employeeName?: string;
   employeeRole?: string;
@@ -338,7 +337,7 @@ class ResumeTab extends Component<IProps> {
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <UserIcon />
+              <UserIcon className="text-white" />
             </div>
           </div>
           <span className="text-[20px] font-bold text-primary">
@@ -374,7 +373,7 @@ class ResumeTab extends Component<IProps> {
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <FolderOpenIcon />
+              <FolderOpenIcon className="text-white" />
             </div>
           </div>
           <span className="text-[20px] font-bold text-primary">
@@ -662,37 +661,32 @@ class ResumeTab extends Component<IProps> {
       {
         title: intl.formatMessage(messages.compRiskIdentification),
         description: intl.formatMessage(messages.compRiskIdentificationDesc),
-        iconBg: 'bg-error-light',
-        iconColor: 'text-error',
-        iconText: '⚠',
+        iconBg: '#FFF1F0',
+        iconSrc: './assets/icons/risk-identification.svg',
       },
       {
         title: intl.formatMessage(messages.compBoundaryControl),
         description: intl.formatMessage(messages.compBoundaryControlDesc),
-        iconBg: 'bg-brand-light',
-        iconColor: 'text-brand',
-        iconText: '◈',
+        iconBg: '#E8F5FF',
+        iconSrc: './assets/icons/boundary-control.svg',
       },
       {
         title: intl.formatMessage(messages.compHumanHandover),
         description: intl.formatMessage(messages.compHumanHandoverDesc),
-        iconBg: 'bg-warning-light',
-        iconColor: 'text-warning',
-        iconText: '◎',
+        iconBg: '#FFF7E6',
+        iconSrc: './assets/icons/human-handover.svg',
       },
       {
         title: intl.formatMessage(messages.compHighIntentAlert),
         description: intl.formatMessage(messages.compHighIntentAlertDesc),
-        iconBg: 'bg-success-light',
-        iconColor: 'text-success',
-        iconText: '◆',
+        iconBg: '#F0FFF0',
+        iconSrc: './assets/icons/high-intent-alert.svg',
       },
       {
         title: intl.formatMessage(messages.compSessionPause),
         description: intl.formatMessage(messages.compSessionPauseDesc),
-        iconBg: 'bg-purple-50',
-        iconColor: 'text-purple-600',
-        iconText: '■',
+        iconBg: '#F3F0FF',
+        iconSrc: './assets/icons/session-pause.svg',
       },
     ];
     return (
@@ -700,7 +694,7 @@ class ResumeTab extends Component<IProps> {
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <LockOnIcon />
+              <LockOnIcon className="text-white" />
             </div>
           </div>
           <span className="text-[20px] font-bold text-primary">
@@ -714,9 +708,18 @@ class ResumeTab extends Component<IProps> {
               className="flex items-start gap-[16px] rounded-[10px] border border-solid border-line bg-container p-[16px]"
             >
               <div
-                className={`flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-[8px] text-[20px] ${cap.iconBg} ${cap.iconColor}`}
+                className="flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-[8px] text-[20px]"
+                style={{ backgroundColor: cap.iconBg }}
               >
-                {cap.iconText}
+                {cap.iconSrc.endsWith('.svg') ? (
+                  <img
+                    src={cap.iconSrc}
+                    alt={cap.title}
+                    className="h-[24px] w-[24px]"
+                  />
+                ) : (
+                  cap.iconSrc
+                )}
               </div>
               <div className="flex-1">
                 <span className="block text-[16px] font-bold leading-[22px] text-primary">

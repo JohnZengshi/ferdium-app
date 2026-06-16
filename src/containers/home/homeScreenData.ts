@@ -20,7 +20,7 @@ export interface EmployeeResume {
     title: string;
     description: string;
     iconBg: string;
-    iconText: string;
+    iconSrc: string;
   }[];
   avatarSrc?: string;
   employeeRole?: string;
@@ -1176,7 +1176,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#FFF1F0',
-          iconText: '⚠',
+          iconSrc: './assets/icons/Frame1.svg',
         },
         {
           title: intl.formatMessage({
@@ -1188,7 +1188,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#E8F5FF',
-          iconText: '◈',
+          iconSrc: './assets/icons/Frame2.svg',
         },
         {
           title: intl.formatMessage({
@@ -1200,7 +1200,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#FFF7E6',
-          iconText: '◎',
+          iconSrc: './assets/icons/Frame3.svg',
         },
         {
           title: intl.formatMessage({
@@ -1212,7 +1212,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#F0FFF0',
-          iconText: '◆',
+          iconSrc: './assets/icons/Frame4.svg',
         },
         {
           title: intl.formatMessage({
@@ -1224,7 +1224,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#F3F0FF',
-          iconText: '■',
+          iconSrc: './assets/icons/Frame5.svg',
         },
       ],
     },
@@ -1291,31 +1291,31 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
           title: intl.formatMessage(messages.employeeMikeComp1Title),
           description: intl.formatMessage(messages.employeeMikeComp1Desc),
           iconBg: '#FFF1F0',
-          iconText: '🔔',
+          iconSrc: '🔔',
         },
         {
           title: intl.formatMessage(messages.employeeMikeComp2Title),
           description: intl.formatMessage(messages.employeeMikeComp2Desc),
           iconBg: '#E8F5FF',
-          iconText: '📊',
+          iconSrc: '📊',
         },
         {
           title: intl.formatMessage(messages.employeeMikeComp3Title),
           description: intl.formatMessage(messages.employeeMikeComp3Desc),
           iconBg: '#FFF7E6',
-          iconText: '⚠',
+          iconSrc: '⚠',
         },
         {
           title: intl.formatMessage(messages.employeeMikeComp4Title),
           description: intl.formatMessage(messages.employeeMikeComp4Desc),
           iconBg: '#F0FFF0',
-          iconText: '📈',
+          iconSrc: '📈',
         },
         {
           title: intl.formatMessage(messages.employeeMikeComp5Title),
           description: intl.formatMessage(messages.employeeMikeComp5Desc),
           iconBg: '#F3F0FF',
-          iconText: '💌',
+          iconSrc: '💌',
         },
       ],
     },
@@ -1383,31 +1383,31 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
           title: intl.formatMessage(messages.employeeAliceComp1Title),
           description: intl.formatMessage(messages.employeeAliceComp1Desc),
           iconBg: '#FFF1F0',
-          iconText: '✍',
+          iconSrc: '✍',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp2Title),
           description: intl.formatMessage(messages.employeeAliceComp2Desc),
           iconBg: '#E8F5FF',
-          iconText: '🎯',
+          iconSrc: '🎯',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp3Title),
           description: intl.formatMessage(messages.employeeAliceComp3Desc),
           iconBg: '#FFF7E6',
-          iconText: '📊',
+          iconSrc: '📊',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp4Title),
           description: intl.formatMessage(messages.employeeAliceComp4Desc),
           iconBg: '#F0FFF0',
-          iconText: '📋',
+          iconSrc: '📋',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp5Title),
           description: intl.formatMessage(messages.employeeAliceComp5Desc),
           iconBg: '#F3F0FF',
-          iconText: '👤',
+          iconSrc: '👤',
         },
       ],
     },
@@ -1476,31 +1476,31 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
           title: intl.formatMessage(messages.employeeLilyComp1Title),
           description: intl.formatMessage(messages.employeeLilyComp1Desc),
           iconBg: '#FFF1F0',
-          iconText: '⚡',
+          iconSrc: '⚡',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp2Title),
           description: intl.formatMessage(messages.employeeLilyComp2Desc),
           iconBg: '#E8F5FF',
-          iconText: '📚',
+          iconSrc: '📚',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp3Title),
           description: intl.formatMessage(messages.employeeLilyComp3Desc),
           iconBg: '#FFF7E6',
-          iconText: '🧭',
+          iconSrc: '🧭',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp4Title),
           description: intl.formatMessage(messages.employeeLilyComp4Desc),
           iconBg: '#F0FFF0',
-          iconText: '💰',
+          iconSrc: '💰',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp5Title),
           description: intl.formatMessage(messages.employeeLilyComp5Desc),
           iconBg: '#F3F0FF',
-          iconText: '🔄',
+          iconSrc: '🔄',
         },
       ],
     },
@@ -1569,31 +1569,31 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
           title: intl.formatMessage(messages.employeeAllenComp1Title),
           description: intl.formatMessage(messages.employeeAllenComp1Desc),
           iconBg: '#FFF1F0',
-          iconText: '🌐',
+          iconSrc: '🌐',
         },
         {
           title: intl.formatMessage(messages.employeeAllenComp2Title),
           description: intl.formatMessage(messages.employeeAllenComp2Desc),
           iconBg: '#E8F5FF',
-          iconText: '🔍',
+          iconSrc: '🔍',
         },
         {
           title: intl.formatMessage(messages.employeeAllenComp3Title),
           description: intl.formatMessage(messages.employeeAllenComp3Desc),
           iconBg: '#FFF7E6',
-          iconText: '⚖',
+          iconSrc: '⚖',
         },
         {
           title: intl.formatMessage(messages.employeeAllenComp4Title),
           description: intl.formatMessage(messages.employeeAllenComp4Desc),
           iconBg: '#F0FFF0',
-          iconText: '👤',
+          iconSrc: '👤',
         },
         {
           title: intl.formatMessage(messages.employeeAllenComp5Title),
           description: intl.formatMessage(messages.employeeAllenComp5Desc),
           iconBg: '#F3F0FF',
-          iconText: '📨',
+          iconSrc: '📨',
         },
       ],
     },
@@ -1662,31 +1662,31 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
           title: intl.formatMessage(messages.employeeAmyComp1Title),
           description: intl.formatMessage(messages.employeeAmyComp1Desc),
           iconBg: '#FFF1F0',
-          iconText: '🤝',
+          iconSrc: '🤝',
         },
         {
           title: intl.formatMessage(messages.employeeAmyComp2Title),
           description: intl.formatMessage(messages.employeeAmyComp2Desc),
           iconBg: '#E8F5FF',
-          iconText: '✉',
+          iconSrc: '✉',
         },
         {
           title: intl.formatMessage(messages.employeeAmyComp3Title),
           description: intl.formatMessage(messages.employeeAmyComp3Desc),
           iconBg: '#FFF7E6',
-          iconText: '📅',
+          iconSrc: '📅',
         },
         {
           title: intl.formatMessage(messages.employeeAmyComp4Title),
           description: intl.formatMessage(messages.employeeAmyComp4Desc),
           iconBg: '#F0FFF0',
-          iconText: '📄',
+          iconSrc: '📄',
         },
         {
           title: intl.formatMessage(messages.employeeAmyComp5Title),
           description: intl.formatMessage(messages.employeeAmyComp5Desc),
           iconBg: '#F3F0FF',
-          iconText: '🔗',
+          iconSrc: '🔗',
         },
       ],
     },

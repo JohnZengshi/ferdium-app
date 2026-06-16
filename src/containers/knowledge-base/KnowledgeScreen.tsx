@@ -174,7 +174,7 @@ const messages = defineMessages({
   },
   socialAccountPersona: {
     id: 'knowledgeScreen.socialAccountPersona',
-    defaultMessage: 'Social Account Persona',
+    defaultMessage: 'Social Persona',
   },
   smartImportPlaceholder: {
     id: 'knowledgeScreen.smartImportPlaceholder',

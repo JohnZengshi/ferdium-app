@@ -586,7 +586,7 @@
   "knowledgeScreen.smartImportAndRecognize": "Recognize & Import",
   "knowledgeScreen.smartImportPlaceholder": "Paste text here to automatically recognize persona information\n\nExample: Amy is a 24-year-old unmarried female sales representative who is deeply involved in the entire project process, responsible for lead generation, client engagement, relationship management, needs analysis, product presentation, objection handling, and business negotiation, leading project signing and implementation.\n\nAmy is a 24-year-old unmarried female sales representative...",
   "knowledgeScreen.smartImportSuccess": "Smart import successful",
-  "knowledgeScreen.socialAccountPersona": "Social Account Persona",
+  "knowledgeScreen.socialAccountPersona": "Social Persona",
   "knowledgeScreen.tagActiveSocial": "High Activity Social Account",
   "knowledgeScreen.tagBusiness": "Business Style",
   "knowledgeScreen.tagFemale": "Female",

@@ -1,5 +1,6 @@
 import { Menu, dialog, app as electronApp } from '@electron/remote';
 import { clipboard, ipcRenderer } from 'electron';
+import { debounce } from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
@@ -283,8 +284,7 @@ interface StatusTag {
 interface BindAccountFormValues {
   remark: string;
   proxyAutoFill: boolean;
-  proxyAutoFillContent: string;
-  proxyType: 'http' | 'socks5';
+  proxyType: string;
   proxyHost: string;
   proxyPort: string;
   proxyUser: string;
@@ -292,6 +292,35 @@ interface BindAccountFormValues {
   cookieAutoFill: boolean;
   cookie: string;
 }
+
+interface ParsedProxy {
+  isEnabled: boolean;
+  protocol?: string;
+  host?: string;
+  port?: string;
+  user?: string;
+  password?: string;
+}
+
+const parseProxyString = (content: string): ParsedProxy => {
+  if (!content?.trim()) return { isEnabled: false };
+  const regex =
+    /^(?<protocol>https?|socks5):\/\/(?:(?<user>[^:]+):(?<password>[^@]+)@)?(?<host>[^:]+):(?<port>\d+)$/;
+  const match = content.trim().match(regex);
+  if (match?.groups) {
+    return {
+      isEnabled: true,
+      protocol:
+        match.groups.protocol === 'https' ? 'http' : match.groups.protocol,
+      host: match.groups.host,
+      port: match.groups.port,
+      user: match.groups.user || '',
+      password: match.groups.password || '',
+    };
+  }
+  return { isEnabled: false };
+};
+
 const getStatusTag = (
   sessionStatus: WhatsAppSessionStatus,
   intl: IntlShape,
@@ -645,7 +674,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
       bindForm: {
         remark: '',
         proxyAutoFill: true,
-        proxyAutoFillContent: '',
         proxyType: 'http',
         proxyHost: '',
         proxyPort: '',
@@ -656,6 +684,10 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
       },
       editingService: null,
     };
+  }
+
+  componentWillUnmount(): void {
+    this.handleAutoFillChange.cancel();
   }
 
   onSortEnd = ({
@@ -795,7 +827,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         bindForm: {
           remark: editingService.name || '',
           proxyAutoFill: proxy.isEnabled || false,
-          proxyAutoFillContent: '',
           proxyType: proxy.protocol || 'http',
           proxyHost: proxy.host || '',
           proxyPort: proxy.port || '',
@@ -812,7 +843,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         bindForm: {
           remark: '',
           proxyAutoFill: true,
-          proxyAutoFillContent: '',
           proxyType: 'http',
           proxyHost: '',
           proxyPort: '',
@@ -829,8 +859,44 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     this.setState({ isBindDrawerVisible: false, editingService: null });
   };
 
+  applyProxyAutoFill = (content: string): void => {
+    const parsed = parseProxyString(content);
+    if (parsed.isEnabled) {
+      this.setState(prevState => {
+        const { bindForm } = prevState;
+        const newType = parsed.protocol || 'http';
+        const newHost = parsed.host || '';
+        const newPort = parsed.port || '';
+        const newUser = parsed.user || '';
+        const newPassword = parsed.password || '';
+
+        if (
+          bindForm.proxyType !== newType ||
+          bindForm.proxyHost !== newHost ||
+          bindForm.proxyPort !== newPort ||
+          bindForm.proxyUser !== newUser ||
+          bindForm.proxyPassword !== newPassword
+        ) {
+          return {
+            bindForm: {
+              ...bindForm,
+              proxyType: newType,
+              proxyHost: newHost,
+              proxyPort: newPort,
+              proxyUser: newUser,
+              proxyPassword: newPassword,
+            },
+          };
+        }
+        return null;
+      });
+    }
+  };
+
+  handleAutoFillChange = debounce(this.applyProxyAutoFill, 300);
+
   handleBindFormChange = (
-    field: keyof BindAccountFormValues,
+    field: keyof Omit<BindAccountFormValues, 'proxyAutoFillContent'>,
     value: string | boolean,
   ) => {
     this.setState(prevState => ({
@@ -881,6 +947,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
   handleProxyCheck = async () => {
     const { bindForm } = this.state;
+
     if (!bindForm.proxyHost || !bindForm.proxyPort) {
       MessagePlugin.warning('请先填写代理地址和端口');
       return;
@@ -1104,13 +1171,9 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                         placeholder={intl.formatMessage(
                           messages.autoFillPlaceholder,
                         )}
-                        value={this.state.bindForm.proxyAutoFillContent}
-                        onChange={val =>
-                          this.handleBindFormChange('proxyAutoFillContent', val)
-                        }
+                        onChange={val => this.handleAutoFillChange(val)}
                       />
                     </div>
-
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
                       <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyType)}
@@ -1118,19 +1181,13 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                       <Select
                         className="!w-[406px]"
                         value={this.state.bindForm.proxyType}
-                        onChange={val =>
-                          this.handleBindFormChange(
-                            'proxyType',
-                            typeof val === 'string' ? val : 'http',
-                          )
-                        }
+                        disabled
                         options={[
                           { label: 'HTTP', value: 'http' },
                           { label: 'SOCKS5', value: 'socks5' },
                         ]}
                       />
-                    </div>
-
+                    </div>{' '}
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
                       <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyHost)}
@@ -1146,7 +1203,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                         }
                       />
                     </div>
-
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
                       <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyPort)}
@@ -1162,7 +1218,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                         }
                       />
                     </div>
-
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
                       <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyUser)}
@@ -1178,7 +1233,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                         }
                       />
                     </div>
-
                     <div className="flex items-start gap-x-[12px] mb-[16px]">
                       <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                         {intl.formatMessage(messages.proxyPassword)}
@@ -1195,7 +1249,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                         }
                       />
                     </div>
-
                     <div className="ml-[94px]">
                       <Button
                         className="min-w-[118px] !h-[40px] !bg-brand !text-white !font-medium"

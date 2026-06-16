@@ -5,7 +5,6 @@ import {
   ChevronLeftIcon,
   EditIcon,
   FileIcon,
-  FolderIcon,
   HomeIcon,
   UserIcon,
   UsergroupIcon,
@@ -55,7 +54,7 @@ const QUICK_TAGS = [
   { key: 'west', labelKey: 'tagWestern' },
   { key: 'business-2', labelKey: 'tagBusiness' },
   { key: 'active', labelKey: 'tagActiveSocial' },
-  { key: 'social-2', labelKey: 'tagSocial' },
+  // { key: 'social-2', labelKey: 'tagSocial' },
 ] as const;
 
 const sleep = (ms: number) =>
@@ -1441,7 +1440,7 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 {/* 人设照片 */}
-                <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
+                {/* <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <FolderIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
@@ -1464,7 +1463,7 @@ const KnowledgeScreen: React.FC = () => {
                       {intl.formatMessage(messages.uploadPhotoHint)}
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 

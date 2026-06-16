@@ -363,11 +363,11 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         {stores.user.waAkgEmail ||
                           `${stores.user.data.firstname} ${stores.user.data.lastname}`}
                       </span>
-                      <img
+                      {/* <img
                         src="./assets/images/topbar-user-chevron.svg"
                         alt=""
                         className="w-[16px] h-[16px]"
-                      />
+                      /> */}
                       <button
                         type="button"
                         onClick={() =>

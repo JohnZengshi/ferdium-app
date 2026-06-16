@@ -1033,10 +1033,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     });
 
     socket.on('connect_error', err => {
-      debug(
-        `[WA-AKG] Socket.IO connect error for ${serviceId}:`,
-        err.message,
-      );
+      debug(`[WA-AKG] Socket.IO connect error for ${serviceId}:`, err.message);
       debug('Socket.IO connection error for session', serviceId, err.message);
       this._handleSocketConnectionUpdate(serviceId, {
         status: WA_SESSION_STATUS.SERVER_ERROR,

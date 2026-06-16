@@ -1328,5 +1328,8 @@
   "ruleListEditor.saveSuccess": "保存成功",
   "ruleListEditor.loadFailed": "加载规则失败",
   "ruleListEditor.saveFailed": "保存规则失败",
-  "ruleListEditor.deleteFailed": "删除规则失败"
+  "ruleListEditor.deleteFailed": "删除规则失败",
+  "ruleListEditor.suggestedRulesTitle": "推荐规则",
+  "ruleListEditor.suggestedRulesHint": "点击展开并选择推荐规则添加",
+  "ruleListEditor.suggestedRulesCollapse": "收起"
 }

@@ -29,8 +29,16 @@ import type {
   HandoffListResponse,
   HandoffResolveRequest,
   HealthCheckResponse,
+  KnowledgeAssignRequest,
+  KnowledgeAssignmentResponse,
+  KnowledgeCollectionCreateRequest,
+  KnowledgeCollectionListResponse,
+  KnowledgeCollectionResponse,
+  KnowledgeDeleteResponse,
+  KnowledgeOverviewResponse,
   ListAdminsApiV1AdminAdminsGetParams,
   ListAuditLogsApiV1AdminAuditAuditLogsGetParams,
+  ListCollectionsApiV1AdminKnowledgeCollectionsGetParams,
   ListConversationsApiV1AdminOverviewConversationsGetParams,
   ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams,
   ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams,
@@ -1765,3 +1773,297 @@ export const getMemoryOverviewApiV1AdminMemoryOverviewGet = async (
     },
   );
 };
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse200 = {
+  data: KnowledgeOverviewResponse;
+  status: 200;
+};
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponseSuccess =
+  knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse200 & {
+    headers: Headers;
+  };
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse =
+  knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponseSuccess;
+
+export const getKnowledgeOverviewApiV1AdminKnowledgeOverviewGetUrl = () => {
+  return `http://10.0.0.228:8000/api/v1/admin/knowledge/overview`;
+};
+
+/**
+ * 知识库全局统计概览。
+ * @summary Knowledge Overview
+ */
+export const knowledgeOverviewApiV1AdminKnowledgeOverviewGet = async (
+  options?: RequestInit,
+): Promise<knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse> => {
+  return useCustomInstance<knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse>(
+    getKnowledgeOverviewApiV1AdminKnowledgeOverviewGetUrl(),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse200 = {
+  data: KnowledgeCollectionListResponse;
+  status: 200;
+};
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse422 = {
+  data: HTTPValidationError;
+  status: 422;
+};
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponseSuccess =
+  listCollectionsApiV1AdminKnowledgeCollectionsGetResponse200 & {
+    headers: Headers;
+  };
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponseError =
+  listCollectionsApiV1AdminKnowledgeCollectionsGetResponse422 & {
+    headers: Headers;
+  };
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse =
+  | listCollectionsApiV1AdminKnowledgeCollectionsGetResponseSuccess
+  | listCollectionsApiV1AdminKnowledgeCollectionsGetResponseError;
+
+export const getListCollectionsApiV1AdminKnowledgeCollectionsGetUrl = (
+  params?: ListCollectionsApiV1AdminKnowledgeCollectionsGetParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value));
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `http://10.0.0.228:8000/api/v1/admin/knowledge/collections?${stringifiedParams}`
+    : `http://10.0.0.228:8000/api/v1/admin/knowledge/collections`;
+};
+
+/**
+ * 跨租户分页列出知识库集合。
+ * @summary List Collections
+ */
+export const listCollectionsApiV1AdminKnowledgeCollectionsGet = async (
+  params?: ListCollectionsApiV1AdminKnowledgeCollectionsGetParams,
+  options?: RequestInit,
+): Promise<listCollectionsApiV1AdminKnowledgeCollectionsGetResponse> => {
+  return useCustomInstance<listCollectionsApiV1AdminKnowledgeCollectionsGetResponse>(
+    getListCollectionsApiV1AdminKnowledgeCollectionsGetUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
+
+export type createCollectionApiV1AdminKnowledgeCollectionsPostResponse201 = {
+  data: KnowledgeCollectionResponse;
+  status: 201;
+};
+
+export type createCollectionApiV1AdminKnowledgeCollectionsPostResponse422 = {
+  data: HTTPValidationError;
+  status: 422;
+};
+
+export type createCollectionApiV1AdminKnowledgeCollectionsPostResponseSuccess =
+  createCollectionApiV1AdminKnowledgeCollectionsPostResponse201 & {
+    headers: Headers;
+  };
+export type createCollectionApiV1AdminKnowledgeCollectionsPostResponseError =
+  createCollectionApiV1AdminKnowledgeCollectionsPostResponse422 & {
+    headers: Headers;
+  };
+
+export type createCollectionApiV1AdminKnowledgeCollectionsPostResponse =
+  | createCollectionApiV1AdminKnowledgeCollectionsPostResponseSuccess
+  | createCollectionApiV1AdminKnowledgeCollectionsPostResponseError;
+
+export const getCreateCollectionApiV1AdminKnowledgeCollectionsPostUrl = () => {
+  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections`;
+};
+
+/**
+ * 创建共享知识库集合。
+ * @summary Create Collection
+ */
+export const createCollectionApiV1AdminKnowledgeCollectionsPost = async (
+  knowledgeCollectionCreateRequest: KnowledgeCollectionCreateRequest,
+  options?: RequestInit,
+): Promise<createCollectionApiV1AdminKnowledgeCollectionsPostResponse> => {
+  return useCustomInstance<createCollectionApiV1AdminKnowledgeCollectionsPostResponse>(
+    getCreateCollectionApiV1AdminKnowledgeCollectionsPostUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(knowledgeCollectionCreateRequest),
+    },
+  );
+};
+
+export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse200 =
+  {
+    data: KnowledgeDeleteResponse;
+    status: 200;
+  };
+
+export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
+
+export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseSuccess =
+  deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse200 & {
+    headers: Headers;
+  };
+export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseError =
+  deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse422 & {
+    headers: Headers;
+  };
+
+export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse =
+
+    | deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseSuccess
+    | deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseError;
+
+export const getDeleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteUrl =
+  (collectionId: string) => {
+    return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}`;
+  };
+
+/**
+ * 软删除知识库集合并批量撤销所有分配。
+ * @summary Delete Collection
+ */
+export const deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDelete =
+  async (
+    collectionId: string,
+    options?: RequestInit,
+  ): Promise<deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse> => {
+    return useCustomInstance<deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse>(
+      getDeleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteUrl(
+        collectionId,
+      ),
+      {
+        ...options,
+        method: 'DELETE',
+      },
+    );
+  };
+
+export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse201 =
+  {
+    data: KnowledgeAssignmentResponse;
+    status: 201;
+  };
+
+export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
+
+export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseSuccess =
+  assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse201 & {
+    headers: Headers;
+  };
+export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseError =
+  assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse422 & {
+    headers: Headers;
+  };
+
+export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse =
+
+    | assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseSuccess
+    | assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseError;
+
+export const getAssignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostUrl =
+  (collectionId: string) => {
+    return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/assign`;
+  };
+
+/**
+ * 将共享集合分配给主账号。
+ * @summary Assign Collection
+ */
+export const assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPost =
+  async (
+    collectionId: string,
+    knowledgeAssignRequest: KnowledgeAssignRequest,
+    options?: RequestInit,
+  ): Promise<assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse> => {
+    return useCustomInstance<assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse>(
+      getAssignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostUrl(
+        collectionId,
+      ),
+      {
+        ...options,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...options?.headers },
+        body: JSON.stringify(knowledgeAssignRequest),
+      },
+    );
+  };
+
+export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse200 =
+  {
+    data: KnowledgeDeleteResponse;
+    status: 200;
+  };
+
+export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse422 =
+  {
+    data: HTTPValidationError;
+    status: 422;
+  };
+
+export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseSuccess =
+  revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse200 & {
+    headers: Headers;
+  };
+export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseError =
+  revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse422 & {
+    headers: Headers;
+  };
+
+export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse =
+
+    | revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseSuccess
+    | revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseError;
+
+export const getRevokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteUrl =
+  (collectionId: string, ownerId: string) => {
+    return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/assign/${ownerId}`;
+  };
+
+/**
+ * 撤销知识库集合分配。
+ * @summary Revoke Assignment
+ */
+export const revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDelete =
+  async (
+    collectionId: string,
+    ownerId: string,
+    options?: RequestInit,
+  ): Promise<revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse> => {
+    return useCustomInstance<revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse>(
+      getRevokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteUrl(
+        collectionId,
+        ownerId,
+      ),
+      {
+        ...options,
+        method: 'DELETE',
+      },
+    );
+  };

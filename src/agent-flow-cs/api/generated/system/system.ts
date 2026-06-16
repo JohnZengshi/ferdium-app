@@ -23,7 +23,7 @@ export const getHealthzHealthzGetUrl = () => {
 };
 
 /**
- * 提供基础存活探针，供本地检查和编排系统使用。
+ * 存活探针：检查进程可达性。
  * @summary Healthz
  */
 export const healthzHealthzGet = async (
@@ -31,6 +31,38 @@ export const healthzHealthzGet = async (
 ): Promise<healthzHealthzGetResponse> => {
   return useCustomInstance<healthzHealthzGetResponse>(
     getHealthzHealthzGetUrl(),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
+
+export type readinessHealthzReadyGetResponse200 = {
+  data: unknown;
+  status: 200;
+};
+
+export type readinessHealthzReadyGetResponseSuccess =
+  readinessHealthzReadyGetResponse200 & {
+    headers: Headers;
+  };
+export type readinessHealthzReadyGetResponse =
+  readinessHealthzReadyGetResponseSuccess;
+
+export const getReadinessHealthzReadyGetUrl = () => {
+  return `http://10.0.0.228:8000/healthz/ready`;
+};
+
+/**
+ * 就绪探针：检查关键依赖（DB、Redis）是否可达。
+ * @summary Readiness
+ */
+export const readinessHealthzReadyGet = async (
+  options?: RequestInit,
+): Promise<readinessHealthzReadyGetResponse> => {
+  return useCustomInstance<readinessHealthzReadyGetResponse>(
+    getReadinessHealthzReadyGetUrl(),
     {
       ...options,
       method: 'GET',

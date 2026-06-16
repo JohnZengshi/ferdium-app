@@ -79,7 +79,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
       if (!localServerStarted) {
         // Set flag immediately to prevent race condition
         localServerStarted = true;
-        
+
         setWaAkgProfileEmail(data?.waAkgEmail);
 
         // Find next unused port for server
@@ -89,7 +89,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
           port += 1;
         }
         token = randomBytes(256 / 8).toString('base64url');
-        
+
         try {
           await server(userDataPath(), port, token);
         } catch (error) {

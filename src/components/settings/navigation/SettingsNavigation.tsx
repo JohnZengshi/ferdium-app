@@ -150,7 +150,7 @@ class SettingsNavigation extends Component<IProps> {
           <span className="badge">{workspaceCount}</span>
         </NavLink>
         */}
-        {!isUsingWithoutAccount && (
+        {/* {!isUsingWithoutAccount && (
           <NavLink
             to="/settings/user"
             className={({ isActive }) =>
@@ -161,7 +161,7 @@ class SettingsNavigation extends Component<IProps> {
           >
             {intl.formatMessage(messages.account)}
           </NavLink>
-        )}
+        )} */}
         {isUsingFranzServer && (
           <NavLink
             to="/settings/team"

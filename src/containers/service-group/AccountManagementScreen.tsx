@@ -8,9 +8,10 @@ import {
   useState,
 } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { RefreshIcon } from 'tdesign-icons-react';
+import { EditIcon, RefreshIcon } from 'tdesign-icons-react';
 import {
   Button,
+  MessagePlugin,
   type PrimaryTableCol,
   Select,
   Table,
@@ -23,6 +24,7 @@ import type {
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import { getWhatsappBindingApiV1WhatsappBindGet } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import AvatarCell from '../../components/ui/AvatarCell';
+import EditServiceDrawer from '../../components/ui/EditServiceDrawer';
 import FilterToolbar from '../../components/ui/FilterToolbar';
 import {
   type MappedAccountStatus,
@@ -45,6 +47,14 @@ const messages = defineMessages({
   colCreatedAt: {
     id: 'accountMgmt.col.createdAt',
     defaultMessage: 'Created At',
+  },
+  colAction: {
+    id: 'accountMgmt.col.action',
+    defaultMessage: 'Actions',
+  },
+  edit: {
+    id: 'accountMgmt.edit',
+    defaultMessage: 'Edit',
   },
   statusOnline: { id: 'accountMgmt.status.online', defaultMessage: 'Online' },
   statusOffline: {
@@ -90,6 +100,14 @@ const messages = defineMessages({
     id: 'accountMgmt.filter.error',
     defaultMessage: 'Error',
   },
+  updateSuccess: {
+    id: 'accountMgmt.updateSuccess',
+    defaultMessage: 'Update successful',
+  },
+  updateFailed: {
+    id: 'accountMgmt.updateFailed',
+    defaultMessage: 'Update failed',
+  },
 });
 
 interface Account {
@@ -107,6 +125,7 @@ interface ServiceProxyConfig {
   host?: string;
   port?: string | number;
 }
+
 const formatProxy = (proxy: unknown): string => {
   if (!proxy || typeof proxy !== 'object') {
     return '';
@@ -125,9 +144,10 @@ const ACCOUNT_MANAGEMENT_TABLE_CLASS =
 
 interface IProps {
   stores?: any;
+  actions?: any;
 }
 
-function AccountManagementScreen({ stores }: IProps): ReactElement {
+function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
   const intl = useIntl();
 
   const [sessionCreatedAtMap, setSessionCreatedAtMap] = useState<
@@ -137,6 +157,9 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
     new Map(),
   );
   const [filterStatus, setFilterStatus] = useState<string | undefined>();
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
+  const [refreshVersion, setRefreshVersion] = useState(0);
 
   const allServices: Service[] = stores?.services?.all ?? [];
   const waStatuses: Map<string, WhatsAppSessionStatus> =
@@ -213,27 +236,27 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
     }
   }, [fetchAllPersonaBindings, allServices.length]);
 
-  const data: Account[] = useMemo(
-    () =>
-      allServices.map(service => {
-        const waStatus = waStatuses.get(service.id);
-        const status = getMappedStatus(waStatus);
+  // MobX observer will track observable properties (service.name, service.proxy)
+  // refreshVersion is used to force re-computation when needed
+  const data: Account[] = allServices.map(service => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    refreshVersion; // Force dependency on refreshVersion to trigger refresh
+    const waStatus = waStatuses.get(service.id);
+    const status = getMappedStatus(waStatus);
 
-        const proxyValue = formatProxy(service.proxy);
-        const createdAt = sessionCreatedAtMap.get(service.id) ?? '';
+    const proxyValue = formatProxy(service.proxy);
+    const createdAt = sessionCreatedAtMap.get(service.id) ?? '';
 
-        return {
-          id: service.id,
-          username: service.name,
-          phone: '',
-          status,
-          persona: personaNameMap.get(service.id) ?? '',
-          proxy: proxyValue,
-          createdAt,
-        };
-      }),
-    [allServices, waStatuses, sessionCreatedAtMap, personaNameMap],
-  );
+    return {
+      id: service.id,
+      username: service.name,
+      phone: '',
+      status,
+      persona: personaNameMap.get(service.id) ?? '',
+      proxy: proxyValue,
+      createdAt,
+    };
+  });
 
   // Filter data by status
   const filteredData = useMemo(() => {
@@ -243,6 +266,11 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
 
     return data.filter(account => account.status === filterStatus);
   }, [data, filterStatus]);
+
+  const handleEdit = useCallback((serviceId: string) => {
+    setEditingServiceId(serviceId);
+    setDrawerVisible(true);
+  }, []);
 
   const columns: PrimaryTableCol<Account>[] = useMemo(
     () => [
@@ -374,8 +402,26 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
           </span>
         ),
       },
+      {
+        colKey: 'action',
+        title: intl.formatMessage(messages.colAction),
+        width: 100,
+        fixed: 'right',
+        align: 'center',
+        cell: ({ row }) => (
+          <Button
+            theme="default"
+            variant="outline"
+            size="small"
+            icon={<EditIcon />}
+            onClick={() => handleEdit(row.id)}
+          >
+            {intl.formatMessage(messages.edit)}
+          </Button>
+        ),
+      },
     ],
-    [intl],
+    [intl, handleEdit],
   );
 
   const handleReset = useCallback(() => {
@@ -397,6 +443,49 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
     ],
     [intl],
   );
+
+  const editingService = useMemo(
+    () => allServices.find(s => s.id === editingServiceId) ?? null,
+    [allServices, editingServiceId],
+  );
+
+  const handleEditConfirm = useCallback(
+    async (data: { name: string; proxy: any }) => {
+      if (!editingServiceId) return;
+
+      try {
+        await actions?.service?.updateService?.({
+          serviceId: editingServiceId,
+          serviceData: {
+            name: data.name,
+            proxy: data.proxy,
+          },
+          redirect: false,
+        });
+
+        setDrawerVisible(false);
+        setEditingServiceId(null);
+        setRefreshVersion(v => v + 1); // Trigger data refresh
+
+        MessagePlugin.success({
+          content: intl.formatMessage(messages.updateSuccess),
+          duration: 3000,
+        });
+      } catch (error) {
+        console.error('Failed to update service:', error);
+        MessagePlugin.error({
+          content: intl.formatMessage(messages.updateFailed),
+          duration: 3000,
+        });
+      }
+    },
+    [actions, editingServiceId, intl],
+  );
+
+  const handleEditClose = useCallback(() => {
+    setDrawerVisible(false);
+    setEditingServiceId(null);
+  }, []);
 
   return (
     <div className="account-management-screen flex flex-1 flex-col bg-page p-[24px]">
@@ -453,9 +542,25 @@ function AccountManagementScreen({ stores }: IProps): ReactElement {
             pageSizeOptions: [10, 20, 50],
           }}
         />
+
+        <EditServiceDrawer
+          key={editingServiceId ?? 'closed'}
+          visible={drawerVisible}
+          initialData={
+            editingService
+              ? {
+                  name: editingService.name,
+                  proxy: editingService.proxy as ServiceProxyConfig | null,
+                  cookie: (editingService as { cookie?: string }).cookie || '',
+                }
+              : null
+          }
+          onClose={handleEditClose}
+          onConfirm={handleEditConfirm}
+        />
       </div>
     </div>
   );
 }
 
-export default inject('stores')(observer(AccountManagementScreen));
+export default inject('stores', 'actions')(observer(AccountManagementScreen));

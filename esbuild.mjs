@@ -164,7 +164,12 @@ const runEsbuild = async () => {
   log(chalk.blue('Starting with args'), myArgs);
 
   if (fs.existsSync(outDir)) {
-    fs.rmSync(outDir, { force: true, recursive: true });
+    // Clean contents but preserve directory inode —
+    // deleting the dir recreates a new inode, which breaks
+    // Chromium file:// origin localStorage persistence
+    for (const entry of fs.readdirSync(outDir)) {
+      fs.rmSync(path.join(outDir, entry), { force: true, recursive: true });
+    }
     log(chalk.blue('Cleaning'), outDir);
   }
   copyManualAssets({ isDev });

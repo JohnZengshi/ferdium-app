@@ -497,9 +497,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                       header: intl.formatMessage(
                         messages.bindPersonaDialogTitle,
                       ),
-                      cancelBtn: intl.formatMessage(
-                        messages.cancel,
-                      ),
+                      cancelBtn: intl.formatMessage(messages.cancel),
                       body: (
                         <Form colon labelWidth={130} className="py-[16px]">
                           <Form.FormItem

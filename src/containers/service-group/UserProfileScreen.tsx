@@ -84,6 +84,30 @@ const messages = defineMessages({
     id: 'userProfile.summaryEmpty',
     defaultMessage: 'No summary yet',
   },
+  intentHigh: {
+    id: 'userProfile.intentHigh',
+    defaultMessage: 'High Intent',
+  },
+  intentMedium: {
+    id: 'userProfile.intentMedium',
+    defaultMessage: 'Medium Intent',
+  },
+  intentLow: {
+    id: 'userProfile.intentLow',
+    defaultMessage: 'Low Intent',
+  },
+  valueHigh: {
+    id: 'userProfile.valueHigh',
+    defaultMessage: 'High Value',
+  },
+  valueMedium: {
+    id: 'userProfile.valueMedium',
+    defaultMessage: 'Medium Value',
+  },
+  valueLow: {
+    id: 'userProfile.valueLow',
+    defaultMessage: 'Low Value',
+  },
 });
 
 interface FanProfile {
@@ -147,16 +171,19 @@ function formatListValue(
     .join(separator);
 }
 
-function formatIntentLevel(value?: string | null): string {
+function formatIntentLevel(
+  value: string | null | undefined,
+  intl: ReturnType<typeof useIntl>,
+): string {
   switch (value) {
     case 'high': {
-      return '高意向';
+      return intl.formatMessage(messages.intentHigh);
     }
     case 'medium': {
-      return '中意向';
+      return intl.formatMessage(messages.intentMedium);
     }
     case 'low': {
-      return '低意向';
+      return intl.formatMessage(messages.intentLow);
     }
     default: {
       return '—';
@@ -179,15 +206,22 @@ function getIntentColor(value?: string | null): 'green' | 'orange' | 'red' {
 }
 
 function isHighCustomerValue(value?: string | null): boolean {
-  return value === 'high' || value === '高价值';
+  return value === 'high';
 }
 
-function mapProfileToFanProfile(profile: CustomerProfileResponse): FanProfile {
+function mapProfileToFanProfile(
+  profile: CustomerProfileResponse,
+  intl: ReturnType<typeof useIntl>,
+): FanProfile {
   const stage = formatListValue(profile.purchase_signals);
   const stageColor: 'blue' | 'orange' = stage === '—' ? 'orange' : 'blue';
   const tag = formatListValue(profile.tags);
-  const tagColor: 'orange' | 'red' = tag.includes('不匹配') ? 'red' : 'orange';
-  const intentLevel = formatIntentLevel(profile.intent_level);
+  const tagColor: 'orange' | 'red' = profile.tags?.some(
+    t => t === 'mismatch' || t === '不匹配',
+  )
+    ? 'red'
+    : 'orange';
+  const intentLevel = formatIntentLevel(profile.intent_level, intl);
   const intentColor = getIntentColor(profile.intent_level);
 
   return {
@@ -239,7 +273,7 @@ function UserProfileScreen(): ReactElement {
       const body =
         result.data as AppApiSchemasOwnersCustomerProfileListResponse;
       const items = (body.items || []).map(profile =>
-        mapProfileToFanProfile(profile),
+        mapProfileToFanProfile(profile, intl),
       );
       setData(items);
       setTotal(body.total);
@@ -249,7 +283,7 @@ function UserProfileScreen(): ReactElement {
     } finally {
       setLoading(false);
     }
-  }, [page, pageSize, searchText, filterStatus, filterPersona]);
+  }, [page, pageSize, searchText, filterStatus, filterPersona, intl]);
 
   useEffect(() => {
     fetchData();
@@ -450,9 +484,18 @@ function UserProfileScreen(): ReactElement {
                 onChange={val => setFilterStatus(val as string)}
                 clearable
                 options={[
-                  { label: '高意向', value: 'high' },
-                  { label: '中意向', value: 'medium' },
-                  { label: '低意向', value: 'low' },
+                  {
+                    label: intl.formatMessage(messages.intentHigh),
+                    value: 'high',
+                  },
+                  {
+                    label: intl.formatMessage(messages.intentMedium),
+                    value: 'medium',
+                  },
+                  {
+                    label: intl.formatMessage(messages.intentLow),
+                    value: 'low',
+                  },
                 ]}
               />
               <span className="text-[14px] leading-[22px] text-primary">
@@ -465,9 +508,18 @@ function UserProfileScreen(): ReactElement {
                 onChange={val => setFilterPersona(val as string)}
                 clearable
                 options={[
-                  { label: '高价值', value: 'high' },
-                  { label: '中价值', value: 'medium' },
-                  { label: '低价值', value: 'low' },
+                  {
+                    label: intl.formatMessage(messages.valueHigh),
+                    value: 'high',
+                  },
+                  {
+                    label: intl.formatMessage(messages.valueMedium),
+                    value: 'medium',
+                  },
+                  {
+                    label: intl.formatMessage(messages.valueLow),
+                    value: 'low',
+                  },
                 ]}
               />
               <Button theme="primary" onClick={handleSearch}>

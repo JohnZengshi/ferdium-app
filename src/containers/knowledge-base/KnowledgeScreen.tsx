@@ -43,6 +43,21 @@ import { getApiKey } from '../../whatsapp-automation/api/auth';
 const aiIllustration = 'assets/images/ai-illustration.png';
 const aiStars = 'assets/images/ai-stars.png';
 
+const QUICK_TAGS = [
+  { key: 'female', labelKey: 'tagFemale' },
+  { key: 'male', labelKey: 'tagMale' },
+  { key: 'young', labelKey: 'tagYoung' },
+  { key: 'business-1', labelKey: 'tagBusiness' },
+  { key: 'travel', labelKey: 'tagTravel' },
+  { key: 'food', labelKey: 'tagFood' },
+  { key: 'social-1', labelKey: 'tagSocial' },
+  { key: 'sea', labelKey: 'tagSoutheastAsia' },
+  { key: 'west', labelKey: 'tagWestern' },
+  { key: 'business-2', labelKey: 'tagBusiness' },
+  { key: 'active', labelKey: 'tagActiveSocial' },
+  { key: 'social-2', labelKey: 'tagSocial' },
+] as const;
+
 const sleep = (ms: number) =>
   new Promise<void>(resolve => {
     setTimeout(resolve, ms);
@@ -104,7 +119,7 @@ const messages = defineMessages({
   description: {
     id: 'knowledgeScreen.description',
     defaultMessage:
-      'Persona profile contains your social account information. Once linked to an account, the digital employee will chat using the account\'s persona.',
+      "Persona profile contains your social account information. Once linked to an account, the digital employee will chat using the account's persona.",
   },
   inputPlaceholder: {
     id: 'knowledgeScreen.inputPlaceholder',
@@ -191,6 +206,238 @@ const messages = defineMessages({
     id: 'knowledgeScreen.noPersonasDescription',
     defaultMessage: 'Create your first persona profile to get started',
   },
+  defaultRemarkFallback: {
+    id: 'knowledgeScreen.defaultRemarkFallback',
+    defaultMessage: 'US WhatsApp account persona',
+  },
+  completionRate: {
+    id: 'knowledgeScreen.completionRate',
+    defaultMessage: 'Profile Completion',
+  },
+  createTitle: {
+    id: 'knowledgeScreen.createTitle',
+    defaultMessage: 'Create',
+  },
+  editTitle: {
+    id: 'knowledgeScreen.editTitle',
+    defaultMessage: 'Edit',
+  },
+  personaAccountTitle: {
+    id: 'knowledgeScreen.personaAccountTitle',
+    defaultMessage: ' Persona Account',
+  },
+  profileTitle: {
+    id: 'knowledgeScreen.profileTitle',
+    defaultMessage: ' Profile',
+  },
+  heroDescription: {
+    id: 'knowledgeScreen.heroDescription',
+    defaultMessage:
+      'Enter keywords and AI will automatically generate a complete social account persona profile for you to review before saving.',
+  },
+  keywordDescription: {
+    id: 'knowledgeScreen.keywordDescription',
+    defaultMessage: 'Keyword Description',
+  },
+  keywordPlaceholder: {
+    id: 'knowledgeScreen.keywordPlaceholder',
+    defaultMessage:
+      'e.g. 25-year-old female from the Philippines, enjoys travel and food, outgoing personality, sales deeply involved in the full project lifecycle, responsible for lead mining, client engagement, relationship management, needs analysis, product demos, objection handling, and business negotiation, leading project signing and implementation. After standardized project closure, hand off to after-sales for WhatsApp account use.',
+  },
+  quickTags: {
+    id: 'knowledgeScreen.quickTags',
+    defaultMessage: 'Quick Tags',
+  },
+  tagFemale: {
+    id: 'knowledgeScreen.tagFemale',
+    defaultMessage: 'Female',
+  },
+  tagMale: {
+    id: 'knowledgeScreen.tagMale',
+    defaultMessage: 'Male',
+  },
+  tagYoung: {
+    id: 'knowledgeScreen.tagYoung',
+    defaultMessage: 'Young',
+  },
+  tagBusiness: {
+    id: 'knowledgeScreen.tagBusiness',
+    defaultMessage: 'Business Style',
+  },
+  tagTravel: {
+    id: 'knowledgeScreen.tagTravel',
+    defaultMessage: 'Travel Enthusiast',
+  },
+  tagFood: {
+    id: 'knowledgeScreen.tagFood',
+    defaultMessage: 'Food Enthusiast',
+  },
+  tagSocial: {
+    id: 'knowledgeScreen.tagSocial',
+    defaultMessage: 'Social Enthusiast',
+  },
+  tagSoutheastAsia: {
+    id: 'knowledgeScreen.tagSoutheastAsia',
+    defaultMessage: 'Southeast Asia',
+  },
+  tagWestern: {
+    id: 'knowledgeScreen.tagWestern',
+    defaultMessage: 'Western',
+  },
+  tagActiveSocial: {
+    id: 'knowledgeScreen.tagActiveSocial',
+    defaultMessage: 'High Activity Social Account',
+  },
+  aiGenerate: {
+    id: 'knowledgeScreen.aiGenerate',
+    defaultMessage: 'AI One-Click Generate',
+  },
+  regenerate: {
+    id: 'knowledgeScreen.regenerate',
+    defaultMessage: 'Regenerate',
+  },
+  aiThinking: {
+    id: 'knowledgeScreen.aiThinking',
+    defaultMessage: 'AI is thinking hard...',
+  },
+  aiThinkingDesc: {
+    id: 'knowledgeScreen.aiThinkingDesc',
+    defaultMessage:
+      'Generating name, birthday, occupation, family status, hobbies, social profile and more, creating your exclusive persona...',
+  },
+  sectionPersonaRemark: {
+    id: 'knowledgeScreen.sectionPersonaRemark',
+    defaultMessage: 'Persona Note',
+  },
+  remarkPlaceholder: {
+    id: 'knowledgeScreen.remarkPlaceholder',
+    defaultMessage: 'Enter internal notes about this persona...',
+  },
+  sectionBasicInfo: {
+    id: 'knowledgeScreen.sectionBasicInfo',
+    defaultMessage: 'Basic Information',
+  },
+  fieldName: {
+    id: 'knowledgeScreen.fieldName',
+    defaultMessage: 'Name',
+  },
+  fieldNameEn: {
+    id: 'knowledgeScreen.fieldNameEn',
+    defaultMessage: '(Name)',
+  },
+  fieldGender: {
+    id: 'knowledgeScreen.fieldGender',
+    defaultMessage: 'Gender',
+  },
+  fieldGenderEn: {
+    id: 'knowledgeScreen.fieldGenderEn',
+    defaultMessage: '(Gender)',
+  },
+  fieldBirthday: {
+    id: 'knowledgeScreen.fieldBirthday',
+    defaultMessage: 'Birthday',
+  },
+  fieldBirthdayEn: {
+    id: 'knowledgeScreen.fieldBirthdayEn',
+    defaultMessage: '(Birthday)',
+  },
+  fieldAge: {
+    id: 'knowledgeScreen.fieldAge',
+    defaultMessage: 'Age',
+  },
+  fieldAgeEn: {
+    id: 'knowledgeScreen.fieldAgeEn',
+    defaultMessage: '(Age)',
+  },
+  fieldCountry: {
+    id: 'knowledgeScreen.fieldCountry',
+    defaultMessage: 'Country/Region',
+  },
+  fieldCountryEn: {
+    id: 'knowledgeScreen.fieldCountryEn',
+    defaultMessage: '(Country)',
+  },
+  fieldLanguage: {
+    id: 'knowledgeScreen.fieldLanguage',
+    defaultMessage: 'Language',
+  },
+  fieldLanguageEn: {
+    id: 'knowledgeScreen.fieldLanguageEn',
+    defaultMessage: '(Language)',
+  },
+  sectionLifeBackground: {
+    id: 'knowledgeScreen.sectionLifeBackground',
+    defaultMessage: 'Life Background',
+  },
+  fieldCity: {
+    id: 'knowledgeScreen.fieldCity',
+    defaultMessage: 'City',
+  },
+  fieldCityEn: {
+    id: 'knowledgeScreen.fieldCityEn',
+    defaultMessage: '(City)',
+  },
+  fieldFamily: {
+    id: 'knowledgeScreen.fieldFamily',
+    defaultMessage: 'Family Status',
+  },
+  fieldFamilyEn: {
+    id: 'knowledgeScreen.fieldFamilyEn',
+    defaultMessage: '(Family)',
+  },
+  familyPlaceholder: {
+    id: 'knowledgeScreen.familyPlaceholder',
+    defaultMessage: 'e.g. Single, lives with a cat',
+  },
+  sectionCareerBackground: {
+    id: 'knowledgeScreen.sectionCareerBackground',
+    defaultMessage: 'Career & Project Background',
+  },
+  fieldOccupation: {
+    id: 'knowledgeScreen.fieldOccupation',
+    defaultMessage: 'Occupation',
+  },
+  fieldOccupationEn: {
+    id: 'knowledgeScreen.fieldOccupationEn',
+    defaultMessage: '(Occupation)',
+  },
+  fieldMainWork: {
+    id: 'knowledgeScreen.fieldMainWork',
+    defaultMessage: 'Main Work in Project',
+  },
+  fieldMainWorkEn: {
+    id: 'knowledgeScreen.fieldMainWorkEn',
+    defaultMessage: '(Main work in project)',
+  },
+  mainWorkPlaceholder: {
+    id: 'knowledgeScreen.mainWorkPlaceholder',
+    defaultMessage:
+      'e.g. Space currently has a strategic partnership with Kraken exchange, mainly responsible for team building and marketing on the Kraken exchange platform.',
+  },
+  sectionPersonaPhotos: {
+    id: 'knowledgeScreen.sectionPersonaPhotos',
+    defaultMessage: 'Persona Photos',
+  },
+  uploadPhoto: {
+    id: 'knowledgeScreen.uploadPhoto',
+    defaultMessage: 'Click to upload',
+  },
+  uploadPhotoHint: {
+    id: 'knowledgeScreen.uploadPhotoHint',
+    defaultMessage: 'Supports JPG, PNG format persona photos',
+  },
+  deletePersona: {
+    id: 'knowledgeScreen.deletePersona',
+    defaultMessage: 'Delete',
+  },
+  confirmSave: {
+    id: 'knowledgeScreen.confirmSave',
+    defaultMessage: 'Save',
+  },
+  generateFailed: {
+    id: 'knowledgeScreen.generateFailed',
+    defaultMessage: 'Generation failed',
+  },
 });
 
 interface PersonaRecord {
@@ -248,13 +495,16 @@ const getConfigString = (
     : '';
 };
 
-const getGenderLabel = (gender: string): string => {
+const getGenderLabel = (
+  gender: string,
+  intl: ReturnType<typeof useIntl>,
+): string => {
   switch (gender) {
     case 'male': {
-      return '男';
+      return intl.formatMessage(messages.male);
     }
     case 'female': {
-      return '女';
+      return intl.formatMessage(messages.female);
     }
     default: {
       return gender;
@@ -278,19 +528,23 @@ const digitalHumanToFormData = (
   participation: getConfigString(digitalHuman.persona_config, 'participation'),
 });
 
-const buildPersonaPrompt = (data: FormData): string =>
+const buildPersonaPrompt = (
+  data: FormData,
+  intl: ReturnType<typeof useIntl>,
+): string =>
   [
-    `姓名：${data.name}`,
-    `人设备注：${data.remark}`,
-    `年龄：${data.age}`,
-    `性别：${getGenderLabel(data.gender)}`,
-    `家庭情况：${data.family}`,
-    `职业：${data.occupation}`,
-    `项目参与度：${data.participation}`,
+    `${intl.formatMessage(messages.fieldName)}：${data.name}`,
+    `${intl.formatMessage(messages.sectionPersonaRemark)}：${data.remark}`,
+    `${intl.formatMessage(messages.fieldAge)}：${data.age}`,
+    `${intl.formatMessage(messages.fieldGender)}：${getGenderLabel(data.gender, intl)}`,
+    `${intl.formatMessage(messages.fieldFamily)}：${data.family}`,
+    `${intl.formatMessage(messages.fieldOccupation)}：${data.occupation}`,
+    `${intl.formatMessage(messages.participation)}：${data.participation}`,
   ].join('；');
 
 const buildDigitalHumanRequest = (
   data: FormData,
+  intl: ReturnType<typeof useIntl>,
 ): DigitalHumanCreateRequest => ({
   name: data.name.trim(),
   persona_config: {
@@ -305,7 +559,7 @@ const buildDigitalHumanRequest = (
     occupation: data.occupation,
     participation: data.participation,
   },
-  persona_prompt: buildPersonaPrompt(data),
+  persona_prompt: buildPersonaPrompt(data, intl),
   status: 'active',
 });
 
@@ -401,14 +655,14 @@ const KnowledgeScreen: React.FC = () => {
           remark: parsedFormData.remark,
           name: digitalHuman.name,
           age: parsedFormData.age,
-          gender: getGenderLabel(parsedFormData.gender),
+          gender: getGenderLabel(parsedFormData.gender, intl),
           occupation: parsedFormData.occupation,
           familyStatus: parsedFormData.family,
           participation: parsedFormData.participation,
           source: digitalHuman,
         };
       }),
-    [digitalHumans],
+    [digitalHumans, intl],
   );
 
   const handlePageChange = useCallback(
@@ -511,12 +765,12 @@ const KnowledgeScreen: React.FC = () => {
         if (!response.ok) {
           const errorBody = await response.text().catch(() => '');
           throw new Error(
-            `生成失败 (${response.status}): ${errorBody || response.statusText}`,
+            `${intl.formatMessage(messages.generateFailed)} (${response.status}): ${errorBody || response.statusText}`,
           );
         }
 
         const reader = response.body?.getReader();
-        if (!reader) throw new Error('无法获取响应流');
+        if (!reader) throw new Error('Failed to read response stream');
 
         const decoder = new TextDecoder();
         let buffer = '';
@@ -627,7 +881,9 @@ const KnowledgeScreen: React.FC = () => {
       })
       .catch((error: Error) => {
         if (error.name === 'AbortError') return;
-        MessagePlugin.error(error.message || '生成失败');
+        MessagePlugin.error(
+          error.message || intl.formatMessage(messages.generateFailed),
+        );
       })
       .finally(() => {
         setIsGenerating(false);
@@ -645,7 +901,7 @@ const KnowledgeScreen: React.FC = () => {
 
     setIsSaving(true);
     try {
-      const request = buildDigitalHumanRequest(formData);
+      const request = buildDigitalHumanRequest(formData, intl);
       let isNewCreation = false;
       if (editingId) {
         const updateRequest: DigitalHumanUpdateRequest = request;
@@ -754,7 +1010,8 @@ const KnowledgeScreen: React.FC = () => {
 
                   {/* 描述信息 */}
                   <div className="mt-[11px] text-[14px] text-secondary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
-                    {record.remark || '美国WhatsApp手机号的人设'}
+                    {record.remark ||
+                      intl.formatMessage(messages.defaultRemarkFallback)}
                   </div>
 
                   {/* 编辑按钮 */}
@@ -809,7 +1066,9 @@ const KnowledgeScreen: React.FC = () => {
               </span>
             </button>
             <div className="flex items-center gap-[12px]">
-              <span className="text-[12px] text-primary">资料完成度</span>
+              <span className="text-[12px] text-primary">
+                {intl.formatMessage(messages.completionRate)}
+              </span>
               <div className="h-[4px] w-[170px] rounded-full bg-component overflow-hidden">
                 <div
                   className="h-full rounded-full bg-brand transition-all duration-300"
@@ -832,19 +1091,24 @@ const KnowledgeScreen: React.FC = () => {
                   <div>
                     <h2 className="m-0 text-[24px] font-bold leading-[34px]">
                       <span className="text-primary">
-                        {editingId ? '编辑' : '创建'}
+                        {editingId
+                          ? intl.formatMessage(messages.editTitle)
+                          : intl.formatMessage(messages.createTitle)}
                       </span>
-                      <span className="text-brand">人设账号</span>
-                      <span className="text-primary">资料</span>
+                      <span className="text-brand">
+                        {intl.formatMessage(messages.personaAccountTitle)}
+                      </span>
+                      <span className="text-primary">
+                        {intl.formatMessage(messages.profileTitle)}
+                      </span>
                     </h2>
                     <p className="m-0 mt-[4px] w-[260px] text-[12px] leading-[22px] text-secondary">
-                      输入关键词，AI
-                      将自动生成人设完整的社交账号人设资料，你可以审核后保存。
+                      {intl.formatMessage(messages.heroDescription)}
                     </p>
                   </div>
                   <img
                     src={aiIllustration}
-                    alt="AI资料卡插画"
+                    alt=""
                     className="h-[96px] w-[128px] object-contain"
                   />
                 </div>
@@ -854,12 +1118,14 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="flex items-center gap-[8px]">
                     <FileIcon size="18px" className="text-brand" />
                     <span className="text-[16px] font-semibold text-primary">
-                      关键词描述
+                      {intl.formatMessage(messages.keywordDescription)}
                     </span>
                   </div>
 
                   <textarea
-                    placeholder="例：25岁女性，菲律宾人，喜欢旅游和美食，性格开朗，销售深度参与项目全流程，负责线索挖掘、客户对接、客情维护、需求梳理、产品讲解、异议处理及商务谈判，主导项目签约落地。标准化项目成交后衔接售后即可用于WhatsApp账号。"
+                    placeholder={intl.formatMessage(
+                      messages.keywordPlaceholder,
+                    )}
                     value={smartImportText}
                     onChange={e => handleSmartImportTextChange(e.target.value)}
                     className="mt-[16px] h-[102px] w-full resize-none rounded-[8px] border-none bg-secondary-container px-[16px] py-[14px] text-[12px] leading-[22px] text-primary outline-none placeholder:text-[12px] placeholder:font-normal placeholder:leading-[22px] placeholder:text-placeholder box-border"
@@ -869,25 +1135,12 @@ const KnowledgeScreen: React.FC = () => {
                     <div className="flex items-center gap-[8px]">
                       <EditIcon size="18px" className="text-brand" />
                       <span className="text-[14px] font-semibold text-primary">
-                        快速标签
+                        {intl.formatMessage(messages.quickTags)}
                       </span>
                     </div>
 
                     <div className="mt-[12px] flex flex-wrap gap-x-[8px] gap-y-[8px]">
-                      {[
-                        { key: 'female', label: '女性' },
-                        { key: 'male', label: '男性' },
-                        { key: 'young', label: '年轻人' },
-                        { key: 'business-1', label: '商务风' },
-                        { key: 'travel', label: '旅行爱好者' },
-                        { key: 'food', label: '美食爱好者' },
-                        { key: 'social-1', label: '社交爱好者' },
-                        { key: 'sea', label: '东南亚' },
-                        { key: 'west', label: '欧美' },
-                        { key: 'business-2', label: '商务风' },
-                        { key: 'active', label: '高活跃社交账号' },
-                        { key: 'social-2', label: '社交爱好者' },
-                      ].map(tag => {
+                      {QUICK_TAGS.map(tag => {
                         const isSelected = selectedTags.includes(tag.key);
                         return (
                           <button
@@ -900,7 +1153,9 @@ const KnowledgeScreen: React.FC = () => {
                                 : 'bg-component text-primary'
                             }`}
                           >
-                            {tag.label}
+                            {intl.formatMessage(
+                              messages[tag.labelKey as keyof typeof messages],
+                            )}
                           </button>
                         );
                       })}
@@ -924,7 +1179,7 @@ const KnowledgeScreen: React.FC = () => {
                     >
                       <FileIcon size="16px" className="text-white" />
                       <span className="text-[14px] font-medium leading-[20px] text-white">
-                        AI一键生成
+                        {intl.formatMessage(messages.aiGenerate)}
                       </span>
                     </button>
                     <button
@@ -953,7 +1208,7 @@ const KnowledgeScreen: React.FC = () => {
                             : 'text-primary group-hover:text-brand'
                         }`}
                       >
-                        重新生成
+                        {intl.formatMessage(messages.regenerate)}
                       </span>
                     </button>
                   </div>
@@ -966,16 +1221,16 @@ const KnowledgeScreen: React.FC = () => {
                       <div className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center rounded-[10px]">
                         <img
                           src={aiStars}
-                          alt="AI生成中"
+                          alt=""
                           className="h-full w-full object-contain"
                         />
                       </div>
                       <div className="flex-1">
                         <div className="text-[14px] font-semibold text-primary">
-                          AI正在疯狂思考中.....
+                          {intl.formatMessage(messages.aiThinking)}
                         </div>
                         <div className="mt-[4px] text-[12px] leading-[20px] text-secondary">
-                          正在生成姓名、生日、职业、家庭情况、兴趣爱好和社交资料等，打造专属于你的人设.....
+                          {intl.formatMessage(messages.aiThinkingDesc)}
                         </div>
                         <div className="mt-[8px] flex items-center gap-[8px]">
                           <div className="flex-1">
@@ -1018,12 +1273,12 @@ const KnowledgeScreen: React.FC = () => {
                     <div className="flex items-center gap-[8px]">
                       <UserIcon size="18px" className="text-brand" />
                       <span className="text-[14px] font-semibold text-primary">
-                        人设备注
+                        {intl.formatMessage(messages.sectionPersonaRemark)}
                       </span>
                     </div>
                   </div>
                   <textarea
-                    placeholder="输入关于此人设的内部备注...."
+                    placeholder={intl.formatMessage(messages.remarkPlaceholder)}
                     value={formData.remark}
                     onChange={e => handleFormChange('remark', e.target.value)}
                     className="h-[72px] w-full resize-none rounded-[4px] border border-solid border-component-border bg-container p-[10px_12px] text-[12px] leading-[20px] text-primary outline-none placeholder:text-placeholder"
@@ -1035,15 +1290,15 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <UsergroupIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
-                      基础信息
+                      {intl.formatMessage(messages.sectionBasicInfo)}
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-x-[24px] gap-y-[16px]">
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        姓名{' '}
+                        {intl.formatMessage(messages.fieldName)}{' '}
                         <span className="font-normal text-secondary">
-                          (Name)
+                          {intl.formatMessage(messages.fieldNameEn)}
                         </span>
                       </div>
                       <Input
@@ -1057,9 +1312,9 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        性别{' '}
+                        {intl.formatMessage(messages.fieldGender)}{' '}
                         <span className="font-normal text-secondary">
-                          (Gender)
+                          {intl.formatMessage(messages.fieldGenderEn)}
                         </span>
                       </div>
                       <Select
@@ -1076,9 +1331,9 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        出生日期{' '}
+                        {intl.formatMessage(messages.fieldBirthday)}{' '}
                         <span className="font-normal text-secondary">
-                          (Birthday)
+                          {intl.formatMessage(messages.fieldBirthdayEn)}
                         </span>
                       </div>
                       <DatePicker
@@ -1097,9 +1352,9 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        年龄{' '}
+                        {intl.formatMessage(messages.fieldAge)}{' '}
                         <span className="font-normal text-secondary">
-                          (Age)
+                          {intl.formatMessage(messages.fieldAgeEn)}
                         </span>
                       </div>
                       <Input
@@ -1113,9 +1368,9 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        国家/地区{' '}
+                        {intl.formatMessage(messages.fieldCountry)}{' '}
                         <span className="font-normal text-secondary">
-                          (Country)
+                          {intl.formatMessage(messages.fieldCountryEn)}
                         </span>
                       </div>
                       <Input
@@ -1129,9 +1384,9 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        语言{' '}
+                        {intl.formatMessage(messages.fieldLanguage)}{' '}
                         <span className="font-normal text-secondary">
-                          (Language)
+                          {intl.formatMessage(messages.fieldLanguageEn)}
                         </span>
                       </div>
                       <Input
@@ -1151,15 +1406,15 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <HomeIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
-                      生活背景
+                      {intl.formatMessage(messages.sectionLifeBackground)}
                     </span>
                   </div>
                   <div className="space-y-[16px]">
                     <div className="w-[320px]">
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        所在城市{' '}
+                        {intl.formatMessage(messages.fieldCity)}{' '}
                         <span className="font-normal text-secondary">
-                          (City)
+                          {intl.formatMessage(messages.fieldCityEn)}
                         </span>
                       </div>
                       <Input
@@ -1173,13 +1428,15 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        家庭情况{' '}
+                        {intl.formatMessage(messages.fieldFamily)}{' '}
                         <span className="font-normal text-secondary">
-                          (Family)
+                          {intl.formatMessage(messages.fieldFamilyEn)}
                         </span>
                       </div>
                       <textarea
-                        placeholder="例：单身，与一只猫生活"
+                        placeholder={intl.formatMessage(
+                          messages.familyPlaceholder,
+                        )}
                         value={formData.family}
                         onChange={e =>
                           handleFormChange('family', e.target.value)
@@ -1195,15 +1452,15 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <WorkIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
-                      职业与项目背景
+                      {intl.formatMessage(messages.sectionCareerBackground)}
                     </span>
                   </div>
                   <div className="space-y-[16px]">
                     <div className="w-[320px]">
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        职业{' '}
+                        {intl.formatMessage(messages.fieldOccupation)}{' '}
                         <span className="font-normal text-secondary">
-                          (Occupation)
+                          {intl.formatMessage(messages.fieldOccupationEn)}
                         </span>
                       </div>
                       <Input
@@ -1217,13 +1474,15 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                     <div>
                       <div className="mb-[6px] text-[12px] font-semibold text-primary">
-                        项目中的主要工作项目{' '}
+                        {intl.formatMessage(messages.fieldMainWork)}{' '}
                         <span className="font-normal text-secondary">
-                          (Main work in project)
+                          {intl.formatMessage(messages.fieldMainWorkEn)}
                         </span>
                       </div>
                       <textarea
-                        placeholder="例：Space 目前与 Kraken 交易所有战略合作关系，主要在Kraken交易所平台上负责团队建设和市场营销。"
+                        placeholder={intl.formatMessage(
+                          messages.mainWorkPlaceholder,
+                        )}
                         value={formData.participation}
                         onChange={e =>
                           handleFormChange('participation', e.target.value)
@@ -1239,7 +1498,7 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <FolderIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
-                      人设照片
+                      {intl.formatMessage(messages.sectionPersonaPhotos)}
                     </span>
                   </div>
                   <div className="flex flex-col gap-[8px]">
@@ -1251,11 +1510,11 @@ const KnowledgeScreen: React.FC = () => {
                         +
                       </span>
                       <span className="text-[12px] text-placeholder">
-                        点击上传图片
+                        {intl.formatMessage(messages.uploadPhoto)}
                       </span>
                     </button>
                     <span className="text-[12px] text-placeholder">
-                      支持上传JPG、PNG格式的人设照片
+                      {intl.formatMessage(messages.uploadPhotoHint)}
                     </span>
                   </div>
                 </div>
@@ -1269,7 +1528,7 @@ const KnowledgeScreen: React.FC = () => {
                 theme="default"
                 className="!h-[32px] !w-[88px] !rounded-[4px] !bg-component !text-primary !border-none !text-[14px]"
               >
-                删除人设
+                {intl.formatMessage(messages.deletePersona)}
               </Button>
               <Button
                 theme="primary"
@@ -1277,7 +1536,7 @@ const KnowledgeScreen: React.FC = () => {
                 className="!h-[32px] !w-[88px] !rounded-[4px] !bg-brand !text-[14px]"
                 onClick={handleSave}
               >
-                确认保存
+                {intl.formatMessage(messages.confirmSave)}
               </Button>
             </div>
           </div>

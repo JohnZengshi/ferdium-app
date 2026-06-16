@@ -243,6 +243,22 @@ const messages = defineMessages({
     id: 'accountSlider.confirm',
     defaultMessage: 'Confirm',
   },
+  proxyWarningMessage: {
+    id: 'accountSlider.proxyWarningMessage',
+    defaultMessage: 'Please enter proxy host and port first',
+  },
+  proxySuccessMessage: {
+    id: 'accountSlider.proxySuccessMessage',
+    defaultMessage: '{label} proxy connected (latency: {latency}ms)',
+  },
+  proxyTestFailed: {
+    id: 'accountSlider.proxyTestFailed',
+    defaultMessage: 'Proxy test failed',
+  },
+  proxyTestFailedMessage: {
+    id: 'accountSlider.proxyTestFailedMessage',
+    defaultMessage: 'Test failed, please check proxy config',
+  },
 });
 
 const TAB_IDS = ['all', 'online', 'offline', 'error'] as const;
@@ -951,34 +967,42 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
 
   handleProxyCheck = async () => {
     const { bindForm } = this.state;
+    const { intl } = this.props;
 
     if (!bindForm.proxyHost || !bindForm.proxyPort) {
-      MessagePlugin.warning('请先填写代理地址和端口');
+      MessagePlugin.warning(intl.formatMessage(messages.proxyWarningMessage));
       return;
     }
 
     this.setState({ isProxyTesting: true });
     try {
-      const result = await ipcRenderer.invoke('proxy-test', {
+      const result = await ipcRenderer.invoke('proxy-test-request', {
         host: bindForm.proxyHost,
         port: Number.parseInt(bindForm.proxyPort, 10),
         protocol: bindForm.proxyType,
-        timeout: 5000,
+        user: bindForm.proxyUser || undefined,
+        password: bindForm.proxyPassword || undefined,
+        timeout: 10_000,
       });
 
       if (result.reachable) {
         const label = result.protocol === 'socks5' ? 'SOCKS5' : 'HTTP';
         MessagePlugin.success(
-          `${label}代理连接成功 (延迟: ${result.latency}ms)`,
+          intl.formatMessage(messages.proxySuccessMessage, {
+            label,
+            latency: result.latency,
+          }),
         );
       } else {
-        const label = bindForm.proxyType === 'socks5' ? 'SOCKS5' : 'HTTP';
-        MessagePlugin.error(
-          `${label}代理连接失败: ${result.error || '请检查地址和端口是否正确'}`,
-        );
+        // Handle specific error codes
+        const errorMessage =
+          result.error === 'WHATSAPP_REQUEST_FAILED'
+            ? intl.formatMessage(messages.proxyTestFailed)
+            : intl.formatMessage(messages.proxyTestFailedMessage);
+        MessagePlugin.error(errorMessage);
       }
     } catch {
-      MessagePlugin.error('检测失败，请检查代理配置');
+      MessagePlugin.error(intl.formatMessage(messages.proxyTestFailedMessage));
     } finally {
       this.setState({ isProxyTesting: false });
     }

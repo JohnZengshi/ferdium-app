@@ -133,7 +133,7 @@ const messages = defineMessages({
   },
   proxyWhatsAppRequestFailed: {
     id: 'editDrawer.proxyWhatsAppRequestFailed',
-    defaultMessage: 'Failed to access WhatsApp through proxy',
+    defaultMessage: 'Proxy test failed',
   },
 });
 

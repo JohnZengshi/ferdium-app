@@ -18,10 +18,10 @@ const EmptyState = ({
   <div className={`flex flex-col items-center ${className}`}>
     <img src={imageSrc} alt="" className="h-[210px] w-[260px] mb-[18px]" />
     <div className="flex flex-col items-center gap-[12px]">
-      <p className="m-0 text-[16px] font-normal leading-[24px] text-[#6B7280]">
+      <p className="m-0 text-[16px] font-normal leading-[24px] text-secondary">
         {title}
       </p>
-      <p className="m-0 text-[16px] font-normal leading-[24px] text-[#9CA3AF]">
+      <p className="m-0 text-[16px] font-normal leading-[24px] text-placeholder">
         {description}
       </p>
     </div>

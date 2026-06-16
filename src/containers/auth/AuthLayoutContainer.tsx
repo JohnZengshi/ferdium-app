@@ -23,6 +23,22 @@ interface IProps extends StoresProps, WrappedComponentProps {}
 @inject('stores', 'actions')
 @observer
 class AuthLayoutContainer extends Component<IProps> {
+  componentDidMount(): void {
+    // Force light mode on auth pages to prevent dark mode styles from bleeding
+    // into TDesign login form components (Input, Checkbox, etc.).
+    // NOTE: Do NOT remove body.classList 'theme__dark' here — the UIStore
+    // reaction only re-adds it when isDarkThemeActive *changes value*.
+    // If dark mode stays enabled throughout logout→login, the reaction won't
+    // fire and the main app would lose all .theme__dark CSS rules.
+    document.documentElement.setAttribute('theme-mode', 'light');
+  }
+
+  componentWillUnmount(): void {
+    // Clean up: remove the forced light mode attribute so the main app
+    // can manage theme-mode normally again
+    document.documentElement.removeAttribute('theme-mode');
+  }
+
   render(): ReactElement {
     const { stores, actions, intl } = this.props;
     const { app, features, globalError, user } = stores;

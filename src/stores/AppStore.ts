@@ -27,7 +27,6 @@ import {
   osRelease,
 } from '../environment';
 import {
-  ferdiumLocale,
   ferdiumVersion,
   userDataPath,
 } from '../environment-remote';
@@ -118,7 +117,7 @@ export default class AppStore extends TypedStore {
 
   @observable updateVersion = '';
 
-  @observable locale = ferdiumLocale;
+  @observable locale = DEFAULT_APP_SETTINGS.locale;
 
   @observable isSystemMuteOverridden = false;
 
@@ -804,8 +803,9 @@ export default class AppStore extends TypedStore {
   }
 
   _getDefaultLocale() {
+    // Prefer the configured default locale (e.g. 'zh') over the system locale
     return getLocale({
-      locale: ferdiumLocale,
+      locale: DEFAULT_APP_SETTINGS.locale,
       locales,
       fallbackLocale: DEFAULT_APP_SETTINGS.fallbackLocale,
     });

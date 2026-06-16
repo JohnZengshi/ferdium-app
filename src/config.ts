@@ -561,7 +561,7 @@ export const DEFAULT_APP_SETTINGS = {
   navigationBarManualActive: false,
   splitMode: false,
   splitColumns: 3,
-  fallbackLocale: 'zh',
+  fallbackLocale: 'zh-CN',
   beta: false,
   isAppMuted: false,
   enableGPUAcceleration: true,

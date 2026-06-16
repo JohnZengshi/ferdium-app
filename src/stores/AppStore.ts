@@ -26,10 +26,7 @@ import {
   isWinPortable,
   osRelease,
 } from '../environment';
-import {
-  ferdiumVersion,
-  userDataPath,
-} from '../environment-remote';
+import { ferdiumVersion, userDataPath } from '../environment-remote';
 import sleep from '../helpers/async-helpers';
 import { getLocale, getTranslatedText } from '../helpers/i18n-helpers';
 import {

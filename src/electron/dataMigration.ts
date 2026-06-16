@@ -3,7 +3,6 @@ import {
   existsSync,
   mkdirSync,
   readdirSync,
-  rmSync,
 } from 'node:fs';
 import { join } from 'node:path';
 /* eslint-disable no-console */
@@ -88,17 +87,12 @@ export async function migrateUserData(): Promise<boolean> {
     } else {
       try {
         console.log(
-          '[Migration]   Removing existing target directory if present...',
+          `[Migration]   Copying data from ${oldPath} to ${newPath} (merging, overwriting existing files)...`,
         );
-        rmSync(newPath, { recursive: true, force: true });
-
-        console.log(
-          `[Migration]   Copying data from ${oldPath} to ${newPath}...`,
-        );
-        copyDirRecursive(oldPath, newPath);
+        copyDirRecursive(oldPath, newPath, { overwrite: true });
 
         console.log(`[Migration]   Creating backup at ${backupPath}...`);
-        copyDirRecursive(oldPath, backupPath);
+        copyDirRecursive(oldPath, backupPath, { overwrite: true });
 
         if (hasData(newPath)) {
           console.log(

@@ -230,7 +230,11 @@ const runEsbuild = async () => {
     incremental: isDev,
     define: envDefines,
     plugins: [
-      sassPlugin(),
+      sassPlugin({
+      quietDeps: true,
+      silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'],
+      cache: true,
+    }),
       ...staticAssets(),
       ...(isDev
         ? [

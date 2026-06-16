@@ -22,6 +22,7 @@ interface IProps {
 @observer
 class ServiceWebview extends Component<IProps> {
   @observable webview: ElectronWebView | null = null;
+  private _didStopLoadingWebview: ElectronWebView | null = null;
 
   constructor(props: IProps) {
     super(props);
@@ -65,6 +66,13 @@ class ServiceWebview extends Component<IProps> {
   componentWillUnmount(): void {
     const { service, detachService } = this.props;
     detachService({ service });
+    if (this._didStopLoadingWebview?.view) {
+      this._didStopLoadingWebview.view.removeEventListener(
+        'did-stop-loading',
+        this.refocusWebview,
+      );
+      this._didStopLoadingWebview = null;
+    }
   }
 
   refocusWebview(): void {
@@ -125,11 +133,12 @@ class ServiceWebview extends Component<IProps> {
         style={{ flex: 1, minHeight: 0 }}
         ref={webview => {
           this._setWebview(webview);
-          if (webview?.view) {
+          if (webview?.view && webview !== this._didStopLoadingWebview) {
             webview.view.addEventListener(
               'did-stop-loading',
               this.refocusWebview,
             );
+            this._didStopLoadingWebview = webview;
           }
         }}
         autosize

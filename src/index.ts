@@ -826,7 +826,19 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   const [defaultLocale] = serviceSession.getSpellCheckerLanguages();
   debug(`Spellchecker default locale is: ${defaultLocale}`);
 
-  const locales = [locale, defaultLocale, DEFAULT_APP_SETTINGS.fallbackLocale];
+  const rawLocales = [locale, defaultLocale, DEFAULT_APP_SETTINGS.fallbackLocale];
+  // Deduplicate and filter out locales not supported by Electron's spellchecker.
+  // Bare language codes like 'zh' are invalid — Electron requires full BCP-47 tags (e.g. 'zh-CN').
+  const available = new Set(serviceSession.availableSpellCheckerLanguages);
+  const locales = [...new Set(
+    rawLocales.filter((l): l is string =>
+      typeof l === 'string' && l.length > 0 && available.has(l.toLowerCase()),
+    ),
+  )];
+  if (locales.length === 0) {
+    debug('No valid spellchecker locales after filtering, skipping');
+    return;
+  }
   debug(`Setting spellchecker locales to: ${locales}`);
   serviceSession.setSpellCheckerLanguages(locales);
 });

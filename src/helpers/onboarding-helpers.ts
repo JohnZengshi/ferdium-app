@@ -1,8 +1,27 @@
 /**
- * Helper functions for managing onboarding progress
+ * Helper functions for managing onboarding progress.
+ * Progress is stored per-account in localStorage, keyed by user ID.
  */
 
-const ONBOARDING_STORAGE_KEY = 'ferdium_onboarding_progress';
+const ONBOARDING_STORAGE_KEY_PREFIX = 'ferdium_onboarding_progress';
+
+/**
+ * Get the current logged-in user ID from the Ferdium stores.
+ * Falls back to 'anonymous' if no user is logged in or stores are unavailable.
+ */
+function getCurrentUserId(): string {
+  try {
+    const userId = (window as any).ferdium?.stores?.user?.id;
+    if (userId) return String(userId);
+  } catch {
+    // stores not available
+  }
+  return 'anonymous';
+}
+
+function getStorageKey(): string {
+  return `${ONBOARDING_STORAGE_KEY_PREFIX}_${getCurrentUserId()}`;
+}
 
 export interface OnboardingProgress {
   step1Completed: boolean; // Bind social media account
@@ -12,11 +31,11 @@ export interface OnboardingProgress {
 }
 
 /**
- * Get onboarding progress from localStorage
+ * Get onboarding progress from localStorage (per-account)
  */
 export function getOnboardingProgress(): OnboardingProgress {
   try {
-    const stored = localStorage.getItem(ONBOARDING_STORAGE_KEY);
+    const stored = localStorage.getItem(getStorageKey());
     if (stored) {
       return JSON.parse(stored);
     }
@@ -34,11 +53,11 @@ export function getOnboardingProgress(): OnboardingProgress {
 }
 
 /**
- * Save onboarding progress to localStorage
+ * Save onboarding progress to localStorage (per-account)
  */
 export function saveOnboardingProgress(progress: OnboardingProgress): void {
   try {
-    localStorage.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify(progress));
+    localStorage.setItem(getStorageKey(), JSON.stringify(progress));
   } catch (error) {
     console.error('Failed to save onboarding progress:', error);
   }
@@ -108,11 +127,12 @@ export function getStepStatus(
 }
 
 /**
- * Reset onboarding progress (for testing or admin purposes)
+ * Reset onboarding progress for the current account (for testing or admin purposes)
  *
  * Usage in browser DevTools console:
  * ```javascript
- * localStorage.removeItem('ferdium_onboarding_progress');
+ * // Replace <userId> with the actual user ID, e.g.:
+ * localStorage.removeItem('ferdium_onboarding_progress_abc123');
  * window.location.reload();
  * ```
  *
@@ -123,5 +143,5 @@ export function getStepStatus(
  * ```
  */
 export function resetOnboardingProgress(): void {
-  localStorage.removeItem(ONBOARDING_STORAGE_KEY);
+  localStorage.removeItem(getStorageKey());
 }

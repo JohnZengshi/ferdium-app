@@ -7,73 +7,69 @@
 import type {
   HTTPValidationError,
   WorkflowSettingsResponse,
-  WorkflowSettingsUpdate
+  WorkflowSettingsUpdate,
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getWorkflowApiV1AgentWorkflowGetResponse200 = {
-  data: WorkflowSettingsResponse
-  status: 200
-}
-
-export type getWorkflowApiV1AgentWorkflowGetResponseSuccess = (getWorkflowApiV1AgentWorkflowGetResponse200) & {
-  headers: Headers;
+  data: WorkflowSettingsResponse;
+  status: 200;
 };
-;
 
-export type getWorkflowApiV1AgentWorkflowGetResponse = (getWorkflowApiV1AgentWorkflowGetResponseSuccess)
+export type getWorkflowApiV1AgentWorkflowGetResponseSuccess =
+  getWorkflowApiV1AgentWorkflowGetResponse200 & {
+    headers: Headers;
+  };
+export type getWorkflowApiV1AgentWorkflowGetResponse =
+  getWorkflowApiV1AgentWorkflowGetResponseSuccess;
 
 export const getGetWorkflowApiV1AgentWorkflowGetUrl = () => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/agent-workflow`
-}
+  return `http://10.0.0.228:8000/api/v1/agent-workflow`;
+};
 
 /**
  * 获取当前用户的 Agent 工作流全局开关状态。
  * @summary Get Workflow
  */
-export const getWorkflowApiV1AgentWorkflowGet = async ( options?: RequestInit): Promise<getWorkflowApiV1AgentWorkflowGetResponse> => {
-
-  return useCustomInstance<getWorkflowApiV1AgentWorkflowGetResponse>(getGetWorkflowApiV1AgentWorkflowGetUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
+export const getWorkflowApiV1AgentWorkflowGet = async (
+  options?: RequestInit,
+): Promise<getWorkflowApiV1AgentWorkflowGetResponse> => {
+  return useCustomInstance<getWorkflowApiV1AgentWorkflowGetResponse>(
+    getGetWorkflowApiV1AgentWorkflowGetUrl(),
+    {
+      ...options,
+      method: 'GET',
+    },
+  );
+};
 
 export type updateWorkflowApiV1AgentWorkflowPutResponse200 = {
-  data: WorkflowSettingsResponse
-  status: 200
-}
+  data: WorkflowSettingsResponse;
+  status: 200;
+};
 
 export type updateWorkflowApiV1AgentWorkflowPutResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type updateWorkflowApiV1AgentWorkflowPutResponseSuccess = (updateWorkflowApiV1AgentWorkflowPutResponse200) & {
-  headers: Headers;
-};
-export type updateWorkflowApiV1AgentWorkflowPutResponseError = (updateWorkflowApiV1AgentWorkflowPutResponse422) & {
-  headers: Headers;
+  data: HTTPValidationError;
+  status: 422;
 };
 
-export type updateWorkflowApiV1AgentWorkflowPutResponse = (updateWorkflowApiV1AgentWorkflowPutResponseSuccess | updateWorkflowApiV1AgentWorkflowPutResponseError)
+export type updateWorkflowApiV1AgentWorkflowPutResponseSuccess =
+  updateWorkflowApiV1AgentWorkflowPutResponse200 & {
+    headers: Headers;
+  };
+export type updateWorkflowApiV1AgentWorkflowPutResponseError =
+  updateWorkflowApiV1AgentWorkflowPutResponse422 & {
+    headers: Headers;
+  };
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse =
+  | updateWorkflowApiV1AgentWorkflowPutResponseSuccess
+  | updateWorkflowApiV1AgentWorkflowPutResponseError;
 
 export const getUpdateWorkflowApiV1AgentWorkflowPutUrl = () => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/agent-workflow`
-}
+  return `http://10.0.0.228:8000/api/v1/agent-workflow`;
+};
 
 /**
  * 更新 Agent 工作流全局开关。
@@ -82,15 +78,17 @@ export const getUpdateWorkflowApiV1AgentWorkflowPutUrl = () => {
  * 重新打开时：自动清除当前用户所有会话的暂停状态。
  * @summary Update Workflow
  */
-export const updateWorkflowApiV1AgentWorkflowPut = async (workflowSettingsUpdate: WorkflowSettingsUpdate, options?: RequestInit): Promise<updateWorkflowApiV1AgentWorkflowPutResponse> => {
-
-  return useCustomInstance<updateWorkflowApiV1AgentWorkflowPutResponse>(getUpdateWorkflowApiV1AgentWorkflowPutUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(workflowSettingsUpdate)
-  }
-);}
-
-
+export const updateWorkflowApiV1AgentWorkflowPut = async (
+  workflowSettingsUpdate: WorkflowSettingsUpdate,
+  options?: RequestInit,
+): Promise<updateWorkflowApiV1AgentWorkflowPutResponse> => {
+  return useCustomInstance<updateWorkflowApiV1AgentWorkflowPutResponse>(
+    getUpdateWorkflowApiV1AgentWorkflowPutUrl(),
+    {
+      ...options,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(workflowSettingsUpdate),
+    },
+  );
+};

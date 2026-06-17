@@ -6,9 +6,9 @@ import type ElectronWebView from 'react-electron-web-view';
 
 import { v4 as uuidV4 } from 'uuid';
 import * as conversationsApi from '../agent-flow-cs/api/generated/conversations/conversations';
-import { subscribeConversationStatus } from '../agent-flow-cs/api/sse';
 import * as translateApi from '../agent-flow-cs/api/generated/translate/translate';
 import * as whatsappApi from '../agent-flow-cs/api/generated/whatsapp/whatsapp';
+import { subscribeConversationStatus } from '../agent-flow-cs/api/sse';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { isMac } from '../environment';

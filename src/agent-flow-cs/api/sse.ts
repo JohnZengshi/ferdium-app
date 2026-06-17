@@ -7,8 +7,8 @@
  * with Bearer token authentication.
  */
 import { getApiKey } from '../../whatsapp-automation/api/auth';
-import { AGENT_FLOW_CS_BASE } from './customInstance';
 import { getAccessToken } from './auth';
+import { AGENT_FLOW_CS_BASE } from './customInstance';
 
 export type SSEEvent<T = unknown> = {
   /** Event type (the `event:` field). Default is `message` when omitted. */

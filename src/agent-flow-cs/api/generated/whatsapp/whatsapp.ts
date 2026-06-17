@@ -8,85 +8,83 @@ import type {
   AppApiSchemasWhatsAppBindRequest,
   GetWhatsappBindingApiV1WhatsappBindGetParams,
   HTTPValidationError,
+  TriggerHistorySyncApiV1WhatsappSyncHistorySessionIdPost202,
   WhatsAppBindSwitchRequest,
   WhatsAppBindingResponse,
-  WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200,
+  WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200 = {
-  data: WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200;
-  status: 200;
-};
+  data: WhatsappWebhookApiV1WhatsappWebhooksSessionIdPost200
+  status: 200
+}
 
 export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200) & {
+  headers: Headers;
+};
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422) & {
+  headers: Headers;
 };
 
-export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess =
-  whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200 & {
-    headers: Headers;
-  };
-export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError =
-  whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422 & {
-    headers: Headers;
-  };
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError)
 
-export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse =
-  | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess
-  | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError;
+export const getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl = (sessionId: string,) => {
 
-export const getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl = (
-  sessionId: string,
-) => {
-  return `http://10.0.0.228:8000/api/v1/whatsapp/webhooks/${sessionId}`;
-};
+
+
+
+  return `http://10.0.0.228:8000/api/v1/whatsapp/webhooks/${sessionId}`
+}
 
 /**
  * 接收 WA-AKG 的 webhook 回调，异步编排 Agent 回复。
  * @summary Whatsapp Webhook
  */
-export const whatsappWebhookApiV1WhatsappWebhooksSessionIdPost = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse> => {
-  return useCustomInstance<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse>(
-    getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl(sessionId),
-    {
-      ...options,
-      method: 'POST',
-    },
-  );
-};
+export const whatsappWebhookApiV1WhatsappWebhooksSessionIdPost = async (sessionId: string, options?: RequestInit): Promise<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse> => {
+
+  return useCustomInstance<whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse>(getWhatsappWebhookApiV1WhatsappWebhooksSessionIdPostUrl(sessionId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
 
 export type createWhatsappBindingApiV1WhatsappBindPostResponse201 = {
-  data: WhatsAppBindingResponse;
-  status: 201;
-};
+  data: WhatsAppBindingResponse
+  status: 201
+}
 
 export type createWhatsappBindingApiV1WhatsappBindPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponseSuccess = (createWhatsappBindingApiV1WhatsappBindPostResponse201) & {
+  headers: Headers;
+};
+export type createWhatsappBindingApiV1WhatsappBindPostResponseError = (createWhatsappBindingApiV1WhatsappBindPostResponse422) & {
+  headers: Headers;
 };
 
-export type createWhatsappBindingApiV1WhatsappBindPostResponseSuccess =
-  createWhatsappBindingApiV1WhatsappBindPostResponse201 & {
-    headers: Headers;
-  };
-export type createWhatsappBindingApiV1WhatsappBindPostResponseError =
-  createWhatsappBindingApiV1WhatsappBindPostResponse422 & {
-    headers: Headers;
-  };
-
-export type createWhatsappBindingApiV1WhatsappBindPostResponse =
-  | createWhatsappBindingApiV1WhatsappBindPostResponseSuccess
-  | createWhatsappBindingApiV1WhatsappBindPostResponseError;
+export type createWhatsappBindingApiV1WhatsappBindPostResponse = (createWhatsappBindingApiV1WhatsappBindPostResponseSuccess | createWhatsappBindingApiV1WhatsappBindPostResponseError)
 
 export const getCreateWhatsappBindingApiV1WhatsappBindPostUrl = () => {
-  return `http://10.0.0.228:8000/api/v1/whatsapp/bind`;
-};
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/whatsapp/bind`
+}
 
 /**
  * 子账号自助绑定 WhatsApp 通道。
@@ -95,124 +93,154 @@ export const getCreateWhatsappBindingApiV1WhatsappBindPostUrl = () => {
  * 可选指定 digital_human_id，不传则自动从已分配中选取。
  * @summary Create Whatsapp Binding
  */
-export const createWhatsappBindingApiV1WhatsappBindPost = async (
-  appApiSchemasWhatsAppBindRequest: AppApiSchemasWhatsAppBindRequest,
-  options?: RequestInit,
-): Promise<createWhatsappBindingApiV1WhatsappBindPostResponse> => {
-  return useCustomInstance<createWhatsappBindingApiV1WhatsappBindPostResponse>(
-    getCreateWhatsappBindingApiV1WhatsappBindPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(appApiSchemasWhatsAppBindRequest),
-    },
-  );
-};
+export const createWhatsappBindingApiV1WhatsappBindPost = async (appApiSchemasWhatsAppBindRequest: AppApiSchemasWhatsAppBindRequest, options?: RequestInit): Promise<createWhatsappBindingApiV1WhatsappBindPostResponse> => {
+
+  return useCustomInstance<createWhatsappBindingApiV1WhatsappBindPostResponse>(getCreateWhatsappBindingApiV1WhatsappBindPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(appApiSchemasWhatsAppBindRequest)
+  }
+);}
+
 
 export type getWhatsappBindingApiV1WhatsappBindGetResponse200 = {
-  data: WhatsAppBindingResponse | null;
-  status: 200;
-};
+  data: WhatsAppBindingResponse | null
+  status: 200
+}
 
 export type getWhatsappBindingApiV1WhatsappBindGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponseSuccess = (getWhatsappBindingApiV1WhatsappBindGetResponse200) & {
+  headers: Headers;
+};
+export type getWhatsappBindingApiV1WhatsappBindGetResponseError = (getWhatsappBindingApiV1WhatsappBindGetResponse422) & {
+  headers: Headers;
 };
 
-export type getWhatsappBindingApiV1WhatsappBindGetResponseSuccess =
-  getWhatsappBindingApiV1WhatsappBindGetResponse200 & {
-    headers: Headers;
-  };
-export type getWhatsappBindingApiV1WhatsappBindGetResponseError =
-  getWhatsappBindingApiV1WhatsappBindGetResponse422 & {
-    headers: Headers;
-  };
+export type getWhatsappBindingApiV1WhatsappBindGetResponse = (getWhatsappBindingApiV1WhatsappBindGetResponseSuccess | getWhatsappBindingApiV1WhatsappBindGetResponseError)
 
-export type getWhatsappBindingApiV1WhatsappBindGetResponse =
-  | getWhatsappBindingApiV1WhatsappBindGetResponseSuccess
-  | getWhatsappBindingApiV1WhatsappBindGetResponseError;
-
-export const getGetWhatsappBindingApiV1WhatsappBindGetUrl = (
-  params?: GetWhatsappBindingApiV1WhatsappBindGetParams,
-) => {
+export const getGetWhatsappBindingApiV1WhatsappBindGetUrl = (params?: GetWhatsappBindingApiV1WhatsappBindGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.228:8000/api/v1/whatsapp/bind?${stringifiedParams}`
-    : `http://10.0.0.228:8000/api/v1/whatsapp/bind`;
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/whatsapp/bind?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/whatsapp/bind`
+}
 
 /**
  * 查询当前子账号的 WhatsApp 通道绑定；传 session_id 可按通道 ID 查。
  * @summary Get Whatsapp Binding
  */
-export const getWhatsappBindingApiV1WhatsappBindGet = async (
-  params?: GetWhatsappBindingApiV1WhatsappBindGetParams,
-  options?: RequestInit,
-): Promise<getWhatsappBindingApiV1WhatsappBindGetResponse> => {
-  return useCustomInstance<getWhatsappBindingApiV1WhatsappBindGetResponse>(
-    getGetWhatsappBindingApiV1WhatsappBindGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const getWhatsappBindingApiV1WhatsappBindGet = async (params?: GetWhatsappBindingApiV1WhatsappBindGetParams, options?: RequestInit): Promise<getWhatsappBindingApiV1WhatsappBindGetResponse> => {
+
+  return useCustomInstance<getWhatsappBindingApiV1WhatsappBindGetResponse>(getGetWhatsappBindingApiV1WhatsappBindGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse200 = {
+  data: WhatsAppBindingResponse
+  status: 200
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseSuccess = (switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse200) & {
+  headers: Headers;
+};
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseError = (switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse422) & {
+  headers: Headers;
 };
 
-export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse200 =
-  {
-    data: WhatsAppBindingResponse;
-    status: 200;
-  };
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse = (switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseSuccess | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseError)
 
-export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
+export const getSwitchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchUrl = () => {
 
-export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseSuccess =
-  switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse200 & {
-    headers: Headers;
-  };
-export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseError =
-  switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse422 & {
-    headers: Headers;
-  };
 
-export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse =
-  | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseSuccess
-  | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseError;
 
-export const getSwitchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchUrl =
-  () => {
-    return `http://10.0.0.228:8000/api/v1/whatsapp/bind`;
-  };
+
+  return `http://10.0.0.228:8000/api/v1/whatsapp/bind`
+}
 
 /**
  * 切换 WhatsApp 通道绑定的数字人；传 session_id 按通道切换，否则切当前用户。
  * @summary Switch Whatsapp Binding Digital Human
  */
-export const switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch = async (
-  whatsAppBindSwitchRequest: WhatsAppBindSwitchRequest,
-  options?: RequestInit,
-): Promise<switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse> => {
-  return useCustomInstance<switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse>(
-    getSwitchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchUrl(),
-    {
-      ...options,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(whatsAppBindSwitchRequest),
-    },
-  );
+export const switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch = async (whatsAppBindSwitchRequest: WhatsAppBindSwitchRequest, options?: RequestInit): Promise<switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse> => {
+
+  return useCustomInstance<switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse>(getSwitchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(whatsAppBindSwitchRequest)
+  }
+);}
+
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse202 = {
+  data: TriggerHistorySyncApiV1WhatsappSyncHistorySessionIdPost202
+  status: 202
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponseSuccess = (triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse202) & {
+  headers: Headers;
 };
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponseError = (triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse422) & {
+  headers: Headers;
+};
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse = (triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponseSuccess | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponseError)
+
+export const getTriggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/whatsapp/sync-history/${sessionId}`
+}
+
+/**
+ * 手动触发 WhatsApp 历史会话同步。
+ *
+ * 从 WA-AKG 拉取指定 session 的全部聊天列表及最近 100 条消息，
+ * 写入本地 conversations / messages 表。异步执行，立即返回 202。
+ * @summary Trigger History Sync
+ */
+export const triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPost = async (sessionId: string, options?: RequestInit): Promise<triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse> => {
+
+  return useCustomInstance<triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse>(getTriggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostUrl(sessionId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+

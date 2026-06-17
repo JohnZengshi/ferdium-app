@@ -6,6 +6,7 @@ import type ElectronWebView from 'react-electron-web-view';
 
 import { v4 as uuidV4 } from 'uuid';
 import * as conversationsApi from '../agent-flow-cs/api/generated/conversations/conversations';
+import { subscribeConversationStatus } from '../agent-flow-cs/api/sse';
 import * as translateApi from '../agent-flow-cs/api/generated/translate/translate';
 import * as whatsappApi from '../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import { needsToken } from '../api/apiBase';
@@ -57,6 +58,11 @@ export default class Service {
 
   // 防止 initializeWebViewEvents 被多次调用导致重复绑定事件监听器
   webviewEventsInitialized = false;
+
+  // SSE 会话状态订阅管理
+  private _sseConversationSubscription: { close: () => void } | null = null;
+
+  private _sseCustomerId: string | null = null;
 
   @observable isAttached: boolean = false;
 
@@ -432,6 +438,53 @@ export default class Service {
     return this.recipe.partition || `persist:service-${this.id}`;
   }
 
+  // SSE 会话状态订阅管理
+  private _subscribeConversationStatusSSE(customerId: string): void {
+    if (!customerId) return;
+    if (
+      this._sseCustomerId === customerId &&
+      this._sseConversationSubscription
+    ) {
+      debug('SSE already subscribed to customer %s, skipping', customerId);
+      return;
+    }
+
+    this._unsubscribeConversationStatusSSE();
+    this._sseCustomerId = customerId;
+    this._sseConversationSubscription = subscribeConversationStatus(
+      customerId,
+      {
+        onEvent: evt => {
+          if (evt.data?.type === 'status_change') {
+            this.webview?.send('wa-ai-status-change', evt.data);
+          }
+        },
+        onError: error => {
+          debug('SSE error for customer %s: %o', customerId, error);
+        },
+        onClose: () => {
+          debug('SSE closed for customer %s', customerId);
+          if (this._sseCustomerId === customerId) {
+            this._sseConversationSubscription = null;
+            this._sseCustomerId = null;
+          }
+        },
+      },
+      { waSessionId: this.id }, // pass service sessionId as wa_session_id
+    );
+
+    debug('SSE subscribed to customer %s', customerId);
+  }
+
+  private _unsubscribeConversationStatusSSE(): void {
+    if (this._sseConversationSubscription) {
+      this._sseConversationSubscription.close();
+      this._sseConversationSubscription = null;
+      debug('SSE unsubscribed from customer %s', this._sseCustomerId);
+      this._sseCustomerId = null;
+    }
+  }
+
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
     if (this.webviewEventsInitialized) return;
     this.webviewEventsInitialized = true;
@@ -544,6 +597,15 @@ export default class Service {
             const result = await (
               apiMethod as (...fnArgs: unknown[]) => Promise<unknown>
             )(...enhancedArgs);
+
+            // 自动订阅/更新 SSE
+            if (
+              method.includes('getConversationByCustomer') &&
+              enhancedArgs.length > 0
+            ) {
+              const customerId = enhancedArgs[0] as string;
+              this._subscribeConversationStatusSSE(customerId);
+            }
 
             this.webview.send('wa-ai-api-response-host', {
               requestId,

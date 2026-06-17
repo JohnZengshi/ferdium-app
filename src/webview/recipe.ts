@@ -176,6 +176,17 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
       window.location.origin,
     );
   });
+
+  // SSE 状态变更推送：宿主进程 → 主世界
+  ipcRenderer.on('wa-ai-status-change', (_event, payload) => {
+    window.postMessage(
+      {
+        type: 'wa-ai-status-change',
+        payload,
+      },
+      window.location.origin,
+    );
+  });
 }
 
 class RecipeController {

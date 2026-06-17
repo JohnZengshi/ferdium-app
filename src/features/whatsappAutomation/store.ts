@@ -1256,10 +1256,12 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const escLabel = label.replaceAll("'", "\\'");
 
     const SID = 'wa-akg-si';
+    const escStatus = status.replaceAll("'", "\\'");
     const script = `
 (function() {
   var old = document.getElementById('${SID}');
   if (old) {
+    old.dataset.waAkgStatus = '${escStatus}';
     var dot = old.querySelector('.waa-si-dot');
     if (dot) dot.style.background = '${escColor}';
     var txt = old.querySelector('.waa-si-label');
@@ -1270,7 +1272,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   s.textContent = [
     '@keyframes waa-si-pulse{0%{box-shadow:0 0 0 0 ${escColor}88}70%{box-shadow:0 0 0 14px ${escColor}00}100%{box-shadow:0 0 0 0 ${escColor}00}}',
     '@keyframes waa-si-radar{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}',
-    '#${SID}{position:fixed;top:20px;right:20px;z-index:2147483646;display:flex;align-items:center;gap:10px;background:rgba(11,20,26,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:30px;padding:10px 18px 10px 14px;box-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;cursor:move;user-select:none}',
+    '#${SID}{position:fixed;top:20px;right:20px;z-index:2147483646;display:flex;align-items:center;gap:10px;background:rgba(11,20,26,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:30px;padding:10px 18px 10px 14px;box-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,sans-serif;pointer-events:auto;cursor:grab;user-select:none}',
     '.waa-si-radar{position:relative;width:20px;height:20px;flex-shrink:0}',
     '.waa-si-dot{position:absolute;inset:4px;border-radius:50%;background:${escColor};z-index:2;animation:waa-si-pulse 2s infinite}',
     '.waa-si-sweep{position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;border-top-color:${escColor}44;animation:waa-si-radar 2s linear infinite}',
@@ -1279,35 +1281,32 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   document.head.appendChild(s);
   var el = document.createElement('div');
   el.id = '${SID}';
-  el.innerHTML = '<div class="waa-si-radar"><div class="waa-si-dot"></div><div class="waa-si-sweep"></div></div><span class="waa-si-label">${escLabel}</span>';
+  el.dataset.waAkgStatus = '${escStatus}';
+  el.innerHTML = '<div class=\"waa-si-radar\"><div class=\"waa-si-dot\"></div><div class=\"waa-si-sweep\"></div></div><span class=\"waa-si-label\">${escLabel}</span>';
   document.body.appendChild(el);
-  var isDragging = false;
-  var startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
-  el.addEventListener('mousedown', function(e) {
-    if (e.button !== 0) return;
-    isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    var rect = el.getBoundingClientRect();
-    initialLeft = rect.left;
-    initialTop = rect.top;
-    el.style.transition = 'none';
-    e.preventDefault();
-  });
-  document.addEventListener('mousemove', function(e) {
-    if (!isDragging) return;
-    var dx = e.clientX - startX;
-    var dy = e.clientY - startY;
-    el.style.left = (initialLeft + dx) + 'px';
-    el.style.top = (initialTop + dy) + 'px';
-    el.style.right = 'auto';
-  });
-  document.addEventListener('mouseup', function() {
-    if (isDragging) {
-      isDragging = false;
-      el.style.transition = '';
-    }
-  });
+  (function(ind) {
+    var dragging = false, sx = 0, sy = 0, sl = 0, st = 0;
+    ind.addEventListener('mousedown', function(e) {
+      if (e.button !== 0) return;
+      dragging = true;
+      sx = e.clientX; sy = e.clientY;
+      var r = ind.getBoundingClientRect();
+      sl = r.left; st = r.top;
+      ind.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      ind.style.left = (sl + e.clientX - sx) + 'px';
+      ind.style.top = (st + e.clientY - sy) + 'px';
+      ind.style.right = 'auto';
+    });
+    document.addEventListener('mouseup', function() {
+      if (!dragging) return;
+      dragging = false;
+      ind.style.cursor = 'grab';
+    });
+  })(el);
 })();
 `;
     service.webview.executeJavaScript(script).catch(() => {});

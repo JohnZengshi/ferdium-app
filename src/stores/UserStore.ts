@@ -7,7 +7,7 @@ import moment from 'moment';
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
-import { TODOS_PARTITION_ID } from '../config';
+import { DEFAULT_APP_SETTINGS, TODOS_PARTITION_ID } from '../config';
 import serverlessLogin from '../helpers/serverless-helpers';
 import authManager from '../lib/auth/AuthManager';
 import FerdiumProvider from '../lib/auth/providers/FerdiumProvider';
@@ -431,7 +431,7 @@ export default class UserStore extends TypedStore {
         type: 'app',
         data: {
           beta: data.beta,
-          locale: data.locale,
+          locale: data.locale || DEFAULT_APP_SETTINGS.locale,
         },
       });
     }

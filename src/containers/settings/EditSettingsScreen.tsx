@@ -597,8 +597,13 @@ class EditSettingsScreen extends Component<
     // Obtain the internationalization configuration object - this is the critical step
     const i18nConfig = getI18nConfigObjects(intl);
 
+    const filteredAppLocales = {
+      'en-US': APP_LOCALES['en-US'],
+      'zh-HANS': APP_LOCALES['zh-HANS'],
+      'zh-HANT': APP_LOCALES['zh-HANT'],
+    };
     const locales = getSelectOptions({
-      locales: APP_LOCALES,
+      locales: filteredAppLocales,
     });
 
     // Use the internationalized navigation bar behavior configuration

@@ -544,7 +544,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 {this.renderSocialAccountTable()}
               </div>
 
-              <div className="flex min-h-[509px] w-[647px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
+              <div className="flex min-h-[509px] min-w-[647px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
                 <div className="flex h-[55px] items-start justify-between">
                   <div className="flex items-start">
                     <div className="relative h-[32px] w-[32px] flex-shrink-0">

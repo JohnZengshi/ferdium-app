@@ -2,7 +2,7 @@ import { Menu, dialog, app as electronApp } from '@electron/remote';
 import { clipboard, ipcRenderer } from 'electron';
 import { debounce } from 'lodash';
 import { inject, observer } from 'mobx-react';
-import { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import type { IntlShape, WrappedComponentProps } from 'react-intl';
@@ -476,7 +476,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
             }}
             onContextMenu={() => onContextMenu(service)}
           >
-            <div className="relative w-[56px] h-[56px]">
+            <div className="relative w-[56px] h-[56px] [.compact-mode_&]:hidden">
               <Avatar
                 image={service.icon || ''}
                 icon={<UserIcon />}
@@ -680,6 +680,8 @@ interface IAccountSliderState {
   bindForm: BindAccountFormValues;
   editingService: Service | null;
   isProxyTesting: boolean;
+  width: number;
+  isDragging: boolean;
 }
 
 @inject('stores', 'actions')
@@ -691,6 +693,8 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
       activeTab: 'all',
       isBindDrawerVisible: false,
       isProxyTesting: false,
+      width: 300,
+      isDragging: false,
       bindForm: {
         remark: '',
         proxyAutoFill: true,
@@ -706,8 +710,39 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     };
   }
 
+  private sliderRef = React.createRef<HTMLDivElement>();
+
+  private resizeStartX = 0;
+
+  private resizeStartWidth = 0;
+
+  handleResizeMouseDown = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.resizeStartX = event.clientX;
+    this.resizeStartWidth = this.state.width;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    // Use an invisible overlay to catch all mouse events reliably in Electron
+    this.setState({ isDragging: true });
+  };
+
+  handleResizeMouseMove = (event: MouseEvent) => {
+    const deltaX = event.clientX - this.resizeStartX;
+    const newWidth = this.resizeStartWidth + deltaX;
+    this.setState({ width: Math.max(200, newWidth) });
+  };
+
+  handleResizeMouseUp = () => {
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    this.setState({ isDragging: false });
+  };
+
   componentWillUnmount(): void {
     this.handleAutoFillChange.cancel();
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
   }
 
   onSortEnd = ({
@@ -1023,8 +1058,27 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     const tabs = getTabs(intl);
 
     return (
-      <div className="flex flex-col h-full bg-container px-[8px] py-[16px] gap-[16px] overflow-hidden">
-        <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0">
+      <div
+        ref={this.sliderRef}
+        className={`flex flex-col h-full bg-container px-[8px] py-[16px] gap-[16px] overflow-hidden relative flex-shrink-0 ${this.state.width < 250 ? 'compact-mode' : ''}`}
+        style={{ width: `${this.state.width}px` }}
+      >
+        <button
+          type="button"
+          aria-label="拖拽调整侧边栏宽度"
+          className="absolute right-0 top-0 bottom-0 w-[4px] cursor-col-resize hover:bg-brand z-10 transition-colors border-0 p-0 bg-transparent"
+          onMouseDown={this.handleResizeMouseDown}
+        />
+        {this.state.isDragging && (
+          <div
+            role="presentation"
+            className="fixed inset-0 z-[9999] cursor-col-resize"
+            onMouseMove={e => this.handleResizeMouseMove(e.nativeEvent)}
+            onMouseUp={this.handleResizeMouseUp}
+            onMouseLeave={this.handleResizeMouseUp}
+          />
+        )}
+        <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0 w-full">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
             const unreadCount = allServices
@@ -1044,18 +1098,19 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
                 count={unreadCount || null}
                 size="small"
                 offset={[10, 0]}
+                className="flex-1 min-w-0"
               >
                 <Button
-                  className="h-[32px] px-[12px]"
+                  className="h-[32px] w-full min-w-0"
                   theme="default"
                   variant={isActive ? 'base' : 'text'}
                   onClick={() => this.setActiveTab(tab.id)}
                 >
-                  <div className="flex items-center gap-[8px]">
+                  <div className="flex items-center gap-[8px] justify-center">
                     {tab.id === 'all' && (
                       <img
                         src="./assets/images/sidebar-services.svg"
-                        className="w-[16px] h-[16px]"
+                        className="w-[16px] h-[16px] [.compact-mode_&]:hidden"
                         alt=""
                       />
                     )}

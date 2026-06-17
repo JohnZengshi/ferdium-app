@@ -194,12 +194,12 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         agent_workflow_enabled: val,
       });
 
-       const { services } = this.props.stores!;
-       services.allDisplayed.forEach(service => {
-         if (service.recipe.id === 'whatsapp' && service.webview) {
-           service.webview.send('wa-ai-force-refresh-status');
-         }
-       });
+      const { services } = this.props.stores!;
+      services.allDisplayed.forEach(service => {
+        if (service.recipe.id === 'whatsapp' && service.webview) {
+          service.webview.send('wa-ai-force-refresh-status');
+        }
+      });
 
       MessagePlugin.success(
         val

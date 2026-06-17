@@ -168,7 +168,7 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     );
   });
 
-   ipcRenderer.on('wa-ai-force-refresh-status', () => {
+  ipcRenderer.on('wa-ai-force-refresh-status', () => {
     window.postMessage(
       {
         type: 'wa-ai-force-refresh-status',

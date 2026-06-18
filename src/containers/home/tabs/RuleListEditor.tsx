@@ -2,6 +2,7 @@ import {
   type ReactElement,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -148,6 +149,14 @@ const messages = defineMessages({
   suggestedRulesCollapse: {
     id: 'ruleListEditor.suggestedRulesCollapse',
     defaultMessage: 'Collapse',
+  },
+  savingSuggestions: {
+    id: 'ruleListEditor.savingSuggestions',
+    defaultMessage: 'Saving...',
+  },
+  addSelectedSuggestions: {
+    id: 'ruleListEditor.addSelectedSuggestions',
+    defaultMessage: 'Add Selected ({count})',
   },
 });
 
@@ -473,6 +482,16 @@ const RuleListEditor = ({
     new Set(),
   );
   const [isAddingSuggestions, setIsAddingSuggestions] = useState(false);
+
+  const existingRuleContents = useMemo(() => {
+    const contents = new Set<string>();
+    for (const rule of rules) {
+      if (!rule.isDraft && rule.content) {
+        contents.add(rule.content);
+      }
+    }
+    return contents;
+  }, [rules]);
 
   const loadRules = useCallback(
     async (offset: number, append: boolean) => {
@@ -913,19 +932,23 @@ const RuleListEditor = ({
                     </div>
                     <div className="flex flex-wrap gap-[8px]">
                       {category.rules.map(rule => {
+                        const isAlreadyAdded = existingRuleContents.has(rule);
                         const isSelected = selectedSuggestions.has(rule);
                         return (
                           <button
                             key={rule}
                             type="button"
+                            disabled={isAlreadyAdded}
                             onClick={() => handleAddSuggestedRule(rule)}
-                            className={`cursor-pointer rounded-[6px] border border-solid px-[12px] py-[6px] text-left text-[13px] transition-colors ${
-                              isSelected
-                                ? 'border-brand bg-brand-light text-brand'
-                                : 'border-line bg-container text-secondary hover:border-brand hover:text-brand'
+                            className={`rounded-[6px] border border-solid px-[12px] py-[6px] text-left text-[13px] transition-colors ${
+                              isAlreadyAdded
+                                ? 'cursor-not-allowed border-brand bg-brand text-text-anti'
+                                : isSelected
+                                  ? 'cursor-pointer border-brand bg-brand-light text-brand'
+                                  : 'cursor-pointer border-line bg-container text-secondary hover:border-brand hover:text-brand'
                             }`}
                           >
-                            {rule}
+                            {isAlreadyAdded ? `✓ ${rule}` : rule}
                           </button>
                         );
                       })}
@@ -945,8 +968,10 @@ const RuleListEditor = ({
                   >
                     {isAddingSuggestions && <Loading loading size="small" />}
                     {isAddingSuggestions
-                      ? 'Saving...'
-                      : `Add Selected (${selectedSuggestions.size})`}
+                      ? intl.formatMessage(messages.savingSuggestions)
+                      : intl.formatMessage(messages.addSelectedSuggestions, {
+                          count: selectedSuggestions.size,
+                        })}
                   </button>
                 </div>
               )}

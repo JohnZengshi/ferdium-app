@@ -20,11 +20,11 @@ import {
   Progress,
   Switch,
 } from 'tdesign-react';
+import { useCustomInstance } from '../../agent-flow-cs/api/customInstance';
 import {
   getWorkflowApiV1AgentWorkflowGet,
   updateWorkflowApiV1AgentWorkflowPut,
 } from '../../agent-flow-cs/api/generated/agent-workflow/agent-workflow';
-import { useCustomInstance } from '../../agent-flow-cs/api/customInstance';
 import { SectionHeader } from '../../components/home/SectionHeader';
 import { StepItem } from '../../components/home/StepItem';
 import {

@@ -80,9 +80,7 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState('resume');
   const contentRef = useRef<HTMLDivElement>(null);
-  const [handoffBadge, setHandoffBadge] = useState<string | undefined>(
-    undefined,
-  );
+  const [handoffBadge, setHandoffBadge] = useState<string | undefined>();
 
   const handleResize = useCallback(() => {
     if (contentRef.current) {

@@ -154,6 +154,7 @@
   "digitalHumanForm.placeholder.name": "Please enter a digital human name",
   "digitalHumanForm.placeholder.personaPrompt": "Describe the digital human’s personality, tone, and expertise in natural language...",
   "digitalHumanForm.placeholder.voice": "TTS configuration (optional)",
+  "digitalHumanForm.refiningPersona": "正在精细化人设中",
   "digitalHumanForm.selectOption.active": "Active",
   "digitalHumanForm.selectOption.inactive": "Inactive",
   "digitalHumanForm.toast.createFailed": "Creation failed",

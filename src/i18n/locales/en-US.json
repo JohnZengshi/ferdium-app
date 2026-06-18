@@ -575,6 +575,8 @@
   "knowledgeScreen.remarkPlaceholder": "Enter internal notes about this persona...",
   "knowledgeScreen.save": "Save",
   "knowledgeScreen.saveFailed": "Save failed",
+  "knowledgeScreen.savingDescription": "We’re organizing and polishing this persona profile now. Please give us a moment…",
+  "knowledgeScreen.savingTitle": "Optimizing persona profile",
   "knowledgeScreen.saveSuccess": "Saved successfully",
   "knowledgeScreen.sectionBasicInfo": "Basic Information",
   "knowledgeScreen.sectionCareerBackground": "Career & Project Background",

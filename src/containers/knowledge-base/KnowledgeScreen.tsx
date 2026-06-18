@@ -15,6 +15,7 @@ import {
   Button,
   DatePicker,
   Input,
+  Loading,
   MessagePlugin,
   Pagination,
   Select,
@@ -159,6 +160,14 @@ const messages = defineMessages({
   saveFailed: {
     id: 'knowledgeScreen.saveFailed',
     defaultMessage: 'Save failed',
+  },
+  savingTitle: {
+    id: 'knowledgeScreen.savingTitle',
+    defaultMessage: '正在优化人设中',
+  },
+  savingDescription: {
+    id: 'knowledgeScreen.savingDescription',
+    defaultMessage: '正在整理并完善这份人设资料，请稍候片刻…',
   },
   nameRequired: {
     id: 'knowledgeScreen.nameRequired',
@@ -555,6 +564,8 @@ const KnowledgeScreen: React.FC = () => {
   const [hasGenerated, setHasGenerated] = useState(false);
   const [streamProgress, setStreamProgress] = useState(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [isGeneratedContentHighlighted, setIsGeneratedContentHighlighted] =
+    useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const genderOptions = useMemo(
@@ -710,6 +721,23 @@ const KnowledgeScreen: React.FC = () => {
 
     setIsGenerating(true);
     setStreamProgress(0);
+    setIsGeneratedContentHighlighted(false);
+
+    const markGenerationComplete = async (
+      updates?: Record<string, string>,
+    ): Promise<void> => {
+      setStreamProgress(100);
+      setHasGenerated(true);
+
+      if (updates && Object.keys(updates).length > 0) {
+        setFormData(prev => ({ ...prev, ...updates }));
+      }
+
+      setIsGeneratedContentHighlighted(true);
+      window.setTimeout(() => {
+        setIsGeneratedContentHighlighted(false);
+      }, 1800);
+    };
 
     const url = `${AGENT_FLOW_CS_BASE.replace(/\/+$/, '')}/api/v1/digital-humans/generate`;
 
@@ -775,9 +803,7 @@ const KnowledgeScreen: React.FC = () => {
           }
           return reader.read().then(({ done, value }) => {
             if (done) {
-              setStreamProgress(100);
-              setHasGenerated(true);
-              return;
+              return markGenerationComplete();
             }
 
             buffer += decoder.decode(value, { stream: true });
@@ -822,8 +848,6 @@ const KnowledgeScreen: React.FC = () => {
 
                 // complete 事件 → 最终全量数据覆盖
                 if (data.type === 'complete' && data.persona) {
-                  setStreamProgress(100);
-                  setHasGenerated(true);
                   const updates: Record<string, string> = {};
                   for (const [key, val] of Object.entries(data.persona)) {
                     const formField = FIELD_MAP[key] ?? key;
@@ -831,9 +855,8 @@ const KnowledgeScreen: React.FC = () => {
                       updates[formField] = String(val ?? '');
                     }
                   }
-                  if (Object.keys(updates).length > 0) {
-                    setFormData(prev => ({ ...prev, ...updates }));
-                  }
+                  // eslint-disable-next-line no-await-in-loop
+                  await markGenerationComplete(updates);
                   return 'done';
                 }
               }
@@ -919,6 +942,23 @@ const KnowledgeScreen: React.FC = () => {
 
   return (
     <div className="flex min-h-0 flex-1 bg-page">
+      <style>
+        {`
+          @keyframes knowledge-progress-glow {
+            0% {
+              transform: translateX(0);
+              opacity: 0;
+            }
+            18% {
+              opacity: 1;
+            }
+            100% {
+              transform: translateX(420%);
+              opacity: 0;
+            }
+          }
+        `}
+      </style>
       <SidebarMenu
         items={sidebarItems}
         activeKey="persona"
@@ -1048,7 +1088,10 @@ const KnowledgeScreen: React.FC = () => {
             <button
               type="button"
               onClick={handleBack}
-              className="flex cursor-pointer items-center gap-[8px] border-none bg-transparent p-0 text-primary"
+              disabled={isSaving}
+              className={`flex items-center gap-[8px] border-none bg-transparent p-0 text-primary ${
+                isSaving ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
+              }`}
             >
               <ChevronLeftIcon size="14px" className="text-primary" />
               <span className="text-[14px] font-medium text-primary">
@@ -1077,6 +1120,34 @@ const KnowledgeScreen: React.FC = () => {
 
           {/* 主体布局 */}
           <div className="flex flex-1 flex-col overflow-auto relative">
+            {isSaving && (
+              <div className="absolute inset-0 z-20 flex items-center justify-center bg-[rgba(15,23,42,0.18)] backdrop-blur-[3px]">
+                <div className="mx-[24px] flex w-[360px] max-w-full flex-col items-center rounded-[16px] border border-solid border-[rgba(56,207,244,0.2)] bg-container px-[28px] py-[24px] text-center shadow-[0_24px_60px_rgba(29,107,255,0.18)]">
+                  <div className="relative flex h-[72px] w-[72px] items-center justify-center">
+                    <div className="absolute inset-0 rounded-full bg-brand-light animate-ping opacity-75" />
+                    <div className="absolute inset-[10px] rounded-full bg-[rgba(56,207,244,0.18)]" />
+                    <div className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(29,107,255,0.16)]">
+                      <Loading loading size="small" />
+                    </div>
+                  </div>
+                  <div className="mt-[16px] text-[18px] font-semibold text-primary">
+                    {intl.formatMessage(messages.savingTitle)}
+                  </div>
+                  <div className="mt-[8px] text-[13px] leading-[22px] text-secondary">
+                    {intl.formatMessage(messages.savingDescription)}
+                  </div>
+                  <div className="mt-[16px] flex items-center gap-[8px]">
+                    {[0, 1, 2].map(index => (
+                      <span
+                        key={index}
+                        className="h-[8px] w-[8px] rounded-full bg-brand animate-bounce"
+                        style={{ animationDelay: `${index * 0.15}s` }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="flex flex-1 items-start gap-[24px] p-[24px_32px] pb-[40px]">
               {/* 左侧区域 */}
               <div className="w-[517px] min-h-[781px] flex-[0_0_517px] flex flex-col gap-[16px]">
@@ -1211,7 +1282,7 @@ const KnowledgeScreen: React.FC = () => {
                 {/* AI 生成进度卡片 */}
                 {isGenerating && (
                   <div className="w-[517px] h-[106px] rounded-[8px] border border-solid border-line bg-container p-[16px_24px] box-border">
-                    <div className="flex items-start gap-[16px]">
+                    <div className="flex h-full items-start gap-[16px]">
                       <div className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center rounded-[10px]">
                         <img
                           src={aiStars}
@@ -1228,25 +1299,23 @@ const KnowledgeScreen: React.FC = () => {
                         </div>
                         <div className="mt-[8px] flex items-center gap-[8px]">
                           <div className="flex-1">
-                            <div
-                              style={{
-                                height: '8px',
-                                width: '100%',
-                                borderRadius: '9999px',
-                                overflow: 'hidden',
-                                backgroundColor: '#e5e7eb',
-                              }}
-                            >
+                            <div className="relative h-[8px] w-full overflow-hidden rounded-full bg-[#e5e7eb]">
                               <div
+                                className="relative h-[8px] rounded-full transition-[width] duration-100 linear"
                                 style={{
                                   width: `${Math.round(streamProgress)}%`,
-                                  height: '8px',
                                   background:
-                                    'linear-gradient(to right, #2F6BFF, #36D0F4)',
-                                  borderRadius: '9999px',
-                                  transition: 'width 0.1s linear',
+                                    'linear-gradient(90deg, #2F6BFF 0%, #36D0F4 100%)',
                                 }}
-                              />
+                              >
+                                <span
+                                  className="absolute inset-y-0 left-[-35%] w-[35%] -skew-x-12 bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.25)_35%,rgba(255,255,255,0.92)_50%,rgba(255,255,255,0.25)_65%,rgba(255,255,255,0)_100%)]"
+                                  style={{
+                                    animation:
+                                      'knowledge-progress-glow 1.35s ease-in-out infinite',
+                                  }}
+                                />
+                              </div>
                             </div>
                           </div>
                           <div className="text-[12px] text-primary whitespace-nowrap">
@@ -1260,9 +1329,21 @@ const KnowledgeScreen: React.FC = () => {
               </div>
 
               {/* 右侧区域：资料编辑区 */}
-              <div className="flex-1 min-w-[0] flex flex-col gap-[16px]">
+              <div
+                className={`flex-1 min-w-[0] flex flex-col gap-[16px] transition-all duration-500 ease-out ${
+                  isGeneratedContentHighlighted
+                    ? 'translate-y-0 scale-[1.01]'
+                    : 'translate-y-0 scale-100'
+                }`}
+              >
                 {/* 人设备注 */}
-                <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
+                <div
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 ${
+                    isGeneratedContentHighlighted
+                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                      : 'border-line bg-container'
+                  }`}
+                >
                   <div className="mb-[12px]">
                     <div className="flex items-center gap-[8px]">
                       <UserIcon size="18px" className="text-brand" />
@@ -1280,7 +1361,13 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 {/* 基础信息 */}
-                <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
+                <div
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-75 ${
+                    isGeneratedContentHighlighted
+                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                      : 'border-line bg-container'
+                  }`}
+                >
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <UsergroupIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
@@ -1378,7 +1465,13 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 {/* 生活背景 */}
-                <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
+                <div
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-150 ${
+                    isGeneratedContentHighlighted
+                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                      : 'border-line bg-container'
+                  }`}
+                >
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <HomeIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
@@ -1418,7 +1511,13 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 {/* 职业与项目背景 */}
-                <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
+                <div
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-200 ${
+                    isGeneratedContentHighlighted
+                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                      : 'border-line bg-container'
+                  }`}
+                >
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <WorkIcon size="18px" className="text-brand" />
                     <span className="text-[14px] font-semibold text-primary">
@@ -1492,6 +1591,7 @@ const KnowledgeScreen: React.FC = () => {
                 theme="default"
                 className="!h-[32px] !w-[88px] !rounded-[4px] !bg-component !text-primary !border-none !text-[14px]"
                 onClick={handleBack}
+                disabled={isSaving}
               >
                 {intl.formatMessage(messages.cancel)}
               </Button>

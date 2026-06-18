@@ -550,6 +550,8 @@
   "knowledgeScreen.personaRemark": "人设备注",
   "knowledgeScreen.save": "保存",
   "knowledgeScreen.saveFailed": "保存失败",
+  "knowledgeScreen.savingDescription": "正在整理并完善这份人设资料，请稍候片刻…",
+  "knowledgeScreen.savingTitle": "正在优化人设中",
   "knowledgeScreen.saveSuccess": "保存成功",
   "knowledgeScreen.selectPlaceholder": "请选择内容",
   "knowledgeScreen.serialNumber": "序号",

@@ -47,7 +47,17 @@ const getAssetBase64 = (assetPath: string): string => {
     const fullPath = asarPath(join(__dirname, assetPath));
     debug('Reading asset from path:', fullPath);
     const buffer = readFileSync(fullPath);
-    return `data:image/png;base64,${buffer.toString('base64')}`;
+    const ext = fullPath.split('.').pop()?.toLowerCase() || 'png';
+    const mimeMap: Record<string, string> = {
+      png: 'image/png',
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      gif: 'image/gif',
+      mp4: 'video/mp4',
+      webm: 'video/webm',
+    };
+    const mime = mimeMap[ext] || 'application/octet-stream';
+    return `data:${mime};base64,${buffer.toString('base64')}`;
   } catch (error) {
     debug(
       '[WA-AKG] Error reading asset for base64 conversion:',
@@ -64,19 +74,19 @@ const normalizeWaMe = (
 ): { jid?: string; pushName?: string } | undefined =>
   me
     ? {
-        jid:
-          typeof me.id === 'string'
-            ? me.id
-            : typeof me.jid === 'string'
-              ? me.jid
-              : undefined,
-        pushName:
-          typeof me.name === 'string'
-            ? me.name
-            : typeof me.pushName === 'string'
-              ? me.pushName
-              : undefined,
-      }
+      jid:
+        typeof me.id === 'string'
+          ? me.id
+          : typeof me.jid === 'string'
+            ? me.jid
+            : undefined,
+      pushName:
+        typeof me.name === 'string'
+          ? me.name
+          : typeof me.pushName === 'string'
+            ? me.pushName
+            : undefined,
+    }
     : undefined;
 
 export default class WhatsAppAutomationStore extends FeatureStore {
@@ -676,11 +686,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
-    const successGifBase64 = getAssetBase64(
-      '../../assets/images/whatsapp/success-animation.gif',
+    const successVideoBase64 = getAssetBase64(
+      '../../assets/images/whatsapp/success-animation.mp4',
     );
 
-    const script = this._buildSuccessModalScript(successGifBase64);
+    const script = this._buildSuccessModalScript(successVideoBase64);
 
     service.webview.executeJavaScript(script).catch((error: Error) => {
       debug('Success modal injection failed:', error);
@@ -1309,7 +1319,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   })(el);
 })();
 `;
-    service.webview.executeJavaScript(script).catch(() => {});
+    service.webview.executeJavaScript(script).catch(() => { });
   };
 
   private _injectStatusWhenReady = (
@@ -1462,8 +1472,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
    * Build the HTML and CSS for the WA-AKG connection success modal.
    * This is injected directly into the webview.
    */
-  _buildSuccessModalScript = (successGifBase64: string): string => {
-    const escapedSuccessGif = successGifBase64
+  _buildSuccessModalScript = (successVideoBase64: string): string => {
+    const escapedSuccessVideo = successVideoBase64
       .replaceAll('\\', '\\\\')
       .replaceAll("'", "\\'");
 
@@ -1472,7 +1482,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   try {
     if (document.getElementById('wa-akg-success-modal')) return;
 
-    var SUCCESS_GIF = '${escapedSuccessGif}';
+    var SUCCESS_VIDEO = '${escapedSuccessVideo}';
 
     /* ── Inject styles ── */
     var s = document.createElement('style');
@@ -1481,7 +1491,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       '.waas-wrapper{display:flex;flex-direction:column;align-items:center}',
       '.waas-card{position:relative;width:465px;height:540px;border-radius:12px;background:#FFFFFF;box-shadow:0 8px 24px rgba(0,0,0,0.12)}',
       '.waas-gif-container{position:absolute;top:35px;left:0;width:465px;height:260px;display:flex;justify-content:center;align-items:center;overflow:hidden}',
-      '.waas-gif{width:100%;height:auto;object-fit:contain}',
+      '.waas-gif{width:100%;height:100%;object-fit:contain}',
       '.waas-main-text{position:absolute;top:365px;left:0;width:100%;text-align:center;color:#111111;font-size:28px;font-weight:700;line-height:36px;margin:0;padding:0 48px;box-sizing:border-box}',
       '.waas-close-btn{margin-top:20px;width:40px;height:40px;border-radius:50%;border:4px solid #fff;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;outline:none}',
       '.waas-close-btn:hover{opacity:0.8}',
@@ -1498,7 +1508,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         '<div class=\"waas-wrapper\">' +
           '<div class=\"waas-card\">' +
             '<div class=\"waas-gif-container\">' +
-              '<img src=\"' + SUCCESS_GIF + '\" alt=\"Success Animation\" class=\"waas-gif\"/>' +
+              '<video src=\"' + SUCCESS_VIDEO + '\" autoplay muted playsinline class=\"waas-gif\" id=\"waas-success-video\"></video>' +
             '</div>' +
             '<p class=\"waas-main-text\">恭喜你可以使用数字员工啦~</p>' +
           '</div>' +
@@ -1512,6 +1522,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       '</div>';
 
     document.body.appendChild(modal);
+
+    /* ── Play video once, prevent replay ── */
+    var video = document.getElementById('waas-success-video');
+    if (video) {
+      video.addEventListener('ended', function() {
+        video.pause();
+        video.removeAttribute('loop');
+      });
+    }
 
     /* ── Close button handler ── */
     var closeBtn = document.getElementById('waas-close-btn');

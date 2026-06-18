@@ -83,6 +83,10 @@ fi
 echo -e "${YELLOW}✓ Node 版本: $(node --version)${NC}"
 echo -e "${YELLOW}✓ pnpm 版本: $(pnpm --version)${NC}"
 
+# 禁用代码签名自动发现 (内部测试构建不需要签名)
+export CSC_IDENTITY_AUTO_DISCOVERY=false
+echo -e "${YELLOW}✓ 已禁用代码签名 (CSC_IDENTITY_AUTO_DISCOVERY=false)${NC}"
+
 # 1. 备份原始 entitlements 文件
 echo -e "\n${GREEN}[1/6] 备份原始 entitlements 配置...${NC}"
 cp build-helpers/entitlements.mas.plist build-helpers/entitlements.mas.plist.bak

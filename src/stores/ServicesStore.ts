@@ -1089,8 +1089,11 @@ export default class ServicesStore extends TypedStore {
     }
 
     if (!service.webview) return;
+    // Use reload() instead of loadURL() to avoid full navigation that triggers
+    // beforeunload, service worker re-registration, and WhatsApp crash detection.
+    // reload() preserves the current URL and does a softer page refresh.
     // eslint-disable-next-line consistent-return
-    return service.webview.loadURL(service.url);
+    return service.webview.reload();
   }
 
   @action _reloadActive() {

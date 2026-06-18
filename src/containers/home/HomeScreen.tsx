@@ -69,7 +69,7 @@ const fetchOpenHandoffCount = async (): Promise<number> => {
     const response = await useCustomInstance<{
       data: { total?: number; items?: unknown[] } | unknown[];
       status: number;
-    }>('/api/v1/handoff?status=open&limit=1&offset=0', { method: 'GET' });
+    }>('/api/v1/handoff?read_at=false&limit=100', { method: 'GET' });
     const payload = response.data;
     if (Array.isArray(payload)) return payload.length;
     return typeof payload.total === 'number' ? payload.total : 0;

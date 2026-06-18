@@ -5,6 +5,7 @@ import { defineMessages, useIntl } from 'react-intl';
 import { ChatBubble1FilledIcon } from 'tdesign-icons-react';
 import {
   DateRangePicker,
+  Dialog,
   Loading,
   MessagePlugin,
   Pagination,
@@ -13,6 +14,7 @@ import {
 } from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
 import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
+import { markHandoffReadApiV1HandoffHandoffIdReadPost } from '../../../agent-flow-cs/api/generated/handoff/handoff';
 
 const messages = defineMessages({
   serialNumber: {
@@ -147,6 +149,22 @@ const messages = defineMessages({
     id: 'notificationsTab.btn.reset',
     defaultMessage: 'Reset',
   },
+  dialogTitle: {
+    id: 'notificationsTab.dialog.title',
+    defaultMessage: 'Notification Detail',
+  },
+  dialogTriggerContent: {
+    id: 'notificationsTab.dialog.triggerContent',
+    defaultMessage: 'Trigger Content',
+  },
+  dialogAlertRule: {
+    id: 'notificationsTab.dialog.alertRule',
+    defaultMessage: 'Alert Rule',
+  },
+  dialogClose: {
+    id: 'notificationsTab.dialog.close',
+    defaultMessage: 'Close',
+  },
 });
 
 /** 接口 /api/v1/handoff 返回的记录字段 */
@@ -157,6 +175,7 @@ interface HandoffRecord {
   status: string;
   source: string;
   created_at: string;
+  read_at?: string | null;
 }
 
 interface HandoffListResponse {
@@ -224,6 +243,7 @@ const NotificationsTab = (): ReactElement => {
   );
   const [socialFilter, setSocialFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [dialogRecord, setDialogRecord] = useState<HandoffRecord | null>(null);
 
   const loadRecords = useCallback(
     async (page: number) => {
@@ -289,7 +309,30 @@ const NotificationsTab = (): ReactElement => {
     downloadCSV(records, intl);
   }, [intl, records]);
 
-  const handleViewConversation = useCallback((): void => {}, []);
+  const handleViewConversation = useCallback(
+    async (record: HandoffRecord) => {
+      // 仅未读时才调用标记已读接口
+      if (!record.read_at) {
+        try {
+          await markHandoffReadApiV1HandoffHandoffIdReadPost(record.id);
+          // 刷新列表更新已读状态
+          loadRecords(currentPage).catch(() => {});
+        } catch (error) {
+          MessagePlugin.error(
+            error instanceof Error
+              ? error.message
+              : 'Failed to mark as read',
+          );
+        }
+      }
+      setDialogRecord(record);
+    },
+    [currentPage, loadRecords],
+  );
+
+  const handleCloseDialog = useCallback(() => {
+    setDialogRecord(null);
+  }, []);
 
   const columns: PrimaryTableCol[] = [
     { colKey: 'row-select', type: 'multiple', width: 48 },
@@ -331,8 +374,7 @@ const NotificationsTab = (): ReactElement => {
       width: 100,
       cell: ({ row }) => {
         const r = row as HandoffRecord;
-        const isRead =
-          r.status === 'read' || r.status === 'Read' || r.status === 'READ';
+        const isRead = !!r.read_at;
         return (
           <span
             className="inline-flex items-center gap-[6px]"
@@ -393,21 +435,25 @@ const NotificationsTab = (): ReactElement => {
       colKey: 'op',
       title: intl.formatMessage(messages.actions),
       width: 96,
-      cell: () => (
-        <button
-          type="button"
-          onClick={handleViewConversation}
-          className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
-        >
-          {intl.formatMessage(messages.viewConversation)}
-        </button>
-      ),
+      cell: ({ row }) => {
+        const r = row as HandoffRecord;
+        return (
+          <button
+            type="button"
+            onClick={() => handleViewConversation(r)}
+            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
+          >
+            {intl.formatMessage(messages.viewConversation)}
+          </button>
+        );
+      },
     },
   ];
 
   const someSelected = selectedRowKeys.length > 0;
 
   return (
+    <>
     <div
       className="mx-auto w-full px-[24px] pt-[24px]"
       style={{ maxWidth: '1440px' }}
@@ -555,6 +601,45 @@ const NotificationsTab = (): ReactElement => {
         </div>
       </div>
     </div>
+
+    {dialogRecord && (
+      <Dialog
+        visible
+        header={intl.formatMessage(messages.dialogTitle)}
+        onClose={handleCloseDialog}
+        footer={
+          <button
+            type="button"
+            onClick={handleCloseDialog}
+            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[24px] text-[14px] font-medium text-text-anti"
+          >
+            {intl.formatMessage(messages.dialogClose)}
+          </button>
+        }
+        width={480}
+        placement="center"
+      >
+        <div className="flex flex-col gap-[20px] py-[8px]">
+          <div className="flex flex-col gap-[8px]">
+            <span className="text-[13px] font-medium text-secondary">
+              {intl.formatMessage(messages.dialogTriggerContent)}
+            </span>
+            <div className="rounded-[6px] bg-secondary-container px-[16px] py-[12px] text-[14px] leading-[22px] text-primary">
+              {dialogRecord.reason || '-'}
+            </div>
+          </div>
+          <div className="flex flex-col gap-[8px]">
+            <span className="text-[13px] font-medium text-secondary">
+              {intl.formatMessage(messages.dialogAlertRule)}
+            </span>
+            <div className="rounded-[6px] bg-secondary-container px-[16px] py-[12px] text-[14px] leading-[22px] text-primary">
+              {dialogRecord.source || '-'}
+            </div>
+          </div>
+        </div>
+      </Dialog>
+    )}
+    </>
   );
 };
 

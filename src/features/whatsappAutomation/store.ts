@@ -74,19 +74,19 @@ const normalizeWaMe = (
 ): { jid?: string; pushName?: string } | undefined =>
   me
     ? {
-      jid:
-        typeof me.id === 'string'
-          ? me.id
-          : typeof me.jid === 'string'
-            ? me.jid
-            : undefined,
-      pushName:
-        typeof me.name === 'string'
-          ? me.name
-          : typeof me.pushName === 'string'
-            ? me.pushName
-            : undefined,
-    }
+        jid:
+          typeof me.id === 'string'
+            ? me.id
+            : typeof me.jid === 'string'
+              ? me.jid
+              : undefined,
+        pushName:
+          typeof me.name === 'string'
+            ? me.name
+            : typeof me.pushName === 'string'
+              ? me.pushName
+              : undefined,
+      }
     : undefined;
 
 export default class WhatsAppAutomationStore extends FeatureStore {
@@ -1319,7 +1319,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   })(el);
 })();
 `;
-    service.webview.executeJavaScript(script).catch(() => { });
+    service.webview.executeJavaScript(script).catch(() => {});
   };
 
   private _injectStatusWhenReady = (

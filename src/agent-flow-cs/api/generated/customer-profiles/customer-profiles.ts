@@ -9,112 +9,95 @@ import type {
   CustomerProfileResponse,
   HTTPValidationError,
   ListCustomerProfilesApiV1CustomerProfilesGetParams,
-  ToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchParams,
+  ToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchParams
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listCustomerProfilesApiV1CustomerProfilesGetResponse200 = {
-  data: AppApiSchemasOwnersCustomerProfileListResponse;
-  status: 200;
-};
+  data: AppApiSchemasOwnersCustomerProfileListResponse
+  status: 200
+}
 
 export type listCustomerProfilesApiV1CustomerProfilesGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess = (listCustomerProfilesApiV1CustomerProfilesGetResponse200) & {
+  headers: Headers;
+};
+export type listCustomerProfilesApiV1CustomerProfilesGetResponseError = (listCustomerProfilesApiV1CustomerProfilesGetResponse422) & {
+  headers: Headers;
 };
 
-export type listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess =
-  listCustomerProfilesApiV1CustomerProfilesGetResponse200 & {
-    headers: Headers;
-  };
-export type listCustomerProfilesApiV1CustomerProfilesGetResponseError =
-  listCustomerProfilesApiV1CustomerProfilesGetResponse422 & {
-    headers: Headers;
-  };
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse = (listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess | listCustomerProfilesApiV1CustomerProfilesGetResponseError)
 
-export type listCustomerProfilesApiV1CustomerProfilesGetResponse =
-  | listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess
-  | listCustomerProfilesApiV1CustomerProfilesGetResponseError;
-
-export const getListCustomerProfilesApiV1CustomerProfilesGetUrl = (
-  params?: ListCustomerProfilesApiV1CustomerProfilesGetParams,
-) => {
+export const getListCustomerProfilesApiV1CustomerProfilesGetUrl = (params?: ListCustomerProfilesApiV1CustomerProfilesGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.228:8000/api/v1/customer-profiles?${stringifiedParams}`
-    : `http://10.0.0.228:8000/api/v1/customer-profiles`;
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/customer-profiles?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/customer-profiles`
+}
 
 /**
  * 查询当前子账号名下的客户画像，支持过滤和搜索。
  * @summary List Customer Profiles
  */
-export const listCustomerProfilesApiV1CustomerProfilesGet = async (
-  params?: ListCustomerProfilesApiV1CustomerProfilesGetParams,
-  options?: RequestInit,
-): Promise<listCustomerProfilesApiV1CustomerProfilesGetResponse> => {
-  return useCustomInstance<listCustomerProfilesApiV1CustomerProfilesGetResponse>(
-    getListCustomerProfilesApiV1CustomerProfilesGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
+export const listCustomerProfilesApiV1CustomerProfilesGet = async (params?: ListCustomerProfilesApiV1CustomerProfilesGetParams, options?: RequestInit): Promise<listCustomerProfilesApiV1CustomerProfilesGetResponse> => {
+
+  return useCustomInstance<listCustomerProfilesApiV1CustomerProfilesGetResponse>(getListCustomerProfilesApiV1CustomerProfilesGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse200 = {
+  data: CustomerProfileResponse
+  status: 200
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseSuccess = (toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse200) & {
+  headers: Headers;
+};
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseError = (toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse422) & {
+  headers: Headers;
 };
 
-export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse200 =
-  {
-    data: CustomerProfileResponse;
-    status: 200;
-  };
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse = (toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseSuccess | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseError)
 
-export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse422 =
-  {
-    data: HTTPValidationError;
-    status: 422;
-  };
-
-export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseSuccess =
-  toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse200 & {
-    headers: Headers;
-  };
-export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseError =
-  toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse422 & {
-    headers: Headers;
-  };
-
-export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse =
-  | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseSuccess
-  | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseError;
-
-export const getToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchUrl = (
-  profileId: string,
-  params: ToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchParams,
-) => {
+export const getToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchUrl = (profileId: string,
+    params: ToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.228:8000/api/v1/customer-profiles/${profileId}/heavy-fan?${stringifiedParams}`
-    : `http://10.0.0.228:8000/api/v1/customer-profiles/${profileId}/heavy-fan`;
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/customer-profiles/${profileId}/heavy-fan?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/customer-profiles/${profileId}/heavy-fan`
+}
 
 /**
  * 标记或取消客户重粉标签。
@@ -122,19 +105,16 @@ export const getToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchUrl = (
  * 设置后前端可在会话列表中高亮该客户画像。
  * @summary Toggle Heavy Fan
  */
-export const toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatch = async (
-  profileId: string,
-  params: ToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchParams,
-  options?: RequestInit,
-): Promise<toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse> => {
-  return useCustomInstance<toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse>(
-    getToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchUrl(
-      profileId,
-      params,
-    ),
-    {
-      ...options,
-      method: 'PATCH',
-    },
-  );
-};
+export const toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatch = async (profileId: string,
+    params: ToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchParams, options?: RequestInit): Promise<toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse> => {
+
+  return useCustomInstance<toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse>(getToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchUrl(profileId,params),
+  {
+    ...options,
+    method: 'PATCH'
+
+
+  }
+);}
+
+

@@ -319,9 +319,7 @@ const NotificationsTab = (): ReactElement => {
           loadRecords(currentPage).catch(() => {});
         } catch (error) {
           MessagePlugin.error(
-            error instanceof Error
-              ? error.message
-              : 'Failed to mark as read',
+            error instanceof Error ? error.message : 'Failed to mark as read',
           );
         }
       }
@@ -454,191 +452,194 @@ const NotificationsTab = (): ReactElement => {
 
   return (
     <>
-    <div
-      className="mx-auto w-full px-[24px] pt-[24px]"
-      style={{ maxWidth: '1440px' }}
-    >
-      <div className="flex h-[56px] items-center gap-[20px]">
-        <div className="flex items-center gap-[8px]">
-          <span className="text-[14px] font-normal text-secondary">
-            {intl.formatMessage(messages.filterNotificationTime)}
-          </span>
-          <DateRangePicker
-            mode="date"
-            placeholder={[
-              intl.formatMessage(messages.startDate),
-              intl.formatMessage(messages.endDate),
-            ]}
-            style={{ width: 260, height: 32 }}
-            className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-          />
-        </div>
-
-        <div className="flex items-center gap-[8px]">
-          <span className="text-[14px] font-normal text-secondary">
-            {intl.formatMessage(messages.filterSocialMedia)}
-          </span>
-          <Select
-            style={{ width: 160 }}
-            className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-            placeholder={intl.formatMessage(messages.selectStatus)}
-            options={[
-              { label: intl.formatMessage(messages.filterAll), value: 'all' },
-              { label: 'WhatsApp', value: 'whatsapp' },
-              // { label: 'Telegram', value: 'telegram' },
-            ]}
-            value={socialFilter}
-            onChange={value => {
-              if (typeof value === 'string') setSocialFilter(value);
-            }}
-          />
-        </div>
-
-        <div className="flex items-center gap-[8px]">
-          <span className="text-[14px] font-normal text-secondary">
-            {intl.formatMessage(messages.filterStatus)}
-          </span>
-          <Select
-            style={{ width: 160 }}
-            className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
-            placeholder={intl.formatMessage(messages.selectStatus)}
-            options={[
-              { label: intl.formatMessage(messages.filterAll), value: 'all' },
-              { label: intl.formatMessage(messages.filterRead), value: 'read' },
-              {
-                label: intl.formatMessage(messages.filterUnread),
-                value: 'unread',
-              },
-            ]}
-            value={statusFilter}
-            onChange={value => {
-              if (typeof value === 'string') setStatusFilter(value);
-            }}
-          />
-        </div>
-
-        <button
-          type="button"
-          onClick={handleSearch}
-          className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[14px] font-medium text-text-anti"
-        >
-          {intl.formatMessage(messages.btnSearch)}
-        </button>
-
-        <button
-          type="button"
-          onClick={handleReset}
-          className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container text-[14px] font-medium text-secondary"
-        >
-          {intl.formatMessage(messages.btnReset)}
-        </button>
-      </div>
-
-      <div className="mt-[16px] flex h-[44px] items-center gap-[12px]">
-        <button
-          type="button"
-          onClick={handleMarkAllRead}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[16px] text-[14px] font-medium text-text-anti"
-        >
-          {intl.formatMessage(messages.btnMarkAllRead)}
-        </button>
-
-        <button
-          type="button"
-          onClick={handleExportSelected}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
-        >
-          {intl.formatMessage(messages.btnExportSelected)}
-        </button>
-
-        <button
-          type="button"
-          onClick={handleExportAll}
-          className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
-        >
-          {intl.formatMessage(messages.btnExportAll)}
-        </button>
-
-        {someSelected && (
-          <span className="text-[14px] font-normal text-placeholder">
-            {intl.formatMessage(messages.selectedItems, {
-              count: selectedRowKeys.length,
-            })}
-          </span>
-        )}
-      </div>
-
-      <div className="mt-[16px] rounded-[8px] border border-solid border-line">
-        {loading ? (
-          <div className="flex min-h-[300px] items-center justify-center">
-            <Loading loading text={intl.formatMessage(messages.loading)} />
+      <div
+        className="mx-auto w-full px-[24px] pt-[24px]"
+        style={{ maxWidth: '1440px' }}
+      >
+        <div className="flex h-[56px] items-center gap-[20px]">
+          <div className="flex items-center gap-[8px]">
+            <span className="text-[14px] font-normal text-secondary">
+              {intl.formatMessage(messages.filterNotificationTime)}
+            </span>
+            <DateRangePicker
+              mode="date"
+              placeholder={[
+                intl.formatMessage(messages.startDate),
+                intl.formatMessage(messages.endDate),
+              ]}
+              style={{ width: 260, height: 32 }}
+              className="[&_.t-input]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
+            />
           </div>
-        ) : (
-          <Table
-            data={records}
-            columns={columns}
-            rowKey="id"
-            selectedRowKeys={selectedRowKeys}
-            onSelectChange={handleSelectChange}
-            tableLayout="fixed"
-            hover
-            stripe={false}
-            bordered
-            size="medium"
-            className={NOTIFICATIONS_TABLE_CLASS}
-          />
-        )}
 
-        <div className="flex h-[52px] items-center justify-between border-t border-solid border-line bg-container px-[24px]">
-          <Pagination
-            total={total}
-            pageSize={PAGE_SIZE}
-            current={currentPage}
-            onChange={handlePageChange}
-            showJumper
-            size="small"
-          />
-        </div>
-      </div>
-    </div>
+          <div className="flex items-center gap-[8px]">
+            <span className="text-[14px] font-normal text-secondary">
+              {intl.formatMessage(messages.filterSocialMedia)}
+            </span>
+            <Select
+              style={{ width: 160 }}
+              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
+              placeholder={intl.formatMessage(messages.selectStatus)}
+              options={[
+                { label: intl.formatMessage(messages.filterAll), value: 'all' },
+                { label: 'WhatsApp', value: 'whatsapp' },
+                // { label: 'Telegram', value: 'telegram' },
+              ]}
+              value={socialFilter}
+              onChange={value => {
+                if (typeof value === 'string') setSocialFilter(value);
+              }}
+            />
+          </div>
 
-    {dialogRecord && (
-      <Dialog
-        visible
-        header={intl.formatMessage(messages.dialogTitle)}
-        onClose={handleCloseDialog}
-        footer={
+          <div className="flex items-center gap-[8px]">
+            <span className="text-[14px] font-normal text-secondary">
+              {intl.formatMessage(messages.filterStatus)}
+            </span>
+            <Select
+              style={{ width: 160 }}
+              className="[&_.t-select__trigger]:h-[32px] [&_.t-input]:rounded-[6px] [&_.t-input]:border-line"
+              placeholder={intl.formatMessage(messages.selectStatus)}
+              options={[
+                { label: intl.formatMessage(messages.filterAll), value: 'all' },
+                {
+                  label: intl.formatMessage(messages.filterRead),
+                  value: 'read',
+                },
+                {
+                  label: intl.formatMessage(messages.filterUnread),
+                  value: 'unread',
+                },
+              ]}
+              value={statusFilter}
+              onChange={value => {
+                if (typeof value === 'string') setStatusFilter(value);
+              }}
+            />
+          </div>
+
           <button
             type="button"
-            onClick={handleCloseDialog}
-            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[24px] text-[14px] font-medium text-text-anti"
+            onClick={handleSearch}
+            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[14px] font-medium text-text-anti"
           >
-            {intl.formatMessage(messages.dialogClose)}
+            {intl.formatMessage(messages.btnSearch)}
           </button>
-        }
-        width={480}
-        placement="center"
-      >
-        <div className="flex flex-col gap-[20px] py-[8px]">
-          <div className="flex flex-col gap-[8px]">
-            <span className="text-[13px] font-medium text-secondary">
-              {intl.formatMessage(messages.dialogTriggerContent)}
+
+          <button
+            type="button"
+            onClick={handleReset}
+            className="flex h-[32px] w-[64px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container text-[14px] font-medium text-secondary"
+          >
+            {intl.formatMessage(messages.btnReset)}
+          </button>
+        </div>
+
+        <div className="mt-[16px] flex h-[44px] items-center gap-[12px]">
+          <button
+            type="button"
+            onClick={handleMarkAllRead}
+            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[16px] text-[14px] font-medium text-text-anti"
+          >
+            {intl.formatMessage(messages.btnMarkAllRead)}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleExportSelected}
+            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
+          >
+            {intl.formatMessage(messages.btnExportSelected)}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleExportAll}
+            className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-line bg-container px-[16px] text-[14px] font-medium text-secondary"
+          >
+            {intl.formatMessage(messages.btnExportAll)}
+          </button>
+
+          {someSelected && (
+            <span className="text-[14px] font-normal text-placeholder">
+              {intl.formatMessage(messages.selectedItems, {
+                count: selectedRowKeys.length,
+              })}
             </span>
-            <div className="rounded-[6px] bg-secondary-container px-[16px] py-[12px] text-[14px] leading-[22px] text-primary">
-              {dialogRecord.reason || '-'}
+          )}
+        </div>
+
+        <div className="mt-[16px] rounded-[8px] border border-solid border-line">
+          {loading ? (
+            <div className="flex min-h-[300px] items-center justify-center">
+              <Loading loading text={intl.formatMessage(messages.loading)} />
             </div>
-          </div>
-          <div className="flex flex-col gap-[8px]">
-            <span className="text-[13px] font-medium text-secondary">
-              {intl.formatMessage(messages.dialogAlertRule)}
-            </span>
-            <div className="rounded-[6px] bg-secondary-container px-[16px] py-[12px] text-[14px] leading-[22px] text-primary">
-              {dialogRecord.source || '-'}
-            </div>
+          ) : (
+            <Table
+              data={records}
+              columns={columns}
+              rowKey="id"
+              selectedRowKeys={selectedRowKeys}
+              onSelectChange={handleSelectChange}
+              tableLayout="fixed"
+              hover
+              stripe={false}
+              bordered
+              size="medium"
+              className={NOTIFICATIONS_TABLE_CLASS}
+            />
+          )}
+
+          <div className="flex h-[52px] items-center justify-between border-t border-solid border-line bg-container px-[24px]">
+            <Pagination
+              total={total}
+              pageSize={PAGE_SIZE}
+              current={currentPage}
+              onChange={handlePageChange}
+              showJumper
+              size="small"
+            />
           </div>
         </div>
-      </Dialog>
-    )}
+      </div>
+
+      {dialogRecord && (
+        <Dialog
+          visible
+          header={intl.formatMessage(messages.dialogTitle)}
+          onClose={handleCloseDialog}
+          footer={
+            <button
+              type="button"
+              onClick={handleCloseDialog}
+              className="flex h-[32px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand px-[24px] text-[14px] font-medium text-text-anti"
+            >
+              {intl.formatMessage(messages.dialogClose)}
+            </button>
+          }
+          width={480}
+          placement="center"
+        >
+          <div className="flex flex-col gap-[20px] py-[8px]">
+            <div className="flex flex-col gap-[8px]">
+              <span className="text-[13px] font-medium text-secondary">
+                {intl.formatMessage(messages.dialogTriggerContent)}
+              </span>
+              <div className="rounded-[6px] bg-secondary-container px-[16px] py-[12px] text-[14px] leading-[22px] text-primary">
+                {dialogRecord.reason || '-'}
+              </div>
+            </div>
+            <div className="flex flex-col gap-[8px]">
+              <span className="text-[13px] font-medium text-secondary">
+                {intl.formatMessage(messages.dialogAlertRule)}
+              </span>
+              <div className="rounded-[6px] bg-secondary-container px-[16px] py-[12px] text-[14px] leading-[22px] text-primary">
+                {dialogRecord.source || '-'}
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      )}
     </>
   );
 };

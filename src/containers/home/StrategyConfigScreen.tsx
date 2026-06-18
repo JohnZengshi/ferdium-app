@@ -14,6 +14,7 @@ import {
   UserIcon,
   UserSafetyIcon,
 } from 'tdesign-icons-react';
+import { useCustomInstance } from '../../agent-flow-cs/api/customInstance';
 import HandoverRulesTab from './tabs/HandoverRulesTab';
 import NotificationsTab from './tabs/NotificationsTab';
 import ResumeTab from './tabs/ResumeTab';
@@ -53,12 +54,35 @@ interface SidebarItem {
   badge?: string;
 }
 
+const formatHandoffBadge = (total: number): string | undefined => {
+  if (total <= 0) return undefined;
+  if (total > 99) return '99+';
+  return String(total);
+};
+
+const fetchOpenHandoffCount = async (): Promise<number> => {
+  try {
+    const response = await useCustomInstance<{
+      data: { total?: number; items?: unknown[] } | unknown[];
+      status: number;
+    }>('/api/v1/handoff?status=open&limit=1&offset=0', { method: 'GET' });
+    const payload = response.data;
+    if (Array.isArray(payload)) return payload.length;
+    return typeof payload.total === 'number' ? payload.total : 0;
+  } catch {
+    return 0;
+  }
+};
+
 const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
   onBack,
 }) => {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState('resume');
   const contentRef = useRef<HTMLDivElement>(null);
+  const [handoffBadge, setHandoffBadge] = useState<string | undefined>(
+    undefined,
+  );
 
   const handleResize = useCallback(() => {
     if (contentRef.current) {
@@ -78,6 +102,14 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
+
+  useEffect(() => {
+    fetchOpenHandoffCount()
+      .then(total => {
+        setHandoffBadge(formatHandoffBadge(total));
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSidebarClick = useCallback((key: string) => {
     setActiveTab(key);
@@ -103,7 +135,7 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
       key: 'notifications',
       label: intl.formatMessage(messages.notifications),
       icon: <FolderOpenIcon />,
-      badge: '99+',
+      badge: handoffBadge,
     },
   ];
 

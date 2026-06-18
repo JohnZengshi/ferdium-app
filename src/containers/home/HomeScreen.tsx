@@ -24,6 +24,7 @@ import {
   getWorkflowApiV1AgentWorkflowGet,
   updateWorkflowApiV1AgentWorkflowPut,
 } from '../../agent-flow-cs/api/generated/agent-workflow/agent-workflow';
+import { useCustomInstance } from '../../agent-flow-cs/api/customInstance';
 import { SectionHeader } from '../../components/home/SectionHeader';
 import { StepItem } from '../../components/home/StepItem';
 import {
@@ -54,7 +55,28 @@ interface HomeScreenState {
   dialogEmployee: EmployeeResume | null;
   step1Completed: boolean;
   onboardingVersion: number;
+  handoffOpenCount: number;
 }
+
+const formatHandoffBadge = (total: number): string | undefined => {
+  if (total <= 0) return undefined;
+  if (total > 99) return '99+';
+  return String(total);
+};
+
+const fetchOpenHandoffCount = async (): Promise<number> => {
+  try {
+    const response = await useCustomInstance<{
+      data: { total?: number; items?: unknown[] } | unknown[];
+      status: number;
+    }>('/api/v1/handoff?status=open&limit=1&offset=0', { method: 'GET' });
+    const payload = response.data;
+    if (Array.isArray(payload)) return payload.length;
+    return typeof payload.total === 'number' ? payload.total : 0;
+  } catch {
+    return 0;
+  }
+};
 
 @inject('stores')
 @observer
@@ -72,6 +94,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       dialogEmployee: null,
       step1Completed: onboardingProgress.step1Completed,
       onboardingVersion: 0,
+      handoffOpenCount: 0,
     };
   }
 
@@ -103,6 +126,12 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     await this.props.stores!.whatsappAutomation.fetchAllSessionStatuses();
     // Check account binding status
     await this.checkStep1Completion();
+    // Fetch open handoff count for badge display
+    fetchOpenHandoffCount()
+      .then(count => {
+        this.setState({ handoffOpenCount: count });
+      })
+      .catch(() => {});
 
     // Listen for onboarding step updates from other components
     // (e.g. RuleListEditor, AccountSlider) to refresh progress display
@@ -352,6 +381,9 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   }
 
   renderEmployeeCard(employee: any): ReactElement {
+    const badgeText = employee.hasBadge
+      ? formatHandoffBadge(this.state.handoffOpenCount)
+      : undefined;
     return (
       <div
         key={employee.id}
@@ -366,8 +398,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         </div>
 
         <div className="relative z-10 mt-auto mb-[24px] flex flex-col items-center">
-          {employee.hasBadge ? (
-            <Badge count="99+" shape="round" offset={[-4, -4]}>
+          {badgeText ? (
+            <Badge count={badgeText} shape="round" offset={[-4, -4]}>
               <Button
                 theme="primary"
                 size="small"
@@ -383,8 +415,12 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
               theme="primary"
               size="small"
               className="!bg-brand !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm"
-              suffix={<ChevronRightIcon />}
-              onClick={() => this.handleOpenResume(employee)}
+              suffix={employee.hasBadge ? undefined : <ChevronRightIcon />}
+              onClick={
+                employee.hasBadge
+                  ? this.handleOpenStrategy
+                  : () => this.handleOpenResume(employee)
+              }
             >
               {employee.cta}
             </Button>

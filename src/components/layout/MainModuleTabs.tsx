@@ -16,6 +16,7 @@ import {
   injectIntl,
 } from 'react-intl';
 import type { Stores } from '../../@types/stores.types';
+import { useCustomInstance } from '../../agent-flow-cs/api/customInstance';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
 
@@ -64,9 +65,46 @@ interface IProps {
   stores?: Stores;
 }
 
+interface IState {
+  handoffBadge: string | null;
+}
+
+const fetchOpenHandoffCount = async (): Promise<number> => {
+  try {
+    const response = await useCustomInstance<{
+      data: { total?: number; items?: unknown[] } | unknown[];
+      status: number;
+    }>('/api/v1/handoff?status=open&limit=1&offset=0', { method: 'GET' });
+    const payload = response.data;
+    if (Array.isArray(payload)) return payload.length;
+    return typeof payload.total === 'number' ? payload.total : 0;
+  } catch {
+    return 0;
+  }
+};
+
+const formatHandoffBadge = (total: number): string | null => {
+  if (total <= 0) return null;
+  if (total > 99) return '99+';
+  return String(total);
+};
+
 @inject('stores')
 @observer
-class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
+class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
+  constructor(props: IProps & WrappedComponentProps) {
+    super(props);
+    this.state = { handoffBadge: null };
+  }
+
+  componentDidMount(): void {
+    fetchOpenHandoffCount()
+      .then(total => {
+        this.setState({ handoffBadge: formatHandoffBadge(total) });
+      })
+      .catch(() => {});
+  }
+
   render(): ReactElement {
     const { stores, intl } = this.props;
     const badge = stores?.services.mainModuleBadge;
@@ -88,7 +126,13 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
                 }}
               >
                 <Badge
-                  count={mod.id === 'service-type' ? badge : null}
+                  count={
+                    mod.id === 'service-type'
+                      ? badge
+                      : mod.id === 'home'
+                        ? this.state.handoffBadge
+                        : null
+                  }
                   size="small"
                   offset={[0, 0]}
                 >

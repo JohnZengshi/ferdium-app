@@ -211,7 +211,7 @@ const formatDateTime = (iso: string): string => {
   }
 };
 const NOTIFICATIONS_TABLE_CLASS =
-  '[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:!h-[52px] [&_.t-table__body-td]:align-middle';
+  '[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:!h-[52px] [&_.t-table__body-td]:!whitespace-nowrap [&_.t-table__body-td]:!overflow-hidden [&_.t-table__body-td]:!text-ellipsis [&_.t-table__body-td]:align-middle [&_.t-table__cell]:!whitespace-nowrap';
 
 const NotificationsTab = (): ReactElement => {
   const intl = useIntl();
@@ -304,13 +304,13 @@ const NotificationsTab = (): ReactElement => {
     {
       colKey: 'id',
       title: intl.formatMessage(messages.account),
-      width: 140,
+      width: 100,
       ellipsis: true,
     },
     {
       colKey: 'conversation_id',
       title: intl.formatMessage(messages.conversation),
-      width: 140,
+      width: 100,
       ellipsis: true,
     },
     {
@@ -334,7 +334,10 @@ const NotificationsTab = (): ReactElement => {
         const isRead =
           r.status === 'read' || r.status === 'Read' || r.status === 'READ';
         return (
-          <span className="inline-flex items-center gap-[6px]">
+          <span
+            className="inline-flex items-center gap-[6px]"
+            style={{ whiteSpace: 'nowrap' }}
+          >
             <span
               className={`inline-block h-[6px] w-[6px] rounded-full ${isRead ? 'bg-success' : 'bg-error'}`}
             />
@@ -354,7 +357,10 @@ const NotificationsTab = (): ReactElement => {
       title: intl.formatMessage(messages.platform),
       width: 96,
       cell: () => (
-        <div className="flex items-center gap-[8px]">
+        <div
+          className="flex items-center gap-[8px]"
+          style={{ whiteSpace: 'nowrap' }}
+        >
           <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-success">
             <ChatBubble1FilledIcon className="text-text-anti" />
           </div>
@@ -372,7 +378,12 @@ const NotificationsTab = (): ReactElement => {
       cell: ({ row }) => {
         const r = row as HandoffRecord;
         return (
-          <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+          <span
+            style={{
+              fontVariantNumeric: 'tabular-nums',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {formatDateTime(r.created_at)}
           </span>
         );
@@ -523,7 +534,7 @@ const NotificationsTab = (): ReactElement => {
             rowKey="id"
             selectedRowKeys={selectedRowKeys}
             onSelectChange={handleSelectChange}
-            tableLayout="auto"
+            tableLayout="fixed"
             hover
             stripe={false}
             bordered

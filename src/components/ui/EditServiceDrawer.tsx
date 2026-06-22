@@ -165,7 +165,7 @@ const parseProxyString = (content: string): ParsedProxy => {
   return { isEnabled: false };
 };
 
-interface ServiceProxy {
+export interface ServiceProxy {
   isEnabled?: boolean;
   protocol?: string;
   host?: string;
@@ -252,7 +252,6 @@ export default function EditServiceDrawer({
           }),
         );
       } else {
-        // Handle specific error codes
         let errorMessage: string;
         if (result.error === 'WHATSAPP_REQUEST_FAILED') {
           errorMessage = intl.formatMessage(

@@ -1,32 +1,24 @@
 import { Menu, dialog, app as electronApp } from '@electron/remote';
-import { clipboard, ipcRenderer } from 'electron';
-import { debounce } from 'lodash';
+import { clipboard } from 'electron';
 import { inject, observer } from 'mobx-react';
 import React, { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import type { IntlShape, WrappedComponentProps } from 'react-intl';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import {
-  AddIcon,
-  CloseIcon,
-  ErrorCircleFilledIcon,
-  UserIcon,
-} from 'tdesign-icons-react';
+import { AddIcon, UserIcon } from 'tdesign-icons-react';
 import {
   Avatar,
   Badge,
   Button,
   DialogPlugin,
-  Drawer,
   Empty,
   Form,
-  Input,
   MessagePlugin,
   Select,
-  Switch,
-  Textarea,
 } from 'tdesign-react';
+import EditServiceDrawer from '../ui/EditServiceDrawer';
+import type { ServiceProxy } from '../ui/EditServiceDrawer';
 import type { Actions } from '../../actions/lib/actions';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
@@ -125,139 +117,9 @@ const messages = defineMessages({
     id: 'accountSlider.bindPersonaFailed',
     defaultMessage: 'Failed to bind persona',
   },
-  bindAccountDialogTitle: {
-    id: 'accountSlider.bindAccountDialogTitle',
-    defaultMessage: 'Bind Account',
-  },
-  basicSettings: {
-    id: 'accountSlider.basicSettings',
-    defaultMessage: 'Basic Settings',
-  },
-  accountRemark: {
-    id: 'accountSlider.accountRemark',
-    defaultMessage: 'Account Notes',
-  },
-  accountRemarkPlaceholder: {
-    id: 'accountSlider.accountRemarkPlaceholder',
-    defaultMessage: 'Enter notes here',
-  },
-  proxyHostPlaceholder: {
-    id: 'accountSlider.proxyHostPlaceholder',
-    defaultMessage: 'e.g. http://127.0.0.1',
-  },
-  proxyPortPlaceholder: {
-    id: 'accountSlider.proxyPortPlaceholder',
-    defaultMessage: 'e.g. 8080',
-  },
-  proxyUserPlaceholder: {
-    id: 'accountSlider.proxyUserPlaceholder',
-    defaultMessage: 'Fill in if applicable',
-  },
-  proxyPasswordPlaceholder: {
-    id: 'accountSlider.proxyPasswordPlaceholder',
-    defaultMessage: 'Fill in if applicable',
-  },
-  proxyType: {
-    id: 'accountSlider.proxyType',
-    defaultMessage: 'Proxy Type',
-  },
-  autoFillPlaceholder: {
-    id: 'accountSlider.autoFillPlaceholder',
-    defaultMessage: 'Paste IP info here — it will auto-fill the fields below',
-  },
-  cookieAutoFillPlaceholder: {
-    id: 'accountSlider.cookieAutoFillPlaceholder',
-    defaultMessage:
-      '支持数组包含JSON格式的Cookie，例如\n[(“name”:“name”,“value”:“value”,“domain”:“domain”)]',
-  },
-  proxyCheckDesc: {
-    id: 'accountSlider.proxyCheckDesc',
-    defaultMessage: 'Test your proxy after configuring it',
-  },
-  cookieHint: {
-    id: 'accountSlider.cookieHint',
-    defaultMessage: 'Used for login session persistence',
-  },
-  proxySettings: {
-    id: 'accountSlider.proxySettings',
-    defaultMessage: 'Proxy Settings',
-  },
-  proxyAutoFill: {
-    id: 'accountSlider.proxyAutoFill',
-    defaultMessage: 'Auto-Fill Proxy',
-  },
-  proxyHost: {
-    id: 'accountSlider.proxyHost',
-    defaultMessage: 'Host',
-  },
-  proxyPort: {
-    id: 'accountSlider.proxyPort',
-    defaultMessage: 'Port',
-  },
-  proxyUser: {
-    id: 'accountSlider.proxyUser',
-    defaultMessage: 'Username',
-  },
-  proxyPassword: {
-    id: 'accountSlider.proxyPassword',
-    defaultMessage: 'Password',
-  },
-  proxyCheck: {
-    id: 'accountSlider.proxyCheck',
-    defaultMessage: 'Test Connection',
-  },
-  cookieSettings: {
-    id: 'accountSlider.cookieSettings',
-    defaultMessage: 'Cookie Settings',
-  },
-  cookieAutoFill: {
-    id: 'accountSlider.cookieAutoFill',
-    defaultMessage: 'Auto-Fill Cookie',
-  },
-  cookiePlaceholder: {
-    id: 'accountSlider.cookiePlaceholder',
-    defaultMessage: 'Enter cookie content',
-  },
-  proxyRestartInfo: {
-    id: 'accountSlider.proxyRestartInfo',
-    defaultMessage: 'Proxy changes take effect after restart',
-  },
-  proxyRiskWarning: {
-    id: 'accountSlider.proxyRiskWarning',
-    defaultMessage: '建议打开代理，关闭代理会有风险哦～',
-  },
-  autoFillLabel: {
-    id: 'accountSlider.autoFillLabel',
-    defaultMessage: 'Auto-Fill',
-  },
-  clickCheckDesc: {
-    id: 'accountSlider.clickCheckDesc',
-    defaultMessage:
-      'When enabled, proxy auto-fill will fetch proxy details automatically during account binding',
-  },
   cancel: {
     id: 'accountSlider.cancel',
     defaultMessage: 'Cancel',
-  },
-  confirm: {
-    id: 'accountSlider.confirm',
-    defaultMessage: 'Confirm',
-  },
-  proxyWarningMessage: {
-    id: 'accountSlider.proxyWarningMessage',
-    defaultMessage: 'Please enter proxy host and port first',
-  },
-  proxySuccessMessage: {
-    id: 'accountSlider.proxySuccessMessage',
-    defaultMessage: '{label} proxy connected (latency: {latency}ms)',
-  },
-  proxyTestFailed: {
-    id: 'accountSlider.proxyTestFailed',
-    defaultMessage: 'Proxy test failed',
-  },
-  proxyTestFailedMessage: {
-    id: 'accountSlider.proxyTestFailedMessage',
-    defaultMessage: 'Test failed, please check proxy config',
   },
 });
 
@@ -296,46 +158,6 @@ interface StatusTag {
   bg: string;
   text: string;
 }
-
-interface BindAccountFormValues {
-  remark: string;
-  proxyAutoFill: boolean;
-  proxyType: string;
-  proxyHost: string;
-  proxyPort: string;
-  proxyUser: string;
-  proxyPassword: string;
-  cookieAutoFill: boolean;
-  cookie: string;
-}
-
-interface ParsedProxy {
-  isEnabled: boolean;
-  protocol?: string;
-  host?: string;
-  port?: string;
-  user?: string;
-  password?: string;
-}
-
-const parseProxyString = (content: string): ParsedProxy => {
-  if (!content?.trim()) return { isEnabled: false };
-  const regex =
-    /^(?<protocol>https?|socks5):\/\/(?:(?<user>[^:]+):(?<password>[^@]+)@)?(?<host>[^:]+):(?<port>\d+)$/;
-  const match = content.trim().match(regex);
-  if (match?.groups) {
-    return {
-      isEnabled: true,
-      protocol:
-        match.groups.protocol === 'https' ? 'http' : match.groups.protocol,
-      host: match.groups.host,
-      port: match.groups.port,
-      user: match.groups.user || '',
-      password: match.groups.password || '',
-    };
-  }
-  return { isEnabled: false };
-};
 
 const getStatusTag = (
   sessionStatus: WhatsAppSessionStatus,
@@ -445,12 +267,8 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                 if (cancelled) return;
                 const found = listRes.data.find(dh => dh.id === boundId);
                 setBoundPersonaName(found?.name ?? '');
-              } catch {
-                // name lookup best-effort
-              }
-            } catch {
-              // binding check best-effort
-            } finally {
+              } catch { /* best-effort */ }
+            } catch { /* best-effort */ } finally {
               if (!cancelled) setIsLoadingBinding(false);
             }
           };
@@ -603,7 +421,6 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                           );
                           confirmDia.hide();
 
-                          // Mark onboarding step 4 (bind persona to account) as completed
                           updateOnboardingStep(4, true);
                           window.dispatchEvent(
                             new Event('onboarding-step-updated'),
@@ -674,12 +491,15 @@ interface IProps extends WrappedComponentProps {
   actions?: Actions;
 }
 
+type ServiceDrawerData = Service & {
+  proxy?: ServiceProxy | null;
+  cookie?: string;
+};
+
 interface IAccountSliderState {
   activeTab: TabId;
   isBindDrawerVisible: boolean;
-  bindForm: BindAccountFormValues;
-  editingService: Service | null;
-  isProxyTesting: boolean;
+  editingService: ServiceDrawerData | null;
   width: number;
   isDragging: boolean;
 }
@@ -692,20 +512,8 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     this.state = {
       activeTab: 'all',
       isBindDrawerVisible: false,
-      isProxyTesting: false,
       width: 300,
       isDragging: false,
-      bindForm: {
-        remark: '',
-        proxyAutoFill: true,
-        proxyType: 'http',
-        proxyHost: '',
-        proxyPort: '',
-        proxyUser: '',
-        proxyPassword: '',
-        cookieAutoFill: false,
-        cookie: '',
-      },
       editingService: null,
     };
   }
@@ -723,7 +531,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     this.resizeStartWidth = this.state.width;
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
-    // Use an invisible overlay to catch all mouse events reliably in Electron
     this.setState({ isDragging: true });
   };
 
@@ -740,7 +547,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
   };
 
   componentWillUnmount(): void {
-    this.handleAutoFillChange.cancel();
     document.body.style.cursor = '';
     document.body.style.userSelect = '';
   }
@@ -873,113 +679,27 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     this.setState({ activeTab: id });
   };
 
-  openBindDrawer = (editingService: Service | null = null) => {
-    if (editingService) {
-      const proxy = (editingService as any).proxy || {};
-      this.setState({
-        isBindDrawerVisible: true,
-        editingService,
-        bindForm: {
-          remark: editingService.name || '',
-          proxyAutoFill: proxy.isEnabled || false,
-          proxyType: proxy.protocol || 'http',
-          proxyHost: proxy.host || '',
-          proxyPort: proxy.port || '',
-          proxyUser: proxy.user || '',
-          proxyPassword: proxy.password || '',
-          cookieAutoFill: false,
-          cookie: '',
-        },
-      });
-    } else {
-      this.setState({
-        isBindDrawerVisible: true,
-        editingService: null,
-        bindForm: {
-          remark: '',
-          proxyAutoFill: true,
-          proxyType: 'http',
-          proxyHost: '',
-          proxyPort: '',
-          proxyUser: '',
-          proxyPassword: '',
-          cookieAutoFill: false,
-          cookie: '',
-        },
-      });
-    }
+  openBindDrawer = (editingService: ServiceDrawerData | null = null) => {
+    this.setState({
+      isBindDrawerVisible: true,
+      editingService,
+    });
   };
 
   closeBindDrawer = () => {
     this.setState({ isBindDrawerVisible: false, editingService: null });
   };
 
-  applyProxyAutoFill = (content: string): void => {
-    const parsed = parseProxyString(content);
-    if (parsed.isEnabled) {
-      this.setState(prevState => {
-        const { bindForm } = prevState;
-        const newType = parsed.protocol || 'http';
-        const newHost = parsed.host || '';
-        const newPort = parsed.port || '';
-        const newUser = parsed.user || '';
-        const newPassword = parsed.password || '';
-
-        if (
-          bindForm.proxyType !== newType ||
-          bindForm.proxyHost !== newHost ||
-          bindForm.proxyPort !== newPort ||
-          bindForm.proxyUser !== newUser ||
-          bindForm.proxyPassword !== newPassword
-        ) {
-          return {
-            bindForm: {
-              ...bindForm,
-              proxyType: newType,
-              proxyHost: newHost,
-              proxyPort: newPort,
-              proxyUser: newUser,
-              proxyPassword: newPassword,
-            },
-          };
-        }
-        return null;
-      });
-    }
-  };
-
-  handleAutoFillChange = debounce(this.applyProxyAutoFill, 300);
-
-  handleBindFormChange = (
-    field: keyof Omit<BindAccountFormValues, 'proxyAutoFillContent'>,
-    value: string | boolean,
-  ) => {
-    this.setState(prevState => ({
-      bindForm: { ...prevState.bindForm, [field]: value },
-    }));
-  };
-
-  handleBindConfirm = () => {
+  handleBindConfirm = (data: { name: string; proxy: ServiceProxy }) => {
     const { actions } = this.props;
-    const { bindForm, editingService } = this.state;
-
-    const proxy = bindForm.proxyAutoFill
-      ? {
-          isEnabled: true,
-          protocol: bindForm.proxyType,
-          host: bindForm.proxyHost,
-          port: bindForm.proxyPort,
-          user: bindForm.proxyUser,
-          password: bindForm.proxyPassword,
-        }
-      : { isEnabled: false };
+    const { editingService } = this.state;
 
     if (editingService) {
       actions?.service?.updateService?.({
         serviceId: editingService.id,
         serviceData: {
-          name: bindForm.remark || 'WhatsApp',
-          proxy,
+          name: data.name || 'WhatsApp',
+          proxy: data.proxy,
         },
         redirect: false,
       });
@@ -988,8 +708,8 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
       actions?.service?.createService?.({
         recipeId: 'whatsapp',
         serviceData: {
-          name: bindForm.remark || 'WhatsApp',
-          proxy,
+          name: data.name || 'WhatsApp',
+          proxy: data.proxy,
           isHibernationEnabled: true,
         },
         redirect: false,
@@ -998,49 +718,6 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     }
 
     this.closeBindDrawer();
-  };
-
-  handleProxyCheck = async () => {
-    const { bindForm } = this.state;
-    const { intl } = this.props;
-
-    if (!bindForm.proxyHost || !bindForm.proxyPort) {
-      MessagePlugin.warning(intl.formatMessage(messages.proxyWarningMessage));
-      return;
-    }
-
-    this.setState({ isProxyTesting: true });
-    try {
-      const result = await ipcRenderer.invoke('proxy-test-request', {
-        host: bindForm.proxyHost,
-        port: Number.parseInt(bindForm.proxyPort, 10),
-        protocol: bindForm.proxyType,
-        user: bindForm.proxyUser || undefined,
-        password: bindForm.proxyPassword || undefined,
-        timeout: 10_000,
-      });
-
-      if (result.reachable) {
-        const label = result.protocol === 'socks5' ? 'SOCKS5' : 'HTTP';
-        MessagePlugin.success(
-          intl.formatMessage(messages.proxySuccessMessage, {
-            label,
-            latency: result.latency,
-          }),
-        );
-      } else {
-        // Handle specific error codes
-        const errorMessage =
-          result.error === 'WHATSAPP_REQUEST_FAILED'
-            ? intl.formatMessage(messages.proxyTestFailed)
-            : intl.formatMessage(messages.proxyTestFailedMessage);
-        MessagePlugin.error(errorMessage);
-      }
-    } catch {
-      MessagePlugin.error(intl.formatMessage(messages.proxyTestFailedMessage));
-    } finally {
-      this.setState({ isProxyTesting: false });
-    }
   };
 
   render(): ReactElement {
@@ -1156,230 +833,20 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           </div>
         )}
 
-        <Drawer
-          header={
-            <div className="flex items-center justify-between w-full h-full">
-              <span className="text-[18px] font-semibold text-primary">
-                {intl.formatMessage(messages.bindAccountDialogTitle)}
-              </span>
-              <CloseIcon
-                className="w-[16px] h-[16px] text-secondary cursor-pointer"
-                onClick={this.closeBindDrawer}
-              />
-            </div>
-          }
+        <EditServiceDrawer
           visible={this.state.isBindDrawerVisible}
-          size="548px"
-          onClose={this.closeBindDrawer}
-          destroyOnClose
-          closeOnOverlayClick={false}
-          placement="right"
-          closeBtn={false}
-          className="[&_.t-drawer__body]:!p-0"
-          footer={
-            <div className="flex items-center justify-end h-full px-[24px] gap-[12px] border-t border-line">
-              <Button
-                theme="default"
-                variant="base"
-                className="!w-[80px] !h-[40px] !bg-secondary-container !text-primary border-none"
-                onClick={this.closeBindDrawer}
-              >
-                {intl.formatMessage(messages.cancel)}
-              </Button>
-              <Button
-                theme="primary"
-                className="!w-[88px] !h-[40px] !bg-brand"
-                onClick={this.handleBindConfirm}
-              >
-                {intl.formatMessage(messages.confirm)}
-              </Button>
-            </div>
+          initialData={
+            this.state.editingService
+              ? {
+                  name: this.state.editingService.name,
+                  proxy: this.state.editingService?.proxy,
+                  cookie: this.state.editingService?.cookie || '',
+                }
+              : null
           }
-        >
-          <div className="flex flex-col h-full">
-            <div className="flex-1 overflow-y-auto px-[24px] pt-[28px] pb-[32px]">
-              <div className="mb-[40px]">
-                <div className="text-[16px] font-semibold text-primary mb-[24px]">
-                  {intl.formatMessage(messages.basicSettings)}
-                </div>
-                <div className="flex items-start gap-x-[12px] mb-[20px]">
-                  <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                    {intl.formatMessage(messages.accountRemark)}
-                  </div>
-                  <div className="relative w-[406px]">
-                    <Input
-                      className="!h-[40px] !border-line"
-                      placeholder={intl.formatMessage(
-                        messages.accountRemarkPlaceholder,
-                      )}
-                      value={this.state.bindForm.remark}
-                      onChange={val => this.handleBindFormChange('remark', val)}
-                    />
-                    <span className="absolute right-[12px] top-[10px] text-[12px] text-brand">
-                      {this.state.bindForm.remark.length}/10
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-[40px]">
-                <div className="flex items-center gap-x-[12px] mb-[24px]">
-                  <span className="text-[16px] font-semibold text-primary">
-                    {intl.formatMessage(messages.proxySettings)}
-                  </span>
-                  <Switch
-                    value={this.state.bindForm.proxyAutoFill}
-                    onChange={val =>
-                      this.handleBindFormChange('proxyAutoFill', val)
-                    }
-                  />
-                  {!this.state.bindForm.proxyAutoFill && (
-                    <div className="flex items-center gap-x-[4px]">
-                      <ErrorCircleFilledIcon className="w-[16px] h-[16px] text-warning" />
-                      <span className="text-[12px] text-placeholder">
-                        {intl.formatMessage(messages.proxyRiskWarning)}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {this.state.bindForm.proxyAutoFill && (
-                  <>
-                    <div className="flex items-start gap-x-[12px] mb-[20px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                        {intl.formatMessage(messages.autoFillLabel)}
-                      </div>
-                      <Textarea
-                        className="!h-[132px] !border-line !p-[12px] w-full"
-                        placeholder={intl.formatMessage(
-                          messages.autoFillPlaceholder,
-                        )}
-                        onChange={val => this.handleAutoFillChange(val)}
-                      />
-                    </div>
-                    <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                        {intl.formatMessage(messages.proxyType)}
-                      </div>
-                      <Select
-                        className="!w-[406px]"
-                        value={this.state.bindForm.proxyType}
-                        disabled
-                        options={[
-                          { label: 'HTTP', value: 'http' },
-                          { label: 'SOCKS5', value: 'socks5' },
-                        ]}
-                      />
-                    </div>{' '}
-                    <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                        {intl.formatMessage(messages.proxyHost)}
-                      </div>
-                      <Input
-                        className="!w-[406px] !h-[40px] !border-line"
-                        placeholder={intl.formatMessage(
-                          messages.proxyHostPlaceholder,
-                        )}
-                        value={this.state.bindForm.proxyHost}
-                        onChange={val =>
-                          this.handleBindFormChange('proxyHost', val)
-                        }
-                      />
-                    </div>
-                    <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                        {intl.formatMessage(messages.proxyPort)}
-                      </div>
-                      <Input
-                        className="!w-[406px] !h-[40px] !border-line"
-                        placeholder={intl.formatMessage(
-                          messages.proxyPortPlaceholder,
-                        )}
-                        value={this.state.bindForm.proxyPort}
-                        onChange={val =>
-                          this.handleBindFormChange('proxyPort', val)
-                        }
-                      />
-                    </div>
-                    <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                        {intl.formatMessage(messages.proxyUser)}
-                      </div>
-                      <Input
-                        className="!w-[406px] !h-[40px] !border-line"
-                        placeholder={intl.formatMessage(
-                          messages.proxyUserPlaceholder,
-                        )}
-                        value={this.state.bindForm.proxyUser}
-                        onChange={val =>
-                          this.handleBindFormChange('proxyUser', val)
-                        }
-                      />
-                    </div>
-                    <div className="flex items-start gap-x-[12px] mb-[16px]">
-                      <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                        {intl.formatMessage(messages.proxyPassword)}
-                      </div>
-                      <Input
-                        type="password"
-                        className="!w-[406px] !h-[40px] !border-line"
-                        placeholder={intl.formatMessage(
-                          messages.proxyPasswordPlaceholder,
-                        )}
-                        value={this.state.bindForm.proxyPassword}
-                        onChange={val =>
-                          this.handleBindFormChange('proxyPassword', val)
-                        }
-                      />
-                    </div>
-                    <div className="ml-[94px]">
-                      <Button
-                        className="min-w-[118px] !h-[40px] !bg-brand !text-white !font-medium"
-                        onClick={this.handleProxyCheck}
-                        loading={this.state.isProxyTesting}
-                      >
-                        {intl.formatMessage(messages.proxyCheck)}
-                      </Button>
-                      <div className="mt-[8px] text-[12px] text-placeholder">
-                        {intl.formatMessage(messages.proxyCheckDesc)}
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div>
-                <div className="flex items-center justify-start gap-[12px] w-full mb-[24px]">
-                  <span className="text-[16px] font-semibold text-primary">
-                    {intl.formatMessage(messages.cookieSettings)}
-                  </span>
-                  <Switch
-                    value={this.state.bindForm.cookieAutoFill}
-                    onChange={val =>
-                      this.handleBindFormChange('cookieAutoFill', val)
-                    }
-                  />
-                </div>
-
-                {this.state.bindForm.cookieAutoFill && (
-                  <div className="flex flex-col">
-                    <Textarea
-                      className="w-full min-h-[148px] !border-line !p-[12px] self-end"
-                      placeholder={intl.formatMessage(
-                        messages.cookiePlaceholder,
-                      )}
-                      value={this.state.bindForm.cookie}
-                      onChange={val => this.handleBindFormChange('cookie', val)}
-                    />
-                    <div className="mt-[8px] text-[12px] text-placeholder self-end">
-                      {intl.formatMessage(messages.cookieHint)}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </Drawer>
+          onClose={this.closeBindDrawer}
+          onConfirm={this.handleBindConfirm}
+        />
       </div>
     );
   }

@@ -221,6 +221,10 @@ BUILD_NUMBER=$(git rev-list --count HEAD)
 export BUILD_NUMBER
 echo -e "${YELLOW}✓ 构建号: ${BUILD_NUMBER}${NC}"
 
+# 获取应用版本号 (从 package.json)
+APP_VERSION=$(node -p "require('./package.json').version")
+echo -e "${YELLOW}✓ 版本号: ${APP_VERSION}${NC}"
+
 # 根据打包模式决定架构参数
 case "$BUILD_MODE" in
     mac-uni)
@@ -258,9 +262,130 @@ cleanup() {
 # 设置 trap 在脚本退出时恢复原始文件
 trap cleanup EXIT
 
-# 执行打包 (仅 DMG 目标，跳过 notarization)
+# --- 新增：重新签名函数 ---
+# 问题：CSC_IDENTITY_AUTO_DISCOVERY=false 导致 electron-builder 跳过 codesign，
+# 只保留了链接器签名（linker-signed），没有 Sealed Resources。
+# macOS Gatekeeper 会判定这种签名为 "损坏"。
+# --universal 模式不受影响，因为 lipo 合并过程会触发完整重新签名。
+# --x64 --arm64 (sep) 模式和 auto 模式需要手动重新签名。
+resign_app() {
+    local APP_PATH="$1"
+    local ENTITLEMENTS="$2"
+
+    if [ ! -d "$APP_PATH" ]; then
+        echo -e "${YELLOW}  跳过: $APP_PATH 不存在${NC}"
+        return
+    fi
+
+    echo -e "${YELLOW}  重新签名: $(basename "$APP_PATH")${NC}"
+
+    # 1. 签名所有 Frameworks
+    for fw in "$APP_PATH/Contents/Frameworks/"*.framework; do
+        [ -d "$fw" ] && codesign --force --sign - --timestamp=none "$fw" 2>/dev/null
+    done
+
+    # 2. 签名所有 Helper apps
+    for helper in "$APP_PATH/Contents/Frameworks/"*.app; do
+        [ -d "$helper" ] && codesign --force --sign - --timestamp=none \
+            --entitlements "$ENTITLEMENTS" "$helper" 2>/dev/null
+    done
+
+    # 3. 签名主应用 (使用 entitlements + deep)
+    codesign --force --deep --sign - --timestamp=none \
+        --entitlements "$ENTITLEMENTS" \
+        --options runtime "$APP_PATH"
+
+    # 验证签名
+    if codesign --verify --deep --strict "$APP_PATH" 2>/dev/null; then
+        echo -e "${GREEN}  ✓ 签名验证通过: $(basename "$APP_PATH")${NC}"
+    else
+        echo -e "${RED}  ✗ 签名验证失败: $(basename "$APP_PATH")${NC}"
+        return 1
+    fi
+}
+
+# --- 新增：手动创建 DMG 函数 (避免 electron-builder 覆盖签名) ---
+# 关键：electron-builder --mac dmg 会在打包时重新签名应用，
+# 覆盖我们的 codesign 签名。因此使用 hdiutil 手动创建 DMG。
+create_dmg_from_app() {
+    local APP_PATH="$1"
+    local DMG_OUTPUT="$2"
+    local VOLUME_NAME="$3"
+
+    local APP_NAME="$(basename "$APP_PATH")"
+    local TEMP_DIR="$(mktemp -d)"
+
+    echo -e "${YELLOW}  创建 DMG: $VOLUME_NAME${NC}"
+
+    # 复制应用到临时目录
+    cp -R "$APP_PATH" "$TEMP_DIR/"
+
+    # 创建 Applications 快捷方式
+    ln -s /Applications "$TEMP_DIR/Applications"
+
+    # 创建 DMG (UDZO 压缩格式)
+    hdiutil create \
+        -volname "$VOLUME_NAME" \
+        -srcfolder "$TEMP_DIR" \
+        -ov \
+        -format UDZO \
+        "$DMG_OUTPUT"
+
+    # 清理临时目录
+    rm -rf "$TEMP_DIR"
+
+    if [ -f "$DMG_OUTPUT" ]; then
+        echo -e "${GREEN}  ✓ DMG 创建成功: $(basename "$DMG_OUTPUT")${NC}"
+    else
+        echo -e "${RED}  ✗ DMG 创建失败${NC}"
+        return 1
+    fi
+}
+
+# 执行打包
 echo -e "${YELLOW}执行 electron-builder...${NC}"
-CSC_IDENTITY_AUTO_DISCOVERY=false pnpm exec electron-builder --mac dmg $ARCH_ARG --config.mac.notarize=false --publish never
+
+if [ "$BUILD_MODE" = "mac-uni" ]; then
+    # Universal 模式：一步完成 (lipo 合并过程自带正确签名)
+    CSC_IDENTITY_AUTO_DISCOVERY=false pnpm exec electron-builder --mac dmg $ARCH_ARG --config.mac.notarize=false --publish never
+else
+    # Sep / Auto 模式：分三步完成
+    # 第 1 步：构建 unpacked apps (不生成 DMG)
+    CSC_IDENTITY_AUTO_DISCOVERY=false pnpm exec electron-builder --mac --dir $ARCH_ARG --config.mac.notarize=false --publish never
+
+    # 第 2 步：重新签名 (修复 linker-signed 无 Sealed Resources 的问题)
+    echo -e "\n${GREEN}[6.5/6] 重新签名应用 (修复 sep/auto 模式签名问题)...${NC}"
+    ENTITLEMENTS_FILE="build-helpers/entitlements.mas.plist"
+
+    for APP_DIR in out/mac-*/; do
+        [ -d "$APP_DIR" ] || continue
+        for APP_BUNDLE in "$APP_DIR"*.app; do
+            [ -d "$APP_BUNDLE" ] || continue
+            resign_app "$APP_BUNDLE" "$ENTITLEMENTS_FILE"
+        done
+    done
+    echo -e "${GREEN}✓ 重新签名完成${NC}"
+
+    # 第 3 步：使用 hdiutil 手动创建 DMG (避免 electron-builder 覆盖签名)
+    echo -e "\n${YELLOW}创建 DMG 镜像...${NC}"
+    PRODUCT_NAME=$(node -p "require('./package.json').productName")
+
+    for APP_DIR in out/mac-*/; do
+        [ -d "$APP_DIR" ] || continue
+        for APP_BUNDLE in "$APP_DIR"*.app; do
+            [ -d "$APP_BUNDLE" ] || continue
+
+            # 从目录名推断架构: mac-arm64 -> arm64, mac-x64 -> x64
+            ARCH_NAME="$(basename "$APP_DIR" | sed 's/mac-//')"
+
+            # DMG 文件名与 electron-builder 原始命名一致:
+            # AITALK-mac-7.1.3-nightly.3-arm64.dmg
+            DMG_FILENAME="out/${PRODUCT_NAME}-mac-${APP_VERSION}-${ARCH_NAME}.dmg"
+
+            create_dmg_from_app "$APP_BUNDLE" "$DMG_FILENAME" "${PRODUCT_NAME} ${APP_VERSION}"
+        done
+    done
+fi
 
 for DMG_FILE in out/*.dmg; do
     [ -f "$DMG_FILE" ] || continue

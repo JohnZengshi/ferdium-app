@@ -36,6 +36,7 @@ import authManager from '../../lib/auth/AuthManager';
 import { clearApiKey, getApiKey } from '../../whatsapp-automation/api/auth';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
+import { isMac } from '../../environment';
 import { asarPath } from '../../helpers/asar-helpers';
 
 const debug = require('../../preload-safe-debug')(
@@ -64,7 +65,6 @@ const getAssetBase64 = (assetPath: string): string => {
       assetPath,
       error,
     );
-    debug('Error reading asset for base64 conversion:', assetPath, error);
     return '';
   }
 };
@@ -229,7 +229,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   @action async fetchAllSessionStatuses(): Promise<void> {
     debug('fetchAllSessionStatuses called');
 
-    // Ensure we're authenticated before making API calls
     const authenticated = await this._ensureAuthenticated();
     if (!authenticated) {
       debug('Cannot fetch sessions: authentication failed');
@@ -243,7 +242,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         const sessions: Session[] = response.data;
         debug(`Fetched ${sessions.length} sessions from API`);
 
-        // Update sessionStatuses Map with current status
         runInAction(() => {
           for (const session of sessions) {
             if (session.sessionId) {
@@ -318,7 +316,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   @action async checkAccountBinding(serviceId: string): Promise<boolean> {
     debug('checkAccountBinding called for', serviceId);
 
-    // Ensure we're authenticated before making API calls
     const authenticated = await this._ensureAuthenticated();
     if (!authenticated) {
       debug('Cannot check account binding: authentication failed');
@@ -500,7 +497,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   }: {
     serviceId: string;
   }) => {
-    // Ensure we're authenticated before making API calls
     const authenticated = await this._ensureAuthenticated();
     if (!authenticated) {
       debug('Cannot check session: authentication failed');
@@ -513,7 +509,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
-    // Show initial status indicator
     this._injectOrUpdateStatusIndicator(
       serviceId,
       WA_SESSION_STATUS.CONNECTING,
@@ -669,7 +664,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       .executeJavaScript(script)
       .then(() => {
         debug('QR modal script injected into service', serviceId);
-        // Clear retry count on success
         this._retryCounts.delete(serviceId);
       })
       .catch((error: Error) => {
@@ -686,9 +680,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
-    const successVideoBase64 = getAssetBase64(
-      '../../assets/images/whatsapp/success-animation.mp4',
-    );
+    const successVideoPath = isMac
+      ? '../../assets/images/whatsapp/success-animation-mac.mp4'
+      : '../../assets/images/whatsapp/success-animation.mp4';
+    const successVideoBase64 = getAssetBase64(successVideoPath);
 
     const script = this._buildSuccessModalScript(successVideoBase64);
 
@@ -999,7 +994,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   /** Start a Socket.IO connection for a specific session and join its room. */
   _startSocketIoForSession = (serviceId: string) => {
-    // Don't create duplicate connections
     if (this._sockets.has(serviceId)) {
       debug(`Socket already exists for ${serviceId}, skipping`);
       return;
@@ -1034,7 +1028,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
     socket.on('disconnect', reason => {
       debug(`Socket.IO disconnected for ${serviceId}:`, reason);
-      debug('Socket.IO disconnected for session', serviceId, reason);
       if (reason === 'io server disconnect' || reason === 'transport close') {
         this._handleSocketConnectionUpdate(serviceId, {
           status: WA_SESSION_STATUS.SERVER_ERROR,
@@ -1044,7 +1037,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
     socket.on('connect_error', err => {
       debug(`[WA-AKG] Socket.IO connect error for ${serviceId}:`, err.message);
-      debug('Socket.IO connection error for session', serviceId, err.message);
       this._handleSocketConnectionUpdate(serviceId, {
         status: WA_SESSION_STATUS.SERVER_ERROR,
       });
@@ -1096,7 +1088,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       this.sessionStatuses.set(serviceId, status);
     });
 
-    // Update floating status indicator in webview
     this._injectOrUpdateStatusIndicator(serviceId, status);
     this._updateQrModalStatus(serviceId, status);
 
@@ -1114,13 +1105,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
       case WA_SESSION_STATUS.CONNECTED: {
         debug(`Session ${serviceId} connected via Socket.IO!`);
-        // Ensure QR modal is removed if present
         this._removeQrModal({ serviceId });
-        // Inject success modal
         this._injectSuccessModal(serviceId);
-        // Notify the webview
         this._notifySessionConnected(serviceId);
-        // Update status
         this._injectOrUpdateStatusIndicator(
           serviceId,
           WA_SESSION_STATUS.CONNECTED,
@@ -1136,11 +1123,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       }
 
       case WA_SESSION_STATUS.DISCONNECTED: {
-        // Connection lost — update UI state
         runInAction(() => {
           this.isLoadingQr.set(serviceId, true);
         });
-        // If there was a QR modal, it will auto-reconnect and show new QR
         debug('Session disconnected, waiting for reconnect...', serviceId);
         break;
       }

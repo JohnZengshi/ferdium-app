@@ -33,3 +33,7 @@ node_modules
 # package files
 package.json
 pnpm-lock.yaml
+
+# Auto-generated API client code (orval)
+src/agent-flow-cs/api/generated
+src/whatsapp-automation/api/generated

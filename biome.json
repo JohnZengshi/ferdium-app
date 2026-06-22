@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "ignore": [".understand-anything"]
+    "ignore": [".understand-anything", "src/agent-flow-cs/api/generated", "src/whatsapp-automation/api/generated"]
   },
   "formatter": {
     "enabled": false

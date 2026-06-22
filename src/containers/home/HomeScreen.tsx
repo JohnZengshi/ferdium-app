@@ -20,7 +20,6 @@ import {
   Progress,
   Switch,
 } from 'tdesign-react';
-import { useCustomInstance } from '../../agent-flow-cs/api/customInstance';
 import {
   getWorkflowApiV1AgentWorkflowGet,
   updateWorkflowApiV1AgentWorkflowPut,
@@ -55,27 +54,12 @@ interface HomeScreenState {
   dialogEmployee: EmployeeResume | null;
   step1Completed: boolean;
   onboardingVersion: number;
-  handoffOpenCount: number;
 }
 
 const formatHandoffBadge = (total: number): string | undefined => {
   if (total <= 0) return undefined;
   if (total > 99) return '99+';
   return String(total);
-};
-
-const fetchOpenHandoffCount = async (): Promise<number> => {
-  try {
-    const response = await useCustomInstance<{
-      data: { total?: number; items?: unknown[] } | unknown[];
-      status: number;
-    }>('/api/v1/handoff?read_at=false&limit=100', { method: 'GET' });
-    const payload = response.data;
-    if (Array.isArray(payload)) return payload.length;
-    return typeof payload.total === 'number' ? payload.total : 0;
-  } catch {
-    return 0;
-  }
 };
 
 @inject('stores')
@@ -94,7 +78,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       dialogEmployee: null,
       step1Completed: onboardingProgress.step1Completed,
       onboardingVersion: 0,
-      handoffOpenCount: 0,
     };
   }
 
@@ -126,12 +109,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     await this.props.stores!.whatsappAutomation.fetchAllSessionStatuses();
     // Check account binding status
     await this.checkStep1Completion();
-    // Fetch open handoff count for badge display
-    fetchOpenHandoffCount()
-      .then(count => {
-        this.setState({ handoffOpenCount: count });
-      })
-      .catch(() => {});
 
     // Listen for onboarding step updates from other components
     // (e.g. RuleListEditor, AccountSlider) to refresh progress display
@@ -381,8 +358,9 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   }
 
   renderEmployeeCard(employee: any): ReactElement {
+    const unreadCount = this.props.stores!.handoff.unreadCount;
     const badgeText = employee.hasBadge
-      ? formatHandoffBadge(this.state.handoffOpenCount)
+      ? formatHandoffBadge(unreadCount)
       : undefined;
     return (
       <div
@@ -473,7 +451,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
   render(): ReactElement {
     if (this.state.viewMode === 'strategy') {
-      return <StrategyConfigScreen onBack={this.handleBackToDashboard} />;
+      return <StrategyConfigScreen onBack={this.handleBackToDashboard} handoffUnreadCount={this.props.stores!.handoff.unreadCount} />;
     }
 
     const { isAutoReply } = this.state;

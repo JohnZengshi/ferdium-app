@@ -19,6 +19,7 @@ export interface FerdiumStores {
   customerProfile: CustomerProfileStore;
   features: FeaturesStore;
   globalError: GlobalErrorStore;
+  handoff: HandoffStoreType;
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;
   requests: RequestsStore;
@@ -38,6 +39,7 @@ export interface Stores {
   customerProfile: CustomerProfileStore;
   features: FeaturesStore;
   globalError: GlobalErrorStore;
+  handoff: HandoffStoreType;
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;
   requests: RequestsStore;
@@ -162,6 +164,11 @@ interface GlobalErrorStore extends TypedStore {
   messages: () => void;
   response: () => void;
   _handleRequests: () => void;
+}
+
+interface HandoffStoreType extends TypedStore {
+  unreadCount: number;
+  fetchUnreadCount: () => Promise<void>;
 }
 
 interface RecipePreviewsStore extends TypedStore {

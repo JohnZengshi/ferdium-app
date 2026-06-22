@@ -30,12 +30,11 @@ export default (params: { mainWindow: BrowserWindow }) => {
 
             if (saveDialog.canceled) return;
 
-            const binaryImage = decodeBase64Image(content);
-            writeFileSync(
-              saveDialog.filePath as PathLike,
-              binaryImage as unknown as string,
-              'binary',
-            );
+            const buffer = decodeBase64Image(content);
+            if (buffer instanceof Error) {
+              throw buffer;
+            }
+            writeFileSync(saveDialog.filePath as PathLike, buffer);
 
             debug('File blob saved to', saveDialog.filePath);
           } catch (error) {

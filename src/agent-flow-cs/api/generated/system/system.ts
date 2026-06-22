@@ -4,68 +4,81 @@
  * agent-flow-cs
  * OpenAPI spec version: 0.1.0
  */
-import type { HealthzHealthzGet200 } from '../agentFlowCs.schemas';
+import type {
+  HealthzHealthzGet200
+} from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type healthzHealthzGetResponse200 = {
-  data: HealthzHealthzGet200;
-  status: 200;
-};
+  data: HealthzHealthzGet200
+  status: 200
+}
 
-export type healthzHealthzGetResponseSuccess = healthzHealthzGetResponse200 & {
+export type healthzHealthzGetResponseSuccess = (healthzHealthzGetResponse200) & {
   headers: Headers;
 };
-export type healthzHealthzGetResponse = healthzHealthzGetResponseSuccess;
+;
+
+export type healthzHealthzGetResponse = (healthzHealthzGetResponseSuccess)
 
 export const getHealthzHealthzGetUrl = () => {
-  return `http://10.0.0.228:8000/healthz`;
-};
+
+
+
+
+  return `http://10.0.0.228:8000/healthz`
+}
 
 /**
  * 存活探针：检查进程可达性。
  * @summary Healthz
  */
-export const healthzHealthzGet = async (
-  options?: RequestInit,
-): Promise<healthzHealthzGetResponse> => {
-  return useCustomInstance<healthzHealthzGetResponse>(
-    getHealthzHealthzGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const healthzHealthzGet = async ( options?: RequestInit): Promise<healthzHealthzGetResponse> => {
+
+  return useCustomInstance<healthzHealthzGetResponse>(getHealthzHealthzGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type readinessHealthzReadyGetResponse200 = {
-  data: unknown;
-  status: 200;
-};
+  data: unknown
+  status: 200
+}
 
-export type readinessHealthzReadyGetResponseSuccess =
-  readinessHealthzReadyGetResponse200 & {
-    headers: Headers;
-  };
-export type readinessHealthzReadyGetResponse =
-  readinessHealthzReadyGetResponseSuccess;
+export type readinessHealthzReadyGetResponseSuccess = (readinessHealthzReadyGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type readinessHealthzReadyGetResponse = (readinessHealthzReadyGetResponseSuccess)
 
 export const getReadinessHealthzReadyGetUrl = () => {
-  return `http://10.0.0.228:8000/healthz/ready`;
-};
+
+
+
+
+  return `http://10.0.0.228:8000/healthz/ready`
+}
 
 /**
  * 就绪探针：检查关键依赖（DB、Redis）是否可达。
  * @summary Readiness
  */
-export const readinessHealthzReadyGet = async (
-  options?: RequestInit,
-): Promise<readinessHealthzReadyGetResponse> => {
-  return useCustomInstance<readinessHealthzReadyGetResponse>(
-    getReadinessHealthzReadyGetUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const readinessHealthzReadyGet = async ( options?: RequestInit): Promise<readinessHealthzReadyGetResponse> => {
+
+  return useCustomInstance<readinessHealthzReadyGetResponse>(getReadinessHealthzReadyGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

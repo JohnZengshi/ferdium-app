@@ -13,8 +13,13 @@ import {
   Table,
 } from 'tdesign-react';
 import type { PrimaryTableCol } from 'tdesign-react';
-import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
-import { markHandoffReadApiV1HandoffHandoffIdReadPost } from '../../../agent-flow-cs/api/generated/handoff/handoff';
+import type { HandoffBriefResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
+import {
+  listHandoffsByReadApiV1HandoffReadGet,
+  listMemberHandoffsApiV1HandoffGet,
+  markHandoffReadApiV1HandoffHandoffIdReadPost,
+} from '../../../agent-flow-cs/api/generated/handoff/handoff';
+import { HANDOFF_UNREAD_CHANGED_EVENT } from '../../../stores/HandoffStore';
 
 const messages = defineMessages({
   serialNumber: {
@@ -167,57 +172,10 @@ const messages = defineMessages({
   },
 });
 
-/** 接口 /api/v1/handoff 返回的记录字段 */
-interface HandoffRecord {
-  id: string;
-  conversation_id: string;
-  reason: string;
-  status: string;
-  source: string;
-  created_at: string;
-  read_at?: string | null;
-}
+/** 使用生成的 HandoffBriefResponse 类型 */
+type HandoffRecord = HandoffBriefResponse;
 
-interface HandoffListResponse {
-  items: HandoffRecord[];
-  total: number;
-  limit: number;
-  offset: number;
-}
-
-const HANDOFF_BASE = '/api/v1/handoff';
 const PAGE_SIZE = 20;
-
-const fetchHandoffRecords = async (
-  offset: number,
-  limit: number,
-): Promise<HandoffListResponse> => {
-  const searchParams = new URLSearchParams({
-    limit: String(limit),
-    offset: String(offset),
-  });
-
-  const response = await useCustomInstance<{
-    data: HandoffListResponse | HandoffRecord[];
-    status: number;
-    headers: Headers;
-  }>(`${HANDOFF_BASE}?${searchParams.toString()}`, {
-    method: 'GET',
-  });
-
-  const payload = response.data;
-
-  if (Array.isArray(payload)) {
-    return {
-      items: payload,
-      limit,
-      offset,
-      total: payload.length,
-    };
-  }
-
-  return payload;
-};
 
 const formatDateTime = (iso: string): string => {
   if (!iso) return '';
@@ -250,9 +208,22 @@ const NotificationsTab = (): ReactElement => {
       setLoading(true);
       try {
         const offset = (page - 1) * PAGE_SIZE;
-        const result = await fetchHandoffRecords(offset, PAGE_SIZE);
-        setRecords(result.items);
-        setTotal(result.total);
+        // 筛选全部时走业务态接口，筛选已读/未读时走已读视图接口
+        const result: any =
+          statusFilter === 'all'
+            ? await listMemberHandoffsApiV1HandoffGet({
+                offset,
+                limit: PAGE_SIZE,
+              })
+            : await listHandoffsByReadApiV1HandoffReadGet({
+                unread: statusFilter === 'unread',
+                offset,
+                limit: PAGE_SIZE,
+              });
+        const payload =
+          result.data as import('../../../agent-flow-cs/api/generated/agentFlowCs.schemas').HandoffListResponse;
+        setRecords(payload.items ?? []);
+        setTotal(payload.total);
       } catch (error) {
         MessagePlugin.error(
           error instanceof Error
@@ -265,7 +236,7 @@ const NotificationsTab = (): ReactElement => {
         setLoading(false);
       }
     },
-    [intl],
+    [intl, statusFilter],
   );
 
   useEffect(() => {
@@ -315,6 +286,8 @@ const NotificationsTab = (): ReactElement => {
       if (!record.read_at) {
         try {
           await markHandoffReadApiV1HandoffHandoffIdReadPost(record.id);
+          // 通知全局 Store 刷新未读计数
+          window.dispatchEvent(new Event(HANDOFF_UNREAD_CHANGED_EVENT));
           // 刷新列表更新已读状态
           loadRecords(currentPage).catch(() => {});
         } catch (error) {
@@ -672,7 +645,8 @@ function downloadCSV(
       .map(cell => `"${String(cell).replaceAll('"', '""')}"`)
       .join(','),
   );
-  const csvContent = [headers.join(','), ...csvRows].join('\n');
+  // Prepend UTF-8 BOM so Excel correctly recognizes the encoding for CJK characters
+  const csvContent = `\uFEFF${[headers.join(','), ...csvRows].join('\n')}`;
   const base64 = btoa(unescape(encodeURIComponent(csvContent)));
   const dataUri = `data:text/csv;base64,${base64}`;
   ipcRenderer.send('download-file', {

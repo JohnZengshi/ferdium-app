@@ -9,192 +9,230 @@ import type {
   HandoffCreateRequest,
   HandoffListResponse,
   HandoffResponse,
-  ListMemberHandoffsApiV1HandoffGetParams,
+  ListHandoffsByReadApiV1HandoffReadGetParams,
+  ListMemberHandoffsApiV1HandoffGetParams
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type listMemberHandoffsApiV1HandoffGetResponse200 = {
-  data: HandoffListResponse;
-  status: 200;
-};
+  data: HandoffListResponse
+  status: 200
+}
 
 export type listMemberHandoffsApiV1HandoffGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponseSuccess = (listMemberHandoffsApiV1HandoffGetResponse200) & {
+  headers: Headers;
+};
+export type listMemberHandoffsApiV1HandoffGetResponseError = (listMemberHandoffsApiV1HandoffGetResponse422) & {
+  headers: Headers;
 };
 
-export type listMemberHandoffsApiV1HandoffGetResponseSuccess =
-  listMemberHandoffsApiV1HandoffGetResponse200 & {
-    headers: Headers;
-  };
-export type listMemberHandoffsApiV1HandoffGetResponseError =
-  listMemberHandoffsApiV1HandoffGetResponse422 & {
-    headers: Headers;
-  };
+export type listMemberHandoffsApiV1HandoffGetResponse = (listMemberHandoffsApiV1HandoffGetResponseSuccess | listMemberHandoffsApiV1HandoffGetResponseError)
 
-export type listMemberHandoffsApiV1HandoffGetResponse =
-  | listMemberHandoffsApiV1HandoffGetResponseSuccess
-  | listMemberHandoffsApiV1HandoffGetResponseError;
-
-export const getListMemberHandoffsApiV1HandoffGetUrl = (
-  params?: ListMemberHandoffsApiV1HandoffGetParams,
-) => {
+export const getListMemberHandoffsApiV1HandoffGetUrl = (params?: ListMemberHandoffsApiV1HandoffGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://10.0.0.228:8000/api/v1/handoff?${stringifiedParams}`
-    : `http://10.0.0.228:8000/api/v1/handoff`;
-};
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/handoff?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/handoff`
+}
 
 /**
- * 列出当前用户范围内的人工接管记录（子账号只看自己，主账号看旗下全部）。
+ * 业务态视图：按 status（open/closed）过滤业务流转，不掺已读维度。
  *
- * status 过滤业务流转态（open/closed），read 过滤已读/未读，两者正交可同传。
+ * ?status= 空串等价于不过滤（service 层用真值判断，与 owner/admin 一致）。
  * limit 不传时查全部；传则限制 1~200。
  * @summary List Member Handoffs
  */
-export const listMemberHandoffsApiV1HandoffGet = async (
-  params?: ListMemberHandoffsApiV1HandoffGetParams,
-  options?: RequestInit,
-): Promise<listMemberHandoffsApiV1HandoffGetResponse> => {
-  return useCustomInstance<listMemberHandoffsApiV1HandoffGetResponse>(
-    getListMemberHandoffsApiV1HandoffGetUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listMemberHandoffsApiV1HandoffGet = async (params?: ListMemberHandoffsApiV1HandoffGetParams, options?: RequestInit): Promise<listMemberHandoffsApiV1HandoffGetResponse> => {
+
+  return useCustomInstance<listMemberHandoffsApiV1HandoffGetResponse>(getListMemberHandoffsApiV1HandoffGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type createHandoffApiV1HandoffPostResponse200 = {
-  data: HandoffResponse;
-  status: 200;
-};
+  data: HandoffResponse
+  status: 200
+}
 
 export type createHandoffApiV1HandoffPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createHandoffApiV1HandoffPostResponseSuccess = (createHandoffApiV1HandoffPostResponse200) & {
+  headers: Headers;
+};
+export type createHandoffApiV1HandoffPostResponseError = (createHandoffApiV1HandoffPostResponse422) & {
+  headers: Headers;
 };
 
-export type createHandoffApiV1HandoffPostResponseSuccess =
-  createHandoffApiV1HandoffPostResponse200 & {
-    headers: Headers;
-  };
-export type createHandoffApiV1HandoffPostResponseError =
-  createHandoffApiV1HandoffPostResponse422 & {
-    headers: Headers;
-  };
-
-export type createHandoffApiV1HandoffPostResponse =
-  | createHandoffApiV1HandoffPostResponseSuccess
-  | createHandoffApiV1HandoffPostResponseError;
+export type createHandoffApiV1HandoffPostResponse = (createHandoffApiV1HandoffPostResponseSuccess | createHandoffApiV1HandoffPostResponseError)
 
 export const getCreateHandoffApiV1HandoffPostUrl = () => {
-  return `http://10.0.0.228:8000/api/v1/handoff`;
-};
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/handoff`
+}
 
 /**
  * 为某个会话创建人工接管请求。
  * @summary Create Handoff
  */
-export const createHandoffApiV1HandoffPost = async (
-  handoffCreateRequest: HandoffCreateRequest,
-  options?: RequestInit,
-): Promise<createHandoffApiV1HandoffPostResponse> => {
-  return useCustomInstance<createHandoffApiV1HandoffPostResponse>(
-    getCreateHandoffApiV1HandoffPostUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(handoffCreateRequest),
-    },
-  );
+export const createHandoffApiV1HandoffPost = async (handoffCreateRequest: HandoffCreateRequest, options?: RequestInit): Promise<createHandoffApiV1HandoffPostResponse> => {
+
+  return useCustomInstance<createHandoffApiV1HandoffPostResponse>(getCreateHandoffApiV1HandoffPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(handoffCreateRequest)
+  }
+);}
+
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse200 = {
+  data: HandoffListResponse
+  status: 200
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponseSuccess = (listHandoffsByReadApiV1HandoffReadGetResponse200) & {
+  headers: Headers;
 };
+export type listHandoffsByReadApiV1HandoffReadGetResponseError = (listHandoffsByReadApiV1HandoffReadGetResponse422) & {
+  headers: Headers;
+};
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse = (listHandoffsByReadApiV1HandoffReadGetResponseSuccess | listHandoffsByReadApiV1HandoffReadGetResponseError)
+
+export const getListHandoffsByReadApiV1HandoffReadGetUrl = (params?: ListHandoffsByReadApiV1HandoffReadGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/handoff/read?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/handoff/read`
+}
+
+/**
+ * 已读视图：按 read_at 是否为空过滤，与业务态视图正交，不按 status 过滤。
+ *
+ * unread=true 返回未读（read_at 为空，坐席红点待处理），unread=false 返回已读。
+ * 必须声明在 /{conversation_id} 之前，否则 /read 会被 UUID 路径段抢先匹配。
+ * @summary List Handoffs By Read
+ */
+export const listHandoffsByReadApiV1HandoffReadGet = async (params?: ListHandoffsByReadApiV1HandoffReadGetParams, options?: RequestInit): Promise<listHandoffsByReadApiV1HandoffReadGetResponse> => {
+
+  return useCustomInstance<listHandoffsByReadApiV1HandoffReadGetResponse>(getListHandoffsByReadApiV1HandoffReadGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type listHandoffsApiV1HandoffConversationIdGetResponse200 = {
-  data: HandoffResponse[];
-  status: 200;
-};
+  data: HandoffResponse[]
+  status: 200
+}
 
 export type listHandoffsApiV1HandoffConversationIdGetResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponseSuccess = (listHandoffsApiV1HandoffConversationIdGetResponse200) & {
+  headers: Headers;
+};
+export type listHandoffsApiV1HandoffConversationIdGetResponseError = (listHandoffsApiV1HandoffConversationIdGetResponse422) & {
+  headers: Headers;
 };
 
-export type listHandoffsApiV1HandoffConversationIdGetResponseSuccess =
-  listHandoffsApiV1HandoffConversationIdGetResponse200 & {
-    headers: Headers;
-  };
-export type listHandoffsApiV1HandoffConversationIdGetResponseError =
-  listHandoffsApiV1HandoffConversationIdGetResponse422 & {
-    headers: Headers;
-  };
+export type listHandoffsApiV1HandoffConversationIdGetResponse = (listHandoffsApiV1HandoffConversationIdGetResponseSuccess | listHandoffsApiV1HandoffConversationIdGetResponseError)
 
-export type listHandoffsApiV1HandoffConversationIdGetResponse =
-  | listHandoffsApiV1HandoffConversationIdGetResponseSuccess
-  | listHandoffsApiV1HandoffConversationIdGetResponseError;
+export const getListHandoffsApiV1HandoffConversationIdGetUrl = (conversationId: string,) => {
 
-export const getListHandoffsApiV1HandoffConversationIdGetUrl = (
-  conversationId: string,
-) => {
-  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}`;
-};
+
+
+
+  return `http://10.0.0.228:8000/api/v1/handoff/${conversationId}`
+}
 
 /**
  * 列出某个会话关联的人工接管记录。
  * @summary List Handoffs
  */
-export const listHandoffsApiV1HandoffConversationIdGet = async (
-  conversationId: string,
-  options?: RequestInit,
-): Promise<listHandoffsApiV1HandoffConversationIdGetResponse> => {
-  return useCustomInstance<listHandoffsApiV1HandoffConversationIdGetResponse>(
-    getListHandoffsApiV1HandoffConversationIdGetUrl(conversationId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const listHandoffsApiV1HandoffConversationIdGet = async (conversationId: string, options?: RequestInit): Promise<listHandoffsApiV1HandoffConversationIdGetResponse> => {
+
+  return useCustomInstance<listHandoffsApiV1HandoffConversationIdGetResponse>(getListHandoffsApiV1HandoffConversationIdGetUrl(conversationId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse200 = {
-  data: HandoffResponse;
-  status: 200;
-};
+  data: HandoffResponse
+  status: 200
+}
 
 export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse422 = {
-  data: HTTPValidationError;
-  status: 422;
+  data: HTTPValidationError
+  status: 422
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponseSuccess = (markHandoffReadApiV1HandoffHandoffIdReadPostResponse200) & {
+  headers: Headers;
+};
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponseError = (markHandoffReadApiV1HandoffHandoffIdReadPostResponse422) & {
+  headers: Headers;
 };
 
-export type markHandoffReadApiV1HandoffHandoffIdReadPostResponseSuccess =
-  markHandoffReadApiV1HandoffHandoffIdReadPostResponse200 & {
-    headers: Headers;
-  };
-export type markHandoffReadApiV1HandoffHandoffIdReadPostResponseError =
-  markHandoffReadApiV1HandoffHandoffIdReadPostResponse422 & {
-    headers: Headers;
-  };
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse = (markHandoffReadApiV1HandoffHandoffIdReadPostResponseSuccess | markHandoffReadApiV1HandoffHandoffIdReadPostResponseError)
 
-export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse =
-  | markHandoffReadApiV1HandoffHandoffIdReadPostResponseSuccess
-  | markHandoffReadApiV1HandoffHandoffIdReadPostResponseError;
+export const getMarkHandoffReadApiV1HandoffHandoffIdReadPostUrl = (handoffId: string,) => {
 
-export const getMarkHandoffReadApiV1HandoffHandoffIdReadPostUrl = (
-  handoffId: string,
-) => {
-  return `http://10.0.0.228:8000/api/v1/handoff/${handoffId}/read`;
-};
+
+
+
+  return `http://10.0.0.228:8000/api/v1/handoff/${handoffId}/read`
+}
 
 /**
  * 标记指定接管记录为已读（幂等）。
@@ -203,15 +241,15 @@ export const getMarkHandoffReadApiV1HandoffHandoffIdReadPostUrl = (
  * 已读再读不报错。
  * @summary Mark Handoff Read
  */
-export const markHandoffReadApiV1HandoffHandoffIdReadPost = async (
-  handoffId: string,
-  options?: RequestInit,
-): Promise<markHandoffReadApiV1HandoffHandoffIdReadPostResponse> => {
-  return useCustomInstance<markHandoffReadApiV1HandoffHandoffIdReadPostResponse>(
-    getMarkHandoffReadApiV1HandoffHandoffIdReadPostUrl(handoffId),
-    {
-      ...options,
-      method: 'POST',
-    },
-  );
-};
+export const markHandoffReadApiV1HandoffHandoffIdReadPost = async (handoffId: string, options?: RequestInit): Promise<markHandoffReadApiV1HandoffHandoffIdReadPostResponse> => {
+
+  return useCustomInstance<markHandoffReadApiV1HandoffHandoffIdReadPostResponse>(getMarkHandoffReadApiV1HandoffHandoffIdReadPostUrl(handoffId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+

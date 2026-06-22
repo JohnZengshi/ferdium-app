@@ -10,6 +10,7 @@ import AppStore from './AppStore';
 import DigitalHumanStore from './DigitalHumanStore';
 import FeaturesStore from './FeaturesStore';
 import GlobalErrorStore from './GlobalErrorStore';
+import HandoffStore from './HandoffStore';
 import RecipePreviewsStore from './RecipePreviewsStore';
 import RecipesStore from './RecipesStore';
 import RequestStore from './RequestStore';
@@ -36,6 +37,7 @@ export interface RealStores {
   whatsappAutomation: typeof whatsappAutomationStore;
   customerProfile: typeof customerProfileStore;
   digitalHuman: DigitalHumanStore;
+  handoff: HandoffStore;
 }
 
 export default (
@@ -62,6 +64,7 @@ export default (
     whatsappAutomation: whatsappAutomationStore,
     customerProfile: customerProfileStore,
     digitalHuman: new DigitalHumanStore(stores, api, actions),
+    handoff: new HandoffStore(stores, api, actions),
   });
 
   // Initialize all stores

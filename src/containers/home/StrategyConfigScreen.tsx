@@ -3,6 +3,7 @@ import {
   type ReactElement,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -14,7 +15,6 @@ import {
   UserIcon,
   UserSafetyIcon,
 } from 'tdesign-icons-react';
-import { useCustomInstance } from '../../agent-flow-cs/api/customInstance';
 import HandoverRulesTab from './tabs/HandoverRulesTab';
 import NotificationsTab from './tabs/NotificationsTab';
 import ResumeTab from './tabs/ResumeTab';
@@ -45,6 +45,7 @@ const messages = defineMessages({
 
 interface StrategyConfigScreenProps {
   onBack: () => void;
+  handoffUnreadCount?: number;
 }
 
 interface SidebarItem {
@@ -60,27 +61,18 @@ const formatHandoffBadge = (total: number): string | undefined => {
   return String(total);
 };
 
-const fetchOpenHandoffCount = async (): Promise<number> => {
-  try {
-    const response = await useCustomInstance<{
-      data: { total?: number; items?: unknown[] } | unknown[];
-      status: number;
-    }>('/api/v1/handoff?read_at=false&limit=100', { method: 'GET' });
-    const payload = response.data;
-    if (Array.isArray(payload)) return payload.length;
-    return typeof payload.total === 'number' ? payload.total : 0;
-  } catch {
-    return 0;
-  }
-};
-
 const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
   onBack,
+  handoffUnreadCount = 0,
 }) => {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState('resume');
   const contentRef = useRef<HTMLDivElement>(null);
-  const [handoffBadge, setHandoffBadge] = useState<string | undefined>();
+
+  const handoffBadge = useMemo(
+    () => formatHandoffBadge(handoffUnreadCount),
+    [handoffUnreadCount],
+  );
 
   const handleResize = useCallback(() => {
     if (contentRef.current) {
@@ -100,14 +92,6 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
-
-  useEffect(() => {
-    fetchOpenHandoffCount()
-      .then(total => {
-        setHandoffBadge(formatHandoffBadge(total));
-      })
-      .catch(() => {});
-  }, []);
 
   const handleSidebarClick = useCallback((key: string) => {
     setActiveTab(key);
@@ -228,6 +212,7 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
 
 StrategyConfigScreen.propTypes = {
   onBack: PropTypes.func.isRequired,
+  handoffUnreadCount: PropTypes.number,
 };
 
 export default StrategyConfigScreen;

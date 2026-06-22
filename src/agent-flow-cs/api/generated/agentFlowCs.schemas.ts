@@ -1776,7 +1776,7 @@ export interface AppApiSchemasWhatsAppBindRequest {
      * @maxLength 128
      */
   session_id: string;
-  /** 要绑定的数字人ID，不传则自动选取；无分配时先创建未配置绑定 */
+  /** 要绑定的数字人ID；不传则先创建未配置绑定，后续通过 PATCH /bind 补配 */
   digital_human_id?: string | null;
 }
 
@@ -1831,7 +1831,7 @@ export interface AppApiSchemasOwnersWhatsAppBindRequest {
      * @maxLength 128
      */
   session_id: string;
-  /** 要绑定的数字人ID。不传则自动选取；无分配时先创建未配置绑定。 */
+  /** 要绑定的数字人ID。不传则先创建未配置绑定，后续通过 PATCH /bind 补配。 */
   digital_human_id?: string | null;
 }
 
@@ -2085,6 +2085,14 @@ export type ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmen
 export type ListMemberHandoffsApiV1HandoffGetParams = {
 status?: string | null;
 /**
+ * 工单创建时间下界（闭区间，ISO 8601，建议带时区）
+ */
+created_after?: string | null;
+/**
+ * 工单创建时间上界（闭区间，ISO 8601，建议带时区）
+ */
+created_before?: string | null;
+/**
  * @minimum 0
  */
 offset?: number;
@@ -2096,6 +2104,14 @@ export type ListHandoffsByReadApiV1HandoffReadGetParams = {
  * true=未读, false=已读
  */
 unread?: boolean;
+/**
+ * 工单创建时间下界（闭区间，ISO 8601，建议带时区）
+ */
+created_after?: string | null;
+/**
+ * 工单创建时间上界（闭区间，ISO 8601，建议带时区）
+ */
+created_before?: string | null;
 /**
  * @minimum 0
  */
@@ -2211,6 +2227,25 @@ before?: string | null;
  * @maximum 100
  */
 limit?: number;
+};
+
+export type StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams = {
+/**
+ * WhatsApp session 标识
+ */
+wa_session_id: string;
+/**
+ * 终端客户 ID
+ */
+customer_id: string;
+/**
+ * 平台标识
+ */
+platform?: string;
+/**
+ * 主账号俯视时指定旗下子账号；子账号无需传
+ */
+owner_user_id?: string | null;
 };
 
 export type ListHandoffsApiV1OwnersHandoffsGetParams = {

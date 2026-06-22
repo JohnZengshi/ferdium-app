@@ -90,7 +90,8 @@ export const getCreateWhatsappBindingApiV1WhatsappBindPostUrl = () => {
  * 子账号自助绑定 WhatsApp 通道。
  *
  * 子账号在 AKG 扫码后获得 session_id，调用此接口创建绑定。
- * 可选指定 digital_human_id，不传则自动从已分配中选取。
+ * 可选指定 digital_human_id（须已分配给本子账号）；不传则先建空通道，
+ * 后续通过 PATCH /bind 补配数字人。
  * @summary Create Whatsapp Binding
  */
 export const createWhatsappBindingApiV1WhatsappBindPost = async (appApiSchemasWhatsAppBindRequest: AppApiSchemasWhatsAppBindRequest, options?: RequestInit): Promise<createWhatsappBindingApiV1WhatsappBindPostResponse> => {

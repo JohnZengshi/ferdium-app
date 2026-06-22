@@ -12,7 +12,7 @@ import {
   Select,
   Table,
 } from 'tdesign-react';
-import type { PrimaryTableCol } from 'tdesign-react';
+import type { DateRangeValue, PrimaryTableCol } from 'tdesign-react';
 import type { HandoffBriefResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import {
   listHandoffsByReadApiV1HandoffReadGet,
@@ -201,6 +201,7 @@ const NotificationsTab = (): ReactElement => {
   );
   const [socialFilter, setSocialFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [dateRange, setDateRange] = useState<DateRangeValue>([]);
   const [dialogRecord, setDialogRecord] = useState<HandoffRecord | null>(null);
 
   const loadRecords = useCallback(
@@ -208,15 +209,24 @@ const NotificationsTab = (): ReactElement => {
       setLoading(true);
       try {
         const offset = (page - 1) * PAGE_SIZE;
+        const [start, end] = dateRange;
+        const timeParams: { created_after?: string; created_before?: string } =
+          {};
+        if (start && end) {
+          timeParams.created_after = `${String(start)}T00:00:00`;
+          timeParams.created_before = `${String(end)}T23:59:59`;
+        }
         // 筛选全部时走业务态接口，筛选已读/未读时走已读视图接口
         const result: any =
           statusFilter === 'all'
             ? await listMemberHandoffsApiV1HandoffGet({
+                ...timeParams,
                 offset,
                 limit: PAGE_SIZE,
               })
             : await listHandoffsByReadApiV1HandoffReadGet({
                 unread: statusFilter === 'unread',
+                ...timeParams,
                 offset,
                 limit: PAGE_SIZE,
               });
@@ -236,7 +246,7 @@ const NotificationsTab = (): ReactElement => {
         setLoading(false);
       }
     },
-    [intl, statusFilter],
+    [intl, statusFilter, dateRange],
   );
 
   useEffect(() => {
@@ -262,6 +272,7 @@ const NotificationsTab = (): ReactElement => {
   const handleReset = useCallback((): void => {
     setSocialFilter('all');
     setStatusFilter('all');
+    setDateRange([]);
     loadRecords(1).catch(() => {});
   }, [loadRecords]);
 
@@ -436,6 +447,8 @@ const NotificationsTab = (): ReactElement => {
             </span>
             <DateRangePicker
               mode="date"
+              value={dateRange}
+              onChange={value => setDateRange(value)}
               placeholder={[
                 intl.formatMessage(messages.startDate),
                 intl.formatMessage(messages.endDate),

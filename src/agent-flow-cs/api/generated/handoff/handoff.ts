@@ -53,6 +53,7 @@ export const getListMemberHandoffsApiV1HandoffGetUrl = (params?: ListMemberHando
  * 业务态视图：按 status（open/closed）过滤业务流转，不掺已读维度。
  *
  * ?status= 空串等价于不过滤（service 层用真值判断，与 owner/admin 一致）。
+ * created_after/created_before 按工单创建时间闭区间筛选，可不传或单传。
  * limit 不传时查全部；传则限制 1~200。
  * @summary List Member Handoffs
  */
@@ -149,6 +150,7 @@ export const getListHandoffsByReadApiV1HandoffReadGetUrl = (params?: ListHandoff
  * 已读视图：按 read_at 是否为空过滤，与业务态视图正交，不按 status 过滤。
  *
  * unread=true 返回未读（read_at 为空，坐席红点待处理），unread=false 返回已读。
+ * created_after/created_before 按工单创建时间闭区间筛选，可不传或单传。
  * 必须声明在 /{conversation_id} 之前，否则 /read 会被 UUID 路径段抢先匹配。
  * @summary List Handoffs By Read
  */

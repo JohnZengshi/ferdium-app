@@ -40,6 +40,7 @@ import type {
   ListSubAccountsApiV1OwnersSubAccountsGetParams,
   ResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPost200,
   ResetPasswordRequest,
+  StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams,
   SubAccountCreate,
   SubAccountListResponse,
   SubAccountResponse,
@@ -717,6 +718,60 @@ export const getConversationMessagesApiV1OwnersConversationsConvIdMessagesGet = 
     params?: GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetParams, options?: RequestInit): Promise<getConversationMessagesApiV1OwnersConversationsConvIdMessagesGetResponse> => {
 
   return useCustomInstance<getConversationMessagesApiV1OwnersConversationsConvIdMessagesGetResponse>(getGetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetUrl(convId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse200 = {
+  data: unknown
+  status: 200
+}
+
+export type streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponseSuccess = (streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse200) & {
+  headers: Headers;
+};
+export type streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponseError = (streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse422) & {
+  headers: Headers;
+};
+
+export type streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse = (streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponseSuccess | streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponseError)
+
+export const getStreamConversationLiveApiV1OwnersConversationsBySessionStreamGetUrl = (params: StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/conversations/by-session/stream?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/conversations/by-session/stream`
+}
+
+/**
+ * SSE：按 session + 客户定位会话，实时推送包装后的 Agent 执行事件。
+ *
+ * 1. 定位会话 + 校验归属（member 仅自身，owner 可指定旗下 member）
+ * 2. 回放历史轮次（turn_complete）
+ * 3. 订阅 ``trace:live:{conversation_id}``，逐帧过 presenter 转发
+ * @summary Stream Conversation Live
+ */
+export const streamConversationLiveApiV1OwnersConversationsBySessionStreamGet = async (params: StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams, options?: RequestInit): Promise<streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse> => {
+
+  return useCustomInstance<streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse>(getStreamConversationLiveApiV1OwnersConversationsBySessionStreamGetUrl(params),
   {
     ...options,
     method: 'GET'

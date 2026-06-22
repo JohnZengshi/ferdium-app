@@ -358,7 +358,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   }
 
   renderEmployeeCard(employee: any): ReactElement {
-    const unreadCount = this.props.stores!.handoff.unreadCount;
+    const { unreadCount } = this.props.stores!.handoff;
     const badgeText = employee.hasBadge
       ? formatHandoffBadge(unreadCount)
       : undefined;
@@ -451,7 +451,12 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
   render(): ReactElement {
     if (this.state.viewMode === 'strategy') {
-      return <StrategyConfigScreen onBack={this.handleBackToDashboard} handoffUnreadCount={this.props.stores!.handoff.unreadCount} />;
+      return (
+        <StrategyConfigScreen
+          onBack={this.handleBackToDashboard}
+          handoffUnreadCount={this.props.stores!.handoff.unreadCount}
+        />
+      );
     }
 
     const { isAutoReply } = this.state;

@@ -17,8 +17,6 @@ import {
   MessagePlugin,
   Select,
 } from 'tdesign-react';
-import EditServiceDrawer from '../ui/EditServiceDrawer';
-import type { ServiceProxy } from '../ui/EditServiceDrawer';
 import type { Actions } from '../../actions/lib/actions';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
@@ -27,6 +25,8 @@ import {
   switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
+import EditServiceDrawer from '../ui/EditServiceDrawer';
+import type { ServiceProxy } from '../ui/EditServiceDrawer';
 
 import {
   type WhatsAppSessionStatus,
@@ -267,8 +267,12 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                 if (cancelled) return;
                 const found = listRes.data.find(dh => dh.id === boundId);
                 setBoundPersonaName(found?.name ?? '');
-              } catch { /* best-effort */ }
-            } catch { /* best-effort */ } finally {
+              } catch {
+                /* best-effort */
+              }
+            } catch {
+              /* best-effort */
+            } finally {
               if (!cancelled) setIsLoadingBinding(false);
             }
           };

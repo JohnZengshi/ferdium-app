@@ -44,7 +44,10 @@ export default class HandoffStore extends TypedStore {
     }, HandoffStore.POLL_INTERVAL);
 
     // 监听跨组件通知：当通知记录中执行了标记已读操作后立即刷新
-    window.addEventListener(HANDOFF_UNREAD_CHANGED_EVENT, this._onUnreadChanged);
+    window.addEventListener(
+      HANDOFF_UNREAD_CHANGED_EVENT,
+      this._onUnreadChanged,
+    );
   }
 
   teardown(): void {

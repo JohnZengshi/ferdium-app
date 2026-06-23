@@ -679,7 +679,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
-    const successVideoPath = '../../assets/images/whatsapp/success-animation.mp4';
+    const successVideoPath =
+      '../../assets/images/whatsapp/success-animation.mp4';
     const successVideoBase64 = getAssetBase64(successVideoPath);
 
     const script = this._buildSuccessModalScript(successVideoBase64);

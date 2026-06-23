@@ -36,7 +36,6 @@ import authManager from '../../lib/auth/AuthManager';
 import { clearApiKey, getApiKey } from '../../whatsapp-automation/api/auth';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
 
-import { isMac } from '../../environment';
 import { asarPath } from '../../helpers/asar-helpers';
 
 const debug = require('../../preload-safe-debug')(
@@ -680,9 +679,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return;
     }
 
-    const successVideoPath = isMac
-      ? '../../assets/images/whatsapp/success-animation-mac.mp4'
-      : '../../assets/images/whatsapp/success-animation.mp4';
+    const successVideoPath = '../../assets/images/whatsapp/success-animation.mp4';
     const successVideoBase64 = getAssetBase64(successVideoPath);
 
     const script = this._buildSuccessModalScript(successVideoBase64);

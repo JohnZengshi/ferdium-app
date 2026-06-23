@@ -9,6 +9,7 @@ import {
   dialog,
   globalShortcut,
   ipcMain,
+  screen,
   session,
 } from 'electron';
 
@@ -172,15 +173,21 @@ const webRTCIPHandlingPolicy = retrieveSettingValue(
   | 'default_public_and_private_interfaces';
 
 const createWindow = () => {
+  const { width: displayWidth, height: displayHeight } = screen.getPrimaryDisplay().workAreaSize;
+  const defaultWidth = Math.round(displayWidth * 0.8);
+  const defaultHeight = Math.round(displayHeight * 0.8);
+  const minWidth = Math.max(Math.round(displayWidth * 0.5), DEFAULT_WINDOW_OPTIONS.minWidth);
+  const minHeight = Math.max(Math.round(displayHeight * 0.5), DEFAULT_WINDOW_OPTIONS.minHeight);
+
   const mainWindowState = windowStateKeeper({
-    defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
-    defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
+    defaultWidth,
+    defaultHeight,
     maximize: true, // Automatically maximizes the window, if it was last closed maximized
     fullScreen: true, // Automatically restores the window to full screen, if it was last closed full screen
   });
 
-  if (mainWindowState.width < 1490) mainWindowState.width = 1490;
-  if (mainWindowState.height < 1130) mainWindowState.height = 1130;
+  const width = Math.max(mainWindowState.width, minWidth);
+  const height = Math.max(mainWindowState.height, minHeight);
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
   let posY = mainWindowState.y || DEFAULT_WINDOW_OPTIONS.y;
@@ -197,9 +204,9 @@ const createWindow = () => {
   )
     ? darkThemeGrayDarkest
     : (retrieveSettingValue(
-        'accentColor',
-        DEFAULT_APP_SETTINGS.accentColor,
-      ) as string);
+      'accentColor',
+      DEFAULT_APP_SETTINGS.accentColor,
+    ) as string);
 
   const linuxMainWindowConf = {
     icon: asarPath(
@@ -213,10 +220,10 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     x: posX,
     y: posY,
-    width: mainWindowState.width,
-    height: mainWindowState.height,
-    minWidth: 1490,
-    minHeight: 1130,
+    width,
+    height,
+    minWidth,
+    minHeight,
     show: false,
     titleBarStyle: isMac ? 'hidden' : 'default',
     frame: isLinux,
@@ -364,7 +371,7 @@ const createWindow = () => {
   dbus.start();
 
   mainWindowState.manage(mainWindow);
-  mainWindow.setMinimumSize(1490, 1130);
+  mainWindow.setMinimumSize(minWidth, minHeight);
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 

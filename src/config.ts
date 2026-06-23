@@ -503,6 +503,9 @@ export const DEFAULT_WINDOW_OPTIONS = {
   height: 1130,
   x: 0,
   y: 0,
+  // Absolute floor for min window size; actual min scales with display (see createWindow).
+  minWidth: 800,
+  minHeight: 600,
 };
 
 export const GITHUB_FRANZ_URL = 'https://github.com/meetfranz';

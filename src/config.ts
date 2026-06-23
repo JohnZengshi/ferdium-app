@@ -7,7 +7,7 @@ import { shiftKey } from './environment';
 
 export const DEFAULT_ACCENT_COLOR = '#0052D9';
 
-export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
+export const CHECK_INTERVAL = ms('1h');
 
 export const LOCAL_HOSTNAME = 'localhost';
 export const LOCAL_PORT = 46_569;
@@ -500,7 +500,7 @@ export const iconSizeBias = 20;
 
 export const DEFAULT_WINDOW_OPTIONS = {
   width: 1470,
-  height: 900,
+  height: 1130,
   x: 0,
   y: 0,
 };
@@ -602,6 +602,7 @@ export const DEFAULT_APP_SETTINGS = {
   translatorEngine: TRANSLATOR_ENGINE_LIBRETRANSLATE,
   useHorizontalStyle: false,
   hideCollapseButton: false,
+  accountSliderWidth: 300,
   isMenuCollapsed: false,
   hideRecipesButton: false,
   hideSplitModeButton: true,
@@ -664,7 +665,6 @@ export const DEFAULT_SHORTCUTS = {
   activateServiceUsesAlt: false,
 };
 
-// Helper function to get internationalized config objects
 export const getI18nConfigObjects = (intl: any) => ({
   WEBRTC_IP_HANDLING_POLICY: {
     [defaultWebRTCIPHandlingPolicy]: intl.formatMessage(

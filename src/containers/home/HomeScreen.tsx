@@ -105,32 +105,25 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   async componentDidMount(): Promise<void> {
     await this.fetchWorkflow();
     await this.props.stores!.digitalHuman.fetchDigitalHumans();
-    // Fetch initial session statuses for the social account overview
     await this.props.stores!.whatsappAutomation.fetchAllSessionStatuses();
-    // Check account binding status
     await this.checkStep1Completion();
 
-    // Listen for onboarding step updates from other components
-    // (e.g. RuleListEditor, AccountSlider) to refresh progress display
     window.addEventListener(
       'onboarding-step-updated',
       this.handleOnboardingStepUpdated,
     );
 
-    // Set up reaction to monitor session status changes
     this._statusReactionDisposer = reaction(
       () => {
         const { whatsappAutomation } = this.props.stores!;
-        // Track all session statuses as a string to trigger reaction on any change
         return [...whatsappAutomation.sessionStatuses.entries()]
           .map(([id, status]) => `${id}:${status}`)
           .join('|');
       },
       () => {
-        // When any session status changes, recheck step 1 completion
         this.checkStep1Completion();
       },
-      { delay: 500 }, // Debounce to avoid too frequent checks
+      { delay: 500 },
     );
   }
 
@@ -144,12 +137,10 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   };
 
   componentWillUnmount(): void {
-    // Clean up reaction
     if (this._statusReactionDisposer) {
       this._statusReactionDisposer();
       this._statusReactionDisposer = undefined;
     }
-    // Clean up onboarding event listener
     window.removeEventListener(
       'onboarding-step-updated',
       this.handleOnboardingStepUpdated,
@@ -157,7 +148,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   }
 
   handleOnboardingStepUpdated = (): void => {
-    // Force re-render to pick up latest onboarding progress from localStorage
     this.setState(prev => ({ onboardingVersion: prev.onboardingVersion + 1 }));
   };
 
@@ -170,8 +160,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   checkStep1Completion = async (): Promise<void> => {
     const { whatsappAutomation } = this.props.stores!;
 
-    // If already marked as completed in localStorage, keep it completed
-    // (user has already learned how to do this, no need to guide again)
     if (this.state.step1Completed) {
       return;
     }
@@ -180,7 +168,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       const isBinding = await whatsappAutomation.hasAnyAccountBinding();
 
       if (isBinding) {
-        // First-time completion: mark as completed and save permanently
         this.setState({ step1Completed: true });
         updateOnboardingStep(1, true);
       }
@@ -213,7 +200,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
           : intl!.formatMessage(messages.autoReplyDisabled),
       );
     } catch (error) {
-      // Revert on error
       this.setState({ isAutoReply: previousState });
       MessagePlugin.error(
         intl!.formatMessage({
@@ -512,10 +498,10 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       <>
         <div className="flex h-full flex-col bg-page p-[24px] overflow-auto">
           <div className="flex gap-[24px] h-full">
-            <div className="flex min-h-0 flex-[2] flex-col rounded-[24px] bg-container p-[32px] shadow-sm">
+            <div className="flex min-h-0 flex-[2] flex-col rounded-[24px] bg-container p-[32px] shadow-sm min-w-[770px]">
               <SectionHeader
                 icon={
-                  <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-brand-light">
+                  <div className="flex h-[48px] min-w-[48px] items-center justify-center rounded-full bg-brand-light">
                     <UserIcon className="text-[24px] text-brand" />
                   </div>
                 }
@@ -541,7 +527,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
               </div>
             </div>
 
-            <div className="flex flex-1 flex-col gap-[24px]">
+            <div className="flex flex-1 flex-col gap-[24px] min-w-[347px]">
               <div className="flex h-[369px] flex-col rounded-[8px] bg-container px-[32px] pb-[24px] pt-[28px] shadow-sm">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-[16px]">
@@ -563,7 +549,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 {this.renderSocialAccountTable()}
               </div>
 
-              <div className="flex min-h-[509px] min-w-[647px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
+              <div className="flex min-h-[509px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
                 <div className="flex h-[55px] items-start justify-between">
                   <div className="flex items-start">
                     <div className="relative h-[32px] w-[32px] flex-shrink-0">

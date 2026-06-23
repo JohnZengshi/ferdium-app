@@ -1,3 +1,4 @@
+import Lottie from 'lottie-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import {
@@ -32,6 +33,7 @@ import {
   listDigitalHumansApiV1DigitalHumansGet,
   updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut,
 } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
+import aiThinkingAnimation from '../../assets/ai-thinking.json';
 import {
   type SidebarItem,
   SidebarMenu,
@@ -41,7 +43,6 @@ import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 
 const aiIllustration = 'assets/images/ai-illustration.png';
-const aiStars = 'assets/images/ai-stars.png';
 
 const QUICK_TAGS = [
   { key: 'female', labelKey: 'tagFemale' },
@@ -55,7 +56,6 @@ const QUICK_TAGS = [
   { key: 'west', labelKey: 'tagWestern' },
   { key: 'business-2', labelKey: 'tagBusiness' },
   { key: 'active', labelKey: 'tagActiveSocial' },
-  // { key: 'social-2', labelKey: 'tagSocial' },
 ] as const;
 
 const sleep = (ms: number) =>
@@ -579,7 +579,6 @@ const KnowledgeScreen: React.FC = () => {
   const completionPercent = useMemo(() => {
     let percent = 0;
 
-    // 基础信息: 30% (6 fields × 5%)
     if (formData.name.trim()) percent += 5;
     if (formData.gender.trim()) percent += 5;
     if (formData.birthday.trim()) percent += 5;
@@ -587,15 +586,11 @@ const KnowledgeScreen: React.FC = () => {
     if (formData.country.trim()) percent += 5;
     if (formData.language.trim()) percent += 5;
 
-    // 生活背景: 20% (2 fields × 10%)
     if (formData.city.trim()) percent += 10;
     if (formData.family.trim()) percent += 10;
 
-    // 职业与项目背景: 50% (职业 20%, 项目 30%)
     if (formData.occupation.trim()) percent += 20;
     if (formData.participation.trim()) percent += 30;
-
-    // 人设备注和人设照片不参与计算
 
     return percent;
   }, [formData]);
@@ -811,7 +806,6 @@ const KnowledgeScreen: React.FC = () => {
             const lines = buffer.split('\n');
             buffer = lines.pop() || '';
 
-            // 先把所有事件解析出来
             const events: any[] = [];
             for (const line of lines) {
               if (line.startsWith('data:')) {
@@ -826,17 +820,15 @@ const KnowledgeScreen: React.FC = () => {
               }
             }
 
-            // 逐个处理，progress 更新间加延时让 React 渲染动画
+            // delay between progress updates so React renders animation frames
             const processEvents = async () => {
               for (const data of events) {
-                // progress 事件
                 if (data.type === 'progress' && data.progress !== undefined) {
                   setStreamProgress(data.progress);
                   // eslint-disable-next-line no-await-in-loop
                   await sleep(80);
                 }
 
-                // field 事件 → 即时填充表单
                 if (data.type === 'field') {
                   const formField = FIELD_MAP[data.field] ?? data.field;
                   if (VALID_FIELDS.has(formField)) {
@@ -846,7 +838,7 @@ const KnowledgeScreen: React.FC = () => {
                   }
                 }
 
-                // complete 事件 → 最终全量数据覆盖
+                // complete event — final full data override
                 if (data.type === 'complete' && data.persona) {
                   const updates: Record<string, string> = {};
                   for (const [key, val] of Object.entries(data.persona)) {
@@ -965,125 +957,121 @@ const KnowledgeScreen: React.FC = () => {
         onItemClick={() => {}}
       />
       {view === 'list' ? (
-        <div className="flex flex-col flex-1 min-w-0 p-[32px]">
-          {/* 顶部区域：创建按钮 + 说明文字 */}
-          <div className="flex items-center mb-[24px]">
-            <Button
-              theme="primary"
-              className="!h-[32px] !rounded-[3px] !bg-brand hover:!bg-brand-hover !px-[14px]"
-              onClick={handleCreate}
-            >
-              <div className="flex items-center gap-[6px]">
-                <AddIcon size="14px" />
-                <span className="text-[14px] font-normal">
-                  {intl.formatMessage(messages.createPersonaProfile)}
-                </span>
-              </div>
-            </Button>
-            <span className="ml-[16px] text-[14px] text-placeholder">
-              {intl.formatMessage(messages.description)}
-            </span>
-          </div>
-
-          {/* 卡片网格区域 */}
-          {tableData.length === 0 ? (
-            <div className="flex flex-1 items-center justify-center">
-              <EmptyState
-                imageSrc="./assets/images/empty-accounts.svg"
-                title={intl.formatMessage(messages.noPersonasTitle)}
-                description={intl.formatMessage(messages.noPersonasDescription)}
-              />
-            </div>
-          ) : (
-            <div className="flex flex-wrap gap-[24px]">
-              {tableData.map(record => (
-                <div
-                  key={record.id}
-                  className="flex flex-col items-center w-[262px] h-[300px] bg-secondary-container rounded-[9px] shadow-sm"
-                >
-                  {/* 头像区域 */}
-                  <div className="mt-[24px]">
-                    {record.source.avatar_url ? (
-                      <Avatar
-                        size="120px"
-                        image={record.source.avatar_url}
-                        className="!border-[3px] !border-line !rounded-full"
-                      />
-                    ) : (
-                      <Avatar
-                        size="120px"
-                        icon={
-                          <svg
-                            width="48"
-                            height="48"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
-                              fill="transparent"
-                            />
-                            <path
-                              d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
-                              strokeLinecap="square"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                            />
-                          </svg>
-                        }
-                        className="!border-[3px] !border-line !rounded-full !bg-brand !text-white"
-                      />
-                    )}
-                  </div>
-
-                  {/* 人设名称 */}
-                  <div className="mt-[23px] text-[18px] font-semibold text-primary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
-                    {record.name}
-                  </div>
-
-                  {/* 描述信息 */}
-                  <div className="mt-[11px] text-[14px] text-secondary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
-                    {record.remark ||
-                      intl.formatMessage(messages.defaultRemarkFallback)}
-                  </div>
-
-                  {/* 编辑按钮 */}
-                  <div className="mt-[25px]">
-                    <Button
-                      theme="primary"
-                      className="!w-[89px] !h-[32px] !rounded-[4px] !bg-brand hover:!bg-brand-hover"
-                      onClick={() => handleEditPersona(record)}
-                    >
-                      <span className="text-[14px] font-normal">
-                        {intl.formatMessage(messages.editPersona)}
-                      </span>
-                    </Button>
-                  </div>
+        <div className="p-[24px] w-full h-full">
+          <div className="flex flex-col flex-1 min-w-0 h-full bg-container p-[32px]">
+            <div className="flex items-center mb-[24px]">
+              <Button
+                theme="primary"
+                className="!h-[32px] !rounded-[3px] !bg-brand hover:!bg-brand-hover !px-[14px]"
+                onClick={handleCreate}
+              >
+                <div className="flex items-center gap-[6px]">
+                  <AddIcon size="14px" />
+                  <span className="text-[14px] font-normal">
+                    {intl.formatMessage(messages.createPersonaProfile)}
+                  </span>
                 </div>
-              ))}
+              </Button>
+              <span className="ml-[16px] text-[14px] text-placeholder">
+                {intl.formatMessage(messages.description)}
+              </span>
             </div>
-          )}
 
-          {/* 分页器 */}
-          {tableData.length > 0 && (
-            <div className="mt-[24px] flex items-center justify-between">
-              <Pagination
-                total={tableData.length}
-                pageSize={pageSize}
-                current={currentPage}
-                onChange={handlePageChange}
-                showJumper
-                showPageSize
-                size="small"
-                className="[&_.t-pagination__select]:!w-[100px]"
-              />
-            </div>
-          )}
+            {tableData.length === 0 ? (
+              <div className="flex flex-1 items-center justify-center">
+                <EmptyState
+                  imageSrc="./assets/images/empty-accounts.svg"
+                  title={intl.formatMessage(messages.noPersonasTitle)}
+                  description={intl.formatMessage(
+                    messages.noPersonasDescription,
+                  )}
+                />
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-[24px]">
+                {tableData.map(record => (
+                  <div
+                    key={record.id}
+                    className="flex flex-col items-center w-[262px] h-[300px] bg-secondary-container rounded-[9px] shadow-sm"
+                  >
+                    <div className="mt-[24px]">
+                      {record.source.avatar_url ? (
+                        <Avatar
+                          size="120px"
+                          image={record.source.avatar_url}
+                          className="!border-[3px] !border-line !rounded-full"
+                        />
+                      ) : (
+                        <Avatar
+                          size="120px"
+                          icon={
+                            <svg
+                              width="48"
+                              height="48"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
+                                fill="transparent"
+                              />
+                              <path
+                                d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
+                                strokeLinecap="square"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                              />
+                            </svg>
+                          }
+                          className="!border-[3px] !border-line !rounded-full !bg-brand !text-white"
+                        />
+                      )}
+                    </div>
+
+                    <div className="mt-[23px] text-[18px] font-semibold text-primary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                      {record.name}
+                    </div>
+
+                    <div className="mt-[11px] text-[14px] text-secondary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                      {record.remark ||
+                        intl.formatMessage(messages.defaultRemarkFallback)}
+                    </div>
+
+                    <div className="mt-[25px]">
+                      <Button
+                        theme="primary"
+                        className="!w-[89px] !h-[32px] !rounded-[4px] !bg-brand hover:!bg-brand-hover"
+                        onClick={() => handleEditPersona(record)}
+                      >
+                        <span className="text-[14px] font-normal">
+                          {intl.formatMessage(messages.editPersona)}
+                        </span>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {tableData.length > 0 && (
+              <div className="mt-[24px] flex items-center justify-between">
+                <Pagination
+                  total={tableData.length}
+                  pageSize={pageSize}
+                  current={currentPage}
+                  onChange={handlePageChange}
+                  showJumper
+                  showPageSize
+                  size="small"
+                  className="[&_.t-pagination__select]:!w-[100px]"
+                />
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <div className="flex flex-1 flex-col bg-page">
-          {/* 顶部导航栏 */}
           <div className="flex h-[48px] w-full items-center justify-between bg-container px-[16px] border-b border-solid border-line">
             <button
               type="button"
@@ -1118,7 +1106,6 @@ const KnowledgeScreen: React.FC = () => {
             </div>
           </div>
 
-          {/* 主体布局 */}
           <div className="flex flex-1 flex-col overflow-auto relative">
             {isSaving && (
               <div className="absolute inset-0 z-20 flex items-center justify-center bg-[rgba(15,23,42,0.18)] backdrop-blur-[3px]">
@@ -1149,9 +1136,7 @@ const KnowledgeScreen: React.FC = () => {
               </div>
             )}
             <div className="flex flex-1 items-start gap-[24px] p-[24px_32px] pb-[40px]">
-              {/* 左侧区域 */}
               <div className="w-[517px] min-h-[781px] flex-[0_0_517px] flex flex-col gap-[16px]">
-                {/* Hero 标题区 */}
                 <div className="flex h-[108px] items-center justify-between">
                   <div>
                     <h2 className="m-0 text-[24px] font-bold leading-[34px]">
@@ -1178,7 +1163,6 @@ const KnowledgeScreen: React.FC = () => {
                   />
                 </div>
 
-                {/* 关键词生成卡片 */}
                 <div className="w-[517px] rounded-[8px] border border-solid border-line bg-container p-[20px_24px] box-border">
                   <div className="flex items-center gap-[8px]">
                     <FileIcon size="18px" className="text-brand" />
@@ -1279,14 +1263,14 @@ const KnowledgeScreen: React.FC = () => {
                   </div>
                 </div>
 
-                {/* AI 生成进度卡片 */}
                 {isGenerating && (
                   <div className="w-[517px] h-[106px] rounded-[8px] border border-solid border-line bg-container p-[16px_24px] box-border">
                     <div className="flex h-full items-start gap-[16px]">
                       <div className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center rounded-[10px]">
-                        <img
-                          src={aiStars}
-                          alt=""
+                        <Lottie
+                          animationData={aiThinkingAnimation}
+                          loop
+                          autoplay
                           className="h-full w-full object-contain"
                         />
                       </div>
@@ -1328,7 +1312,6 @@ const KnowledgeScreen: React.FC = () => {
                 )}
               </div>
 
-              {/* 右侧区域：资料编辑区 */}
               <div
                 className={`flex-1 min-w-[0] flex flex-col gap-[16px] transition-all duration-500 ease-out ${
                   isGeneratedContentHighlighted
@@ -1336,7 +1319,6 @@ const KnowledgeScreen: React.FC = () => {
                     : 'translate-y-0 scale-100'
                 }`}
               >
-                {/* 人设备注 */}
                 <div
                   className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 ${
                     isGeneratedContentHighlighted
@@ -1360,7 +1342,6 @@ const KnowledgeScreen: React.FC = () => {
                   />
                 </div>
 
-                {/* 基础信息 */}
                 <div
                   className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-75 ${
                     isGeneratedContentHighlighted
@@ -1464,7 +1445,6 @@ const KnowledgeScreen: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 生活背景 */}
                 <div
                   className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-150 ${
                     isGeneratedContentHighlighted
@@ -1510,7 +1490,6 @@ const KnowledgeScreen: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 职业与项目背景 */}
                 <div
                   className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-200 ${
                     isGeneratedContentHighlighted
@@ -1555,36 +1534,9 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* 人设照片 */}
-                {/* <div className="bg-container rounded-[8px] border border-solid border-line p-[16px]">
-                  <div className="flex items-center gap-[8px] mb-[12px]">
-                    <FolderIcon size="18px" className="text-brand" />
-                    <span className="text-[14px] font-semibold text-primary">
-                      {intl.formatMessage(messages.sectionPersonaPhotos)}
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-[8px]">
-                    <button
-                      type="button"
-                      className="w-[96px] h-[96px] rounded-[2px] border border-dashed border-component-border bg-secondary-container flex flex-col items-center justify-center gap-[4px] cursor-pointer hover:border-brand"
-                    >
-                      <span className="text-[28px] text-placeholder leading-none font-light">
-                        +
-                      </span>
-                      <span className="text-[12px] text-placeholder">
-                        {intl.formatMessage(messages.uploadPhoto)}
-                      </span>
-                    </button>
-                    <span className="text-[12px] text-placeholder">
-                      {intl.formatMessage(messages.uploadPhotoHint)}
-                    </span>
-                  </div>
-                </div> */}
               </div>
             </div>
 
-            {/* 底部操作栏 */}
             <div className="sticky bottom-0 z-10 flex w-full min-h-[64px] flex-shrink-0 items-center justify-end gap-[12px] border-t border-solid border-line bg-container px-[32px] box-border">
               <Button
                 variant="outline"

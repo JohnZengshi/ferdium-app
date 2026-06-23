@@ -516,7 +516,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     this.state = {
       activeTab: 'all',
       isBindDrawerVisible: false,
-      width: 300,
+      width: props.stores?.settings.all.app.accountSliderWidth ?? 300,
       isDragging: false,
       editingService: null,
     };
@@ -548,6 +548,10 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     document.body.style.cursor = '';
     document.body.style.userSelect = '';
     this.setState({ isDragging: false });
+    this.props.actions?.settings.update({
+      type: 'app',
+      data: { accountSliderWidth: this.state.width },
+    });
   };
 
   componentWillUnmount(): void {

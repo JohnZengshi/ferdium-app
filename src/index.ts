@@ -63,8 +63,6 @@ const debug = require('./preload-safe-debug')('Ferdium:App');
 debug('Set userAgent to ', userAgent());
 app.userAgentFallback = userAgent();
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | undefined;
 let willQuitApp = false;
 let overrideAppQuitForUpdate = false;
@@ -72,15 +70,9 @@ let overrideAppQuitForUpdate = false;
 // eslint-disable-next-line unicorn/prefer-event-target
 export const appEvents = new EventEmitter();
 
-// Register methods to be called once the window has been loaded.
 let onDidLoadFns: any[] | null = [];
 
-const onDidLoad = (fn: {
-  (window: BrowserWindow): void;
-  (window: BrowserWindow): void;
-  (window: BrowserWindow): void;
-  (arg0: BrowserWindow): void;
-}): void => {
+const onDidLoad = (fn: (window: BrowserWindow) => void): void => {
   if (onDidLoadFns) {
     onDidLoadFns.push(fn);
   } else if (mainWindow) {
@@ -88,16 +80,13 @@ const onDidLoad = (fn: {
   }
 };
 
-// Ensure that the recipe directory exists
 emptyDirSync(userDataRecipesPath('temp'));
 ensureFileSync(userDataPath('window-state.json'));
 
-// Set App ID for Windows
 if (isWindows) {
   app.setAppUserModelId(appId);
 }
 
-// Initialize Settings
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 const shortcutSettings = new Settings('shortcuts', DEFAULT_SHORTCUTS);
@@ -116,13 +105,11 @@ const liftSingleInstanceLock = retrieveSettingValue(
   DEFAULT_APP_SETTINGS.liftSingleInstanceLock,
 );
 
-// Force single window
 const gotTheLock = liftSingleInstanceLock
   ? true
   : app.requestSingleInstanceLock();
 if (gotTheLock) {
   app.on('second-instance', (_event, argv) => {
-    // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
       if (!mainWindow.isVisible()) {
         mainWindow.show();
@@ -134,7 +121,6 @@ if (gotTheLock) {
 
       if (isWindows) {
         onDidLoad((window: BrowserWindow) => {
-          // Keep only command line / deep linked arguments
           const url = argv.slice(1);
           handleDeepLink(window, url.toString());
 
@@ -166,7 +152,6 @@ if (gotTheLock) {
   app.quit();
 }
 
-// Disable GPU acceleration
 if (
   !retrieveSettingValue(
     'enableGPUAcceleration',
@@ -187,13 +172,15 @@ const webRTCIPHandlingPolicy = retrieveSettingValue(
   | 'default_public_and_private_interfaces';
 
 const createWindow = () => {
-  // Remember window size
   const mainWindowState = windowStateKeeper({
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
     maximize: true, // Automatically maximizes the window, if it was last closed maximized
     fullScreen: true, // Automatically restores the window to full screen, if it was last closed full screen
   });
+
+  if (mainWindowState.width < 1490) mainWindowState.width = 1490;
+  if (mainWindowState.height < 1130) mainWindowState.height = 1130;
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
   let posY = mainWindowState.y || DEFAULT_WINDOW_OPTIONS.y;
@@ -204,7 +191,6 @@ const createWindow = () => {
     posY = DEFAULT_WINDOW_OPTIONS.y;
   }
 
-  // Create the browser window.
   const backgroundColor = retrieveSettingValue(
     'darkMode',
     DEFAULT_APP_SETTINGS.darkMode,
@@ -229,8 +215,8 @@ const createWindow = () => {
     y: posY,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    minWidth: 600,
-    minHeight: 500,
+    minWidth: 1490,
+    minHeight: 1130,
     show: false,
     titleBarStyle: isMac ? 'hidden' : 'default',
     frame: isLinux,
@@ -336,7 +322,6 @@ const createWindow = () => {
         child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
       });
 
-      // Handle will download event from main process (prevent download dialog)
       contents.session.on('will-download', (_e, item) => {
         const downloadFolderPath = retrieveSettingValue(
           'downloadFolderPath',
@@ -361,13 +346,10 @@ const createWindow = () => {
     }
   });
 
-  // Initialize System Tray
   const trayIcon: TrayIcon = new TrayIcon();
 
-  // Initialize DBus interface
   const dbus = new DBus(trayIcon);
 
-  // Initialize ipcApi
   ipcApi({
     mainWindow,
     settings: {
@@ -381,13 +363,11 @@ const createWindow = () => {
   // Connect to the DBus after ipcApi took care of the System Tray
   dbus.start();
 
-  // Manage Window State
   mainWindowState.manage(mainWindow);
+  mainWindow.setMinimumSize(1490, 1130);
 
-  // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // Open the DevTools.
   if (isDevMode || process.argv.includes('--devtools')) {
     mainWindow.webContents.openDevTools();
   }
@@ -400,12 +380,8 @@ const createWindow = () => {
     });
   }
 
-  // Emitted when the window is closed.
   mainWindow.on('close', e => {
     debug('Window: close window');
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     if (
       !willQuitApp &&
       retrieveSettingValue(
@@ -538,7 +514,6 @@ const createWindow = () => {
         DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
       )
     ) {
-      // Toggle the window on 'Alt+X'
       globalShortcut.register(`${altKey()}+X`, () => {
         trayIcon._toggleWindow();
       });
@@ -569,14 +544,9 @@ if (argv['auth-negotiate-delegate-whitelist']) {
 // Apply workaround for https://github.com/electron/electron/pull/26432
 app.commandLine.appendSwitch('disable-features', 'CrossOriginOpenerPolicy');
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  // force app to live in /Applications
   enforceMacOSAppLocation();
 
-  // Register App URL
   if (!app.isDefaultProtocolClient(protocolClient, process.execPath)) {
     app.setAsDefaultProtocolClient(protocolClient, process.execPath);
   }
@@ -643,7 +613,6 @@ ipcMain.handle(
   },
 );
 
-// Handle translation requests from webview
 ipcMain.handle(
   'get-translation',
   async (_e, key: string, params?: { [key: string]: string }) => {
@@ -665,14 +634,12 @@ ipcMain.handle(
   },
 );
 
-// Send translation cache to webview when requested
 ipcMain.on('request-translation-cache', event => {
   try {
     const locale = settings.get('locale') || 'en-US';
     const translations = generatedTranslations();
     const contextMenuTranslations = {};
 
-    // Extract only context menu related translations
     Object.keys(translations[locale] || {}).forEach(key => {
       if (key.startsWith('contextMenu.')) {
         contextMenuTranslations[key] = translations[locale][key];
@@ -686,7 +653,6 @@ ipcMain.on('request-translation-cache', event => {
   }
 });
 
-// TODO: evaluate if we need to store the authCallback for every service
 ipcMain.on('feature-basic-auth-credentials', (_e, { user, password }) => {
   debug('Received basic auth credentials', user, '********');
 
@@ -873,9 +839,7 @@ ipcMain.on('toggle-pause-download', (_e, data) => {
   mainWindow?.webContents.send('toggle-pause-download', data);
 });
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macos it is common for applications and their menu bar to stay active until the user quits explicitly with Cmd + Q
   if (
     retrieveSettingValue(
       'runInBackground',
@@ -918,7 +882,6 @@ app.on('before-quit', event => {
 });
 
 app.on('activate', () => {
-  // On macos it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
   } else {
@@ -933,7 +896,6 @@ app.on('web-contents-created', (_createdEvent, contents) => {
 });
 
 app.on('will-finish-launching', () => {
-  // Protocol handler for macOS
   app.on('open-url', (event, url) => {
     event.preventDefault();
 
@@ -947,8 +909,6 @@ app.on('will-finish-launching', () => {
 app.on(
   'certificate-error',
   (event, _webContents, _url, _error, certificate, callback) => {
-    // On certificate error we disable default behaviour (stop loading the page)
-    // and we then say "it is all fine - true" to the callback
     event.preventDefault();
 
     const useSelfSignedCertificates =
@@ -957,7 +917,6 @@ app.on(
         DEFAULT_APP_SETTINGS.useSelfSignedCertificates,
       ) === true;
 
-    // Check if the certificate is trusted
     if (!useSelfSignedCertificates) {
       callback(false);
       return;
@@ -968,7 +927,6 @@ app.on(
 );
 
 ipcMain.on('relaunch-app', async (_, options) => {
-  // Ask user to confirm
   const result = await dialog.showMessageBox(mainWindow!, options);
 
   if (result.response === options.cancelId) {

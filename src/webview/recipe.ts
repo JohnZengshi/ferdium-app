@@ -187,6 +187,20 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
       window.location.origin,
     );
   });
+
+  ipcRenderer.on('wa-ai-live-reset', () => {
+    window.postMessage({ type: 'wa-ai-live-reset' }, window.location.origin);
+  });
+
+  ipcRenderer.on('wa-ai-live-event', (_event, payload) => {
+    window.postMessage(
+      {
+        type: 'wa-ai-live-event',
+        payload,
+      },
+      window.location.origin,
+    );
+  });
 }
 
 class RecipeController {

@@ -8,7 +8,10 @@ import { v4 as uuidV4 } from 'uuid';
 import * as conversationsApi from '../agent-flow-cs/api/generated/conversations/conversations';
 import * as translateApi from '../agent-flow-cs/api/generated/translate/translate';
 import * as whatsappApi from '../agent-flow-cs/api/generated/whatsapp/whatsapp';
-import { subscribeConversationStatus } from '../agent-flow-cs/api/sse';
+import {
+  subscribeConversationLive,
+  subscribeConversationStatus,
+} from '../agent-flow-cs/api/sse';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { isMac } from '../environment';
@@ -59,10 +62,13 @@ export default class Service {
   // 防止 initializeWebViewEvents 被多次调用导致重复绑定事件监听器
   webviewEventsInitialized = false;
 
-  // SSE 会话状态订阅管理
   private _sseConversationSubscription: { close: () => void } | null = null;
 
   private _sseCustomerId: string | null = null;
+
+  private _sseConversationLiveSubscription: { close: () => void } | null = null;
+
+  private _sseLiveCustomerId: string | null = null;
 
   @observable isAttached: boolean = false;
 
@@ -470,7 +476,7 @@ export default class Service {
           }
         },
       },
-      { waSessionId: this.id }, // pass service sessionId as wa_session_id
+      { waSessionId: this.id },
     );
 
     debug('SSE subscribed to customer %s', customerId);
@@ -482,6 +488,55 @@ export default class Service {
       this._sseConversationSubscription = null;
       debug('SSE unsubscribed from customer %s', this._sseCustomerId);
       this._sseCustomerId = null;
+    }
+  }
+
+  private _subscribeConversationLiveSSE(customerId: string): void {
+    if (!customerId) return;
+    if (
+      this._sseLiveCustomerId === customerId &&
+      this._sseConversationLiveSubscription
+    ) {
+      debug('SSE live already subscribed to customer %s, skipping', customerId);
+      return;
+    }
+
+    this._unsubscribeConversationLiveSSE();
+    this.webview?.send('wa-ai-live-reset');
+    this._sseLiveCustomerId = customerId;
+    this._sseConversationLiveSubscription = subscribeConversationLive(
+      customerId,
+      {
+        onEvent: evt => {
+          debug('conversation live SSE event for %s: %o', customerId, {
+            event: evt.event,
+            data: evt.data,
+          });
+          this.webview?.send('wa-ai-live-event', evt.data);
+        },
+        onError: error => {
+          debug('SSE live error for customer %s: %o', customerId, error);
+        },
+        onClose: () => {
+          debug('SSE live closed for customer %s', customerId);
+          if (this._sseLiveCustomerId === customerId) {
+            this._sseConversationLiveSubscription = null;
+            this._sseLiveCustomerId = null;
+          }
+        },
+      },
+      { waSessionId: this.id },
+    );
+
+    debug('SSE live subscribed to customer %s', customerId);
+  }
+
+  private _unsubscribeConversationLiveSSE(): void {
+    if (this._sseConversationLiveSubscription) {
+      this._sseConversationLiveSubscription.close();
+      this._sseConversationLiveSubscription = null;
+      debug('SSE live unsubscribed from customer %s', this._sseLiveCustomerId);
+      this._sseLiveCustomerId = null;
     }
   }
 
@@ -605,6 +660,7 @@ export default class Service {
             ) {
               const customerId = enhancedArgs[0] as string;
               this._subscribeConversationStatusSSE(customerId);
+              this._subscribeConversationLiveSSE(customerId);
             }
 
             this.webview.send('wa-ai-api-response-host', {

@@ -264,3 +264,26 @@ export const subscribeConversationStatus = (
     handlers,
   );
 };
+
+export const subscribeConversationLive = (
+  customerId: string,
+  handlers: SSEHandlers<unknown>,
+  options?: {
+    platform?: string;
+    waSessionId?: string;
+    ownerUserId?: string | null;
+  },
+): SSESubscription => {
+  const platform = options?.platform ?? 'whatsapp';
+  const params = new URLSearchParams({ platform, customer_id: customerId });
+  if (options?.waSessionId) {
+    params.set('wa_session_id', options.waSessionId);
+  }
+  if (options?.ownerUserId) {
+    params.set('owner_user_id', options.ownerUserId);
+  }
+  return subscribeSSE<unknown>(
+    `/api/v1/owners/conversations/by-session/stream?${params.toString()}`,
+    handlers,
+  );
+};

@@ -12,7 +12,6 @@ import {
   WorkIcon,
 } from 'tdesign-icons-react';
 import {
-  Avatar,
   Button,
   DatePicker,
   Input,
@@ -988,63 +987,42 @@ const KnowledgeScreen: React.FC = () => {
                 />
               </div>
             ) : (
-              <div className="flex flex-wrap gap-[24px]">
+              <div className="flex flex-wrap gap-[20px]">
                 {tableData.map(record => (
                   <div
                     key={record.id}
-                    className="flex flex-col items-center w-[262px] h-[300px] bg-secondary-container rounded-[9px] shadow-sm"
+                    className="flex h-[320px] w-[280px] flex-col items-center rounded-[12px] bg-[linear-gradient(135deg,#FFFFFF_0%,#F6FAFF_45%,#EEF5FF_100%)] px-[20px] pt-[28px] shadow-[0_6px_18px_rgba(40,90,150,0.12)]"
                   >
-                    <div className="mt-[24px] flex h-[132px] w-[132px] items-center justify-center rounded-full bg-white shadow-[0_10px_24px_rgba(45,98,213,0.14),0_2px_6px_rgba(15,23,42,0.10)] ring-1 ring-[#D9E6FF]">
+                    <div className="flex h-[128px] w-[128px] items-center justify-center overflow-hidden rounded-full border-[4px] border-solid border-white bg-[#DCE7F8] shadow-[0_4px_12px_rgba(0,0,0,0.22)]">
                       {record.source.avatar_url ? (
-                        <Avatar
-                          size="124px"
-                          image={record.source.avatar_url}
-                          className="!border-[2px] !border-white !rounded-full"
+                        <img
+                          src={record.source.avatar_url}
+                          alt={record.name}
+                          className="h-full w-full rounded-full object-cover"
                         />
                       ) : (
-                        <Avatar
-                          size="124px"
-                          icon={
-                            <svg
-                              width="48"
-                              height="48"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
-                                fill="transparent"
-                              />
-                              <path
-                                d="M16.5 7.5C16.5 9.98528 14.4853 12 12 12 9.51472 12 7.5 9.98528 7.5 7.5 7.5 5.01472 9.51472 3 12 3 14.4853 3 16.5 5.01472 16.5 7.5ZM20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21H20Z"
-                                strokeLinecap="square"
-                                strokeWidth="2"
-                                stroke="currentColor"
-                              />
-                            </svg>
-                          }
-                          className="!border-[2px] !border-white !rounded-full !bg-brand !text-white"
-                        />
+                        <div className="flex h-full w-full items-center justify-center rounded-full bg-[radial-gradient(circle_at_50%_30%,#434E63_0%,#273043_42%,#111827_100%)] text-white">
+                          <UserIcon size="64px" />
+                        </div>
                       )}
                     </div>
 
-                    <div className="mt-[23px] text-[18px] font-semibold text-primary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                    <div className="mt-[20px] max-w-full text-center text-[20px] font-bold leading-[26px] text-[#2B2F33]">
                       {record.name}
                     </div>
 
-                    <div className="mt-[11px] text-[14px] text-secondary text-center max-w-[210px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+                    <div className="mt-[8px] line-clamp-2 min-h-[40px] max-w-[220px] text-center text-[14px] font-normal leading-[20px] text-[#333333]">
                       {record.remark ||
                         intl.formatMessage(messages.defaultRemarkFallback)}
                     </div>
 
-                    <div className="mt-[25px]">
+                    <div className="mt-[10px]">
                       <Button
                         theme="primary"
-                        className="!w-[89px] !h-[32px] !rounded-[4px] !bg-brand hover:!bg-brand-hover"
+                        className="!h-[36px] !w-[96px] !rounded-[4px] !border-none !bg-[#005BEA] !text-[14px] !font-medium hover:!bg-[#0050C8]"
                         onClick={() => handleEditPersona(record)}
                       >
-                        <span className="text-[14px] font-normal">
+                        <span className="text-[14px] font-medium text-white">
                           {intl.formatMessage(messages.editPersona)}
                         </span>
                       </Button>

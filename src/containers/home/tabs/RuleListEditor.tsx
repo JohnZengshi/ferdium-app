@@ -10,6 +10,7 @@ import { defineMessages, useIntl } from 'react-intl';
 import { AddIcon } from 'tdesign-icons-react';
 import { Loading, MessagePlugin } from 'tdesign-react';
 import { useCustomInstance } from '../../../agent-flow-cs/api/customInstance';
+import EmptyState from '../../../components/ui/EmptyState';
 import { updateOnboardingStep } from '../../../helpers/onboarding-helpers';
 
 // 后端 /api/v1/rules 已从 OpenAPI spec 中移除，本地保留类型和请求函数
@@ -109,6 +110,10 @@ const messages = defineMessages({
   loadingMore: {
     id: 'ruleListEditor.loadingMore',
     defaultMessage: 'Loading more...',
+  },
+  emptyTitle: {
+    id: 'ruleListEditor.emptyTitle',
+    defaultMessage: 'No Rules Yet',
   },
   empty: {
     id: 'ruleListEditor.empty',
@@ -811,14 +816,14 @@ const RuleListEditor = ({
               }}
               className="flex min-h-[52px] items-center"
             >
-              <div className="flex min-w-[88px] flex-shrink-0 items-center gap-[8px]">
+              <div className="flex flex-shrink-0 items-center gap-[8px] mr-[12px]">
                 <div className="h-[18px] w-[4px] flex-shrink-0 rounded-[2px] bg-brand" />
-                <span className="min-w-[76px] text-right text-[15px] font-medium leading-[22px] text-primary">
+                <span className="text-right text-[15px] font-medium leading-[22px] text-primary">
                   {rule.sequence ? `${namePrefix}${rule.sequence}` : rule.name}
                 </span>
               </div>
 
-              <div className="ml-[16px] flex-1">
+              <div className="flex-1">
                 <div
                   className={`flex h-[44px] items-center rounded-[8px] bg-container transition-all duration-200 ${
                     isActive
@@ -856,9 +861,22 @@ const RuleListEditor = ({
                         onClick={() => {
                           handleDeleteRule(rule).catch(() => {});
                         }}
-                        className="flex h-[28px] min-w-[56px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border border-solid border-line px-[12px] text-[13px] font-medium text-secondary transition-colors duration-200 hover:border-error hover:text-error"
+                        title={intl.formatMessage(messages.delete)}
+                        className="flex h-[28px] w-[28px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-transparent p-0 text-placeholder transition-colors duration-200 hover:text-error"
                       >
-                        {intl.formatMessage(messages.delete)}
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 16.5 16.5"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M8.25 16.5C12.8064 16.5 16.5 12.8064 16.5 8.25C16.5 3.69365 12.8064 0 8.25 0C3.69365 0 0 3.69365 0 8.25C0 12.8064 3.69365 16.5 8.25 16.5ZM5.86315 4.8026L8.24989 7.18934L10.6361 4.80311L11.6968 5.86377L9.31055 8.25L11.6968 10.6362L10.6361 11.6969L8.24989 9.31066L5.86315 11.6974L4.80249 10.6367L7.18923 8.25L4.80249 5.86326L5.86315 4.8026Z"
+                            fill="currentColor"
+                          />
+                        </svg>
                       </button>
                     )}
                   </div>
@@ -874,21 +892,21 @@ const RuleListEditor = ({
           <Loading loading text={intl.formatMessage(messages.loading)} />
         </div>
       ) : rules.length === 0 ? (
-        <div className="ml-[104px] mt-[24px] rounded-[8px] border border-dashed border-line bg-container px-[20px] py-[24px] text-[14px] text-secondary">
-          {intl.formatMessage(messages.empty)}
-        </div>
+        <EmptyState
+          imageSrc="./assets/images/empty-accounts.svg"
+          title={intl.formatMessage(messages.emptyTitle)}
+          description={intl.formatMessage(messages.empty)}
+          className="mt-[24px]"
+        />
       ) : null}
 
       {isLoadingMore ? (
-        <div className="ml-[104px] mt-[16px] text-[14px] text-secondary">
+        <div className="mt-[16px] text-[14px] text-secondary">
           {intl.formatMessage(messages.loadingMore)}
         </div>
       ) : null}
 
-      <div
-        className="ml-[104px] mt-[28px]"
-        style={{ width: 'calc(100% - 104px)' }}
-      >
+      <div className="mt-[28px]">
         {/* Suggested Rules Section */}
         <div className="mb-[16px] overflow-hidden rounded-[8px] border border-solid border-line bg-container">
           <div

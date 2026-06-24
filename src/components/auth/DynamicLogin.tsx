@@ -245,6 +245,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
             type={inputType as InputType}
             placeholder={placeholder}
             className={customInputClass}
+            suffixIcon={$field.value ? undefined : <span />}
             prefixIcon={getFieldIcon(field.type)}
           />
         </div>
@@ -252,7 +253,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
     };
 
     const customInputClass =
-      'h-[48px] w-full rounded-[4px] border border-solid border-line bg-container !shadow-none [&_.t-input]:!h-full [&_.t-input]:!border-none [&_.t-input]:!shadow-none [&_.t-input]:!rounded-[4px] [&_.t-input]:!pl-[16px] [&_.t-input]:!pr-[12px] [&_.t-input]:!text-[14px] [&_.t-input]:!text-primary [&_.t-input]::placeholder:!text-placeholder [&_.t-input__prefix]:!absolute [&_.t-input__prefix]:!left-[12px] [&_.t-input__prefix]:!top-1/2 [&_.t-input__prefix]:!-translate-y-1/2 [&_.t-input__prefix]:!text-placeholder [&_.t-input__suffix]:!hidden';
+      'h-[48px] w-full rounded-[4px] border border-solid border-line bg-container !shadow-none [&_.t-input]:!h-full [&_.t-input]:!border-none [&_.t-input]:!shadow-none [&_.t-input]:!rounded-[4px] [&_.t-input]:!pl-[16px] [&_.t-input]:!pr-[12px] [&_.t-input]:!text-[14px] [&_.t-input]:!text-primary [&_.t-input]::placeholder:!text-placeholder [&_.t-input__prefix]:!absolute [&_.t-input__prefix]:!left-[12px] [&_.t-input__prefix]:!top-1/2 [&_.t-input__prefix]:!-translate-y-1/2 [&_.t-input__prefix]:!text-placeholder';
 
     return (
       <div

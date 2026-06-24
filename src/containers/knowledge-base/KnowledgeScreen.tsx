@@ -22,8 +22,6 @@ import {
 } from 'tdesign-react';
 import { getAccessToken } from '../../agent-flow-cs/api/auth';
 import { AGENT_FLOW_CS_BASE } from '../../agent-flow-cs/api/customInstance';
-import BookSparkleIcon from '../../components/ui/icons/BookSparkleIcon';
-import RegenerateIcon from '../../components/ui/icons/RegenerateIcon';
 import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
@@ -40,6 +38,8 @@ import {
   SidebarMenu,
 } from '../../components/home/SidebarMenu';
 import EmptyState from '../../components/ui/EmptyState';
+import BookSparkleIcon from '../../components/ui/icons/BookSparkleIcon';
+import RegenerateIcon from '../../components/ui/icons/RegenerateIcon';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 
@@ -1071,7 +1071,7 @@ const KnowledgeScreen: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-1 flex-col bg-page">
+        <div className="flex flex-1 flex-col bg-[#F6F8FF]">
           <div className="flex h-[48px] w-full items-center justify-between bg-container px-[16px] border-b border-solid border-line">
             <button
               type="button"

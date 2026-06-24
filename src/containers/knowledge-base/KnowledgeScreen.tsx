@@ -22,6 +22,8 @@ import {
 } from 'tdesign-react';
 import { getAccessToken } from '../../agent-flow-cs/api/auth';
 import { AGENT_FLOW_CS_BASE } from '../../agent-flow-cs/api/customInstance';
+import BookSparkleIcon from '../../components/ui/icons/BookSparkleIcon';
+import RegenerateIcon from '../../components/ui/icons/RegenerateIcon';
 import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
@@ -497,19 +499,39 @@ const getGenderLabel = (
 
 const digitalHumanToFormData = (
   digitalHuman: AppApiSchemasDigitalHumanResponse,
-): FormData => ({
-  name: digitalHuman.name,
-  remark: getConfigString(digitalHuman.persona_config, 'remark'),
-  age: getConfigString(digitalHuman.persona_config, 'age'),
-  gender: getConfigString(digitalHuman.persona_config, 'gender'),
-  birthday: getConfigString(digitalHuman.persona_config, 'birthday'),
-  country: getConfigString(digitalHuman.persona_config, 'country'),
-  language: getConfigString(digitalHuman.persona_config, 'language'),
-  city: getConfigString(digitalHuman.persona_config, 'city'),
-  family: getConfigString(digitalHuman.persona_config, 'family'),
-  occupation: getConfigString(digitalHuman.persona_config, 'occupation'),
-  participation: getConfigString(digitalHuman.persona_config, 'participation'),
-});
+): FormData => {
+  const config = digitalHuman.persona_config;
+
+  // 尝试从 participation 或 project_work 字段读取
+  const getParticipation = (): string => {
+    if (!config || typeof config !== 'object') {
+      return '';
+    }
+    // 先尝试 participation，如果没有则尝试 project_work
+    const { participation, project_work: projectWork } = config;
+    const value =
+      participation !== undefined && participation !== null
+        ? participation
+        : projectWork;
+    return typeof value === 'string' || typeof value === 'number'
+      ? String(value)
+      : '';
+  };
+
+  return {
+    name: digitalHuman.name,
+    remark: getConfigString(config, 'remark'),
+    age: getConfigString(config, 'age'),
+    gender: getConfigString(config, 'gender'),
+    birthday: getConfigString(config, 'birthday'),
+    country: getConfigString(config, 'country'),
+    language: getConfigString(config, 'language'),
+    city: getConfigString(config, 'city'),
+    family: getConfigString(config, 'family'),
+    occupation: getConfigString(config, 'occupation'),
+    participation: getParticipation(),
+  };
+};
 
 const buildPersonaPrompt = (
   data: FormData,
@@ -1194,7 +1216,7 @@ const KnowledgeScreen: React.FC = () => {
                       type="button"
                       onClick={handleSmartImport}
                       disabled={isGenerating}
-                      className={`flex h-[40px] w-[271px] items-center justify-center gap-[8px] rounded-[4px] border-none transition-all ${
+                      className={`flex h-[40px] w-[271px] items-center justify-center gap-[14px] rounded-[4px] border-none transition-all ${
                         isGenerating
                           ? 'opacity-50 cursor-not-allowed'
                           : 'hover:brightness-105 cursor-pointer'
@@ -1204,8 +1226,11 @@ const KnowledgeScreen: React.FC = () => {
                           'linear-gradient(90deg, #1D6BFF 0%, #38CFF4 100%)',
                       }}
                     >
-                      <FileIcon size="16px" className="text-white" />
-                      <span className="text-[14px] font-medium leading-[20px] text-white">
+                      <BookSparkleIcon
+                        size="22px"
+                        className="text-white flex-shrink-0"
+                      />
+                      <span className="text-[14px] font-medium leading-none text-white">
                         {intl.formatMessage(messages.aiGenerate)}
                       </span>
                     </button>
@@ -1219,17 +1244,16 @@ const KnowledgeScreen: React.FC = () => {
                           : 'border-line bg-container hover:border-brand cursor-pointer'
                       }`}
                     >
-                      <span
-                        className={`text-[16px] ${
+                      <RegenerateIcon
+                        size="16px"
+                        className={`flex-shrink-0 ${
                           !hasGenerated || isGenerating
                             ? 'text-placeholder'
                             : 'text-primary group-hover:text-brand'
                         }`}
-                      >
-                        ↻
-                      </span>
+                      />
                       <span
-                        className={`text-[14px] font-medium leading-[20px] ${
+                        className={`text-[14px] font-medium leading-none ${
                           !hasGenerated || isGenerating
                             ? 'text-placeholder'
                             : 'text-primary group-hover:text-brand'

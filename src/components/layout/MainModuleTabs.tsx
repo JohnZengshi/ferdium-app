@@ -18,6 +18,67 @@ import {
 import type { Stores } from '../../@types/stores.types';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
+import { isDevMode } from '../../environment-remote';
+
+const WHATSAPP_RECIPE_ID = 'whatsapp';
+
+const TOGGLE_CLICK_THRESHOLD = 10;
+const TOGGLE_RESET_MS = 3000;
+
+const SCRIPT_AUTO_SHOW = `
+  (function() {
+    console.log('[WA-AutoShow] start');
+    var maxA = 15;
+    var intA = 1000;
+    var attA = 0;
+    function tryShow() {
+      attA++;
+      window.__waAiDebugVisible = true;
+      var p = document.querySelector('.wa-ai-debug-panel');
+      console.log('[WA-AutoShow] attempt', attA, 'panel:', !!p);
+      if (p) {
+        p.classList.remove('wa-ai-debug-hidden');
+        var s = document.getElementById('wa-akg-si');
+        if (s) s.style.display = '';
+        console.log('[WA-AutoShow] done');
+        return;
+      }
+      if (attA < maxA) setTimeout(tryShow, intA);
+      else console.log('[WA-AutoShow] max attempts reached');
+    }
+    tryShow();
+  })();
+`;
+
+const SCRIPT_TOGGLE_DEBUG = `
+  (function() {
+    console.log('[WA-Script-Toggle] start');
+    var maxT = 10;
+    var intT = 1000;
+    var attT = 0;
+    function tryToggle() {
+      attT++;
+      var w = window.__waAi;
+      console.log('[WA-Script-Toggle] attempt', attT, 'waAi:', !!w, 'toggleDebugPanel:', !!(w && w.toggleDebugPanel));
+      if (w && w.toggleDebugPanel) {
+        console.log('[WA-Script-Toggle] calling waAI.toggleDebugPanel');
+        w.toggleDebugPanel();
+        return;
+      }
+      var p = document.querySelector('.wa-ai-debug-panel');
+      console.log('[WA-Script-Toggle] panel found:', !!p);
+      if (p) {
+        p.classList.toggle('wa-ai-debug-hidden');
+        var s = document.getElementById('wa-akg-si');
+        if (s) s.style.display = s.style.display === 'none' ? '' : 'none';
+        return;
+      }
+      if (attT < maxT) setTimeout(tryToggle, intT);
+      else console.log('[WA-Script-Toggle] max attempts reached, giving up');
+    }
+    tryToggle();
+  })();
+`;
 
 const MODULES: {
   id: FerdiumModule;
@@ -73,6 +134,58 @@ const formatHandoffBadge = (total: number): string | null => {
 @inject('stores')
 @observer
 class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
+  private _logoClickCount = 0;
+
+  private _logoClickTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private _logoElement: HTMLImageElement | null = null;
+
+  componentDidMount(): void {
+    this._logoElement?.addEventListener('click', this._handleLogoClick);
+    if (isDevMode) {
+      this._autoShowDebugPanel();
+    }
+  }
+
+  componentWillUnmount(): void {
+    if (this._logoClickTimer) clearTimeout(this._logoClickTimer);
+    this._logoElement?.removeEventListener('click', this._handleLogoClick);
+  }
+
+  private _autoShowDebugPanel = (attempt = 0) => {
+    if (attempt >= 3) return;
+    const { stores } = this.props;
+    const services = stores?.services.allDisplayed ?? [];
+    for (const service of services) {
+      if (service.recipe?.id === WHATSAPP_RECIPE_ID && service.webview) {
+        service.webview.executeJavaScript(SCRIPT_AUTO_SHOW).catch(() => {});
+      }
+    }
+    setTimeout(() => this._autoShowDebugPanel(attempt + 1), 1500);
+  };
+
+  private _toggleWhatsAppDebug = () => {
+    const { stores } = this.props;
+    const services = stores?.services.allDisplayed ?? [];
+    for (const service of services) {
+      if (service.recipe?.id === WHATSAPP_RECIPE_ID && service.webview) {
+        service.webview.executeJavaScript(SCRIPT_TOGGLE_DEBUG).catch(() => {});
+      }
+    }
+  };
+
+  private _handleLogoClick = () => {
+    this._logoClickCount += 1;
+    if (this._logoClickTimer) clearTimeout(this._logoClickTimer);
+    this._logoClickTimer = setTimeout(() => {
+      this._logoClickCount = 0;
+    }, TOGGLE_RESET_MS);
+    if (this._logoClickCount >= TOGGLE_CLICK_THRESHOLD) {
+      this._logoClickCount = 0;
+      this._toggleWhatsAppDebug();
+    }
+  };
+
   render(): ReactElement {
     const { stores, intl } = this.props;
     const badge = stores?.services.mainModuleBadge;
@@ -80,7 +193,13 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps> {
 
     return (
       <nav className="flex flex-col items-center w-[88px] py-[24px] h-full min-h-0 bg-container border-r border-solid border-line">
-        <img src="./assets/images/sidebar-logo.svg" alt="logo" />
+        <img
+          src="./assets/images/sidebar-logo.svg"
+          alt="logo"
+          ref={el => {
+            this._logoElement = el;
+          }}
+        />
 
         <div className="flex flex-col items-center h-fit my-auto gap-[4px] w-[64px] p-[8px] rounded-xl shadow-[0px_5px_5px_-3px_rgba(0,0,0,0.10),0px_8px_10px_1px_rgba(0,0,0,0.06),0px_3px_14px_2px_rgba(0,0,0,0.05)]">
           {MODULES.map(mod => {

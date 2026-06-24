@@ -6,11 +6,17 @@ export type FerdiumModule =
   | 'knowledge-base'
   | 'settings';
 export type ServiceSubTab = 'messages' | 'account' | 'profile';
+export type HomeViewMode = 'dashboard' | 'strategy';
+export type StrategyConfigTab = 'resume' | 'security' | 'handover' | 'notifications';
 
 class NavigationStore {
   @observable activeModule: FerdiumModule = 'service-type';
 
   @observable activeServiceTab: ServiceSubTab = 'messages';
+
+  @observable activeHomeView: HomeViewMode = 'dashboard';
+
+  @observable activeStrategyTab: StrategyConfigTab = 'resume';
 
   constructor() {
     makeObservable(this);
@@ -24,6 +30,16 @@ class NavigationStore {
   @action
   setServiceTab(tab: ServiceSubTab) {
     this.activeServiceTab = tab;
+  }
+
+  @action
+  setHomeView(view: HomeViewMode) {
+    this.activeHomeView = view;
+  }
+
+  @action
+  setStrategyTab(tab: StrategyConfigTab) {
+    this.activeStrategyTab = tab;
   }
 }
 

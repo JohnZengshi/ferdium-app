@@ -15,6 +15,7 @@ import {
   UserIcon,
   UserSafetyIcon,
 } from 'tdesign-icons-react';
+import type { StrategyConfigTab } from '../../stores/NavigationStore';
 import HandoverRulesTab from './tabs/HandoverRulesTab';
 import NotificationsTab from './tabs/NotificationsTab';
 import ResumeTab from './tabs/ResumeTab';
@@ -46,10 +47,11 @@ const messages = defineMessages({
 interface StrategyConfigScreenProps {
   onBack: () => void;
   handoffUnreadCount?: number;
+  initialTab?: StrategyConfigTab;
 }
 
 interface SidebarItem {
-  key: string;
+  key: StrategyConfigTab;
   label: string;
   icon: ReactElement;
   badge?: string;
@@ -64,9 +66,10 @@ const formatHandoffBadge = (total: number): string | undefined => {
 const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
   onBack,
   handoffUnreadCount = 0,
+  initialTab = 'resume',
 }) => {
   const intl = useIntl();
-  const [activeTab, setActiveTab] = useState('resume');
+  const [activeTab, setActiveTab] = useState<StrategyConfigTab>(initialTab);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handoffBadge = useMemo(
@@ -93,7 +96,11 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
 
-  const handleSidebarClick = useCallback((key: string) => {
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
+
+  const handleSidebarClick = useCallback((key: StrategyConfigTab) => {
     setActiveTab(key);
   }, []);
 
@@ -213,6 +220,12 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
 StrategyConfigScreen.propTypes = {
   onBack: PropTypes.func.isRequired,
   handoffUnreadCount: PropTypes.number,
+  initialTab: PropTypes.oneOf<StrategyConfigTab>([
+    'resume',
+    'security',
+    'handover',
+    'notifications',
+  ]),
 };
 
 export default StrategyConfigScreen;

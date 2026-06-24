@@ -33,6 +33,7 @@ import {
   updateOnboardingStep,
 } from '../../helpers/onboarding-helpers';
 import type { RealStores } from '../../stores';
+import { navigationStore } from '../../stores/NavigationStore';
 import StrategyConfigScreen from './StrategyConfigScreen';
 import {
   type EmployeeResume,
@@ -50,7 +51,6 @@ type IHomeScreenProps = HomeScreenProps & WrappedComponentProps;
 
 interface HomeScreenState {
   isAutoReply: boolean;
-  viewMode: 'dashboard' | 'strategy';
   dialogEmployee: EmployeeResume | null;
   step1Completed: boolean;
   onboardingVersion: number;
@@ -74,7 +74,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
 
     this.state = {
       isAutoReply: false,
-      viewMode: 'dashboard',
       dialogEmployee: null,
       step1Completed: onboardingProgress.step1Completed,
       onboardingVersion: 0,
@@ -82,7 +81,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   }
 
   handleOpenStrategy = (): void => {
-    this.setState({ viewMode: 'strategy' });
+    navigationStore.setHomeView('strategy');
+    navigationStore.setStrategyTab('resume');
   };
 
   handleOpenResume = (employee: any): void => {
@@ -99,7 +99,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   };
 
   handleBackToDashboard = (): void => {
-    this.setState({ viewMode: 'dashboard' });
+    navigationStore.setHomeView('dashboard');
   };
 
   async componentDidMount(): Promise<void> {
@@ -367,7 +367,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
               <Button
                 theme="primary"
                 size="small"
-                className="!bg-brand !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm"
+                className="!bg-[#6C4E14] !border-[#6C4E14] !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm"
                 suffix={<ChevronRightIcon />}
                 onClick={this.handleOpenStrategy}
               >
@@ -436,11 +436,12 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   }
 
   render(): ReactElement {
-    if (this.state.viewMode === 'strategy') {
+    if (navigationStore.activeHomeView === 'strategy') {
       return (
         <StrategyConfigScreen
           onBack={this.handleBackToDashboard}
           handoffUnreadCount={this.props.stores!.handoff.unreadCount}
+          initialTab={navigationStore.activeStrategyTab}
         />
       );
     }

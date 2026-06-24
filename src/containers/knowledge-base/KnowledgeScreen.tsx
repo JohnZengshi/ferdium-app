@@ -40,6 +40,7 @@ import {
 import EmptyState from '../../components/ui/EmptyState';
 import BookSparkleIcon from '../../components/ui/icons/BookSparkleIcon';
 import RegenerateIcon from '../../components/ui/icons/RegenerateIcon';
+import SparkleIcon from '../../components/ui/icons/SparkleIcon';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 
@@ -242,7 +243,7 @@ const messages = defineMessages({
   heroDescription: {
     id: 'knowledgeScreen.heroDescription',
     defaultMessage:
-      'Enter keywords and AI will automatically generate a complete social account persona profile for you to review before saving.',
+      '输入关键词，AI 将自动生成完整的社交账号人设资料，你\n可以审核后保存。',
   },
   keywordDescription: {
     id: 'knowledgeScreen.keywordDescription',
@@ -1137,30 +1138,40 @@ const KnowledgeScreen: React.FC = () => {
             )}
             <div className="flex flex-1 items-start gap-[24px] p-[24px_32px] pb-[40px]">
               <div className="w-[517px] min-h-[781px] flex-[0_0_517px] flex flex-col gap-[16px]">
-                <div className="flex h-[108px] items-center justify-between">
-                  <div>
-                    <h2 className="m-0 text-[24px] font-bold leading-[34px]">
-                      <span className="text-primary">
+                <div className="relative flex h-[160px] items-start justify-between pl-[28px] pt-[34px]">
+                  <div className="relative max-w-[65%]">
+                    <h2 className="relative m-0 text-[34px] font-[800] leading-[42px]">
+                      <span className="text-[#222222]">
                         {editingId
                           ? intl.formatMessage(messages.editTitle)
                           : intl.formatMessage(messages.createTitle)}
                       </span>
-                      <span className="text-brand">
+                      <span className="text-[#2F6BFF]">
                         {intl.formatMessage(messages.personaAccountTitle)}
                       </span>
-                      <span className="text-primary">
+                      <span className="text-[#222222]">
                         {intl.formatMessage(messages.profileTitle)}
                       </span>
+                      <SparkleIcon
+                        size="12px"
+                        className="absolute right-[-8px] top-[4px] text-[#3B73FF]"
+                      />
+                      <SparkleIcon
+                        size="10px"
+                        className="absolute right-[-18px] top-[14px] text-[#3B73FF]"
+                      />
                     </h2>
-                    <p className="m-0 mt-[4px] w-[260px] text-[12px] leading-[22px] text-secondary">
+                    <p className="m-0 mt-[18px] max-w-[380px] text-[14px] font-normal leading-[22px] text-[#555C66] whitespace-pre-line">
                       {intl.formatMessage(messages.heroDescription)}
                     </p>
                   </div>
-                  <img
-                    src={aiIllustration}
-                    alt=""
-                    className="h-[96px] w-[128px] object-contain"
-                  />
+                  <div className="absolute right-0 top-[25px]">
+                    <img
+                      src={aiIllustration}
+                      alt=""
+                      className="h-[130px] w-[145px] object-contain"
+                    />
+                  </div>
                 </div>
 
                 <div className="w-[517px] rounded-[8px] border border-solid border-line bg-container p-[20px_24px] box-border">

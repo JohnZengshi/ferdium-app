@@ -227,6 +227,12 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       settings: intl.formatMessage(messages.moduleSettings),
     };
 
+    const MODULE_ICONS: Partial<Record<FerdiumModule, string>> = {
+      home: './assets/images/desktop-1.svg',
+      'service-type': './assets/images/chat-ws.svg',
+      'knowledge-base': './assets/images/collection.svg',
+    };
+
     const { locked, automaticUpdates, useCompactWorkspaceDrawer } =
       settings.app;
     if (locked) {
@@ -353,19 +359,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex-shrink-0 w-full h-[56px] bg-container border-b border-solid border-b-line flex items-center justify-between px-[24px]">
                   <span className="flex items-center gap-[12px] text-[16px] font-semibold leading-[24px] text-primary">
-                    {navigationStore.activeModule === 'knowledge-base' && (
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M18 4H19V2H18H6H5V4H6L18 4ZM21 7.5H20L4 7.5H3V5.5L4 5.5L20 5.5H21V7.5ZM23 9V10V21V22H22H2H1V21V10V9H2L22 9H23ZM21 11L3 11L3 20H21V11Z"
-                          fill="#0052D9"
-                        />
-                      </svg>
+                    {MODULE_ICONS[activeModule] && (
+                      <img
+                        src={MODULE_ICONS[activeModule]}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-[24px] w-[24px] flex-shrink-0"
+                      />
                     )}
                     {MODULE_LABELS[navigationStore.activeModule]}
                   </span>

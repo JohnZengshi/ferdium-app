@@ -90,6 +90,7 @@
   "appLayout.moduleKnowledgeBase": "资料库",
   "appLayout.moduleServiceType": "WA工具",
   "appLayout.moduleSettings": "设置",
+  "appLayout.notificationsTooltip": "通知",
   "appLayout.settingsTooltip": "设置",
   "appLayout.tryAgain": "重试",
   "auth.loggingOut": "正在退出登录...",

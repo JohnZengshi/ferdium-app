@@ -51,6 +51,7 @@
   "appLayout.moduleKnowledgeBase": "Knowledge Base",
   "appLayout.moduleServiceType": "Whats",
   "appLayout.moduleSettings": "Settings",
+  "appLayout.notificationsTooltip": "Notifications",
   "appLayout.settingsTooltip": "Settings",
   "appLayout.tryAgain": "Try again",
   "auth.loggingOut": "Logging you out...",

@@ -774,6 +774,7 @@
   "ruleListEditor.deleteFailed": "Failed to delete rule",
   "ruleListEditor.deleteSuccess": "Deleted successfully",
   "ruleListEditor.empty": "No content yet. Click the button below to add",
+  "ruleListEditor.emptyTitle": "No Rules Yet",
   "ruleListEditor.loadFailed": "Failed to load rules",
   "ruleListEditor.loading": "Loading...",
   "ruleListEditor.loadingMore": "Loading more...",

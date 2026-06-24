@@ -562,7 +562,6 @@ function UserProfileScreen(): ReactElement {
           stripe={false}
           hover
           loading={loading}
-          className="[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:align-middle"
           pagination={{
             current: page,
             pageSize,

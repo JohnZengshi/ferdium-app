@@ -187,8 +187,7 @@ const formatDateTime = (iso: string): string => {
     return iso;
   }
 };
-const NOTIFICATIONS_TABLE_CLASS =
-  '[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:!h-[52px] [&_.t-table__body-td]:!whitespace-nowrap [&_.t-table__body-td]:!overflow-hidden [&_.t-table__body-td]:!text-ellipsis [&_.t-table__body-td]:align-middle [&_.t-table__cell]:!whitespace-nowrap';
+
 
 const NotificationsTab = (): ReactElement => {
   const intl = useIntl();
@@ -220,16 +219,16 @@ const NotificationsTab = (): ReactElement => {
         const result: any =
           statusFilter === 'all'
             ? await listMemberHandoffsApiV1HandoffGet({
-                ...timeParams,
-                offset,
-                limit: PAGE_SIZE,
-              })
+              ...timeParams,
+              offset,
+              limit: PAGE_SIZE,
+            })
             : await listHandoffsByReadApiV1HandoffReadGet({
-                unread: statusFilter === 'unread',
-                ...timeParams,
-                offset,
-                limit: PAGE_SIZE,
-              });
+              unread: statusFilter === 'unread',
+              ...timeParams,
+              offset,
+              limit: PAGE_SIZE,
+            });
         const payload =
           result.data as import('../../../agent-flow-cs/api/generated/agentFlowCs.schemas').HandoffListResponse;
         setRecords(payload.items ?? []);
@@ -250,13 +249,13 @@ const NotificationsTab = (): ReactElement => {
   );
 
   useEffect(() => {
-    loadRecords(1).catch(() => {});
+    loadRecords(1).catch(() => { });
   }, [loadRecords]);
 
   const handlePageChange = useCallback(
     (pageInfo: { current: number; pageSize: number }) => {
       setCurrentPage(pageInfo.current);
-      loadRecords(pageInfo.current).catch(() => {});
+      loadRecords(pageInfo.current).catch(() => { });
     },
     [loadRecords],
   );
@@ -266,17 +265,17 @@ const NotificationsTab = (): ReactElement => {
   }, []);
 
   const handleSearch = useCallback((): void => {
-    loadRecords(1).catch(() => {});
+    loadRecords(1).catch(() => { });
   }, [loadRecords]);
 
   const handleReset = useCallback((): void => {
     setSocialFilter('all');
     setStatusFilter('all');
     setDateRange([]);
-    loadRecords(1).catch(() => {});
+    loadRecords(1).catch(() => { });
   }, [loadRecords]);
 
-  const handleMarkAllRead = useCallback((): void => {}, []);
+  const handleMarkAllRead = useCallback((): void => { }, []);
 
   const handleExportSelected = useCallback((): void => {
     if (selectedRowKeys.length === 0) {
@@ -300,7 +299,7 @@ const NotificationsTab = (): ReactElement => {
           // 通知全局 Store 刷新未读计数
           window.dispatchEvent(new Event(HANDOFF_UNREAD_CHANGED_EVENT));
           // 刷新列表更新已读状态
-          loadRecords(currentPage).catch(() => {});
+          loadRecords(currentPage).catch(() => { });
         } catch (error) {
           MessagePlugin.error(
             error instanceof Error ? error.message : 'Failed to mark as read',
@@ -437,8 +436,7 @@ const NotificationsTab = (): ReactElement => {
   return (
     <>
       <div
-        className="mx-auto w-full px-[24px] pt-[24px]"
-        style={{ maxWidth: '1440px' }}
+        className="mx-auto w-full min-h-full py-[32px] px-[30px] bg-container"
       >
         <div className="flex h-[56px] items-center gap-[20px]">
           <div className="flex items-center gap-[8px]">
@@ -555,7 +553,7 @@ const NotificationsTab = (): ReactElement => {
           )}
         </div>
 
-        <div className="mt-[16px] rounded-[8px] border border-solid border-line">
+        <div className="mt-[16px] rounded-[8px]">
           {loading ? (
             <div className="flex min-h-[300px] items-center justify-center">
               <Loading loading text={intl.formatMessage(messages.loading)} />
@@ -572,11 +570,10 @@ const NotificationsTab = (): ReactElement => {
               stripe={false}
               bordered
               size="medium"
-              className={NOTIFICATIONS_TABLE_CLASS}
             />
           )}
 
-          <div className="flex h-[52px] items-center justify-between border-t border-solid border-line bg-container px-[24px]">
+          <div className="flex h-[52px] items-center justify-between bg-container px-[24px]">
             <Pagination
               total={total}
               pageSize={PAGE_SIZE}

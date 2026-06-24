@@ -139,8 +139,6 @@ const formatProxy = (proxy: unknown): string => {
 
   return config.port ? `${config.host}:${config.port}` : config.host;
 };
-const ACCOUNT_MANAGEMENT_TABLE_CLASS =
-  '[&_.t-table__header-th]:!whitespace-nowrap [&_.t-table__header-th]:!text-[13px] [&_.t-table__header-th]:!font-medium [&_.t-table__body-td]:align-middle';
 
 interface IProps {
   stores?: any;
@@ -308,7 +306,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
                 <Tag
                   variant="outline"
                   theme={theme}
-                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                  className=" !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
                 >
                   {intl.formatMessage(messages[statusTextKey])}
                 </Tag>
@@ -321,7 +319,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
                 <Tag
                   variant="outline"
                   theme={theme}
-                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                  className=" !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
                 >
                   {intl.formatMessage(messages[statusTextKey])}
                 </Tag>
@@ -334,7 +332,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
                 <Tag
                   variant="outline"
                   theme={theme}
-                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                  className=" !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
                 >
                   {intl.formatMessage(messages[statusTextKey])}
                 </Tag>
@@ -345,7 +343,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
                 <Tag
                   variant="outline"
                   theme="default"
-                  className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                  className=" !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
                 >
                   {intl.formatMessage(messages.statusUnknown)}
                 </Tag>
@@ -366,7 +364,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
               <Tag
                 variant="outline"
                 theme="warning"
-                className="cursor-pointer !rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+                className="cursor-pointer  !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
               >
                 {row.persona}
               </Tag>
@@ -489,7 +487,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
 
   return (
     <div className="account-management-screen flex flex-1 flex-col bg-page p-[24px]">
-      <div className="flex h-full w-full flex-col bg-container p-[32px]">
+      <div className="flex h-full w-full flex-col bg-container p-[32px] rounded-[6px]">
         <FilterToolbar
           leftContent={
             <>
@@ -532,7 +530,6 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
           hover
           tableLayout="auto"
           lazyLoad
-          className={ACCOUNT_MANAGEMENT_TABLE_CLASS}
           pagination={{
             current: 1,
             pageSize: 20,
@@ -549,10 +546,10 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
           initialData={
             editingService
               ? {
-                  name: editingService.name,
-                  proxy: editingService.proxy as ServiceProxyConfig | null,
-                  cookie: (editingService as { cookie?: string }).cookie || '',
-                }
+                name: editingService.name,
+                proxy: editingService.proxy as ServiceProxyConfig | null,
+                cookie: (editingService as { cookie?: string }).cookie || '',
+              }
               : null
           }
           onClose={handleEditClose}

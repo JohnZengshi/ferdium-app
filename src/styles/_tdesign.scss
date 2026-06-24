@@ -5679,7 +5679,7 @@ ul.t-select-option-group__header,
   height: var(--td-comp-size-xs);
   font: var(--td-font-body-small);
   color: var(--td-text-color-anti);
-  border-radius: var(--td-radius-default);
+  border-radius: 3px;
   border: 1px solid transparent;
   white-space: nowrap;
 }

@@ -295,118 +295,117 @@ const HandoverRulesTab = (): ReactElement => {
   };
 
   return (
-    <div
-      className="mx-auto w-full max-w-[960px] pt-[48px]"
-      style={{ width: 'calc(100% - 64px)' }}
-    >
-      <div className="relative mb-[32px] rounded-[12px] border border-solid border-brand-light bg-brand-light px-[24px] pb-[20px] pt-[20px]">
-        <div className="absolute left-[24px] top-[20px] flex h-[22px] w-[22px] items-center justify-center rounded-full bg-brand">
-          <span className="text-[13px] font-semibold leading-none text-text-anti">
-            i
-          </span>
-        </div>
-        <div className="ml-[32px]">
-          <span
-            className="text-[17px] font-semibold leading-[26px] text-primary"
-            style={{ letterSpacing: '0.2px' }}
-          >
-            {intl.formatMessage(messages.title)}
-          </span>
-        </div>
-        <div className="ml-[32px] mt-[10px] text-[14px] font-normal leading-[24px] text-secondary">
-          <p>{intl.formatMessage(messages.descP1)}</p>
-          <p>{intl.formatMessage(messages.descP2)}</p>
-          <p>{intl.formatMessage(messages.descP3)}</p>
-          <p>{intl.formatMessage(messages.descP4)}</p>
-        </div>
-      </div>
-
-      <div
-        className="mb-[32px] rounded-[12px] bg-container px-[32px] pb-[28px] pt-[28px]"
-        style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
-      >
-        <div className="flex items-center gap-[12px]">
-          <div className="flex h-[36px] w-[36px] flex-shrink-0 items-center justify-center rounded-[8px] bg-brand">
-            <NotificationIcon className="text-text-anti" />
-          </div>
-          <span
-            className="text-[18px] font-semibold text-primary"
-            style={{ lineHeight: '36px', letterSpacing: '0.3px' }}
-          >
-            {intl.formatMessage(messages.notificationTitle)}
-          </span>
-        </div>
-
-        <p
-          className="ml-[48px] mt-[14px] text-[14px] font-normal text-placeholder"
-          style={{ lineHeight: '22px', maxWidth: '500px' }}
-        >
-          {intl.formatMessage(messages.notificationDesc)}
-        </p>
-
-        <div className="mt-[24px] flex gap-[24px]">
-          <div className="relative flex-1 overflow-hidden rounded-[12px] bg-brand-light p-[24px]">
-            <div className="pointer-events-none absolute right-0 top-0 h-full w-[40%] opacity-[0.08]">
-              <svg viewBox="0 0 200 160" className="h-full w-full">
-                <path
-                  d="M200 160C160 100 120 120 80 80S40 20 0 40V160H200Z"
-                  style={{ fill: 'var(--td-brand-color)' }}
-                />
-              </svg>
-            </div>
-
-            <div className="flex h-[48px] w-[48px] items-center justify-center rounded-[12px] bg-brand">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path
-                  d="M24.5 4.5L2.5 13.5L9.5 16.5L20.5 9L12 18L12.5 19L20 24.5L24.5 4.5Z"
-                  fill="white"
-                />
-              </svg>
-            </div>
-
-            <span className="mt-[16px] block text-[16px] font-medium leading-[22px] text-primary">
-              {intl.formatMessage(messages.telegramBot)}
+    <div className="mx-auto w-full min-h-full py-[32px] bg-container">
+      <div className="mx-auto w-[72%]">
+        <div className="relative mb-[32px] rounded-[12px] border border-solid border-brand-light bg-brand-light px-[24px] pb-[20px] pt-[20px]">
+          <div className="absolute left-[24px] top-[20px] flex h-[22px] w-[22px] items-center justify-center rounded-full bg-brand">
+            <span className="text-[13px] font-semibold leading-none text-text-anti">
+              i
             </span>
-
-            {loading ? (
-              <div className="absolute bottom-[24px] right-[24px]">
-                <div className="h-[32px] w-[88px] animate-pulse rounded-[6px] bg-secondary-container" />
-              </div>
-            ) : bound ? (
-              <div className="absolute bottom-[24px] right-[24px] flex gap-[8px]">
-                <button
-                  type="button"
-                  onClick={handleUnbind}
-                  className="flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-error bg-container text-[13px] font-medium text-error"
-                >
-                  {intl.formatMessage(messages.unbind)}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleEdit}
-                  className="flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-brand bg-container text-[13px] font-medium text-brand"
-                >
-                  {intl.formatMessage(messages.edit)}
-                </button>
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={handleBind}
-                className="absolute bottom-[24px] right-[24px] flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[13px] font-medium text-text-anti"
-              >
-                {intl.formatMessage(messages.goBind)}
-              </button>
-            )}
+          </div>
+          <div className="ml-[32px]">
+            <span
+              className="text-[17px] font-semibold leading-[26px] text-primary"
+              style={{ letterSpacing: '0.2px' }}
+            >
+              {intl.formatMessage(messages.title)}
+            </span>
+          </div>
+          <div className="ml-[32px] mt-[10px] text-[14px] font-normal leading-[24px] text-secondary">
+            <p>{intl.formatMessage(messages.descP1)}</p>
+            <p>{intl.formatMessage(messages.descP2)}</p>
+            <p>{intl.formatMessage(messages.descP3)}</p>
+            <p>{intl.formatMessage(messages.descP4)}</p>
           </div>
         </div>
-      </div>
 
-      <RuleListEditor
-        addLabel={intl.formatMessage(messages.addRule)}
-        namePrefix={intl.formatMessage(messages.namePrefix)}
-        ruleType="handoff_policy"
-      />
+        <div
+          className="mb-[32px] rounded-[12px] bg-container px-[32px] pb-[28px] pt-[28px]"
+          style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
+        >
+          <div className="flex items-center gap-[12px]">
+            <div className="flex h-[36px] w-[36px] flex-shrink-0 items-center justify-center rounded-[8px] bg-brand">
+              <NotificationIcon className="text-text-anti" />
+            </div>
+            <span
+              className="text-[18px] font-semibold text-primary"
+              style={{ lineHeight: '36px', letterSpacing: '0.3px' }}
+            >
+              {intl.formatMessage(messages.notificationTitle)}
+            </span>
+          </div>
+
+          <p
+            className="ml-[48px] mt-[14px] text-[14px] font-normal text-placeholder"
+            style={{ lineHeight: '22px', maxWidth: '500px' }}
+          >
+            {intl.formatMessage(messages.notificationDesc)}
+          </p>
+
+          <div className="w-[297px] mt-[24px] flex gap-[24px]">
+            <div className="relative flex-1 overflow-hidden rounded-[12px] bg-brand-light p-[24px]">
+              <div className="pointer-events-none absolute right-0 top-0 h-full w-[40%] opacity-[0.08]">
+                <svg viewBox="0 0 200 160" className="h-full w-full">
+                  <path
+                    d="M200 160C160 100 120 120 80 80S40 20 0 40V160H200Z"
+                    style={{ fill: 'var(--td-brand-color)' }}
+                  />
+                </svg>
+              </div>
+
+              <div className="flex h-[48px] w-[48px] items-center justify-center rounded-[12px] bg-brand">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <path
+                    d="M24.5 4.5L2.5 13.5L9.5 16.5L20.5 9L12 18L12.5 19L20 24.5L24.5 4.5Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
+
+              <span className="mt-[16px] block text-[16px] font-medium leading-[22px] text-primary">
+                {intl.formatMessage(messages.telegramBot)}
+              </span>
+
+              {loading ? (
+                <div className="absolute bottom-[24px] right-[24px]">
+                  <div className="h-[32px] w-[88px] animate-pulse rounded-[6px] bg-secondary-container" />
+                </div>
+              ) : bound ? (
+                <div className="absolute bottom-[24px] right-[24px] flex gap-[8px]">
+                  <button
+                    type="button"
+                    onClick={handleUnbind}
+                    className="flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-error bg-container text-[13px] font-medium text-error"
+                  >
+                    {intl.formatMessage(messages.unbind)}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleEdit}
+                    className="flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border border-solid border-brand bg-container text-[13px] font-medium text-brand"
+                  >
+                    {intl.formatMessage(messages.edit)}
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleBind}
+                  className="absolute bottom-[24px] right-[24px] flex h-[32px] w-[88px] cursor-pointer items-center justify-center rounded-[6px] border-none bg-brand text-[13px] font-medium text-text-anti"
+                >
+                  {intl.formatMessage(messages.goBind)}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <RuleListEditor
+          addLabel={intl.formatMessage(messages.addRule)}
+          namePrefix={intl.formatMessage(messages.namePrefix)}
+          ruleType="handoff_policy"
+        />
+      </div>
 
       {/* Bind/Edit Dialog */}
       <Dialog

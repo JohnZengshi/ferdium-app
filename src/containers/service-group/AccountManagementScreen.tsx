@@ -546,10 +546,10 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
           initialData={
             editingService
               ? {
-                name: editingService.name,
-                proxy: editingService.proxy as ServiceProxyConfig | null,
-                cookie: (editingService as { cookie?: string }).cookie || '',
-              }
+                  name: editingService.name,
+                  proxy: editingService.proxy as ServiceProxyConfig | null,
+                  cookie: (editingService as { cookie?: string }).cookie || '',
+                }
               : null
           }
           onClose={handleEditClose}

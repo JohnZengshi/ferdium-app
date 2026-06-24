@@ -188,7 +188,6 @@ const formatDateTime = (iso: string): string => {
   }
 };
 
-
 const NotificationsTab = (): ReactElement => {
   const intl = useIntl();
   const [records, setRecords] = useState<HandoffRecord[]>([]);
@@ -219,16 +218,16 @@ const NotificationsTab = (): ReactElement => {
         const result: any =
           statusFilter === 'all'
             ? await listMemberHandoffsApiV1HandoffGet({
-              ...timeParams,
-              offset,
-              limit: PAGE_SIZE,
-            })
+                ...timeParams,
+                offset,
+                limit: PAGE_SIZE,
+              })
             : await listHandoffsByReadApiV1HandoffReadGet({
-              unread: statusFilter === 'unread',
-              ...timeParams,
-              offset,
-              limit: PAGE_SIZE,
-            });
+                unread: statusFilter === 'unread',
+                ...timeParams,
+                offset,
+                limit: PAGE_SIZE,
+              });
         const payload =
           result.data as import('../../../agent-flow-cs/api/generated/agentFlowCs.schemas').HandoffListResponse;
         setRecords(payload.items ?? []);
@@ -249,13 +248,13 @@ const NotificationsTab = (): ReactElement => {
   );
 
   useEffect(() => {
-    loadRecords(1).catch(() => { });
+    loadRecords(1).catch(() => {});
   }, [loadRecords]);
 
   const handlePageChange = useCallback(
     (pageInfo: { current: number; pageSize: number }) => {
       setCurrentPage(pageInfo.current);
-      loadRecords(pageInfo.current).catch(() => { });
+      loadRecords(pageInfo.current).catch(() => {});
     },
     [loadRecords],
   );
@@ -265,17 +264,17 @@ const NotificationsTab = (): ReactElement => {
   }, []);
 
   const handleSearch = useCallback((): void => {
-    loadRecords(1).catch(() => { });
+    loadRecords(1).catch(() => {});
   }, [loadRecords]);
 
   const handleReset = useCallback((): void => {
     setSocialFilter('all');
     setStatusFilter('all');
     setDateRange([]);
-    loadRecords(1).catch(() => { });
+    loadRecords(1).catch(() => {});
   }, [loadRecords]);
 
-  const handleMarkAllRead = useCallback((): void => { }, []);
+  const handleMarkAllRead = useCallback((): void => {}, []);
 
   const handleExportSelected = useCallback((): void => {
     if (selectedRowKeys.length === 0) {
@@ -299,7 +298,7 @@ const NotificationsTab = (): ReactElement => {
           // 通知全局 Store 刷新未读计数
           window.dispatchEvent(new Event(HANDOFF_UNREAD_CHANGED_EVENT));
           // 刷新列表更新已读状态
-          loadRecords(currentPage).catch(() => { });
+          loadRecords(currentPage).catch(() => {});
         } catch (error) {
           MessagePlugin.error(
             error instanceof Error ? error.message : 'Failed to mark as read',
@@ -435,9 +434,7 @@ const NotificationsTab = (): ReactElement => {
 
   return (
     <>
-      <div
-        className="mx-auto w-full min-h-full py-[32px] px-[30px] bg-container"
-      >
+      <div className="mx-auto w-full min-h-full py-[32px] px-[30px] bg-container">
         <div className="flex h-[56px] items-center gap-[20px]">
           <div className="flex items-center gap-[8px]">
             <span className="text-[14px] font-normal text-secondary">

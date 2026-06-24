@@ -285,11 +285,19 @@ class ResumeTab extends Component<IProps> {
     const avatarSrcFinal = avatarSrc || './assets/images/monica.png';
     return (
       <div className="relative flex h-full flex-col items-center overflow-hidden rounded-[8px]">
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{
+            WebkitMaskImage:
+              'linear-gradient(to bottom, #000 0%, #000 68%, rgba(0,0,0,0.85) 76%, rgba(0,0,0,0.45) 88%, rgba(0,0,0,0) 100%)',
+            maskImage:
+              'linear-gradient(to bottom, #000 0%, #000 68%, rgba(0,0,0,0.85) 76%, rgba(0,0,0,0.45) 88%, rgba(0,0,0,0) 100%)',
+          }}
+        >
           <img
             src={avatarSrcFinal}
             alt={name}
-            className="h-full w-full object-contain"
+            className="h-[484px] w-[484px] -mt-[16px] object-contain"
           />
         </div>
 
@@ -300,7 +308,7 @@ class ResumeTab extends Component<IProps> {
         <div className="absolute left-[25%] top-[35%] h-[5px] w-[5px] rounded-full bg-brand-light" />
         <div className="absolute right-[8%] top-[40%] h-[9px] w-[9px] rounded-full bg-brand-light" />
 
-        <div className="relative z-10 ml-[40px] mt-[50px] flex flex-col items-start self-start">
+        <div className="relative z-10 ml-[11px] mt-[50px] flex flex-col items-start self-start">
           <span className="text-[48px] font-bold leading-[56px] text-primary">
             {name}
           </span>
@@ -309,8 +317,21 @@ class ResumeTab extends Component<IProps> {
           </span>
         </div>
 
-        <div className="relative z-10 mb-0 mt-auto flex w-full flex-col items-center bg-gradient-to-t from-white/95 via-white/80 to-transparent pb-[19px] pt-[40px]">
-          <div className="flex flex-nowrap items-center justify-center gap-[8px] px-[12px]">
+        <div
+          className="relative z-10 mx-auto mb-[36px] mt-auto flex h-[74px] w-[460px] items-center pl-[43px]"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(64,140,255,0.56) 0%, rgba(64,140,255,0.36) 42%, rgba(64,140,255,0.14) 75%, rgba(64,140,255,0) 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%)',
+            maskImage:
+              'linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%)',
+          }}
+        >
+          <span className="mr-[21px] text-[18px] font-extrabold leading-none text-[#000000]">
+            具备技能：
+          </span>
+          <div className="flex gap-[8px]">
             {[
               intl.formatMessage(messages.defaultSkillRiskDetection),
               intl.formatMessage(messages.defaultSkillAnomalyWarning),
@@ -318,7 +339,7 @@ class ResumeTab extends Component<IProps> {
             ].map(skill => (
               <span
                 key={skill}
-                className="inline-flex h-[30px] flex-shrink-0 items-center justify-center whitespace-nowrap rounded-[15px] border border-solid border-brand bg-container/90 px-[12px] text-[12px] font-medium text-brand"
+                className="inline-flex h-[33px] w-[84px] items-center justify-center rounded-[16.5px] border-2 border-solid border-[#0052D9] bg-[#F2F3FF] text-[16px] font-medium leading-none text-[#0052D9]"
               >
                 {skill}
               </span>
@@ -414,31 +435,13 @@ class ResumeTab extends Component<IProps> {
       { label: intl.formatMessage(messages.enterpriseExtraLarge), value: 1500 },
     ];
     const barData = costChartData || defaultBarData;
-    const defaultYLabels = [1600, 1100, 600, 100, 0];
     const maxVal = Math.max(...barData.map(d => d.value));
-    const yLabels = costChartData
-      ? [
-          maxVal,
-          Math.round(maxVal * 0.7),
-          Math.round(maxVal * 0.4),
-          Math.round(maxVal * 0.1),
-          0,
-        ]
-      : defaultYLabels;
-    const getBarHeight = (value: number): number => {
-      if (!costChartData) {
-        if (value <= 100) return (value / 100) * 20;
-        return 20 + ((value - 100) / 500) * 40;
-      }
-      const maxV = Math.max(...barData.map(d => d.value));
-      const maxH = 100;
-      return maxV > 0 ? (value / maxV) * maxH : 0;
-    };
-    const chartData = barData.map(d => ({
-      ...d,
-      barHeight: getBarHeight(d.value),
-    }));
-    const yTickValues = yLabels.map(v => getBarHeight(v));
+    const yMax = Math.max(1600, Math.ceil(maxVal / 400) * 400);
+    const yTickValues = Array.from(
+      { length: yMax / 400 + 1 },
+      (_, index) => index * 400,
+    );
+    const chartData = barData;
     const summaryItems = costSummary || [
       {
         label: intl.formatMessage(messages.costTotalSavings),
@@ -467,7 +470,7 @@ class ResumeTab extends Component<IProps> {
     ];
 
     return (
-      <div className="flex min-h-[428px] flex-col rounded-[12px] bg-container p-[24px]">
+      <div className="flex min-h-[428px] min-w-[380px] flex-col rounded-[12px] bg-container p-[24px]">
         <div className="flex items-center gap-[12px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
             <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
@@ -529,7 +532,8 @@ class ResumeTab extends Component<IProps> {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={chartData}
-              margin={{ top: 4, right: 0, left: -32, bottom: 0 }}
+              margin={{ top: 28, right: 24, left: 0, bottom: 0 }}
+              barCategoryGap="30%"
             >
               <defs>
                 <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
@@ -544,7 +548,6 @@ class ResumeTab extends Component<IProps> {
                 </linearGradient>
               </defs>
               <CartesianGrid
-                horizontalValues={yTickValues}
                 style={{ stroke: 'var(--td-border-level-1-color)' }}
                 vertical={false}
               />
@@ -557,18 +560,14 @@ class ResumeTab extends Component<IProps> {
               />
               <YAxis
                 ticks={yTickValues}
-                width={32}
-                tickFormatter={(v: number) => {
-                  const idx = yTickValues.indexOf(v);
-                  return yLabels[idx] === undefined ? '' : String(yLabels[idx]);
-                }}
+                width={44}
                 tick={{ fontSize: 12, fill: '#999999' }}
                 axisLine={false}
                 tickLine={false}
-                domain={[0, Math.max(...yTickValues)]}
+                domain={[0, yMax]}
               />
               <Bar
-                dataKey="barHeight"
+                dataKey="value"
                 radius={[4, 4, 0, 0]}
                 barSize={52}
                 fill="url(#barGradient)"
@@ -577,6 +576,7 @@ class ResumeTab extends Component<IProps> {
                 <LabelList
                   dataKey="value"
                   position="top"
+                  offset={8}
                   style={{ fill: 'var(--td-text-color-primary)' }}
                   fontSize={14}
                 />
@@ -609,48 +609,73 @@ class ResumeTab extends Component<IProps> {
       },
     ];
     return (
-      <div className="flex min-h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
-        <div className="flex items-center gap-[8px]">
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path
-                  d="M2 5H8"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-          </div>
-          <span className="text-[20px] font-bold text-primary">
-            {intl.formatMessage(messages.efficiencySectionTitle)}
-          </span>
+      <div className="relative h-[312px] w-[594px] rounded-[6px] bg-white">
+        <div className="absolute left-[24px] top-[24px] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#F2F3FF]">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="3.5" cy="3.5" r="1.5" fill="#0052D9" />
+            <circle cx="3.5" cy="8" r="1.5" fill="#0052D9" />
+            <circle cx="3.5" cy="12.5" r="1.5" fill="#0052D9" />
+            <line
+              x1="8"
+              y1="3.5"
+              x2="13"
+              y2="3.5"
+              stroke="#0052D9"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <line
+              x1="8"
+              y1="8"
+              x2="13"
+              y2="8"
+              stroke="#0052D9"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <line
+              x1="8"
+              y1="12.5"
+              x2="13"
+              y2="12.5"
+              stroke="#0052D9"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
         </div>
-        <div className="mt-[24px] flex flex-col gap-[20px]">
-          {effData.map(item => (
-            <div key={item.label} className="flex flex-col gap-[8px]">
-              <div className="flex items-center justify-between">
-                <span className="text-[15px] font-medium text-secondary">
-                  {item.label}
-                </span>
-                <span className="text-[16px] font-bold text-brand">
-                  {item.value}%
-                </span>
-              </div>
-              <div className="h-[8px] w-full overflow-hidden rounded-[4px] bg-secondary-container">
+        <span className="absolute left-[72px] top-[29px] text-[20px] font-bold text-[#111111]">
+          {intl.formatMessage(messages.efficiencySectionTitle)}
+        </span>
+        {effData.map((item, idx) => {
+          const trackTop = 76 + idx * 52;
+          return (
+            <div
+              key={item.label}
+              className="absolute left-0 right-0"
+              style={{ top: trackTop, height: 32 }}
+            >
+              <div className="absolute left-[24px] top-[12px] h-[8px] w-[8px] rounded-full bg-[#3D73F6]" />
+              <span className="absolute left-[41px] top-[4px] text-[16px] text-[#222222]">
+                {item.label}
+              </span>
+              <div className="absolute left-[175px] h-[32px] w-[395px] overflow-hidden rounded-[4px] bg-[#EEEEEE]">
                 <div
-                  className="h-full rounded-[4px]"
+                  className="relative flex h-full items-center justify-end rounded-[4px] pr-[12px]"
                   style={{
                     width: `${item.value}%`,
                     background:
-                      'linear-gradient(90deg, #9CCCF7 0%, #5A96F2 100%)',
+                      'linear-gradient(90deg, #B5E2FF 0%, #4E90FF 100%)',
                   }}
-                />
+                >
+                  <span className="text-[18px] font-bold leading-none text-white">
+                    {item.value}%
+                  </span>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
     );
   }
@@ -661,31 +686,31 @@ class ResumeTab extends Component<IProps> {
       {
         title: intl.formatMessage(messages.compRiskIdentification),
         description: intl.formatMessage(messages.compRiskIdentificationDesc),
-        iconBg: '#FFF1F0',
+        iconBg: '#EEF4FF',
         iconSrc: './assets/icons/risk-identification.svg',
       },
       {
         title: intl.formatMessage(messages.compBoundaryControl),
         description: intl.formatMessage(messages.compBoundaryControlDesc),
-        iconBg: '#E8F5FF',
+        iconBg: '#E9F8F0',
         iconSrc: './assets/icons/boundary-control.svg',
       },
       {
         title: intl.formatMessage(messages.compHumanHandover),
         description: intl.formatMessage(messages.compHumanHandoverDesc),
-        iconBg: '#FFF7E6',
+        iconBg: '#E5F9FC',
         iconSrc: './assets/icons/human-handover.svg',
       },
       {
         title: intl.formatMessage(messages.compHighIntentAlert),
         description: intl.formatMessage(messages.compHighIntentAlertDesc),
-        iconBg: '#F0FFF0',
+        iconBg: '#FFF1E7',
         iconSrc: './assets/icons/high-intent-alert.svg',
       },
       {
         title: intl.formatMessage(messages.compSessionPause),
         description: intl.formatMessage(messages.compSessionPauseDesc),
-        iconBg: '#F3F0FF',
+        iconBg: '#F0EEFF',
         iconSrc: './assets/icons/session-pause.svg',
       },
     ];
@@ -711,21 +736,19 @@ class ResumeTab extends Component<IProps> {
                 className="flex h-[48px] w-[48px] flex-shrink-0 items-center justify-center rounded-[8px] text-[20px]"
                 style={{ backgroundColor: cap.iconBg }}
               >
-                {cap.iconSrc.endsWith('.svg') ? (
+                {cap.iconSrc ? (
                   <img
                     src={cap.iconSrc}
                     alt={cap.title}
                     className="h-[24px] w-[24px]"
                   />
-                ) : (
-                  cap.iconSrc
-                )}
+                ) : null}
               </div>
               <div className="flex-1">
                 <span className="block text-[16px] font-bold leading-[22px] text-primary">
                   {cap.title}
                 </span>
-                <span className="mt-[4px] block text-[13px] font-normal leading-[20px] text-placeholder line-clamp-2">
+                <span className="mt-[4px] block text-[13px] font-normal leading-[20px] text-primary line-clamp-2">
                   {cap.description}
                 </span>
               </div>

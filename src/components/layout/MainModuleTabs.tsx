@@ -24,22 +24,22 @@ const MODULES: {
   activeIcon: ReactElement;
   inactiveIcon: ReactElement;
 }[] = [
-    {
-      id: 'home',
-      activeIcon: <HomeFilledIcon size="24px" />,
-      inactiveIcon: <HomeIcon size="24px" />,
-    },
-    {
-      id: 'service-type',
-      activeIcon: <ChatBubble1FilledIcon size="24px" />,
-      inactiveIcon: <ChatBubble1Icon size="24px" />,
-    },
-    {
-      id: 'knowledge-base',
-      activeIcon: <BookOpenFilledIcon size="24px" />,
-      inactiveIcon: <BookOpenIcon size="24px" />,
-    },
-  ];
+  {
+    id: 'home',
+    activeIcon: <HomeFilledIcon size="24px" />,
+    inactiveIcon: <HomeIcon size="24px" />,
+  },
+  {
+    id: 'service-type',
+    activeIcon: <ChatBubble1FilledIcon size="24px" />,
+    inactiveIcon: <ChatBubble1Icon size="24px" />,
+  },
+  {
+    id: 'knowledge-base',
+    activeIcon: <BookOpenFilledIcon size="24px" />,
+    inactiveIcon: <BookOpenIcon size="24px" />,
+  },
+];
 
 const messages = defineMessages({
   home: {

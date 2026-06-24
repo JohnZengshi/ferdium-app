@@ -96,9 +96,11 @@ const shortcutSettings = new Settings('shortcuts', DEFAULT_SHORTCUTS);
 const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
-const WA_DEBUG_TOGGLE_SCRIPT = `(function(){var w=window.__waAi;if(w&&w.toggleDebugPanel){w.toggleDebugPanel();return;}var p=document.querySelector('.wa-ai-debug-panel');if(p)p.classList.toggle('wa-ai-debug-hidden');var s=document.getElementById('wa-akg-si');if(s)s.style.display=s.style.display==='none'?'':'none';})()`;
+const WA_DEBUG_TOGGLE_SCRIPT =
+  "(function(){var w=window.__waAi;if(w&&w.toggleDebugPanel){w.toggleDebugPanel();return;}var p=document.querySelector('.wa-ai-debug-panel');if(p)p.classList.toggle('wa-ai-debug-hidden');var s=document.getElementById('wa-akg-si');if(s)s.style.display=s.style.display==='none'?'':'none';})()";
 
-const WA_DEBUG_AUTO_SHOW_SCRIPT = `(function(){var max=20,i=0;function f(){i++;window.__waAiDebugVisible=true;var p=document.querySelector('.wa-ai-debug-panel');if(p){p.classList.remove('wa-ai-debug-hidden');var s=document.getElementById('wa-akg-si');if(s)s.style.display='';return;}if(i<max)setTimeout(f,1000);}f();})()`;
+const WA_DEBUG_AUTO_SHOW_SCRIPT =
+  "(function(){var max=20,i=0;function f(){i++;window.__waAiDebugVisible=true;var p=document.querySelector('.wa-ai-debug-panel');if(p){p.classList.remove('wa-ai-debug-hidden');var s=document.getElementById('wa-akg-si');if(s)s.style.display='';return;}if(i<max)setTimeout(f,1000);}f();})()";
 
 const executeInWhatsAppWebContents = (script: string): void => {
   for (const wc of webContents.getAllWebContents()) {

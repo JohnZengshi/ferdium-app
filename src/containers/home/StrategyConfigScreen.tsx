@@ -1,3 +1,4 @@
+import { throttle } from 'lodash';
 import PropTypes from 'prop-types';
 import {
   type ReactElement,
@@ -80,21 +81,33 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
   const handleResize = useCallback(() => {
     if (contentRef.current) {
       if (activeTab === 'resume') {
-        contentRef.current.style.setProperty(
-          'zoom',
-          String(window.innerWidth / 1600),
-        );
+        const parentWidth = contentRef.current.parentElement?.offsetWidth;
+        if (parentWidth) {
+          const targetWidth = parentWidth - 232;
+          contentRef.current.style.setProperty(
+            'zoom',
+            String(Math.min(1, targetWidth / 1600)),
+          );
+        }
       } else {
         contentRef.current.style.removeProperty('zoom');
       }
     }
   }, [activeTab]);
 
+  const debouncedHandleResize = useMemo(
+    () => throttle(handleResize, 150, { trailing: true, leading: false }),
+    [handleResize],
+  );
+
   useEffect(() => {
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [handleResize]);
+    window.addEventListener('resize', debouncedHandleResize);
+    return () => {
+      debouncedHandleResize.cancel();
+      window.removeEventListener('resize', debouncedHandleResize);
+    };
+  }, [handleResize, debouncedHandleResize]);
 
   useEffect(() => {
     setActiveTab(initialTab);
@@ -135,11 +148,11 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
         onClick={onBack}
         className="flex cursor-pointer items-center gap-0 border-none bg-transparent p-0"
       >
-        <ChevronLeftIcon className="h-[18px] w-[18px] text-primary" />
+        <ChevronLeftIcon className="h-[24px] w-[24px] text-primary" />
       </button>
       <button
         type="button"
-        className="ml-[12px] cursor-pointer select-none border-none bg-transparent p-0 text-[20px] font-semibold leading-[28px] text-primary"
+        className="ml-[12px] cursor-pointer select-none border-none bg-transparent p-0 text-[16px] font-semibold leading-[28px] text-primary"
         onClick={onBack}
       >
         {intl.formatMessage(messages.title)}
@@ -167,7 +180,7 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
             }`}
           >
             <div
-              className={`flex h-[18px] w-[18px] items-center justify-center ${
+              className={`flex h-[20px] w-[20px] items-center justify-center ${
                 isActive ? 'text-brand' : 'text-secondary'
               }`}
             >

@@ -7,7 +7,11 @@ export type FerdiumModule =
   | 'settings';
 export type ServiceSubTab = 'messages' | 'account' | 'profile';
 export type HomeViewMode = 'dashboard' | 'strategy';
-export type StrategyConfigTab = 'resume' | 'security' | 'handover' | 'notifications';
+export type StrategyConfigTab =
+  | 'resume'
+  | 'security'
+  | 'handover'
+  | 'notifications';
 
 class NavigationStore {
   @observable activeModule: FerdiumModule = 'service-type';

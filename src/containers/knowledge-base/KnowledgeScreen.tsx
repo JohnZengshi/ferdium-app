@@ -189,7 +189,7 @@ const messages = defineMessages({
   smartImportPlaceholder: {
     id: 'knowledgeScreen.smartImportPlaceholder',
     defaultMessage:
-      'Paste text here to automatically recognize persona information\n\nExample: Amy is a 24-year-old unmarried female sales representative who is deeply involved in the entire project process, responsible for lead generation, client engagement, relationship management, needs analysis, product presentation, objection handling, and business negotiation, leading project signing and implementation.\n\nAmy is a 24-year-old unmarried female sales representative...',
+      'Paste text here to automatically recognize persona information\n\nExample: Nina is a 24-year-old unmarried female sales representative who is deeply involved in the entire project process, responsible for lead generation, client engagement, relationship management, needs analysis, product presentation, objection handling, and business negotiation, leading project signing and implementation.\n\nNina is a 24-year-old unmarried female sales representative...',
   },
   editPersona: {
     id: 'knowledgeScreen.editPersona',

@@ -1,14 +1,10 @@
 import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import { Component, type ReactElement } from 'react';
+import { type CSSProperties, Component, type ReactElement } from 'react';
 import { type WrappedComponentProps, injectIntl } from 'react-intl';
 import {
-  AddIcon,
-  ChevronRightIcon,
   ErrorCircleIcon,
   RefreshIcon,
-  UserIcon,
-  UsergroupIcon,
   WifiIcon,
   WifiOffIcon,
 } from 'tdesign-icons-react';
@@ -37,6 +33,7 @@ import { navigationStore } from '../../stores/NavigationStore';
 import StrategyConfigScreen from './StrategyConfigScreen';
 import {
   type EmployeeResume,
+  type EmployeeRoleKey,
   MOCK_EMPLOYEES,
   getEmployeeResumes,
   messages,
@@ -55,6 +52,17 @@ interface HomeScreenState {
   step1Completed: boolean;
   onboardingVersion: number;
 }
+
+type DisplayEmployee = {
+  id: string;
+  mockId: EmployeeRoleKey;
+  name: string;
+  role: string;
+  avatar: string;
+  capabilities: string[];
+  cta: string;
+  hasBadge?: boolean;
+};
 
 const formatHandoffBadge = (total: number): string | undefined => {
   if (total <= 0) return undefined;
@@ -85,9 +93,9 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     navigationStore.setStrategyTab('resume');
   };
 
-  handleOpenResume = (employee: any): void => {
+  handleOpenResume = (employee: DisplayEmployee): void => {
     const { intl } = this.props;
-    const lookupId = employee.mockId || employee.id;
+    const lookupId: EmployeeRoleKey = employee.mockId;
     const resume = getEmployeeResumes(intl)[lookupId];
     if (resume) {
       this.setState({ dialogEmployee: resume });
@@ -253,20 +261,17 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     ];
 
     return (
-      <div className="mt-[24px] overflow-hidden rounded-[6px] border border-line">
-        <table
-          className="w-full"
-          style={{ tableLayout: 'fixed', borderCollapse: 'collapse' }}
-        >
+      <div className="mt-[24px] overflow-hidden rounded-[6px] border border-solid border-line">
+        <table className="w-full [border-collapse:collapse] [table-layout:fixed] [&_td]:border-solid [&_th]:border-solid">
           <thead>
             <tr className="h-[45px] bg-secondary-container">
-              <th className="w-[116px] border-r border-line pl-[12px] text-left text-[12px] font-medium text-placeholder">
+              <th className="w-[116px] border-r border-b border-line pl-[12px] text-left text-[12px] font-medium text-placeholder">
                 {intl.formatMessage(messages.type)}
               </th>
-              <th className="w-[117px] border-r border-line text-center text-[12px] font-medium text-placeholder">
+              <th className="w-[117px] border-r border-b border-line text-center text-[12px] font-medium text-placeholder">
                 {intl.formatMessage(messages.totalCount)}
               </th>
-              <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
+              <th className="w-[117px] border-r border-b border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiIcon className="text-success text-[14px]" />
                   <span className="text-success">
@@ -274,7 +279,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                   </span>
                 </span>
               </th>
-              <th className="w-[117px] border-r border-line text-center text-[12px] font-medium">
+              <th className="w-[117px] border-r border-b border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiOffIcon className="text-warning text-[14px]" />
                   <span className="text-warning">
@@ -282,7 +287,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                   </span>
                 </span>
               </th>
-              <th className="w-[116px] text-center text-[12px] font-medium">
+              <th className="w-[116px] border-b border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <ErrorCircleIcon className="text-error text-[14px]" />
                   <span className="text-error">
@@ -334,24 +339,25 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
             </tr>
           </tbody>
         </table>
-        <div className="flex h-[48px] items-center justify-center border-t border-line">
-          <span className="text-[11px] font-normal text-placeholder">
-            {intl.formatMessage(messages.moreSocialComing)}
-          </span>
-        </div>
       </div>
     );
   }
 
-  renderEmployeeCard(employee: any): ReactElement {
+  renderEmployeeCard(employee: DisplayEmployee): ReactElement {
     const { unreadCount } = this.props.stores!.handoff;
     const badgeText = employee.hasBadge
       ? formatHandoffBadge(unreadCount)
       : undefined;
+    const isMonica = employee.mockId === 'seniorSalesExpert';
+    const buttonClassName = `!h-[32px] !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm${isMonica ? ' !bg-[#6C4E14]' : ' bg-brand'}`;
+    const buttonStyle: CSSProperties | undefined = isMonica
+      ? { borderColor: '#6C4E14' }
+      : undefined;
+
     return (
       <div
         key={employee.id}
-        className="relative flex h-[331px] w-[237px] flex-col overflow-hidden rounded-[16px] border border-line bg-container transition-all hover:shadow-md"
+        className="group relative flex h-[331px] w-[237px] flex-col overflow-hidden rounded-[16px] border border-line bg-container transition-all hover:shadow-md"
       >
         <div className="absolute inset-0 z-0">
           <img
@@ -367,8 +373,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
               <Button
                 theme="primary"
                 size="small"
-                className="!bg-[#6C4E14] !border-[#6C4E14] !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm"
-                suffix={<ChevronRightIcon />}
+                className={buttonClassName}
+                style={buttonStyle}
                 onClick={this.handleOpenStrategy}
               >
                 {employee.cta}
@@ -378,8 +384,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
             <Button
               theme="primary"
               size="small"
-              className="!bg-brand !px-[20px] !py-[6px] !rounded-[8px] font-bold text-text-anti shadow-sm"
-              suffix={employee.hasBadge ? undefined : <ChevronRightIcon />}
+              className={buttonClassName}
+              style={buttonStyle}
               onClick={
                 employee.hasBadge
                   ? this.handleOpenStrategy
@@ -410,26 +416,47 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         onClose={this.handleCloseResume}
         className="[&_.t-dialog\\_\\_body]:!p-0 [&_.t-dialog\\_\\_wrap]:!items-center [&_.t-dialog]:!p-0"
       >
-        <div
-          className="relative max-h-[85vh] overflow-y-auto rounded-[12px] p-[22px]"
-          style={{
-            background:
-              'linear-gradient(180deg, color-mix(in srgb, var(--td-brand-color-light) 73%, transparent) 0%, color-mix(in srgb, var(--td-brand-color-light) 14%, transparent) 100%)',
-          }}
-        >
-          <ResumeTab
-            stageTags={emp.stageTags}
-            profile={emp.profile}
-            reviews={emp.reviews}
-            costLabel={emp.costLabel}
-            costChartData={emp.costChartData}
-            costSummary={emp.costSummary}
-            efficiencyData={emp.efficiencyData}
-            coreCompetencies={emp.coreCompetencies as any}
-            employeeName={emp.name}
-            employeeRole={emp.employeeRole}
-            avatarSrc={emp.avatarSrc}
-          />
+        <div className="flex max-h-[85vh] flex-col overflow-hidden rounded-[12px]">
+          <div className="flex h-[56px] flex-shrink-0 items-center justify-between border-b border-solid border-[#E7E7E7] bg-white px-[16px]">
+            <span className="text-[16px] font-semibold leading-[24px] text-primary">
+              {emp.name}的简历
+            </span>
+            <button
+              type="button"
+              onClick={this.handleCloseResume}
+              className="flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-[3px] border-0 bg-transparent p-[2px] text-secondary hover:text-primary"
+            >
+              <span
+                className="block h-[16px] w-[16px] bg-current"
+                style={{
+                  mask: 'url(./assets/icons/close-x.svg) center / contain no-repeat',
+                  WebkitMask:
+                    'url(./assets/icons/close-x.svg) center / contain no-repeat',
+                }}
+              />
+            </button>
+          </div>
+          <div
+            className="flex-1 overflow-y-auto p-[22px]"
+            style={{
+              background:
+                'linear-gradient(180deg, color-mix(in srgb, var(--td-brand-color-light) 73%, transparent) 0%, color-mix(in srgb, var(--td-brand-color-light) 14%, transparent) 100%)',
+            }}
+          >
+            <ResumeTab
+              stageTags={emp.stageTags}
+              profile={emp.profile}
+              reviews={emp.reviews}
+              costLabel={emp.costLabel}
+              costChartData={emp.costChartData}
+              costSummary={emp.costSummary}
+              efficiencyData={emp.efficiencyData}
+              coreCompetencies={emp.coreCompetencies as any}
+              employeeName={emp.name}
+              employeeRole={emp.employeeRole}
+              avatarSrc={emp.avatarSrc}
+            />
+          </div>
         </div>
       </Dialog>
     );
@@ -451,16 +478,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     const digitalHumanStore = this.props.stores!.digitalHuman;
     const realEmployees = digitalHumanStore.digitalHumans;
 
-    const displayEmployees: {
-      id: string;
-      mockId: string;
-      name: string;
-      role: string;
-      avatar: string;
-      capabilities: string[];
-      cta: string;
-      hasBadge?: boolean;
-    }[] = MOCK_EMPLOYEES.map(emp => ({
+    const displayEmployees: DisplayEmployee[] = MOCK_EMPLOYEES.map(emp => ({
       id: emp.id,
       mockId: emp.id,
       name: emp.name,
@@ -499,11 +517,15 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
       <>
         <div className="flex h-full flex-col bg-page p-[24px] overflow-auto">
           <div className="flex gap-[24px] h-full">
-            <div className="flex min-h-0 flex-[2] flex-col rounded-[24px] bg-container p-[32px] shadow-sm min-w-[770px]">
+            <div className="flex min-h-0 flex-[2] flex-col rounded-[6px] bg-container p-[32px] shadow-sm min-w-[770px]">
               <SectionHeader
                 icon={
-                  <div className="flex h-[48px] min-w-[48px] items-center justify-center rounded-full bg-brand-light">
-                    <UserIcon className="text-[24px] text-brand" />
+                  <div className="flex h-[32px] min-w-[32px] items-center justify-center rounded-full bg-brand-light">
+                    <img
+                      src="./assets/icons/user-business-filled.svg"
+                      alt=""
+                      className="h-[18px] w-auto"
+                    />
                   </div>
                 }
                 title={intl.formatMessage(messages.myDigitalEmployees)}
@@ -533,9 +555,11 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-[16px]">
                     <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-                      <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-                        <UsergroupIcon className="text-text-anti text-[10px]" />
-                      </div>
+                      <img
+                        src="./assets/icons/logo-wecom-filled.svg"
+                        alt=""
+                        className="h-[18px] w-[18px]"
+                      />
                     </div>
                     <h2 className="text-[20px] font-bold leading-[28px] text-primary !mb-0">
                       {intl.formatMessage(messages.socialAccountOverview)}
@@ -548,6 +572,11 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 </div>
 
                 {this.renderSocialAccountTable()}
+                <div className="flex h-[48px] mt-auto items-center justify-center">
+                  <span className="text-[11px] font-normal text-placeholder">
+                    {intl.formatMessage(messages.moreSocialComing)}
+                  </span>
+                </div>
               </div>
 
               <div className="flex min-h-[509px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
@@ -555,8 +584,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                   <div className="flex items-start">
                     <div className="relative h-[32px] w-[32px] flex-shrink-0">
                       <div className="absolute inset-0 rounded-full bg-brand-light" />
-                      <div className="absolute left-[7px] top-[7px] flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-                        <AddIcon className="text-[10px] text-text-anti" />
+                      <div className="absolute left-[7px] top-[7px] flex h-[18px] w-[18px] items-center justify-center rounded-full">
+                        <img src="./assets/icons/explore-filled.svg" alt="" />
                       </div>
                     </div>
                     <span className="ml-[16px] pt-[2px] text-[20px] font-bold leading-[28px] text-primary">
@@ -621,7 +650,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                     <div className="mt-[9px] flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-brand text-[12px] font-semibold leading-none text-text-anti">
                       i
                     </div>
-                    <p className="flex-1 text-[14px] font-medium leading-[22px] text-primary">
+                    <p className="flex-1 text-[14px] font-[400] leading-[22px] text-primary">
                       {intl.formatMessage(messages.setupInfoText)}
                     </p>
                   </div>

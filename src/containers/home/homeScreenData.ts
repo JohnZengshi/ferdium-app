@@ -1,11 +1,19 @@
-import { defineMessages } from 'react-intl';
+import { type IntlShape, defineMessages } from 'react-intl';
+
+export type EmployeeRoleKey =
+  | 'seniorSalesExpert'
+  | 'customerMaintenanceSpecialist'
+  | 'marketingAmbassador'
+  | 'afterSalesSupportExpert'
+  | 'leadCollectionAssistant'
+  | 'businessDevelopmentElite';
 
 export const employeeMonica = './assets/images/handover-assistant.png';
-export const employeeMike = './assets/images/sales-director.png';
+export const employeeLeo = './assets/images/sales-director.png';
 export const employeeAlice = './assets/images/emotional-companion.png';
 export const employeeLily = './assets/images/business-specialist.png';
-export const employeeAllen = './assets/images/risk-control-director.png';
-export const employeeAmy = './assets/images/user-operations.png';
+export const employeeKevin = './assets/images/risk-control-director.png';
+export const employeeNina = './assets/images/user-operations.png';
 
 export interface EmployeeResume {
   name: string;
@@ -24,6 +32,21 @@ export interface EmployeeResume {
   }[];
   avatarSrc?: string;
   employeeRole?: string;
+}
+
+export type EmployeeResumeMap = Record<EmployeeRoleKey, EmployeeResume>;
+
+export interface MockEmployee {
+  id: EmployeeRoleKey;
+  name: string;
+  roleKey: string;
+  roleDefault: string;
+  avatar: string;
+  capabilityKeys: string[];
+  capabilityDefaults: string[];
+  ctaKey: string;
+  ctaDefault: string;
+  hasBadge?: boolean;
 }
 
 export const messages = defineMessages({
@@ -247,128 +270,128 @@ export const messages = defineMessages({
     defaultMessage: 'Precision Marketing',
   },
 
-  // ─── Employee Mike ───
-  employeeMikeProfile: {
+  // ─── Employee Leo ───
+  employeeLeoProfile: {
     id: 'homeScreen.employee.mike.profile',
     defaultMessage:
-      'Mike is responsible for daily maintenance of the digital employee team, continuously monitoring service quality, and automatically alerting when customer satisfaction drops or churn risk exists.',
+      'Leo is responsible for daily maintenance of the digital employee team, continuously monitoring service quality, and automatically alerting when customer satisfaction drops or churn risk exists.',
   },
-  employeeMikeCostLabel: {
+  employeeLeoCostLabel: {
     id: 'homeScreen.employee.mike.costLabel',
     defaultMessage: 'Maintenance Cost (10K CNY)',
   },
-  employeeMikeCostChart1: {
+  employeeLeoCostChart1: {
     id: 'homeScreen.employee.mike.costChart1',
     defaultMessage: 'Micro Enterprise',
   },
-  employeeMikeCostChart2: {
+  employeeLeoCostChart2: {
     id: 'homeScreen.employee.mike.costChart2',
     defaultMessage: 'Medium Enterprise',
   },
-  employeeMikeCostChart3: {
+  employeeLeoCostChart3: {
     id: 'homeScreen.employee.mike.costChart3',
     defaultMessage: 'Large Group',
   },
-  employeeMikeCostSummary1: {
+  employeeLeoCostSummary1: {
     id: 'homeScreen.employee.mike.costSummary1',
     defaultMessage: 'Total Revenue Recovered',
   },
-  employeeMikeCostSummary2: {
+  employeeLeoCostSummary2: {
     id: 'homeScreen.employee.mike.costSummary2',
     defaultMessage: 'Churn Rate Reduced',
   },
-  employeeMikeEff1: {
+  employeeLeoEff1: {
     id: 'homeScreen.employee.mike.eff1',
     defaultMessage: 'Visit Completion Rate',
   },
-  employeeMikeEff2: {
+  employeeLeoEff2: {
     id: 'homeScreen.employee.mike.eff2',
     defaultMessage: 'Complaint Response Rate',
   },
-  employeeMikeEff3: {
+  employeeLeoEff3: {
     id: 'homeScreen.employee.mike.eff3',
     defaultMessage: 'Survey Coverage Rate',
   },
-  employeeMikeEff4: {
+  employeeLeoEff4: {
     id: 'homeScreen.employee.mike.eff4',
     defaultMessage: 'Churn Prediction Accuracy',
   },
-  employeeMikeStage1: {
+  employeeLeoStage1: {
     id: 'homeScreen.employee.mike.stage1',
     defaultMessage: 'Customer Silence',
   },
-  employeeMikeStage2: {
+  employeeLeoStage2: {
     id: 'homeScreen.employee.mike.stage2',
     defaultMessage: 'Product Recommendation',
   },
-  employeeMikeStage3: {
+  employeeLeoStage3: {
     id: 'homeScreen.employee.mike.stage3',
     defaultMessage: 'Complaint Escalation',
   },
-  employeeMikeStage4: {
+  employeeLeoStage4: {
     id: 'homeScreen.employee.mike.stage4',
     defaultMessage: 'Promotion Sensitive',
   },
-  employeeMikeStage5: {
+  employeeLeoStage5: {
     id: 'homeScreen.employee.mike.stage5',
     defaultMessage: 'Competitor Churn',
   },
-  employeeMikeReview1Text: {
+  employeeLeoReview1Text: {
     id: 'homeScreen.employee.mike.review1Text',
     defaultMessage: 'Customer repurchase rate increased by',
   },
-  employeeMikeReview1Suffix: {
+  employeeLeoReview1Suffix: {
     id: 'homeScreen.employee.mike.review1Suffix',
     defaultMessage: ', monthly recovery of over 150 churned customers',
   },
-  employeeMikeReview2Text: {
+  employeeLeoReview2Text: {
     id: 'homeScreen.employee.mike.review2Text',
     defaultMessage:
       'Satisfaction score improved from 78 to 92, complaint response time reduced by',
   },
-  employeeMikeReview3Text: {
+  employeeLeoReview3Text: {
     id: 'homeScreen.employee.mike.review3Text',
     defaultMessage:
       'Completed over 800K customer visits, retention rate increased by',
   },
-  employeeMikeComp1Title: {
+  employeeLeoComp1Title: {
     id: 'homeScreen.employee.mike.comp1Title',
     defaultMessage: 'Scheduled Visits',
   },
-  employeeMikeComp1Desc: {
+  employeeLeoComp1Desc: {
     id: 'homeScreen.employee.mike.comp1Desc',
     defaultMessage:
       'Automatically plan visit schedules and proactively reach out to maintain relationships',
   },
-  employeeMikeComp2Title: {
+  employeeLeoComp2Title: {
     id: 'homeScreen.employee.mike.comp2Title',
     defaultMessage: 'Satisfaction Survey',
   },
-  employeeMikeComp2Desc: {
+  employeeLeoComp2Desc: {
     id: 'homeScreen.employee.mike.comp2Desc',
     defaultMessage: 'Auto-send surveys and analyze results',
   },
-  employeeMikeComp3Title: {
+  employeeLeoComp3Title: {
     id: 'homeScreen.employee.mike.comp3Title',
     defaultMessage: 'Churn Warning',
   },
-  employeeMikeComp3Desc: {
+  employeeLeoComp3Desc: {
     id: 'homeScreen.employee.mike.comp3Desc',
     defaultMessage: 'Predict churn risk based on behavioral models',
   },
-  employeeMikeComp4Title: {
+  employeeLeoComp4Title: {
     id: 'homeScreen.employee.mike.comp4Title',
     defaultMessage: 'Service Monitoring',
   },
-  employeeMikeComp4Desc: {
+  employeeLeoComp4Desc: {
     id: 'homeScreen.employee.mike.comp4Desc',
     defaultMessage: 'Real-time monitoring of service quality metric anomalies',
   },
-  employeeMikeComp5Title: {
+  employeeLeoComp5Title: {
     id: 'homeScreen.employee.mike.comp5Title',
     defaultMessage: 'Care Reminder',
   },
-  employeeMikeComp5Desc: {
+  employeeLeoComp5Desc: {
     id: 'homeScreen.employee.mike.comp5Desc',
     defaultMessage: 'Auto-send care notifications at key touchpoints',
   },
@@ -636,272 +659,272 @@ export const messages = defineMessages({
       'Auto-push repurchase reminders and offers at conversation end',
   },
 
-  // ─── Employee Allen ───
-  employeeAllenProfile: {
+  // ─── Employee Kevin ───
+  employeeKevinProfile: {
     id: 'homeScreen.employee.allen.profile',
     defaultMessage:
-      'Allen focuses on lead collection and cleaning, scraping information from multiple channels, auto-identifying key contacts, and pre-screening to improve sales team efficiency.',
+      'Kevin focuses on lead collection and cleaning, scraping information from multiple channels, auto-identifying key contacts, and pre-screening to improve sales team efficiency.',
   },
-  employeeAllenCostLabel: {
+  employeeKevinCostLabel: {
     id: 'homeScreen.employee.allen.costLabel',
     defaultMessage: 'Acquisition Cost (10K CNY)',
   },
-  employeeAllenCostChart1: {
+  employeeKevinCostChart1: {
     id: 'homeScreen.employee.allen.costChart1',
     defaultMessage: 'Startup',
   },
-  employeeAllenCostChart2: {
+  employeeKevinCostChart2: {
     id: 'homeScreen.employee.allen.costChart2',
     defaultMessage: 'Growth Stage',
   },
-  employeeAllenCostChart3: {
+  employeeKevinCostChart3: {
     id: 'homeScreen.employee.allen.costChart3',
     defaultMessage: 'Mature Enterprise',
   },
-  employeeAllenCostSummary1: {
+  employeeKevinCostSummary1: {
     id: 'homeScreen.employee.allen.costSummary1',
     defaultMessage: 'Acquisition Cost Reduced',
   },
-  employeeAllenCostSummary2: {
+  employeeKevinCostSummary2: {
     id: 'homeScreen.employee.allen.costSummary2',
     defaultMessage: 'Lead Conversion Rate Up',
   },
-  employeeAllenEff1: {
+  employeeKevinEff1: {
     id: 'homeScreen.employee.allen.eff1',
     defaultMessage: 'Web Scraping Coverage',
   },
-  employeeAllenEff2: {
+  employeeKevinEff2: {
     id: 'homeScreen.employee.allen.eff2',
     defaultMessage: 'Key Contact Recognition',
   },
-  employeeAllenEff3: {
+  employeeKevinEff3: {
     id: 'homeScreen.employee.allen.eff3',
     defaultMessage: 'Lead Screening Automation',
   },
-  employeeAllenEff4: {
+  employeeKevinEff4: {
     id: 'homeScreen.employee.allen.eff4',
     defaultMessage: 'Sales Follow-up Efficiency',
   },
-  employeeAllenStage1: {
+  employeeKevinStage1: {
     id: 'homeScreen.employee.allen.stage1',
     defaultMessage: 'Info Collection',
   },
-  employeeAllenStage2: {
+  employeeKevinStage2: {
     id: 'homeScreen.employee.allen.stage2',
     defaultMessage: 'Lead Screening',
   },
-  employeeAllenStage3: {
+  employeeKevinStage3: {
     id: 'homeScreen.employee.allen.stage3',
     defaultMessage: 'Customer Reach',
   },
-  employeeAllenStage4: {
+  employeeKevinStage4: {
     id: 'homeScreen.employee.allen.stage4',
     defaultMessage: 'Needs Discovery',
   },
-  employeeAllenStage5: {
+  employeeKevinStage5: {
     id: 'homeScreen.employee.allen.stage5',
     defaultMessage: 'Conversion Follow-up',
   },
-  employeeAllenReview1Text: {
+  employeeKevinReview1Text: {
     id: 'homeScreen.employee.allen.review1Text',
     defaultMessage: 'Lead collection efficiency improved by',
   },
-  employeeAllenReview1Suffix: {
+  employeeKevinReview1Suffix: {
     id: 'homeScreen.employee.allen.review1Suffix',
     defaultMessage: ', daily collection of 5000+ leads',
   },
-  employeeAllenReview2Text: {
+  employeeKevinReview2Text: {
     id: 'homeScreen.employee.allen.review2Text',
     defaultMessage: 'Lead screening accuracy reaches',
   },
-  employeeAllenReview2Suffix: {
+  employeeKevinReview2Suffix: {
     id: 'homeScreen.employee.allen.review2Suffix',
     defaultMessage: ', invalid leads reduced by 62%',
   },
-  employeeAllenReview3Text: {
+  employeeKevinReview3Text: {
     id: 'homeScreen.employee.allen.review3Text',
     defaultMessage: 'Sales follow-up efficiency improved',
   },
-  employeeAllenReview3Suffix: {
+  employeeKevinReview3Suffix: {
     id: 'homeScreen.employee.allen.review3Suffix',
     defaultMessage: ', conversion rate up 35%',
   },
-  employeeAllenComp1Title: {
+  employeeKevinComp1Title: {
     id: 'homeScreen.employee.allen.comp1Title',
     defaultMessage: 'Web-wide Scraping',
   },
-  employeeAllenComp1Desc: {
+  employeeKevinComp1Desc: {
     id: 'homeScreen.employee.allen.comp1Desc',
     defaultMessage: 'Multi-source data collection, auto-aggregate leads',
   },
-  employeeAllenComp2Title: {
+  employeeKevinComp2Title: {
     id: 'homeScreen.employee.allen.comp2Title',
     defaultMessage: 'Key Contact Identification',
   },
-  employeeAllenComp2Desc: {
+  employeeKevinComp2Desc: {
     id: 'homeScreen.employee.allen.comp2Desc',
     defaultMessage: 'Identify key decision-makers via social graph',
   },
-  employeeAllenComp3Title: {
+  employeeKevinComp3Title: {
     id: 'homeScreen.employee.allen.comp3Title',
     defaultMessage: 'Lead Pre-Screening',
   },
-  employeeAllenComp3Desc: {
+  employeeKevinComp3Desc: {
     id: 'homeScreen.employee.allen.comp3Desc',
     defaultMessage: 'Multi-dimensional scoring to screen high-value leads',
   },
-  employeeAllenComp4Title: {
+  employeeKevinComp4Title: {
     id: 'homeScreen.employee.allen.comp4Title',
     defaultMessage: 'Customer Profile Building',
   },
-  employeeAllenComp4Desc: {
+  employeeKevinComp4Desc: {
     id: 'homeScreen.employee.allen.comp4Desc',
     defaultMessage: 'Auto-build 360-degree customer profiles',
   },
-  employeeAllenComp5Title: {
+  employeeKevinComp5Title: {
     id: 'homeScreen.employee.allen.comp5Title',
     defaultMessage: 'Smart Lead Assignment',
   },
-  employeeAllenComp5Desc: {
+  employeeKevinComp5Desc: {
     id: 'homeScreen.employee.allen.comp5Desc',
     defaultMessage: 'Auto-assign leads by industry/region',
   },
 
-  // ─── Employee Amy ───
-  employeeAmyProfile: {
+  // ─── Employee Nina ───
+  employeeNinaProfile: {
     id: 'homeScreen.employee.amy.profile',
     defaultMessage:
-      'Amy excels at business development, auto-generating personalized business letters, intelligently matching potential partners, efficiently scheduling meetings and managing calendars.',
+      'Nina excels at business development, auto-generating personalized business letters, intelligently matching potential partners, efficiently scheduling meetings and managing calendars.',
   },
-  employeeAmyCostLabel: {
+  employeeNinaCostLabel: {
     id: 'homeScreen.employee.amy.costLabel',
     defaultMessage: 'BD Cost (10K CNY)',
   },
-  employeeAmyCostChart1: {
+  employeeNinaCostChart1: {
     id: 'homeScreen.employee.amy.costChart1',
     defaultMessage: 'Small Partnership',
   },
-  employeeAmyCostChart2: {
+  employeeNinaCostChart2: {
     id: 'homeScreen.employee.amy.costChart2',
     defaultMessage: 'Medium Partnership',
   },
-  employeeAmyCostChart3: {
+  employeeNinaCostChart3: {
     id: 'homeScreen.employee.amy.costChart3',
     defaultMessage: 'Strategic Alliance',
   },
-  employeeAmyCostSummary1: {
+  employeeNinaCostSummary1: {
     id: 'homeScreen.employee.amy.costSummary1',
     defaultMessage: 'BD Cost Reduced',
   },
-  employeeAmyCostSummary2: {
+  employeeNinaCostSummary2: {
     id: 'homeScreen.employee.amy.costSummary2',
     defaultMessage: 'Deal Signing Rate Up',
   },
-  employeeAmyEff1: {
+  employeeNinaEff1: {
     id: 'homeScreen.employee.amy.eff1',
     defaultMessage: 'Partner Discovery Precision',
   },
-  employeeAmyEff2: {
+  employeeNinaEff2: {
     id: 'homeScreen.employee.amy.eff2',
     defaultMessage: 'Letter Auto-Generation Rate',
   },
-  employeeAmyEff3: {
+  employeeNinaEff3: {
     id: 'homeScreen.employee.amy.eff3',
     defaultMessage: 'Meeting Scheduling Automation',
   },
-  employeeAmyEff4: {
+  employeeNinaEff4: {
     id: 'homeScreen.employee.amy.eff4',
     defaultMessage: 'Partnership Process Efficiency',
   },
-  employeeAmyStage1: {
+  employeeNinaStage1: {
     id: 'homeScreen.employee.amy.stage1',
     defaultMessage: 'Business Introduction',
   },
-  employeeAmyStage2: {
+  employeeNinaStage2: {
     id: 'homeScreen.employee.amy.stage2',
     defaultMessage: 'Negotiation',
   },
-  employeeAmyStage3: {
+  employeeNinaStage3: {
     id: 'homeScreen.employee.amy.stage3',
     defaultMessage: 'Contract Approval',
   },
-  employeeAmyStage4: {
+  employeeNinaStage4: {
     id: 'homeScreen.employee.amy.stage4',
     defaultMessage: 'Project Delivery',
   },
-  employeeAmyStage5: {
+  employeeNinaStage5: {
     id: 'homeScreen.employee.amy.stage5',
     defaultMessage: 'Ecosystem Collaboration',
   },
-  employeeAmyReview1Text: {
+  employeeNinaReview1Text: {
     id: 'homeScreen.employee.amy.review1Text',
     defaultMessage: 'BD efficiency increased by',
   },
-  employeeAmyReview1Suffix: {
+  employeeNinaReview1Suffix: {
     id: 'homeScreen.employee.amy.review1Suffix',
     defaultMessage: ', 60+ business meetings per month',
   },
-  employeeAmyReview2Text: {
+  employeeNinaReview2Text: {
     id: 'homeScreen.employee.amy.review2Text',
     defaultMessage: 'Partner match accuracy reaches',
   },
-  employeeAmyReview2Suffix: {
+  employeeNinaReview2Suffix: {
     id: 'homeScreen.employee.amy.review2Suffix',
     defaultMessage: ', collaboration intent conversion up 48%',
   },
-  employeeAmyReview3Text: {
+  employeeNinaReview3Text: {
     id: 'homeScreen.employee.amy.review3Text',
     defaultMessage: 'Business letter production improved',
   },
-  employeeAmyReview3Suffix: {
+  employeeNinaReview3Suffix: {
     id: 'homeScreen.employee.amy.review3Suffix',
     defaultMessage: ', letter response rate up to 56%',
   },
-  employeeAmyComp1Title: {
+  employeeNinaComp1Title: {
     id: 'homeScreen.employee.amy.comp1Title',
     defaultMessage: 'Partner Discovery',
   },
-  employeeAmyComp1Desc: {
+  employeeNinaComp1Desc: {
     id: 'homeScreen.employee.amy.comp1Desc',
     defaultMessage: 'Smart match potential partners via industry graph',
   },
-  employeeAmyComp2Title: {
+  employeeNinaComp2Title: {
     id: 'homeScreen.employee.amy.comp2Title',
     defaultMessage: 'Business Letter Writing',
   },
-  employeeAmyComp2Desc: {
+  employeeNinaComp2Desc: {
     id: 'homeScreen.employee.amy.comp2Desc',
     defaultMessage: 'Personalized generation of professional business letters',
   },
-  employeeAmyComp3Title: {
+  employeeNinaComp3Title: {
     id: 'homeScreen.employee.amy.comp3Title',
     defaultMessage: 'Meeting Scheduling',
   },
-  employeeAmyComp3Desc: {
+  employeeNinaComp3Desc: {
     id: 'homeScreen.employee.amy.comp3Desc',
     defaultMessage: 'Auto-coordinate schedules to arrange meetings',
   },
-  employeeAmyComp4Title: {
+  employeeNinaComp4Title: {
     id: 'homeScreen.employee.amy.comp4Title',
     defaultMessage: 'Contract Clause Analysis',
   },
-  employeeAmyComp4Desc: {
+  employeeNinaComp4Desc: {
     id: 'homeScreen.employee.amy.comp4Desc',
     defaultMessage: 'Smart identify key clauses and risk points',
   },
-  employeeAmyComp5Title: {
+  employeeNinaComp5Title: {
     id: 'homeScreen.employee.amy.comp5Title',
     defaultMessage: 'Ecosystem Resource Mgmt',
   },
-  employeeAmyComp5Desc: {
+  employeeNinaComp5Desc: {
     id: 'homeScreen.employee.amy.comp5Desc',
     defaultMessage: 'Track full lifecycle of partnership progress',
   },
 });
 
-export const MOCK_EMPLOYEES = [
+export const MOCK_EMPLOYEES: MockEmployee[] = [
   {
-    id: 'monica',
+    id: 'seniorSalesExpert',
     name: 'Monica',
     roleKey: 'homeScreen.roleSeniorSalesExpert',
     roleDefault: 'Senior Sales Expert',
@@ -921,11 +944,11 @@ export const MOCK_EMPLOYEES = [
     hasBadge: true,
   },
   {
-    id: 'mike',
-    name: 'Mike',
+    id: 'customerMaintenanceSpecialist',
+    name: 'Leo',
     roleKey: 'homeScreen.roleCustomerMaintenance',
     roleDefault: 'Customer Maintenance Specialist',
-    avatar: employeeMike,
+    avatar: employeeLeo,
     capabilityKeys: [
       'homeScreen.capRegularVisit',
       'homeScreen.capSatisfactionSurvey',
@@ -940,7 +963,7 @@ export const MOCK_EMPLOYEES = [
     ctaDefault: 'Resume',
   },
   {
-    id: 'alice',
+    id: 'marketingAmbassador',
     name: 'Alice',
     roleKey: 'homeScreen.roleMarketingAmbassador',
     roleDefault: 'Marketing Ambassador',
@@ -959,7 +982,7 @@ export const MOCK_EMPLOYEES = [
     ctaDefault: 'Resume',
   },
   {
-    id: 'lily',
+    id: 'afterSalesSupportExpert',
     name: 'Lily',
     roleKey: 'homeScreen.roleAfterSalesExpert',
     roleDefault: 'After-Sales Support Expert',
@@ -978,11 +1001,11 @@ export const MOCK_EMPLOYEES = [
     ctaDefault: 'Resume',
   },
   {
-    id: 'allen',
-    name: 'Allen',
+    id: 'leadCollectionAssistant',
+    name: 'Kevin',
     roleKey: 'homeScreen.roleLeadAssistant',
     roleDefault: 'Lead Collection Assistant',
-    avatar: employeeAllen,
+    avatar: employeeKevin,
     capabilityKeys: [
       'homeScreen.capWebScraping',
       'homeScreen.capKeyContact',
@@ -997,11 +1020,11 @@ export const MOCK_EMPLOYEES = [
     ctaDefault: 'Resume',
   },
   {
-    id: 'amy',
-    name: 'Amy',
+    id: 'businessDevelopmentElite',
+    name: 'Nina',
     roleKey: 'homeScreen.roleBusinessDevElite',
     roleDefault: 'Business Development Elite',
-    avatar: employeeAmy,
+    avatar: employeeNina,
     capabilityKeys: [
       'homeScreen.capPartnerMining',
       'homeScreen.capBusinessLetter',
@@ -1017,9 +1040,9 @@ export const MOCK_EMPLOYEES = [
   },
 ];
 
-export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
+export function getEmployeeResumes(intl: IntlShape): EmployeeResumeMap {
   return {
-    monica: {
+    seniorSalesExpert: {
       name: 'Monica',
       avatarSrc: './assets/images/monica.png',
       employeeRole: intl.formatMessage(messages.roleSeniorSalesExpert),
@@ -1176,7 +1199,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#FFF1F0',
-          iconSrc: './assets/icons/Frame1.svg',
+          iconSrc: './assets/icons/risk-identification.svg',
         },
         {
           title: intl.formatMessage({
@@ -1188,7 +1211,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#E8F5FF',
-          iconSrc: './assets/icons/Frame2.svg',
+          iconSrc: './assets/icons/boundary-control.svg',
         },
         {
           title: intl.formatMessage({
@@ -1200,7 +1223,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#FFF7E6',
-          iconSrc: './assets/icons/Frame3.svg',
+          iconSrc: './assets/icons/human-handover.svg',
         },
         {
           title: intl.formatMessage({
@@ -1212,7 +1235,7 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#F0FFF0',
-          iconSrc: './assets/icons/Frame4.svg',
+          iconSrc: './assets/icons/high-intent-alert.svg',
         },
         {
           title: intl.formatMessage({
@@ -1224,102 +1247,102 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
             defaultMessage: '',
           }),
           iconBg: '#F3F0FF',
-          iconSrc: './assets/icons/Frame5.svg',
+          iconSrc: './assets/icons/session-pause.svg',
         },
       ],
     },
-    mike: {
-      name: 'Mike',
+    customerMaintenanceSpecialist: {
+      name: 'Leo',
       avatarSrc: './assets/images/mike.png',
       employeeRole: intl.formatMessage(messages.roleCustomerMaintenance),
       stageTags: [
-        intl.formatMessage(messages.employeeMikeStage1),
-        intl.formatMessage(messages.employeeMikeStage2),
-        intl.formatMessage(messages.employeeMikeStage3),
-        intl.formatMessage(messages.employeeMikeStage4),
-        intl.formatMessage(messages.employeeMikeStage5),
+        intl.formatMessage(messages.employeeLeoStage1),
+        intl.formatMessage(messages.employeeLeoStage2),
+        intl.formatMessage(messages.employeeLeoStage3),
+        intl.formatMessage(messages.employeeLeoStage4),
+        intl.formatMessage(messages.employeeLeoStage5),
       ],
-      profile: intl.formatMessage(messages.employeeMikeProfile),
+      profile: intl.formatMessage(messages.employeeLeoProfile),
       reviews: [
         {
-          text: intl.formatMessage(messages.employeeMikeReview1Text),
+          text: intl.formatMessage(messages.employeeLeoReview1Text),
           highlight: '23%',
-          suffix: intl.formatMessage(messages.employeeMikeReview1Suffix),
+          suffix: intl.formatMessage(messages.employeeLeoReview1Suffix),
         },
         {
-          text: intl.formatMessage(messages.employeeMikeReview2Text),
+          text: intl.formatMessage(messages.employeeLeoReview2Text),
           highlight: '65%',
         },
         {
-          text: intl.formatMessage(messages.employeeMikeReview3Text),
+          text: intl.formatMessage(messages.employeeLeoReview3Text),
           highlight: '18%',
         },
       ],
-      costLabel: intl.formatMessage(messages.employeeMikeCostLabel),
+      costLabel: intl.formatMessage(messages.employeeLeoCostLabel),
       costChartData: [
         {
-          label: intl.formatMessage(messages.employeeMikeCostChart1),
+          label: intl.formatMessage(messages.employeeLeoCostChart1),
           value: 30,
         },
         {
-          label: intl.formatMessage(messages.employeeMikeCostChart2),
+          label: intl.formatMessage(messages.employeeLeoCostChart2),
           value: 200,
         },
         {
-          label: intl.formatMessage(messages.employeeMikeCostChart3),
+          label: intl.formatMessage(messages.employeeLeoCostChart3),
           value: 800,
         },
       ],
       costSummary: [
         {
-          label: intl.formatMessage(messages.employeeMikeCostSummary1),
+          label: intl.formatMessage(messages.employeeLeoCostSummary1),
           value: '830M',
         },
         {
-          label: intl.formatMessage(messages.employeeMikeCostSummary2),
+          label: intl.formatMessage(messages.employeeLeoCostSummary2),
           value: '42%',
         },
       ],
       efficiencyData: [
-        { label: intl.formatMessage(messages.employeeMikeEff1), value: 94 },
-        { label: intl.formatMessage(messages.employeeMikeEff2), value: 88 },
-        { label: intl.formatMessage(messages.employeeMikeEff3), value: 76 },
-        { label: intl.formatMessage(messages.employeeMikeEff4), value: 91 },
+        { label: intl.formatMessage(messages.employeeLeoEff1), value: 94 },
+        { label: intl.formatMessage(messages.employeeLeoEff2), value: 88 },
+        { label: intl.formatMessage(messages.employeeLeoEff3), value: 76 },
+        { label: intl.formatMessage(messages.employeeLeoEff4), value: 91 },
       ],
       coreCompetencies: [
         {
-          title: intl.formatMessage(messages.employeeMikeComp1Title),
-          description: intl.formatMessage(messages.employeeMikeComp1Desc),
+          title: intl.formatMessage(messages.employeeLeoComp1Title),
+          description: intl.formatMessage(messages.employeeLeoComp1Desc),
           iconBg: '#FFF1F0',
-          iconSrc: '🔔',
+          iconSrc: './assets/icons/risk-identification.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeMikeComp2Title),
-          description: intl.formatMessage(messages.employeeMikeComp2Desc),
+          title: intl.formatMessage(messages.employeeLeoComp2Title),
+          description: intl.formatMessage(messages.employeeLeoComp2Desc),
           iconBg: '#E8F5FF',
-          iconSrc: '📊',
+          iconSrc: './assets/icons/boundary-control.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeMikeComp3Title),
-          description: intl.formatMessage(messages.employeeMikeComp3Desc),
+          title: intl.formatMessage(messages.employeeLeoComp3Title),
+          description: intl.formatMessage(messages.employeeLeoComp3Desc),
           iconBg: '#FFF7E6',
-          iconSrc: '⚠',
+          iconSrc: './assets/icons/human-handover.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeMikeComp4Title),
-          description: intl.formatMessage(messages.employeeMikeComp4Desc),
+          title: intl.formatMessage(messages.employeeLeoComp4Title),
+          description: intl.formatMessage(messages.employeeLeoComp4Desc),
           iconBg: '#F0FFF0',
-          iconSrc: '📈',
+          iconSrc: './assets/icons/high-intent-alert.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeMikeComp5Title),
-          description: intl.formatMessage(messages.employeeMikeComp5Desc),
+          title: intl.formatMessage(messages.employeeLeoComp5Title),
+          description: intl.formatMessage(messages.employeeLeoComp5Desc),
           iconBg: '#F3F0FF',
-          iconSrc: '💌',
+          iconSrc: './assets/icons/session-pause.svg',
         },
       ],
     },
-    alice: {
+    marketingAmbassador: {
       name: 'Alice',
       avatarSrc: './assets/images/alice.png',
       employeeRole: intl.formatMessage(messages.roleMarketingAmbassador),
@@ -1383,35 +1406,35 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
           title: intl.formatMessage(messages.employeeAliceComp1Title),
           description: intl.formatMessage(messages.employeeAliceComp1Desc),
           iconBg: '#FFF1F0',
-          iconSrc: '✍',
+          iconSrc: './assets/icons/risk-identification.svg',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp2Title),
           description: intl.formatMessage(messages.employeeAliceComp2Desc),
           iconBg: '#E8F5FF',
-          iconSrc: '🎯',
+          iconSrc: './assets/icons/boundary-control.svg',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp3Title),
           description: intl.formatMessage(messages.employeeAliceComp3Desc),
           iconBg: '#FFF7E6',
-          iconSrc: '📊',
+          iconSrc: './assets/icons/human-handover.svg',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp4Title),
           description: intl.formatMessage(messages.employeeAliceComp4Desc),
           iconBg: '#F0FFF0',
-          iconSrc: '📋',
+          iconSrc: './assets/icons/high-intent-alert.svg',
         },
         {
           title: intl.formatMessage(messages.employeeAliceComp5Title),
           description: intl.formatMessage(messages.employeeAliceComp5Desc),
           iconBg: '#F3F0FF',
-          iconSrc: '👤',
+          iconSrc: './assets/icons/session-pause.svg',
         },
       ],
     },
-    lily: {
+    afterSalesSupportExpert: {
       name: 'Lily',
       avatarSrc: './assets/images/lily.png',
       employeeRole: intl.formatMessage(messages.roleAfterSalesExpert),
@@ -1476,217 +1499,217 @@ export function getEmployeeResumes(intl: any): Record<string, EmployeeResume> {
           title: intl.formatMessage(messages.employeeLilyComp1Title),
           description: intl.formatMessage(messages.employeeLilyComp1Desc),
           iconBg: '#FFF1F0',
-          iconSrc: '⚡',
+          iconSrc: './assets/icons/risk-identification.svg',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp2Title),
           description: intl.formatMessage(messages.employeeLilyComp2Desc),
           iconBg: '#E8F5FF',
-          iconSrc: '📚',
+          iconSrc: './assets/icons/boundary-control.svg',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp3Title),
           description: intl.formatMessage(messages.employeeLilyComp3Desc),
           iconBg: '#FFF7E6',
-          iconSrc: '🧭',
+          iconSrc: './assets/icons/human-handover.svg',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp4Title),
           description: intl.formatMessage(messages.employeeLilyComp4Desc),
           iconBg: '#F0FFF0',
-          iconSrc: '💰',
+          iconSrc: './assets/icons/high-intent-alert.svg',
         },
         {
           title: intl.formatMessage(messages.employeeLilyComp5Title),
           description: intl.formatMessage(messages.employeeLilyComp5Desc),
           iconBg: '#F3F0FF',
-          iconSrc: '🔄',
+          iconSrc: './assets/icons/session-pause.svg',
         },
       ],
     },
-    allen: {
-      name: 'Allen',
+    leadCollectionAssistant: {
+      name: 'Kevin',
       avatarSrc: './assets/images/allen.png',
       employeeRole: intl.formatMessage(messages.roleLeadAssistant),
       stageTags: [
-        intl.formatMessage(messages.employeeAllenStage1),
-        intl.formatMessage(messages.employeeAllenStage2),
-        intl.formatMessage(messages.employeeAllenStage3),
-        intl.formatMessage(messages.employeeAllenStage4),
-        intl.formatMessage(messages.employeeAllenStage5),
+        intl.formatMessage(messages.employeeKevinStage1),
+        intl.formatMessage(messages.employeeKevinStage2),
+        intl.formatMessage(messages.employeeKevinStage3),
+        intl.formatMessage(messages.employeeKevinStage4),
+        intl.formatMessage(messages.employeeKevinStage5),
       ],
-      profile: intl.formatMessage(messages.employeeAllenProfile),
+      profile: intl.formatMessage(messages.employeeKevinProfile),
       reviews: [
         {
-          text: intl.formatMessage(messages.employeeAllenReview1Text),
+          text: intl.formatMessage(messages.employeeKevinReview1Text),
           highlight: '340%',
-          suffix: intl.formatMessage(messages.employeeAllenReview1Suffix),
+          suffix: intl.formatMessage(messages.employeeKevinReview1Suffix),
         },
         {
-          text: intl.formatMessage(messages.employeeAllenReview2Text),
+          text: intl.formatMessage(messages.employeeKevinReview2Text),
           highlight: '87%',
-          suffix: intl.formatMessage(messages.employeeAllenReview2Suffix),
+          suffix: intl.formatMessage(messages.employeeKevinReview2Suffix),
         },
         {
-          text: intl.formatMessage(messages.employeeAllenReview3Text),
+          text: intl.formatMessage(messages.employeeKevinReview3Text),
           highlight: '2.8x',
-          suffix: intl.formatMessage(messages.employeeAllenReview3Suffix),
+          suffix: intl.formatMessage(messages.employeeKevinReview3Suffix),
         },
       ],
-      costLabel: intl.formatMessage(messages.employeeAllenCostLabel),
+      costLabel: intl.formatMessage(messages.employeeKevinCostLabel),
       costChartData: [
         {
-          label: intl.formatMessage(messages.employeeAllenCostChart1),
+          label: intl.formatMessage(messages.employeeKevinCostChart1),
           value: 5,
         },
         {
-          label: intl.formatMessage(messages.employeeAllenCostChart2),
+          label: intl.formatMessage(messages.employeeKevinCostChart2),
           value: 60,
         },
         {
-          label: intl.formatMessage(messages.employeeAllenCostChart3),
+          label: intl.formatMessage(messages.employeeKevinCostChart3),
           value: 400,
         },
       ],
       costSummary: [
         {
-          label: intl.formatMessage(messages.employeeAllenCostSummary1),
+          label: intl.formatMessage(messages.employeeKevinCostSummary1),
           value: '64%',
         },
         {
-          label: intl.formatMessage(messages.employeeAllenCostSummary2),
+          label: intl.formatMessage(messages.employeeKevinCostSummary2),
           value: '35%',
         },
       ],
       efficiencyData: [
-        { label: intl.formatMessage(messages.employeeAllenEff1), value: 93 },
-        { label: intl.formatMessage(messages.employeeAllenEff2), value: 86 },
-        { label: intl.formatMessage(messages.employeeAllenEff3), value: 91 },
-        { label: intl.formatMessage(messages.employeeAllenEff4), value: 78 },
+        { label: intl.formatMessage(messages.employeeKevinEff1), value: 93 },
+        { label: intl.formatMessage(messages.employeeKevinEff2), value: 86 },
+        { label: intl.formatMessage(messages.employeeKevinEff3), value: 91 },
+        { label: intl.formatMessage(messages.employeeKevinEff4), value: 78 },
       ],
       coreCompetencies: [
         {
-          title: intl.formatMessage(messages.employeeAllenComp1Title),
-          description: intl.formatMessage(messages.employeeAllenComp1Desc),
+          title: intl.formatMessage(messages.employeeKevinComp1Title),
+          description: intl.formatMessage(messages.employeeKevinComp1Desc),
           iconBg: '#FFF1F0',
-          iconSrc: '🌐',
+          iconSrc: './assets/icons/risk-identification.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAllenComp2Title),
-          description: intl.formatMessage(messages.employeeAllenComp2Desc),
+          title: intl.formatMessage(messages.employeeKevinComp2Title),
+          description: intl.formatMessage(messages.employeeKevinComp2Desc),
           iconBg: '#E8F5FF',
-          iconSrc: '🔍',
+          iconSrc: './assets/icons/boundary-control.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAllenComp3Title),
-          description: intl.formatMessage(messages.employeeAllenComp3Desc),
+          title: intl.formatMessage(messages.employeeKevinComp3Title),
+          description: intl.formatMessage(messages.employeeKevinComp3Desc),
           iconBg: '#FFF7E6',
-          iconSrc: '⚖',
+          iconSrc: './assets/icons/human-handover.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAllenComp4Title),
-          description: intl.formatMessage(messages.employeeAllenComp4Desc),
+          title: intl.formatMessage(messages.employeeKevinComp4Title),
+          description: intl.formatMessage(messages.employeeKevinComp4Desc),
           iconBg: '#F0FFF0',
-          iconSrc: '👤',
+          iconSrc: './assets/icons/high-intent-alert.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAllenComp5Title),
-          description: intl.formatMessage(messages.employeeAllenComp5Desc),
+          title: intl.formatMessage(messages.employeeKevinComp5Title),
+          description: intl.formatMessage(messages.employeeKevinComp5Desc),
           iconBg: '#F3F0FF',
-          iconSrc: '📨',
+          iconSrc: './assets/icons/session-pause.svg',
         },
       ],
     },
-    amy: {
-      name: 'Amy',
+    businessDevelopmentElite: {
+      name: 'Nina',
       avatarSrc: './assets/images/amy.png',
       employeeRole: intl.formatMessage(messages.roleBusinessDevElite),
       stageTags: [
-        intl.formatMessage(messages.employeeAmyStage1),
-        intl.formatMessage(messages.employeeAmyStage2),
-        intl.formatMessage(messages.employeeAmyStage3),
-        intl.formatMessage(messages.employeeAmyStage4),
-        intl.formatMessage(messages.employeeAmyStage5),
+        intl.formatMessage(messages.employeeNinaStage1),
+        intl.formatMessage(messages.employeeNinaStage2),
+        intl.formatMessage(messages.employeeNinaStage3),
+        intl.formatMessage(messages.employeeNinaStage4),
+        intl.formatMessage(messages.employeeNinaStage5),
       ],
-      profile: intl.formatMessage(messages.employeeAmyProfile),
+      profile: intl.formatMessage(messages.employeeNinaProfile),
       reviews: [
         {
-          text: intl.formatMessage(messages.employeeAmyReview1Text),
+          text: intl.formatMessage(messages.employeeNinaReview1Text),
           highlight: '215%',
-          suffix: intl.formatMessage(messages.employeeAmyReview1Suffix),
+          suffix: intl.formatMessage(messages.employeeNinaReview1Suffix),
         },
         {
-          text: intl.formatMessage(messages.employeeAmyReview2Text),
+          text: intl.formatMessage(messages.employeeNinaReview2Text),
           highlight: '82%',
-          suffix: intl.formatMessage(messages.employeeAmyReview2Suffix),
+          suffix: intl.formatMessage(messages.employeeNinaReview2Suffix),
         },
         {
-          text: intl.formatMessage(messages.employeeAmyReview3Text),
+          text: intl.formatMessage(messages.employeeNinaReview3Text),
           highlight: '10x',
-          suffix: intl.formatMessage(messages.employeeAmyReview3Suffix),
+          suffix: intl.formatMessage(messages.employeeNinaReview3Suffix),
         },
       ],
-      costLabel: intl.formatMessage(messages.employeeAmyCostLabel),
+      costLabel: intl.formatMessage(messages.employeeNinaCostLabel),
       costChartData: [
         {
-          label: intl.formatMessage(messages.employeeAmyCostChart1),
+          label: intl.formatMessage(messages.employeeNinaCostChart1),
           value: 15,
         },
         {
-          label: intl.formatMessage(messages.employeeAmyCostChart2),
+          label: intl.formatMessage(messages.employeeNinaCostChart2),
           value: 100,
         },
         {
-          label: intl.formatMessage(messages.employeeAmyCostChart3),
+          label: intl.formatMessage(messages.employeeNinaCostChart3),
           value: 600,
         },
       ],
       costSummary: [
         {
-          label: intl.formatMessage(messages.employeeAmyCostSummary1),
+          label: intl.formatMessage(messages.employeeNinaCostSummary1),
           value: '52%',
         },
         {
-          label: intl.formatMessage(messages.employeeAmyCostSummary2),
+          label: intl.formatMessage(messages.employeeNinaCostSummary2),
           value: '48%',
         },
       ],
       efficiencyData: [
-        { label: intl.formatMessage(messages.employeeAmyEff1), value: 88 },
-        { label: intl.formatMessage(messages.employeeAmyEff2), value: 95 },
-        { label: intl.formatMessage(messages.employeeAmyEff3), value: 83 },
-        { label: intl.formatMessage(messages.employeeAmyEff4), value: 76 },
+        { label: intl.formatMessage(messages.employeeNinaEff1), value: 88 },
+        { label: intl.formatMessage(messages.employeeNinaEff2), value: 95 },
+        { label: intl.formatMessage(messages.employeeNinaEff3), value: 83 },
+        { label: intl.formatMessage(messages.employeeNinaEff4), value: 76 },
       ],
       coreCompetencies: [
         {
-          title: intl.formatMessage(messages.employeeAmyComp1Title),
-          description: intl.formatMessage(messages.employeeAmyComp1Desc),
+          title: intl.formatMessage(messages.employeeNinaComp1Title),
+          description: intl.formatMessage(messages.employeeNinaComp1Desc),
           iconBg: '#FFF1F0',
-          iconSrc: '🤝',
+          iconSrc: './assets/icons/risk-identification.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAmyComp2Title),
-          description: intl.formatMessage(messages.employeeAmyComp2Desc),
+          title: intl.formatMessage(messages.employeeNinaComp2Title),
+          description: intl.formatMessage(messages.employeeNinaComp2Desc),
           iconBg: '#E8F5FF',
-          iconSrc: '✉',
+          iconSrc: './assets/icons/boundary-control.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAmyComp3Title),
-          description: intl.formatMessage(messages.employeeAmyComp3Desc),
+          title: intl.formatMessage(messages.employeeNinaComp3Title),
+          description: intl.formatMessage(messages.employeeNinaComp3Desc),
           iconBg: '#FFF7E6',
-          iconSrc: '📅',
+          iconSrc: './assets/icons/human-handover.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAmyComp4Title),
-          description: intl.formatMessage(messages.employeeAmyComp4Desc),
+          title: intl.formatMessage(messages.employeeNinaComp4Title),
+          description: intl.formatMessage(messages.employeeNinaComp4Desc),
           iconBg: '#F0FFF0',
-          iconSrc: '📄',
+          iconSrc: './assets/icons/high-intent-alert.svg',
         },
         {
-          title: intl.formatMessage(messages.employeeAmyComp5Title),
-          description: intl.formatMessage(messages.employeeAmyComp5Desc),
+          title: intl.formatMessage(messages.employeeNinaComp5Title),
+          description: intl.formatMessage(messages.employeeNinaComp5Desc),
           iconBg: '#F3F0FF',
-          iconSrc: '🔗',
+          iconSrc: './assets/icons/session-pause.svg',
         },
       ],
     },

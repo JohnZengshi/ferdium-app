@@ -12,7 +12,7 @@ import injectSheet, { type WithStylesProps } from 'react-jss';
 
 import { mdiCog, mdiFlash, mdiPowerPlug } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
-import { MessagePlugin } from 'tdesign-react';
+import { Badge, MessagePlugin } from 'tdesign-react';
 import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
@@ -77,6 +77,10 @@ const messages = defineMessages({
   settingsTooltip: {
     id: 'appLayout.settingsTooltip',
     defaultMessage: 'Settings',
+  },
+  notificationsTooltip: {
+    id: 'appLayout.notificationsTooltip',
+    defaultMessage: 'Notifications',
   },
   avatarPlaceholder: {
     id: 'appLayout.avatarPlaceholder',
@@ -354,6 +358,51 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
                   {stores?.user.data && (
                     <div className="flex items-center gap-[8px]">
+                      <Badge
+                        count={stores?.handoff?.unreadCount ?? 0}
+                        maxCount={99}
+                        size="small"
+                        offset={[5, 5]}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigationStore.setModule('home');
+                            navigationStore.setHomeView('strategy');
+                            navigationStore.setStrategyTab('notifications');
+                          }}
+                          className="flex h-[32px] w-[32px] items-center justify-center rounded-full border-0 bg-transparent p-0 text-secondary hover:bg-secondary-container hover:text-primary"
+                          aria-label={intl.formatMessage(
+                            messages.notificationsTooltip,
+                          )}
+                          data-tooltip-id="tooltip-sidebar-button"
+                          data-tooltip-content={intl.formatMessage(
+                            messages.notificationsTooltip,
+                          )}
+                        >
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M18 9.6C18 6.462 15.314 4 12 4S6 6.462 6 9.6v3.297c0 .483-.173.95-.488 1.316L4 15.973V18h16v-2.027l-1.512-1.76A2 2 0 0 1 18 12.897V9.6Z"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M9.5 20a2.5 2.5 0 0 0 5 0"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        </button>
+                      </Badge>
                       <div className="w-[32px] h-[32px] rounded-full bg-component flex items-center justify-center text-secondary">
                         <svg
                           width="24"

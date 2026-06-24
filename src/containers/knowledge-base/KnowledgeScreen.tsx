@@ -994,16 +994,16 @@ const KnowledgeScreen: React.FC = () => {
                     key={record.id}
                     className="flex flex-col items-center w-[262px] h-[300px] bg-secondary-container rounded-[9px] shadow-sm"
                   >
-                    <div className="mt-[24px]">
+                    <div className="mt-[24px] flex h-[132px] w-[132px] items-center justify-center rounded-full bg-white shadow-[0_10px_24px_rgba(45,98,213,0.14),0_2px_6px_rgba(15,23,42,0.10)] ring-1 ring-[#D9E6FF]">
                       {record.source.avatar_url ? (
                         <Avatar
-                          size="120px"
+                          size="124px"
                           image={record.source.avatar_url}
-                          className="!border-[3px] !border-line !rounded-full"
+                          className="!border-[2px] !border-white !rounded-full"
                         />
                       ) : (
                         <Avatar
-                          size="120px"
+                          size="124px"
                           icon={
                             <svg
                               width="48"
@@ -1024,7 +1024,7 @@ const KnowledgeScreen: React.FC = () => {
                               />
                             </svg>
                           }
-                          className="!border-[3px] !border-line !rounded-full !bg-brand !text-white"
+                          className="!border-[2px] !border-white !rounded-full !bg-brand !text-white"
                         />
                       )}
                     </div>

@@ -1,23 +1,42 @@
 import { inject, observer } from 'mobx-react';
-import { Component, type ReactElement } from 'react';
-import {
-  BookOpenFilledIcon,
-  BookOpenIcon,
-  ChatBubble1FilledIcon,
-  ChatBubble1Icon,
-  HomeFilledIcon,
-  HomeIcon,
-} from 'tdesign-icons-react';
-import { Badge } from 'tdesign-react';
-
+import { type CSSProperties, Component, type ReactElement } from 'react';
 import {
   type WrappedComponentProps,
   defineMessages,
   injectIntl,
 } from 'react-intl';
+
+import { Badge } from 'tdesign-react';
+
 import type { Stores } from '../../@types/stores.types';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
+
+const iconMask = (src: string): CSSProperties => ({
+  mask: `url(${src}) center / contain no-repeat`,
+  WebkitMask: `url(${src}) center / contain no-repeat`,
+});
+
+const ChatWsIcon = (): ReactElement => (
+  <span
+    className="block h-[24px] w-[24px] bg-current"
+    style={iconMask('./assets/icons/chat-ws.svg')}
+  />
+);
+
+const CollectionIcon = (): ReactElement => (
+  <span
+    className="block h-[24px] w-[24px] bg-current"
+    style={iconMask('./assets/icons/collection.svg')}
+  />
+);
+
+const HomeTabIcon = (): ReactElement => (
+  <span
+    className="block h-[24px] w-[24px] bg-current"
+    style={iconMask('./assets/icons/home.svg')}
+  />
+);
 
 const MODULES: {
   id: FerdiumModule;
@@ -26,18 +45,18 @@ const MODULES: {
 }[] = [
   {
     id: 'home',
-    activeIcon: <HomeFilledIcon size="24px" />,
-    inactiveIcon: <HomeIcon size="24px" />,
+    activeIcon: <HomeTabIcon />,
+    inactiveIcon: <HomeTabIcon />,
   },
   {
     id: 'service-type',
-    activeIcon: <ChatBubble1FilledIcon size="24px" />,
-    inactiveIcon: <ChatBubble1Icon size="24px" />,
+    activeIcon: <ChatWsIcon />,
+    inactiveIcon: <ChatWsIcon />,
   },
   {
     id: 'knowledge-base',
-    activeIcon: <BookOpenFilledIcon size="24px" />,
-    inactiveIcon: <BookOpenIcon size="24px" />,
+    activeIcon: <CollectionIcon />,
+    inactiveIcon: <CollectionIcon />,
   },
 ];
 

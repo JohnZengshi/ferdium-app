@@ -6,7 +6,9 @@ export type EmployeeRoleKey =
   | 'marketingAmbassador'
   | 'afterSalesSupportExpert'
   | 'leadCollectionAssistant'
-  | 'businessDevelopmentElite';
+  | 'businessDevelopmentElite'
+  | 'archiveExpert'
+  | 'receptionExpert';
 
 export const employeeMonica = './assets/images/handover-assistant.png';
 export const employeeLeo = './assets/images/sales-director.png';
@@ -14,6 +16,8 @@ export const employeeAlice = './assets/images/emotional-companion.png';
 export const employeeLily = './assets/images/business-specialist.png';
 export const employeeKevin = './assets/images/risk-control-director.png';
 export const employeeNina = './assets/images/user-operations.png';
+export const employeeTom = './assets/images/tom-card.png';
+export const employeeEmma = './assets/images/emma-card.png';
 
 export interface EmployeeResume {
   name: string;
@@ -170,6 +174,14 @@ export const messages = defineMessages({
     id: 'homeScreen.roleBusinessDevElite',
     defaultMessage: 'Business Development Elite',
   },
+  roleArchiveExpert: {
+    id: 'homeScreen.roleArchiveExpert',
+    defaultMessage: 'Archive Expert',
+  },
+  roleReceptionExpert: {
+    id: 'homeScreen.roleReceptionExpert',
+    defaultMessage: 'Reception Expert',
+  },
 
   // ─── Employee capabilities ───
   capAlwaysOnline: {
@@ -243,6 +255,26 @@ export const messages = defineMessages({
   capMeetingScheduling: {
     id: 'homeScreen.capMeetingScheduling',
     defaultMessage: 'Meeting Scheduling',
+  },
+  capPreciseMapping: {
+    id: 'homeScreen.capPreciseMapping',
+    defaultMessage: 'Precise User Profiling',
+  },
+  capCustomerValue: {
+    id: 'homeScreen.capCustomerValue',
+    defaultMessage: 'Customer Value',
+  },
+  capInterestConfirm: {
+    id: 'homeScreen.capInterestConfirm',
+    defaultMessage: 'Interest Confirmation',
+  },
+  capIntentAssessment: {
+    id: 'homeScreen.capIntentAssessment',
+    defaultMessage: 'Intent Assessment',
+  },
+  capClearOpening: {
+    id: 'homeScreen.capClearOpening',
+    defaultMessage: 'Clear Opening',
   },
 
   // ─── Buttons / CTAs ───
@@ -920,6 +952,348 @@ export const messages = defineMessages({
     id: 'homeScreen.employee.amy.comp5Desc',
     defaultMessage: 'Track full lifecycle of partnership progress',
   },
+
+  // ─── Employee Tom ───
+  employeeTomProfile: {
+    id: 'homeScreen.employee.tom.profile',
+    defaultMessage:
+      'Tom is responsible for recording communication logs, interest tags, marketing stages, intent levels and customer value for each client, providing stable data support for follow-up, scheduling and conversion.',
+  },
+  employeeTomCostLabel: {
+    id: 'homeScreen.employee.tom.costLabel',
+    defaultMessage: 'Cost Saving (10K CNY)',
+  },
+  employeeTomCostChart1: {
+    id: 'homeScreen.employee.tom.costChart1',
+    defaultMessage: 'Small Enterprise',
+  },
+  employeeTomCostChart2: {
+    id: 'homeScreen.employee.tom.costChart2',
+    defaultMessage: 'Medium Enterprise',
+  },
+  employeeTomCostChart3: {
+    id: 'homeScreen.employee.tom.costChart3',
+    defaultMessage: 'Large Enterprise',
+  },
+  employeeTomCostSummary1: {
+    id: 'homeScreen.employee.tom.costSummary1',
+    defaultMessage: 'Total Cost Saving',
+  },
+  employeeTomCostSummary2: {
+    id: 'homeScreen.employee.tom.costSummary2',
+    defaultMessage: 'Training Cost Reduced',
+  },
+  employeeTomEff1: {
+    id: 'homeScreen.employee.tom.eff1',
+    defaultMessage: 'Information Organization Time Reduced',
+  },
+  employeeTomEff2: {
+    id: 'homeScreen.employee.tom.eff2',
+    defaultMessage: 'Goal Achievement Rate',
+  },
+  employeeTomEff3: {
+    id: 'homeScreen.employee.tom.eff3',
+    defaultMessage: 'Customer Churn Rate Reduced',
+  },
+  employeeTomEff4: {
+    id: 'homeScreen.employee.tom.eff4',
+    defaultMessage: 'High-Value Customer Conversion Rate',
+  },
+  employeeTomStage1: {
+    id: 'homeScreen.employee.tom.stage1',
+    defaultMessage: 'Customer Development Stage',
+  },
+  employeeTomStage2: {
+    id: 'homeScreen.employee.tom.stage2',
+    defaultMessage: 'Customer Follow-up Stage',
+  },
+  employeeTomStage3: {
+    id: 'homeScreen.employee.tom.stage3',
+    defaultMessage: 'Deal Conversion Stage',
+  },
+  employeeTomStage4: {
+    id: 'homeScreen.employee.tom.stage4',
+    defaultMessage: 'Full Customer Management',
+  },
+  employeeTomStage5: {
+    id: 'homeScreen.employee.tom.stage5',
+    defaultMessage: 'Interest Tag Update',
+  },
+  employeeTomStage6: {
+    id: 'homeScreen.employee.tom.stage6',
+    defaultMessage: 'Opportunity Maturity Assessment',
+  },
+  employeeTomStage7: {
+    id: 'homeScreen.employee.tom.stage7',
+    defaultMessage: 'Pilot Validation Period',
+  },
+  employeeTomStage8: {
+    id: 'homeScreen.employee.tom.stage8',
+    defaultMessage: 'Trust Building',
+  },
+  employeeTomStage9: {
+    id: 'homeScreen.employee.tom.stage9',
+    defaultMessage: 'Key Communication Milestones',
+  },
+  employeeTomStage10: {
+    id: 'homeScreen.employee.tom.stage10',
+    defaultMessage: 'Strategic Planning',
+  },
+  employeeTomStage11: {
+    id: 'homeScreen.employee.tom.stage11',
+    defaultMessage: 'Limited Budget',
+  },
+  employeeTomReview1Text: {
+    id: 'homeScreen.employee.tom.review1Text',
+    defaultMessage:
+      'Archive Expert automatically records customer interest tags and intent levels, enabling the sales team to quickly identify high-value customers. Within three months, high-intent customer identification accuracy improved by',
+  },
+  employeeTomReview1Suffix: {
+    id: 'homeScreen.employee.tom.review1Suffix',
+    defaultMessage: ', lead conversion rate increased by 27%',
+  },
+  employeeTomReview2Text: {
+    id: 'homeScreen.employee.tom.review2Text',
+    defaultMessage:
+      'Customer stage updates used to rely on manual maintenance, often with outdated information. After Archive Expert took over, customer marketing stage sync rate reached',
+  },
+  employeeTomReview2Suffix: {
+    id: 'homeScreen.employee.tom.review2Suffix',
+    defaultMessage: ', customer churn rate decreased by 18%',
+  },
+  employeeTomReview3Text: {
+    id: 'homeScreen.employee.tom.review3Text',
+    defaultMessage:
+      'After using the AI Archive Expert, my management time was reduced by',
+  },
+  employeeTomReview3Suffix: {
+    id: 'homeScreen.employee.tom.review3Suffix',
+    defaultMessage:
+      ', customer follow-up completion rate soared from 48% to 96%, team per-capita productivity increased by 42%',
+  },
+  employeeTomComp1Title: {
+    id: 'homeScreen.employee.tom.comp1Title',
+    defaultMessage: 'Tag Generation',
+  },
+  employeeTomComp1Desc: {
+    id: 'homeScreen.employee.tom.comp1Desc',
+    defaultMessage:
+      'Automatically generate precise tags based on customer behavior and needs, supporting tiered operations.',
+  },
+  employeeTomComp2Title: {
+    id: 'homeScreen.employee.tom.comp2Title',
+    defaultMessage: 'Profile Update',
+  },
+  employeeTomComp2Desc: {
+    id: 'homeScreen.employee.tom.comp2Desc',
+    defaultMessage:
+      'Dynamically update customer profiles based on behavior and business feedback, improving service precision and marketing effectiveness.',
+  },
+  employeeTomComp3Title: {
+    id: 'homeScreen.employee.tom.comp3Title',
+    defaultMessage: 'Chat Summary',
+  },
+  employeeTomComp3Desc: {
+    id: 'homeScreen.employee.tom.comp3Desc',
+    defaultMessage:
+      'Automatically extract chat highlights, customer needs and follow-up items to form structured summary records.',
+  },
+  employeeTomComp4Title: {
+    id: 'homeScreen.employee.tom.comp4Title',
+    defaultMessage: 'Stage Recording',
+  },
+  employeeTomComp4Desc: {
+    id: 'homeScreen.employee.tom.comp4Desc',
+    defaultMessage:
+      'Record customer stage, key actions and follow-up results to support process tracking.',
+  },
+  employeeTomComp5Title: {
+    id: 'homeScreen.employee.tom.comp5Title',
+    defaultMessage: 'Intent Rating',
+  },
+  employeeTomComp5Desc: {
+    id: 'homeScreen.employee.tom.comp5Desc',
+    defaultMessage:
+      'Assess intent level based on customer behavior, need intensity and interaction frequency to guide follow-up.',
+  },
+  employeeTomComp6Title: {
+    id: 'homeScreen.employee.tom.comp6Title',
+    defaultMessage: 'Customer Value Assessment',
+  },
+  employeeTomComp6Desc: {
+    id: 'homeScreen.employee.tom.comp6Desc',
+    defaultMessage:
+      'Evaluate customer spending power, activity level and conversion potential to guide tiered operations.',
+  },
+
+  // ─── Employee Emma ───
+  employeeEmmaProfile: {
+    id: 'homeScreen.employee.emma.profile',
+    defaultMessage:
+      'Emma handles the first professional reception for potential clients, quickly assessing their value for further communication and conversion through clear opening, interest confirmation and basic screening.',
+  },
+  employeeEmmaCostLabel: {
+    id: 'homeScreen.employee.emma.costLabel',
+    defaultMessage: 'Cost Saving (10K CNY)',
+  },
+  employeeEmmaCostChart1: {
+    id: 'homeScreen.employee.emma.costChart1',
+    defaultMessage: 'Small Enterprise',
+  },
+  employeeEmmaCostChart2: {
+    id: 'homeScreen.employee.emma.costChart2',
+    defaultMessage: 'Medium Enterprise',
+  },
+  employeeEmmaCostChart3: {
+    id: 'homeScreen.employee.emma.costChart3',
+    defaultMessage: 'Large Enterprise',
+  },
+  employeeEmmaCostSummary1: {
+    id: 'homeScreen.employee.emma.costSummary1',
+    defaultMessage: 'Total Cost Saving',
+  },
+  employeeEmmaCostSummary2: {
+    id: 'homeScreen.employee.emma.costSummary2',
+    defaultMessage: 'Training Cost Reduced',
+  },
+  employeeEmmaEff1: {
+    id: 'homeScreen.employee.emma.eff1',
+    defaultMessage: 'First Response Speed Improved',
+  },
+  employeeEmmaEff2: {
+    id: 'homeScreen.employee.emma.eff2',
+    defaultMessage: 'High-Intent Identification Rate',
+  },
+  employeeEmmaEff3: {
+    id: 'homeScreen.employee.emma.eff3',
+    defaultMessage: 'Opportunity Conversion Rate',
+  },
+  employeeEmmaEff4: {
+    id: 'homeScreen.employee.emma.eff4',
+    defaultMessage: 'Customer Churn Rate Reduced',
+  },
+  employeeEmmaStage1: {
+    id: 'homeScreen.employee.emma.stage1',
+    defaultMessage: 'Initial Customer Contact',
+  },
+  employeeEmmaStage2: {
+    id: 'homeScreen.employee.emma.stage2',
+    defaultMessage: 'Lead Distribution & Transfer',
+  },
+  employeeEmmaStage3: {
+    id: 'homeScreen.employee.emma.stage3',
+    defaultMessage: 'Campaign Reception',
+  },
+  employeeEmmaStage4: {
+    id: 'homeScreen.employee.emma.stage4',
+    defaultMessage: 'Customer Tiering into CRM',
+  },
+  employeeEmmaStage5: {
+    id: 'homeScreen.employee.emma.stage5',
+    defaultMessage: 'Interest Tag Update',
+  },
+  employeeEmmaStage6: {
+    id: 'homeScreen.employee.emma.stage6',
+    defaultMessage: 'Pilot Validation Period',
+  },
+  employeeEmmaStage7: {
+    id: 'homeScreen.employee.emma.stage7',
+    defaultMessage: 'Trust Building',
+  },
+  employeeEmmaStage8: {
+    id: 'homeScreen.employee.emma.stage8',
+    defaultMessage: 'Key Communication Milestones',
+  },
+  employeeEmmaStage9: {
+    id: 'homeScreen.employee.emma.stage9',
+    defaultMessage: 'Preliminary Customer Profile',
+  },
+  employeeEmmaStage10: {
+    id: 'homeScreen.employee.emma.stage10',
+    defaultMessage: 'Limited Budget',
+  },
+  employeeEmmaReview1Text: {
+    id: 'homeScreen.employee.emma.review1Text',
+    defaultMessage:
+      'Previously, incoming customer inquiries required manual handling one by one, consuming significant sales time on ineffective communication. After Reception Expert went live, customer response time reduced from 15 minutes to',
+  },
+  employeeEmmaReview1Suffix: {
+    id: 'homeScreen.employee.emma.review1Suffix',
+    defaultMessage:
+      ', high-intent customer identification rate increased by 68%, sales effective communication time increased by 42%',
+  },
+  employeeEmmaReview2Text: {
+    id: 'homeScreen.employee.emma.review2Text',
+    defaultMessage:
+      'Reception Expert quickly assesses customer needs and purchase intent, automatically completing lead distribution. Within 3 months, invalid leads decreased by',
+  },
+  employeeEmmaReview2Suffix: {
+    id: 'homeScreen.employee.emma.review2Suffix',
+    defaultMessage: ', opportunity conversion rate increased by 24%',
+  },
+  employeeEmmaReview3Text: {
+    id: 'homeScreen.employee.emma.review3Text',
+    defaultMessage:
+      'Reception Expert provides 24/7 stable customer reception and intent assessment. Within 6 months, customer response speed improved by',
+  },
+  employeeEmmaReview3Suffix: {
+    id: 'homeScreen.employee.emma.review3Suffix',
+    defaultMessage: ', valid lead rate increased by 53%',
+  },
+  employeeEmmaComp1Title: {
+    id: 'homeScreen.employee.emma.comp1Title',
+    defaultMessage: 'Precision Reception',
+  },
+  employeeEmmaComp1Desc: {
+    id: 'homeScreen.employee.emma.comp1Desc',
+    defaultMessage:
+      'Combine customer profiles with real-time needs to precisely receive customers and match personalized service plans.',
+  },
+  employeeEmmaComp2Title: {
+    id: 'homeScreen.employee.emma.comp2Title',
+    defaultMessage: 'Professional Opening',
+  },
+  employeeEmmaComp2Desc: {
+    id: 'homeScreen.employee.emma.comp2Desc',
+    defaultMessage:
+      'Build trust with professional greetings, quickly introduce identity and service scope, and guide customers to express their needs.',
+  },
+  employeeEmmaComp3Title: {
+    id: 'homeScreen.employee.emma.comp3Title',
+    defaultMessage: 'Interest Confirmation',
+  },
+  employeeEmmaComp3Desc: {
+    id: 'homeScreen.employee.emma.comp3Desc',
+    defaultMessage:
+      'Confirm customer interests and focus areas, precisely match product solutions and drive deeper communication.',
+  },
+  employeeEmmaComp4Title: {
+    id: 'homeScreen.employee.emma.comp4Title',
+    defaultMessage: 'Intent Assessment',
+  },
+  employeeEmmaComp4Desc: {
+    id: 'homeScreen.employee.emma.comp4Desc',
+    defaultMessage:
+      'Analyze customer expressions, behavior and interaction signals to assess purchase intent and match follow-up strategy.',
+  },
+  employeeEmmaComp5Title: {
+    id: 'homeScreen.employee.emma.comp5Title',
+    defaultMessage: 'Basic Screening',
+  },
+  employeeEmmaComp5Desc: {
+    id: 'homeScreen.employee.emma.comp5Desc',
+    defaultMessage:
+      'Quickly screen valid customers based on basic information and needs, then assign for follow-up.',
+  },
+  employeeEmmaComp6Title: {
+    id: 'homeScreen.employee.emma.comp6Title',
+    defaultMessage: 'Transfer Assessment',
+  },
+  employeeEmmaComp6Desc: {
+    id: 'homeScreen.employee.emma.comp6Desc',
+    defaultMessage:
+      'Assess problem complexity and service boundaries, promptly transfer to human or specialized digital employee.',
+  },
 });
 
 export const MOCK_EMPLOYEES: MockEmployee[] = [
@@ -1034,6 +1408,39 @@ export const MOCK_EMPLOYEES: MockEmployee[] = [
       'Partner Mining',
       'Business Letter Writing',
       'Meeting Scheduling',
+    ],
+    ctaKey: 'homeScreen.resume',
+    ctaDefault: 'Resume',
+  },
+  {
+    id: 'archiveExpert',
+    name: 'Tom',
+    roleKey: 'homeScreen.roleArchiveExpert',
+    roleDefault: 'Archive Expert',
+    avatar: employeeTom,
+    capabilityKeys: [
+      'homeScreen.capPreciseMapping',
+      'homeScreen.capCustomerValue',
+    ],
+    capabilityDefaults: ['Precise User Profiling', 'Customer Value'],
+    ctaKey: 'homeScreen.resume',
+    ctaDefault: 'Resume',
+  },
+  {
+    id: 'receptionExpert',
+    name: 'Emma',
+    roleKey: 'homeScreen.roleReceptionExpert',
+    roleDefault: 'Reception Expert',
+    avatar: employeeEmma,
+    capabilityKeys: [
+      'homeScreen.capInterestConfirm',
+      'homeScreen.capIntentAssessment',
+      'homeScreen.capClearOpening',
+    ],
+    capabilityDefaults: [
+      'Interest Confirmation',
+      'Intent Assessment',
+      'Clear Opening',
     ],
     ctaKey: 'homeScreen.resume',
     ctaDefault: 'Resume',
@@ -1710,6 +2117,215 @@ export function getEmployeeResumes(intl: IntlShape): EmployeeResumeMap {
           description: intl.formatMessage(messages.employeeNinaComp5Desc),
           iconBg: '#F3F0FF',
           iconSrc: './assets/icons/session-pause.svg',
+        },
+      ],
+    },
+    archiveExpert: {
+      name: 'Tom',
+      avatarSrc: './assets/images/tom-resume.png',
+      employeeRole: intl.formatMessage(messages.roleArchiveExpert),
+      stageTags: [
+        intl.formatMessage(messages.employeeTomStage1),
+        intl.formatMessage(messages.employeeTomStage2),
+        intl.formatMessage(messages.employeeTomStage3),
+        intl.formatMessage(messages.employeeTomStage4),
+        intl.formatMessage(messages.employeeTomStage5),
+        intl.formatMessage(messages.employeeTomStage6),
+        intl.formatMessage(messages.employeeTomStage7),
+        intl.formatMessage(messages.employeeTomStage8),
+        intl.formatMessage(messages.employeeTomStage9),
+        intl.formatMessage(messages.employeeTomStage10),
+        intl.formatMessage(messages.employeeTomStage11),
+      ],
+      profile: intl.formatMessage(messages.employeeTomProfile),
+      reviews: [
+        {
+          text: intl.formatMessage(messages.employeeTomReview1Text),
+          highlight: '42%',
+          suffix: intl.formatMessage(messages.employeeTomReview1Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeTomReview2Text),
+          highlight: '98%',
+          suffix: intl.formatMessage(messages.employeeTomReview2Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeTomReview3Text),
+          highlight: '75%',
+          suffix: intl.formatMessage(messages.employeeTomReview3Suffix),
+        },
+      ],
+      costLabel: intl.formatMessage(messages.employeeTomCostLabel),
+      costChartData: [
+        {
+          label: intl.formatMessage(messages.employeeTomCostChart1),
+          value: 350,
+        },
+        {
+          label: intl.formatMessage(messages.employeeTomCostChart2),
+          value: 600,
+        },
+        {
+          label: intl.formatMessage(messages.employeeTomCostChart3),
+          value: 900,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage(messages.employeeTomCostSummary1),
+          value: '920M',
+        },
+        {
+          label: intl.formatMessage(messages.employeeTomCostSummary2),
+          value: '77%',
+        },
+      ],
+      efficiencyData: [
+        { label: intl.formatMessage(messages.employeeTomEff1), value: 84 },
+        { label: intl.formatMessage(messages.employeeTomEff2), value: 45 },
+        { label: intl.formatMessage(messages.employeeTomEff3), value: 33 },
+        { label: intl.formatMessage(messages.employeeTomEff4), value: 67 },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage(messages.employeeTomComp1Title),
+          description: intl.formatMessage(messages.employeeTomComp1Desc),
+          iconBg: '#FFF1F0',
+          iconSrc: './assets/icons/risk-identification.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeTomComp2Title),
+          description: intl.formatMessage(messages.employeeTomComp2Desc),
+          iconBg: '#E8F5FF',
+          iconSrc: './assets/icons/boundary-control.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeTomComp3Title),
+          description: intl.formatMessage(messages.employeeTomComp3Desc),
+          iconBg: '#FFF7E6',
+          iconSrc: './assets/icons/human-handover.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeTomComp4Title),
+          description: intl.formatMessage(messages.employeeTomComp4Desc),
+          iconBg: '#F0FFF0',
+          iconSrc: './assets/icons/high-intent-alert.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeTomComp5Title),
+          description: intl.formatMessage(messages.employeeTomComp5Desc),
+          iconBg: '#F3F0FF',
+          iconSrc: './assets/icons/session-pause.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeTomComp6Title),
+          description: intl.formatMessage(messages.employeeTomComp6Desc),
+          iconBg: '#E8F5FF',
+          iconSrc: './assets/icons/boundary-control.svg',
+        },
+      ],
+    },
+    receptionExpert: {
+      name: 'Emma',
+      avatarSrc: './assets/images/emma-resume.png',
+      employeeRole: intl.formatMessage(messages.roleReceptionExpert),
+      stageTags: [
+        intl.formatMessage(messages.employeeEmmaStage1),
+        intl.formatMessage(messages.employeeEmmaStage2),
+        intl.formatMessage(messages.employeeEmmaStage3),
+        intl.formatMessage(messages.employeeEmmaStage4),
+        intl.formatMessage(messages.employeeEmmaStage5),
+        intl.formatMessage(messages.employeeEmmaStage6),
+        intl.formatMessage(messages.employeeEmmaStage7),
+        intl.formatMessage(messages.employeeEmmaStage8),
+        intl.formatMessage(messages.employeeEmmaStage9),
+        intl.formatMessage(messages.employeeEmmaStage10),
+      ],
+      profile: intl.formatMessage(messages.employeeEmmaProfile),
+      reviews: [
+        {
+          text: intl.formatMessage(messages.employeeEmmaReview1Text),
+          highlight: '10s',
+          suffix: intl.formatMessage(messages.employeeEmmaReview1Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeEmmaReview2Text),
+          highlight: '55%',
+          suffix: intl.formatMessage(messages.employeeEmmaReview2Suffix),
+        },
+        {
+          text: intl.formatMessage(messages.employeeEmmaReview3Text),
+          highlight: '95%',
+          suffix: intl.formatMessage(messages.employeeEmmaReview3Suffix),
+        },
+      ],
+      costLabel: intl.formatMessage(messages.employeeEmmaCostLabel),
+      costChartData: [
+        {
+          label: intl.formatMessage(messages.employeeEmmaCostChart1),
+          value: 350,
+        },
+        {
+          label: intl.formatMessage(messages.employeeEmmaCostChart2),
+          value: 600,
+        },
+        {
+          label: intl.formatMessage(messages.employeeEmmaCostChart3),
+          value: 900,
+        },
+      ],
+      costSummary: [
+        {
+          label: intl.formatMessage(messages.employeeEmmaCostSummary1),
+          value: '920M',
+        },
+        {
+          label: intl.formatMessage(messages.employeeEmmaCostSummary2),
+          value: '77%',
+        },
+      ],
+      efficiencyData: [
+        { label: intl.formatMessage(messages.employeeEmmaEff1), value: 95 },
+        { label: intl.formatMessage(messages.employeeEmmaEff2), value: 46 },
+        { label: intl.formatMessage(messages.employeeEmmaEff3), value: 33 },
+        { label: intl.formatMessage(messages.employeeEmmaEff4), value: 26 },
+      ],
+      coreCompetencies: [
+        {
+          title: intl.formatMessage(messages.employeeEmmaComp1Title),
+          description: intl.formatMessage(messages.employeeEmmaComp1Desc),
+          iconBg: '#FFF1F0',
+          iconSrc: './assets/icons/risk-identification.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeEmmaComp2Title),
+          description: intl.formatMessage(messages.employeeEmmaComp2Desc),
+          iconBg: '#E8F5FF',
+          iconSrc: './assets/icons/boundary-control.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeEmmaComp3Title),
+          description: intl.formatMessage(messages.employeeEmmaComp3Desc),
+          iconBg: '#FFF7E6',
+          iconSrc: './assets/icons/human-handover.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeEmmaComp4Title),
+          description: intl.formatMessage(messages.employeeEmmaComp4Desc),
+          iconBg: '#F0FFF0',
+          iconSrc: './assets/icons/high-intent-alert.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeEmmaComp5Title),
+          description: intl.formatMessage(messages.employeeEmmaComp5Desc),
+          iconBg: '#F3F0FF',
+          iconSrc: './assets/icons/session-pause.svg',
+        },
+        {
+          title: intl.formatMessage(messages.employeeEmmaComp6Title),
+          description: intl.formatMessage(messages.employeeEmmaComp6Desc),
+          iconBg: '#E8F5FF',
+          iconSrc: './assets/icons/boundary-control.svg',
         },
       ],
     },

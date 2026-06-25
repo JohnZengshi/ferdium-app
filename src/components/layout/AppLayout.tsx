@@ -39,6 +39,7 @@ import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
 import MainModuleTabs from './MainModuleTabs';
 import ServiceSubTabs from './ServiceSubTabs';
+import SettingsModal from './SettingsModal';
 
 const messages = defineMessages({
   servicesUpdated: {
@@ -140,6 +141,7 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
 interface IState {
   shouldShowAppUpdateInfoBar: boolean;
   shouldShowServicesUpdatedInfoBar: boolean;
+  settingsModalVisible: boolean;
 }
 
 @inject('stores', 'actions')
@@ -151,6 +153,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
     this.state = {
       shouldShowAppUpdateInfoBar: true,
       shouldShowServicesUpdatedInfoBar: true,
+      settingsModalVisible: false,
     };
   }
 
@@ -462,8 +465,8 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                       <button
                         type="button"
                         onClick={() =>
-                          this.props.actions?.ui?.openSettings?.({
-                            path: 'app',
+                          this.setState({
+                            settingsModalVisible: true,
                           })
                         }
                         className="ml-2 p-3 -m-3 sidebar__button sidebar__button--settings"
@@ -496,6 +499,10 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             </div>
           </div>
         </ErrorBoundary>
+        <SettingsModal
+          visible={this.state.settingsModalVisible}
+          onClose={() => this.setState({ settingsModalVisible: false })}
+        />
       </>
     );
   }

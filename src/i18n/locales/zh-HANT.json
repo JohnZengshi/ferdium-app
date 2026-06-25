@@ -1213,5 +1213,13 @@
   "workspaceDrawer.workspaceFeatureInfo": "<p>AITALK Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "編輯工作區設定",
   "workspaces.switchingIndicator.allServices": "所有服務",
-  "workspaces.switchingIndicator.switchingTo": "切換到"
+  "workspaces.switchingIndicator.switchingTo": "切換到",
+  "settingsModal.title": "設定",
+  "settingsModal.languageLabel": "語言選擇",
+  "settingsModal.spellcheckLabel": "啟用拼字檢查",
+  "settingsModal.spellcheckDesc": "AITALK 使用您 Mac 內建的拼字檢查器來檢查拼字錯誤。如果您想更改拼字檢查的語言，可以在 Mac 的系統偏好設定中進行設定。",
+  "settingsModal.restartHint": "重啟後生效",
+  "settingsModal.logoutButton": "登出帳戶",
+  "settingsModal.logoutConfirmTitle": "確認登出",
+  "settingsModal.logoutConfirmContent": "確定要登出當前帳戶嗎？"
 }

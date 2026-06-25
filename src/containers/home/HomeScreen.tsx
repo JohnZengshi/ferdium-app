@@ -261,8 +261,8 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     ];
 
     return (
-      <div className="mt-[24px] overflow-hidden rounded-[6px] border border-solid border-line">
-        <table className="w-full [border-collapse:collapse] [table-layout:fixed] [&_td]:border-solid [&_th]:border-solid">
+      <div className="mt-[24px] overflow-x-auto overflow-y-hidden rounded-[6px] border border-solid border-line">
+        <table className="w-full min-w-[583px] [border-collapse:collapse] [table-layout:fixed] [&_td]:border-solid [&_th]:border-solid">
           <thead>
             <tr className="h-[45px] bg-secondary-container">
               <th className="w-[116px] border-r border-b border-line pl-[12px] text-left text-[12px] font-medium text-placeholder">

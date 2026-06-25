@@ -21,6 +21,9 @@ import Link from '../ui/Link';
 
 const debug = require('../../preload-safe-debug')('Ferdium:auth:DynamicLogin');
 
+const STORAGE_EMAIL_KEY = 'ferdium-saved-email';
+const STORAGE_PASSWORD_KEY = 'ferdium-saved-password';
+
 const messages = defineMessages({
   userFriendlyError: {
     id: 'dynamicLogin.userFriendlyError',
@@ -137,6 +140,19 @@ class DynamicLogin extends Component<DynamicLoginProps> {
       fields: buildFormFields(provider.config.fields),
     });
     makeObservable(this);
+
+    const savedEmail = localStorage.getItem(STORAGE_EMAIL_KEY);
+    const savedPassword = localStorage.getItem(STORAGE_PASSWORD_KEY);
+    if (savedEmail) {
+      const emailField = this.form.$('email');
+      if (emailField) emailField.set(savedEmail);
+    }
+    if (savedPassword) {
+      this.rememberPassword = true;
+      const passwordField = this.form.$('password');
+      if (passwordField) passwordField.set(savedPassword);
+    }
+
     debug(`DynamicLogin initialized for provider: ${provider.name}`);
   }
 
@@ -159,6 +175,15 @@ class DynamicLogin extends Component<DynamicLoginProps> {
           debug(`Authenticate result: ${JSON.stringify(result)}`);
           if (result.success) {
             debug('Authentication successful');
+            const email = values.email;
+            if (email) {
+              localStorage.setItem(STORAGE_EMAIL_KEY, email);
+            }
+            if (this.rememberPassword && values.password) {
+              localStorage.setItem(STORAGE_PASSWORD_KEY, values.password);
+            } else {
+              localStorage.removeItem(STORAGE_PASSWORD_KEY);
+            }
             onAuthenticated({
               success: true,
               token: result.token,
@@ -286,6 +311,9 @@ class DynamicLogin extends Component<DynamicLoginProps> {
                     onChange={(checked: boolean) =>
                       runInAction(() => {
                         this.rememberPassword = checked;
+                        if (!checked) {
+                          localStorage.removeItem(STORAGE_PASSWORD_KEY);
+                        }
                       })
                     }
                     className="[&_.t-checkbox__label]:text-[13px] [&_.t-checkbox__label]:text-primary"

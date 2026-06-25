@@ -996,7 +996,7 @@ const KnowledgeScreen: React.FC = () => {
       />
       {view === 'list' ? (
         <div className="p-[24px] w-full h-full">
-          <div className="flex flex-col flex-1 min-w-0 h-full bg-container p-[32px]">
+          <div className="flex flex-col flex-1 min-w-0 h-full bg-container p-[32px] rounded-[6px]">
             <div className="flex items-center mb-[24px]">
               <Button
                 theme="primary"

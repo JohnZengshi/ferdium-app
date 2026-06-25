@@ -434,7 +434,7 @@ const NotificationsTab = (): ReactElement => {
 
   return (
     <>
-      <div className="mx-auto w-full min-h-full py-[32px] px-[30px] bg-container">
+      <div className="mx-auto w-full min-h-full py-[32px] px-[30px] bg-container rounded-[6px]">
         <div className="flex h-[56px] items-center gap-[20px]">
           <div className="flex items-center gap-[8px]">
             <span className="text-[14px] font-normal text-secondary">

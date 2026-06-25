@@ -38,7 +38,7 @@ const SecuritySettingsTab = (): ReactElement => {
   const intl = useIntl();
 
   return (
-    <div className="mx-auto w-full min-h-full py-[32px] bg-container">
+    <div className="mx-auto w-full min-h-full py-[32px] bg-container rounded-[6px]">
       <div className="mx-auto w-[72%]">
         <div className="relative mb-[32px] rounded-[12px] border border-solid border-brand-light bg-brand-light px-[24px] pb-[20px] pt-[20px]">
           <div className="absolute left-[24px] top-[20px] flex h-[22px] w-[22px] items-center justify-center rounded-full bg-brand">

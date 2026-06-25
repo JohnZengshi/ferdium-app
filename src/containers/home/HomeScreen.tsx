@@ -409,7 +409,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         visible
         closeBtn={false}
         destroyOnClose
-        width="min(90vw,1400px)"
+        width={1475}
         placement="center"
         header={false}
         footer={false}

@@ -154,21 +154,21 @@ class SettingsModal extends Component<IProps, IState> {
         className="[&_.t-dialog]:rounded-none [&_.t-dialog\\_\\_body]:!p-0 [&_.t-dialog\\_\\_wrap]:!items-center [&_.t-dialog]:!p-0 overflow-hidden"
       >
         <div className="flex h-[640px] flex-col">
-          <div className="flex h-[60px] shrink-0 items-center justify-between bg-[#F3F3F3] pl-[32px] pr-[36px]">
-            <span className="text-[20px] font-semibold leading-[24px] text-[#1A1A1A]">
+          <div className="flex h-[60px] shrink-0 items-center justify-between bg-component pl-[32px] pr-[36px]">
+            <span className="text-[20px] font-semibold leading-[24px] text-primary">
               {intl.formatMessage(messages.title)}
             </span>
             <button
               type="button"
               onClick={onClose}
-              className="cursor-pointer border-none bg-transparent p-0 text-[20px] leading-none text-[#666] hover:text-[#333]"
+              className="cursor-pointer border-none bg-transparent p-0 text-[20px] leading-none text-secondary hover:text-primary"
             >
               ×
             </button>
           </div>
 
-          <div className="flex flex-auto flex-col bg-white px-[32px] pt-[22px]">
-            <div className="text-[16px] font-semibold leading-[20px] text-[#1A1A1A]">
+          <div className="flex flex-auto flex-col bg-container px-[32px] pt-[22px]">
+            <div className="text-[16px] font-semibold leading-[20px] text-primary">
               {intl.formatMessage(messages.languageLabel)}
             </div>
 
@@ -181,12 +181,12 @@ class SettingsModal extends Component<IProps, IState> {
                     this.handleLocaleChange(value);
                   }
                 }}
-                className="!w-full [&_.t-select__trigger]:!h-[32px] [&_.t-select__trigger]:!rounded-[3px] [&_.t-select__trigger]:!border-[#DCDCDC]"
+                className="!h-[32px] !w-full [&_.t-select__trigger]:!h-[32px] [&_.t-select__trigger]:!rounded-[3px] [&_.t-select__trigger]:!border-line"
               />
             </div>
 
             <div className="mt-[23px] flex items-center gap-[12px]">
-              <span className="text-[16px] font-semibold leading-[22px] text-[#1A1A1A]">
+              <span className="text-[16px] font-semibold leading-[22px] text-primary">
                 {intl.formatMessage(messages.spellcheckLabel)}
               </span>
               <Switch
@@ -195,7 +195,7 @@ class SettingsModal extends Component<IProps, IState> {
               />
             </div>
 
-            <div className="mt-[9px] text-[14px] leading-[21px] text-[#999]">
+            <div className="mt-[9px] text-[14px] leading-[21px] text-placeholder">
               {intl.formatMessage(messages.spellcheckDesc)}
             </div>
 
@@ -225,14 +225,14 @@ class SettingsModal extends Component<IProps, IState> {
                   fill="white"
                 />
               </svg>
-              <span className="text-[14px] leading-[20px] text-[#999]">
+              <span className="text-[14px] leading-[20px] text-placeholder">
                 {intl.formatMessage(messages.restartHint)}
               </span>
             </div>
 
             <div className="mt-auto flex justify-end pb-[32px]">
               <Button
-                className="!h-[32px] !w-[88px] !rounded-[4px] !border-none !bg-[#E7E7E7] !text-[14px] !text-[#1A1A1A]"
+                className="!h-[32px] !w-[88px] !rounded-[4px] !border-none !bg-component !text-[14px] !text-primary"
                 onClick={this.handleLogout}
               >
                 {intl.formatMessage(messages.logoutButton)}

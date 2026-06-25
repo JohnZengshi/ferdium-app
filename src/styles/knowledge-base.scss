@@ -8,15 +8,15 @@
   }
 
   .kb-table-shell {
-    border: 1px solid #e7e7e7;
+    border: 1px solid var(--td-component-border);
     border-radius: 6px;
-    background: #ffffff;
+    background: var(--td-bg-color-container);
   }
 
   .kb-table thead th {
-    background: #f3f3f3;
-    border-bottom: 1px solid #e7e7e7;
-    color: rgba(0, 0, 0, 0.4);
+    background: var(--td-bg-color-component);
+    border-bottom: 1px solid var(--td-component-border);
+    color: var(--td-text-color-placeholder);
     font-size: 15px;
     font-weight: 500;
     line-height: 24px;
@@ -29,13 +29,13 @@
   }
 
   .kb-table thead th:not(:last-child) {
-    border-right: 1px solid #e7e7e7;
+    border-right: 1px solid var(--td-component-border);
   }
 
   .kb-table tbody td {
-    background: #ffffff;
-    border-bottom: 1px solid #e7e7e7;
-    color: rgba(0, 0, 0, 0.9);
+    background: var(--td-bg-color-container);
+    border-bottom: 1px solid var(--td-component-border);
+    color: var(--td-text-color-primary);
     font-size: 15px;
     line-height: 24px;
     text-align: left;
@@ -47,7 +47,7 @@
   }
 
   .kb-table tbody td:not(:last-child) {
-    border-right: 1px solid #e7e7e7;
+    border-right: 1px solid var(--td-component-border);
   }
 
   .kb-table .t-table__content {
@@ -62,19 +62,19 @@
     display: inline-flex;
     align-items: center;
     white-space: nowrap;
-    color: rgba(0, 0, 0, 0.45);
+    color: var(--td-text-color-placeholder);
     font-size: 15px;
     line-height: 24px;
   }
 
   .kb-table-total strong {
-    color: rgba(0, 0, 0, 0.65);
+    color: var(--td-text-color-secondary);
     font-weight: 600;
   }
 
   .kb-table-pagination {
     align-items: center;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--td-text-color-secondary);
     column-gap: 8px;
     font-size: 14px;
     line-height: 22px;
@@ -83,19 +83,19 @@
   .kb-table-pagination button {
     min-width: 28px;
     height: 28px;
-    background: #ffffff;
-    border-color: #e7e7e7;
+    background: var(--td-bg-color-container);
+    border-color: var(--td-component-border);
     border-radius: 6px;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--td-text-color-secondary);
     box-shadow: none;
   }
 
   .kb-table-pagination .t-is-current,
   .kb-table-pagination .t-pagination__item.t-is-current,
   .kb-table-pagination .t-pagination__btn--current {
-    background: #f3f3f3;
-    border-color: #e7e7e7;
-    color: rgba(0, 0, 0, 0.9);
+    background: var(--td-bg-color-component);
+    border-color: var(--td-component-border);
+    color: var(--td-text-color-primary);
   }
 
   .kb-table-pagination svg {

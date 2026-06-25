@@ -74,8 +74,8 @@
 
 // Global table styles — applies to all TDesign tables
 .t-table__header th {
-  background: #f3f3f3 !important;
-  border-color: #e7e7e7 !important;
+  background: var(--td-bg-color-component) !important;
+  border-color: var(--td-component-border) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
   white-space: nowrap !important;
@@ -83,7 +83,7 @@
 
 .t-table__body td {
   height: 52px !important;
-  border-color: #e7e7e7 !important;
+  border-color: var(--td-component-border) !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;

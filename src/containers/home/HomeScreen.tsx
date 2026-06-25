@@ -261,17 +261,17 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
     ];
 
     return (
-      <div className="mt-[24px] overflow-x-auto overflow-y-hidden rounded-[6px] border border-solid border-line">
-        <table className="w-full min-w-[583px] [border-collapse:collapse] [table-layout:fixed] [&_td]:border-solid [&_th]:border-solid">
+      <div className="mt-[24px] rounded-[6px] border border-solid border-line">
+        <table className="w-full [border-collapse:collapse] [table-layout:fixed] [&_td]:border-solid [&_th]:border-solid">
           <thead>
             <tr className="h-[45px] bg-secondary-container">
-              <th className="w-[116px] border-r border-b border-line pl-[12px] text-left text-[12px] font-medium text-placeholder">
+              <th className="w-1/5 border-r border-b border-line pl-[12px] text-left text-[12px] font-medium text-placeholder">
                 {intl.formatMessage(messages.type)}
               </th>
-              <th className="w-[117px] border-r border-b border-line text-center text-[12px] font-medium text-placeholder">
+              <th className="w-1/5 border-r border-b border-line text-center text-[12px] font-medium text-placeholder">
                 {intl.formatMessage(messages.totalCount)}
               </th>
-              <th className="w-[117px] border-r border-b border-line text-center text-[12px] font-medium">
+              <th className="w-1/5 border-r border-b border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiIcon className="text-success text-[14px]" />
                   <span className="text-success">
@@ -279,7 +279,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                   </span>
                 </span>
               </th>
-              <th className="w-[117px] border-r border-b border-line text-center text-[12px] font-medium">
+              <th className="w-1/5 border-r border-b border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <WifiOffIcon className="text-warning text-[14px]" />
                   <span className="text-warning">
@@ -287,7 +287,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                   </span>
                 </span>
               </th>
-              <th className="w-[116px] border-b border-line text-center text-[12px] font-medium">
+              <th className="w-1/5 border-b border-line text-center text-[12px] font-medium">
                 <span className="inline-flex items-center gap-[6px]">
                   <ErrorCircleIcon className="text-error text-[14px]" />
                   <span className="text-error">

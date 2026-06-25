@@ -201,13 +201,13 @@ echo -e "\n${GREEN}[3/6] 清理旧的构建产物...${NC}"
 rm -rf build out
 echo -e "${GREEN}✓ 清理完成${NC}"
 
-# 4. 安装依赖 (如果需要)
-if [ ! -d "node_modules" ]; then
+# 4. 安装依赖 (必须)
+# if [ ! -d "node_modules" ]; then
     echo -e "\n${GREEN}[4/6] 安装依赖...${NC}"
     pnpm install
-else
-    echo -e "\n${GREEN}[4/6] 依赖已存在，跳过安装${NC}"
-fi
+# else
+#     echo -e "\n${GREEN}[4/6] 依赖已存在，跳过安装${NC}"
+# fi
 
 # 5. 构建应用代码
 echo -e "\n${GREEN}[5/6] 构建应用代码...${NC}"

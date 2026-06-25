@@ -152,27 +152,27 @@ export const messages = defineMessages({
   // ─── Employee MOCK roles ───
   roleSeniorSalesExpert: {
     id: 'homeScreen.roleSeniorSalesExpert',
-    defaultMessage: 'Senior Sales Expert',
+    defaultMessage: 'Risk Control Assistant',
   },
   roleCustomerMaintenance: {
     id: 'homeScreen.roleCustomerMaintenance',
-    defaultMessage: 'Customer Maintenance Specialist',
+    defaultMessage: 'Sales Supervisor',
   },
   roleMarketingAmbassador: {
     id: 'homeScreen.roleMarketingAmbassador',
-    defaultMessage: 'Marketing Ambassador',
+    defaultMessage: 'Customer Advisor',
   },
   roleAfterSalesExpert: {
     id: 'homeScreen.roleAfterSalesExpert',
-    defaultMessage: 'After-Sales Support Expert',
+    defaultMessage: 'Growth Advisor',
   },
   roleLeadAssistant: {
     id: 'homeScreen.roleLeadAssistant',
-    defaultMessage: 'Lead Collection Assistant',
+    defaultMessage: 'Product Expert',
   },
   roleBusinessDevElite: {
     id: 'homeScreen.roleBusinessDevElite',
-    defaultMessage: 'Business Development Elite',
+    defaultMessage: 'Maintenance Expert',
   },
   roleArchiveExpert: {
     id: 'homeScreen.roleArchiveExpert',
@@ -1301,7 +1301,7 @@ export const MOCK_EMPLOYEES: MockEmployee[] = [
     id: 'seniorSalesExpert',
     name: 'Monica',
     roleKey: 'homeScreen.roleSeniorSalesExpert',
-    roleDefault: 'Senior Sales Expert',
+    roleDefault: 'Risk Control Assistant',
     avatar: employeeMonica,
     capabilityKeys: [
       'homeScreen.capAlwaysOnline',
@@ -1321,7 +1321,7 @@ export const MOCK_EMPLOYEES: MockEmployee[] = [
     id: 'customerMaintenanceSpecialist',
     name: 'Leo',
     roleKey: 'homeScreen.roleCustomerMaintenance',
-    roleDefault: 'Customer Maintenance Specialist',
+    roleDefault: 'Sales Supervisor',
     avatar: employeeLeo,
     capabilityKeys: [
       'homeScreen.capRegularVisit',
@@ -1340,7 +1340,7 @@ export const MOCK_EMPLOYEES: MockEmployee[] = [
     id: 'marketingAmbassador',
     name: 'Alice',
     roleKey: 'homeScreen.roleMarketingAmbassador',
-    roleDefault: 'Marketing Ambassador',
+    roleDefault: 'Customer Advisor',
     avatar: employeeAlice,
     capabilityKeys: [
       'homeScreen.capViralCopywriting',
@@ -1359,7 +1359,7 @@ export const MOCK_EMPLOYEES: MockEmployee[] = [
     id: 'afterSalesSupportExpert',
     name: 'Lily',
     roleKey: 'homeScreen.roleAfterSalesExpert',
-    roleDefault: 'After-Sales Support Expert',
+    roleDefault: 'Growth Advisor',
     avatar: employeeLily,
     capabilityKeys: [
       'homeScreen.capQuickResponse',
@@ -1378,7 +1378,7 @@ export const MOCK_EMPLOYEES: MockEmployee[] = [
     id: 'leadCollectionAssistant',
     name: 'Kevin',
     roleKey: 'homeScreen.roleLeadAssistant',
-    roleDefault: 'Lead Collection Assistant',
+    roleDefault: 'Product Expert',
     avatar: employeeKevin,
     capabilityKeys: [
       'homeScreen.capWebScraping',
@@ -1397,7 +1397,7 @@ export const MOCK_EMPLOYEES: MockEmployee[] = [
     id: 'businessDevelopmentElite',
     name: 'Nina',
     roleKey: 'homeScreen.roleBusinessDevElite',
-    roleDefault: 'Business Development Elite',
+    roleDefault: 'Maintenance Expert',
     avatar: employeeNina,
     capabilityKeys: [
       'homeScreen.capPartnerMining',

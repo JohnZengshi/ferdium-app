@@ -451,7 +451,6 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
               costChartData={emp.costChartData}
               costSummary={emp.costSummary}
               efficiencyData={emp.efficiencyData}
-              coreCompetencies={emp.coreCompetencies as any}
               employeeName={emp.name}
               employeeRole={emp.employeeRole}
               avatarSrc={emp.avatarSrc}

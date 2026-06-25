@@ -557,7 +557,7 @@ class ResumeTab extends Component<IProps> {
               />
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 12, fill: '#666666' }}
+                tick={{ fontSize: 12, fill: 'var(--td-text-color-secondary)' }}
                 axisLine={false}
                 tickLine={false}
                 interval={0}
@@ -565,7 +565,10 @@ class ResumeTab extends Component<IProps> {
               <YAxis
                 ticks={yTickValues}
                 width={44}
-                tick={{ fontSize: 12, fill: '#999999' }}
+                tick={{
+                  fontSize: 12,
+                  fill: 'var(--td-text-color-placeholder)',
+                }}
                 axisLine={false}
                 tickLine={false}
                 domain={[0, yMax]}
@@ -613,18 +616,18 @@ class ResumeTab extends Component<IProps> {
       },
     ];
     return (
-      <div className="relative h-[312px] w-[594px] rounded-[6px] bg-white">
-        <div className="absolute left-[24px] top-[24px] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#F2F3FF]">
+      <div className="relative h-[312px] w-[594px] rounded-[6px] bg-container">
+        <div className="absolute left-[24px] top-[24px] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <circle cx="3.5" cy="3.5" r="1.5" fill="#0052D9" />
-            <circle cx="3.5" cy="8" r="1.5" fill="#0052D9" />
-            <circle cx="3.5" cy="12.5" r="1.5" fill="#0052D9" />
+            <circle cx="3.5" cy="3.5" r="1.5" fill="var(--td-brand-color)" />
+            <circle cx="3.5" cy="8" r="1.5" fill="var(--td-brand-color)" />
+            <circle cx="3.5" cy="12.5" r="1.5" fill="var(--td-brand-color)" />
             <line
               x1="8"
               y1="3.5"
               x2="13"
               y2="3.5"
-              stroke="#0052D9"
+              stroke="var(--td-brand-color)"
               strokeWidth="1.5"
               strokeLinecap="round"
             />
@@ -633,7 +636,7 @@ class ResumeTab extends Component<IProps> {
               y1="8"
               x2="13"
               y2="8"
-              stroke="#0052D9"
+              stroke="var(--td-brand-color)"
               strokeWidth="1.5"
               strokeLinecap="round"
             />
@@ -642,13 +645,13 @@ class ResumeTab extends Component<IProps> {
               y1="12.5"
               x2="13"
               y2="12.5"
-              stroke="#0052D9"
+              stroke="var(--td-brand-color)"
               strokeWidth="1.5"
               strokeLinecap="round"
             />
           </svg>
         </div>
-        <span className="absolute left-[72px] top-[29px] text-[20px] font-bold text-[#111111]">
+        <span className="absolute left-[72px] top-[29px] text-[20px] font-bold text-primary">
           {intl.formatMessage(messages.efficiencySectionTitle)}
         </span>
         {effData.map((item, idx) => {
@@ -659,11 +662,11 @@ class ResumeTab extends Component<IProps> {
               className="absolute left-0 right-0"
               style={{ top: trackTop, height: 32 }}
             >
-              <div className="absolute left-[24px] top-[12px] h-[8px] w-[8px] rounded-full bg-[#3D73F6]" />
-              <span className="absolute left-[41px] top-[4px] text-[16px] text-[#222222]">
+              <div className="absolute left-[24px] top-[12px] h-[8px] w-[8px] rounded-full bg-brand" />
+              <span className="absolute left-[41px] top-[4px] text-[16px] text-primary">
                 {item.label}
               </span>
-              <div className="absolute left-[175px] h-[32px] w-[395px] overflow-hidden rounded-[4px] bg-[#EEEEEE]">
+              <div className="absolute left-[175px] h-[32px] w-[395px] overflow-hidden rounded-[4px] bg-component">
                 <div
                   className="relative flex h-full items-center justify-end rounded-[4px] pr-[12px]"
                   style={{

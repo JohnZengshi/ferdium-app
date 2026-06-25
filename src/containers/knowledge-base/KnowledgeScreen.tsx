@@ -631,11 +631,11 @@ const KnowledgeScreen: React.FC = () => {
           >
             <path
               d="M9.58366 3.33366C7.97283 3.33366 6.66699 4.6395 6.66699 6.25033C6.66699 7.86116 7.97283 9.16699 9.58366 9.16699C11.1945 9.16699 12.5003 7.86116 12.5003 6.25033C12.5003 4.6395 11.1945 3.33366 9.58366 3.33366ZM5.00032 6.25033C5.00032 3.71902 7.05235 1.66699 9.58366 1.66699C12.115 1.66699 14.167 3.71902 14.167 6.25033C14.167 8.78163 12.115 10.8337 9.58366 10.8337C7.05235 10.8337 5.00032 8.78163 5.00032 6.25033ZM6.66699 13.3337C4.82604 13.3337 3.33366 14.826 3.33366 16.667H10.042V18.3337L1.66699 18.3337L1.66699 16.667C1.66699 13.9056 3.90557 11.667 6.66699 11.667H10.0003V13.3337H6.66699Z"
-              fill="#0052D9"
+              fill="var(--td-brand-color)"
             />
             <path
               d="M16.2503 10.6253V11.772C16.8461 11.9254 17.3774 12.2393 17.7954 12.6649L18.7891 12.0911L19.6225 13.5345L18.6294 14.1078C18.7082 14.3919 18.7503 14.6912 18.7503 15.0003C18.7503 15.3095 18.7082 15.6088 18.6294 15.8928L19.6225 16.4661L18.7891 17.9095L17.7954 17.3358C17.3774 17.7614 16.8461 18.0753 16.2503 18.2286V19.3753H14.5836V18.2286C13.9878 18.0753 13.4565 17.7614 13.0385 17.3358L12.0447 17.9095L11.2114 16.4661L12.2044 15.8928C12.1257 15.6088 12.0836 15.3095 12.0836 15.0003C12.0836 14.6912 12.1257 14.3919 12.2044 14.1078L11.2114 13.5345L12.0447 12.0911L13.0385 12.6649C13.4565 12.2393 13.9878 11.9254 14.5836 11.772V10.6253H16.2503ZM13.9576 14.1947C13.8255 14.4335 13.7503 14.7081 13.7503 15.0003C13.7503 15.2925 13.8255 15.5672 13.9576 15.8059L13.988 15.8587C14.2796 16.343 14.8104 16.667 15.4169 16.667C16.0235 16.667 16.5543 16.343 16.8459 15.8587L16.8763 15.806C17.0084 15.5672 17.0836 15.2925 17.0836 15.0003C17.0836 14.7081 17.0084 14.4335 16.8763 14.1947L16.8459 14.142C16.5543 13.6576 16.0235 13.3337 15.4169 13.3337C14.8104 13.3337 14.2796 13.6576 13.988 14.142L13.9576 14.1947Z"
-              fill="#0052D9"
+              fill="var(--td-brand-color)"
             />
           </svg>
         ),
@@ -1030,9 +1030,13 @@ const KnowledgeScreen: React.FC = () => {
                 {tableData.map(record => (
                   <div
                     key={record.id}
-                    className="flex h-[320px] w-[280px] flex-col items-center rounded-[12px] bg-[linear-gradient(135deg,#FFFFFF_0%,#F6FAFF_45%,#EEF5FF_100%)] px-[20px] pt-[28px] shadow-[0_6px_18px_rgba(40,90,150,0.12)]"
+                    className="flex h-[320px] w-[280px] flex-col items-center rounded-[12px] px-[20px] pt-[28px] shadow-[0_6px_18px_rgba(40,90,150,0.12)]"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, var(--td-bg-color-container) 0%, var(--td-bg-color-secondarycontainer) 45%, var(--td-bg-color-component) 100%)',
+                    }}
                   >
-                    <div className="flex h-[128px] w-[128px] items-center justify-center overflow-hidden rounded-full border-[4px] border-solid border-white bg-[#DCE7F8] shadow-[0_4px_12px_rgba(0,0,0,0.22)]">
+                    <div className="flex h-[128px] w-[128px] items-center justify-center overflow-hidden rounded-full border-[4px] border-solid border-line bg-component shadow-[0_4px_12px_rgba(0,0,0,0.22)]">
                       {record.source.avatar_url ? (
                         <img
                           src={record.source.avatar_url}
@@ -1046,11 +1050,11 @@ const KnowledgeScreen: React.FC = () => {
                       )}
                     </div>
 
-                    <div className="mt-[20px] max-w-full text-center text-[20px] font-bold leading-[26px] text-[#2B2F33]">
+                    <div className="mt-[20px] max-w-full text-center text-[20px] font-bold leading-[26px] text-primary">
                       {record.name}
                     </div>
 
-                    <div className="mt-[8px] line-clamp-2 min-h-[40px] max-w-[220px] text-center text-[14px] font-normal leading-[20px] text-[#333333]">
+                    <div className="mt-[8px] line-clamp-2 min-h-[40px] max-w-[220px] text-center text-[14px] font-normal leading-[20px] text-secondary">
                       {record.remark ||
                         intl.formatMessage(messages.defaultRemarkFallback)}
                     </div>
@@ -1058,7 +1062,7 @@ const KnowledgeScreen: React.FC = () => {
                     <div className="mt-[10px]">
                       <Button
                         theme="primary"
-                        className="!h-[36px] !w-[96px] !rounded-[4px] !border-none !bg-[#005BEA] !text-[14px] !font-medium hover:!bg-[#0050C8]"
+                        className="!h-[36px] !w-[96px] !rounded-[4px] !border-none !bg-brand !text-[14px] !font-medium hover:!bg-brand-hover"
                         onClick={() => handleEditPersona(record)}
                       >
                         <span className="text-[14px] font-medium text-white">
@@ -1088,7 +1092,7 @@ const KnowledgeScreen: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-1 flex-col bg-[#F6F8FF]">
+        <div className="flex flex-1 flex-col bg-page">
           <div className="flex h-[48px] w-full items-center justify-between bg-container px-[16px] border-b border-solid border-line">
             <button
               type="button"
@@ -1130,7 +1134,7 @@ const KnowledgeScreen: React.FC = () => {
                   <div className="relative flex h-[72px] w-[72px] items-center justify-center">
                     <div className="absolute inset-0 rounded-full bg-brand-light animate-ping opacity-75" />
                     <div className="absolute inset-[10px] rounded-full bg-[rgba(56,207,244,0.18)]" />
-                    <div className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(29,107,255,0.16)]">
+                    <div className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full bg-container shadow-[0_10px_30px_rgba(29,107,255,0.16)]">
                       <Loading loading size="small" />
                     </div>
                   </div>
@@ -1157,27 +1161,27 @@ const KnowledgeScreen: React.FC = () => {
                 <div className="relative flex min-h-[160px] items-start justify-between pl-[28px] pt-[34px]">
                   <div className="relative max-w-[65%]">
                     <h2 className="relative m-0 text-[34px] font-[800] leading-[42px]">
-                      <span className="text-[#222222]">
+                      <span className="text-primary">
                         {editingId
                           ? intl.formatMessage(messages.editTitle)
                           : intl.formatMessage(messages.createTitle)}
                       </span>
-                      <span className="text-[#2F6BFF]">
+                      <span className="text-brand">
                         {intl.formatMessage(messages.personaAccountTitle)}
                       </span>
-                      <span className="text-[#222222]">
+                      <span className="text-primary">
                         {intl.formatMessage(messages.profileTitle)}
                       </span>
                       <SparkleIcon
                         size="12px"
-                        className="absolute right-[-8px] top-[4px] text-[#3B73FF]"
+                        className="absolute right-[-8px] top-[4px] text-brand"
                       />
                       <SparkleIcon
                         size="10px"
-                        className="absolute right-[-18px] top-[14px] text-[#3B73FF]"
+                        className="absolute right-[-18px] top-[14px] text-brand"
                       />
                     </h2>
-                    <p className="m-0 mt-[18px] max-w-[380px] text-[14px] font-normal leading-[22px] text-[#555C66] whitespace-pre-line">
+                    <p className="m-0 mt-[18px] max-w-[380px] text-[14px] font-normal leading-[22px] text-secondary whitespace-pre-line">
                       {intl.formatMessage(messages.heroDescription)}
                     </p>
                   </div>
@@ -1312,7 +1316,7 @@ const KnowledgeScreen: React.FC = () => {
                         </div>
                         <div className="mt-[8px] flex items-center gap-[8px]">
                           <div className="flex-1">
-                            <div className="relative h-[8px] w-full overflow-hidden rounded-full bg-[#e5e7eb]">
+                            <div className="relative h-[8px] w-full overflow-hidden rounded-full bg-component">
                               <div
                                 className="relative h-[8px] rounded-full transition-[width] duration-100 linear"
                                 style={{

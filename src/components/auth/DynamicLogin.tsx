@@ -175,7 +175,7 @@ class DynamicLogin extends Component<DynamicLoginProps> {
           debug(`Authenticate result: ${JSON.stringify(result)}`);
           if (result.success) {
             debug('Authentication successful');
-            const email = values.email;
+            const { email } = values;
             if (email) {
               localStorage.setItem(STORAGE_EMAIL_KEY, email);
             }

@@ -90,15 +90,19 @@ case "$PLATFORM" in
     exit 0
     ;;
   windows)
-    LOCAL_FILE="out/AITALK-win-AutoSetup-7.1.3-nightly.3-x64-${BUILD_NUMBER}.exe "
-    # windows 待编译
-    # 检查结果
-    if [ $? -eq 0 ]; then
-      echo "✅ 编译成功: `ls -lrth $LOCAL_FILE`"
-    else
+    echo "正在构建 Windows 安装包..."
+    SCRIPT_PATH="$(cd "$(dirname "$0")" && pwd)/build-windows-installer.ps1"
+    if ! powershell.exe -ExecutionPolicy Bypass -File "$(wslpath -w "$SCRIPT_PATH" 2>/dev/null || echo "$SCRIPT_PATH")" -SkipVer; then
       echo "❌ 编译失败"
       exit 1
     fi
+
+    LOCAL_FILE=$(ls -t out/*-win-AutoSetup-*.exe 2>/dev/null | head -1)
+    if [ -z "$LOCAL_FILE" ]; then
+      echo "❌ 未找到生成的安装包"
+      exit 1
+    fi
+    echo "✅ 编译成功: $(ls -lh "$LOCAL_FILE" | awk '{print $5, $NF}')"
     REMOTE_FILE="${REMOTE_DIR}/windows/AITALK-win_${DATE}_${VERSION}_${BUILD_NUMBER}_x64.exe"
     ;;
   *)
@@ -109,6 +113,7 @@ esac
 
 # 执行更名
 echo "正在更名 $LOCAL_FILE 到 $REMOTE_FILE ..."
+mkdir -p "$(dirname "$REMOTE_FILE")"
 mv $LOCAL_FILE $REMOTE_FILE
 
 # 检查结果

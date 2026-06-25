@@ -32,16 +32,16 @@
   Equivalent to setting `$env:FERDIUM_DEV = "1"`.
 
 .EXAMPLE
-  .\scripts\build-windows-production.ps1
+  .\scripts\build-windows-installer.ps1
 
 .EXAMPLE
-  $env:CLEAN = "true"; .\scripts\build-windows-production.ps1 -Arch arm64
+  $env:CLEAN = "true"; .\scripts\build-windows-installer.ps1 -Arch arm64
 
 .EXAMPLE
-  .\scripts\build-windows-production.ps1 -SkipTests -SkipRecipes
+  .\scripts\build-windows-installer.ps1 -SkipTests -SkipRecipes
 
 .EXAMPLE
-  .\scripts\build-windows-production.ps1 -SkipVer
+  .\scripts\build-windows-installer.ps1 -SkipVer
 #>
 
 param(

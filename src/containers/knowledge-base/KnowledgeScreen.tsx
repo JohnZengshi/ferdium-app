@@ -1154,7 +1154,7 @@ const KnowledgeScreen: React.FC = () => {
             )}
             <div className="flex flex-1 items-start gap-[24px] p-[24px_32px] pb-[40px]">
               <div className="w-[517px] min-h-[781px] flex-[0_0_517px] flex flex-col gap-[16px]">
-                <div className="relative flex h-[160px] items-start justify-between pl-[28px] pt-[34px]">
+                <div className="relative flex min-h-[160px] items-start justify-between pl-[28px] pt-[34px]">
                   <div className="relative max-w-[65%]">
                     <h2 className="relative m-0 text-[34px] font-[800] leading-[42px]">
                       <span className="text-[#222222]">

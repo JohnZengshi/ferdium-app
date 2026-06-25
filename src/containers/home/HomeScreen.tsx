@@ -579,7 +579,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 </div>
               </div>
 
-              <div className="flex min-h-[509px] flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
+              <div className="flex h-fit flex-auto flex-col rounded-[8px] bg-container px-[32px] pb-[36px] pt-[28px] shadow-sm">
                 <div className="flex h-[55px] items-start justify-between">
                   <div className="flex items-start">
                     <div className="relative h-[32px] w-[32px] flex-shrink-0">
@@ -645,7 +645,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                   />
                 </div>
 
-                <div className="mt-[24px] w-full flex-shrink-0 rounded-[6px] bg-brand-light px-[34px] py-[15px]">
+                <div className="mt-auto w-full flex-shrink-0 rounded-[6px] bg-brand-light px-[34px] py-[15px]">
                   <div className="flex items-start gap-[10px]">
                     <div className="mt-[9px] flex h-[18px] w-[18px] flex-shrink-0 items-center justify-center rounded-full bg-brand text-[12px] font-semibold leading-none text-text-anti">
                       i

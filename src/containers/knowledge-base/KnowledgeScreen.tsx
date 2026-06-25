@@ -242,7 +242,7 @@ const messages = defineMessages({
   heroDescription: {
     id: 'knowledgeScreen.heroDescription',
     defaultMessage:
-      '输入关键词，AI 将自动生成完整的社交账号人设资料，你\n可以审核后保存。',
+      '输入关键词，AI 将自动生成完整的社交账号人设资料，你可以审核后保存。',
   },
   keywordDescription: {
     id: 'knowledgeScreen.keywordDescription',

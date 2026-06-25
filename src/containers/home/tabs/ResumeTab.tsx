@@ -70,15 +70,15 @@ const messages = defineMessages({
   },
   defaultSkillRiskDetection: {
     id: 'resumeTab.defaultSkillRiskDetection',
-    defaultMessage: 'Risk Detection',
+    defaultMessage: 'Risk Scan',
   },
   defaultSkillAnomalyWarning: {
     id: 'resumeTab.defaultSkillAnomalyWarning',
-    defaultMessage: 'Anomaly Alerting',
+    defaultMessage: 'Alerts',
   },
   defaultSkillHandover: {
     id: 'resumeTab.defaultSkillHandover',
-    defaultMessage: 'Human Handover',
+    defaultMessage: 'Handoff',
   },
   profileSectionTitle: {
     id: 'resumeTab.profileSectionTitle',
@@ -128,11 +128,11 @@ const messages = defineMessages({
   },
   enterpriseLarge: {
     id: 'resumeTab.enterpriseLarge',
-    defaultMessage: 'Large Enterprises',
+    defaultMessage: 'Large',
   },
   enterpriseExtraLarge: {
     id: 'resumeTab.enterpriseExtraLarge',
-    defaultMessage: 'Enterprise Giants',
+    defaultMessage: 'Giant',
   },
   efficiencySectionTitle: {
     id: 'resumeTab.efficiencySectionTitle',
@@ -140,19 +140,19 @@ const messages = defineMessages({
   },
   effCustomerWorkHour: {
     id: 'resumeTab.effCustomerWorkHour',
-    defaultMessage: 'Customer Work Hours Saved',
+    defaultMessage: 'Hours Saved',
   },
   effOperationEfficiency: {
     id: 'resumeTab.effOperationEfficiency',
-    defaultMessage: 'Avg Enterprise Operational Efficiency',
+    defaultMessage: 'Ops Efficiency',
   },
   effProcessAutomation: {
     id: 'resumeTab.effProcessAutomation',
-    defaultMessage: 'Process Automation Rate',
+    defaultMessage: 'Automation Rate',
   },
   effHighRiskInterception: {
     id: 'resumeTab.effHighRiskInterception',
-    defaultMessage: 'High-Risk Interception Rate',
+    defaultMessage: 'Risk Interception',
   },
   coreCompetencyTitle: {
     id: 'resumeTab.coreCompetencyTitle',
@@ -206,7 +206,11 @@ const messages = defineMessages({
   defaultProfile: {
     id: 'resumeTab.defaultProfile',
     defaultMessage:
-      'Monica 会持续监控所有会话，在识别到高风险、高异议、高价值或超出边界的问题时，自动触发预警并协助人工接管。',
+      'Monica monitors all chats and alerts humans on risky, high-value, disputed, or out-of-scope issues.',
+  },
+  reviewSatisfactionHighlight: {
+    id: 'resumeTab.reviewSatisfactionHighlight',
+    defaultMessage: '12x',
   },
 });
 
@@ -329,7 +333,7 @@ class ResumeTab extends Component<IProps> {
           }}
         >
           <span className="mr-[21px] text-[18px] font-extrabold leading-none text-[#000000]">
-            具备技能：
+            {intl.formatMessage(messages.skillsSectionTitle)}：
           </span>
           <div className="flex gap-[8px]">
             {[
@@ -339,7 +343,7 @@ class ResumeTab extends Component<IProps> {
             ].map(skill => (
               <span
                 key={skill}
-                className="inline-flex h-[33px] w-[84px] items-center justify-center rounded-[16.5px] border-2 border-solid border-[#0052D9] bg-[#F2F3FF] text-[16px] font-medium leading-none text-[#0052D9]"
+                className="inline-flex h-[33px] min-w-[84px] items-center justify-center rounded-[16.5px] border-2 border-solid border-[#0052D9] bg-[#F2F3FF] text-[16px] font-medium leading-none text-[#0052D9]"
               >
                 {skill}
               </span>
@@ -382,7 +386,7 @@ class ResumeTab extends Component<IProps> {
       },
       {
         text: intl.formatMessage(messages.reviewSatisfaction),
-        highlight: '12倍',
+        highlight: intl.formatMessage(messages.reviewSatisfactionHighlight),
       },
       {
         text: intl.formatMessage(messages.reviewConsultationVolume),

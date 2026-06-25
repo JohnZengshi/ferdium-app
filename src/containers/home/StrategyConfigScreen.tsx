@@ -33,11 +33,11 @@ const messages = defineMessages({
   },
   security: {
     id: 'strategyConfig.security',
-    defaultMessage: 'Safety Boundary Settings',
+    defaultMessage: 'Safety Boundaries',
   },
   handover: {
     id: 'strategyConfig.handover',
-    defaultMessage: 'Human Handover Rules',
+    defaultMessage: 'Handover Rules',
   },
   notifications: {
     id: 'strategyConfig.notifications',

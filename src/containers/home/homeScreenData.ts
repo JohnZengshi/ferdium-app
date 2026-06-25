@@ -146,7 +146,7 @@ export const messages = defineMessages({
   setupInfoText: {
     id: 'homeScreen.setupInfoText',
     defaultMessage:
-      'After setup, configure auto-reply for the social accounts and conversation tags. Finally, toggle the master switch on the homepage to activate your digital employees!',
+      'After setup, configure auto-reply and tags. Then turn on the homepage switch to activate digital employees!',
   },
 
   // ─── Employee MOCK roles ───
@@ -314,15 +314,15 @@ export const messages = defineMessages({
   },
   employeeLeoCostChart1: {
     id: 'homeScreen.employee.mike.costChart1',
-    defaultMessage: 'Micro Enterprise',
+    defaultMessage: 'Micro',
   },
   employeeLeoCostChart2: {
     id: 'homeScreen.employee.mike.costChart2',
-    defaultMessage: 'Medium Enterprise',
+    defaultMessage: 'Medium',
   },
   employeeLeoCostChart3: {
     id: 'homeScreen.employee.mike.costChart3',
-    defaultMessage: 'Large Group',
+    defaultMessage: 'Large',
   },
   employeeLeoCostSummary1: {
     id: 'homeScreen.employee.mike.costSummary1',
@@ -440,15 +440,15 @@ export const messages = defineMessages({
   },
   employeeAliceCostChart1: {
     id: 'homeScreen.employee.alice.costChart1',
-    defaultMessage: 'Small Campaign',
+    defaultMessage: 'Small',
   },
   employeeAliceCostChart2: {
     id: 'homeScreen.employee.alice.costChart2',
-    defaultMessage: 'Medium Campaign',
+    defaultMessage: 'Medium',
   },
   employeeAliceCostChart3: {
     id: 'homeScreen.employee.alice.costChart3',
-    defaultMessage: 'Large Campaign',
+    defaultMessage: 'Large',
   },
   employeeAliceCostSummary1: {
     id: 'homeScreen.employee.alice.costSummary1',
@@ -571,15 +571,15 @@ export const messages = defineMessages({
   },
   employeeLilyCostChart1: {
     id: 'homeScreen.employee.lily.costChart1',
-    defaultMessage: 'Small Enterprise',
+    defaultMessage: 'Small',
   },
   employeeLilyCostChart2: {
     id: 'homeScreen.employee.lily.costChart2',
-    defaultMessage: 'Medium Enterprise',
+    defaultMessage: 'Medium',
   },
   employeeLilyCostChart3: {
     id: 'homeScreen.employee.lily.costChart3',
-    defaultMessage: 'Large Enterprise',
+    defaultMessage: 'Large',
   },
   employeeLilyCostSummary1: {
     id: 'homeScreen.employee.lily.costSummary1',
@@ -707,11 +707,11 @@ export const messages = defineMessages({
   },
   employeeKevinCostChart2: {
     id: 'homeScreen.employee.allen.costChart2',
-    defaultMessage: 'Growth Stage',
+    defaultMessage: 'Growth',
   },
   employeeKevinCostChart3: {
     id: 'homeScreen.employee.allen.costChart3',
-    defaultMessage: 'Mature Enterprise',
+    defaultMessage: 'Mature',
   },
   employeeKevinCostSummary1: {
     id: 'homeScreen.employee.allen.costSummary1',
@@ -834,15 +834,15 @@ export const messages = defineMessages({
   },
   employeeNinaCostChart1: {
     id: 'homeScreen.employee.amy.costChart1',
-    defaultMessage: 'Small Partnership',
+    defaultMessage: 'Small',
   },
   employeeNinaCostChart2: {
     id: 'homeScreen.employee.amy.costChart2',
-    defaultMessage: 'Medium Partnership',
+    defaultMessage: 'Medium',
   },
   employeeNinaCostChart3: {
     id: 'homeScreen.employee.amy.costChart3',
-    defaultMessage: 'Strategic Alliance',
+    defaultMessage: 'Alliance',
   },
   employeeNinaCostSummary1: {
     id: 'homeScreen.employee.amy.costSummary1',
@@ -965,15 +965,15 @@ export const messages = defineMessages({
   },
   employeeTomCostChart1: {
     id: 'homeScreen.employee.tom.costChart1',
-    defaultMessage: 'Small Enterprise',
+    defaultMessage: 'Small',
   },
   employeeTomCostChart2: {
     id: 'homeScreen.employee.tom.costChart2',
-    defaultMessage: 'Medium Enterprise',
+    defaultMessage: 'Medium',
   },
   employeeTomCostChart3: {
     id: 'homeScreen.employee.tom.costChart3',
-    defaultMessage: 'Large Enterprise',
+    defaultMessage: 'Large',
   },
   employeeTomCostSummary1: {
     id: 'homeScreen.employee.tom.costSummary1',
@@ -1138,15 +1138,15 @@ export const messages = defineMessages({
   },
   employeeEmmaCostChart1: {
     id: 'homeScreen.employee.emma.costChart1',
-    defaultMessage: 'Small Enterprise',
+    defaultMessage: 'Small',
   },
   employeeEmmaCostChart2: {
     id: 'homeScreen.employee.emma.costChart2',
-    defaultMessage: 'Medium Enterprise',
+    defaultMessage: 'Medium',
   },
   employeeEmmaCostChart3: {
     id: 'homeScreen.employee.emma.costChart3',
-    defaultMessage: 'Large Enterprise',
+    defaultMessage: 'Large',
   },
   employeeEmmaCostSummary1: {
     id: 'homeScreen.employee.emma.costSummary1',

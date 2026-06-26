@@ -14,52 +14,53 @@ import { APP_LOCALES } from '../../i18n/languages';
 const messages = defineMessages({
   title: {
     id: 'settingsModal.title',
-    defaultMessage: '设置',
+    defaultMessage: 'Settings',
   },
   languageLabel: {
     id: 'settingsModal.languageLabel',
-    defaultMessage: '语言选择',
+    defaultMessage: 'Language',
   },
   themeLabel: {
     id: 'settingsModal.themeLabel',
-    defaultMessage: '主题模式',
+    defaultMessage: 'Theme',
   },
   themeLight: {
     id: 'settingsModal.themeLight',
-    defaultMessage: '浅色',
+    defaultMessage: 'Light',
   },
   themeDark: {
     id: 'settingsModal.themeDark',
-    defaultMessage: '深色',
+    defaultMessage: 'Dark',
   },
   themeSystem: {
     id: 'settingsModal.themeSystem',
-    defaultMessage: '跟随系统',
+    defaultMessage: 'Follow system',
   },
   spellcheckLabel: {
     id: 'settingsModal.spellcheckLabel',
-    defaultMessage: '启用拼写检查',
+    defaultMessage: 'Enable spell check',
   },
   spellcheckDesc: {
     id: 'settingsModal.spellcheckDesc',
     defaultMessage:
-      'AITALK使用您Mac内置的拼写检查器来检查拼写错误。如果您想更改拼写检查的语言，可以在Mac的系统偏好设置中进行设置。',
+      "AITALK uses your Mac's built-in spell checker to check for spelling errors. To change the spell check language, go to macOS System Settings.",
   },
   restartHint: {
     id: 'settingsModal.restartHint',
-    defaultMessage: '重启后生效',
+    defaultMessage: 'Restart to take effect',
   },
   logoutButton: {
     id: 'settingsModal.logoutButton',
-    defaultMessage: '退出账户',
+    defaultMessage: 'Log out',
   },
   logoutConfirmTitle: {
     id: 'settingsModal.logoutConfirmTitle',
-    defaultMessage: '退出登录',
+    defaultMessage: 'Log out',
   },
   logoutConfirmContent: {
     id: 'settingsModal.logoutConfirmContent',
-    defaultMessage: '退出登录不会掉号，确认要退出登录吗？',
+    defaultMessage:
+      'Logging out will not disconnect your accounts. Are you sure you want to log out?',
   },
 });
 

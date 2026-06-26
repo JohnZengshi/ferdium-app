@@ -760,6 +760,7 @@
   "menu.workspaces.closeWorkspaceDrawer": "Close workspace drawer",
   "menu.workspaces.defaultWorkspace": "All services",
   "menu.workspaces.openWorkspaceDrawer": "Open workspace drawer",
+  "notificationsTab.action.jumpToChat": "Chat",
   "notificationsTab.action.viewConversation": "View",
   "notificationsTab.btn.exportAll": "Export all",
   "notificationsTab.btn.exportSelected": "Export selected",

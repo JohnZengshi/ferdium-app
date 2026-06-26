@@ -169,6 +169,9 @@
   --td-bg-color-secondarycomponent-active: var(--td-gray-color-6);
   --td-bg-color-component-disabled: var(--td-gray-color-2);
   --td-bg-color-specialcomponent: #fff;
+  --td-bg-color-kb-surface: #F5F8FF;
+  --td-bg-color-kb-card-bg: linear-gradient(180deg, #F8FBFF 31.26%, #DBE8FF 174.17%);
+  --td-bg-color-kb-card-shadow: 0 0 5.5px 0 rgba(0, 0, 0, 0.07);
   --td-text-color-primary: var(--td-font-gray-1);
   --td-text-color-secondary: var(--td-font-gray-2);
   --td-text-color-placeholder: var(--td-font-gray-3);
@@ -307,6 +310,9 @@
   --td-bg-color-secondarycomponent-active: var(--td-gray-color-8);
   --td-bg-color-component-disabled: var(--td-gray-color-12);
   --td-bg-color-specialcomponent: transparent;
+  --td-bg-color-kb-surface: #1E2235;
+  --td-bg-color-kb-card-bg: linear-gradient(180deg, #1E2235 31.26%, #2D3350 174.17%);
+  --td-bg-color-kb-card-shadow: 0 0 5.5px 0 rgba(0, 0, 0, 0.2);
   --td-text-color-primary: var(--td-font-white-1);
   --td-text-color-secondary: var(--td-font-white-2);
   --td-text-color-placeholder: var(--td-font-white-3);

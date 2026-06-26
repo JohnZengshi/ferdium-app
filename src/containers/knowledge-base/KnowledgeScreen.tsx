@@ -1030,11 +1030,7 @@ const KnowledgeScreen: React.FC = () => {
                 {tableData.map(record => (
                   <div
                     key={record.id}
-                    className="flex h-[320px] w-[280px] flex-col items-center rounded-[12px] px-[20px] pt-[28px] shadow-[0_6px_18px_rgba(40,90,150,0.12)]"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, var(--td-bg-color-container) 0%, var(--td-bg-color-secondarycontainer) 45%, var(--td-bg-color-component) 100%)',
-                    }}
+                    className="flex h-[320px] w-[280px] flex-col items-center rounded-[12px] px-[20px] pt-[28px] shadow-kb-card [background:var(--td-bg-color-kb-card-bg)]"
                   >
                     <div className="flex h-[128px] w-[128px] items-center justify-center overflow-hidden rounded-full border-[4px] border-solid border-line bg-component shadow-[0_4px_12px_rgba(63,133,255,0.23)]">
                       {record.source.avatar_url ? (
@@ -1156,7 +1152,7 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
               </div>
             )}
-            <div className="flex flex-1 items-start gap-[24px] p-[24px_32px] pb-[40px]">
+            <div className="flex flex-1 items-start gap-[24px] p-[24px_32px] pb-[40px] bg-kb-surface">
               <div className="w-[517px] min-h-[781px] flex-[0_0_517px] flex flex-col gap-[16px]">
                 <div className="relative flex min-h-[160px] items-start justify-between pl-[28px] pt-[34px]">
                   <div className="relative max-w-[65%]">

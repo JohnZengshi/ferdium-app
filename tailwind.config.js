@@ -57,6 +57,7 @@ module.exports = {
         'component-disabled': 'var(--td-bg-color-component-disabled)',
         'secondary-component': 'var(--td-bg-color-secondarycomponent)',
         'special-component': 'var(--td-bg-color-specialcomponent)',
+        'kb-surface': 'var(--td-bg-color-kb-surface)',
 
         // ── Text ──
         primary: 'var(--td-text-color-primary)',
@@ -92,6 +93,9 @@ module.exports = {
       },
 
       // ── Border radius mapped to TDesign tokens ──
+      boxShadow: {
+        'kb-card': 'var(--td-bg-color-kb-card-shadow)',
+      },
       borderRadius: {
         'td-sm': 'var(--td-radius-small)',
         'td-default': 'var(--td-radius-default)',

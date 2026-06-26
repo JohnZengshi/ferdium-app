@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 131 131" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 1707481913">
+<circle id="Ellipse 2534" cx="65.5" cy="65.5" r="65.5" fill="url(#paint0_linear_1363_14817)"/>
+<g id="Frame 1707481909">
+<path id="Vector 75" opacity="0.54" d="M29.4024 87.2175C37.9554 79.4247 65.5533 67.6025 107.52 82.6559" stroke="var(--stroke-0, #D1DCFF)" stroke-width="1.14041"/>
+<path id="Vector 76" opacity="0.54" d="M18 122C23.8921 113.447 41.0362 96.2266 62.4759 95.7704C83.9155 95.3142 104.101 101.662 111.513 104.894" stroke="var(--stroke-0, #D1DCFF)" stroke-width="1.14041"/>
+<path id="Vector 72" d="M20.2773 24.4949C25.029 20.1234 45.2523 12.2926 88.1316 15.9419" stroke="var(--stroke-0, #D1DCFF)" stroke-width="1.14041"/>
+<path id="Vector 73" opacity="0.54" d="M37.3867 43.8815C42.1384 40.8404 56.0894 35.3284 73.8798 37.6092C91.6701 39.89 106.381 35.8989 111.513 33.6182" stroke="var(--stroke-0, #D1DCFF)" stroke-width="1.14041"/>
+<path id="Vector 74" opacity="0.54" d="M38.5273 65.5505C40.428 58.8982 57.3441 48.9006 109.803 62.1293" stroke="var(--stroke-0, #D1DCFF)" stroke-width="1.14041"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_1363_14817" x1="65.5" y1="0" x2="65.5" y2="131" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4EBFF"/>
+<stop offset="1" stop-color="#E4EBFF" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

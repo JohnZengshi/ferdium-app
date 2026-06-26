@@ -73,7 +73,10 @@ PLATFORM=$1
 cd "$(dirname "$0")/../"
 echo "当前目录: $(pwd)"
 BUILD_NUMBER=$(git rev-list --count HEAD)
-APP_VERSION=$(node -p "require('./package.json').version")
+APP_VERSION=$(node -p "require('./package.json').version" 2>/dev/null)
+if [ -z "$APP_VERSION" ]; then
+  echo "⚠️ 警告: node 未安装或 package.json 读取失败，APP_VERSION 为空"
+fi
 
 # 自动生成日期时分 (格式: YYYYMMDDHHMM)
 DATE=$(date +"%Y%m%d%H%M")
@@ -128,7 +131,14 @@ case "$PLATFORM" in
       exit 1
     fi
     echo "✅ 编译成功: $(ls -lh "$LOCAL_FILE" | awk '{print $5, $NF}')"
-    REMOTE_FILE="${REMOTE_DIR}/windows/AITALK-win_${DATE}_${APP_VERSION}_${BUILD_NUMBER}_x64.exe"
+    # 从 installer 文件名中提取版本号 (e.g. "AITALK-win-AutoSetup-1.0.8-beta.0-7665-x64.exe")
+    # 不依赖 bash 中 node 可用性，直接从 PowerShell 生成的文件名解析
+    WIN_APP_VERSION=$(echo "$LOCAL_FILE" | sed -n 's/.*AutoSetup-\([0-9.]*\(-beta\.[0-9]*\)*\)-[0-9]*-x64\.exe$/\1/p')
+    if [ -z "$WIN_APP_VERSION" ]; then
+      echo "⚠️ 无法从文件名提取版本号，回退到 APP_VERSION (可能为空)"
+      WIN_APP_VERSION="$APP_VERSION"
+    fi
+    REMOTE_FILE="${REMOTE_DIR}/windows/AITALK-win_${DATE}_${WIN_APP_VERSION}_${BUILD_NUMBER}_x64.exe"
     ;;
   *)
     echo "未知平台: $PLATFORM"

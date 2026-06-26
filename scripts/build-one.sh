@@ -5,11 +5,10 @@ show_help() {
 build-one.sh — AITALK 一键打包脚本
 
 用法:
-  ./scripts/build-one.sh <platform> <version>
+  ./scripts/build-one.sh <platform>
 
 参数:
   platform    打包目标平台
-  version     版本号 (如 1.0.0)
 
 可用平台:
   mac-uni     生成 Universal 通用包 (x64 + arm64 合并，体积约 2 倍)
@@ -17,9 +16,25 @@ build-one.sh — AITALK 一键打包脚本
   windows     生成 Windows x64 安装包 (待实现)
 
 示例:
-  ./scripts/build-one.sh mac-uni 1.0.0
-   ./scripts/build-one.sh mac-sep 1.0.7
+  ./scripts/build-one.sh mac-uni
+  ./scripts/build-one.sh mac-sep
   ./scripts/build-one.sh --help
+
+版本管理:
+  版本号统一从 package.json 读取。
+  构建前请用 pnpm version 更新版本号:
+
+  pnpm version patch            # 7.1.3 → 7.1.4  (小修)
+  pnpm version minor            # 7.1.3 → 7.2.0  (功能)
+  pnpm version major            # 7.1.3 → 8.0.0  (大版本)
+  pnpm run version:beta                 # 7.1.3 → 7.1.4-beta.0 (测试版)
+
+  上述命令会自动更新 package.json、commit 并打 tag。
+  完整流程:
+
+    pnpm run version:beta
+    ./scripts/build-one.sh mac-sep
+    git push --tags origin main
 
 说明:
   - 脚本会自动构建并将产物重命名为带日期、版本号、构建号的归档文件
@@ -35,20 +50,30 @@ case "${1:-}" in
     ;;
 esac
 
-if [ $# -lt 2 ]; then
-  echo "用法: $0 <platform> <version>"
+if [ $# -lt 1 ]; then
+  echo "用法: $0 <platform>"
   echo "platform: mac-uni | mac-sep | windows"
   echo "运行 '$0 --help' 查看详细帮助"
   exit 1
 fi
 
+if [ $# -gt 1 ]; then
+  echo "❌ 不再支持版本号参数: $2"
+  echo "版本号统一由 package.json 管理。请先用 pnpm version 更新版本号，再打包。"
+  echo "示例:"
+  echo "      pnpm run version:beta"
+  echo "  $0 $1"
+  echo "运行 '$0 --help' 查看 pnpm version 参数说明"
+  exit 1
+fi
+
 PLATFORM=$1
-VERSION=$2
 
 #切换目录
 cd "$(dirname "$0")/../"
 echo "当前目录: $(pwd)"
 BUILD_NUMBER=$(git rev-list --count HEAD)
+APP_VERSION=$(node -p "require('./package.json').version")
 
 # 自动生成日期时分 (格式: YYYYMMDDHHMM)
 DATE=$(date +"%Y%m%d%H%M")
@@ -59,7 +84,7 @@ REMOTE_DIR=out
 # 根据平台选择不同的包路径和文件名
 case "$PLATFORM" in
   mac-uni)
-    LOCAL_FILE="out/AITALK-mac-7.1.3-nightly.3-universal-${BUILD_NUMBER}.dmg"
+    LOCAL_FILE="out/AITALK-mac-${APP_VERSION}-universal-${BUILD_NUMBER}.dmg"
     ./scripts/build-dmg-no-sandbox.sh mac-uni
     # 检查结果
     if [ $? -eq 0 ]; then
@@ -68,7 +93,7 @@ case "$PLATFORM" in
       echo "❌ 编译失败"
       exit 1
     fi
-    REMOTE_FILE="${REMOTE_DIR}/mac/AITALK-mac_${DATE}_${VERSION}_${BUILD_NUMBER}_universal.dmg"
+    REMOTE_FILE="${REMOTE_DIR}/mac/AITALK-mac_${DATE}_${APP_VERSION}_${BUILD_NUMBER}_universal.dmg"
     ;;
   mac-sep)
     ./scripts/build-dmg-no-sandbox.sh mac-sep
@@ -79,9 +104,9 @@ case "$PLATFORM" in
     echo "✅ 编译成功"
     mkdir -p "${REMOTE_DIR}/mac"
     for ARCH in x64 arm64; do
-      LOCAL_FILE="out/AITALK-mac-7.1.3-nightly.3-${ARCH}-${BUILD_NUMBER}.dmg"
+      LOCAL_FILE="out/AITALK-mac-${APP_VERSION}-${ARCH}-${BUILD_NUMBER}.dmg"
       if [ -f "$LOCAL_FILE" ]; then
-        REMOTE_FILE="${REMOTE_DIR}/mac/AITALK-mac_${DATE}_${VERSION}_${BUILD_NUMBER}_${ARCH}.dmg"
+        REMOTE_FILE="${REMOTE_DIR}/mac/AITALK-mac_${DATE}_${APP_VERSION}_${BUILD_NUMBER}_${ARCH}.dmg"
         echo "正在更名 $LOCAL_FILE 到 $REMOTE_FILE ..."
         mv "$LOCAL_FILE" "$REMOTE_FILE"
         echo "✅ 打包成功: $REMOTE_FILE"
@@ -103,7 +128,7 @@ case "$PLATFORM" in
       exit 1
     fi
     echo "✅ 编译成功: $(ls -lh "$LOCAL_FILE" | awk '{print $5, $NF}')"
-    REMOTE_FILE="${REMOTE_DIR}/windows/AITALK-win_${DATE}_${VERSION}_${BUILD_NUMBER}_x64.exe"
+    REMOTE_FILE="${REMOTE_DIR}/windows/AITALK-win_${DATE}_${APP_VERSION}_${BUILD_NUMBER}_x64.exe"
     ;;
   *)
     echo "未知平台: $PLATFORM"

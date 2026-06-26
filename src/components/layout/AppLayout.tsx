@@ -470,11 +470,20 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                           messages.settingsTooltip,
                         )}
                       >
-                        <img
-                          src="./assets/icons/setting.svg"
-                          alt=""
-                          className="w-[20px] h-[20px]"
-                        />
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="text-primary"
+                        >
+                          <path
+                            d="M10.0004 0.70459L18.0506 5.35238V14.648L10.0004 19.2958L1.9502 14.648V5.35238L10.0004 0.70459ZM10.0004 2.62909L3.61686 6.31463V13.6857L10.0004 17.3713L16.384 13.6857V6.31463L10.0004 2.62909ZM10.0004 7.50017C8.6197 7.50017 7.50041 8.61946 7.50041 10.0002C7.50041 11.3809 8.6197 12.5002 10.0004 12.5002C11.3811 12.5002 12.5004 11.3809 12.5004 10.0002C12.5004 8.61946 11.3811 7.50017 10.0004 7.50017ZM5.83374 10.0002C5.83374 7.69899 7.69922 5.83351 10.0004 5.83351C12.3016 5.83351 14.1671 7.69899 14.1671 10.0002C14.1671 12.3014 12.3016 14.1668 10.0004 14.1668C7.69922 14.1668 5.83374 12.3014 5.83374 10.0002Z"
+                            fill="currentColor"
+                            fillOpacity="0.9"
+                          />
+                        </svg>
                         {showUpdateDot && (
                           <span className="update-available">•</span>
                         )}

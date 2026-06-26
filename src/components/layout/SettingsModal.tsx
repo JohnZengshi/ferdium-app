@@ -235,9 +235,18 @@ class SettingsModal extends Component<IProps, IState> {
             <div className="mt-[10px]">
               <Select
                 options={[
-                  { label: intl.formatMessage(messages.themeLight), value: 'light' },
-                  { label: intl.formatMessage(messages.themeDark), value: 'dark' },
-                  { label: intl.formatMessage(messages.themeSystem), value: 'system' },
+                  {
+                    label: intl.formatMessage(messages.themeLight),
+                    value: 'light',
+                  },
+                  {
+                    label: intl.formatMessage(messages.themeDark),
+                    value: 'dark',
+                  },
+                  {
+                    label: intl.formatMessage(messages.themeSystem),
+                    value: 'system',
+                  },
                 ]}
                 value={themeMode}
                 onChange={value => {

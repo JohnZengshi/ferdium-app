@@ -10,7 +10,7 @@ import {
 } from 'react-intl';
 import injectSheet, { type WithStylesProps } from 'react-jss';
 
-import { mdiCog, mdiFlash, mdiPowerPlug } from '@mdi/js';
+import { mdiFlash, mdiPowerPlug } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
 import { Badge, MessagePlugin } from 'tdesign-react';
 import { Component as BasicAuth } from '../../features/basicAuth';
@@ -457,11 +457,6 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         {stores.user.waAkgEmail ||
                           `${stores.user.data.firstname} ${stores.user.data.lastname}`}
                       </span>
-                      {/* <img
-                        src="./assets/images/topbar-user-chevron.svg"
-                        alt=""
-                        className="w-[16px] h-[16px]"
-                      /> */}
                       <button
                         type="button"
                         onClick={() =>
@@ -469,13 +464,17 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                             settingsModalVisible: true,
                           })
                         }
-                        className="ml-2 p-3 -m-3 sidebar__button sidebar__button--settings"
+                        className="p-[6px] sidebar__button sidebar__button--settings flex items-center justify-center"
                         data-tooltip-id="tooltip-sidebar-button"
                         data-tooltip-content={intl.formatMessage(
                           messages.settingsTooltip,
                         )}
                       >
-                        <Icon icon={mdiCog} size={1} />
+                        <img
+                          src="./assets/icons/setting.svg"
+                          alt=""
+                          className="w-[20px] h-[20px]"
+                        />
                         {showUpdateDot && (
                           <span className="update-available">•</span>
                         )}

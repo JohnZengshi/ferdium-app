@@ -13,7 +13,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { FolderOpenIcon, LockOnIcon, UserIcon } from 'tdesign-icons-react';
 
 const messages = defineMessages({
   stageSectionTitle: {
@@ -569,16 +568,11 @@ class ResumeTab extends Component<IProps> {
       <div className="flex min-h-[284px] flex-col rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path
-                  d="M5 2V8M2 5H8"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
+            <img
+              src={`${ICON_PATH}/适用阶段.svg`}
+              alt=""
+              className="h-[20px] w-[20px] object-contain"
+            />
           </div>
           <span className="text-[20px] font-bold text-primary">
             {intl.formatMessage(messages.stageSectionTitle)}
@@ -677,9 +671,11 @@ class ResumeTab extends Component<IProps> {
       <div className="flex flex-col min-h-[148px] rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <UserIcon className="text-white" />
-            </div>
+            <img
+              src={`${ICON_PATH}/个人介绍.svg`}
+              alt=""
+              className="h-[20px] w-[20px] object-contain"
+            />
           </div>
           <span className="text-[20px] font-bold text-primary">
             {intl.formatMessage(messages.profileSectionTitle)}
@@ -713,9 +709,11 @@ class ResumeTab extends Component<IProps> {
       <div className="flex min-h-[292px] flex-col rounded-[8px] bg-container p-[24px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <FolderOpenIcon className="text-white" />
-            </div>
+            <img
+              src={`${ICON_PATH}/客户评价.svg`}
+              alt=""
+              className="h-[20px] w-[20px] object-contain"
+            />
           </div>
           <span className="text-[20px] font-bold text-primary">
             {intl.formatMessage(messages.reviewSectionTitle)}
@@ -793,16 +791,11 @@ class ResumeTab extends Component<IProps> {
       <div className="flex min-h-[428px] min-w-[380px] flex-col rounded-[12px] bg-container p-[24px]">
         <div className="flex items-center gap-[12px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <svg width="10" height="10" viewBox="0.5 0.5 9 9" fill="none">
-                <path
-                  d="M2 8L5 5L8 2"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
+            <img
+              src={`${ICON_PATH}/成本节约数据.svg`}
+              alt=""
+              className="h-[20px] w-[20px] object-contain"
+            />
           </div>
           <span className="text-[20px] font-bold leading-[28px] text-primary">
             {costTitle}
@@ -934,38 +927,11 @@ class ResumeTab extends Component<IProps> {
     return (
       <div className="relative h-[312px] w-[594px] rounded-[6px] bg-container">
         <div className="absolute left-[24px] top-[24px] flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <circle cx="3.5" cy="3.5" r="1.5" fill="var(--td-brand-color)" />
-            <circle cx="3.5" cy="8" r="1.5" fill="var(--td-brand-color)" />
-            <circle cx="3.5" cy="12.5" r="1.5" fill="var(--td-brand-color)" />
-            <line
-              x1="8"
-              y1="3.5"
-              x2="13"
-              y2="3.5"
-              stroke="var(--td-brand-color)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-            <line
-              x1="8"
-              y1="8"
-              x2="13"
-              y2="8"
-              stroke="var(--td-brand-color)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-            <line
-              x1="8"
-              y1="12.5"
-              x2="13"
-              y2="12.5"
-              stroke="var(--td-brand-color)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
+          <img
+            src={`${ICON_PATH}/效率提升数据.svg`}
+            alt=""
+            className="h-[20px] w-[20px] object-contain"
+          />
         </div>
         <span className="absolute left-[72px] top-[29px] text-[20px] font-bold text-primary">
           {intl.formatMessage(messages.efficiencySectionTitle)}
@@ -979,7 +945,7 @@ class ResumeTab extends Component<IProps> {
               style={{ top: trackTop, height: 32 }}
             >
               <div className="absolute left-[24px] top-[12px] h-[8px] w-[8px] rounded-full bg-brand" />
-              <span className="absolute left-[41px] top-[4px] text-[16px] text-primary">
+              <span className="absolute left-[41px] top-[4px] text-[14px] text-primary">
                 {item.label}
               </span>
               <div className="absolute left-[175px] h-[32px] w-[395px] overflow-hidden rounded-[4px] bg-component">
@@ -1015,9 +981,11 @@ class ResumeTab extends Component<IProps> {
       <div className="flex min-h-[312px] flex-col rounded-[8px] bg-container p-[32px] pb-[36px] pt-[28px]">
         <div className="flex items-center gap-[8px]">
           <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-brand-light">
-            <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand">
-              <LockOnIcon className="text-white" />
-            </div>
+            <img
+              src={`${ICON_PATH}/核心能力.svg`}
+              alt=""
+              className="h-[20px] w-[20px] object-contain"
+            />
           </div>
           <span className="text-[20px] font-bold text-primary">
             {intl.formatMessage(messages.coreCompetencyTitle)}

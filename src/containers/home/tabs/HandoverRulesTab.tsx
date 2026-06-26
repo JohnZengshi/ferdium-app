@@ -1,5 +1,6 @@
 import { type ReactElement, useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+
 import { NotificationIcon } from 'tdesign-icons-react';
 import { Button, Dialog, Input, MessagePlugin } from 'tdesign-react';
 import type { TelegramBotResponse } from '../../../agent-flow-cs/api/generated/agentFlowCs.schemas';
@@ -344,13 +345,12 @@ const HandoverRulesTab = (): ReactElement => {
 
           <div className="w-[297px] mt-[24px] flex gap-[24px]">
             <div className="relative flex-1 overflow-hidden rounded-[12px] bg-brand-light p-[24px]">
-              <div className="pointer-events-none absolute right-0 top-0 h-full w-[40%] opacity-[0.08]">
-                <svg viewBox="0 0 200 160" className="h-full w-full">
-                  <path
-                    d="M200 160C160 100 120 120 80 80S40 20 0 40V160H200Z"
-                    style={{ fill: 'var(--td-brand-color)' }}
-                  />
-                </svg>
+              <div className="pointer-events-none absolute right-0 top-0 h-full w-[101px]">
+                <img
+                  src="./assets/images/handover-card-decoration.svg"
+                  alt=""
+                  className="block h-full w-full max-w-none"
+                />
               </div>
 
               <div className="flex h-[48px] w-[48px] items-center justify-center rounded-[12px] bg-brand">

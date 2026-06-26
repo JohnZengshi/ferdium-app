@@ -4,7 +4,7 @@
  */
 
 const AGENT_FLOW_CS_BASE =
-  process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.179:8000';
+  process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.228:8000';
 const TOKEN_STORAGE_KEY =
   process.env.AGENT_FLOW_TOKEN_STORAGE_KEY ?? 'agentFlowCsAccessToken';
 

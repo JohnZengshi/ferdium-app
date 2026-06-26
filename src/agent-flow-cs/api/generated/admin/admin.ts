@@ -18,24 +18,35 @@ import type {
   AppApiSchemasCustomerProfileListResponse,
   AppApiSchemasDigitalHumanListResponse,
   AppApiSchemasDigitalHumanResponse,
+  BodyUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost,
   ConversationBriefResponse,
   ConversationTrendsResponse,
   CustomerProfileDetailResponse,
+  DeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteParams,
   DigitalHumanAdminUpdateRequest,
   GetAgentStatsApiV1AdminStatsAgentStatsGetParams,
   GetConversationTrendsApiV1AdminStatsTrendsGetParams,
+  GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetParams,
+  GetLlmCostOwnersApiV1AdminLlmCostOwnersGetParams,
+  GetLlmCostSummaryApiV1AdminLlmCostSummaryGetParams,
+  GetLlmCostTrendsApiV1AdminLlmCostTrendsGetParams,
   HTTPValidationError,
   HandoffListResponse,
   HealthCheckResponse,
   KnowledgeAssignRequest,
   KnowledgeAssignmentResponse,
+  KnowledgeBatchAssignRequest,
+  KnowledgeBatchAssignmentResponse,
   KnowledgeCollectionCreateRequest,
   KnowledgeCollectionListResponse,
   KnowledgeCollectionResponse,
   KnowledgeDeleteResponse,
+  KnowledgeDocumentListResponse,
   KnowledgeOverviewResponse,
+  KnowledgeUploadResponse,
   ListAdminsApiV1AdminAdminsGetParams,
   ListAuditLogsApiV1AdminAuditAuditLogsGetParams,
+  ListCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetParams,
   ListCollectionsApiV1AdminKnowledgeCollectionsGetParams,
   ListConversationsApiV1AdminOverviewConversationsGetParams,
   ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams,
@@ -43,6 +54,10 @@ import type {
   ListHandoffsApiV1AdminOverviewHandoffsGetParams,
   ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams,
   ListOwnersApiV1AdminAccountsOwnersGetParams,
+  LlmCostBreakdownResponse,
+  LlmCostOwnersResponse,
+  LlmCostSummaryResponse,
+  LlmCostTrendsResponse,
   MemberBriefResponse,
   MemoryOverviewResponse,
   MessageBriefResponse,
@@ -1726,6 +1741,50 @@ export const assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPos
 );}
 
 
+export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse201 = {
+  data: KnowledgeBatchAssignmentResponse
+  status: 201
+}
+
+export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseSuccess = (assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse201) & {
+  headers: Headers;
+};
+export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseError = (assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse422) & {
+  headers: Headers;
+};
+
+export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse = (assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseSuccess | assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseError)
+
+export const getAssignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostUrl = (collectionId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/assign/batch`
+}
+
+/**
+ * 将共享集合批量分配给多个主账号（幂等）。
+ * @summary Assign Collection Batch
+ */
+export const assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPost = async (collectionId: string,
+    knowledgeBatchAssignRequest: KnowledgeBatchAssignRequest, options?: RequestInit): Promise<assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse> => {
+
+  return useCustomInstance<assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse>(getAssignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostUrl(collectionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(knowledgeBatchAssignRequest)
+  }
+);}
+
+
 export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse200 = {
   data: KnowledgeDeleteResponse
   status: 200
@@ -1765,6 +1824,359 @@ export const revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwn
   {
     ...options,
     method: 'DELETE'
+
+
+  }
+);}
+
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse200 = {
+  data: KnowledgeDocumentListResponse
+  status: 200
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponseSuccess = (listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse200) & {
+  headers: Headers;
+};
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponseError = (listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse422) & {
+  headers: Headers;
+};
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse = (listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponseSuccess | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponseError)
+
+export const getListCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetUrl = (collectionId: string,
+    params?: ListCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/documents?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/documents`
+}
+
+/**
+ * 列出指定知识库集合的文档（跨租户，超管专用）。
+ * @summary List Collection Documents
+ */
+export const listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGet = async (collectionId: string,
+    params?: ListCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetParams, options?: RequestInit): Promise<listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse> => {
+
+  return useCustomInstance<listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse>(getListCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetUrl(collectionId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse201 = {
+  data: KnowledgeUploadResponse
+  status: 201
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponseSuccess = (uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse201) & {
+  headers: Headers;
+};
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponseError = (uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse422) & {
+  headers: Headers;
+};
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse = (uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponseSuccess | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponseError)
+
+export const getUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostUrl = (collectionId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/documents`
+}
+
+/**
+ * 上传文档到指定知识库集合（超管专用，可用于默认库文件维护）。
+ * @summary Upload Document
+ */
+export const uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost = async (collectionId: string,
+    bodyUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost: BodyUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost, options?: RequestInit): Promise<uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse> => {
+    const formData = new FormData();
+formData.append(`file`, bodyUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost.file);
+
+  return useCustomInstance<uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse>(getUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostUrl(collectionId),
+  {
+    ...options,
+    method: 'POST'
+    ,
+    body: formData
+  }
+);}
+
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse200 = {
+  data: KnowledgeDeleteResponse
+  status: 200
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponseSuccess = (deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse200) & {
+  headers: Headers;
+};
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponseError = (deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse422) & {
+  headers: Headers;
+};
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse = (deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponseSuccess | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponseError)
+
+export const getDeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteUrl = (docId: string,
+    params: DeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/knowledge/documents/${docId}?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/knowledge/documents/${docId}`
+}
+
+/**
+ * 删除知识库集合中的文档（超管专用，可用于默认库文件）。
+ * @summary Delete Document
+ */
+export const deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDelete = async (docId: string,
+    params: DeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteParams, options?: RequestInit): Promise<deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse> => {
+
+  return useCustomInstance<deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse>(getDeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteUrl(docId,params),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse200 = {
+  data: LlmCostSummaryResponse
+  status: 200
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponseSuccess = (getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse200) & {
+  headers: Headers;
+};
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponseError = (getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse422) & {
+  headers: Headers;
+};
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse = (getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponseSuccess | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponseError)
+
+export const getGetLlmCostSummaryApiV1AdminLlmCostSummaryGetUrl = (params?: GetLlmCostSummaryApiV1AdminLlmCostSummaryGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/llm-cost/summary?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/llm-cost/summary`
+}
+
+/**
+ * 平台级 LLM 成本总计，可按子账号过滤。
+ * @summary Get Llm Cost Summary
+ */
+export const getLlmCostSummaryApiV1AdminLlmCostSummaryGet = async (params?: GetLlmCostSummaryApiV1AdminLlmCostSummaryGetParams, options?: RequestInit): Promise<getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse> => {
+
+  return useCustomInstance<getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse>(getGetLlmCostSummaryApiV1AdminLlmCostSummaryGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse200 = {
+  data: LlmCostOwnersResponse
+  status: 200
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponseSuccess = (getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse200) & {
+  headers: Headers;
+};
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponseError = (getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse422) & {
+  headers: Headers;
+};
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse = (getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponseSuccess | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponseError)
+
+export const getGetLlmCostOwnersApiV1AdminLlmCostOwnersGetUrl = (params?: GetLlmCostOwnersApiV1AdminLlmCostOwnersGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/llm-cost/owners?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/llm-cost/owners`
+}
+
+/**
+ * 按子账号（owner）成本排名。
+ * @summary Get Llm Cost Owners
+ */
+export const getLlmCostOwnersApiV1AdminLlmCostOwnersGet = async (params?: GetLlmCostOwnersApiV1AdminLlmCostOwnersGetParams, options?: RequestInit): Promise<getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse> => {
+
+  return useCustomInstance<getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse>(getGetLlmCostOwnersApiV1AdminLlmCostOwnersGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse200 = {
+  data: LlmCostTrendsResponse
+  status: 200
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponseSuccess = (getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse200) & {
+  headers: Headers;
+};
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponseError = (getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse422) & {
+  headers: Headers;
+};
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse = (getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponseSuccess | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponseError)
+
+export const getGetLlmCostTrendsApiV1AdminLlmCostTrendsGetUrl = (params?: GetLlmCostTrendsApiV1AdminLlmCostTrendsGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/llm-cost/trends?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/llm-cost/trends`
+}
+
+/**
+ * 每日成本趋势，可按子账号过滤。
+ * @summary Get Llm Cost Trends
+ */
+export const getLlmCostTrendsApiV1AdminLlmCostTrendsGet = async (params?: GetLlmCostTrendsApiV1AdminLlmCostTrendsGetParams, options?: RequestInit): Promise<getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse> => {
+
+  return useCustomInstance<getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse>(getGetLlmCostTrendsApiV1AdminLlmCostTrendsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse200 = {
+  data: LlmCostBreakdownResponse
+  status: 200
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponseSuccess = (getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse200) & {
+  headers: Headers;
+};
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponseError = (getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse422) & {
+  headers: Headers;
+};
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse = (getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponseSuccess | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponseError)
+
+export const getGetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetUrl = (params: GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/llm-cost/breakdown?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/llm-cost/breakdown`
+}
+
+/**
+ * 按 agent / model / member 维度分解成本。
+ *
+ * member 维度仅含 API 触发的调用（translate / proactive 等）——agent 流由客户
+ * 消息触发，无 caller 归因，故 member 下钻不覆盖会话内 Agent 调用。
+ * @summary Get Llm Cost Breakdown
+ */
+export const getLlmCostBreakdownApiV1AdminLlmCostBreakdownGet = async (params: GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetParams, options?: RequestInit): Promise<getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse> => {
+
+  return useCustomInstance<getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse>(getGetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
 
 
   }

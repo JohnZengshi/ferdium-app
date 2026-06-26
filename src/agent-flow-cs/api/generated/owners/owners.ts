@@ -30,6 +30,8 @@ import type {
   KnowledgeDocumentListResponse,
   KnowledgeOwnerCollectionCreateRequest,
   KnowledgeOwnerCollectionCreateResponse,
+  KnowledgeRetrieveRequest,
+  KnowledgeRetrieveResponse,
   KnowledgeUploadResponse,
   ListAuditLogsApiV1OwnersAuditLogsGetParams,
   ListConversationsApiV1OwnersConversationsGetParams,
@@ -262,6 +264,49 @@ export const deleteDigitalHumanApiV1OwnersDigitalHumansDhIdDelete = async (dhId:
   {
     ...options,
     method: 'DELETE'
+
+
+  }
+);}
+
+
+export type refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponse200 = {
+  data: AppApiSchemasOwnersDigitalHumanResponse
+  status: 200
+}
+
+export type refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponseSuccess = (refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponse200) & {
+  headers: Headers;
+};
+export type refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponseError = (refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponse422) & {
+  headers: Headers;
+};
+
+export type refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponse = (refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponseSuccess | refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponseError)
+
+export const getRefineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostUrl = (dhId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans/${dhId}/refine-agent-prompt`
+}
+
+/**
+ * 按需触发 LLM 精炼 agent_persona_prompt 并落库。
+ * @summary Refine Agent Prompt
+ */
+export const refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPost = async (dhId: string, options?: RequestInit): Promise<refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponse> => {
+
+  return useCustomInstance<refineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostResponse>(getRefineAgentPromptApiV1OwnersDigitalHumansDhIdRefineAgentPromptPostUrl(dhId),
+  {
+    ...options,
+    method: 'POST'
 
 
   }
@@ -980,6 +1025,52 @@ export const listDocumentsApiV1OwnersKnowledgeDocumentsGet = async (params?: Lis
     method: 'GET'
 
 
+  }
+);}
+
+
+export type retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse200 = {
+  data: KnowledgeRetrieveResponse
+  status: 200
+}
+
+export type retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponseSuccess = (retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse200) & {
+  headers: Headers;
+};
+export type retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponseError = (retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse422) & {
+  headers: Headers;
+};
+
+export type retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse = (retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponseSuccess | retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponseError)
+
+export const getRetrieveKnowledgeApiV1OwnersKnowledgeRetrievePostUrl = () => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/knowledge/retrieve`
+}
+
+/**
+ * 知识库召回测试：对 owner 有权访问的 collection 执行检索，返回命中片段。
+ *
+ * 只读操作，权限口径与 list_documents 一致（allow_default=True）——
+ * owner 对被分配的默认库也可测试召回，但 collection 必须在白名单内，否则 403。
+ * @summary Retrieve Knowledge
+ */
+export const retrieveKnowledgeApiV1OwnersKnowledgeRetrievePost = async (knowledgeRetrieveRequest: KnowledgeRetrieveRequest, options?: RequestInit): Promise<retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse> => {
+
+  return useCustomInstance<retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse>(getRetrieveKnowledgeApiV1OwnersKnowledgeRetrievePostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(knowledgeRetrieveRequest)
   }
 );}
 

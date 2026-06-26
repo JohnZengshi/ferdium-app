@@ -8,7 +8,7 @@ import { getApiKey } from '../../whatsapp-automation/api/auth';
 import { getAccessToken } from './auth';
 
 export const AGENT_FLOW_CS_BASE =
-  process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.179:8000';
+  process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.228:8000';
 
 type OrvalResponse<T> = {
   data: T;

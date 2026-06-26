@@ -856,6 +856,7 @@
   "menu.workspaces.closeWorkspaceDrawer": "关闭工作区列表",
   "menu.workspaces.defaultWorkspace": "所有服务",
   "menu.workspaces.openWorkspaceDrawer": "打开工作组列表",
+  "notificationsTab.action.jumpToChat": "聊天",
   "notificationsTab.action.viewConversation": "查看",
   "notificationsTab.btn.exportAll": "导出全部",
   "notificationsTab.btn.exportSelected": "导出选中",

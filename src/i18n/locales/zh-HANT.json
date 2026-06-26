@@ -810,6 +810,7 @@
   "menu.workspaces.closeWorkspaceDrawer": "關閉工作區",
   "menu.workspaces.defaultWorkspace": "所有服務",
   "menu.workspaces.openWorkspaceDrawer": "打開工作區",
+  "notificationsTab.action.jumpToChat": "聊天",
   "notificationsTab.action.viewConversation": "檢視",
   "notificationsTab.btn.exportAll": "導出全部",
   "notificationsTab.btn.exportSelected": "匯出所選",

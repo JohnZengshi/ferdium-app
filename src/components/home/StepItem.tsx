@@ -52,13 +52,13 @@ export function StepItem(props: StepItemProps): ReactElement {
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="flex-shrink-0"
+        className="flex-shrink-0 text-placeholder"
       >
         <circle
           cx="12"
           cy="12"
           r="10"
-          stroke="black"
+          stroke="currentColor"
           strokeOpacity="0.4"
           strokeWidth="2"
         />
@@ -67,7 +67,7 @@ export function StepItem(props: StepItemProps): ReactElement {
           y="12"
           textAnchor="middle"
           dominantBaseline="central"
-          fill="black"
+          fill="currentColor"
           fillOpacity="0.4"
           fontSize="14"
           fontWeight="600"

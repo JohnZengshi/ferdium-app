@@ -417,7 +417,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         className="[&_.t-dialog\\_\\_body]:!p-0 [&_.t-dialog\\_\\_wrap]:!items-center [&_.t-dialog]:!p-0"
       >
         <div className="flex max-h-[85vh] flex-col overflow-hidden rounded-[12px]">
-          <div className="flex h-[56px] flex-shrink-0 items-center justify-between border-b border-solid border-[#E7E7E7] bg-white px-[16px]">
+          <div className="flex h-[56px] flex-shrink-0 items-center justify-between border-b border-solid border-line bg-container px-[16px]">
             <span className="text-[16px] font-semibold leading-[24px] text-primary">
               {this.props.intl.formatMessage(messages.resumeTitle, {
                 name: emp.name,

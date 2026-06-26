@@ -1102,7 +1102,11 @@ class ResumeTab extends Component<IProps> {
                 {cap.iconSrc ? (
                   <img
                     src={cap.iconSrc}
-                    alt={cap.titleId ? intl.formatMessage({ id: cap.titleId }) : cap.title}
+                    alt={
+                      cap.titleId
+                        ? intl.formatMessage({ id: cap.titleId })
+                        : cap.title
+                    }
                     className="h-[24px] w-[24px]"
                   />
                 ) : (
@@ -1116,10 +1120,14 @@ class ResumeTab extends Component<IProps> {
               </div>
               <div className="flex-1">
                 <span className="block text-[16px] font-bold leading-[22px] text-primary">
-                  {cap.titleId ? intl.formatMessage({ id: cap.titleId }) : cap.title}
+                  {cap.titleId
+                    ? intl.formatMessage({ id: cap.titleId })
+                    : cap.title}
                 </span>
                 <span className="mt-[4px] block text-[13px] font-normal leading-[20px] text-primary line-clamp-2">
-                  {cap.descId ? intl.formatMessage({ id: cap.descId }) : cap.description}
+                  {cap.descId
+                    ? intl.formatMessage({ id: cap.descId })
+                    : cap.description}
                 </span>
               </div>
             </div>

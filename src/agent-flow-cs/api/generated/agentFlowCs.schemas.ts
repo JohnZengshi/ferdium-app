@@ -251,10 +251,100 @@ export interface AuditLogResponse {
   created_at: string;
 }
 
+export interface BodyUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost {
+  file: Blob;
+}
+
 export interface BodyUploadDocumentApiV1OwnersKnowledgeUploadPost {
   file: Blob;
   collection?: string | null;
   domain?: string | null;
+}
+
+export type BusinessGoalConfigQualificationFieldsItem = { [key: string]: unknown };
+
+/**
+ * 北极星目标漏斗的单个阶段。
+ *
+ * key 由业务自定义（trust/kyc/deposit/trade 等），不枚举，避免硬编码业务。
+ * customer_signals 供 GoalDirector LLM 诊断 + 规则兜底匹配。
+ */
+export interface FunnelStage {
+  /**
+     * @minLength 1
+     * @maxLength 64
+     */
+  key: string;
+  /** @maxLength 64 */
+  label?: string;
+  customer_signals?: string[];
+  /**
+     * 该阶段本轮推进动作；建议≤30字（注入 agent 指令时按 30 字截断，超长会切断语义）
+     * @maxLength 200
+     */
+  next_action?: string;
+  /**
+     * 滞留多少轮后可主动推进
+     * @minimum 1
+     */
+  advance_min_turns?: number;
+  /**
+     * 推进所需最低准备度
+     * @minimum 0
+     * @maximum 1
+     */
+  advance_min_readiness?: number;
+  /** 售后段标记：成交后生命周期段（如 aftercare/repurchase），advance 语义为售后跟进/复购引导而非转化推进 */
+  post_conversion?: boolean;
+}
+
+/**
+ * 数字人北极星目标配置。
+ *
+ * enabled=false 或缺失时，GoalDirector 短路，编排行为与未引入该字段时一致。
+ * enabled=true 时必须提供 name/north_star/funnel。
+ */
+export interface BusinessGoalConfig {
+  enabled?: boolean;
+  /** @maxLength 128 */
+  name?: string;
+  /** @maxLength 500 */
+  north_star?: string;
+  funnel?: FunnelStage[];
+  /** 目标级红线提示，运行时读；硬约束由账号级 safety_boundary 兜底 */
+  safety_boundaries?: string[];
+  /** 资格审查字段定义：key/label/enum_values/priority/hook_reason */
+  qualification_fields?: BusinessGoalConfigQualificationFieldsItem[];
+}
+
+export type BusinessGoalConfigPatchQualificationFields = { [key: string]: unknown }[] | null;
+
+/**
+ * 漏斗阶段的局部更新；未传字段保持未设置。
+ */
+export interface FunnelStagePatch {
+  key?: string | null;
+  label?: string | null;
+  customer_signals?: string[] | null;
+  next_action?: string | null;
+  advance_min_turns?: number | null;
+  advance_min_readiness?: number | null;
+  post_conversion?: boolean | null;
+}
+
+/**
+ * 北极星目标的局部更新；传 None 表示不更新。
+ *
+ * 前端编辑器每次提交完整 business_goal（Form 全量），故 enabled=true 时
+ * 仍要求 name/north_star/funnel 齐全，与 BusinessGoalConfig 校验对称。
+ */
+export interface BusinessGoalConfigPatch {
+  enabled?: boolean | null;
+  name?: string | null;
+  north_star?: string | null;
+  funnel?: FunnelStagePatch[] | null;
+  safety_boundaries?: string[] | null;
+  qualification_fields?: BusinessGoalConfigPatchQualificationFields;
 }
 
 export type CampaignScheduleRequestScheduleKind = typeof CampaignScheduleRequestScheduleKind[keyof typeof CampaignScheduleRequestScheduleKind];
@@ -624,6 +714,10 @@ export interface PersonaConfig {
      * @maxLength 2000
      */
   persona_prompt?: string;
+  /** 由系统从 persona_prompt 精炼的结构化 Agent system prompt；owner 可在编辑页查看并手工微调，必须符合结构化人设模板。 */
+  agent_persona_prompt?: string | null;
+  /** 北极星目标配置；enabled=false 时编排行为不变 */
+  business_goal?: BusinessGoalConfig;
 }
 
 export interface DigitalHumanCreate {
@@ -714,6 +808,10 @@ export interface PersonaConfigPatch {
   opening?: string | null;
   signature?: string | null;
   persona_prompt?: string | null;
+  /** 结构化 Agent system prompt；传 None 表示不更新，传空串表示清除。 */
+  agent_persona_prompt?: string | null;
+  /** 北极星目标局部更新；传 None 表示不更新 */
+  business_goal?: BusinessGoalConfigPatch | null;
 }
 
 export interface DigitalHumanUpdate {
@@ -857,6 +955,8 @@ export interface HandoffBriefResponse {
   updated_at: string;
   read_at?: string | null;
   customer_jid?: string | null;
+  /** 该会话绑定的 WA-AKG session_id */
+  wa_session_id?: string | null;
   digital_human_name?: string | null;
   trigger_message_id?: string | null;
   trigger_message_content?: string | null;
@@ -883,8 +983,7 @@ export interface HandoffListResponse {
   total: number;
   /** @minimum 0 */
   offset: number;
-  /** @minimum 1 */
-  limit: number;
+  limit?: number | null;
 }
 
 /**
@@ -952,6 +1051,78 @@ export interface HealthCheckResponse {
   checked_at: string;
 }
 
+export interface HumanCaseIngestErrorItem {
+  index: number;
+  error: string;
+}
+
+/**
+ * 单条待录入的人工回复原文。
+ */
+export interface HumanCaseIngestItemRequest {
+  /**
+     * @minLength 1
+     * @maxLength 8000
+     */
+  raw_reply: string;
+  /** @maxLength 64 */
+  agent_code?: string;
+  /** @maxItems 20 */
+  tags?: string[];
+}
+
+/**
+ * 批量录入人工回复案例。
+ */
+export interface HumanCaseIngestRequest {
+  /**
+     * @minItems 1
+     * @maxItems 50
+     */
+  items: HumanCaseIngestItemRequest[];
+}
+
+/**
+ * 人工回复案例响应。
+ */
+export interface HumanCaseResponse {
+  key: string;
+  situation: string;
+  approach: string;
+  outcome: string;
+  source_reply_summary: string;
+  agent_code: string;
+  tags?: string[];
+  enabled: boolean;
+  effectiveness: number;
+  created_at: string;
+}
+
+/**
+ * 批量录入结果。
+ */
+export interface HumanCaseIngestResponse {
+  /** @minimum 0 */
+  ingested: number;
+  /** @minimum 0 */
+  failed: number;
+  items?: HumanCaseResponse[];
+  errors?: HumanCaseIngestErrorItem[];
+}
+
+/**
+ * 人工回复案例分页列表响应。
+ */
+export interface HumanCaseListResponse {
+  items?: HumanCaseResponse[];
+  /** @minimum 0 */
+  total: number;
+  /** @minimum 0 */
+  offset: number;
+  /** @minimum 1 */
+  limit: number;
+}
+
 /**
  * Admin: 将集合分配给主账号。
  */
@@ -969,6 +1140,42 @@ export interface KnowledgeAssignmentResponse {
   owner_id: string;
   is_active: boolean;
   created_at: string;
+}
+
+/**
+ * Admin: 将集合批量分配给多个主账号。
+ */
+export interface KnowledgeBatchAssignRequest {
+  owner_ids: string[];
+}
+
+/**
+ * 批量分配结果项（成功分配或提交前已活跃）。
+ */
+export interface KnowledgeBatchAssignmentItem {
+  owner_id: string;
+  username: string;
+}
+
+/**
+ * 批量分配结果项（跳过：主账号不存在或非主账号角色）。
+ */
+export interface KnowledgeBatchSkippedItem {
+  owner_id: string;
+  reason: string;
+}
+
+/**
+ * 批量分配汇总响应。
+ */
+export interface KnowledgeBatchAssignmentResponse {
+  collection_id: string;
+  collection_name: string;
+  assigned?: KnowledgeBatchAssignmentItem[];
+  already_active?: KnowledgeBatchAssignmentItem[];
+  skipped?: KnowledgeBatchSkippedItem[];
+  /** @minimum 0 */
+  total_requested: number;
 }
 
 /**
@@ -1075,6 +1282,7 @@ export interface KnowledgeOverviewResponse {
   total_collections?: number;
   admin_shared_count?: number;
   owner_selfbuilt_count?: number;
+  system_count?: number;
   total_assignments?: number;
   assigned_owner_count?: number;
 }
@@ -1102,6 +1310,47 @@ export interface KnowledgeOwnerCollectionCreateResponse {
   description?: string | null;
   document_count?: number;
   created_at: string;
+}
+
+export type KnowledgeRetrieveChunkItemMetadata = { [key: string]: unknown };
+
+/**
+ * 召回命中的单个知识片段。
+ */
+export interface KnowledgeRetrieveChunkItem {
+  content: string;
+  score?: number | null;
+  doc_id?: string;
+  chunk_id?: string;
+  domain?: string;
+  metadata?: KnowledgeRetrieveChunkItemMetadata;
+}
+
+/**
+ * 知识库召回测试请求。
+ */
+export interface KnowledgeRetrieveRequest {
+  /**
+     * @minLength 1
+     * @maxLength 512
+     */
+  query: string;
+  collection: string;
+  top_k?: number | null;
+  domain?: string | null;
+}
+
+/**
+ * 知识库召回测试响应。
+ */
+export interface KnowledgeRetrieveResponse {
+  query: string;
+  collection: string;
+  chunks?: KnowledgeRetrieveChunkItem[];
+  /** @minimum 0 */
+  total: number;
+  low_confidence?: boolean;
+  threshold?: number | null;
 }
 
 export type KnowledgeSearchRequestFilters = { [key: string]: unknown } | null;
@@ -1150,6 +1399,86 @@ export interface KnowledgeUploadResponse {
 }
 
 /**
+ * 单维度成本分解行。
+ */
+export interface LlmCostBreakdownRow {
+  key: string;
+  label: string;
+  cost_usd?: number;
+  tokens?: number;
+  calls?: number;
+}
+
+/**
+ * LLM 成本维度分解响应（agent / model / member）。
+ */
+export interface LlmCostBreakdownResponse {
+  dimension: string;
+  items?: LlmCostBreakdownRow[];
+  owner_user_id?: string | null;
+  start: string;
+  end: string;
+}
+
+/**
+ * 单个子账号（owner）的成本汇总行。
+ */
+export interface LlmCostOwnerRow {
+  owner_user_id: string;
+  owner_name?: string | null;
+  cost_usd?: number;
+  prompt_tokens?: number;
+  completion_tokens?: number;
+  calls?: number;
+  conversations?: number;
+}
+
+/**
+ * 子账号成本排名响应。
+ */
+export interface LlmCostOwnersResponse {
+  items?: LlmCostOwnerRow[];
+  start: string;
+  end: string;
+}
+
+/**
+ * LLM 成本平台总计。
+ */
+export interface LlmCostSummaryResponse {
+  total_cost_usd?: number;
+  total_prompt_tokens?: number;
+  total_completion_tokens?: number;
+  total_calls?: number;
+  success_calls?: number;
+  failed_calls?: number;
+  conversation_count?: number;
+  owner_count?: number;
+  start: string;
+  end: string;
+}
+
+/**
+ * 单日成本趋势数据点。
+ */
+export interface LlmCostTrendPoint {
+  date: string;
+  cost_usd?: number;
+  calls?: number;
+  tokens?: number;
+}
+
+/**
+ * LLM 成本每日趋势响应。
+ */
+export interface LlmCostTrendsResponse {
+  points?: LlmCostTrendPoint[];
+  owner_user_id?: string | null;
+  start: string;
+  end: string;
+}
+
+/**
  * 用户名密码登录请求体。
  */
 export interface LoginRequest {
@@ -1190,9 +1519,10 @@ export interface MemberBriefResponse {
  */
 export interface MemberCreateRequest {
   /**
-     * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
+     * 子账号用户名，仅限大小写字母/数字/下划线；自动追加 --{企业码} 后缀
      * @minLength 3
      * @maxLength 52
+     * @pattern ^[A-Za-z0-9_]+$
      */
   username: string;
   /**
@@ -1444,9 +1774,10 @@ export interface ResetPasswordRequest {
 
 export interface SubAccountCreate {
   /**
-     * 子账号用户名，将自动追加 --{企业码} 后缀形成最终用户名
+     * 子账号用户名，仅限大小写字母/数字/下划线；自动追加 --{企业码} 后缀
      * @minLength 1
      * @maxLength 52
+     * @pattern ^[A-Za-z0-9_]+$
      */
   username: string;
   /**
@@ -1989,6 +2320,91 @@ owner_id?: string | null;
 search?: string | null;
 };
 
+export type ListCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+page_size?: number;
+};
+
+export type DeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteParams = {
+/**
+ * 文档所属知识库集合 ID
+ */
+collection_id: string;
+};
+
+export type GetLlmCostSummaryApiV1AdminLlmCostSummaryGetParams = {
+/**
+ * 起始时间 ISO 8601
+ */
+start?: string | null;
+/**
+ * 结束时间 ISO 8601
+ */
+end?: string | null;
+/**
+ * 限定子账号
+ */
+owner_user_id?: string | null;
+};
+
+export type GetLlmCostOwnersApiV1AdminLlmCostOwnersGetParams = {
+/**
+ * 起始时间 ISO 8601
+ */
+start?: string | null;
+/**
+ * 结束时间 ISO 8601
+ */
+end?: string | null;
+};
+
+export type GetLlmCostTrendsApiV1AdminLlmCostTrendsGetParams = {
+/**
+ * 起始时间 ISO 8601
+ */
+start?: string | null;
+/**
+ * 结束时间 ISO 8601
+ */
+end?: string | null;
+/**
+ * 限定子账号
+ */
+owner_user_id?: string | null;
+};
+
+export type GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetParams = {
+dimension: GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetDimension;
+/**
+ * 起始时间 ISO 8601
+ */
+start?: string | null;
+/**
+ * 结束时间 ISO 8601
+ */
+end?: string | null;
+/**
+ * 限定子账号
+ */
+owner_user_id?: string | null;
+};
+
+export type GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetDimension = typeof GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetDimension[keyof typeof GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetDimension];
+
+
+export const GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetDimension = {
+  agent: 'agent',
+  model: 'model',
+  member: 'member',
+} as const;
+
 export type GetConversationTraceApiV1ChatConversationIdTraceGetParams = {
 /**
  * 返回最近 N 轮，0 表示全部
@@ -2117,6 +2533,19 @@ created_before?: string | null;
  */
 offset?: number;
 limit?: number | null;
+};
+
+export type ListHumanCasesEndpointApiV1HumanCasesGetParams = {
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 200
+ */
+limit?: number;
+include_disabled?: boolean;
 };
 
 export type ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams = {

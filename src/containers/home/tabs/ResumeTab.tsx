@@ -139,19 +139,19 @@ const messages = defineMessages({
   },
   effCustomerWorkHour: {
     id: 'resumeTab.effCustomerWorkHour',
-    defaultMessage: 'Hours Saved',
+    defaultMessage: 'Hours',
   },
   effOperationEfficiency: {
     id: 'resumeTab.effOperationEfficiency',
-    defaultMessage: 'Ops Efficiency',
+    defaultMessage: 'Efficiency',
   },
   effProcessAutomation: {
     id: 'resumeTab.effProcessAutomation',
-    defaultMessage: 'Automation Rate',
+    defaultMessage: 'Automation',
   },
   effHighRiskInterception: {
     id: 'resumeTab.effHighRiskInterception',
-    defaultMessage: 'Risk Interception',
+    defaultMessage: 'Interception',
   },
   coreCompetencyTitle: {
     id: 'resumeTab.coreCompetencyTitle',
@@ -236,7 +236,9 @@ interface IProps extends ResumeTabProps, WrappedComponentProps {}
 
 type CoreCompetencyItem = {
   title: string;
+  titleId?: string;
   description: string;
+  descId?: string;
   iconBg?: string;
   iconSrc?: string;
 };
@@ -247,304 +249,400 @@ const CHARACTER_COMPETENCIES: Record<string, CoreCompetencyItem[]> = {
   Monica: [
     {
       title: '异常识别',
+      titleId: 'resumeTab.monicaAbnormalIdentification',
       description: '识别投诉、退款、纠纷、账号安全、支付问题等高风险会话',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.monicaAbnormalIdentificationDesc',
+      iconBg: '#ebf2fe',
       iconSrc: `${ICON_PATH}/异常识别.svg`,
     },
     {
       title: '风险控制',
+      titleId: 'resumeTab.monicaRiskControl',
       description: '限制AI超范围回复（如承诺收益、违规优惠、私联引导等）',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.monicaRiskControlDesc',
+      iconBg: '#e9f9f1',
       iconSrc: `${ICON_PATH}/风险控制.svg`,
     },
     {
       title: '人工通知',
+      titleId: 'resumeTab.monicaHumanHandoff',
       description: '当客户要求真人或问题超出能力范围时，自动转人工处理',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.monicaHumanHandoffDesc',
+      iconBg: '#e6f9fe',
       iconSrc: `${ICON_PATH}/人工通知.svg`,
     },
     {
       title: '高意向预警',
+      titleId: 'resumeTab.monicaHighIntentAlert',
       description: '识别高转化信号，提醒人工及时跟进避免流失',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.monicaHighIntentAlertDesc',
+      iconBg: '#fdf0e5',
       iconSrc: `${ICON_PATH}/高意向预警.svg`,
     },
     {
       title: '风控记录',
+      titleId: 'resumeTab.monicaRiskRecords',
       description: '自动沉淀风险事件，形成结构化风控与处理记录',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.monicaRiskRecordsDesc',
+      iconBg: '#f0effe',
       iconSrc: `${ICON_PATH}/风控记录.svg`,
     },
     {
       title: '非业务兜底',
+      titleId: 'resumeTab.monicaNonBusinessFallback',
       description: '识别非业务咨询并礼貌引导回业务流程',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.monicaNonBusinessFallbackDesc',
+      iconBg: '#fffae1',
       iconSrc: `${ICON_PATH}/非业务兜底.svg`,
     },
   ],
   Alice: [
     {
       title: '陌生破冰',
+      titleId: 'resumeTab.aliceIcebreaker',
       description: '基于用户语气与响应意愿，选择自然轻松的开场方式降低防备',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.aliceIcebreakerDesc',
+      iconBg: '#fef2eb',
       iconSrc: `${ICON_PATH}/陌生破冰.svg`,
     },
     {
       title: '日常互动',
+      titleId: 'resumeTab.aliceDailyInteraction',
       description: '围绕客户兴趣延展话题，保持沟通连续性与自然感',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.aliceDailyInteractionDesc',
+      iconBg: '#fff9df',
       iconSrc: `${ICON_PATH}/日常互动.svg`,
     },
     {
       title: '情绪价值',
+      titleId: 'resumeTab.aliceEmotionalValue',
       description: '对客户情绪进行理解、安抚与陪伴，提升沟通意愿',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.aliceEmotionalValueDesc',
+      iconBg: '#ffeff5',
       iconSrc: `${ICON_PATH}/情绪价值.svg`,
     },
     {
       title: '人设信任建立',
+      titleId: 'resumeTab.aliceTrustBuilding',
       description: '通过非强推方式逐步建立信任与亲近感',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.aliceTrustBuildingDesc',
+      iconBg: '#feebeb',
       iconSrc: `${ICON_PATH}/人设信任建立.svg`,
     },
     {
       title: '话题拉回',
+      titleId: 'resumeTab.aliceTopicSteering',
       description: '在客户表达兴趣或需求时，及时引导至业务/转化路径',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.aliceTopicSteeringDesc',
+      iconBg: '#efffee',
       iconSrc: `${ICON_PATH}/话题拉回.svg`,
     },
     {
       title: '阶段判断',
+      titleId: 'resumeTab.aliceStageAssessment',
       description: '识别客户所处阶段并匹配对应沟通策略与动作',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.aliceStageAssessmentDesc',
+      iconBg: '#ebfefd',
       iconSrc: `${ICON_PATH}/阶段判断.svg`,
     },
   ],
   Leo: [
     {
       title: '意图识别',
+      titleId: 'resumeTab.leoIntentRecognition',
       description: '识别客户真实需求并匹配业务应答策略',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.leoIntentRecognitionDesc',
+      iconBg: '#d9f7d6',
       iconSrc: `${ICON_PATH}/识别意图.svg`,
     },
     {
       title: '客户画像加载',
+      titleId: 'resumeTab.leoProfileLoading',
       description: '整合客户特征，匹配对应服务与转化策略',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.leoProfileLoadingDesc',
+      iconBg: '#d8e0ff',
       iconSrc: `${ICON_PATH}/加载客户画像.svg`,
     },
     {
       title: '阶段判断',
+      titleId: 'resumeTab.leoStageAssessment',
       description: '识别客户所处生命周期阶段并制定跟进动作',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.leoStageAssessmentDesc',
+      iconBg: '#e3feff',
       iconSrc: `${ICON_PATH}/判断客户阶段.svg`,
     },
     {
       title: '数字员工调度',
+      titleId: 'resumeTab.leoDigitalEmployeeDispatch',
       description: '协同分配任务给数字员工完成接待与转化流程',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.leoDigitalEmployeeDispatchDesc',
+      iconBg: '#f7ebfe',
       iconSrc: `${ICON_PATH}/调度数字员工.svg`,
     },
     {
       title: '关键节点识别',
+      titleId: 'resumeTab.leoKeyNodeDetection',
       description: '捕捉业务转化关键节点并触发相应动作',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.leoKeyNodeDetectionDesc',
+      iconBg: '#ffebc4',
       iconSrc: `${ICON_PATH}/识别关键节点.svg`,
     },
     {
       title: '缓存命中判断',
+      titleId: 'resumeTab.leoCacheHitAssessment',
       description: '利用缓存数据快速响应，提升效率与体验',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.leoCacheHitAssessmentDesc',
+      iconBg: '#ebf4fe',
       iconSrc: `${ICON_PATH}/命中缓存判断.svg`,
     },
   ],
   Lily: [
     {
       title: '需求承接',
+      titleId: 'resumeTab.lilyRequirementIntake',
       description: '明确客户需求并推动进入服务流程',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.lilyRequirementIntakeDesc',
+      iconBg: '#edf2ff',
       iconSrc: `${ICON_PATH}/需求承接.svg`,
     },
     {
       title: '机会引导',
+      titleId: 'resumeTab.lilyOpportunityGuidance',
       description: '挖掘潜在机会并推动需求升级与方案推荐',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.lilyOpportunityGuidanceDesc',
+      iconBg: '#f8f2ff',
       iconSrc: `${ICON_PATH}/机会引导.svg`,
     },
     {
       title: '产品切入',
+      titleId: 'resumeTab.lilyProductPositioning',
       description: '结合业务场景精准植入产品卖点',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.lilyProductPositioningDesc',
+      iconBg: '#eff5ff',
       iconSrc: `${ICON_PATH}/产品切入.svg`,
     },
     {
       title: '转化推进',
+      titleId: 'resumeTab.lilyConversionAdvancement',
       description: '推动预约、成交及转化闭环落地',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.lilyConversionAdvancementDesc',
+      iconBg: '#fef8eb',
       iconSrc: `${ICON_PATH}/转化推进.svg`,
     },
     {
       title: '异议回应',
+      titleId: 'resumeTab.lilyObjectionHandling',
       description: '针对客户疑虑进行解释与消解，降低流失',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.lilyObjectionHandlingDesc',
+      iconBg: '#fff0ed',
       iconSrc: `${ICON_PATH}/异议回应.svg`,
     },
     {
       title: '关键节点通知',
+      titleId: 'resumeTab.lilyKeyNodeNotification',
       description: '实时监控业务节点并提示重要状态变化',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.lilyKeyNodeNotificationDesc',
+      iconBg: '#fff9f2',
       iconSrc: `${ICON_PATH}/关键节点通知.svg`,
     },
   ],
   Kevin: [
     {
       title: '平台背景说明',
+      titleId: 'resumeTab.kevinPlatformBackground',
       description: '清晰解释产品/平台规则、业务背景与基础逻辑',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.kevinPlatformBackgroundDesc',
+      iconBg: '#ebf6fe',
       iconSrc: `${ICON_PATH}/平台背景说明.svg`,
     },
     {
       title: '功能操作讲解',
+      titleId: 'resumeTab.kevinFeatureTutorial',
       description: '指导用户理解功能使用方式与操作路径',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.kevinFeatureTutorialDesc',
+      iconBg: '#fff5df',
       iconSrc: `${ICON_PATH}/功能操作讲解.svg`,
     },
     {
       title: '奖励制度解释',
+      titleId: 'resumeTab.kevinRewardExplanation',
       description: '说明活动/机制/激励规则，降低理解成本',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.kevinRewardExplanationDesc',
+      iconBg: '#fff7db',
       iconSrc: `${ICON_PATH}/奖励制度解释.svg`,
     },
     {
       title: 'FAQ标准解答',
+      titleId: 'resumeTab.kevinFaqStandardAnswers',
       description: '对高频问题进行标准化、规范化答复',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.kevinFaqStandardAnswersDesc',
+      iconBg: '#f2feeb',
       iconSrc: `${ICON_PATH}/FAQ 标准解答.svg`,
     },
     {
       title: '资料引用说明',
+      titleId: 'resumeTab.kevinSourceCitation',
       description: '提供依据与规则来源，增强信息可信度',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.kevinSourceCitationDesc',
+      iconBg: '#fcebfe',
       iconSrc: `${ICON_PATH}/资料引用说明.svg`,
     },
     {
       title: '风险问题识别',
+      titleId: 'resumeTab.kevinRiskIssueDetection',
       description: '识别违规、误用或高风险问题并进行纠正引导',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.kevinRiskIssueDetectionDesc',
+      iconBg: '#feebeb',
       iconSrc: `${ICON_PATH}/风险问题识别.svg`,
     },
   ],
   Nina: [
     {
       title: '关系维护',
+      titleId: 'resumeTab.ninaRelationshipMaintenance',
       description: '持续经营客户关系，提升长期活跃与信任度',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.ninaRelationshipMaintenanceDesc',
+      iconBg: '#ecebfe',
       iconSrc: `${ICON_PATH}/关系维护.svg`,
     },
     {
       title: '复购引导',
+      titleId: 'resumeTab.ninaRepeatPurchaseGuidance',
       description: '基于用户行为与周期，推动再次消费与转化',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.ninaRepeatPurchaseGuidanceDesc',
+      iconBg: '#ffe8df',
       iconSrc: `${ICON_PATH}/复购引导.svg`,
     },
     {
       title: '邀请推广',
+      titleId: 'resumeTab.ninaReferralPromotion',
       description: '引导用户参与分享、裂变与推广活动',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.ninaReferralPromotionDesc',
+      iconBg: '#ffe7cc',
       iconSrc: `${ICON_PATH}/邀请推广.svg`,
     },
     {
       title: '经纪人扶持',
+      titleId: 'resumeTab.ninaAgentSupport',
       description: '支持经纪/销售角色提升转化与运营效率',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.ninaAgentSupportDesc',
+      iconBg: '#dde9ff',
       iconSrc: `${ICON_PATH}/经纪人扶持.svg`,
     },
     {
       title: '团队建设',
+      titleId: 'resumeTab.ninaTeamBuilding',
       description: '辅助构建与维护用户或销售团队结构',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.ninaTeamBuildingDesc',
+      iconBg: '#e4fee0',
       iconSrc: `${ICON_PATH}/团队建设.svg`,
     },
     {
       title: '老客唤醒',
+      titleId: 'resumeTab.ninaInactiveCustomerReactivation',
       description: '对沉默或流失客户进行激活与回访转化',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.ninaInactiveCustomerReactivationDesc',
+      iconBg: '#ebf4fe',
       iconSrc: `${ICON_PATH}/老客唤醒.svg`,
     },
   ],
   Tom: [
     {
       title: '标签生成',
+      titleId: 'resumeTab.tomTagGeneration',
       description: '基于行为与属性自动生成客户标签体系',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.tomTagGenerationDesc',
+      iconBg: '#ebeeff',
       iconSrc: `${ICON_PATH}/标签生成.svg`,
     },
     {
       title: '画像更新',
+      titleId: 'resumeTab.tomProfileUpdate',
       description: '动态更新客户画像，保持信息实时性',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.tomProfileUpdateDesc',
+      iconBg: '#f8ffcb',
       iconSrc: `${ICON_PATH}/画像更新.svg`,
     },
     {
       title: '聊天摘要',
+      titleId: 'resumeTab.tomChatSummary',
       description: '自动提炼沟通关键信息，形成结构化记录',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.tomChatSummaryDesc',
+      iconBg: '#e3feff',
       iconSrc: `${ICON_PATH}/聊天摘要.svg`,
     },
     {
       title: '阶段记录',
+      titleId: 'resumeTab.tomStageRecording',
       description: '记录客户所处生命周期与转化阶段',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.tomStageRecordingDesc',
+      iconBg: '#ebf0fe',
       iconSrc: `${ICON_PATH}/阶段记录.svg`,
     },
     {
       title: '意向评估',
+      titleId: 'resumeTab.tomIntentAssessment',
       description: '识别客户购买/合作意向强弱',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.tomIntentAssessmentDesc',
+      iconBg: '#ffe5e5',
       iconSrc: `${ICON_PATH}/意向评级.svg`,
     },
     {
       title: '客户价值评估',
+      titleId: 'resumeTab.tomCustomerValueAssessment',
       description: '评估客户潜在价值与转化优先级',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.tomCustomerValueAssessmentDesc',
+      iconBg: '#fffbce',
       iconSrc: `${ICON_PATH}/客户价值评估.svg`,
     },
   ],
   Emma: [
     {
       title: '精准客户接待',
+      titleId: 'resumeTab.emmaPreciseReception',
       description: '基于客户特征进行分层接待与匹配服务',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.emmaPreciseReceptionDesc',
+      iconBg: '#ffefeb',
       iconSrc: `${ICON_PATH}/精准客户接待.svg`,
     },
     {
       title: '专业开场',
+      titleId: 'resumeTab.emmaProfessionalOpening',
       description: '以标准化专业话术建立第一轮信任',
-      iconBg: '#F0FFF0',
+      descId: 'resumeTab.emmaProfessionalOpeningDesc',
+      iconBg: '#fff4f3',
       iconSrc: `${ICON_PATH}/专业开场.svg`,
     },
     {
       title: '兴趣确认',
+      titleId: 'resumeTab.emmaInterestConfirmation',
       description: '识别客户关注点与核心需求方向',
-      iconBg: '#F3F0FF',
+      descId: 'resumeTab.emmaInterestConfirmationDesc',
+      iconBg: '#ffebfc',
       iconSrc: `${ICON_PATH}/兴趣确认.svg`,
     },
     {
       title: '意向判断',
+      titleId: 'resumeTab.emmaIntentJudgment',
       description: '判断客户是否具备继续沟通与转化价值',
-      iconBg: '#FFF1F0',
+      descId: 'resumeTab.emmaIntentJudgmentDesc',
+      iconBg: '#def4ff',
       iconSrc: `${ICON_PATH}/意向判断.svg`,
     },
     {
       title: '基础筛选',
+      titleId: 'resumeTab.emmaBasicScreening',
       description: '快速过滤低意向或不匹配客户',
-      iconBg: '#E8F5FF',
+      descId: 'resumeTab.emmaBasicScreeningDesc',
+      iconBg: '#fffbd3',
       iconSrc: `${ICON_PATH}/基础筛选.svg`,
     },
     {
       title: '转交判断',
+      titleId: 'resumeTab.emmaTransferDecision',
       description: '识别需人工/专项跟进的客户并及时转接',
-      iconBg: '#FFF7E6',
+      descId: 'resumeTab.emmaTransferDecisionDesc',
+      iconBg: '#efffe6',
       iconSrc: `${ICON_PATH}/转交判断.svg`,
     },
   ],
@@ -994,7 +1092,7 @@ class ResumeTab extends Component<IProps> {
         <div className="mt-[10px] grid grid-cols-3 gap-[16px]">
           {compData.map(cap => (
             <div
-              key={cap.title}
+              key={cap.titleId || cap.title}
               className="flex items-start gap-[16px] rounded-[10px] border border-solid border-line bg-container p-[16px]"
             >
               <div
@@ -1004,7 +1102,7 @@ class ResumeTab extends Component<IProps> {
                 {cap.iconSrc ? (
                   <img
                     src={cap.iconSrc}
-                    alt={cap.title}
+                    alt={cap.titleId ? intl.formatMessage({ id: cap.titleId }) : cap.title}
                     className="h-[24px] w-[24px]"
                   />
                 ) : (
@@ -1018,10 +1116,10 @@ class ResumeTab extends Component<IProps> {
               </div>
               <div className="flex-1">
                 <span className="block text-[16px] font-bold leading-[22px] text-primary">
-                  {cap.title}
+                  {cap.titleId ? intl.formatMessage({ id: cap.titleId }) : cap.title}
                 </span>
                 <span className="mt-[4px] block text-[13px] font-normal leading-[20px] text-primary line-clamp-2">
-                  {cap.description}
+                  {cap.descId ? intl.formatMessage({ id: cap.descId }) : cap.description}
                 </span>
               </div>
             </div>

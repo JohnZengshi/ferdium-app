@@ -338,19 +338,19 @@ export const messages = defineMessages({
   },
   employeeLeoEff1: {
     id: 'homeScreen.employee.mike.eff1',
-    defaultMessage: 'Visit Completion Rate',
+    defaultMessage: 'Visit Rate',
   },
   employeeLeoEff2: {
     id: 'homeScreen.employee.mike.eff2',
-    defaultMessage: 'Complaint Response Rate',
+    defaultMessage: 'Response Rate',
   },
   employeeLeoEff3: {
     id: 'homeScreen.employee.mike.eff3',
-    defaultMessage: 'Survey Coverage Rate',
+    defaultMessage: 'Survey Rate',
   },
   employeeLeoEff4: {
     id: 'homeScreen.employee.mike.eff4',
-    defaultMessage: 'Churn Prediction Accuracy',
+    defaultMessage: 'Churn Accuracy',
   },
   employeeLeoStage1: {
     id: 'homeScreen.employee.mike.stage1',
@@ -464,19 +464,19 @@ export const messages = defineMessages({
   },
   employeeAliceEff1: {
     id: 'homeScreen.employee.alice.eff1',
-    defaultMessage: 'Copywriting Efficiency',
+    defaultMessage: 'Copywriting',
   },
   employeeAliceEff2: {
     id: 'homeScreen.employee.alice.eff2',
-    defaultMessage: 'Community Reach Precision',
+    defaultMessage: 'Reach Precision',
   },
   employeeAliceEff3: {
     id: 'homeScreen.employee.alice.eff3',
-    defaultMessage: 'Campaign Analysis Speed',
+    defaultMessage: 'Analysis Speed',
   },
   employeeAliceEff4: {
     id: 'homeScreen.employee.alice.eff4',
-    defaultMessage: 'Marketing ROI Uplift',
+    defaultMessage: 'ROI Uplift',
   },
   employeeAliceStage1: {
     id: 'homeScreen.employee.alice.stage1',
@@ -595,19 +595,19 @@ export const messages = defineMessages({
   },
   employeeLilyEff1: {
     id: 'homeScreen.employee.lily.eff1',
-    defaultMessage: 'Quick Response Rate',
+    defaultMessage: 'Response Rate',
   },
   employeeLilyEff2: {
     id: 'homeScreen.employee.lily.eff2',
-    defaultMessage: 'Knowledge Match Accuracy',
+    defaultMessage: 'Match Accuracy',
   },
   employeeLilyEff3: {
     id: 'homeScreen.employee.lily.eff3',
-    defaultMessage: 'Complex Process Completion',
+    defaultMessage: 'Process Completion',
   },
   employeeLilyEff4: {
     id: 'homeScreen.employee.lily.eff4',
-    defaultMessage: 'Follow-up Completion Rate',
+    defaultMessage: 'Follow-up Rate',
   },
   employeeLilyStage1: {
     id: 'homeScreen.employee.lily.stage1',
@@ -727,19 +727,19 @@ export const messages = defineMessages({
   },
   employeeKevinEff1: {
     id: 'homeScreen.employee.allen.eff1',
-    defaultMessage: 'Web Scraping Coverage',
+    defaultMessage: 'Scraping',
   },
   employeeKevinEff2: {
     id: 'homeScreen.employee.allen.eff2',
-    defaultMessage: 'Key Contact Recognition',
+    defaultMessage: 'Contact Recognition',
   },
   employeeKevinEff3: {
     id: 'homeScreen.employee.allen.eff3',
-    defaultMessage: 'Lead Screening Automation',
+    defaultMessage: 'Lead Screening',
   },
   employeeKevinEff4: {
     id: 'homeScreen.employee.allen.eff4',
-    defaultMessage: 'Sales Follow-up Efficiency',
+    defaultMessage: 'Follow-up',
   },
   employeeKevinStage1: {
     id: 'homeScreen.employee.allen.stage1',
@@ -858,19 +858,19 @@ export const messages = defineMessages({
   },
   employeeNinaEff1: {
     id: 'homeScreen.employee.amy.eff1',
-    defaultMessage: 'Partner Discovery Precision',
+    defaultMessage: 'Discovery',
   },
   employeeNinaEff2: {
     id: 'homeScreen.employee.amy.eff2',
-    defaultMessage: 'Letter Auto-Generation Rate',
+    defaultMessage: 'Letter Gen.',
   },
   employeeNinaEff3: {
     id: 'homeScreen.employee.amy.eff3',
-    defaultMessage: 'Meeting Scheduling Automation',
+    defaultMessage: 'Scheduling',
   },
   employeeNinaEff4: {
     id: 'homeScreen.employee.amy.eff4',
-    defaultMessage: 'Partnership Process Efficiency',
+    defaultMessage: 'Process',
   },
   employeeNinaStage1: {
     id: 'homeScreen.employee.amy.stage1',
@@ -989,19 +989,19 @@ export const messages = defineMessages({
   },
   employeeTomEff1: {
     id: 'homeScreen.employee.tom.eff1',
-    defaultMessage: 'Information Organization Time Reduced',
+    defaultMessage: 'Organization Time',
   },
   employeeTomEff2: {
     id: 'homeScreen.employee.tom.eff2',
-    defaultMessage: 'Goal Achievement Rate',
+    defaultMessage: 'Goal Rate',
   },
   employeeTomEff3: {
     id: 'homeScreen.employee.tom.eff3',
-    defaultMessage: 'Customer Churn Rate Reduced',
+    defaultMessage: 'Churn Rate',
   },
   employeeTomEff4: {
     id: 'homeScreen.employee.tom.eff4',
-    defaultMessage: 'High-Value Customer Conversion Rate',
+    defaultMessage: 'Conversion Rate',
   },
   employeeTomStage1: {
     id: 'homeScreen.employee.tom.stage1',
@@ -1162,19 +1162,19 @@ export const messages = defineMessages({
   },
   employeeEmmaEff1: {
     id: 'homeScreen.employee.emma.eff1',
-    defaultMessage: 'First Response Speed Improved',
+    defaultMessage: 'Response Speed',
   },
   employeeEmmaEff2: {
     id: 'homeScreen.employee.emma.eff2',
-    defaultMessage: 'High-Intent Identification Rate',
+    defaultMessage: 'Intent ID Rate',
   },
   employeeEmmaEff3: {
     id: 'homeScreen.employee.emma.eff3',
-    defaultMessage: 'Opportunity Conversion Rate',
+    defaultMessage: 'Conversion Rate',
   },
   employeeEmmaEff4: {
     id: 'homeScreen.employee.emma.eff4',
-    defaultMessage: 'Customer Churn Rate Reduced',
+    defaultMessage: 'Churn Rate',
   },
   employeeEmmaStage1: {
     id: 'homeScreen.employee.emma.stage1',

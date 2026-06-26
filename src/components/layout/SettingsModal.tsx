@@ -20,6 +20,22 @@ const messages = defineMessages({
     id: 'settingsModal.languageLabel',
     defaultMessage: '语言选择',
   },
+  themeLabel: {
+    id: 'settingsModal.themeLabel',
+    defaultMessage: '主题模式',
+  },
+  themeLight: {
+    id: 'settingsModal.themeLight',
+    defaultMessage: '浅色',
+  },
+  themeDark: {
+    id: 'settingsModal.themeDark',
+    defaultMessage: '深色',
+  },
+  themeSystem: {
+    id: 'settingsModal.themeSystem',
+    defaultMessage: '跟随系统',
+  },
   spellcheckLabel: {
     id: 'settingsModal.spellcheckLabel',
     defaultMessage: '启用拼写检查',
@@ -54,6 +70,7 @@ interface IProps extends Partial<StoresProps>, WrappedComponentProps {
 
 interface IState {
   selectedLocale: string;
+  themeMode: string;
   spellcheckEnabled: boolean;
 }
 
@@ -65,6 +82,15 @@ const localeOptions = Object.entries(APP_LOCALES)
     value,
   }));
 
+const getThemeMode = (settings: {
+  adaptableDarkMode: boolean;
+  darkMode: boolean;
+}): string => {
+  if (settings.adaptableDarkMode) return 'system';
+  if (settings.darkMode) return 'dark';
+  return 'light';
+};
+
 @inject('stores', 'actions')
 @observer
 class SettingsModal extends Component<IProps, IState> {
@@ -74,6 +100,7 @@ class SettingsModal extends Component<IProps, IState> {
     const { stores } = this.props;
     this.state = {
       selectedLocale: stores!.app.locale,
+      themeMode: getThemeMode(stores!.settings.all.app),
       spellcheckEnabled: stores!.settings.app.enableSpellchecking,
     };
   }
@@ -83,6 +110,7 @@ class SettingsModal extends Component<IProps, IState> {
       const { stores } = this.props;
       this.setState({
         selectedLocale: stores!.app.locale,
+        themeMode: getThemeMode(stores!.settings.all.app),
         spellcheckEnabled: stores!.settings.app.enableSpellchecking,
       });
     }
@@ -96,6 +124,21 @@ class SettingsModal extends Component<IProps, IState> {
     actions!.settings.update({ type: 'app', data: { locale: value } });
     stores!.app.changeLocale(value);
     actions!.user.update({ userData: { locale: value } });
+  };
+
+  handleThemeChange = (value: string): void => {
+    if (!['light', 'dark', 'system'].includes(value)) return;
+
+    this.setState({ themeMode: value });
+
+    const { actions } = this.props;
+    actions!.settings.update({
+      type: 'app',
+      data: {
+        adaptableDarkMode: value === 'system',
+        darkMode: value === 'dark',
+      },
+    });
   };
 
   handleSpellcheckChange = (value: boolean): void => {
@@ -140,7 +183,7 @@ class SettingsModal extends Component<IProps, IState> {
 
   render(): ReactElement {
     const { visible, onClose, intl } = this.props;
-    const { selectedLocale, spellcheckEnabled } = this.state;
+    const { selectedLocale, themeMode, spellcheckEnabled } = this.state;
 
     return (
       <Dialog
@@ -179,6 +222,27 @@ class SettingsModal extends Component<IProps, IState> {
                 onChange={value => {
                   if (typeof value === 'string') {
                     this.handleLocaleChange(value);
+                  }
+                }}
+                className="!h-[32px] !w-full [&_.t-select__trigger]:!h-[32px] [&_.t-select__trigger]:!rounded-[3px] [&_.t-select__trigger]:!border-line"
+              />
+            </div>
+
+            <div className="mt-[23px] text-[16px] font-semibold leading-[20px] text-primary">
+              {intl.formatMessage(messages.themeLabel)}
+            </div>
+
+            <div className="mt-[10px]">
+              <Select
+                options={[
+                  { label: intl.formatMessage(messages.themeLight), value: 'light' },
+                  { label: intl.formatMessage(messages.themeDark), value: 'dark' },
+                  { label: intl.formatMessage(messages.themeSystem), value: 'system' },
+                ]}
+                value={themeMode}
+                onChange={value => {
+                  if (typeof value === 'string') {
+                    this.handleThemeChange(value);
                   }
                 }}
                 className="!h-[32px] !w-full [&_.t-select__trigger]:!h-[32px] [&_.t-select__trigger]:!rounded-[3px] [&_.t-select__trigger]:!border-line"

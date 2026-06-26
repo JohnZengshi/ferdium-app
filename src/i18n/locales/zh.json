@@ -531,6 +531,7 @@
   "homeScreen.refreshError": "会话状态刷新失败",
   "homeScreen.refreshSuccess": "会话状态刷新成功",
   "homeScreen.resume": "简历",
+  "homeScreen.resumeTitle": "{name}的简历",
   "homeScreen.roleAfterSalesExpert": "增长顾问",
   "homeScreen.roleBusinessDevElite": "维护专家",
   "homeScreen.roleCustomerMaintenance": "销售主管",

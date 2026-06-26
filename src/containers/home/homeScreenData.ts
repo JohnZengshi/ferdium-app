@@ -283,6 +283,10 @@ export const messages = defineMessages({
     defaultMessage: 'Set Strategy',
   },
   resume: { id: 'homeScreen.resume', defaultMessage: 'Resume' },
+  resumeTitle: {
+    id: 'homeScreen.resumeTitle',
+    defaultMessage: "{name}'s Resume",
+  },
 
   // ─── Fallback data ───
   digitalAssistant: {

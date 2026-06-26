@@ -533,6 +533,7 @@
   "homeScreen.refreshError": "Failed to refresh session status",
   "homeScreen.refreshSuccess": "Session status refreshed successfully",
   "homeScreen.resume": "Resume",
+  "homeScreen.resumeTitle": "{name}'s Resume",
   "homeScreen.roleAfterSalesExpert": "Growth Advisor",
   "homeScreen.roleArchiveExpert": "Archive Expert",
   "homeScreen.roleBusinessDevElite": "Maintenance Expert",

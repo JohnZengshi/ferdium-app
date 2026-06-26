@@ -419,7 +419,9 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         <div className="flex max-h-[85vh] flex-col overflow-hidden rounded-[12px]">
           <div className="flex h-[56px] flex-shrink-0 items-center justify-between border-b border-solid border-[#E7E7E7] bg-white px-[16px]">
             <span className="text-[16px] font-semibold leading-[24px] text-primary">
-              {emp.name}的简历
+              {this.props.intl.formatMessage(messages.resumeTitle, {
+                name: emp.name,
+              })}
             </span>
             <button
               type="button"

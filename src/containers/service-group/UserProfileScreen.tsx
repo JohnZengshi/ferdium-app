@@ -381,8 +381,8 @@ function UserProfileScreen(): ReactElement {
           <Tag
             variant="outline"
             theme={STAGE_COLOR_MAP[row.stageColor]}
-            className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
-            maxWidth={120}
+            className="!px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
+            maxWidth={100}
             title={row.stage}
           >
             {row.stage}
@@ -399,7 +399,7 @@ function UserProfileScreen(): ReactElement {
             variant="outline"
             theme={TAG_COLOR_MAP[row.tagColor]}
             className="!rounded-[6px] !px-[10px] !py-[2px] !text-[12px] !leading-[20px]"
-            maxWidth={120}
+            maxWidth={100}
             title={row.tag}
           >
             {row.tag}

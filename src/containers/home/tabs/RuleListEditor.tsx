@@ -169,13 +169,13 @@ type RuleType = 'safety_boundary' | 'handoff_policy';
 
 type RuleListResponse = {
   data:
-    | AgentRuleResponse[]
-    | {
-        items?: AgentRuleResponse[] | null;
-        limit?: number;
-        offset?: number;
-        total?: number;
-      };
+  | AgentRuleResponse[]
+  | {
+    items?: AgentRuleResponse[] | null;
+    limit?: number;
+    offset?: number;
+    total?: number;
+  };
   headers: Headers;
   status: 200;
 };
@@ -535,7 +535,7 @@ const RuleListEditor = ({
     setRules([]);
     setPersistedCount(0);
     setHasMore(true);
-    loadRules(0, false).catch(() => {});
+    loadRules(0, false).catch(() => { });
   }, [loadRules]);
 
   useEffect(() => {
@@ -544,7 +544,7 @@ const RuleListEditor = ({
 
   useEffect(() => {
     if (!activeRuleId) {
-      return () => {};
+      return () => { };
     }
 
     const handlePointerDown = (event: PointerEvent) => {
@@ -584,7 +584,7 @@ const RuleListEditor = ({
     const scrollHost = containerRef.current?.parentElement;
 
     if (!scrollHost) {
-      return () => {};
+      return () => { };
     }
 
     const handleScroll = () => {
@@ -597,7 +597,7 @@ const RuleListEditor = ({
         scrollHost.scrollHeight - 120;
 
       if (nearBottom) {
-        loadRules(persistedCount, true).catch(() => {});
+        loadRules(persistedCount, true).catch(() => { });
       }
     };
 
@@ -807,6 +807,10 @@ const RuleListEditor = ({
       <div className="flex flex-col gap-y-[20px]">
         {rules.map(rule => {
           const isActive = activeRuleId === rule.localId;
+          const hasContent = rule.content.trim().length > 0;
+          const isConfirmed =
+            !rule.isDraft && rule.content === rule.savedContent;
+          const showConfirmBtn = hasContent && !isConfirmed;
 
           return (
             <div
@@ -814,22 +818,21 @@ const RuleListEditor = ({
               ref={node => {
                 itemRefs.current[rule.localId] = node;
               }}
-              className="flex min-h-[52px] items-center"
+              className="group relative flex min-h-[56px] items-center py-[8px]"
             >
-              <div className="flex flex-shrink-0 items-center gap-[8px] mr-[12px]">
-                <div className="h-[18px] w-[4px] flex-shrink-0 rounded-[2px] bg-brand" />
-                <span className="text-right text-[15px] font-medium leading-[22px] text-primary">
-                  {rule.sequence ? `${namePrefix}${rule.sequence}` : rule.name}
-                </span>
-              </div>
+              <div
+                className={`w-[3px] h-[15px] rounded-r-[2px] transition-all duration-150 bg-brand`}
+              />
+              <span className="ml-[6px] mr-[12px] text-right text-[14px] font-normal leading-[22px] text-primary">
+                {rule.sequence ? `${namePrefix}${rule.sequence}` : rule.name}
+              </span>
 
               <div className="flex-1">
                 <div
-                  className={`flex h-[44px] items-center rounded-[8px] bg-container transition-all duration-200 ${
-                    isActive
-                      ? 'border-[1.5px] border-brand shadow-[0_0_0_3px_rgba(37,99,235,0.08)]'
-                      : 'border border-line'
-                  }`}
+                  className={`flex h-[40px] items-center rounded-[4px] bg-container transition-all duration-200 hover:border-brand ${isActive || isConfirmed
+                    ? 'border border-brand shadow-[0_0_0_3px_var(--td-brand-color-focus)]'
+                    : 'border border-line'
+                    }`}
                 >
                   <input
                     type="text"
@@ -839,30 +842,29 @@ const RuleListEditor = ({
                     }
                     placeholder={intl.formatMessage(messages.placeholder)}
                     onFocus={() => setActiveRuleId(rule.localId)}
-                    className="h-full flex-1 rounded-[8px] border-none bg-transparent px-[16px] text-[15px] font-normal text-primary outline-none placeholder:text-placeholder"
-                    style={{ lineHeight: '44px' }}
+                    className="h-full flex-1 rounded-[4px] border-none bg-transparent px-[12px] text-[14px] font-normal leading-[40px] text-primary outline-none placeholder:text-[#BFBFBF]"
                   />
-                  <div className="flex items-center pr-[12px]">
-                    {isActive ? (
+                  <div className="flex items-center pr-[8px]">
+                    {showConfirmBtn ? (
                       <button
                         type="button"
                         disabled={rule.isSaving}
                         onMouseDown={event => event.preventDefault()}
                         onClick={() => {
-                          handleConfirmRule(rule).catch(() => {});
+                          handleConfirmRule(rule).catch(() => { });
                         }}
-                        className="flex h-[28px] min-w-[56px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-brand px-[12px] text-[13px] font-medium text-text-anti disabled:cursor-not-allowed disabled:opacity-60"
+                        className="flex h-[28px] min-w-[56px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-brand px-[12px] text-[13px] font-medium text-text-anti transition-colors duration-150 hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {intl.formatMessage(messages.confirm)}
                       </button>
-                    ) : (
+                    ) : isConfirmed ? (
                       <button
                         type="button"
                         onClick={() => {
-                          handleDeleteRule(rule).catch(() => {});
+                          handleDeleteRule(rule).catch(() => { });
                         }}
                         title={intl.formatMessage(messages.delete)}
-                        className="flex h-[28px] w-[28px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-transparent p-0 text-placeholder transition-colors duration-200 hover:text-error"
+                        className="flex h-[28px] w-[28px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[4px] border-none bg-transparent p-0 text-placeholder opacity-0 transition-all duration-150 group-hover:opacity-100 hover:text-error"
                       >
                         <svg
                           width="18"
@@ -878,7 +880,7 @@ const RuleListEditor = ({
                           />
                         </svg>
                       </button>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -958,13 +960,12 @@ const RuleListEditor = ({
                             type="button"
                             disabled={isAlreadyAdded}
                             onClick={() => handleAddSuggestedRule(rule)}
-                            className={`rounded-[6px] border border-solid px-[12px] py-[6px] text-left text-[13px] transition-colors ${
-                              isAlreadyAdded
-                                ? 'cursor-not-allowed border-brand bg-brand text-text-anti'
-                                : isSelected
-                                  ? 'cursor-pointer border-brand bg-brand-light text-brand'
-                                  : 'cursor-pointer border-line bg-container text-secondary hover:border-brand hover:text-brand'
-                            }`}
+                            className={`rounded-[6px] border border-solid px-[12px] py-[6px] text-left text-[13px] transition-colors ${isAlreadyAdded
+                              ? 'cursor-not-allowed border-brand bg-brand text-text-anti'
+                              : isSelected
+                                ? 'cursor-pointer border-brand bg-brand-light text-brand'
+                                : 'cursor-pointer border-line bg-container text-secondary hover:border-brand hover:text-brand'
+                              }`}
                           >
                             {isAlreadyAdded ? `✓ ${rule}` : rule}
                           </button>
@@ -980,7 +981,7 @@ const RuleListEditor = ({
                     type="button"
                     disabled={isAddingSuggestions}
                     onClick={() => {
-                      handleAddSelectedSuggestions().catch(() => {});
+                      handleAddSelectedSuggestions().catch(() => { });
                     }}
                     className="flex h-[32px] cursor-pointer items-center justify-center gap-[6px] rounded-[6px] border-none bg-brand px-[16px] text-[13px] font-medium text-text-anti disabled:cursor-not-allowed disabled:opacity-60"
                   >
@@ -988,8 +989,8 @@ const RuleListEditor = ({
                     {isAddingSuggestions
                       ? intl.formatMessage(messages.savingSuggestions)
                       : intl.formatMessage(messages.addSelectedSuggestions, {
-                          count: selectedSuggestions.size,
-                        })}
+                        count: selectedSuggestions.size,
+                      })}
                   </button>
                 </div>
               )}

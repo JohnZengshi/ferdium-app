@@ -20,6 +20,7 @@ import {
   markHandoffReadApiV1HandoffHandoffIdReadPost,
 } from '../../../agent-flow-cs/api/generated/handoff/handoff';
 import { HANDOFF_UNREAD_CHANGED_EVENT } from '../../../stores/HandoffStore';
+import { navigationStore } from '../../../stores/NavigationStore';
 
 const messages = defineMessages({
   serialNumber: {
@@ -93,6 +94,10 @@ const messages = defineMessages({
   viewConversation: {
     id: 'notificationsTab.action.viewConversation',
     defaultMessage: 'View',
+  },
+  jumpToChat: {
+    id: 'notificationsTab.action.jumpToChat',
+    defaultMessage: 'Chat',
   },
   loading: {
     id: 'notificationsTab.loading',
@@ -174,6 +179,30 @@ const messages = defineMessages({
 
 /** 使用生成的 HandoffBriefResponse 类型 */
 type HandoffRecord = HandoffBriefResponse;
+
+type WebviewLoader = {
+  loadURL: (url: string) => Promise<void> | void;
+  executeJavaScript: (script: string) => Promise<unknown>;
+};
+
+type FerdiumBridge = Window & {
+  ferdium?: {
+    actions?: {
+      service?: {
+        setActive: (payload: { serviceId: string }) => void;
+      };
+    };
+    stores?: {
+      services?: {
+        one: (id: string) => {
+          webview: WebviewLoader | null;
+          isAttached: boolean;
+          isLoading: boolean;
+        };
+      };
+    };
+  };
+};
 
 const PAGE_SIZE = 20;
 
@@ -314,6 +343,210 @@ const NotificationsTab = (): ReactElement => {
     setDialogRecord(null);
   }, []);
 
+  const handleJumpToChat = useCallback(
+    async (record: HandoffRecord) => {
+      // 标记已读（与 handleViewConversation 保持一致）
+      if (!record.read_at) {
+        try {
+          await markHandoffReadApiV1HandoffHandoffIdReadPost(record.id);
+          window.dispatchEvent(new Event(HANDOFF_UNREAD_CHANGED_EVENT));
+          loadRecords(currentPage).catch(() => {});
+        } catch (error) {
+          MessagePlugin.error(
+            error instanceof Error ? error.message : 'Failed to mark as read',
+          );
+        }
+      }
+
+      const sessionId = record.wa_session_id;
+      const jid = record.customer_jid;
+
+      if (!sessionId) {
+        MessagePlugin.warning('Missing WhatsApp session');
+        return;
+      }
+      if (!jid) {
+        MessagePlugin.warning('Missing customer chat ID');
+        return;
+      }
+
+      const { ferdium } = window as unknown as FerdiumBridge;
+      const service = ferdium?.stores?.services?.one(sessionId);
+      if (!service) {
+        MessagePlugin.warning('WhatsApp service not found');
+        return;
+      }
+
+      // 切换到对应 WhatsApp 服务
+      ferdium?.actions?.service?.setActive({ serviceId: sessionId });
+      navigationStore.setModule('service-type');
+
+      // Tier 1: 等待 webview 挂载 + 页面加载完成（最多 30s）
+      const wv = await new Promise<WebviewLoader | null>(resolve => {
+        const start = Date.now();
+        const poll = () => {
+          const s = ferdium?.stores?.services?.one(sessionId);
+          if (s?.webview && s.isAttached && !s.isLoading) {
+            resolve(s.webview);
+            return;
+          }
+          if (Date.now() - start > 30_000) {
+            resolve(null);
+            return;
+          }
+          window.setTimeout(poll, 500);
+        };
+        poll();
+      });
+
+      if (!wv) {
+        MessagePlugin.warning('WhatsApp webview not ready, please try again');
+        return;
+      }
+
+      // Tier 2: 等待 WhatsApp Web 搜索框出现（最多 20s）
+      const waReady = await new Promise<boolean>(resolve => {
+        const start = Date.now();
+        const poll = () => {
+          wv.executeJavaScript(
+            '!!document.querySelector(\'div[data-testid="chat-list-search-container"] input[type="text"], input[data-tab="3"], div[contenteditable="true"][data-testid="chat-list-search"]\')',
+          )
+            .then((found: unknown) => {
+              if (found) {
+                resolve(true);
+                return;
+              }
+              if (Date.now() - start > 20_000) {
+                resolve(false);
+                return;
+              }
+              window.setTimeout(poll, 1000);
+            })
+            .catch(() => {
+              if (Date.now() - start > 20_000) {
+                resolve(false);
+                return;
+              }
+              window.setTimeout(poll, 1000);
+            });
+        };
+        poll();
+      });
+
+      if (!waReady) {
+        MessagePlugin.warning('WhatsApp Web not fully loaded, trying anyway');
+      }
+
+      // 从 JID 提取手机号用于搜索（如 8613607365287@s.whatsapp.net → 8613607365287）
+      const phone = jid
+        .replace(/@s\.whatsapp\.net$/u, '')
+        .replace(/@c\.us$/u, '');
+      const escapedJid = JSON.stringify(jid);
+      const escapedPhone = JSON.stringify(phone);
+
+      const script = `
+        (async function() {
+          const targetJid = ${escapedJid};
+          const targetPhone = ${escapedPhone};
+          const wait = ms => new Promise(r => window.setTimeout(r, ms));
+          const result = { ok: false, method: '', reason: '' };
+
+          /* --- 搜索框检测（多级兜底） --- */
+          const findSearchInput = () => {
+            const container = document.querySelector('div[data-testid="chat-list-search-container"]');
+            if (container) {
+              const inp = container.querySelector('input[type="text"]');
+              if (inp) return inp;
+            }
+            const byTab = document.querySelector('input[data-tab="3"], div[contenteditable="true"][data-tab="3"]');
+            if (byTab) return byTab;
+            const byAria = document.querySelector(
+              'input[role="textbox"][aria-label*="搜索"], input[role="textbox"][aria-label*="Search"], ' +
+              'div[contenteditable="true"][aria-label*="搜索"], div[contenteditable="true"][aria-label*="Search"]'
+            );
+            if (byAria) return byAria;
+            const legacy = document.querySelector('div[contenteditable="true"][data-testid="chat-list-search"]');
+            if (legacy) return legacy;
+            return document.querySelector('#side input[type="text"], #pane-side input[type="text"]') || null;
+          };
+
+          const searchInput = findSearchInput();
+          if (!searchInput) {
+            result.reason = 'search-input-not-found';
+            return result;
+          }
+
+          /* --- 聚焦 + 输入手机号 --- */
+          searchInput.focus();
+          searchInput.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+
+          const tagName = (searchInput.tagName || '').toLowerCase();
+          if (tagName === 'input' || tagName === 'textarea') {
+            const valueSetter = Object.getOwnPropertyDescriptor(
+              window.HTMLInputElement.prototype,
+              'value'
+            )?.set;
+            if (typeof valueSetter === 'function') {
+              valueSetter.call(searchInput, targetPhone);
+            } else {
+              searchInput.value = targetPhone;
+            }
+            searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+            searchInput.dispatchEvent(new Event('change', { bubbles: true }));
+          } else if (searchInput.isContentEditable) {
+            document.execCommand('selectAll', false, null);
+            document.execCommand('delete', false, null);
+            document.execCommand('insertText', false, targetPhone);
+            searchInput.dispatchEvent(new InputEvent('input', {
+              bubbles: true, inputType: 'insertText', data: targetPhone,
+            }));
+          } else {
+            result.reason = 'search-input-unsupported-type';
+            return result;
+          }
+
+          /* --- 等待结果渲染后按回车 --- */
+          await wait(1500);
+
+          const fireEnter = el => {
+            const opts = {
+              key: 'Enter', code: 'Enter', keyCode: 13, which: 13,
+              bubbles: true, cancelable: true,
+            };
+            el.dispatchEvent(new KeyboardEvent('keydown', opts));
+            el.dispatchEvent(new KeyboardEvent('keypress', opts));
+            el.dispatchEvent(new KeyboardEvent('keyup', opts));
+          };
+          fireEnter(searchInput);
+
+          /* --- 兜底：hash 路由 --- */
+          result.reason = '';
+          await wait(2000);
+          window.location.hash = '#!/c/' + encodeURIComponent(targetJid);
+          result.ok = true;
+          result.method = 'hash-fallback';
+          return result;
+        })()
+      `;
+
+      try {
+        const res = (await wv.executeJavaScript(script)) as {
+          ok?: boolean;
+          method?: string;
+          reason?: string;
+        };
+        if (!res?.ok) {
+          MessagePlugin.warning(
+            `Failed to open chat: ${res?.reason || 'unknown'}`,
+          );
+        }
+      } catch {
+        MessagePlugin.warning('Failed to open WhatsApp chat, please try again');
+      }
+    },
+    [currentPage, loadRecords],
+  );
+
   const columns: PrimaryTableCol[] = [
     { colKey: 'row-select', type: 'multiple', width: 48 },
     {
@@ -414,17 +647,26 @@ const NotificationsTab = (): ReactElement => {
     {
       colKey: 'op',
       title: intl.formatMessage(messages.actions),
-      width: 96,
+      width: 150,
       cell: ({ row }) => {
         const r = row as HandoffRecord;
         return (
-          <button
-            type="button"
-            onClick={() => handleViewConversation(r)}
-            className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
-          >
-            {intl.formatMessage(messages.viewConversation)}
-          </button>
+          <div className="flex items-center gap-[12px]">
+            <button
+              type="button"
+              onClick={() => handleViewConversation(r)}
+              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
+            >
+              {intl.formatMessage(messages.viewConversation)}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleJumpToChat(r)}
+              className="cursor-pointer border-none bg-transparent p-0 text-[14px] text-brand hover:text-brand-hover hover:underline"
+            >
+              {intl.formatMessage(messages.jumpToChat)}
+            </button>
+          </div>
         );
       },
     },

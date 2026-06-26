@@ -505,9 +505,7 @@ const NotificationsTab = (): ReactElement => {
             return result;
           }
 
-          /* --- 等待结果渲染后按回车 --- */
-          await wait(1500);
-
+          /* --- 轮询搜索结果出现后按回车（最多 8s） --- */
           const fireEnter = el => {
             const opts = {
               key: 'Enter', code: 'Enter', keyCode: 13, which: 13,
@@ -517,14 +515,55 @@ const NotificationsTab = (): ReactElement => {
             el.dispatchEvent(new KeyboardEvent('keypress', opts));
             el.dispatchEvent(new KeyboardEvent('keyup', opts));
           };
-          fireEnter(searchInput);
+          const waitForResults = async () => {
+            const deadline = Date.now() + 8000;
+            while (Date.now() < deadline) {
+              const result = document.querySelector(
+                '[data-testid="cell-frame-container"], ' +
+                '[role="listitem"][data-id], ' +
+                '[role="gridcell"]'
+              );
+              if (result) {
+                fireEnter(searchInput);
+                return true;
+              }
+              await wait(200);
+            }
+            return false;
+          };
+          const entered = await waitForResults();
+          if (!entered) {
+            fireEnter(searchInput); // 超时了也试一次
+          }
 
-          /* --- 兜底：hash 路由 --- */
+          /* --- 检测聊天是否已打开，未打开则 hash 兜底 --- */
           result.reason = '';
-          await wait(2000);
-          window.location.hash = '#!/c/' + encodeURIComponent(targetJid);
+          const chatOpened = await (async () => {
+            const deadline = Date.now() + 3000;
+            while (Date.now() < deadline) {
+              if (
+                window.location.hash.includes(targetJid) ||
+                document.querySelector(
+                  'header[data-testid="conversation-header"]',
+                ) ||
+                document.querySelector(
+                  '[data-testid="conversation-compose-box-input"]',
+                )
+              ) {
+                return true;
+              }
+              await wait(300);
+            }
+            return false;
+          })();
+          if (!chatOpened) {
+            window.location.hash =
+              '#!/c/' + encodeURIComponent(targetJid);
+            result.method = 'hash-fallback';
+          } else {
+            result.method = 'search-enter';
+          }
           result.ok = true;
-          result.method = 'hash-fallback';
           return result;
         })()
       `;

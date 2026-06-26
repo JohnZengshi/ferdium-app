@@ -119,7 +119,7 @@ const messages = defineMessages({
   },
   costDisputeDuration: {
     id: 'resumeTab.costDisputeDuration',
-    defaultMessage: 'Dispute Resolution Time Reduced',
+    defaultMessage: 'Dispute Time',
   },
   enterpriseSME: {
     id: 'resumeTab.enterpriseSME',

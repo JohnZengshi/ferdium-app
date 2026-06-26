@@ -164,11 +164,11 @@ const messages = defineMessages({
   },
   savingTitle: {
     id: 'knowledgeScreen.savingTitle',
-    defaultMessage: '正在优化人设中',
+    defaultMessage: 'Optimizing persona profile...',
   },
   savingDescription: {
     id: 'knowledgeScreen.savingDescription',
-    defaultMessage: '正在整理并完善这份人设资料，请稍候片刻…',
+    defaultMessage: 'Organizing and refining persona details, please wait...',
   },
   nameRequired: {
     id: 'knowledgeScreen.nameRequired',
@@ -242,7 +242,7 @@ const messages = defineMessages({
   heroDescription: {
     id: 'knowledgeScreen.heroDescription',
     defaultMessage:
-      '输入关键词，AI 将自动生成完整的社交账号人设资料，你可以审核后保存。',
+      'Enter keywords and AI will automatically generate a complete social persona profile for your review and save.',
   },
   keywordDescription: {
     id: 'knowledgeScreen.keywordDescription',

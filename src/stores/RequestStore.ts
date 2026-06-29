@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import ms from 'ms';
 
 import type { Stores } from '../@types/stores.types';
@@ -80,8 +80,10 @@ export default class RequestStore extends TypedStore {
   // Reactions
   _autoRetry(): void {
     if (this.areRequiredRequestsSuccessful) {
-      this.showRequiredRequestsError = false;
-      this.retries = 0;
+      runInAction(() => {
+        this.showRequiredRequestsError = false;
+        this.retries = 0;
+      });
       return;
     }
 

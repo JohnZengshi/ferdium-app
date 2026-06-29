@@ -97,13 +97,11 @@ const transition = window?.matchMedia('(prefers-reduced-motion: no-preference)')
   ? 'transform 0.5s ease'
   : 'none';
 
-const styles = () => ({
+const styles = {
   appContent: {
     width: '100%',
     transition,
-    transform() {
-      return 'translateX(0)';
-    },
+    transform: 'translateX(0)',
   },
   titleBar: {
     display: 'block',
@@ -113,7 +111,7 @@ const styles = () => ({
     position: 'absolute',
     top: 0,
   },
-});
+};
 
 const toggleFullScreen = () => {
   ipcRenderer.send('window.toolbar-double-clicked');

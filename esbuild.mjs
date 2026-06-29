@@ -212,6 +212,9 @@ const runEsbuild = async () => {
     envDefines[`process.env.${key}`] = JSON.stringify(process.env[key]);
   }
 
+  const pkgJsonForVersion = fsPkg.readJsonSync('package.json');
+  envDefines.APP_VERSION = JSON.stringify(pkgJsonForVersion.version);
+
   // Run build
   await esbuild.build({
     entryPoints,

@@ -31,7 +31,6 @@ import type { Actions } from '../../actions/lib/actions';
 import LockedScreen from '../../containers/auth/LockedScreen';
 import type SettingsStore from '../../stores/SettingsStore';
 
-import { version as appVersion } from '../../../package.json';
 import HomeScreen from '../../containers/home/HomeScreen';
 import KnowledgeScreen from '../../containers/knowledge-base/KnowledgeScreen';
 import AccountManagementScreen from '../../containers/service-group/AccountManagementScreen';
@@ -119,6 +118,8 @@ const styles = () => ({
 const toggleFullScreen = () => {
   ipcRenderer.send('window.toolbar-double-clicked');
 };
+
+const appVersion = APP_VERSION;
 
 interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   stores?: Stores;

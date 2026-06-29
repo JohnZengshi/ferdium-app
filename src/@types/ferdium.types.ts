@@ -3,6 +3,8 @@ declare global {
     ferdium: any;
   }
 
+  const APP_VERSION: string;
+
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv {

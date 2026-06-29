@@ -285,7 +285,7 @@ export const TRANSLATOR_ENGINE_GOOGLE = 'Google';
 export const TRANSLATOR_ENGINE_LIBRETRANSLATE = 'LibreTranslate';
 export const TRANSLATOR_ENGINE_NAMES = {
   [TRANSLATOR_ENGINE_LIBRETRANSLATE]:
-    'Ferdium Translator (Powered by LibreTranslate)',
+    'AITALK Translator (Powered by LibreTranslate)',
   [TRANSLATOR_ENGINE_GOOGLE]: 'Google',
 };
 
@@ -517,8 +517,8 @@ export const FERDIUM_DEV_DOCS =
 
 export const FILE_SYSTEM_SETTINGS_TYPES = ['app', 'proxy', 'shortcuts'];
 
-export const LOCAL_SERVER = 'You are using Ferdium without a server';
-export const SERVER_NOT_LOADED = 'Ferdium::SERVER_NOT_LOADED';
+export const LOCAL_SERVER = 'You are using AITALK without a server';
+export const SERVER_NOT_LOADED = 'AITALK::SERVER_NOT_LOADED';
 
 export const ALLOWED_PROTOCOLS = ['https:', 'http:', 'ftp:', 'aitalk:'];
 

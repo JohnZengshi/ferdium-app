@@ -44,7 +44,7 @@ import {
   toggleFullScreenKey,
   workspaceToggleShortcutKey,
 } from '../environment';
-import { ferdiumVersion } from '../environment-remote';
+import { ferdiumVersion, isDevMode } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
@@ -178,11 +178,11 @@ export const menuItems = defineMessages({
   },
   reloadFerdium: {
     id: 'menu.view.reloadFerdium',
-    defaultMessage: 'Reload Aitalk',
+    defaultMessage: 'Reload AITALK',
   },
   lockFerdium: {
     id: 'menu.view.lockFerdium',
-    defaultMessage: 'Lock Aitalk',
+    defaultMessage: 'Lock AITALK',
   },
   reloadTodos: {
     id: 'menu.view.reloadTodos',
@@ -222,7 +222,7 @@ export const menuItems = defineMessages({
   },
   debugInfoCopiedHeadline: {
     id: 'menu.help.debugInfoCopiedHeadline',
-    defaultMessage: 'Aitalk Debug Information',
+    defaultMessage: 'AITALK Debug Information',
   },
   debugInfoCopiedBody: {
     id: 'menu.help.debugInfoCopiedBody',
@@ -262,7 +262,7 @@ export const menuItems = defineMessages({
   },
   about: {
     id: 'menu.app.about',
-    defaultMessage: 'About Aitalk',
+    defaultMessage: 'About AITALK',
   },
   checkForUpdates: {
     id: 'menu.app.checkForUpdates',
@@ -598,19 +598,19 @@ function titleBarTemplateFactory(
     {
       label: intl.formatMessage(menuItems.services),
       accelerator: `${altKey()}+S`,
-      visible: !locked,
+      visible: isDevMode || !locked, // 开发模式或非锁定状态显示
       submenu: [],
     },
     {
       label: intl.formatMessage(menuItems.workspaces),
       accelerator: `${altKey()}+W`,
       submenu: [],
-      visible: !locked,
+      visible: isDevMode || !locked, // 开发模式或非锁定状态显示
     },
     {
       label: intl.formatMessage(menuItems.todos),
       submenu: [],
-      visible: !locked,
+      visible: isDevMode || !locked, // 开发模式或非锁定状态显示
     },
     {
       label: intl.formatMessage(menuItems.window),
@@ -630,6 +630,7 @@ function titleBarTemplateFactory(
       label: intl.formatMessage(menuItems.help),
       accelerator: `${altKey()}+H`,
       role: 'help',
+      visible: isDevMode, // 仅开发模式显示 Help 菜单
       submenu: [
         {
           label: intl.formatMessage(menuItems.learnMore),
@@ -983,8 +984,8 @@ class FranzMenu implements StoresProps {
         dialog
           .showMessageBox({
             type: 'info',
-            title: 'Aitalk',
-            message: 'Aitalk',
+            title: 'AITALK',
+            message: 'AITALK',
             detail: aboutAppDetails,
             buttons: [
               intl.formatMessage(menuItems.ok),
@@ -1075,13 +1076,16 @@ class FranzMenu implements StoresProps {
 
       tpl[5].submenu = this.todosMenu();
 
-      // eslint-disable-next-line unicorn/prefer-at
-      (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
-        {
-          type: 'separator',
-        },
-        ...this.debugMenu(),
-      );
+      // 仅在开发模式显示 Debug 菜单
+      if (isDevMode) {
+        // eslint-disable-next-line unicorn/prefer-at
+        (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
+          {
+            type: 'separator',
+          },
+          ...this.debugMenu(),
+        );
+      }
     }
     this._setCurrentTemplate(tpl);
     const menu = Menu.buildFromTemplate(tpl);

@@ -7,14 +7,14 @@
 **package.json**:
 - `name`: `ferdium` → `aitalk`
 - `productName`: `Ferdium` → `AITALK`
-- `appId`: `org.ferdium.ferdium-app` → `com.lzxl.aitalk`
+- `appId`: `org.ferdium.ferdium-app` → `com.atc.aitalk`
 - `desktopName`: `ferdium.desktop` → `aitalk.desktop`
 - `description`: 更新为 "AITALK - AI-powered messaging platform"
-- `author`: `Ferdium Contributors` → `LZXL Team`
+- `author`: `Ferdium Contributors` → `ATC Team`
 - `copyright`: `org.ferdium` → `LZXL`
 
 **electron-builder.yml**:
-- `appId`: `org.ferdium.ferdium-app` → `com.lzxl.aitalk`
+- `appId`: `org.ferdium.ferdium-app` → `com.atc.aitalk`
 - `protocols.name`: `Ferdium` → `AITALK`
 - `protocols.schemes`: `[ferdium]` → `[aitalk]`
 - `portable.unpackDirName`: `Ferdium-Unpacked` → `AITALK-Unpacked`
@@ -41,9 +41,9 @@
 创建 `.brand.config` 文件，集中管理品牌信息：
 ```bash
 APP_NAME="AITALK"
-APP_ID="com.lzxl.aitalk"
+APP_ID="com.atc.aitalk"
 APP_DESCRIPTION="AITALK - AI-powered messaging platform"
-APP_AUTHOR="LZXL Team"
+APP_AUTHOR="ATC Team"
 ```
 
 ## 输出文件命名
@@ -72,7 +72,7 @@ $ ./scripts/verify-dmg.sh
 找到 DMG 文件: out/AITALK-mac-7.1.3-nightly.3-x64.dmg
 ✓ DMG 已挂载到: /Volumes/AITALK 7.1.3-nightly.3
 ✓ 找到应用: /Volumes/AITALK 7.1.3-nightly.3/AITALK.app
-✓ Identifier=com.lzxl.aitalk
+✓ Identifier=com.atc.aitalk
 ✓ 沙盒状态: 已禁用 (无沙盒限制)
 ```
 
@@ -88,7 +88,7 @@ $ ./scripts/verify-dmg.sh
 - 分类: Network;InstantMessaging;
 
 ### macOS 集成
-- Bundle ID: `com.lzxl.aitalk`
+- Bundle ID: `com.atc.aitalk`
 - 应用名称: `AITALK.app`
 - 位置: `/Applications/AITALK.app`
 
@@ -163,8 +163,8 @@ pnpm run build
 // brand.config.js
 module.exports = {
   name: 'AITALK',
-  appId: 'com.lzxl.aitalk',
-  author: 'LZXL Team',
+  appId: 'com.atc.aitalk',
+  author: 'ATC Team',
   copyright: 'LZXL',
   description: 'AITALK - AI-powered messaging platform',
   protocol: 'aitalk',

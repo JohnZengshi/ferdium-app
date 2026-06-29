@@ -82,3 +82,24 @@ window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 window.addEventListener('dragover', event => event.stopPropagation());
 window.addEventListener('drop', event => event.stopPropagation());
+
+// Clean up stores when window is closing to prevent memory leaks
+window.addEventListener('beforeunload', () => {
+  try {
+    const { stores } = window['ferdium'];
+    if (stores) {
+      // Clean up stores that have teardown methods
+      Object.values(stores).forEach((store: any) => {
+        if (store && typeof store.teardown === 'function') {
+          try {
+            store.teardown();
+          } catch (error) {
+            console.error('Error during store teardown:', error);
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error during cleanup:', error);
+  }
+});

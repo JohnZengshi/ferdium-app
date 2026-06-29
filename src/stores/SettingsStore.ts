@@ -28,6 +28,9 @@ export default class SettingsStore extends TypedStore {
     shortcuts: DEFAULT_SHORTCUTS,
   };
 
+  // Store reaction disposers for cleanup
+  private _reactionDisposers: Array<() => void> = [];
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -41,16 +44,24 @@ export default class SettingsStore extends TypedStore {
   setup(): void {
     this._migrate();
 
-    reaction(
+    // Store disposer for cleanup
+    const menuBarReaction = reaction(
       () => this.all.app.autohideMenuBar,
       () => {
-        const currentWindow = getCurrentWindow();
-        currentWindow.setMenuBarVisibility(!this.all.app.autohideMenuBar);
-        currentWindow.autoHideMenuBar = this.all.app.autohideMenuBar;
+        try {
+          const currentWindow = getCurrentWindow();
+          if (currentWindow && !currentWindow.isDestroyed()) {
+            currentWindow.setMenuBarVisibility(!this.all.app.autohideMenuBar);
+            currentWindow.autoHideMenuBar = this.all.app.autohideMenuBar;
+          }
+        } catch (error) {
+          debug('Error in autohideMenuBar reaction:', error);
+        }
       },
     );
+    this._reactionDisposers.push(menuBarReaction);
 
-    reaction(
+    const serverReaction = reaction(
       () => this.all.app.server,
       server => {
         const effectiveServer = process.env.FERDIUM_SERVER
@@ -66,10 +77,11 @@ export default class SettingsStore extends TypedStore {
       },
       { fireImmediately: true },
     );
+    this._reactionDisposers.push(serverReaction);
 
     // Inactivity lock timer
     let inactivityTimer;
-    getCurrentWindow().on('blur', () => {
+    const handleBlur = () => {
       if (
         this.all.app.isLockingFeatureEnabled &&
         this.all.app.inactivityLock !== 0
@@ -86,12 +98,34 @@ export default class SettingsStore extends TypedStore {
           this.all.app.inactivityLock * 1000 * 60,
         );
       }
-    });
-    getCurrentWindow().on('focus', () => {
+    };
+
+    const handleFocus = () => {
       if (inactivityTimer) {
         clearTimeout(inactivityTimer);
       }
-    });
+    };
+
+    try {
+      const currentWindow = getCurrentWindow();
+      if (currentWindow && !currentWindow.isDestroyed()) {
+        currentWindow.on('blur', handleBlur);
+        currentWindow.on('focus', handleFocus);
+
+        // Store cleanup function
+        this._reactionDisposers.push(() => {
+          if (inactivityTimer) {
+            clearTimeout(inactivityTimer);
+          }
+          if (currentWindow && !currentWindow.isDestroyed()) {
+            currentWindow.removeListener('blur', handleBlur);
+            currentWindow.removeListener('focus', handleFocus);
+          }
+        });
+      }
+    } catch (error) {
+      debug('Error setting up window event listeners:', error);
+    }
 
     ipcRenderer.on('appSettings', (_, resp) => {
       // Lock on startup if enabled in settings
@@ -272,5 +306,21 @@ export default class SettingsStore extends TypedStore {
 
   get waAkgEmail(): string | null {
     return localStorage.getItem(WA_USER_EMAIL_STORAGE_KEY);
+  }
+
+  // Cleanup method to dispose reactions and remove event listeners
+  override teardown(): void {
+    debug('Cleaning up SettingsStore reactions and listeners');
+    for (const disposer of this._reactionDisposers) {
+      try {
+        disposer();
+      } catch (error) {
+        debug('Error disposing reaction:', error);
+      }
+    }
+    this._reactionDisposers = [];
+    
+    // Call parent teardown to clean up TypedStore reactions
+    super.teardown();
   }
 }

@@ -598,19 +598,19 @@ function titleBarTemplateFactory(
     {
       label: intl.formatMessage(menuItems.services),
       accelerator: `${altKey()}+S`,
-      visible: isDevMode || !locked, // 开发模式或非锁定状态显示
+      visible: isDevMode && !locked, // 仅开发模式显示
       submenu: [],
     },
     {
       label: intl.formatMessage(menuItems.workspaces),
       accelerator: `${altKey()}+W`,
       submenu: [],
-      visible: isDevMode || !locked, // 开发模式或非锁定状态显示
+      visible: isDevMode && !locked, // 仅开发模式显示
     },
     {
       label: intl.formatMessage(menuItems.todos),
       submenu: [],
-      visible: isDevMode || !locked, // 开发模式或非锁定状态显示
+      visible: isDevMode && !locked, // 仅开发模式显示
     },
     {
       label: intl.formatMessage(menuItems.window),
@@ -1068,13 +1068,15 @@ class FranzMenu implements StoresProps {
     }
 
     if (!locked) {
-      if (serviceTpl.length > 0) {
+      // 正式版本不显示 Services/Workspaces/Todos 菜单
+      if (isDevMode && serviceTpl.length > 0) {
         tpl[3].submenu = serviceTpl;
       }
 
-      tpl[4].submenu = this.workspacesMenu();
-
-      tpl[5].submenu = this.todosMenu();
+      if (isDevMode) {
+        tpl[4].submenu = this.workspacesMenu();
+        tpl[5].submenu = this.todosMenu();
+      }
 
       // 仅在开发模式显示 Debug 菜单
       if (isDevMode) {

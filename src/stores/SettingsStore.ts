@@ -29,7 +29,7 @@ export default class SettingsStore extends TypedStore {
   };
 
   // Store reaction disposers for cleanup
-  private _reactionDisposers: Array<() => void> = [];
+  private _reactionDisposers: (() => void)[] = [];
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
@@ -319,7 +319,7 @@ export default class SettingsStore extends TypedStore {
       }
     }
     this._reactionDisposers = [];
-    
+
     // Call parent teardown to clean up TypedStore reactions
     super.teardown();
   }

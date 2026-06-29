@@ -9,6 +9,8 @@ export default <ActionDefinitions>{
     path: PropTypes.string,
   },
   closeSettings: {},
+  openSettingsModal: {},
+  closeSettingsModal: {},
   toggleServiceUpdatedInfoBar: {
     visible: PropTypes.bool,
   },

@@ -12,6 +12,8 @@ export default class UIStore extends TypedStore {
 
   @observable isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
 
+  @observable isSettingsModalVisible = false;
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -21,6 +23,12 @@ export default class UIStore extends TypedStore {
     this.actions.ui.openDownloads.listen(this._openDownloads.bind(this));
     this.actions.ui.openSettings.listen(this._openSettings.bind(this));
     this.actions.ui.closeSettings.listen(this._closeSettings.bind(this));
+    this.actions.ui.openSettingsModal.listen(
+      this._openSettingsModal.bind(this),
+    );
+    this.actions.ui.closeSettingsModal.listen(
+      this._closeSettingsModal.bind(this),
+    );
     this.actions.ui.toggleServiceUpdatedInfoBar.listen(
       this._toggleServiceUpdatedInfoBar.bind(this),
     );
@@ -111,6 +119,14 @@ export default class UIStore extends TypedStore {
 
   @action _closeSettings(): void {
     this.stores.router.push('/');
+  }
+
+  @action _openSettingsModal(): void {
+    this.isSettingsModalVisible = true;
+  }
+
+  @action _closeSettingsModal(): void {
+    this.isSettingsModalVisible = false;
   }
 
   @action _toggleServiceUpdatedInfoBar({ visible }): void {

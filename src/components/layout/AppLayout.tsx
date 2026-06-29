@@ -142,7 +142,6 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
 interface IState {
   shouldShowAppUpdateInfoBar: boolean;
   shouldShowServicesUpdatedInfoBar: boolean;
-  settingsModalVisible: boolean;
 }
 
 @inject('stores', 'actions')
@@ -154,7 +153,6 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
     this.state = {
       shouldShowAppUpdateInfoBar: true,
       shouldShowServicesUpdatedInfoBar: true,
-      settingsModalVisible: false,
     };
   }
 
@@ -220,6 +218,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       areRequiredRequestsLoading,
       updateVersion,
       isUpdateAvailable,
+      actions,
     } = this.props;
 
     const { intl } = this.props;
@@ -460,11 +459,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                       </span>
                       <button
                         type="button"
-                        onClick={() =>
-                          this.setState({
-                            settingsModalVisible: true,
-                          })
-                        }
+                        onClick={() => actions!.ui.openSettingsModal()}
                         className="p-[6px] sidebar__button sidebar__button--settings flex items-center justify-center"
                         data-tooltip-id="tooltip-sidebar-button"
                         data-tooltip-content={intl.formatMessage(
@@ -512,8 +507,8 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
           </div>
         </ErrorBoundary>
         <SettingsModal
-          visible={this.state.settingsModalVisible}
-          onClose={() => this.setState({ settingsModalVisible: false })}
+          visible={stores!.ui.isSettingsModalVisible}
+          onClose={() => actions!.ui.closeSettingsModal()}
         />
       </>
     );

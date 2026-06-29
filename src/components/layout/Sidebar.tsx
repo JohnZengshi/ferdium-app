@@ -365,7 +365,7 @@ class Sidebar extends Component<IProps, IState> {
         {!hideSettingsButton && !isMenuCollapsed ? (
           <button
             type="button"
-            onClick={() => openSettings({ path: 'app' })}
+            onClick={() => actions!.ui.openSettingsModal()}
             className="sidebar__button sidebar__button--settings"
             data-tooltip-id="tooltip-sidebar-button"
             data-tooltip-content={`${intl.formatMessage(

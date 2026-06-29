@@ -605,12 +605,12 @@ function titleBarTemplateFactory(
       label: intl.formatMessage(menuItems.workspaces),
       accelerator: `${altKey()}+W`,
       submenu: [],
-      visible: isDevMode && !locked, // 仅开发模式显示
+      visible: false,
     },
     {
       label: intl.formatMessage(menuItems.todos),
       submenu: [],
-      visible: isDevMode && !locked, // 仅开发模式显示
+      visible: false,
     },
     {
       label: intl.formatMessage(menuItems.window),
@@ -630,7 +630,7 @@ function titleBarTemplateFactory(
       label: intl.formatMessage(menuItems.help),
       accelerator: `${altKey()}+H`,
       role: 'help',
-      visible: isDevMode, // 仅开发模式显示 Help 菜单
+      visible: false,
       submenu: [
         {
           label: intl.formatMessage(menuItems.learnMore),
@@ -796,6 +796,7 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.toggleDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+I`,
+          visible: isDevMode,
           enabled: webContents.fromId(1) !== undefined,
           click: () => {
             const windowWebContents = webContents.fromId(1);
@@ -814,6 +815,7 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.toggleServiceDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+I`,
+          visible: isDevMode,
           click: () => {
             this.actions.service.openDevToolsForActiveService();
           },
@@ -827,6 +829,7 @@ class FranzMenu implements StoresProps {
         (tpl[1].submenu as MenuItemConstructorOptions[]).push({
           label: intl.formatMessage(menuItems.toggleTodosDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+O`,
+          visible: isDevMode,
           click: () => {
             const webview = document.querySelector('#todos-panel webview');
             if (webview) this.actions.todos.openDevTools();
@@ -863,6 +866,7 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.reloadTodos),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+R`,
+          visible: false,
           click: () => {
             this.actions.todos.reload();
           },
@@ -910,20 +914,20 @@ class FranzMenu implements StoresProps {
             this.actions.ui.openDownloads({ path: '/downloadmanager' });
           },
           enabled: this.stores.user.isLoggedIn,
-          visible: !locked,
+          visible: false,
         },
         {
           label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,
           click: () => {
-            this.actions.ui.openSettings({ path: 'app' });
+            this.actions.ui.openSettingsModal();
           },
           enabled: this.stores.user.isLoggedIn,
           visible: !locked,
         },
         {
           label: intl.formatMessage(menuItems.checkForUpdates),
-          visible: !locked,
+          visible: false,
           click: () => {
             this.actions.app.checkForUpdates();
           },
@@ -1041,7 +1045,7 @@ class FranzMenu implements StoresProps {
           label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,
           click: () => {
-            this.actions.ui.openSettings({ path: 'app' });
+            this.actions.ui.openSettingsModal();
           },
           enabled: this.stores.user.isLoggedIn,
           visible: !locked,

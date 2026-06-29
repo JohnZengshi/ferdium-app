@@ -31,6 +31,7 @@ import type { Actions } from '../../actions/lib/actions';
 import LockedScreen from '../../containers/auth/LockedScreen';
 import type SettingsStore from '../../stores/SettingsStore';
 
+import { version as appVersion } from '../../../package.json';
 import HomeScreen from '../../containers/home/HomeScreen';
 import KnowledgeScreen from '../../containers/knowledge-base/KnowledgeScreen';
 import AccountManagementScreen from '../../containers/service-group/AccountManagementScreen';
@@ -505,6 +506,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="absolute bottom-[15px] left-[0px] px-[12px] py-[6px] text-[11px] text-secondary opacity-50 pointer-events-none">
+            v{appVersion}
           </div>
         </ErrorBoundary>
         <SettingsModal

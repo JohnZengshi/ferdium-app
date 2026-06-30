@@ -19,6 +19,7 @@ import type {
   DashboardStats,
   DeleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteParams,
   DigitalHumanCreate,
+  DigitalHumanTestRequest,
   DigitalHumanUpdate,
   EnterpriseCodeResponse,
   EnterpriseCodeSetRequest,
@@ -40,12 +41,17 @@ import type {
   ListDocumentsApiV1OwnersKnowledgeDocumentsGetParams,
   ListHandoffsApiV1OwnersHandoffsGetParams,
   ListSubAccountsApiV1OwnersSubAccountsGetParams,
+  ListTagsApiV1OwnersTagsGetParams,
   ResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPost200,
   ResetPasswordRequest,
   StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams,
   SubAccountCreate,
   SubAccountListResponse,
   SubAccountResponse,
+  TagCreateRequest,
+  TagListResponse,
+  TagResponse,
+  TagUpdateRequest,
   TraceResponse,
   WhatsAppBindingResponse
 } from '../agentFlowCs.schemas';
@@ -392,6 +398,229 @@ export const listAssigneesApiV1OwnersDigitalHumansDhIdAssigneesGet = async (dhId
   {
     ...options,
     method: 'GET'
+
+
+  }
+);}
+
+
+export type testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponse200 = {
+  data: unknown
+  status: 200
+}
+
+export type testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponseSuccess = (testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponse200) & {
+  headers: Headers;
+};
+export type testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponseError = (testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponse422) & {
+  headers: Headers;
+};
+
+export type testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponse = (testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponseSuccess | testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponseError)
+
+export const getTestDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostUrl = (dhId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/digital-humans/${dhId}/test/stream`
+}
+
+/**
+ * @summary Test Digital Human Stream
+ */
+export const testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPost = async (dhId: string,
+    digitalHumanTestRequest: DigitalHumanTestRequest, options?: RequestInit): Promise<testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponse> => {
+
+  return useCustomInstance<testDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostResponse>(getTestDigitalHumanStreamApiV1OwnersDigitalHumansDhIdTestStreamPostUrl(dhId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(digitalHumanTestRequest)
+  }
+);}
+
+
+export type listTagsApiV1OwnersTagsGetResponse200 = {
+  data: TagListResponse
+  status: 200
+}
+
+export type listTagsApiV1OwnersTagsGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listTagsApiV1OwnersTagsGetResponseSuccess = (listTagsApiV1OwnersTagsGetResponse200) & {
+  headers: Headers;
+};
+export type listTagsApiV1OwnersTagsGetResponseError = (listTagsApiV1OwnersTagsGetResponse422) & {
+  headers: Headers;
+};
+
+export type listTagsApiV1OwnersTagsGetResponse = (listTagsApiV1OwnersTagsGetResponseSuccess | listTagsApiV1OwnersTagsGetResponseError)
+
+export const getListTagsApiV1OwnersTagsGetUrl = (params?: ListTagsApiV1OwnersTagsGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/tags?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/tags`
+}
+
+/**
+ * 列出当前主账号的自定义标签；include_defaults=true 时附带全局默认标签。
+ * @summary List Tags
+ */
+export const listTagsApiV1OwnersTagsGet = async (params?: ListTagsApiV1OwnersTagsGetParams, options?: RequestInit): Promise<listTagsApiV1OwnersTagsGetResponse> => {
+
+  return useCustomInstance<listTagsApiV1OwnersTagsGetResponse>(getListTagsApiV1OwnersTagsGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type createTagApiV1OwnersTagsPostResponse201 = {
+  data: TagResponse
+  status: 201
+}
+
+export type createTagApiV1OwnersTagsPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type createTagApiV1OwnersTagsPostResponseSuccess = (createTagApiV1OwnersTagsPostResponse201) & {
+  headers: Headers;
+};
+export type createTagApiV1OwnersTagsPostResponseError = (createTagApiV1OwnersTagsPostResponse422) & {
+  headers: Headers;
+};
+
+export type createTagApiV1OwnersTagsPostResponse = (createTagApiV1OwnersTagsPostResponseSuccess | createTagApiV1OwnersTagsPostResponseError)
+
+export const getCreateTagApiV1OwnersTagsPostUrl = () => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/tags`
+}
+
+/**
+ * 创建自定义标签。
+ * @summary Create Tag
+ */
+export const createTagApiV1OwnersTagsPost = async (tagCreateRequest: TagCreateRequest, options?: RequestInit): Promise<createTagApiV1OwnersTagsPostResponse> => {
+
+  return useCustomInstance<createTagApiV1OwnersTagsPostResponse>(getCreateTagApiV1OwnersTagsPostUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(tagCreateRequest)
+  }
+);}
+
+
+export type updateTagApiV1OwnersTagsTagIdPatchResponse200 = {
+  data: TagResponse
+  status: 200
+}
+
+export type updateTagApiV1OwnersTagsTagIdPatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateTagApiV1OwnersTagsTagIdPatchResponseSuccess = (updateTagApiV1OwnersTagsTagIdPatchResponse200) & {
+  headers: Headers;
+};
+export type updateTagApiV1OwnersTagsTagIdPatchResponseError = (updateTagApiV1OwnersTagsTagIdPatchResponse422) & {
+  headers: Headers;
+};
+
+export type updateTagApiV1OwnersTagsTagIdPatchResponse = (updateTagApiV1OwnersTagsTagIdPatchResponseSuccess | updateTagApiV1OwnersTagsTagIdPatchResponseError)
+
+export const getUpdateTagApiV1OwnersTagsTagIdPatchUrl = (tagId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/tags/${tagId}`
+}
+
+/**
+ * 修改自定义标签（改名 / 调序）。
+ * @summary Update Tag
+ */
+export const updateTagApiV1OwnersTagsTagIdPatch = async (tagId: string,
+    tagUpdateRequest: TagUpdateRequest, options?: RequestInit): Promise<updateTagApiV1OwnersTagsTagIdPatchResponse> => {
+
+  return useCustomInstance<updateTagApiV1OwnersTagsTagIdPatchResponse>(getUpdateTagApiV1OwnersTagsTagIdPatchUrl(tagId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(tagUpdateRequest)
+  }
+);}
+
+
+export type deleteTagApiV1OwnersTagsTagIdDeleteResponse204 = {
+  data: void
+  status: 204
+}
+
+export type deleteTagApiV1OwnersTagsTagIdDeleteResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type deleteTagApiV1OwnersTagsTagIdDeleteResponseSuccess = (deleteTagApiV1OwnersTagsTagIdDeleteResponse204) & {
+  headers: Headers;
+};
+export type deleteTagApiV1OwnersTagsTagIdDeleteResponseError = (deleteTagApiV1OwnersTagsTagIdDeleteResponse422) & {
+  headers: Headers;
+};
+
+export type deleteTagApiV1OwnersTagsTagIdDeleteResponse = (deleteTagApiV1OwnersTagsTagIdDeleteResponseSuccess | deleteTagApiV1OwnersTagsTagIdDeleteResponseError)
+
+export const getDeleteTagApiV1OwnersTagsTagIdDeleteUrl = (tagId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/tags/${tagId}`
+}
+
+/**
+ * 删除自定义标签。
+ * @summary Delete Tag
+ */
+export const deleteTagApiV1OwnersTagsTagIdDelete = async (tagId: string, options?: RequestInit): Promise<deleteTagApiV1OwnersTagsTagIdDeleteResponse> => {
+
+  return useCustomInstance<deleteTagApiV1OwnersTagsTagIdDeleteResponse>(getDeleteTagApiV1OwnersTagsTagIdDeleteUrl(tagId),
+  {
+    ...options,
+    method: 'DELETE'
 
 
   }

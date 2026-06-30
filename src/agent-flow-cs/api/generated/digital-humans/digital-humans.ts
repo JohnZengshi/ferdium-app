@@ -260,7 +260,10 @@ export const getDeleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteUrl = (d
 }
 
 /**
- * 归档数字人（主账号或创建者可操作）。
+ * 暂停数字人（主账号或创建者可操作）。
+ *
+ * 与 owner 域 delete 语义一致：status→paused + is_enabled→False，可由 owner
+ * 在编辑页重新启用恢复（不解绑 WhatsApp/分配，编排层按 status 拦截）。
  * @summary Delete Digital Human
  */
 export const deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDelete = async (digitalHumanId: string, options?: RequestInit): Promise<deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse> => {

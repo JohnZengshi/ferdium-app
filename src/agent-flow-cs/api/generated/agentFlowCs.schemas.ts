@@ -788,6 +788,31 @@ export interface DigitalHumanGenerateRequest {
   tags?: string[];
 }
 
+export type DigitalHumanTestDraftPersonaConfig = { [key: string]: unknown } | null;
+
+/**
+ * 测试草稿：未保存的配置覆盖项。
+ */
+export interface DigitalHumanTestDraft {
+  name?: string | null;
+  is_enabled?: boolean | null;
+  persona_config?: DigitalHumanTestDraftPersonaConfig;
+  knowledge_collection?: string | null;
+  knowledge_domain?: string | null;
+}
+
+export interface DigitalHumanTestRequest {
+  /**
+     * @minLength 1
+     * @maxLength 1000
+     */
+  message: string;
+  /** @maxLength 32 */
+  platform?: string;
+  human_likeness?: number | null;
+  draft?: DigitalHumanTestDraft | null;
+}
+
 export type PersonaConfigPatchEmojiFreq = typeof PersonaConfigPatchEmojiFreq[keyof typeof PersonaConfigPatchEmojiFreq] | null;
 
 
@@ -824,7 +849,6 @@ export interface DigitalHumanUpdate {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   is_enabled?: boolean | null;
-  status?: string | null;
 }
 
 export type DigitalHumanUpdateRequestPersonaConfig = { [key: string]: unknown } | null;
@@ -1546,6 +1570,23 @@ export interface MemberResponse {
 }
 
 /**
+ * 子账号可见标签响应（不含 owner_user_id）。
+ */
+export interface MemberTagResponse {
+  id: string;
+  name: string;
+  is_default: boolean;
+  sort_order: number;
+}
+
+/**
+ * 子账号标签列表响应。
+ */
+export interface MemberTagListResponse {
+  items?: MemberTagResponse[];
+}
+
+/**
  * 修改子账号请求体（密码/状态可选）。
  */
 export interface MemberUpdateRequest {
@@ -1800,6 +1841,56 @@ export interface SubAccountResponse {
 export interface SubAccountListResponse {
   items: SubAccountResponse[];
   total: number;
+}
+
+/**
+ * 主账号创建自定义标签。
+ */
+export interface TagCreateRequest {
+  /**
+     * @minLength 1
+     * @maxLength 64
+     */
+  name: string;
+  /**
+     * @minimum 0
+     * @maximum 10000
+     */
+  sort_order?: number;
+}
+
+/**
+ * 标签响应（owner 视图）。
+ */
+export interface TagResponse {
+  id: string;
+  name: string;
+  owner_user_id: string | null;
+  is_default: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * 标签分页列表响应（owner 视图）。
+ */
+export interface TagListResponse {
+  items?: TagResponse[];
+  /** @minimum 0 */
+  total: number;
+  /** @minimum 0 */
+  offset: number;
+  /** @minimum 1 */
+  limit: number;
+}
+
+/**
+ * 主账号修改自定义标签。
+ */
+export interface TagUpdateRequest {
+  name?: string | null;
+  sort_order?: number | null;
 }
 
 /**
@@ -2613,6 +2704,19 @@ page_size?: number;
 };
 
 export type AssignDigitalHumanApiV1OwnersDigitalHumansDhIdAssignPost200 = {[key: string]: boolean};
+
+export type ListTagsApiV1OwnersTagsGetParams = {
+include_defaults?: boolean;
+/**
+ * @minimum 0
+ */
+offset?: number;
+/**
+ * @minimum 1
+ * @maximum 500
+ */
+limit?: number;
+};
 
 export type ListSubAccountsApiV1OwnersSubAccountsGetParams = {
 search?: string | null;

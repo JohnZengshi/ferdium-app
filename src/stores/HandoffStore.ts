@@ -35,19 +35,37 @@ export default class HandoffStore extends TypedStore {
   }
 
   setup(): void {
-    // 启动时立即拉取一次
-    this.fetchUnreadCount().catch(() => {});
-
-    // 之后每 30 秒自动刷新
-    this._pollingTimer = setInterval(() => {
-      this.fetchUnreadCount().catch(() => {});
-    }, HandoffStore.POLL_INTERVAL);
+    // 只有在用户登录后才启动轮询和拉取数据
+    // 通过 reaction 监听登录状态变化
+    this.registerReactions([this._autoFetchWhenLoggedIn.bind(this)]);
 
     // 监听跨组件通知：当通知记录中执行了标记已读操作后立即刷新
     window.addEventListener(
       HANDOFF_UNREAD_CHANGED_EVENT,
       this._onUnreadChanged,
     );
+  }
+
+  /**
+   * Reaction: 当用户登录后自动启动轮询，退出后停止轮询
+   */
+  private _autoFetchWhenLoggedIn(): void {
+    const isLoggedIn = this.stores?.user?.isLoggedIn;
+
+    if (isLoggedIn && !this._pollingTimer) {
+      // 用户登录，启动轮询
+      this.fetchUnreadCount().catch(() => {});
+
+      this._pollingTimer = setInterval(() => {
+        this.fetchUnreadCount().catch(() => {});
+      }, HandoffStore.POLL_INTERVAL);
+    } else if (!isLoggedIn && this._pollingTimer) {
+      // 用户退出，停止轮询
+      clearInterval(this._pollingTimer);
+      this._pollingTimer = null;
+      // 清空未读数
+      this.unreadCount = 0;
+    }
   }
 
   teardown(): void {

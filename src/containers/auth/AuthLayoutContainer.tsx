@@ -31,6 +31,9 @@ class AuthLayoutContainer extends Component<IProps> {
     // If dark mode stays enabled throughout logout→login, the reaction won't
     // fire and the main app would lose all .theme__dark CSS rules.
     document.documentElement.setAttribute('theme-mode', 'light');
+    
+    // Set unified window title for auth pages
+    document.title = 'AITALK';
   }
 
   componentWillUnmount(): void {

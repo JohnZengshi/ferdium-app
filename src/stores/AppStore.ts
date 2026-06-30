@@ -218,13 +218,16 @@ export default class AppStore extends TypedStore {
     this._systemDND();
     setInterval(() => this._systemDND(), ms('5s'));
 
+    // 定期刷新用户信息和特性（仅在登录时）
     this.fetchDataInterval = setInterval(() => {
-      this.stores.user.getUserInfoRequest.invalidate({
-        immediately: true,
-      });
-      this.stores.features.featuresRequest.invalidate({
-        immediately: true,
-      });
+      if (this.stores.user.isLoggedIn) {
+        this.stores.user.getUserInfoRequest.invalidate({
+          immediately: true,
+        });
+        this.stores.features.featuresRequest.invalidate({
+          immediately: true,
+        });
+      }
     }, ms('60m'));
 
     // Check for updates once every 4 hours

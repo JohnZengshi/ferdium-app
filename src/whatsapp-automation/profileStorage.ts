@@ -1,8 +1,5 @@
 import { createHash } from 'node:crypto';
-import {
-  API_KEY_STORAGE_KEY,
-  WA_USER_EMAIL_STORAGE_KEY,
-} from './constants';
+import { API_KEY_STORAGE_KEY, WA_USER_EMAIL_STORAGE_KEY } from './constants';
 
 const PROFILE_STORAGE_PREFIX = 'waAkgProfileLocalStorage:';
 

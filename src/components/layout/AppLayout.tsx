@@ -253,7 +253,8 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       (appUpdateStatus === AVAILABLE ||
         appUpdateStatus === DOWNLOADED ||
         showServicesUpdatedInfoBar);
-    const rawUserName = `${stores?.user?.data?.firstname || ''} ${stores?.user?.data?.lastname || ''}`.trim();
+    const rawUserName =
+      `${stores?.user?.data?.firstname || ''} ${stores?.user?.data?.lastname || ''}`.trim();
     const normalizedWaAkgName = (stores?.user?.waAkgEmail || '').split('@')[0];
     const displayUserName =
       rawUserName && rawUserName !== 'Aitalk Application'

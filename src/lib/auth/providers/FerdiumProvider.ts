@@ -27,7 +27,6 @@ const AGENT_FLOW_CS_BASE =
 // 如果设置了 USE_AGENT_FLOW_AUTH=true，强制使用 Agent Flow CS 认证
 const USE_AGENT_FLOW_AUTH = process.env.USE_AGENT_FLOW_AUTH === 'true';
 
-
 /**
  * Ferdium JWT Authentication Provider (双模式支持)
  *
@@ -62,7 +61,7 @@ export default class FerdiumProvider implements AuthProvider {
       fields: [
         {
           id: 'email',
-          type: AuthFieldType.TEXT,  // ✅ 改为 TEXT 类型，去掉邮箱校验
+          type: AuthFieldType.TEXT, // ✅ 改为 TEXT 类型，去掉邮箱校验
           label: '用户名',
           placeholder: '请输入用户名',
           required: true,
@@ -75,7 +74,7 @@ export default class FerdiumProvider implements AuthProvider {
           required: true,
         },
       ],
-      showSignup: false,       // ✅ 隐藏注册链接
+      showSignup: false, // ✅ 隐藏注册链接
       showForgotPassword: false, // ✅ 隐藏忘记密码链接
       submitLabel: 'Sign In',
       extraLinks: [],

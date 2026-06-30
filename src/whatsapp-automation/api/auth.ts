@@ -343,7 +343,6 @@ export const initializeAuth = async (
       }
       setWaAkgIdentity(session.user.email, session.user.id);
       authenticatedEmail = session.user.email;
-
     } catch (error) {
       console.error('[WhatsApp Automation] Session check error', error);
       return null;

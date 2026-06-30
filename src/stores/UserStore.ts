@@ -116,16 +116,14 @@ export default class UserStore extends TypedStore {
 
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
 
-    if (process.env.FERDIUM_SERVER === 'local') {
-      if (!this.isLoggedIn) {
-        ipcRenderer.once('localServerPort', () => {
-          debug(
-            '%s：登录内部服务器...',
-            useAgentFlowAuth ? 'Agent Flow 模式' : '纯本地模式',
-          );
-          serverlessLogin(this.actions);
-        });
-      }
+    if (process.env.FERDIUM_SERVER === 'local' && !this.isLoggedIn) {
+      ipcRenderer.once('localServerPort', () => {
+        debug(
+          '%s：登录内部服务器...',
+          useAgentFlowAuth ? 'Agent Flow 模式' : '纯本地模式',
+        );
+        serverlessLogin(this.actions);
+      });
     }
 
     // Register auth providers with AuthManager
@@ -199,7 +197,7 @@ export default class UserStore extends TypedStore {
     if (!this.isLoggedIn) return {};
 
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-    
+
     // Agent Flow 模式：不请求新 token（由后端管理）
     if (!useAgentFlowAuth) {
       const newTokenNeeded = this._shouldRequestNewToken(this.authToken);
@@ -414,7 +412,7 @@ export default class UserStore extends TypedStore {
     // Agent Flow 模式：检查 Agent Flow token 和 AKG Key
     const agentFlowToken = window.localStorage.getItem('agentFlowToken');
     const hasAgentFlowToken = Boolean(agentFlowToken);
-    
+
     if (this.isTokenExpired) {
       this._logout();
       return;

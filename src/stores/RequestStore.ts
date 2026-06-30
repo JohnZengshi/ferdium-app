@@ -1,5 +1,11 @@
 import { ipcRenderer } from 'electron';
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import ms from 'ms';
 
 import type { Stores } from '../@types/stores.types';

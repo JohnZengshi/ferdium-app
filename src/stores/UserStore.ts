@@ -124,11 +124,11 @@ export default class UserStore extends TypedStore {
       ipcRenderer.once('localServerPort', () => {
         // Agent Flow 模式：不自动登录 internal server，等用户通过 Agent Flow CS 登录
         // 纯 local 模式：自动登录 internal server
-        if (!useAgentFlowAuth) {
+        if (useAgentFlowAuth) {
+          debug('Agent Flow 模式：Local server 已启动，等待用户登录');
+        } else {
           debug('纯本地模式：登录内部服务器...');
           serverlessLogin(this.actions);
-        } else {
-          debug('Agent Flow 模式：Local server 已启动，等待用户登录');
         }
       });
     }

@@ -114,10 +114,18 @@ export default class UserStore extends TypedStore {
 
     makeObservable(this);
 
-    if (process.env.FERDIUM_SERVER === 'local' && !this.isLoggedIn) {
-      ipcRenderer.once('localServerPort', () => {
-        serverlessLogin(this.actions);
-      });
+    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
+
+    if (process.env.FERDIUM_SERVER === 'local') {
+      if (!this.isLoggedIn) {
+        ipcRenderer.once('localServerPort', () => {
+          debug(
+            '%s：登录内部服务器...',
+            useAgentFlowAuth ? 'Agent Flow 模式' : '纯本地模式',
+          );
+          serverlessLogin(this.actions);
+        });
+      }
     }
 
     // Register auth providers with AuthManager
@@ -190,9 +198,14 @@ export default class UserStore extends TypedStore {
   @computed get data() {
     if (!this.isLoggedIn) return {};
 
-    const newTokenNeeded = this._shouldRequestNewToken(this.authToken);
-    if (newTokenNeeded) {
-      this._requestNewToken();
+    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
+    
+    // Agent Flow 模式：不请求新 token（由后端管理）
+    if (!useAgentFlowAuth) {
+      const newTokenNeeded = this._shouldRequestNewToken(this.authToken);
+      if (newTokenNeeded) {
+        this._requestNewToken();
+      }
     }
 
     return this.getUserInfoRequest.execute().result || {};
@@ -286,36 +299,55 @@ export default class UserStore extends TypedStore {
     this.actionStatus = [];
   }
 
-  @action _logout(): void {
+  @action async _logout(): Promise<void> {
     authManager.logout().catch((error: unknown) => {
       debug('AuthManager.logout failed: %O', error);
     });
 
     this.isLoggingOut = false;
 
-    saveLocalStorageProfile(localStorage.getItem(WA_USER_EMAIL_STORAGE_KEY));
+    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
 
-    // workaround mobx issue
-    localStorage.removeItem('authToken');
-    window.localStorage.removeItem('authToken');
+    // 先清除所有登录态
+    if (!useAgentFlowAuth) {
+      localStorage.removeItem('authToken');
+      window.localStorage.removeItem('authToken');
+      this.authToken = null;
+    }
+
+    localStorage.removeItem('agentFlowToken');
+    window.localStorage.removeItem('agentFlowToken');
 
     localStorage.removeItem(API_KEY_STORAGE_KEY);
     window.localStorage.removeItem(API_KEY_STORAGE_KEY);
+
+    this.waAkgEmail = null;
+    this.waAkgUserId = null;
+
+    // 清除后再保存 profile 快照（此时快照中不包含登录态）
+    saveLocalStorageProfile(localStorage.getItem(WA_USER_EMAIL_STORAGE_KEY));
+
+    // 最后清除用户身份标识
     localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
     window.localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
     localStorage.removeItem(WA_USER_ID_STORAGE_KEY);
     window.localStorage.removeItem(WA_USER_ID_STORAGE_KEY);
 
-    this.waAkgEmail = null;
-    this.waAkgUserId = null;
-
     this.getUserInfoRequest.invalidate().reset();
-    this.authToken = null;
 
     this.stores.services.allServicesRequest.invalidate().reset();
 
     if (this.stores.todos.isTodosEnabled) {
       ipcRenderer.send('clear-storage-data', { sessionId: TODOS_PARTITION_ID });
+    }
+
+    // 退出后触发应用重启（确保下次登录时状态干净）
+    if (process.env.FERDIUM_SERVER === 'local') {
+      try {
+        await ipcRenderer.invoke('relaunchForWaAkgProfile');
+      } catch (error) {
+        debug('Failed to relaunch app: %O', error);
+      }
     }
   }
 
@@ -357,10 +389,11 @@ export default class UserStore extends TypedStore {
 
     const { router } = this.stores;
     const route = router.location.pathname;
+    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
 
-    // 本地模式下 Ferdium 内部 auth 是基础设施，不依赖用户操作
+    // 本地模式 + 非 Agent Flow CS 认证：Ferdium 内部 auth 是基础设施，不依赖用户操作
     // 这里只关心 WA-AKG key 是否就绪
-    if (process.env.FERDIUM_SERVER === 'local') {
+    if (process.env.FERDIUM_SERVER === 'local' && !useAgentFlowAuth) {
       const hasWaAkgKey = Boolean(
         window.localStorage.getItem(API_KEY_STORAGE_KEY),
       );
@@ -375,34 +408,41 @@ export default class UserStore extends TypedStore {
       return;
     }
 
-    // ── 以下仅在云端模式执行 ──
+    // ── 以下在 Agent Flow CS 模式或云端模式执行 ──
     const onLogout = route === this.LOGOUT_ROUTE;
 
+    // Agent Flow 模式：检查 Agent Flow token 和 AKG Key
+    const agentFlowToken = window.localStorage.getItem('agentFlowToken');
+    const hasAgentFlowToken = Boolean(agentFlowToken);
+    
     if (this.isTokenExpired) {
       this._logout();
       return;
     }
 
     if (onLogout) {
-      if (this.isLoggedIn) {
+      if (hasAgentFlowToken) {
         this.actions.user.logout();
       }
-      if (route !== this.WA_AKG_LOGIN_ROUTE) {
-        router.push(this.WA_AKG_LOGIN_ROUTE);
+      // Agent Flow 模式：跳转到 LOGIN_ROUTE
+      if (route !== this.LOGIN_ROUTE) {
+        router.push(this.LOGIN_ROUTE);
       }
       return;
     }
 
-    if (!this.isLoggedIn) {
-      if (route !== this.WELCOME_ROUTE) {
-        router.push(this.WELCOME_ROUTE);
+    if (!hasAgentFlowToken) {
+      // Agent Flow CS 模式：直接跳转登录页，不需要 welcome 页
+      if (route !== this.LOGIN_ROUTE) {
+        router.push(this.LOGIN_ROUTE);
       }
       return;
     }
 
-    const hasWaAkgKey = Boolean(
-      window.localStorage.getItem(API_KEY_STORAGE_KEY),
-    );
+    const storedKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
+
+    // 只要 localStorage 里有 key，就认为已登录
+    const hasWaAkgKey = Boolean(storedKey);
 
     if (!hasWaAkgKey) {
       if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {

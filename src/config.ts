@@ -545,7 +545,7 @@ export const DEFAULT_APP_SETTINGS = {
   reloadAfterResumeTime: 10,
   enableSystemTray: true,
   startMinimized: false,
-  confirmOnQuit: true,
+  confirmOnQuit: false,
   minimizeToSystemTray: false,
   closeToSystemTray: false,
   privateNotifications: false,

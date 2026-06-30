@@ -94,7 +94,9 @@ class SettingsNavigation extends Component<IProps> {
 
         this.props.actions!.user.logout();
         this.props.stores!.router.push(
-          this.props.stores!.user.WA_AKG_LOGIN_ROUTE,
+          process.env.USE_AGENT_FLOW_AUTH === 'true'
+            ? this.props.stores!.user.LOGIN_ROUTE
+            : this.props.stores!.user.WA_AKG_LOGIN_ROUTE,
         );
         confirmDia.hide();
       },

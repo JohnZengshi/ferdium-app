@@ -253,6 +253,12 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       (appUpdateStatus === AVAILABLE ||
         appUpdateStatus === DOWNLOADED ||
         showServicesUpdatedInfoBar);
+    const rawUserName = `${stores?.user?.data?.firstname || ''} ${stores?.user?.data?.lastname || ''}`.trim();
+    const normalizedWaAkgName = (stores?.user?.waAkgEmail || '').split('@')[0];
+    const displayUserName =
+      rawUserName && rawUserName !== 'Aitalk Application'
+        ? rawUserName
+        : normalizedWaAkgName || rawUserName;
 
     const renderMainContent = () => {
       // IMPORTANT: keep the services/webview container mounted and toggle visibility with CSS only.
@@ -419,7 +425,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                           </svg>
                         </button>
                       </Badge>
-                      <div className="w-[32px] h-[32px] rounded-full bg-component flex items-center justify-center text-secondary">
+                      <div className="w-[32px] h-[32px] rounded-full bg-transparent transition-colors hover:bg-component flex items-center justify-center text-secondary">
                         <svg
                           width="24"
                           height="24"
@@ -453,8 +459,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         </svg>
                       </div>
                       <span className="text-[14px] text-primary">
-                        {stores.user.waAkgEmail ||
-                          `${stores.user.data.firstname} ${stores.user.data.lastname}`}
+                        {displayUserName}
                       </span>
                       <button
                         type="button"

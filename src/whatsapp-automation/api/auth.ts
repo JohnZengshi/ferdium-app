@@ -344,8 +344,6 @@ export const initializeAuth = async (
       setWaAkgIdentity(session.user.email, session.user.id);
       authenticatedEmail = session.user.email;
 
-      // eslint-disable-next-line no-console
-      console.log('[WhatsApp Automation] Authenticated as', session.user.email);
     } catch (error) {
       console.error('[WhatsApp Automation] Session check error', error);
       return null;

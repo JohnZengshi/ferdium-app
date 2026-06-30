@@ -69,7 +69,8 @@ export default class SettingsStore extends TypedStore {
             ? LOCAL_SERVER
             : process.env.FERDIUM_SERVER
           : server;
-        if (effectiveServer === LOCAL_SERVER) {
+
+        if (effectiveServer === LOCAL_SERVER && this.waAkgEmail) {
           ipcRenderer.send('startLocalServer', {
             waAkgEmail: this.waAkgEmail,
           });

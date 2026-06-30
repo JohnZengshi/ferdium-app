@@ -25,12 +25,14 @@ import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
   DigitalHumanUpdateRequest,
+  MemberTagResponse,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import {
   createDigitalHumanApiV1DigitalHumansPost,
   listDigitalHumansApiV1DigitalHumansGet,
   updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPut,
 } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
+import { listTagsForMemberApiV1TagsGet } from '../../agent-flow-cs/api/generated/tags/tags';
 import aiThinkingAnimation from '../../assets/ai-thinking.json';
 import {
   type SidebarItem,
@@ -44,20 +46,6 @@ import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 
 const aiIllustration = 'assets/images/ai-illustration.png';
-
-const QUICK_TAGS = [
-  { key: 'female', labelKey: 'tagFemale' },
-  { key: 'male', labelKey: 'tagMale' },
-  { key: 'young', labelKey: 'tagYoung' },
-  { key: 'business-1', labelKey: 'tagBusiness' },
-  { key: 'travel', labelKey: 'tagTravel' },
-  { key: 'food', labelKey: 'tagFood' },
-  { key: 'social-1', labelKey: 'tagSocial' },
-  { key: 'sea', labelKey: 'tagSoutheastAsia' },
-  { key: 'west', labelKey: 'tagWestern' },
-  { key: 'business-2', labelKey: 'tagBusiness' },
-  { key: 'active', labelKey: 'tagActiveSocial' },
-] as const;
 
 const sleep = (ms: number) =>
   new Promise<void>(resolve => {
@@ -423,6 +411,10 @@ const messages = defineMessages({
     id: 'knowledgeScreen.readStreamFailed',
     defaultMessage: 'Failed to read AI response',
   },
+  tagLoadFailed: {
+    id: 'knowledgeScreen.tagLoadFailed',
+    defaultMessage: 'Failed to load tags',
+  },
 });
 
 interface PersonaRecord {
@@ -588,6 +580,7 @@ const KnowledgeScreen: React.FC = () => {
   const [isGeneratedContentHighlighted, setIsGeneratedContentHighlighted] =
     useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const [tags, setTags] = useState<MemberTagResponse[]>([]);
 
   const genderOptions = useMemo(
     () => [
@@ -656,6 +649,19 @@ const KnowledgeScreen: React.FC = () => {
   useEffect(() => {
     fetchDigitalHumans();
   }, [fetchDigitalHumans]);
+
+  const fetchTags = useCallback(async () => {
+    try {
+      const response = await listTagsForMemberApiV1TagsGet();
+      setTags(response.data.items ?? []);
+    } catch {
+      await MessagePlugin.error(intl.formatMessage(messages.tagLoadFailed));
+    }
+  }, [intl]);
+
+  useEffect(() => {
+    fetchTags();
+  }, [fetchTags]);
 
   useEffect(
     () => () => {
@@ -1216,22 +1222,20 @@ const KnowledgeScreen: React.FC = () => {
                     </div>
 
                     <div className="mt-[12px] flex flex-wrap gap-x-[8px] gap-y-[8px]">
-                      {QUICK_TAGS.map(tag => {
-                        const isSelected = selectedTags.includes(tag.key);
+                      {tags.map(tag => {
+                        const isSelected = selectedTags.includes(tag.name);
                         return (
                           <button
-                            key={tag.key}
+                            key={tag.id}
                             type="button"
-                            onClick={() => handleTagToggle(tag.key)}
+                            onClick={() => handleTagToggle(tag.name)}
                             className={`h-[28px] rounded-[4px] px-[12px] text-[12px] leading-[28px] border-none cursor-pointer transition-colors ${
                               isSelected
                                 ? 'bg-brand-light text-brand'
                                 : 'bg-component text-primary'
                             }`}
                           >
-                            {intl.formatMessage(
-                              messages[tag.labelKey as keyof typeof messages],
-                            )}
+                            {tag.name}
                           </button>
                         );
                       })}

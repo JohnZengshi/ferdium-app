@@ -901,25 +901,25 @@ appEvents.on('install-update', () => {
   overrideAppQuitForUpdate = true;
 });
 
-app.on('before-quit', event => {
-  const yesButtonIndex = 0;
-  let selection = yesButtonIndex;
-  if (
-    retrieveSettingValue('confirmOnQuit', DEFAULT_APP_SETTINGS.confirmOnQuit)
-  ) {
-    selection = dialog.showMessageBoxSync(mainWindow!, {
-      type: 'question',
-      message: 'Quit',
-      detail: 'Do you really want to quit Aitalk?',
-      buttons: ['Yes', 'No'],
-    });
-  }
-  if (selection === yesButtonIndex) {
-    willQuitApp = true;
-  } else {
-    event.preventDefault();
-  }
-});
+// app.on('before-quit', event => {
+//   const yesButtonIndex = 0;
+//   let selection = yesButtonIndex;
+//   if (
+//     retrieveSettingValue('confirmOnQuit', DEFAULT_APP_SETTINGS.confirmOnQuit)
+//   ) {
+//     selection = dialog.showMessageBoxSync(mainWindow!, {
+//       type: 'question',
+//       message: 'Quit',
+//       detail: 'Do you really want to quit Aitalk?',
+//       buttons: ['Yes', 'No'],
+//     });
+//   }
+//   if (selection === yesButtonIndex) {
+//     willQuitApp = true;
+//   } else {
+//     event.preventDefault();
+//   }
+// });
 
 app.on('activate', () => {
   if (mainWindow === null) {

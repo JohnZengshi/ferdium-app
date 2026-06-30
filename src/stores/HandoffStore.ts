@@ -49,12 +49,12 @@ export default class HandoffStore extends TypedStore {
 
   /**
    * Reaction: 当用户登录后自动启动轮询，退出后停止轮询
-   * 
+   *
    * Agent Flow 模式：需要同时检查 agentFlowToken 和 API_KEY
    */
   private _autoFetchWhenLoggedIn(): void {
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-    
+
     let isReallyLoggedIn = false;
     if (useAgentFlowAuth) {
       // Agent Flow 模式：检查 agentFlowToken 和 API_KEY

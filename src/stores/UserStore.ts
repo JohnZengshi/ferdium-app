@@ -116,13 +116,20 @@ export default class UserStore extends TypedStore {
 
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
 
-    if (process.env.FERDIUM_SERVER === 'local' && !this.isLoggedIn) {
+    // Agent Flow 模式：总是启动 local server（提供 internal API）
+    // 纯 local 模式：只在未登录时启动并自动登录
+    const shouldStartLocalServer = useAgentFlowAuth || !this.isLoggedIn;
+
+    if (process.env.FERDIUM_SERVER === 'local' && shouldStartLocalServer) {
       ipcRenderer.once('localServerPort', () => {
-        debug(
-          '%s：登录内部服务器...',
-          useAgentFlowAuth ? 'Agent Flow 模式' : '纯本地模式',
-        );
-        serverlessLogin(this.actions);
+        // Agent Flow 模式：不自动登录 internal server，等用户通过 Agent Flow CS 登录
+        // 纯 local 模式：自动登录 internal server
+        if (!useAgentFlowAuth) {
+          debug('纯本地模式：登录内部服务器...');
+          serverlessLogin(this.actions);
+        } else {
+          debug('Agent Flow 模式：Local server 已启动，等待用户登录');
+        }
       });
     }
 

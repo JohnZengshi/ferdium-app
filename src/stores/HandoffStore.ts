@@ -9,6 +9,7 @@
 
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { listHandoffsByReadApiV1HandoffReadGet } from '../agent-flow-cs/api/generated/handoff/handoff';
+import { API_KEY_STORAGE_KEY } from '../whatsapp-automation/constants';
 import TypedStore from './lib/TypedStore';
 
 /** 通知记录已读状态变更时派发的事件名 */
@@ -48,18 +49,31 @@ export default class HandoffStore extends TypedStore {
 
   /**
    * Reaction: 当用户登录后自动启动轮询，退出后停止轮询
+   * 
+   * Agent Flow 模式：需要同时检查 agentFlowToken 和 API_KEY
    */
   private _autoFetchWhenLoggedIn(): void {
-    const isLoggedIn = this.stores?.user?.isLoggedIn;
+    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
+    
+    let isReallyLoggedIn = false;
+    if (useAgentFlowAuth) {
+      // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
+      const agentFlowToken = window.localStorage.getItem('agentFlowToken');
+      const apiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
+      isReallyLoggedIn = Boolean(agentFlowToken && apiKey);
+    } else {
+      // 其他模式：使用 UserStore 的 isLoggedIn
+      isReallyLoggedIn = Boolean(this.stores?.user?.isLoggedIn);
+    }
 
-    if (isLoggedIn && !this._pollingTimer) {
+    if (isReallyLoggedIn && !this._pollingTimer) {
       // 用户登录，启动轮询
       this.fetchUnreadCount().catch(() => {});
 
       this._pollingTimer = setInterval(() => {
         this.fetchUnreadCount().catch(() => {});
       }, HandoffStore.POLL_INTERVAL);
-    } else if (!isLoggedIn && this._pollingTimer) {
+    } else if (!isReallyLoggedIn && this._pollingTimer) {
       // 用户退出，停止轮询
       clearInterval(this._pollingTimer);
       this._pollingTimer = null;

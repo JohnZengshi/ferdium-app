@@ -36,6 +36,7 @@ export const isDevMode: boolean =
   process.env.ELECTRON_IS_DEV === undefined
     ? !app.isPackaged
     : Number.parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
+
 if (isDevMode) {
   app.setPath('userData', join(app.getPath('appData'), `${app.name}Dev`));
 }

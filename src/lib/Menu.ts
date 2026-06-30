@@ -605,12 +605,12 @@ function titleBarTemplateFactory(
       label: intl.formatMessage(menuItems.workspaces),
       accelerator: `${altKey()}+W`,
       submenu: [],
-      visible: false,
+      visible: isDevMode,
     },
     {
       label: intl.formatMessage(menuItems.todos),
       submenu: [],
-      visible: false,
+      visible: isDevMode,
     },
     {
       label: intl.formatMessage(menuItems.window),
@@ -630,7 +630,7 @@ function titleBarTemplateFactory(
       label: intl.formatMessage(menuItems.help),
       accelerator: `${altKey()}+H`,
       role: 'help',
-      visible: false,
+      visible: isDevMode,
       submenu: [
         {
           label: intl.formatMessage(menuItems.learnMore),
@@ -707,7 +707,26 @@ class FranzMenu implements StoresProps {
 
   get template(): any {
     // @ts-expect-error
-    return fromJS(this.currentTemplate).toJS();
+    const tpl = fromJS(this.currentTemplate).toJS();
+    // ponytail: electron-react-titlebar reads `visiable` (typo) not `visible`
+    // for submenu items, and ignores top-level `visible` entirely. Map
+    // visible → visiable for submenus; filter out hidden top-level menus.
+    // Native menu uses currentTemplate directly and is unaffected. Remove
+    // when library fixed or replaced.
+    const mapVisible = (items: any[]): any[] =>
+      items
+        .filter(item => item.visible !== false)
+        .map(item => {
+          const next = { ...item };
+          if (typeof next.visible === 'boolean') {
+            next.visiable = next.visible;
+          }
+          if (Array.isArray(next.submenu)) {
+            next.submenu = mapVisible(next.submenu);
+          }
+          return next;
+        });
+    return mapVisible(tpl);
   }
 
   getOsName(): string {
@@ -866,7 +885,7 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.reloadTodos),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+R`,
-          visible: false,
+          visible: isDevMode,
           click: () => {
             this.actions.todos.reload();
           },
@@ -905,16 +924,13 @@ class FranzMenu implements StoresProps {
       accelerator: `${altKey()}+F`,
       submenu: [
         {
-          type: 'separator',
-        },
-        {
           label: intl.formatMessage(globalMessages.downloads),
           accelerator: `${downloadsShortcutKey()}`,
           click: () => {
             this.actions.ui.openDownloads({ path: '/downloadmanager' });
           },
           enabled: this.stores.user.isLoggedIn,
-          visible: false,
+          visible: isDevMode && !locked,
         },
         {
           label: intl.formatMessage(globalMessages.settings),
@@ -927,7 +943,7 @@ class FranzMenu implements StoresProps {
         },
         {
           label: intl.formatMessage(menuItems.checkForUpdates),
-          visible: false,
+          visible: isDevMode,
           click: () => {
             this.actions.app.checkForUpdates();
           },
@@ -940,24 +956,30 @@ class FranzMenu implements StoresProps {
           label: intl.formatMessage(menuItems.services),
           role: 'services',
           submenu: [],
+          visible: isMac,
         },
         {
           type: 'separator',
+          visible: isMac,
         },
         {
           label: intl.formatMessage(menuItems.hide),
           role: 'hide',
+          visible: isMac,
         },
         {
           label: intl.formatMessage(menuItems.hideOthers),
           role: 'hideOthers',
+          visible: isMac,
         },
         {
           label: intl.formatMessage(menuItems.unhide),
           role: 'unhide',
+          visible: isMac,
         },
         {
           type: 'separator',
+          visible: isMac,
         },
         {
           label: intl.formatMessage(globalMessages.quit),
@@ -1006,70 +1028,32 @@ class FranzMenu implements StoresProps {
       },
     };
 
-    if (isMac) {
-      // Edit menu.
-      (tpl[1].submenu as MenuItemConstructorOptions[]).push(
-        {
-          type: 'separator',
-        },
-        {
-          label: intl.formatMessage(menuItems.speech),
-          submenu: [
-            {
-              label: intl.formatMessage(menuItems.startSpeaking),
-              role: 'startSpeaking',
-            },
-            {
-              label: intl.formatMessage(menuItems.stopSpeaking),
-              role: 'stopSpeaking',
-            },
-          ],
-        },
-      );
-
-      (tpl[0].submenu as MenuItemConstructorOptions[]).unshift(about, {
+    // Edit menu: Speech submenu (macOS only, hidden on other platforms)
+    (tpl[1].submenu as MenuItemConstructorOptions[]).push(
+      {
         type: 'separator',
-      });
-    } else {
-      tpl[0].submenu = [
-        {
-          label: intl.formatMessage(globalMessages.downloads),
-          accelerator: `${downloadsShortcutKey()}`,
-          click: () => {
-            this.actions.ui.openDownloads({ path: '/downloadmanager' });
+        visible: isMac,
+      },
+      {
+        label: intl.formatMessage(menuItems.speech),
+        submenu: [
+          {
+            label: intl.formatMessage(menuItems.startSpeaking),
+            role: 'startSpeaking',
           },
-          enabled: this.stores.user.isLoggedIn,
-          visible: !locked,
-        },
-        {
-          label: intl.formatMessage(globalMessages.settings),
-          accelerator: `${settingsShortcutKey()}`,
-          click: () => {
-            this.actions.ui.openSettingsModal();
+          {
+            label: intl.formatMessage(menuItems.stopSpeaking),
+            role: 'stopSpeaking',
           },
-          enabled: this.stores.user.isLoggedIn,
-          visible: !locked,
-        },
-        {
-          type: 'separator',
-        },
-        {
-          label: intl.formatMessage(globalMessages.quit),
-          accelerator: `${cmdOrCtrlShortcutKey()}+Q`,
-          click() {
-            app.quit();
-          },
-        },
-      ];
+        ],
+        visible: isMac,
+      },
+    );
 
-      // eslint-disable-next-line unicorn/prefer-at
-      (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
-        {
-          type: 'separator',
-        },
-        about,
-      );
-    }
+    // About entry in first menu (both platforms, synchronized)
+    (tpl[0].submenu as MenuItemConstructorOptions[]).unshift(about, {
+      type: 'separator',
+    });
 
     if (!locked) {
       // 正式版本不显示 Services/Workspaces/Todos 菜单

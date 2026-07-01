@@ -1261,31 +1261,31 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const map: Record<string, { color: string; label: string }> = {
       [WA_SESSION_STATUS.SCAN_QR]: {
         color: '#FF9800',
-        label: '[WA-AKG] Scan QR',
+        label: 'Scan QR',
       },
       [WA_SESSION_STATUS.CONNECTED]: {
         color: '#00E676',
-        label: '[WA-AKG] Connected',
+        label: 'Connected',
       },
       [WA_SESSION_STATUS.DISCONNECTED]: {
         color: '#FF5252',
-        label: '[WA-AKG] Disconnected',
+        label: 'Disconnected',
       },
       [WA_SESSION_STATUS.CONNECTING]: {
         color: '#448AFF',
-        label: '[WA-AKG] Connecting...',
+        label: 'Connecting...',
       },
       [WA_SESSION_STATUS.STOPPED]: {
         color: '#9E9E9E',
-        label: '[WA-AKG] Stopped',
+        label: 'Stopped',
       },
       [WA_SESSION_STATUS.LOGGED_OUT]: {
         color: '#EF5350',
-        label: '[WA-AKG] Logged Out',
+        label: 'Logged Out',
       },
       [WA_SESSION_STATUS.SERVER_ERROR]: {
         color: '#FF1744',
-        label: '[WA-AKG] Server Error',
+        label: 'Server Error',
       },
     };
     return map[status] || { color: '#9E9E9E', label: status };

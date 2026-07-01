@@ -14,6 +14,7 @@ import {
   MessagePlugin,
   type PrimaryTableCol,
   Select,
+  Switch,
   Table,
   Tag,
 } from 'tdesign-react';
@@ -22,7 +23,11 @@ import type {
   WhatsAppBindingResponse,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
-import { getWhatsappBindingApiV1WhatsappBindGet } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
+import {
+  getWhatsappBindingApiV1WhatsappBindGet,
+  pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePost,
+  resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePost,
+} from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import AvatarCell from '../../components/ui/AvatarCell';
 import EditServiceDrawer from '../../components/ui/EditServiceDrawer';
 import FilterToolbar from '../../components/ui/FilterToolbar';
@@ -108,6 +113,26 @@ const messages = defineMessages({
     id: 'accountMgmt.updateFailed',
     defaultMessage: 'Update failed',
   },
+  colAutoChat: {
+    id: 'accountMgmt.col.autoChat',
+    defaultMessage: 'Auto Chat',
+  },
+  autoChatOn: {
+    id: 'accountMgmt.autoChat.on',
+    defaultMessage: 'On',
+  },
+  autoChatOff: {
+    id: 'accountMgmt.autoChat.off',
+    defaultMessage: 'Off',
+  },
+  autoChatToggleSuccess: {
+    id: 'accountMgmt.autoChat.toggleSuccess',
+    defaultMessage: 'Auto chat updated',
+  },
+  autoChatToggleFailed: {
+    id: 'accountMgmt.autoChat.toggleFailed',
+    defaultMessage: 'Failed to toggle auto chat',
+  },
 });
 
 interface Account {
@@ -118,6 +143,7 @@ interface Account {
   persona: string;
   proxy: string;
   createdAt: string;
+  autoChatStatus: string;
 }
 
 interface ServiceProxyConfig {
@@ -153,6 +179,12 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
   >(new Map());
   const [personaNameMap, setPersonaNameMap] = useState<Map<string, string>>(
     new Map(),
+  );
+  const [autoChatStatusMap, setAutoChatStatusMap] = useState<
+    Map<string, string>
+  >(new Map());
+  const [autoChatLoadingIds, setAutoChatLoadingIds] = useState<Set<string>>(
+    new Set(),
   );
   const [filterStatus, setFilterStatus] = useState<string | undefined>();
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -199,14 +231,16 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
           });
           if (response.status === 200) {
             const binding = response.data as WhatsAppBindingResponse | null;
-            if (binding?.digital_human_id) {
-              const dh = digitalHumanList.find(
-                d => d.id === binding.digital_human_id,
-              );
-              if (dh) {
-                return [service.id, dh.name] as const;
-              }
-            }
+            const personaName = binding?.digital_human_id
+              ? digitalHumanList.find(d => d.id === binding.digital_human_id)
+                  ?.name
+              : undefined;
+
+            return {
+              serviceId: service.id,
+              personaName,
+              autoChatStatus: binding?.status,
+            };
           }
         } catch {
           // Silently ignore errors
@@ -215,13 +249,20 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
       }),
     );
 
-    const map = new Map<string, string>();
+    const personaMap = new Map<string, string>();
+    const autoChatMap = new Map<string, string>();
     for (const result of results) {
       if (result) {
-        map.set(result[0], result[1]);
+        if (result.personaName) {
+          personaMap.set(result.serviceId, result.personaName);
+        }
+        if (result.autoChatStatus) {
+          autoChatMap.set(result.serviceId, result.autoChatStatus);
+        }
       }
     }
-    setPersonaNameMap(map);
+    setPersonaNameMap(personaMap);
+    setAutoChatStatusMap(autoChatMap);
   }, [allServices]);
 
   useEffect(() => {
@@ -253,6 +294,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
       persona: personaNameMap.get(service.id) ?? '',
       proxy: proxyValue,
       createdAt,
+      autoChatStatus: autoChatStatusMap.get(service.id) ?? '',
     };
   });
 
@@ -264,6 +306,56 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
 
     return data.filter(account => account.status === filterStatus);
   }, [data, filterStatus]);
+
+  const handleAutoChatToggle = useCallback(
+    async (serviceId: string, checked: boolean) => {
+      setAutoChatLoadingIds(prev => new Set(prev).add(serviceId));
+      try {
+        await (checked
+          ? resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePost(
+              serviceId,
+            )
+          : pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePost(
+              serviceId,
+            ));
+
+        // Refresh binding status from server
+        const response = await getWhatsappBindingApiV1WhatsappBindGet({
+          session_id: serviceId,
+        });
+        if (response.status === 200) {
+          const binding = response.data as WhatsAppBindingResponse | null;
+          setAutoChatStatusMap(prev => {
+            const map = new Map(prev);
+            if (binding?.status) {
+              map.set(serviceId, binding.status);
+            } else {
+              map.delete(serviceId);
+            }
+            return map;
+          });
+        }
+
+        MessagePlugin.success({
+          content: intl.formatMessage(messages.autoChatToggleSuccess),
+          duration: 3000,
+        });
+      } catch (error) {
+        console.error('Failed to toggle auto chat:', error);
+        MessagePlugin.error({
+          content: intl.formatMessage(messages.autoChatToggleFailed),
+          duration: 3000,
+        });
+      } finally {
+        setAutoChatLoadingIds(prev => {
+          const map = new Set(prev);
+          map.delete(serviceId);
+          return map;
+        });
+      }
+    },
+    [intl],
+  );
 
   const handleEdit = useCallback((serviceId: string) => {
     setEditingServiceId(serviceId);
@@ -401,6 +493,26 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
         ),
       },
       {
+        colKey: 'autoChat',
+        title: intl.formatMessage(messages.colAutoChat),
+        width: 120,
+        align: 'center',
+        cell: ({ row }) => {
+          const isActive = row.autoChatStatus === 'active';
+          const loading = autoChatLoadingIds.has(row.id);
+          return (
+            <Switch
+              value={isActive}
+              loading={loading}
+              size="small"
+              onChange={val => {
+                handleAutoChatToggle(row.id, val as boolean);
+              }}
+            />
+          );
+        },
+      },
+      {
         colKey: 'action',
         title: intl.formatMessage(messages.colAction),
         width: 100,
@@ -419,7 +531,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
         ),
       },
     ],
-    [intl, handleEdit],
+    [intl, handleEdit, handleAutoChatToggle, autoChatLoadingIds],
   );
 
   const handleReset = useCallback(() => {

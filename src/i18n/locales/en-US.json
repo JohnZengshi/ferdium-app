@@ -1,6 +1,11 @@
 {
+  "accountMgmt.autoChat.off": "Off",
+  "accountMgmt.autoChat.on": "On",
+  "accountMgmt.autoChat.toggleFailed": "Failed to toggle auto chat",
+  "accountMgmt.autoChat.toggleSuccess": "Auto chat updated",
   "accountMgmt.col.accountInfo": "Account Info",
   "accountMgmt.col.action": "Actions",
+  "accountMgmt.col.autoChat": "Auto Chat",
   "accountMgmt.col.createdAt": "Created At",
   "accountMgmt.col.id": "#",
   "accountMgmt.col.persona": "Persona",

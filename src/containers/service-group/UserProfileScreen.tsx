@@ -112,6 +112,7 @@ const messages = defineMessages({
 
 interface FanProfile {
   id: string;
+  customerId: string;
   username: string;
   phone: string;
   isVIP: boolean;
@@ -228,7 +229,8 @@ function mapProfileToFanProfile(
   const intentColor = getIntentColor(profile.intent_level);
 
   return {
-    id: profile.customer_id || profile.id,
+    id: profile.id,
+    customerId: profile.customer_id,
     username: profile.nickname || '—',
     phone: '',
     isVIP: isHighCustomerValue(profile.customer_value),
@@ -344,7 +346,7 @@ function UserProfileScreen(): ReactElement {
         fixed: 'left',
         cell: ({ row }) => (
           <AvatarCell
-            title={row.id}
+            title={row.customerId}
             subtitle={row.username === '—' ? row.phone : row.username}
             isVIP={row.isVIP}
             vipLabel={intl.formatMessage(messages.vipLabel)}

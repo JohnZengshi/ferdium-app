@@ -9,13 +9,7 @@ import {
   useState,
 } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import {
-  ChevronLeftIcon,
-  FolderOpenIcon,
-  LockOnIcon,
-  UserIcon,
-  UserSafetyIcon,
-} from 'tdesign-icons-react';
+import { ChevronLeftIcon } from 'tdesign-icons-react';
 import type { StrategyConfigTab } from '../../stores/NavigationStore';
 import HandoverRulesTab from './tabs/HandoverRulesTab';
 import NotificationsTab from './tabs/NotificationsTab';
@@ -54,7 +48,7 @@ interface StrategyConfigScreenProps {
 interface SidebarItem {
   key: StrategyConfigTab;
   label: string;
-  icon: ReactElement;
+  iconSrc: string;
   badge?: string;
 }
 
@@ -121,22 +115,22 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
     {
       key: 'resume',
       label: intl.formatMessage(messages.resume),
-      icon: <UserIcon />,
+      iconSrc: './assets/icons/员工简历.svg',
     },
     {
       key: 'security',
       label: intl.formatMessage(messages.security),
-      icon: <LockOnIcon />,
+      iconSrc: './assets/icons/安全边界设置.svg',
     },
     {
       key: 'handover',
       label: intl.formatMessage(messages.handover),
-      icon: <UserSafetyIcon />,
+      iconSrc: './assets/icons/人工接管规则.svg',
     },
     {
       key: 'notifications',
       label: intl.formatMessage(messages.notifications),
-      icon: <FolderOpenIcon />,
+      iconSrc: './assets/icons/通知记录.svg',
       badge: handoffBadge,
     },
   ];
@@ -184,7 +178,13 @@ const StrategyConfigScreen: React.FC<StrategyConfigScreenProps> = ({
                 isActive ? 'text-brand' : 'text-secondary'
               }`}
             >
-              {item.icon}
+              <span
+                className="h-[20px] w-[20px] bg-current"
+                style={{
+                  mask: `url(${item.iconSrc}) center / contain no-repeat`,
+                  WebkitMask: `url(${item.iconSrc}) center / contain no-repeat`,
+                }}
+              />
             </div>
             <span
               className={`ml-[10px] text-[15px] ${

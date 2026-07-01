@@ -456,7 +456,7 @@ export interface ReplyMessage {
   content: string;
   /**
      * @minimum 0
-     * @maximum 8000
+     * @maximum 30000
      */
   delay_ms: number;
 }
@@ -1526,6 +1526,7 @@ export interface LoginResponse {
   token_type?: string;
   user_id: string;
   enterprise_code?: string | null;
+  akg_api_key?: string | null;
 }
 
 /**
@@ -2058,6 +2059,7 @@ export interface WhatsAppBindingResponse {
   session_id: string;
   webhook_id: string | null;
   is_active: boolean;
+  status: string;
   created_at: string;
   updated_at: string;
 }

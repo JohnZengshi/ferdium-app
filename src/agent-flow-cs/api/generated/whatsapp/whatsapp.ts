@@ -245,3 +245,93 @@ export const triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPost = async (se
 );}
 
 
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse200 = {
+  data: WhatsAppBindingResponse
+  status: 200
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponseSuccess = (pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse200) & {
+  headers: Headers;
+};
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponseError = (pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse422) & {
+  headers: Headers;
+};
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse = (pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponseSuccess | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponseError)
+
+export const getPauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/whatsapp/sessions/${sessionId}/pause`
+}
+
+/**
+ * 暂停一个 WA 通道（session 级）：抑制该 session 下 Agent 自动回复，
+ * 并取消进行中的生成任务。客户消息仍照常落库，恢复后自动恢复服务。
+ *
+ * 与 is_active（硬熔断）不同：status=paused 是可恢复的软暂停，webhook
+ * 仍正常收消息。
+ * @summary Pause Whatsapp Session
+ */
+export const pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePost = async (sessionId: string, options?: RequestInit): Promise<pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse> => {
+
+  return useCustomInstance<pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse>(getPauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostUrl(sessionId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse200 = {
+  data: WhatsAppBindingResponse
+  status: 200
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponseSuccess = (resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse200) & {
+  headers: Headers;
+};
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponseError = (resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse422) & {
+  headers: Headers;
+};
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse = (resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponseSuccess | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponseError)
+
+export const getResumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/whatsapp/sessions/${sessionId}/resume`
+}
+
+/**
+ * 恢复一个此前软暂停的 WA 通道。
+ * @summary Resume Whatsapp Session
+ */
+export const resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePost = async (sessionId: string, options?: RequestInit): Promise<resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse> => {
+
+  return useCustomInstance<resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse>(getResumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostUrl(sessionId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+

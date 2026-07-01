@@ -85,6 +85,9 @@ export const getLoginApiV1AuthLoginPostUrl = () => {
 
 /**
  * 登录已有账号；用户名或密码错误返回 401（不再自动创建用户）。
+ *
+ * 子账号（有 akg_user_id）登录时附带返回 AKG apiKey：查库有则用，空则生成
+ * 并写回 AKG；失败统一为 None，不阻断登录。
  * @summary Login
  */
 export const loginApiV1AuthLoginPost = async (loginRequest: LoginRequest, options?: RequestInit): Promise<loginApiV1AuthLoginPostResponse> => {

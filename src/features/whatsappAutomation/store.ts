@@ -119,6 +119,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _qrFetchMaxAttempts = 6;
 
+  /** Track which services have been auto-reloaded after WhatsApp Web login */
+  _postLoginReloadedServices = new Set<string>();
+
   @observable sessionStatuses = new Map<string, string | undefined>();
 
   @observable qrCodes = new Map<string, string | undefined>();
@@ -218,6 +221,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     this.qrCodes.clear();
     this.isLoadingQr.clear();
     this.errorMessages.clear();
+    this._postLoginReloadedServices.clear();
     this.isFeatureActive = false;
   }
 
@@ -363,41 +367,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       }
 
       // Check if WhatsApp is actually logged in within Ferdium webview
-      // by detecting the presence of logged-in UI elements
-      try {
-        const isWhatsAppLoggedIn = await service.webview.executeJavaScript(`
-          (function() {
-            try {
-              // Check if QR modal is still present (means NOT logged in)
-              const hasQrModal = !!document.getElementById('wa-akg-qr-modal');
-              if (hasQrModal) {
-                return false;
-              }
-
-              // Check for WhatsApp Web logged-in indicators
-              // Multiple checks to ensure robustness
-              const hasUserPanel = !!document.querySelector('div[data-testid="default-user"]');
-              const hasChatList = !!document.querySelector('div#pane-side');
-              const hasMainApp = !!document.querySelector('div#app > div > div > div');
-              const hasSearchInput = !!document.querySelector('div[contenteditable="true"][data-testid="chat-list-search"]');
-
-              // At least 2 indicators must be present to confirm login
-              const indicators = [hasUserPanel, hasChatList, hasMainApp, hasSearchInput];
-              const positiveCount = indicators.filter(Boolean).length;
-
-              return positiveCount >= 2;
-            } catch(e) {
-              return false;
-            }
-          })();
-        `);
-
-        if (!isWhatsAppLoggedIn) {
-          debug('WhatsApp not logged in within Ferdium webview for', serviceId);
-          return false;
-        }
-      } catch (jsError) {
-        debug('Failed to check WhatsApp login status in webview:', jsError);
+      const isWhatsAppLoggedIn = await this._isWhatsAppWebLoggedIn(serviceId);
+      if (!isWhatsAppLoggedIn) {
+        debug('WhatsApp not logged in within Ferdium webview for', serviceId);
         return false;
       }
 
@@ -408,6 +380,79 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       return false;
     }
   }
+
+  /**
+   * Detect whether WhatsApp Web shows logged-in UI inside the Ferdium webview.
+   * Reused by `checkAccountBinding` and post-login auto-reload.
+   */
+  _isWhatsAppWebLoggedIn = async (serviceId: string): Promise<boolean> => {
+    const service = this._getService(serviceId);
+    if (!service?.webview) return false;
+
+    try {
+      return service.webview.executeJavaScript(`
+        (function() {
+          try {
+            // QR modal present → not logged in yet
+            if (document.getElementById('wa-akg-qr-modal')) return false;
+
+            var hasUserPanel  = !!document.querySelector('div[data-testid="default-user"]');
+            var hasChatList   = !!document.querySelector('div#pane-side');
+            var hasMainApp    = !!document.querySelector('div#app > div > div > div');
+            var hasSearchInput = !!document.querySelector('div[contenteditable="true"][data-testid="chat-list-search"]');
+
+            return [hasUserPanel, hasChatList, hasMainApp, hasSearchInput]
+              .filter(Boolean).length >= 2;
+          } catch(e) {
+            return false;
+          }
+        })();
+      `);
+    } catch (jsError) {
+      debug('Failed to check WhatsApp login status in webview:', jsError);
+      return false;
+    }
+  };
+
+  /**
+   * After WhatsApp Web login completes, reload the webview once so overlay
+   * scripts re-inject and rebuild the JID cache from a fully-loaded page.
+   * Polls DOM indicators to confirm login before reloading.
+   * Guarded by `_postLoginReloadedServices` — fires at most once per service.
+   */
+  _reloadOnceAfterWhatsAppLogin = async (serviceId: string): Promise<void> => {
+    if (this._postLoginReloadedServices.has(serviceId)) return;
+
+    // Give WhatsApp Web time to navigate from QR screen to main app
+    await new Promise(resolve => {
+      setTimeout(resolve, 5000);
+    });
+
+    const maxAttempts = 10;
+    for (let i = 0; i < maxAttempts; i += 1) {
+      if (this._postLoginReloadedServices.has(serviceId)) return;
+
+      // eslint-disable-next-line no-await-in-loop
+      const loggedIn = await this._isWhatsAppWebLoggedIn(serviceId);
+      if (loggedIn) {
+        this._postLoginReloadedServices.add(serviceId);
+        debug(
+          `Reloading WhatsApp service ${serviceId} after login to rebuild JID cache`,
+        );
+        this.actions?.service.reload({ serviceId });
+        return;
+      }
+
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise(resolve => {
+        setTimeout(resolve, 2000);
+      });
+    }
+
+    debug(
+      `Post-login reload: WhatsApp Web login not detected after ${maxAttempts} attempts for ${serviceId}`,
+    );
+  };
 
   /**
    * Check if any WhatsApp service has completed account binding.
@@ -549,6 +594,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             this._notifySessionConnected(serviceId);
             this._refreshSessionDetails(serviceId).catch(error => {
               debug('Error refreshing session details after connect:', error);
+            });
+            this._reloadOnceAfterWhatsAppLogin(serviceId).catch(error => {
+              debug('Post-login WhatsApp reload check failed:', error);
             });
           } else {
             debug(
@@ -1117,6 +1165,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         this._refreshSessionDetails(serviceId).catch(error => {
           debug('Error refreshing session details after connect:', error);
         });
+        this._reloadOnceAfterWhatsAppLogin(serviceId).catch(error => {
+          debug('Post-login WhatsApp reload check failed:', error);
+        });
         break;
       }
 
@@ -1176,6 +1227,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     this.qrCodes.delete(serviceId);
     this.isLoadingQr.delete(serviceId);
     this.errorMessages.delete(serviceId);
+    this._postLoginReloadedServices.delete(serviceId);
   };
 
   _updateQrModalStatus = (serviceId: string, status: string) => {

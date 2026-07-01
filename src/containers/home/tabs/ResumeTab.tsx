@@ -243,7 +243,88 @@ type CoreCompetencyItem = {
   iconSrc?: string;
 };
 
+type CharacterSkillItem = {
+  id: string;
+  defaultMessage: string;
+};
+
 const ICON_PATH = './assets/icons/strategy';
+
+const CHARACTER_SKILLS: Record<string, CharacterSkillItem[]> = {
+  Monica: [
+    {
+      id: 'resumeTab.monicaSkillRiskIdentification',
+      defaultMessage: 'Risk Scan',
+    },
+    { id: 'resumeTab.monicaSkillAnomalyWarning', defaultMessage: 'Alerts' },
+    { id: 'resumeTab.monicaSkillHandover', defaultMessage: 'Handoff' },
+  ],
+  Alice: [
+    { id: 'resumeTab.aliceSkillIcebreaking', defaultMessage: 'Icebreak' },
+    { id: 'resumeTab.aliceSkillEmotionalValue', defaultMessage: 'Empathy' },
+    { id: 'resumeTab.aliceSkillTrustBuilding', defaultMessage: 'Trust' },
+  ],
+  Leo: [
+    { id: 'resumeTab.leoSkillManagement', defaultMessage: 'Manage' },
+    {
+      id: 'resumeTab.leoSkillDigitalEmployeeCoordination',
+      defaultMessage: 'Coord',
+    },
+    {
+      id: 'resumeTab.leoSkillStructuredAnalysis',
+      defaultMessage: 'Analysis',
+    },
+  ],
+  Lily: [
+    { id: 'resumeTab.lilySkillDealClosing', defaultMessage: 'Closing' },
+    {
+      id: 'resumeTab.lilySkillProjectIntroduction',
+      defaultMessage: 'Project',
+    },
+    {
+      id: 'resumeTab.lilySkillNaturalProductIntro',
+      defaultMessage: 'Intro',
+    },
+  ],
+  Kevin: [
+    {
+      id: 'resumeTab.kevinSkillProductKnowledge',
+      defaultMessage: 'Product',
+    },
+    { id: 'resumeTab.kevinSkillRiskExplanation', defaultMessage: 'Risk' },
+    { id: 'resumeTab.kevinSkillFaqAnswers', defaultMessage: 'FAQ' },
+  ],
+  Nina: [
+    {
+      id: 'resumeTab.ninaSkillCustomerMaintenance',
+      defaultMessage: 'Retention',
+    },
+    {
+      id: 'resumeTab.ninaSkillPostDealRiskControl',
+      defaultMessage: 'Risk Control',
+    },
+    {
+      id: 'resumeTab.ninaSkillCustomerValueAssessment',
+      defaultMessage: 'Value',
+    },
+  ],
+  Tom: [
+    {
+      id: 'resumeTab.tomSkillAccurateUserProfile',
+      defaultMessage: 'Profiling',
+    },
+    { id: 'resumeTab.tomSkillCustomerValue', defaultMessage: 'Value' },
+    { id: 'resumeTab.tomSkillStageRecord', defaultMessage: 'Stages' },
+  ],
+  Emma: [
+    {
+      id: 'resumeTab.emmaSkillInterestConfirmation',
+      defaultMessage: 'Interest',
+    },
+    { id: 'resumeTab.emmaSkillIntentJudgment', defaultMessage: 'Intent' },
+    { id: 'resumeTab.emmaSkillClearOpening', defaultMessage: 'Opening' },
+  ],
+};
 
 const CHARACTER_COMPETENCIES: Record<string, CoreCompetencyItem[]> = {
   Monica: [
@@ -695,6 +776,7 @@ class ResumeTab extends Component<IProps> {
     const name = employeeName || 'Monica';
     const role = employeeRole || intl.formatMessage(messages.defaultRole);
     const avatarSrcFinal = avatarSrc || './assets/images/monica.png';
+    const skills = CHARACTER_SKILLS[name] || CHARACTER_SKILLS.Monica;
     return (
       <div className="relative flex h-full flex-col items-center overflow-hidden rounded-[8px]">
         <div
@@ -730,7 +812,7 @@ class ResumeTab extends Component<IProps> {
         </div>
 
         <div
-          className="relative z-10 mx-auto mb-[36px] mt-auto flex h-[74px] w-[460px] items-center pl-[43px]"
+          className="relative z-10 mx-auto mb-[36px] mt-auto flex h-[74px] min-w-[460px] items-center pl-[10px]"
           style={{
             background:
               'radial-gradient(ellipse at center, rgba(64,140,255,0.56) 0%, rgba(64,140,255,0.36) 42%, rgba(64,140,255,0.14) 75%, rgba(64,140,255,0) 100%)',
@@ -744,16 +826,12 @@ class ResumeTab extends Component<IProps> {
             {intl.formatMessage(messages.skillsSectionTitle)}：
           </span>
           <div className="flex gap-[8px]">
-            {[
-              intl.formatMessage(messages.defaultSkillRiskDetection),
-              intl.formatMessage(messages.defaultSkillAnomalyWarning),
-              intl.formatMessage(messages.defaultSkillHandover),
-            ].map(skill => (
+            {skills.map(skill => (
               <span
-                key={skill}
-                className="inline-flex h-[33px] min-w-[84px] items-center justify-center rounded-[16.5px] border-2 border-solid border-[#0052D9] bg-[#F2F3FF] text-[16px] font-medium leading-none text-[#0052D9]"
+                key={skill.id}
+                className="inline-flex h-[33px] min-w-[84px] px-[5px] items-center justify-center rounded-[16.5px] border-2 border-solid border-[#0052D9] bg-[#F2F3FF] text-[16px] font-medium leading-none text-[#0052D9]"
               >
-                {skill}
+                {intl.formatMessage(skill)}
               </span>
             ))}
           </div>

@@ -381,6 +381,7 @@ const toggleFullScreen = (): void => {
 function titleBarTemplateFactory(
   intl: IntlShape,
   locked: boolean,
+  showDebugMenus: boolean,
 ): MenuItemConstructorOptions[] {
   return [
     {
@@ -598,19 +599,23 @@ function titleBarTemplateFactory(
     {
       label: intl.formatMessage(menuItems.services),
       accelerator: `${altKey()}+S`,
-      visible: isDevMode && !locked, // 仅开发模式显示
+      visible: showDebugMenus && !locked,
+      registerAccelerator: showDebugMenus && !locked,
+      acceleratorWorksWhenHidden: false,
       submenu: [],
     },
     {
       label: intl.formatMessage(menuItems.workspaces),
       accelerator: `${altKey()}+W`,
       submenu: [],
-      visible: isDevMode,
+      visible: showDebugMenus,
+      registerAccelerator: showDebugMenus,
+      acceleratorWorksWhenHidden: false,
     },
     {
       label: intl.formatMessage(menuItems.todos),
       submenu: [],
-      visible: isDevMode,
+      visible: showDebugMenus,
     },
     {
       label: intl.formatMessage(menuItems.window),
@@ -630,7 +635,6 @@ function titleBarTemplateFactory(
       label: intl.formatMessage(menuItems.help),
       accelerator: `${altKey()}+H`,
       role: 'help',
-      visible: isDevMode,
       submenu: [
         {
           label: intl.formatMessage(menuItems.learnMore),
@@ -683,6 +687,8 @@ function titleBarTemplateFactory(
 class FranzMenu implements StoresProps {
   @observable currentTemplate: MenuItemConstructorOptions[];
 
+  showDebugMenus = isDevMode;
+
   actions: any;
 
   stores: RealStores;
@@ -703,6 +709,11 @@ class FranzMenu implements StoresProps {
 
   rebuild(): void {
     this._build();
+  }
+
+  toggleDebugMenus(): void {
+    this.showDebugMenus = !this.showDebugMenus;
+    this.rebuild();
   }
 
   get template(): any {
@@ -752,7 +763,8 @@ class FranzMenu implements StoresProps {
       this.stores.settings.app.isLockingFeatureEnabled &&
       this.stores.user.isLoggedIn;
     const { actions } = this;
-    const tpl = titleBarTemplateFactory(intl, locked);
+    const { showDebugMenus } = this;
+    const tpl = titleBarTemplateFactory(intl, locked, showDebugMenus);
 
     if (!isMac) {
       (tpl[1].submenu as MenuItemConstructorOptions[]).push({
@@ -815,7 +827,9 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.toggleDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+I`,
-          visible: isDevMode,
+          visible: showDebugMenus,
+          registerAccelerator: showDebugMenus,
+          acceleratorWorksWhenHidden: false,
           enabled: webContents.fromId(1) !== undefined,
           click: () => {
             const windowWebContents = webContents.fromId(1);
@@ -834,7 +848,9 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.toggleServiceDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+I`,
-          visible: isDevMode,
+          visible: showDebugMenus,
+          registerAccelerator: showDebugMenus,
+          acceleratorWorksWhenHidden: false,
           click: () => {
             this.actions.service.openDevToolsForActiveService();
           },
@@ -848,7 +864,9 @@ class FranzMenu implements StoresProps {
         (tpl[1].submenu as MenuItemConstructorOptions[]).push({
           label: intl.formatMessage(menuItems.toggleTodosDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+O`,
-          visible: isDevMode,
+          visible: showDebugMenus,
+          registerAccelerator: showDebugMenus,
+          acceleratorWorksWhenHidden: false,
           click: () => {
             const webview = document.querySelector('#todos-panel webview');
             if (webview) this.actions.todos.openDevTools();
@@ -885,7 +903,9 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.reloadTodos),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+R`,
-          visible: isDevMode,
+          visible: showDebugMenus,
+          registerAccelerator: showDebugMenus,
+          acceleratorWorksWhenHidden: false,
           click: () => {
             this.actions.todos.reload();
           },
@@ -930,20 +950,24 @@ class FranzMenu implements StoresProps {
             this.actions.ui.openDownloads({ path: '/downloadmanager' });
           },
           enabled: this.stores.user.isLoggedIn,
-          visible: isDevMode && !locked,
+          visible: showDebugMenus && !locked,
+          registerAccelerator: showDebugMenus && !locked,
+          acceleratorWorksWhenHidden: false,
         },
         {
           label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,
           click: () => {
-            this.actions.ui.openSettingsModal();
+            window['ferdium'].stores.router.push('/settings/app');
           },
           enabled: this.stores.user.isLoggedIn,
-          visible: !locked,
+          visible: showDebugMenus && !locked,
+          registerAccelerator: showDebugMenus && !locked,
+          acceleratorWorksWhenHidden: false,
         },
         {
           label: intl.formatMessage(menuItems.checkForUpdates),
-          visible: isDevMode,
+          visible: showDebugMenus,
           click: () => {
             this.actions.app.checkForUpdates();
           },
@@ -1055,19 +1079,31 @@ class FranzMenu implements StoresProps {
       type: 'separator',
     });
 
+    (tpl.at(-1)!.submenu as MenuItemConstructorOptions[]).push({
+      label: 'Toggle Hidden Menus',
+      accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+D`,
+      visible: false,
+      enabled: !locked,
+      registerAccelerator: !locked,
+      acceleratorWorksWhenHidden: true,
+      click: () => {
+        this.toggleDebugMenus();
+      },
+    });
+
     if (!locked) {
       // 正式版本不显示 Services/Workspaces/Todos 菜单
-      if (isDevMode && serviceTpl.length > 0) {
+      if (showDebugMenus && serviceTpl.length > 0) {
         tpl[3].submenu = serviceTpl;
       }
 
-      if (isDevMode) {
+      if (showDebugMenus) {
         tpl[4].submenu = this.workspacesMenu();
         tpl[5].submenu = this.todosMenu();
       }
 
       // 仅在开发模式显示 Debug 菜单
-      if (isDevMode) {
+      if (showDebugMenus) {
         // eslint-disable-next-line unicorn/prefer-at
         (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
           {

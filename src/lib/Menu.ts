@@ -634,6 +634,9 @@ function titleBarTemplateFactory(
     {
       label: intl.formatMessage(menuItems.help),
       accelerator: `${altKey()}+H`,
+      visible: showDebugMenus,
+      registerAccelerator: showDebugMenus,
+      acceleratorWorksWhenHidden: false,
       role: 'help',
       submenu: [
         {
@@ -699,6 +702,8 @@ class FranzMenu implements StoresProps {
     this.currentTemplate = [];
 
     makeObservable(this);
+
+    ipcRenderer.on('toggle-hidden-menus', () => this.toggleDebugMenus());
 
     setTimeout(() => autorun(this._build.bind(this)), 10);
   }
@@ -1081,11 +1086,8 @@ class FranzMenu implements StoresProps {
 
     (tpl.at(-1)!.submenu as MenuItemConstructorOptions[]).push({
       label: 'Toggle Hidden Menus',
-      accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+D`,
-      visible: false,
+      visible: isDevMode,
       enabled: !locked,
-      registerAccelerator: !locked,
-      acceleratorWorksWhenHidden: true,
       click: () => {
         this.toggleDebugMenus();
       },

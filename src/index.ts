@@ -30,7 +30,14 @@ import {
   DEFAULT_WINDOW_OPTIONS,
 } from './config';
 
-import { altKey, isLinux, isMac, isWindows } from './environment';
+import {
+  altKey,
+  cmdOrCtrlShortcutKey,
+  isLinux,
+  isMac,
+  isWindows,
+  shiftKey,
+} from './environment';
 import {
   isDevMode,
   protocolClient,
@@ -552,6 +559,13 @@ const createWindow = () => {
     globalShortcut.register(`${altKey()}+Shift+W`, () => {
       executeInWhatsAppWebContents(WA_DEBUG_TOGGLE_SCRIPT);
     });
+
+    globalShortcut.register(
+      `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+D`,
+      () => {
+        mainWindow?.webContents.send('toggle-hidden-menus');
+      },
+    );
 
     if (isDevMode) {
       setTimeout(() => {

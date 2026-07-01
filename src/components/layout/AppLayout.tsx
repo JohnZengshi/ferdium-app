@@ -351,10 +351,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             className={`h-full app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}
           >
             {isWindows && !isFullScreen && (
-              <TitleBar
-                menu={window['ferdium'].menu.template}
-                icon="assets/images/logo.svg"
-              />
+              <TitleBar menu={window['ferdium'].menu.template} />
             )}
             {isMac && !isFullScreen && (
               <span

@@ -69,10 +69,7 @@ class AuthLayout extends Component<IProps, IState> {
     return (
       <>
         {isWindows && !isFullScreen && (
-          <TitleBar
-            menu={window['ferdium'].menu.template}
-            icon="assets/images/logo.svg"
-          />
+          <TitleBar menu={window['ferdium'].menu.template} />
         )}
         <div className="auth relative flex min-h-screen overflow-hidden">
           <div className="auth__background pointer-events-none absolute inset-0 z-0 overflow-hidden">

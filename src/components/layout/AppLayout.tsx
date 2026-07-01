@@ -360,7 +360,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               />
             )}
             <div className={`h-full app__content ${classes.appContent}`}>
-              <MainModuleTabs />
+              <MainModuleTabs appVersion={appVersion} />
 
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex-shrink-0 w-full h-[56px] bg-container border-b border-solid border-b-line flex items-center justify-between px-[24px]">
@@ -503,9 +503,6 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="absolute bottom-[15px] left-[0px] px-[12px] py-[6px] text-[11px] text-secondary opacity-50 pointer-events-none">
-            v{appVersion}
           </div>
         </ErrorBoundary>
         <SettingsModal

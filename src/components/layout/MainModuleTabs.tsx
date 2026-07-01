@@ -231,6 +231,7 @@ const messages = defineMessages({
 
 interface IProps {
   stores?: Stores;
+  appVersion: string;
 }
 
 interface IState {
@@ -254,7 +255,7 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
   }
 
   render(): ReactElement {
-    const { stores, intl } = this.props;
+    const { stores, intl, appVersion } = this.props;
     const badge = stores?.services.mainModuleBadge;
     const handoffBadge = formatHandoffBadge(stores?.handoff.unreadCount ?? 0);
 
@@ -319,7 +320,9 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
             className="w-[40px]"
           />
         )}
-        <div className="w-[40px]" />
+        <div className="text-center text-[11px] text-secondary opacity-50 pointer-events-none">
+          v{appVersion}
+        </div>
       </nav>
     );
   }

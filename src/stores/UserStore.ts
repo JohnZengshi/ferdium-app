@@ -184,14 +184,14 @@ export default class UserStore extends TypedStore {
   // Data
   @computed get isLoggedIn(): boolean {
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-    
+
     if (useAgentFlowAuth) {
       // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
       const agentFlowToken = localStorage.getItem('agentFlowToken');
       const apiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
       return Boolean(agentFlowToken && apiKey);
     }
-    
+
     // 其他模式：检查 authToken (Local Server JWT)
     return Boolean(localStorage.getItem('authToken'));
   }

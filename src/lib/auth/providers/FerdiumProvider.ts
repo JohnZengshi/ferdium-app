@@ -293,14 +293,14 @@ export default class FerdiumProvider implements AuthProvider {
 
   getAuthHeader(): string | null {
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-    
+
     if (useAgentFlowAuth) {
       // Agent Flow 模式：使用 agentFlowToken
       const token = localStorage.getItem('agentFlowToken');
       if (!token) return null;
       return `Bearer ${token}`;
     }
-    
+
     // 其他模式：使用 authToken (Local Server JWT)
     const token = localStorage.getItem('authToken');
     if (!token) return null;
@@ -309,13 +309,15 @@ export default class FerdiumProvider implements AuthProvider {
 
   isAuthenticated(): boolean {
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-    
+
     if (useAgentFlowAuth) {
       // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
-      return !!(localStorage.getItem('agentFlowToken') && 
-                localStorage.getItem(API_KEY_STORAGE_KEY));
+      return !!(
+        localStorage.getItem('agentFlowToken') &&
+        localStorage.getItem(API_KEY_STORAGE_KEY)
+      );
     }
-    
+
     // 其他模式：检查 authToken
     return !!localStorage.getItem('authToken');
   }

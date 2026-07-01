@@ -116,7 +116,7 @@ export default class UserStore extends TypedStore {
 
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
 
-    // Agent Flow 模式：总是启动 local server（提供 internal API）
+    // Agent Flow 模式：总是启动 local server（提供 internal API，无论登录状态）
     // 纯 local 模式：只在未登录时启动并自动登录
     const shouldStartLocalServer = useAgentFlowAuth || !this.isLoggedIn;
 
@@ -183,6 +183,16 @@ export default class UserStore extends TypedStore {
 
   // Data
   @computed get isLoggedIn(): boolean {
+    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
+    
+    if (useAgentFlowAuth) {
+      // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
+      const agentFlowToken = localStorage.getItem('agentFlowToken');
+      const apiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
+      return Boolean(agentFlowToken && apiKey);
+    }
+    
+    // 其他模式：检查 authToken (Local Server JWT)
     return Boolean(localStorage.getItem('authToken'));
   }
 
@@ -313,15 +323,17 @@ export default class UserStore extends TypedStore {
 
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
 
-    // 先清除所有登录态
-    if (!useAgentFlowAuth) {
-      localStorage.removeItem('authToken');
-      window.localStorage.removeItem('authToken');
-      this.authToken = null;
-    }
+    // 清除所有登录态
+    // authToken 专门用于 Local Server JWT，在所有模式下都要清除
+    localStorage.removeItem('authToken');
+    window.localStorage.removeItem('authToken');
+    this.authToken = null;
 
-    localStorage.removeItem('agentFlowToken');
-    window.localStorage.removeItem('agentFlowToken');
+    // Agent Flow 模式：额外清除 agentFlowToken
+    if (useAgentFlowAuth) {
+      localStorage.removeItem('agentFlowToken');
+      window.localStorage.removeItem('agentFlowToken');
+    }
 
     localStorage.removeItem(API_KEY_STORAGE_KEY);
     window.localStorage.removeItem(API_KEY_STORAGE_KEY);

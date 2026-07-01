@@ -64,13 +64,14 @@ class PluggableAuthScreen extends Component<IProps> {
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
     if (result.token) {
       if (useAgentFlowAuth && this.props.providerType === 'ferdium') {
+        // Agent Flow 模式：access_token 已存储为 agentFlowToken
+        // 不设置 authToken（authToken 专门用于 Local Server JWT）
         stores.router.push(stores.user.HOME_ROUTE);
       } else {
         stores.user._tokenLogin(result.token);
       }
 
       // Agent Flow CS 模式：apiKey 已经在 FerdiumProvider 中存储
-      // 这里只需要确认一下
     } else {
       // WA-AKG login: apiKey is already stored by initializeAuth() → setApiKey().
       // Also set authToken so UserStore.isLoggedIn returns true after _logout() cleared it.

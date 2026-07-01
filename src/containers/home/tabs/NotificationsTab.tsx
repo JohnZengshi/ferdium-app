@@ -2,7 +2,6 @@ import { ipcRenderer } from 'electron';
 /* eslint-disable react/no-unstable-nested-components */
 import { type ReactElement, useCallback, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { ChatBubble1FilledIcon } from 'tdesign-icons-react';
 import {
   DateRangePicker,
   Dialog,
@@ -655,8 +654,12 @@ const NotificationsTab = (): ReactElement => {
           className="flex items-center gap-[8px]"
           style={{ whiteSpace: 'nowrap' }}
         >
-          <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full bg-success">
-            <ChatBubble1FilledIcon className="text-text-anti" />
+          <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full">
+            <img
+              className="size-[16px]"
+              src="./assets/icons/whats.svg"
+              alt=""
+            />
           </div>
           <span className="text-[14px] text-primary">
             {intl.formatMessage(messages.platformWhatsapp)}

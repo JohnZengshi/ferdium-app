@@ -301,28 +301,11 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
             <tr className="h-[46px] text-[14px] font-medium text-primary">
               <td className="border-r border-line pl-[12px]">
                 <div className="flex items-center gap-[8px]">
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                    <path
-                      d="M7.5 1C3.9 1 1 3.6 1 6.8C1 8.3 1.5 9.7 2.4 10.8L1.5 14L4.7 12.6C5.6 13.1 6.5 13.3 7.5 13.3C11.1 13.3 14 10.7 14 7.2C14 3.7 11.1 1 7.5 1Z"
-                      style={{ fill: 'var(--td-success-color)' }}
-                    />
-                    <path
-                      d="M5.5 6C5.5 5 6.5 4.5 7.5 4.5C8.5 4.5 9.5 5 9.5 6"
-                      stroke="white"
-                      strokeWidth="1"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                    <line
-                      x1="7.5"
-                      y1="4.5"
-                      x2="7.5"
-                      y2="8.5"
-                      stroke="white"
-                      strokeWidth="1"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                  <img
+                    className="size-[16px]"
+                    src="./assets/icons/whats.svg"
+                    alt=""
+                  />
                   <span>Whats</span>
                 </div>
               </td>

@@ -998,7 +998,7 @@ const KnowledgeScreen: React.FC = () => {
       <SidebarMenu
         items={sidebarItems}
         activeKey="persona"
-        onItemClick={() => {}}
+        onItemClick={() => { }}
       />
       {view === 'list' ? (
         <div className="p-[24px] w-full h-full">
@@ -1100,9 +1100,8 @@ const KnowledgeScreen: React.FC = () => {
               type="button"
               onClick={handleBack}
               disabled={isSaving}
-              className={`flex items-center gap-[8px] border-none bg-transparent p-0 text-primary ${
-                isSaving ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
-              }`}
+              className={`flex items-center gap-[8px] border-none bg-transparent p-0 text-primary ${isSaving ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
+                }`}
             >
               <ChevronLeftIcon size="14px" className="text-primary" />
               <span className="text-[14px] font-medium text-primary">
@@ -1247,11 +1246,10 @@ const KnowledgeScreen: React.FC = () => {
                       type="button"
                       onClick={handleSmartImport}
                       disabled={isGenerating}
-                      className={`flex h-[40px] w-[271px] items-center justify-center gap-[14px] rounded-[4px] border-none transition-all ${
-                        isGenerating
-                          ? 'opacity-50 cursor-not-allowed'
-                          : 'hover:brightness-105 cursor-pointer'
-                      }`}
+                      className={`flex h-[40px] w-[271px] items-center justify-center gap-[14px] rounded-[4px] border-none transition-all ${isGenerating
+                        ? 'opacity-50 cursor-not-allowed'
+                        : 'hover:brightness-105 cursor-pointer'
+                        }`}
                       style={{
                         background:
                           'linear-gradient(90deg, #1D6BFF 0%, #38CFF4 100%)',
@@ -1269,26 +1267,23 @@ const KnowledgeScreen: React.FC = () => {
                       type="button"
                       onClick={handleSmartImport}
                       disabled={!hasGenerated || isGenerating}
-                      className={`group flex h-[40px] w-[158px] items-center justify-center gap-[8px] rounded-[4px] border border-solid transition-all ${
-                        !hasGenerated || isGenerating
-                          ? 'border-line bg-component opacity-40 cursor-not-allowed'
-                          : 'border-line bg-container hover:border-brand cursor-pointer'
-                      }`}
+                      className={`group flex h-[40px] w-[158px] items-center justify-center gap-[8px] rounded-[4px] border border-solid transition-all ${!hasGenerated || isGenerating
+                        ? 'border-line bg-component opacity-40 cursor-not-allowed'
+                        : 'border-line bg-container hover:border-brand cursor-pointer'
+                        }`}
                     >
                       <RegenerateIcon
                         size="16px"
-                        className={`flex-shrink-0 ${
-                          !hasGenerated || isGenerating
-                            ? 'text-placeholder'
-                            : 'text-primary group-hover:text-brand'
-                        }`}
+                        className={`flex-shrink-0 ${!hasGenerated || isGenerating
+                          ? 'text-placeholder'
+                          : 'text-primary group-hover:text-brand'
+                          }`}
                       />
                       <span
-                        className={`text-[14px] font-medium leading-none ${
-                          !hasGenerated || isGenerating
-                            ? 'text-placeholder'
-                            : 'text-primary group-hover:text-brand'
-                        }`}
+                        className={`text-[14px] font-medium leading-none ${!hasGenerated || isGenerating
+                          ? 'text-placeholder'
+                          : 'text-primary group-hover:text-brand'
+                          }`}
                       >
                         {intl.formatMessage(messages.regenerate)}
                       </span>
@@ -1346,18 +1341,16 @@ const KnowledgeScreen: React.FC = () => {
               </div>
 
               <div
-                className={`flex-1 min-w-[0] flex flex-col gap-[16px] transition-all duration-500 ease-out ${
-                  isGeneratedContentHighlighted
-                    ? 'translate-y-0 scale-[1.01]'
-                    : 'translate-y-0 scale-100'
-                }`}
+                className={`flex-1 min-w-[0] flex flex-col gap-[16px] transition-all duration-500 ease-out ${isGeneratedContentHighlighted
+                  ? 'translate-y-0 scale-[1.01]'
+                  : 'translate-y-0 scale-100'
+                  }`}
               >
                 <div
-                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 ${
-                    isGeneratedContentHighlighted
-                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
-                      : 'border-line bg-container'
-                  }`}
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 ${isGeneratedContentHighlighted
+                    ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                    : 'border-line bg-container'
+                    }`}
                 >
                   <div className="mb-[12px]">
                     <div className="flex items-center gap-[8px]">
@@ -1376,11 +1369,10 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 <div
-                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-75 ${
-                    isGeneratedContentHighlighted
-                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
-                      : 'border-line bg-container'
-                  }`}
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-75 ${isGeneratedContentHighlighted
+                    ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                    : 'border-line bg-container'
+                    }`}
                 >
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <UserIcon size="18px" className="text-brand" />
@@ -1479,11 +1471,10 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 <div
-                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-150 ${
-                    isGeneratedContentHighlighted
-                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
-                      : 'border-line bg-container'
-                  }`}
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-150 ${isGeneratedContentHighlighted
+                    ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                    : 'border-line bg-container'
+                    }`}
                 >
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <HomeIcon size="18px" className="text-brand" />
@@ -1524,11 +1515,10 @@ const KnowledgeScreen: React.FC = () => {
                 </div>
 
                 <div
-                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-200 ${
-                    isGeneratedContentHighlighted
-                      ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
-                      : 'border-line bg-container'
-                  }`}
+                  className={`rounded-[8px] border border-solid p-[16px] transition-all duration-500 delay-200 ${isGeneratedContentHighlighted
+                    ? 'border-[rgba(56,207,244,0.55)] bg-[rgba(47,107,255,0.04)] shadow-[0_16px_36px_rgba(47,107,255,0.12)]'
+                    : 'border-line bg-container'
+                    }`}
                 >
                   <div className="flex items-center gap-[8px] mb-[12px]">
                     <WorkIcon size="18px" className="text-brand" />

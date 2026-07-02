@@ -135,6 +135,16 @@ const messages = defineMessages({
     id: 'editDrawer.proxyWhatsAppRequestFailed',
     defaultMessage: 'Proxy test failed',
   },
+  autoFillFormatHint: {
+    id: 'editDrawer.autoFillFormatHint',
+    defaultMessage:
+      'HTTP: http://[user:pass@]host:port\nSOCKS5: socks5://[user:pass@]host:port',
+  },
+  autoFillFormatError: {
+    id: 'editDrawer.autoFillFormatError',
+    defaultMessage:
+      'Format not recognized. Use http://[user:pass@]host:port or socks5://[user:pass@]host:port',
+  },
 });
 
 interface ParsedProxy {
@@ -216,15 +226,21 @@ export default function EditServiceDrawer({
   // Auto-fill textarea (not persisted in state, fires on paste)
   const handleAutoFillRef = useRef(
     debounce((content: string) => {
-      const parsed = parseProxyString(content);
-      if (parsed.isEnabled) {
-        setProxyEnabled(true);
-        setProxyType(parsed.protocol || 'http');
-        setProxyHost(parsed.host || '');
-        setProxyPort(parsed.port || '');
-        setProxyUser(parsed.user || '');
-        setProxyPassword(parsed.password || '');
+      const trimmedContent = content.trim();
+      if (!trimmedContent) return;
+
+      const parsed = parseProxyString(trimmedContent);
+      if (!parsed.isEnabled) {
+        MessagePlugin.warning(intl.formatMessage(messages.autoFillFormatError));
+        return;
       }
+
+      setProxyEnabled(true);
+      setProxyType(parsed.protocol || 'http');
+      setProxyHost(parsed.host || '');
+      setProxyPort(parsed.port || '');
+      setProxyUser(parsed.user || '');
+      setProxyPassword(parsed.password || '');
     }, 300),
   );
 
@@ -382,13 +398,18 @@ export default function EditServiceDrawer({
                   <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                     {intl.formatMessage(messages.autoFillLabel)}
                   </div>
-                  <Textarea
-                    className="!h-[132px] !border-line !p-[12px] w-full"
-                    placeholder={intl.formatMessage(
-                      messages.autoFillPlaceholder,
-                    )}
-                    onChange={val => handleAutoFillRef.current(val)}
-                  />
+                  <div className="w-[406px] flex flex-col gap-[8px]">
+                    <Textarea
+                      className="flex-auto !border-line w-full"
+                      placeholder={intl.formatMessage(
+                        messages.autoFillPlaceholder,
+                      )}
+                      onChange={val => handleAutoFillRef.current(val)}
+                    />
+                    <div className="mt-[8px] whitespace-pre-line text-[12px] text-placeholder">
+                      {intl.formatMessage(messages.autoFillFormatHint)}
+                    </div>
+                  </div>
                 </div>
                 <div className="flex items-start gap-x-[12px] mb-[16px]">
                   <div className="w-[82px] pt-[8px] text-[14px] text-primary">
@@ -465,9 +486,6 @@ export default function EditServiceDrawer({
                   >
                     {intl.formatMessage(messages.proxyCheck)}
                   </Button>
-                  <div className="mt-[8px] text-[12px] text-placeholder">
-                    {intl.formatMessage(messages.proxyCheckDesc)}
-                  </div>
                 </div>
               </>
             )}

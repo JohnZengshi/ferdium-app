@@ -29,27 +29,36 @@ export default function init(stores: {
 
     for (const service of services) {
       const s = session.fromPartition(`persist:service-${service.id}`);
+      const serviceProxyConfig = proxySettings[service.id];
 
-      if (config.isEnabled) {
-        const serviceProxyConfig = proxySettings[service.id];
+      if (
+        config.isEnabled &&
+        serviceProxyConfig?.isEnabled &&
+        serviceProxyConfig.host
+      ) {
+        const proxyHost = `${serviceProxyConfig.host}${
+          serviceProxyConfig.port ? `:${serviceProxyConfig.port}` : ''
+        }`;
+        debug(
+          `Setting proxy config from service settings for "${service.name}" (${service.id}) to`,
+          proxyHost,
+        );
 
-        if (serviceProxyConfig?.isEnabled && serviceProxyConfig.host) {
-          const proxyHost = `${serviceProxyConfig.host}${
-            serviceProxyConfig.port ? `:${serviceProxyConfig.port}` : ''
-          }`;
-          debug(
-            `Setting proxy config from service settings for "${service.name}" (${service.id}) to`,
-            proxyHost,
-          );
+        s.setProxy({ proxyRules: proxyHost })
+          .then(() => {
+            debug(
+              `Using proxy "${proxyHost}" for "${service.name}" (${service.id})`,
+            );
+          })
+          .catch(error => console.error(error));
+      } else {
+        debug(`Clearing proxy config for "${service.name}" (${service.id})`);
 
-          s.setProxy({ proxyRules: proxyHost })
-            .then(() => {
-              debug(
-                `Using proxy "${proxyHost}" for "${service.name}" (${service.id})`,
-              );
-            })
-            .catch(error => console.error(error));
-        }
+        s.setProxy({ proxyRules: '' })
+          .then(() => {
+            debug(`Proxy cleared for "${service.name}" (${service.id})`);
+          })
+          .catch(error => console.error(error));
       }
     }
   });

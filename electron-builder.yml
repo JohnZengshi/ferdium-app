@@ -4,8 +4,7 @@ directories:
 
 appId: "com.atc.aitalk"
 
-publish:
-  provider: github
+publish: null  # 禁用自动更新
 
 snap:
   base: core22

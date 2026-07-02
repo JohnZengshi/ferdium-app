@@ -55,7 +55,7 @@ const sleep = (ms: number) =>
 const messages = defineMessages({
   createPersonaProfile: {
     id: 'knowledgeScreen.createPersonaProfile',
-    defaultMessage: 'Create Persona Profile',
+    defaultMessage: 'Create Digital Employee',
   },
   editPersonaProfile: {
     id: 'knowledgeScreen.editPersonaProfile',

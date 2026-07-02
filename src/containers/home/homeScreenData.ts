@@ -86,12 +86,12 @@ export const messages = defineMessages({
   // ─── Dashboard section header ───
   myDigitalEmployees: {
     id: 'homeScreen.myDigitalEmployees',
-    defaultMessage: 'My Digital Employees',
+    defaultMessage: 'My Think Tank',
   },
   digitalEmployeesDesc: {
     id: 'homeScreen.digitalEmployeesDesc',
     defaultMessage:
-      'Let digital employees be your best sales partners, handling inquiries and automating conversions 24/7.',
+      'Let your think tank be your best sales partners, handling inquiries and automating conversions 24/7.',
   },
   autoReply: { id: 'homeScreen.autoReply', defaultMessage: 'Auto Reply' },
 
@@ -112,12 +112,12 @@ export const messages = defineMessages({
   },
   step2Title: {
     id: 'homeScreen.step2Title',
-    defaultMessage: 'Create Persona Profile',
+    defaultMessage: 'Create Digital Employee',
   },
   step2Desc: {
     id: 'homeScreen.step2Desc',
     defaultMessage:
-      'Click Profile Management on the left to create persona data',
+      'Click Profile Management on the left to create digital employee',
   },
   step1Title: {
     id: 'homeScreen.step1Title',

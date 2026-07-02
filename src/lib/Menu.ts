@@ -791,7 +791,7 @@ class FranzMenu implements StoresProps {
     if (locked) {
       const touchIdEnabled = isMac
         ? this.stores.settings.app.useTouchIdToUnlock &&
-        systemPreferences.canPromptTouchID()
+          systemPreferences.canPromptTouchID()
         : false;
 
       (tpl[0].submenu as MenuItemConstructorOptions[]).unshift(

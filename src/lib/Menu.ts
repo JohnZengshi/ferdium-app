@@ -963,7 +963,7 @@ class FranzMenu implements StoresProps {
           label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,
           click: () => {
-            window['ferdium'].stores.router.push('/settings/app');
+            this.actions.ui.openSettings({ path: 'app' });
           },
           enabled: this.stores.user.isLoggedIn,
           visible: showDebugMenus && !locked,

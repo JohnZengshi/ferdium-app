@@ -407,13 +407,19 @@ export default class UserStore extends TypedStore {
     const { router } = this.stores;
     const route = router.location.pathname;
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
+    const agentFlowToken = window.localStorage.getItem('agentFlowToken');
+    const hasAgentFlowToken = Boolean(agentFlowToken);
+    const hasWaAkgKey = Boolean(
+      window.localStorage.getItem(API_KEY_STORAGE_KEY),
+    );
 
-    // 本地模式 + 非 Agent Flow CS 认证：Ferdium 内部 auth 是基础设施，不依赖用户操作
-    // 这里只关心 WA-AKG key 是否就绪
-    if (process.env.FERDIUM_SERVER === 'local' && !useAgentFlowAuth) {
-      const hasWaAkgKey = Boolean(
-        window.localStorage.getItem(API_KEY_STORAGE_KEY),
-      );
+    if (process.env.FERDIUM_SERVER === 'local') {
+      if (useAgentFlowAuth && !hasAgentFlowToken) {
+        if (route !== this.LOGIN_ROUTE) {
+          router.push(this.LOGIN_ROUTE);
+        }
+        return;
+      }
 
       if (!hasWaAkgKey) {
         if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {
@@ -427,10 +433,6 @@ export default class UserStore extends TypedStore {
 
     // ── 以下在 Agent Flow CS 模式或云端模式执行 ──
     const onLogout = route === this.LOGOUT_ROUTE;
-
-    // Agent Flow 模式：检查 Agent Flow token 和 AKG Key
-    const agentFlowToken = window.localStorage.getItem('agentFlowToken');
-    const hasAgentFlowToken = Boolean(agentFlowToken);
 
     if (this.isTokenExpired) {
       this._logout();
@@ -455,11 +457,6 @@ export default class UserStore extends TypedStore {
       }
       return;
     }
-
-    const storedKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
-
-    // 只要 localStorage 里有 key，就认为已登录
-    const hasWaAkgKey = Boolean(storedKey);
 
     if (!hasWaAkgKey) {
       if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {

@@ -227,6 +227,8 @@
   "dynamicLogin.userFriendlyError": "登入失敗，請檢查網路連線或稍後重試",
   "editDrawer.accountRemark": "帳號備註",
   "editDrawer.accountRemarkPlaceholder": "在此輸入備註",
+  "editDrawer.autoFillFormatError": "格式無法識別。請使用 http://[使用者名稱:密碼@]主機:埠號 或 socks5://[使用者名稱:密碼@]主機:埠號",
+  "editDrawer.autoFillFormatHint": "HTTP: http://[使用者名稱:密碼@]主機:埠號\nSOCKS5: socks5://[使用者名稱:密碼@]主機:埠號",
   "editDrawer.basicSettings": "基本設定",
   "editDrawer.bindAccountDialogTitle": "綁定帳號",
   "editDrawer.cancel": "取消",

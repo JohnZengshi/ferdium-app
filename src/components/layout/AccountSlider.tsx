@@ -604,11 +604,15 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         label: service.name || service.recipe.name,
         enabled: false,
       },
+      {
+        label: `AKG Session ID (${service.id})`,
+        click: () => clipboard.writeText(service.id),
+      },
       ...(waMe?.jid
         ? [
             {
               label: `Copy JID (${waMe.jid})`,
-              click: () => clipboard.writeText(waMe.jid!),
+              click: () => clipboard.writeText(waMe.jid ?? ''),
             },
           ]
         : []),

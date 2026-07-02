@@ -601,15 +601,15 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
                 <div className="mt-[24px] flex flex-1 flex-col">
                   <StepItem
                     stepNumber={1}
-                    title={intl.formatMessage(messages.step1Title)}
-                    description={intl.formatMessage(messages.step1Desc)}
+                    title={intl.formatMessage(messages.step2Title)}
+                    description={intl.formatMessage(messages.step2Desc)}
                     status={getStepStatus(1, getOnboardingProgress())}
                     isLast={false}
                   />
                   <StepItem
                     stepNumber={2}
-                    title={intl.formatMessage(messages.step2Title)}
-                    description={intl.formatMessage(messages.step2Desc)}
+                    title={intl.formatMessage(messages.step1Title)}
+                    description={intl.formatMessage(messages.step1Desc)}
                     status={getStepStatus(2, getOnboardingProgress())}
                     isLast={false}
                   />

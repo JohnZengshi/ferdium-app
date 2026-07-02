@@ -110,14 +110,6 @@ export const messages = defineMessages({
     id: 'homeScreen.completionProgress',
     defaultMessage: 'Progress',
   },
-  step1Title: {
-    id: 'homeScreen.step1Title',
-    defaultMessage: 'Bind Account',
-  },
-  step1Desc: {
-    id: 'homeScreen.step1Desc',
-    defaultMessage: 'Click any social platform on the left to bind an account',
-  },
   step2Title: {
     id: 'homeScreen.step2Title',
     defaultMessage: 'Create Persona Profile',
@@ -127,13 +119,21 @@ export const messages = defineMessages({
     defaultMessage:
       'Click Profile Management on the left to create persona data',
   },
+  step1Title: {
+    id: 'homeScreen.step1Title',
+    defaultMessage: 'Bind Account',
+  },
+  step1Desc: {
+    id: 'homeScreen.step1Desc',
+    defaultMessage: 'Click any social platform on the left to bind an account',
+  },
   step3Title: {
     id: 'homeScreen.step3Title',
     defaultMessage: 'Set Alert Rules (Optional)',
   },
   step3Desc: {
     id: 'homeScreen.step3Desc',
-    defaultMessage: 'Click Monica digital employee to set alert rules',
+    defaultMessage: 'Click Monica to set alert rules',
   },
   step4Title: {
     id: 'homeScreen.step4Title',

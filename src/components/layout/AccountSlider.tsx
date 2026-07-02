@@ -506,6 +506,7 @@ interface IAccountSliderState {
   editingService: ServiceDrawerData | null;
   width: number;
   isDragging: boolean;
+  bindDrawerKey: number;
 }
 
 @inject('stores', 'actions')
@@ -519,6 +520,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
       width: props.stores?.settings.all.app.accountSliderWidth ?? 300,
       isDragging: false,
       editingService: null,
+      bindDrawerKey: 0,
     };
   }
 
@@ -688,10 +690,11 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
   };
 
   openBindDrawer = (editingService: ServiceDrawerData | null = null) => {
-    this.setState({
+    this.setState(prev => ({
       isBindDrawerVisible: true,
       editingService,
-    });
+      bindDrawerKey: prev.bindDrawerKey + 1,
+    }));
   };
 
   closeBindDrawer = () => {
@@ -842,6 +845,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         )}
 
         <EditServiceDrawer
+          key={this.state.bindDrawerKey}
           visible={this.state.isBindDrawerVisible}
           initialData={
             this.state.editingService

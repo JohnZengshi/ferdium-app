@@ -192,6 +192,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
   const [refreshVersion, setRefreshVersion] = useState(0);
 
   const allServices: Service[] = stores?.services?.all ?? [];
+  const serviceIdsKey = allServices.map(service => service.id).join('\u0000');
   const waStatuses: Map<string, WhatsAppSessionStatus> =
     stores?.whatsappAutomation?.sessionStatuses ?? new Map();
 
@@ -215,6 +216,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
   }, []);
 
   const fetchAllPersonaBindings = useCallback(async () => {
+    const serviceIds = serviceIdsKey.split('\u0000');
     let digitalHumanList: AppApiSchemasDigitalHumanResponse[] = [];
     try {
       const listRes = await listDigitalHumansApiV1DigitalHumansGet();
@@ -224,10 +226,10 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
     }
 
     const results = await Promise.all(
-      allServices.map(async service => {
+      serviceIds.map(async serviceId => {
         try {
           const response = await getWhatsappBindingApiV1WhatsappBindGet({
-            session_id: service.id,
+            session_id: serviceId,
           });
           if (response.status === 200) {
             const binding = response.data as WhatsAppBindingResponse | null;
@@ -237,7 +239,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
               : undefined;
 
             return {
-              serviceId: service.id,
+              serviceId,
               personaName,
               autoChatStatus: binding?.status,
             };
@@ -263,17 +265,17 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
     }
     setPersonaNameMap(personaMap);
     setAutoChatStatusMap(autoChatMap);
-  }, [allServices]);
+  }, [serviceIdsKey]);
 
   useEffect(() => {
     fetchSessionTimes();
   }, [fetchSessionTimes]);
 
   useEffect(() => {
-    if (allServices.length > 0) {
+    if (serviceIdsKey) {
       fetchAllPersonaBindings();
     }
-  }, [fetchAllPersonaBindings, allServices.length]);
+  }, [fetchAllPersonaBindings, serviceIdsKey]);
 
   // MobX observer will track observable properties (service.name, service.proxy)
   // refreshVersion is used to force re-computation when needed

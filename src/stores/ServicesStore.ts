@@ -24,6 +24,7 @@ import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { cleanseJSObject } from '../jsUtils';
 import type { UnreadServices } from '../lib/dbus/Ferdium';
 import type Service from '../models/Service';
+import { patchSessionsIdSettings } from '../whatsapp-automation/api/generated/sessions/sessions';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
@@ -593,6 +594,25 @@ export default class ServicesStore extends TypedStore {
         [`${serviceId}`]: data.proxy,
       },
     });
+
+    if (service.recipe.id === WHATSAPP_RECIPE_ID) {
+      const proxyData = data.proxy;
+      let proxyUrl: string | null = null;
+      if (proxyData?.isEnabled && proxyData?.host && proxyData?.port) {
+        const protocol = proxyData?.protocol || 'http';
+        const { host, port, user, password } = proxyData;
+        proxyUrl =
+          user && password
+            ? `${protocol}://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}`
+            : `${protocol}://${host}:${port}`;
+      }
+
+      try {
+        await patchSessionsIdSettings(serviceId, { config: { proxyUrl } });
+      } catch (error) {
+        debug('Failed to sync WhatsApp proxy settings:', error);
+      }
+    }
 
     if (redirect) {
       this.stores.router.push('/settings/services');

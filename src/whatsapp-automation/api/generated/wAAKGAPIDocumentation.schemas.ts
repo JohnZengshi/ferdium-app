@@ -301,7 +301,7 @@ export type PatchSessionsIdSettingsBodyConfig = {
   readReceipts?: boolean;
   rejectCalls?: boolean;
   /** SOCKS5/HTTP proxy URL for WhatsApp connection */
-  proxyUrl?: string;
+  proxyUrl?: string | null;
 };
 
 export type PatchSessionsIdSettingsBody = {

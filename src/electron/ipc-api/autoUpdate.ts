@@ -1,10 +1,60 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { spawn } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import { BrowserWindow, app, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import semver from 'semver';
 // eslint-disable-next-line import/no-cycle
 import { appEvents } from '../..';
-import { isSnap } from '../../environment';
+import { isMac, isSnap } from '../../environment';
 
 const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:autoUpdate');
+
+type DownloadedUpdateEvent = {
+  downloadedFile?: string;
+};
+
+type UpdateChannel = 'beta' | 'latest';
+
+type PendingUpdateCandidate = {
+  channel: UpdateChannel;
+  version: string;
+};
+
+let downloadedUpdatePath: string | null = null;
+
+function customMacInstall(zipPath: string) {
+  const appBundlePath = path.dirname(
+    path.dirname(path.dirname(app.getPath('exe'))),
+  );
+  const installDir = path.dirname(appBundlePath);
+
+  const script = `#!/bin/bash
+sleep 2
+rm -rf "${appBundlePath}"
+unzip -q "${zipPath}" -d "${installDir}"
+xattr -dr com.apple.quarantine "${appBundlePath}"
+open "${appBundlePath}"
+rm -f "$0"
+`;
+
+  if (!app.isPackaged) {
+    debug('dev mode: install script generated but not executed');
+    debug(script);
+    return;
+  }
+
+  const scriptPath = path.join(app.getPath('temp'), 'aitalk-install-update.sh');
+  fs.writeFileSync(scriptPath, script);
+  fs.chmodSync(scriptPath, 0o755);
+
+  spawn('/bin/bash', [scriptPath], {
+    detached: true,
+    stdio: 'ignore',
+  }).unref();
+
+  app.quit();
+}
 
 export default (params: { mainWindow: BrowserWindow; settings: any }) => {
   const enableUpdate = Boolean(params.settings.app.get('automaticUpdates'));
@@ -19,17 +69,95 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       autoUpdater.autoDownload = false;
     }
 
+    let isProbing = false;
+
+    const selectBestCandidate = (candidates: PendingUpdateCandidate[]) => {
+      let best: PendingUpdateCandidate | null = null;
+
+      for (const candidate of candidates) {
+        if (
+          semver.gt(candidate.version, app.getVersion()) &&
+          (!best || semver.gt(candidate.version, best.version))
+        ) {
+          best = candidate;
+        }
+      }
+
+      return best;
+    };
+
+    const probeChannel = async (channel: UpdateChannel) => {
+      autoUpdater.channel = channel;
+      autoUpdater.allowPrerelease = channel === 'beta';
+      autoUpdater.autoDownload = false;
+      debug(`probing ${channel} channel`);
+
+      try {
+        const result = await autoUpdater.checkForUpdates();
+        const version = result?.updateInfo?.version;
+        return version ? { channel, version } : null;
+      } catch (error) {
+        debug(`probe ${channel} channel failed`);
+        debug(error);
+        return null;
+      }
+    };
+
+    const runFinalCheck = (channel: UpdateChannel) => {
+      autoUpdater.channel = channel;
+      autoUpdater.allowPrerelease = channel === 'beta';
+      autoUpdater.autoDownload = !isSnap;
+      debug(`checking selected ${channel} channel`);
+      autoUpdater.checkForUpdates();
+    };
+
+    const startCheck = async (event: Electron.IpcMainEvent) => {
+      const isBetaUpdateEnabled = Boolean(params.settings.app.get('beta'));
+
+      if (!isBetaUpdateEnabled) {
+        runFinalCheck('latest');
+        return;
+      }
+
+      isProbing = true;
+      const candidates: PendingUpdateCandidate[] = [];
+
+      const latestCandidate = await probeChannel('latest');
+      if (latestCandidate) candidates.push(latestCandidate);
+
+      const betaCandidate = await probeChannel('beta');
+      if (betaCandidate) candidates.push(betaCandidate);
+
+      isProbing = false;
+
+      const best = selectBestCandidate(candidates);
+
+      if (!best) {
+        event.sender.send('autoUpdate', { available: false });
+        return;
+      }
+
+      runFinalCheck(best.channel);
+    };
+
     ipcMain.on('autoUpdate', (event, args) => {
       if (enableUpdate) {
         try {
           autoUpdater.autoInstallOnAppQuit = false;
-          autoUpdater.allowPrerelease = Boolean(
-            params.settings.app.get('beta'),
-          );
 
           if (args.action === 'check') {
             debug('checking for update');
-            autoUpdater.checkForUpdates();
+
+            if (!app.isPackaged && !autoUpdater.forceDevUpdateConfig) {
+              debug('skipping update check in dev mode');
+              event.sender.send('autoUpdate', { available: false });
+              return;
+            }
+
+            startCheck(event).catch(() => {
+              isProbing = false;
+              event.sender.send('autoUpdate', { available: false });
+            });
           } else if (args.action === 'install') {
             // If the app is a snap, auto-updates are not supported.
             // The snap store will handle updates, therefore the user should be prompted to update through snap store.
@@ -41,24 +169,36 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
 
             appEvents.emit('install-update');
 
+            if (isMac && downloadedUpdatePath) {
+              const openedWindows = BrowserWindow.getAllWindows();
+              for (const window of openedWindows) window.close();
+              customMacInstall(downloadedUpdatePath);
+              return;
+            }
+
             const openedWindows = BrowserWindow.getAllWindows();
             for (const window of openedWindows) window.close();
 
             autoUpdater.quitAndInstall();
           }
-        } catch (error) {
-          event.sender.send('autoUpdate', { error });
+        } catch {
+          event.sender.send('autoUpdate', { available: false });
         }
       }
     });
 
     autoUpdater.on('update-not-available', () => {
       debug('update-not-available');
+
+      if (isProbing) return;
+
       params.mainWindow.webContents.send('autoUpdate', { available: false });
     });
 
     autoUpdater.on('update-available', event => {
       debug('update-available');
+
+      if (isProbing) return;
 
       if (enableUpdate) {
         params.mainWindow.webContents.send('autoUpdate', {
@@ -76,14 +216,27 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       debug(logMessage);
     });
 
-    autoUpdater.on('update-downloaded', () => {
+    autoUpdater.on('update-downloaded', (event: DownloadedUpdateEvent) => {
       debug('update-downloaded');
+      downloadedUpdatePath = event.downloadedFile ?? null;
       params.mainWindow.webContents.send('autoUpdate', { downloaded: true });
     });
 
     autoUpdater.on('error', error => {
       debug('update-error');
-      params.mainWindow.webContents.send('autoUpdate', { error });
+      const isSignatureError = error?.message?.includes(
+        'Could not get code signature',
+      );
+      if (isSignatureError) {
+        debug(
+          'ignoring signature error (custom installer will handle install)',
+        );
+        return;
+      }
+
+      if (isProbing) return;
+
+      params.mainWindow.webContents.send('autoUpdate', { available: false });
     });
   } else {
     autoUpdater.autoInstallOnAppQuit = false;

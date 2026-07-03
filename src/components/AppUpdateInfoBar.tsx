@@ -6,16 +6,11 @@ import InfoBar from './ui/InfoBar';
 import Icon from './ui/icon';
 
 import { isSnap, isWinPortable } from '../environment';
-import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 
 const messages = defineMessages({
   updateAvailable: {
     id: 'infobar.updateAvailable',
     defaultMessage: 'A new update for Aitalk is available.',
-  },
-  changelog: {
-    id: 'infobar.buttonChangelog',
-    defaultMessage: 'What is new?',
   },
   buttonInstallUpdate: {
     id: 'infobar.buttonInstallUpdate',
@@ -53,20 +48,8 @@ const AppUpdateInfoBar = (props: IProps) => {
       <p style={{ padding: '0 0.5rem 0 1rem' }}>
         {intl.formatMessage(messages.updateAvailable)}
         {isSnap && ` ${intl.formatMessage(messages.isSnapMessage)}`}
+        {` (v${updateVersionParsed})`}
       </p>
-
-      <button
-        className="info-bar__inline-button"
-        type="button"
-        onClick={() => {
-          window.location.href = onAuthGoToReleaseNotes(
-            window.location.href,
-            updateVersionParsed,
-          );
-        }}
-      >
-        <u>{intl.formatMessage(messages.changelog)}</u>
-      </button>
     </InfoBar>
   );
 };

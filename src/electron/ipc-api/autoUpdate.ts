@@ -70,6 +70,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
     }
 
     let isProbing = false;
+    let hasUpdateCandidate = false;
 
     const selectBestCandidate = (candidates: PendingUpdateCandidate[]) => {
       let best: PendingUpdateCandidate | null = null;
@@ -104,6 +105,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
     };
 
     const runFinalCheck = (channel: UpdateChannel) => {
+      hasUpdateCandidate = false;
       autoUpdater.channel = channel;
       autoUpdater.allowPrerelease = channel === 'beta';
       autoUpdater.autoDownload = !isSnap;
@@ -201,6 +203,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       if (isProbing) return;
 
       if (enableUpdate) {
+        hasUpdateCandidate = true;
         params.mainWindow.webContents.send('autoUpdate', {
           version: event.version,
           available: true,
@@ -219,6 +222,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
     autoUpdater.on('update-downloaded', (event: DownloadedUpdateEvent) => {
       debug('update-downloaded');
       downloadedUpdatePath = event.downloadedFile ?? null;
+      hasUpdateCandidate = true;
       params.mainWindow.webContents.send('autoUpdate', { downloaded: true });
     });
 
@@ -235,6 +239,15 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       }
 
       if (isProbing) return;
+
+      if (hasUpdateCandidate) {
+        params.mainWindow.webContents.send('autoUpdate', {
+          error: {
+            message: error?.message,
+          },
+        });
+        return;
+      }
 
       params.mainWindow.webContents.send('autoUpdate', { available: false });
     });

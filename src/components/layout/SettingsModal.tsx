@@ -9,6 +9,9 @@ import { Button, Dialog, DialogPlugin, Select, Switch } from 'tdesign-react';
 
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import { LIVE_FERDIUM_API, LOCAL_SERVER } from '../../config';
+import { isSnap, isWinPortable } from '../../environment';
+import { ferdiumVersion } from '../../environment-remote';
+import { updateVersionParse } from '../../helpers/update-helpers';
 import { APP_LOCALES } from '../../i18n/languages';
 
 const messages = defineMessages({
@@ -62,6 +65,66 @@ const messages = defineMessages({
     defaultMessage:
       'Logging out will not disconnect your accounts. Are you sure you want to log out?',
   },
+  updatesLabel: {
+    id: 'settingsModal.updatesLabel',
+    defaultMessage: 'Updates',
+  },
+  automaticUpdatesLabel: {
+    id: 'settingsModal.automaticUpdatesLabel',
+    defaultMessage: 'Automatic updates',
+  },
+  betaUpdatesLabel: {
+    id: 'settingsModal.betaUpdatesLabel',
+    defaultMessage: 'Receive beta updates',
+  },
+  checkForUpdatesButton: {
+    id: 'settingsModal.checkForUpdatesButton',
+    defaultMessage: 'Check for updates',
+  },
+  installUpdateButton: {
+    id: 'settingsModal.installUpdateButton',
+    defaultMessage: 'Restart & install update',
+  },
+  updateAvailableSnap: {
+    id: 'settingsModal.updateAvailableSnap',
+    defaultMessage: 'Update available. Please update via Snap Store.',
+  },
+  updateStatusSearching: {
+    id: 'settingsModal.updateStatusSearching',
+    defaultMessage: 'Searching for updates...',
+  },
+  updateStatusAvailable: {
+    id: 'settingsModal.updateStatusAvailable',
+    defaultMessage: 'Update available, downloading...',
+  },
+  currentVersionLabel: {
+    id: 'settingsModal.currentVersionLabel',
+    defaultMessage: 'Current version:',
+  },
+  latestVersionLabel: {
+    id: 'settingsModal.latestVersionLabel',
+    defaultMessage: 'Latest version:',
+  },
+  updateStatusUpToDate: {
+    id: 'settingsModal.updateStatusUpToDate',
+    defaultMessage: 'You are using the latest version of Aitalk.',
+  },
+  updateFailedMessage: {
+    id: 'settingsModal.updateFailedMessage',
+    defaultMessage: 'An error occurred (check the console for more details).',
+  },
+  servicesUpdatedMessage: {
+    id: 'settingsModal.servicesUpdatedMessage',
+    defaultMessage: 'Your services have been updated.',
+  },
+  reloadServicesButton: {
+    id: 'settingsModal.reloadServicesButton',
+    defaultMessage: 'Reload services',
+  },
+  servicesUpToDateMessage: {
+    id: 'settingsModal.servicesUpToDateMessage',
+    defaultMessage: 'Your services are up-to-date.',
+  },
 });
 
 interface IProps extends Partial<StoresProps>, WrappedComponentProps {
@@ -73,6 +136,8 @@ interface IState {
   selectedLocale: string;
   themeMode: string;
   spellcheckEnabled: boolean;
+  automaticUpdates: boolean;
+  beta: boolean;
 }
 
 const ALLOWED_LOCALES = new Set(['en-US', 'zh-HANS', 'zh-HANT']);
@@ -103,6 +168,8 @@ class SettingsModal extends Component<IProps, IState> {
       selectedLocale: stores!.app.locale,
       themeMode: getThemeMode(stores!.settings.all.app),
       spellcheckEnabled: stores!.settings.app.enableSpellchecking,
+      automaticUpdates: stores!.settings.app.automaticUpdates,
+      beta: stores!.settings.app.beta,
     };
   }
 
@@ -113,6 +180,8 @@ class SettingsModal extends Component<IProps, IState> {
         selectedLocale: stores!.app.locale,
         themeMode: getThemeMode(stores!.settings.all.app),
         spellcheckEnabled: stores!.settings.app.enableSpellchecking,
+        automaticUpdates: stores!.settings.app.automaticUpdates,
+        beta: stores!.settings.app.beta,
       });
     }
   }
@@ -152,6 +221,26 @@ class SettingsModal extends Component<IProps, IState> {
     });
   };
 
+  handleAutomaticUpdatesChange = (value: boolean): void => {
+    this.setState({ automaticUpdates: value });
+
+    const { actions } = this.props;
+    actions!.settings.update({
+      type: 'app',
+      data: { automaticUpdates: value },
+    });
+  };
+
+  handleBetaChange = (value: boolean): void => {
+    this.setState({ beta: value });
+
+    const { actions } = this.props;
+    actions!.settings.update({
+      type: 'app',
+      data: { beta: value },
+    });
+  };
+
   handleLogout = (): void => {
     const { intl, stores, actions, onClose } = this.props;
 
@@ -187,8 +276,36 @@ class SettingsModal extends Component<IProps, IState> {
   };
 
   render(): ReactElement {
-    const { visible, onClose, intl } = this.props;
-    const { selectedLocale, themeMode, spellcheckEnabled } = this.state;
+    const { visible, onClose, intl, stores, actions } = this.props;
+    const {
+      selectedLocale,
+      themeMode,
+      spellcheckEnabled,
+      automaticUpdates,
+      beta,
+    } = this.state;
+
+    const { updateStatus, updateVersion, updateStatusTypes, isOnline } =
+      stores!.app;
+    const { checkForUpdates, installUpdate } = actions!.app;
+    const { showServicesUpdatedInfoBar } = stores!.ui;
+
+    const isCheckingForUpdates = updateStatus === updateStatusTypes.CHECKING;
+    const isUpdateAvailable = updateStatus === updateStatusTypes.AVAILABLE;
+    const noUpdateAvailable = updateStatus === updateStatusTypes.NOT_AVAILABLE;
+    const updateIsReadyToInstall =
+      updateStatus === updateStatusTypes.DOWNLOADED;
+    const updateFailed = updateStatus === updateStatusTypes.FAILED;
+    const installUpdateMessage = isSnap
+      ? messages.updateAvailableSnap
+      : messages.installUpdateButton;
+
+    let updateButtonLabelMessage = messages.checkForUpdatesButton;
+    if (isCheckingForUpdates) {
+      updateButtonLabelMessage = messages.updateStatusSearching;
+    } else if (isUpdateAvailable) {
+      updateButtonLabelMessage = messages.updateStatusAvailable;
+    }
 
     return (
       <Dialog
@@ -307,6 +424,107 @@ class SettingsModal extends Component<IProps, IState> {
                 {intl.formatMessage(messages.restartHint)}
               </span>
             </div>
+
+            <div className="mt-[23px] text-[16px] font-semibold leading-[20px] text-primary">
+              {intl.formatMessage(messages.updatesLabel)}
+            </div>
+
+            <div className="mt-[12px] flex items-center gap-[12px]">
+              <span className="text-[14px] leading-[20px] text-primary">
+                {intl.formatMessage(messages.automaticUpdatesLabel)}
+              </span>
+              <Switch
+                value={automaticUpdates}
+                onChange={this.handleAutomaticUpdatesChange}
+              />
+            </div>
+
+            {automaticUpdates && !isWinPortable && (
+              <div className="mt-[12px] space-y-[10px]">
+                <div className="flex items-center gap-[12px]">
+                  <span className="text-[14px] leading-[20px] text-primary">
+                    {intl.formatMessage(messages.betaUpdatesLabel)}
+                  </span>
+                  <Switch value={beta} onChange={this.handleBetaChange} />
+                </div>
+
+                <div className="flex flex-wrap items-center gap-[8px]">
+                  {updateIsReadyToInstall || (isSnap && isUpdateAvailable) ? (
+                    <Button
+                      size="small"
+                      onClick={installUpdate}
+                      disabled={isSnap}
+                      theme={isSnap ? 'default' : 'primary'}
+                    >
+                      {intl.formatMessage(installUpdateMessage)}
+                    </Button>
+                  ) : (
+                    <Button
+                      size="small"
+                      variant="outline"
+                      onClick={checkForUpdates}
+                      disabled={
+                        !automaticUpdates ||
+                        isCheckingForUpdates ||
+                        isUpdateAvailable ||
+                        !isOnline
+                      }
+                      loading={isCheckingForUpdates && !isUpdateAvailable}
+                    >
+                      {intl.formatMessage(updateButtonLabelMessage)}
+                    </Button>
+                  )}
+                </div>
+
+                <div className="text-[14px] leading-[20px] text-placeholder">
+                  {isUpdateAvailable || updateIsReadyToInstall ? (
+                    <>
+                      {intl.formatMessage(messages.currentVersionLabel)}{' '}
+                      {ferdiumVersion}
+                      <span className="ml-[12px]">
+                        {intl.formatMessage(messages.latestVersionLabel)}{' '}
+                        {updateVersionParse(updateVersion)}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {intl.formatMessage(messages.currentVersionLabel)}{' '}
+                      {ferdiumVersion}
+                    </>
+                  )}
+                </div>
+
+                {noUpdateAvailable && (
+                  <div className="text-[14px] leading-[20px] text-placeholder">
+                    {intl.formatMessage(messages.updateStatusUpToDate)}
+                  </div>
+                )}
+
+                {updateFailed && (
+                  <div className="text-[14px] leading-[20px] text-error">
+                    {intl.formatMessage(messages.updateFailedMessage)}
+                  </div>
+                )}
+
+                {showServicesUpdatedInfoBar ? (
+                  <div className="flex items-center gap-[8px]">
+                    <span className="text-[14px] leading-[20px] text-placeholder">
+                      {intl.formatMessage(messages.servicesUpdatedMessage)}
+                    </span>
+                    <Button
+                      size="small"
+                      onClick={() => window.location.reload()}
+                    >
+                      {intl.formatMessage(messages.reloadServicesButton)}
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="text-[14px] leading-[20px] text-placeholder">
+                    {intl.formatMessage(messages.servicesUpToDateMessage)}
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="mt-auto flex justify-end pb-[32px]">
               <Button

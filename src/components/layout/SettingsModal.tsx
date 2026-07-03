@@ -477,7 +477,9 @@ class SettingsModal extends Component<IProps, IState> {
                 </div>
 
                 <div className="text-[14px] leading-[20px] text-placeholder">
-                  {isUpdateAvailable || updateIsReadyToInstall ? (
+                  {isUpdateAvailable ||
+                  updateIsReadyToInstall ||
+                  (updateFailed && updateVersion) ? (
                     <>
                       {intl.formatMessage(messages.currentVersionLabel)}{' '}
                       {ferdiumVersion}

@@ -87,6 +87,16 @@ echo -e "${YELLOW}✓ pnpm 版本: $(pnpm --version)${NC}"
 export CSC_IDENTITY_AUTO_DISCOVERY=false
 echo -e "${YELLOW}✓ 已禁用代码签名 (CSC_IDENTITY_AUTO_DISCOVERY=false)${NC}"
 
+if [ -f .env ]; then
+    set -a
+    source .env
+    set +a
+    unset DEBUG
+    echo -e "${YELLOW}✓ 已加载 .env (UPDATE_URL=${UPDATE_URL:-未设置})${NC}"
+else
+    echo -e "${RED}⚠️ .env 不存在，UPDATE_URL 将为空，自动更新将无法工作${NC}"
+fi
+
 # 1. 备份原始 entitlements 文件
 echo -e "\n${GREEN}[1/6] 备份原始 entitlements 配置...${NC}"
 cp build-helpers/entitlements.mas.plist build-helpers/entitlements.mas.plist.bak

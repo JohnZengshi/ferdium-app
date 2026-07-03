@@ -108,6 +108,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       hasUpdateCandidate = false;
       autoUpdater.channel = channel;
       autoUpdater.allowPrerelease = channel === 'beta';
+      autoUpdater.allowDowngrade = false;
       autoUpdater.autoDownload = !isSnap;
       debug(`checking selected ${channel} channel`);
       autoUpdater.checkForUpdates();

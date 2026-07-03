@@ -83,6 +83,13 @@ DATE=$(date +"%Y%m%d%H%M")
 
 # 公共配置
 REMOTE_DIR=out
+MAC_APP_PATH="out/mac/AITALK.app"
+
+generate_local_update_files() {
+  local source_path="${1:-$MAC_APP_PATH}"
+  echo "正在生成本地更新文件: $source_path ..."
+  ./scripts/generate-local-update-yml.sh "$source_path"
+}
 
 # 根据平台选择不同的包路径和文件名
 case "$PLATFORM" in
@@ -92,6 +99,7 @@ case "$PLATFORM" in
     # 检查结果
     if [ $? -eq 0 ]; then
       echo "✅ 编译成功: `ls -lrth $LOCAL_FILE`"
+      generate_local_update_files
     else
       echo "❌ 编译失败"
       exit 1
@@ -105,6 +113,7 @@ case "$PLATFORM" in
       exit 1
     fi
     echo "✅ 编译成功"
+    generate_local_update_files
     mkdir -p "${REMOTE_DIR}/mac"
     for ARCH in x64 arm64; do
       LOCAL_FILE="out/AITALK-mac-${APP_VERSION}-${ARCH}-${BUILD_NUMBER}.dmg"
@@ -131,6 +140,7 @@ case "$PLATFORM" in
       exit 1
     fi
     echo "✅ 编译成功: $(ls -lh "$LOCAL_FILE" | awk '{print $5, $NF}')"
+    generate_local_update_files "$LOCAL_FILE"
     # 从 installer 文件名中提取版本号 (e.g. "AITALK-win-AutoSetup-1.0.8-beta.0-7665-x64.exe")
     # 不依赖 bash 中 node 可用性，直接从 PowerShell 生成的文件名解析
     WIN_APP_VERSION=$(echo "$LOCAL_FILE" | sed -n 's/.*AutoSetup-\([0-9.]*\(-beta\.[0-9]*\)*\)-[0-9]*-x64\.exe$/\1/p')

@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process';
-import { promisify } from 'node:util';
 import net from 'node:net';
+import { promisify } from 'node:util';
 import { ipcMain } from 'electron';
 
 const execFileAsync = promisify(execFile);
@@ -178,14 +178,14 @@ async function testProxyViaRequest(
                 }
                 if (connectReply[1] !== 0x00) {
                   const errors: Record<number, string> = {
-                    0x01: 'General SOCKS server failure',
-                    0x02: 'Connection not allowed by ruleset',
-                    0x03: 'Network unreachable',
-                    0x04: 'Host unreachable',
-                    0x05: 'Connection refused by target',
-                    0x06: 'TTL expired',
-                    0x07: 'Command not supported',
-                    0x08: 'Address type not supported',
+                    1: 'General SOCKS server failure',
+                    2: 'Connection not allowed by ruleset',
+                    3: 'Network unreachable',
+                    4: 'Host unreachable',
+                    5: 'Connection refused by target',
+                    6: 'TTL expired',
+                    7: 'Command not supported',
+                    8: 'Address type not supported',
                   };
                   done(
                     `SOCKS5: ${errors[connectReply[1]] || `Error code 0x${connectReply[1].toString(16)}`}`,

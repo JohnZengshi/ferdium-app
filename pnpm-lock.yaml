@@ -175,6 +175,9 @@ importers:
       prop-types:
         specifier: 15.8.1
         version: 15.8.1
+      proxy-chain:
+        specifier: 2.7.1
+        version: 2.7.1
       rc-progress:
         specifier: 3.5.1
         version: 3.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6695,6 +6698,10 @@ packages:
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
+
+  proxy-chain@2.7.1:
+    resolution: {integrity: sha512-LtXu0miohJYrHWJxv8wA6EoGreRcX1hxKb7qlE1pMFH+BXE7bqMvpyhzR/JvR6M5SzYKzyHFpvfmYJrZeMtwAg==}
+    engines: {node: '>=14'}
 
   proxy-from-env@2.1.0:
     resolution: {integrity: sha512-cJ+oHTW1VAEa8cJslgmUZrc+sjRKgAKl3Zyse6+PV38hZe/V6Z14TbCuXcan9F9ghlz4QrFr2c92TNF82UkYHA==}
@@ -13978,8 +13985,7 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
-  ip-address@10.2.0:
-    optional: true
+  ip-address@10.2.0: {}
 
   ipaddr.js@1.9.1: {}
 
@@ -16137,6 +16143,14 @@ snapshots:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
 
+  proxy-chain@2.7.1:
+    dependencies:
+      socks: 2.8.9
+      socks-proxy-agent: 8.0.5
+      tslib: 2.7.0
+    transitivePeerDependencies:
+      - supports-color
+
   proxy-from-env@2.1.0: {}
 
   pseudomap@1.0.2: {}
@@ -17047,8 +17061,7 @@ snapshots:
       is-fullwidth-code-point: 3.0.0
     optional: true
 
-  smart-buffer@4.2.0:
-    optional: true
+  smart-buffer@4.2.0: {}
 
   snapdragon-node@2.1.1:
     dependencies:
@@ -17107,13 +17120,11 @@ snapshots:
       socks: 2.8.9
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   socks@2.8.9:
     dependencies:
       ip-address: 10.2.0
       smart-buffer: 4.2.0
-    optional: true
 
   sort-keys-length@1.0.1:
     dependencies:

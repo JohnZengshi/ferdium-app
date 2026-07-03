@@ -11,6 +11,7 @@ import languageDetect from './languageDetect';
 import localServer from './localServer';
 import processManager from './processManager';
 import proxyTest from './proxyTest';
+import serviceProxyBridge from './serviceProxyBridge';
 import sessionStorage from './sessionStorage';
 import settings from './settings';
 import whatsappWebhook from './whatsappWebhook';
@@ -33,4 +34,5 @@ export default (params: {
   whatsappWebhook(params);
   httpRequest();
   proxyTest();
+  serviceProxyBridge();
 };

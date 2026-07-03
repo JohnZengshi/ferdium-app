@@ -71,6 +71,12 @@ elif [[ "${SOURCE_PATH##*.}" == "exe" ]]; then
   SOURCE_EXE="$SOURCE_PATH"
   EXE_BASENAME="$(basename "$SOURCE_EXE")"
   VERSION=$(echo "$EXE_BASENAME" | sed -nE "s/^.*-AutoSetup-(.+)-[0-9]+-x64\.exe$/\1/p")
+  if [[ -z "$VERSION" ]]; then
+    VERSION=$(echo "$EXE_BASENAME" | sed -nE "s/^${APP_NAME}-win_[0-9]+_(.+)_[0-9]+_x64\.exe$/\1/p")
+  fi
+  if [[ -z "$VERSION" ]]; then
+    VERSION=$(echo "$EXE_BASENAME" | sed -nE "s/^${APP_NAME}-(.+)-win\.exe$/\1/p")
+  fi
   PLATFORM="win"
 else
   if [[ ! -d "$SOURCE_PATH" || "${SOURCE_PATH##*.}" != "app" ]]; then
@@ -98,7 +104,9 @@ fi
 
 if [[ -n "$SOURCE_ZIP" || -n "$SOURCE_EXE" ]]; then
   SOURCE_FILE="${SOURCE_ZIP:-$SOURCE_EXE}"
-  if [[ "$SOURCE_FILE" != "$ARTIFACT" ]]; then
+  RESOLVED_SOURCE="$(realpath "$SOURCE_FILE" 2>/dev/null || echo "$SOURCE_FILE")"
+  RESOLVED_ARTIFACT="$(realpath "$ARTIFACT" 2>/dev/null || echo "$ARTIFACT")"
+  if [[ "$RESOLVED_SOURCE" != "$RESOLVED_ARTIFACT" ]]; then
     cp "$SOURCE_FILE" "$ARTIFACT"
   fi
 else
@@ -110,7 +118,7 @@ else
   fi
 fi
 
-SHA512=$(shasum -a 512 "$ARTIFACT" | awk '{print $1}' | xxd -r -p | base64)
+SHA512=$(shasum -a 512 "$ARTIFACT" | awk '{print $1}' | xxd -r -p | base64 | tr -d '\n')
 SIZE=$(stat -f%z "$ARTIFACT" 2>/dev/null || stat -c%s "$ARTIFACT")
 RELEASE_DATE=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
 

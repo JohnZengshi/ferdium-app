@@ -394,6 +394,26 @@ $BUILD_INFO | Add-Member -NotePropertyName 'buildNumber' -NotePropertyValue (& g
 Write-Host "  [OK] App built successfully (version: $APP_VERSION, build: $($BUILD_INFO.buildNumber), arch: $Arch)"
 Write-Host "  Unpacked app: $UNPACKED_DIR"
 
+$UPDATE_URL = $env:UPDATE_URL
+if (-not $UPDATE_URL) {
+  $ENV_FILE = "$PROJECT_ROOT\.env"
+  if (Test-Path $ENV_FILE) {
+    $updateUrlLine = Get-Content $ENV_FILE | Where-Object { $_ -match '^\s*UPDATE_URL\s*=' } | Select-Object -First 1
+    if ($updateUrlLine) {
+      $UPDATE_URL = ($updateUrlLine -replace '^\s*UPDATE_URL\s*=\s*', '').Trim().Trim('"').Trim("'")
+    }
+  }
+}
+
+if ($UPDATE_URL) {
+  $UPDATE_CONFIG_PATH = "$UNPACKED_DIR\resources\app-update.yml"
+  $updateConfig = "provider: generic`nurl: $UPDATE_URL`n"
+  Set-Content -Path $UPDATE_CONFIG_PATH -Value $updateConfig -NoNewline -Encoding UTF8
+  Write-Host "  [OK] Auto-update config written: $UPDATE_CONFIG_PATH"
+} else {
+  Write-Host "  [WARN] UPDATE_URL is empty; app-update.yml was not generated" -ForegroundColor Yellow
+}
+
 # -----------------------------------------------------------------------------
 #        Step 10: Package with Inno Setup
 # -----------------------------------------------------------------------------

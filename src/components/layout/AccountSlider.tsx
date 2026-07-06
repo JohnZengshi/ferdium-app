@@ -153,6 +153,26 @@ const tabTextColor = (tabId: TabId): string => {
   }
 };
 
+const tabBadgeBgColor = (tabId: TabId): string => {
+  switch (tabId) {
+    case 'all': {
+      return '[&_.t-badge--circle]:!bg-brand';
+    }
+    case 'online': {
+      return '[&_.t-badge--circle]:!bg-success';
+    }
+    case 'offline': {
+      return '[&_.t-badge--circle]:!bg-warning';
+    }
+    case 'error': {
+      return '[&_.t-badge--circle]:!bg-error';
+    }
+    default: {
+      return '';
+    }
+  }
+};
+
 interface StatusTag {
   label: string;
   bg: string;
@@ -240,7 +260,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               return 'bg-error';
             }
             default: {
-              return service.isEnabled ? 'bg-success' : 'bg-warning';
+              return 'bg-gray-400';
             }
           }
         })();
@@ -773,24 +793,16 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0 w-full">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
-            const unreadCount = allServices
-              .filter(service =>
-                isServiceMatchingTab(waStatuses.get(service.id), tab.id),
-              )
-              .reduce(
-                (sum, service) =>
-                  sum +
-                  service.unreadDirectMessageCount +
-                  service.unreadIndirectMessageCount,
-                0,
-              );
+            const accountCount = allServices.filter(service =>
+              isServiceMatchingTab(waStatuses.get(service.id), tab.id),
+            ).length;
             return (
               <Badge
                 key={tab.id}
-                count={unreadCount || null}
+                count={accountCount || null}
                 size="small"
                 offset={[10, 0]}
-                className="flex-1 min-w-0"
+                className={`flex-1 min-w-0 ${tabBadgeBgColor(tab.id)}`}
               >
                 <Button
                   className="h-[32px] w-full min-w-0"

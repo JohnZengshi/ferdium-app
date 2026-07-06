@@ -41,8 +41,13 @@ import type {
   KnowledgeCollectionListResponse,
   KnowledgeCollectionResponse,
   KnowledgeDeleteResponse,
+  KnowledgeDocumentChunkItem,
+  KnowledgeDocumentChunkListResponse,
+  KnowledgeDocumentChunkUpdateRequest,
   KnowledgeDocumentListResponse,
   KnowledgeOverviewResponse,
+  KnowledgeRetrieveRequest,
+  KnowledgeRetrieveResponse,
   KnowledgeUploadResponse,
   ListAdminsApiV1AdminAdminsGetParams,
   ListAuditLogsApiV1AdminAuditAuditLogsGetParams,
@@ -51,6 +56,7 @@ import type {
   ListConversationsApiV1AdminOverviewConversationsGetParams,
   ListCustomerProfilesApiV1AdminOverviewCustomerProfilesGetParams,
   ListDigitalHumansApiV1AdminOverviewDigitalHumansGetParams,
+  ListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetParams,
   ListHandoffsApiV1AdminOverviewHandoffsGetParams,
   ListMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetParams,
   ListOwnersApiV1AdminAccountsOwnersGetParams,
@@ -68,7 +74,11 @@ import type {
   OwnerSuspendRequest,
   OwnerWithMembersResponse,
   PlatformStatsResponse,
-  TraceResponse
+  RuntimeConfigListResponse,
+  RuntimeConfigResetResponse,
+  RuntimeConfigUpdateRequest,
+  TraceResponse,
+  UpdateRuntimeConfigApiV1AdminRuntimeConfigPut200
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
@@ -1069,8 +1079,8 @@ export const getStreamConversationStatusApiV1AdminOverviewConversationsConversat
  * SSE 端点：实时推送会话状态变更（active/handoff/paused）。
  *
  * 1. 先发送当前 DB 状态作为初始事件（is_initial: true）
- * 2. 再订阅 Redis Pub/Sub 频道 conv:status:{id}，实时转发
- * 3. 客户端断开时自动取消订阅
+ * 2. 再经 ``ChannelHub`` 复用订阅 ``conv:status:{id}``，实时转发
+ * 3. 客户端断开时自动注销（末个订阅者退出才销毁 pubsub 连接）
  * @summary Stream Conversation Status
  */
 export const streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGet = async (conversationId: string, options?: RequestInit): Promise<streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse> => {
@@ -1345,8 +1355,9 @@ export const getStreamConversationTraceApiV1AdminAuditConversationsConversationI
  * SSE 端点：实时推送 Agent 执行事件。
  *
  * 1. 先发送所有已完成轮次的 trace 数据 (turn_complete)
- * 2. 再订阅 Redis Pub/Sub 频道，实时转发 progress / node_done / complete / error
- * 3. 客户端断开时自动取消订阅
+ * 2. 再经 ``ChannelHub`` 复用订阅 ``trace:live:{id}``，实时转发
+ *    progress / node_done / complete / error
+ * 3. 客户端断开时自动注销（末个订阅者退出才销毁 pubsub 连接）
  * @summary Stream Conversation Trace
  */
 export const streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGet = async (conversationId: string, options?: RequestInit): Promise<streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse> => {
@@ -1830,6 +1841,50 @@ export const revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwn
 );}
 
 
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse200 = {
+  data: KnowledgeRetrieveResponse
+  status: 200
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponseSuccess = (retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse200) & {
+  headers: Headers;
+};
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponseError = (retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse422) & {
+  headers: Headers;
+};
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse = (retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponseSuccess | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponseError)
+
+export const getRetrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostUrl = (collectionId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/retrieve`
+}
+
+/**
+ * 知识库召回测试（超管专用，跨租户）。
+ * @summary Retrieve Knowledge
+ */
+export const retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePost = async (collectionId: string,
+    knowledgeRetrieveRequest: KnowledgeRetrieveRequest, options?: RequestInit): Promise<retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse> => {
+
+  return useCustomInstance<retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse>(getRetrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostUrl(collectionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(knowledgeRetrieveRequest)
+  }
+);}
+
+
 export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse200 = {
   data: KnowledgeDocumentListResponse
   status: 200
@@ -1924,6 +1979,108 @@ formData.append(`file`, bodyUploadDocumentApiV1AdminKnowledgeCollectionsCollecti
     method: 'POST'
     ,
     body: formData
+  }
+);}
+
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse200 = {
+  data: KnowledgeDocumentChunkListResponse
+  status: 200
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponseSuccess = (listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse200) & {
+  headers: Headers;
+};
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponseError = (listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse422) & {
+  headers: Headers;
+};
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse = (listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponseSuccess | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponseError)
+
+export const getListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetUrl = (collectionId: string,
+    docId: string,
+    params?: ListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/documents/${docId}/chunks?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/documents/${docId}/chunks`
+}
+
+/**
+ * 列出指定文档分块（超管专用）。
+ * @summary List Document Chunks
+ */
+export const listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGet = async (collectionId: string,
+    docId: string,
+    params?: ListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetParams, options?: RequestInit): Promise<listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse> => {
+
+  return useCustomInstance<listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse>(getListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetUrl(collectionId,docId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse200 = {
+  data: KnowledgeDocumentChunkItem
+  status: 200
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponseSuccess = (updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse200) & {
+  headers: Headers;
+};
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponseError = (updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse422) & {
+  headers: Headers;
+};
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse = (updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponseSuccess | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponseError)
+
+export const getUpdateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutUrl = (collectionId: string,
+    docId: string,
+    chunkId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/documents/${docId}/chunks/${chunkId}`
+}
+
+/**
+ * 编辑保存指定文档分块（超管专用）。
+ * @summary Update Document Chunk
+ */
+export const updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPut = async (collectionId: string,
+    docId: string,
+    chunkId: string,
+    knowledgeDocumentChunkUpdateRequest: KnowledgeDocumentChunkUpdateRequest, options?: RequestInit): Promise<updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse> => {
+
+  return useCustomInstance<updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse>(getUpdateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutUrl(collectionId,docId,chunkId),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(knowledgeDocumentChunkUpdateRequest)
   }
 );}
 
@@ -2177,6 +2334,128 @@ export const getLlmCostBreakdownApiV1AdminLlmCostBreakdownGet = async (params: G
   {
     ...options,
     method: 'GET'
+
+
+  }
+);}
+
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse200 = {
+  data: RuntimeConfigListResponse
+  status: 200
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponseSuccess = (listRuntimeConfigApiV1AdminRuntimeConfigGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse = (listRuntimeConfigApiV1AdminRuntimeConfigGetResponseSuccess)
+
+export const getListRuntimeConfigApiV1AdminRuntimeConfigGetUrl = () => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/runtime-config`
+}
+
+/**
+ * 列出全部可热更新配置项（含默认值、当前值、是否被覆盖）。
+ * @summary List Runtime Config
+ */
+export const listRuntimeConfigApiV1AdminRuntimeConfigGet = async ( options?: RequestInit): Promise<listRuntimeConfigApiV1AdminRuntimeConfigGetResponse> => {
+
+  return useCustomInstance<listRuntimeConfigApiV1AdminRuntimeConfigGetResponse>(getListRuntimeConfigApiV1AdminRuntimeConfigGetUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse200 = {
+  data: UpdateRuntimeConfigApiV1AdminRuntimeConfigPut200
+  status: 200
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponseSuccess = (updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse200) & {
+  headers: Headers;
+};
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponseError = (updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse422) & {
+  headers: Headers;
+};
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse = (updateRuntimeConfigApiV1AdminRuntimeConfigPutResponseSuccess | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponseError)
+
+export const getUpdateRuntimeConfigApiV1AdminRuntimeConfigPutUrl = () => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/runtime-config`
+}
+
+/**
+ * 批量更新运行时配置（仅白名单字段），校验通过后即时生效并广播多副本。
+ * @summary Update Runtime Config
+ */
+export const updateRuntimeConfigApiV1AdminRuntimeConfigPut = async (runtimeConfigUpdateRequest: RuntimeConfigUpdateRequest, options?: RequestInit): Promise<updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse> => {
+
+  return useCustomInstance<updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse>(getUpdateRuntimeConfigApiV1AdminRuntimeConfigPutUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(runtimeConfigUpdateRequest)
+  }
+);}
+
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse200 = {
+  data: RuntimeConfigResetResponse
+  status: 200
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponseSuccess = (resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse200) & {
+  headers: Headers;
+};
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponseError = (resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse422) & {
+  headers: Headers;
+};
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse = (resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponseSuccess | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponseError)
+
+export const getResetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostUrl = (key: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/runtime-config/${key}/reset`
+}
+
+/**
+ * 重置单个配置项为 .env 默认值（删除 DB 覆盖）。
+ * @summary Reset Runtime Config
+ */
+export const resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPost = async (key: string, options?: RequestInit): Promise<resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse> => {
+
+  return useCustomInstance<resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse>(getResetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostUrl(key),
+  {
+    ...options,
+    method: 'POST'
 
 
   }

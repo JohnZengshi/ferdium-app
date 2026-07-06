@@ -661,6 +661,7 @@ export interface DigitalHumanAdminUpdateRequest {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   status?: string | null;
+  remark?: string | null;
   gender?: string | null;
   birthday?: string | null;
   age?: number | null;
@@ -734,6 +735,7 @@ export interface DigitalHumanCreate {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   is_enabled?: boolean;
+  remark?: string | null;
 }
 
 export type DigitalHumanCreateRequestPersonaConfig = { [key: string]: unknown } | null;
@@ -757,6 +759,7 @@ export interface DigitalHumanCreateRequest {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   status?: string;
+  remark?: string | null;
   gender?: string | null;
   birthday?: string | null;
   age?: number | null;
@@ -849,6 +852,7 @@ export interface DigitalHumanUpdate {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   is_enabled?: boolean | null;
+  remark?: string | null;
 }
 
 export type DigitalHumanUpdateRequestPersonaConfig = { [key: string]: unknown } | null;
@@ -867,6 +871,7 @@ export interface DigitalHumanUpdateRequest {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   status?: string | null;
+  remark?: string | null;
   gender?: string | null;
   birthday?: string | null;
   age?: number | null;
@@ -1264,6 +1269,47 @@ export interface KnowledgeDeleteResponse {
   ok?: boolean;
 }
 
+export type KnowledgeDocumentChunkItemMetadata = { [key: string]: unknown };
+
+/**
+ * 知识库文档切片列表项。
+ */
+export interface KnowledgeDocumentChunkItem {
+  chunk_id: string;
+  file_id?: string;
+  doc_id?: string;
+  order?: number;
+  version?: string;
+  content: string;
+  domain?: string;
+  collection?: string;
+  score?: number | null;
+  status?: string;
+  visibility?: string;
+  can_quote?: boolean;
+  effective_from?: string | null;
+  effective_to?: string | null;
+  metadata?: KnowledgeDocumentChunkItemMetadata;
+}
+
+/**
+ * 知识库文档切片列表响应。
+ */
+export interface KnowledgeDocumentChunkListResponse {
+  doc_id: string;
+  chunks?: KnowledgeDocumentChunkItem[];
+  /** @minimum 0 */
+  total: number;
+}
+
+/**
+ * 知识库文档切片编辑请求。
+ */
+export interface KnowledgeDocumentChunkUpdateRequest {
+  /** @minLength 1 */
+  content: string;
+}
+
 /**
  * 知识库文档列表项。
  */
@@ -1364,6 +1410,8 @@ export interface KnowledgeRetrieveRequest {
   domain?: string | null;
 }
 
+export type KnowledgeRetrieveResponseAnswer = { [key: string]: unknown } | null;
+
 /**
  * 知识库召回测试响应。
  */
@@ -1375,6 +1423,7 @@ export interface KnowledgeRetrieveResponse {
   total: number;
   low_confidence?: boolean;
   threshold?: number | null;
+  answer?: KnowledgeRetrieveResponseAnswer;
 }
 
 export type KnowledgeSearchRequestFilters = { [key: string]: unknown } | null;
@@ -1420,6 +1469,7 @@ export interface KnowledgeUploadResponse {
   doc_id: string;
   name: string;
   status: string;
+  duplicate?: boolean;
 }
 
 /**
@@ -1814,6 +1864,43 @@ export interface ResetPasswordRequest {
   new_password: string;
 }
 
+/**
+ * 单个可热更新配置项的展示信息。
+ */
+export interface RuntimeConfigItem {
+  key: string;
+  group: string;
+  description?: string | null;
+  value_type: string;
+  default_value?: boolean | number | string | null;
+  current_value?: boolean | number | string | null;
+  is_overridden?: boolean;
+}
+
+/**
+ * 运行时配置列表响应（前端按 group 分区展示）。
+ */
+export interface RuntimeConfigListResponse {
+  items?: RuntimeConfigItem[];
+}
+
+/**
+ * 重置单个配置项后的响应，含恢复后的当前值快照。
+ */
+export interface RuntimeConfigResetResponse {
+  key: string;
+  current_value?: boolean | number | string | null;
+}
+
+export type RuntimeConfigUpdateRequestChanges = {[key: string]: boolean | number | string};
+
+/**
+ * 批量更新运行时配置：changes 为 {字段名: 新值}，仅白名单字段生效。
+ */
+export interface RuntimeConfigUpdateRequest {
+  changes?: RuntimeConfigUpdateRequestChanges;
+}
+
 export interface SubAccountCreate {
   /**
      * 子账号用户名，仅限大小写字母/数字/下划线；自动追加 --{企业码} 后缀
@@ -2164,6 +2251,7 @@ export interface AppApiSchemasDigitalHumanResponse {
   knowledge_collection?: string | null;
   knowledge_domain?: string | null;
   status?: string;
+  remark?: string | null;
   created_by?: string | null;
   created_at: string;
   gender?: string | null;
@@ -2232,6 +2320,7 @@ export interface AppApiSchemasOwnersDigitalHumanResponse {
   knowledge_collection: string | null;
   knowledge_domain: string | null;
   is_enabled: boolean;
+  remark?: string | null;
   status: string;
   creator_user_id: string;
   created_by?: string | null;
@@ -2425,6 +2514,10 @@ page?: number;
 page_size?: number;
 };
 
+export type ListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetParams = {
+keyword?: string | null;
+};
+
 export type DeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteParams = {
 /**
  * 文档所属知识库集合 ID
@@ -2497,6 +2590,8 @@ export const GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetDimension = {
   model: 'model',
   member: 'member',
 } as const;
+
+export type UpdateRuntimeConfigApiV1AdminRuntimeConfigPut200 = { [key: string]: unknown };
 
 export type GetConversationTraceApiV1ChatConversationIdTraceGetParams = {
 /**
@@ -2827,6 +2922,17 @@ page?: number;
  * @maximum 100
  */
 page_size?: number;
+};
+
+export type ListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetParams = {
+collection?: string | null;
+domain?: string | null;
+keyword?: string | null;
+};
+
+export type UpdateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutParams = {
+collection?: string | null;
+domain?: string | null;
 };
 
 export type DeleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteParams = {

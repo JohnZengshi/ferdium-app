@@ -28,6 +28,9 @@ import type {
   HandoffWithContextListResponse,
   KnowledgeCollectionOwnerResponse,
   KnowledgeDeleteResponse,
+  KnowledgeDocumentChunkItem,
+  KnowledgeDocumentChunkListResponse,
+  KnowledgeDocumentChunkUpdateRequest,
   KnowledgeDocumentListResponse,
   KnowledgeOwnerCollectionCreateRequest,
   KnowledgeOwnerCollectionCreateResponse,
@@ -38,6 +41,7 @@ import type {
   ListConversationsApiV1OwnersConversationsGetParams,
   ListCustomerProfilesApiV1OwnersCustomerProfilesGetParams,
   ListDigitalHumansApiV1OwnersDigitalHumansGetParams,
+  ListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetParams,
   ListDocumentsApiV1OwnersKnowledgeDocumentsGetParams,
   ListHandoffsApiV1OwnersHandoffsGetParams,
   ListSubAccountsApiV1OwnersSubAccountsGetParams,
@@ -53,6 +57,7 @@ import type {
   TagResponse,
   TagUpdateRequest,
   TraceResponse,
+  UpdateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutParams,
   WhatsAppBindingResponse
 } from '../agentFlowCs.schemas';
 
@@ -1040,7 +1045,8 @@ export const getStreamConversationLiveApiV1OwnersConversationsBySessionStreamGet
  *
  * 1. 定位会话 + 校验归属（member 仅自身，owner 可指定旗下 member）
  * 2. 回放历史轮次（turn_complete）
- * 3. 订阅 ``trace:live:{conversation_id}``，逐帧过 presenter 转发
+ * 3. 经 ``ChannelHub`` 复用订阅 ``trace:live:{conversation_id}``，逐帧过
+ *    presenter 转发
  * @summary Stream Conversation Live
  */
 export const streamConversationLiveApiV1OwnersConversationsBySessionStreamGet = async (params: StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams, options?: RequestInit): Promise<streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse> => {
@@ -1304,6 +1310,115 @@ export const retrieveKnowledgeApiV1OwnersKnowledgeRetrievePost = async (knowledg
 );}
 
 
+export type listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse200 = {
+  data: KnowledgeDocumentChunkListResponse
+  status: 200
+}
+
+export type listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponseSuccess = (listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse200) & {
+  headers: Headers;
+};
+export type listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponseError = (listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse422) & {
+  headers: Headers;
+};
+
+export type listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse = (listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponseSuccess | listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponseError)
+
+export const getListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetUrl = (docId: string,
+    params?: ListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}/chunks?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}/chunks`
+}
+
+/**
+ * 列出单个知识库文档的全部切片。
+ *
+ * 权限口径与文档列表一致：collection 必须在 owner 白名单内，默认库只读可见。
+ * @summary List Document Chunks
+ */
+export const listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGet = async (docId: string,
+    params?: ListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetParams, options?: RequestInit): Promise<listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse> => {
+
+  return useCustomInstance<listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse>(getListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetUrl(docId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponse200 = {
+  data: KnowledgeDocumentChunkItem
+  status: 200
+}
+
+export type updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponseSuccess = (updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponse200) & {
+  headers: Headers;
+};
+export type updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponseError = (updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponse422) & {
+  headers: Headers;
+};
+
+export type updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponse = (updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponseSuccess | updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponseError)
+
+export const getUpdateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutUrl = (docId: string,
+    chunkId: string,
+    params?: UpdateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}/chunks/${chunkId}?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}/chunks/${chunkId}`
+}
+
+/**
+ * 编辑保存单个文档切片正文。
+ * @summary Update Document Chunk
+ */
+export const updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPut = async (docId: string,
+    chunkId: string,
+    knowledgeDocumentChunkUpdateRequest: KnowledgeDocumentChunkUpdateRequest,
+    params?: UpdateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutParams, options?: RequestInit): Promise<updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponse> => {
+
+  return useCustomInstance<updateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutResponse>(getUpdateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutUrl(docId,chunkId,params),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(knowledgeDocumentChunkUpdateRequest)
+  }
+);}
+
+
 export type deleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteResponse200 = {
   data: KnowledgeDeleteResponse
   status: 200
@@ -1383,7 +1498,6 @@ export const getListCollectionsApiV1OwnersKnowledgeCollectionsGetUrl = () => {
  * - 'default': 配置的默认集合
  * - 'admin': 超管分配的共享集合
  * - 'owner': 自建集合
- * - 'digital_human': 数字人引用的集合（未在 KnowledgeCollection 表中注册）
  * @summary List Collections
  */
 export const listCollectionsApiV1OwnersKnowledgeCollectionsGet = async ( options?: RequestInit): Promise<listCollectionsApiV1OwnersKnowledgeCollectionsGetResponse> => {

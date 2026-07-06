@@ -3,7 +3,7 @@
   "productName": "AITALK",
   "desktopName": "aitalk.desktop",
   "appId": "com.atc.aitalk",
-  "version": "1.0.9",
+  "version": "1.0.10-beta.0",
   "description": "AITALK - AI-powered messaging platform",
   "author": "ATC Team",
   "license": "Apache-2.0",

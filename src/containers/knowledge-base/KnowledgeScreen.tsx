@@ -489,17 +489,25 @@ const getGenderLabel = (
   }
 };
 
+const getTopLevelString = (value: unknown): string =>
+  typeof value === 'string' || typeof value === 'number' ? String(value) : '';
+
 const digitalHumanToFormData = (
   digitalHuman: AppApiSchemasDigitalHumanResponse,
 ): FormData => {
   const config = digitalHuman.persona_config;
 
-  // 尝试从 participation 或 project_work 字段读取
+  // 尝试从顶层 project_work 或 persona_config 旧字段读取
   const getParticipation = (): string => {
+    const topLevelValue = getTopLevelString(digitalHuman.project_work);
+    if (topLevelValue) {
+      return topLevelValue;
+    }
+
     if (!config || typeof config !== 'object') {
       return '';
     }
-    // 先尝试 participation，如果没有则尝试 project_work
+
     const { participation, project_work: projectWork } = config;
     const value =
       participation !== undefined && participation !== null
@@ -512,7 +520,10 @@ const digitalHumanToFormData = (
 
   return {
     name: digitalHuman.name,
-    remark: getConfigString(config, 'remark'),
+    remark:
+      getTopLevelString(digitalHuman.remark) ||
+      getTopLevelString(digitalHuman.persona_notes) ||
+      getConfigString(config, 'remark'),
     age: getConfigString(config, 'age'),
     gender: getConfigString(config, 'gender'),
     birthday: getConfigString(config, 'birthday'),
@@ -545,7 +556,6 @@ const buildDigitalHumanRequest = (
 ): DigitalHumanCreateRequest => ({
   name: data.name.trim(),
   persona_config: {
-    remark: data.remark,
     age: data.age,
     gender: data.gender,
     birthday: data.birthday,
@@ -554,10 +564,11 @@ const buildDigitalHumanRequest = (
     city: data.city,
     family: data.family,
     occupation: data.occupation,
-    participation: data.participation,
   },
   persona_prompt: buildPersonaPrompt(data, intl),
   status: 'active',
+  remark: data.remark,
+  project_work: data.participation,
 });
 
 const KnowledgeScreen: React.FC = () => {
@@ -1131,7 +1142,7 @@ const KnowledgeScreen: React.FC = () => {
 
           <div className="flex flex-1 flex-col overflow-auto relative">
             {isSaving && (
-              <div className="absolute inset-0 z-20 flex items-center justify-center bg-[rgba(15,23,42,0.18)] backdrop-blur-[3px]">
+              <div className="fixed inset-0 z-20 flex items-center justify-center bg-[rgba(15,23,42,0.18)] backdrop-blur-[3px]">
                 <div className="mx-[24px] flex w-[360px] max-w-full flex-col items-center rounded-[16px] border border-solid border-[rgba(56,207,244,0.2)] bg-container px-[28px] py-[24px] text-center shadow-[0_24px_60px_rgba(29,107,255,0.18)]">
                   <div className="relative flex h-[72px] w-[72px] items-center justify-center">
                     <div className="absolute inset-0 rounded-full bg-brand-light animate-ping opacity-75" />

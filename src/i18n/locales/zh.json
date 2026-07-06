@@ -236,7 +236,7 @@
   "editDrawer.accountRemark": "账号备注",
   "editDrawer.accountRemarkPlaceholder": "请输入备注内容",
   "editDrawer.autoFillFormatError": "格式无法识别。请使用 http://[用户名:密码@]主机:端口 或 socks5://[用户名:密码@]主机:端口",
-  "editDrawer.autoFillFormatHint": "HTTP: http://[用户名:密码@]主机:端口\nSOCKS5: socks5://[用户名:密码@]主机:端口",
+  "editDrawer.autoFillFormatHint": "HTTP: http://用户名:密码@主机:端口\nSOCKS5: socks5://用户名:密码@主机:端口",
   "editDrawer.autoFillLabel": "自动填充",
   "editDrawer.autoFillPlaceholder": "粘贴IP信息到这里会自动解析填充下方字段",
   "editDrawer.basicSettings": "基础设置",

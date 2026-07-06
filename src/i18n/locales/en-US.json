@@ -170,7 +170,7 @@
   "editDrawer.accountRemark": "Account Notes",
   "editDrawer.accountRemarkPlaceholder": "Enter notes here",
   "editDrawer.autoFillFormatError": "Format not recognized. Use http://[user:pass@]host:port or socks5://[user:pass@]host:port",
-  "editDrawer.autoFillFormatHint": "HTTP: http://[user:pass@]host:port\nSOCKS5: socks5://[user:pass@]host:port",
+  "editDrawer.autoFillFormatHint": "HTTP: http://user:pass@host:port\nSOCKS5: socks5://user:pass@host:port",
   "editDrawer.autoFillLabel": "Auto-Fill",
   "editDrawer.autoFillPlaceholder": "Paste IP info here — it will auto-fill the fields below",
   "editDrawer.basicSettings": "Basic Settings",

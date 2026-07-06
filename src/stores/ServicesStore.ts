@@ -597,7 +597,7 @@ export default class ServicesStore extends TypedStore {
 
     if (service.recipe.id === WHATSAPP_RECIPE_ID) {
       const proxyData = data.proxy;
-      let proxyUrl: string | null = null;
+      let proxyUrl = '';
       if (proxyData?.isEnabled && proxyData?.host && proxyData?.port) {
         const protocol = proxyData?.protocol || 'http';
         const { host, port, user, password } = proxyData;

@@ -67,7 +67,7 @@ class AuthLayout extends Component<IProps, IState> {
       serverNameParse === 'Custom' ? 'your Custom Server' : serverNameParse;
 
     return (
-      <>
+      <div className="flex h-full flex-col">
         {isWindows && !isFullScreen && (
           <TitleBar menu={window['ferdium'].menu.template} />
         )}
@@ -167,7 +167,7 @@ class AuthLayout extends Component<IProps, IState> {
           </div>
         </div>
         <PublishDebugInfo />
-      </>
+      </div>
     );
   }
 }

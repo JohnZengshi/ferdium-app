@@ -154,6 +154,9 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     if (event.data?.type === 'wa-ai-toast-request') {
       ipcRenderer.sendToHost('wa-ai-toast-request', event.data.payload);
     }
+    if (event.data?.type === 'wa-akg:qr-modal-action') {
+      ipcRenderer.sendToHost('wa-akg:qr-modal-action', event.data.payload);
+    }
   });
 
   // 接收宿主进程的 API 响应，转发回主世界 (overlay.js)

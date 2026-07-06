@@ -9,6 +9,7 @@ import {
   reaction,
   runInAction,
 } from 'mobx';
+import { defineMessages } from 'react-intl';
 import { type Socket, io } from 'socket.io-client';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';
@@ -20,6 +21,7 @@ import {
   WA_AKG_SOCKET_PATH,
   WA_SESSION_STATUS,
   WHATSAPP_RECIPE_ID,
+  WINDOW_MESSAGE_CHANNELS,
 } from './constants';
 
 import {
@@ -41,6 +43,78 @@ import { asarPath } from '../../helpers/asar-helpers';
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:whatsapp-automation:store',
 );
+
+const messages = defineMessages({
+  authFailed: {
+    id: 'waAkg.authFailed',
+    defaultMessage: 'WA-AKG authentication failed. Is the backend running?',
+  },
+  authExpired: {
+    id: 'waAkg.authExpired',
+    defaultMessage: 'Authentication expired. Please log in again.',
+  },
+  apiReturnedStatus: {
+    id: 'waAkg.apiReturnedStatus',
+    defaultMessage: 'API returned status {status}',
+  },
+  failedToCreateSession: {
+    id: 'waAkg.failedToCreateSession',
+    defaultMessage: 'Failed to create session',
+  },
+  noQrDataYet: {
+    id: 'waAkg.noQrDataYet',
+    defaultMessage: 'No QR data available yet',
+  },
+  qrApiReturnedStatus: {
+    id: 'waAkg.qrApiReturnedStatus',
+    defaultMessage: 'QR API returned status {status}',
+  },
+  injectQrFailed: {
+    id: 'waAkg.injectQrFailed',
+    defaultMessage:
+      'Could not inject QR code into WhatsApp page. Please check your network connection and try reloading the service.',
+  },
+  sessionStopped: {
+    id: 'waAkg.sessionStopped',
+    defaultMessage: 'WhatsApp session was stopped.',
+  },
+  sessionLoggedOut: {
+    id: 'waAkg.sessionLoggedOut',
+    defaultMessage:
+      'WhatsApp session was logged out. Please re-add the service.',
+  },
+  duplicateAccount: {
+    id: 'waAkg.duplicateAccount',
+    defaultMessage:
+      'This WhatsApp account is already connected to another session. Use a different account, or unbind original session before retrying.',
+  },
+  qrModalTitle: {
+    id: 'waAkg.qrModalTitle',
+    defaultMessage: 'Scan QR Code',
+  },
+  qrModalRefresh: {
+    id: 'waAkg.qrModalRefresh',
+    defaultMessage: 'Refresh QR Code',
+  },
+  qrModalDuplicateText: {
+    id: 'waAkg.qrModalDuplicateText',
+    defaultMessage:
+      'This account is already connected in another session. Use another account or unbind it before refreshing.',
+  },
+  qrModalDesc: {
+    id: 'waAkg.qrModalDesc',
+    defaultMessage: 'Scan to link your AI digital employee',
+  },
+  successModalText: {
+    id: 'waAkg.successModalText',
+    defaultMessage: 'Your digital employee is ready to use~',
+  },
+});
+
+const formatMessage = (
+  descriptor: (typeof messages)[keyof typeof messages],
+  values?: Record<string, string | number>,
+): string => (window as any).ferdium.intl.formatMessage(descriptor, values);
 
 const getAssetBase64 = (assetPath: string): string => {
   try {
@@ -66,6 +140,22 @@ const getAssetBase64 = (assetPath: string): string => {
     );
     return '';
   }
+};
+
+const parseQrModalActionEvent = (event: {
+  channel: string;
+  args: unknown[];
+}): { action: string; serviceId?: string } | null => {
+  if (event.channel !== WINDOW_MESSAGE_CHANNELS.QR_MODAL_ACTION) return null;
+
+  const message = event.args[0] as
+    | { action?: string; serviceId?: string }
+    | undefined;
+
+  return {
+    action: message?.action || '',
+    serviceId: message?.serviceId,
+  };
 };
 
 const normalizeWaMe = (
@@ -110,6 +200,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   _waReactionDisposer: (() => void) | undefined;
 
   _socketConnectWaiters = new Map<string, (() => void)[]>();
+
+  _qrModalActionListeners = new Map<
+    string,
+    (event: { channel: string; args: unknown[] }) => void
+  >();
 
   _maxRetries = 10;
 
@@ -216,6 +311,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     this._sockets.clear();
     this._retryCounts.clear();
     this._socketConnectWaiters.clear();
+
+    for (const [sid, listener] of this._qrModalActionListeners) {
+      const svc = this._getService(sid);
+      svc?.webview?.removeEventListener?.('ipc-message', listener);
+    }
+    this._qrModalActionListeners.clear();
+
     this._initializedServices.clear();
     this.sessionStatuses.clear();
     this.qrCodes.clear();
@@ -492,6 +594,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         this._initializedServices.add(service.id);
         this._initializedServiceInstances.add(service);
         this._checkSessionStatus({ serviceId: service.id });
+        this._attachQrModalActionListener(service.id);
       }
     }
 
@@ -509,6 +612,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   @action _setServiceWebview = ({ serviceId }: { serviceId: string }) => {
     debug('_setServiceWebview', serviceId);
+    this._attachQrModalActionListener(serviceId);
   };
 
   _ensureAuthenticated = async (): Promise<boolean> => {
@@ -545,10 +649,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     if (!authenticated) {
       debug('Cannot check session: authentication failed');
       runInAction(() => {
-        this.errorMessages.set(
-          serviceId,
-          'WA-AKG authentication failed. Is the backend running?',
-        );
+        this.errorMessages.set(serviceId, formatMessage(messages.authFailed));
       });
       return;
     }
@@ -629,7 +730,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         runInAction(() => {
           this.errorMessages.set(
             serviceId,
-            `API returned status ${response.status}`,
+            formatMessage(messages.apiReturnedStatus, {
+              status: response.status,
+            }),
           );
         });
       }
@@ -652,9 +755,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       runInAction(() => {
         this.errorMessages.set(
           serviceId,
-          status === 401
-            ? 'Authentication expired. Please log in again.'
-            : message,
+          status === 401 ? formatMessage(messages.authExpired) : message,
         );
       });
     }
@@ -671,13 +772,23 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   };
 
   @action _handleClientMessage = ({
-    channel: _channel,
-    message: _message,
+    channel,
+    message,
   }: {
     channel: string;
-    message: { action: string; data: object };
+    message: { action: string; serviceId?: string };
   }) => {
-    debug('_handleClientMessage', _channel, _message);
+    debug('_handleClientMessage', channel, message);
+
+    if (
+      channel === WINDOW_MESSAGE_CHANNELS.QR_MODAL_ACTION &&
+      message.action === 'restart-session' &&
+      message.serviceId
+    ) {
+      this._refreshQrAfterDuplicate(message.serviceId).catch(error => {
+        debug('Failed to refresh QR after duplicate account:', error);
+      });
+    }
   };
 
   @action _injectQrModal = ({
@@ -749,7 +860,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       runInAction(() => {
         this.errorMessages.set(
           serviceId,
-          'Could not inject QR code into WhatsApp page. Please check your network connection and try reloading the service.',
+          formatMessage(messages.injectQrFailed),
         );
         this.isLoadingQr.set(serviceId, false);
       });
@@ -906,7 +1017,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.CONNECTING);
       } else {
         runInAction(() => {
-          this.errorMessages.set(serviceId, 'Failed to create session');
+          this.errorMessages.set(
+            serviceId,
+            formatMessage(messages.failedToCreateSession),
+          );
           this.isLoadingQr.set(serviceId, false);
         });
       }
@@ -945,7 +1059,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         } else {
           debug(`QR API returned no base64 data, retrying ${attempt}/6`);
           runInAction(() => {
-            this.errorMessages.set(serviceId, 'No QR data available yet');
+            this.errorMessages.set(
+              serviceId,
+              formatMessage(messages.noQrDataYet),
+            );
           });
           await new Promise<void>(resolve => {
             setTimeout(resolve, 2000);
@@ -957,7 +1074,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         runInAction(() => {
           this.errorMessages.set(
             serviceId,
-            `QR API returned status ${qrResponse.status}`,
+            formatMessage(messages.qrApiReturnedStatus, {
+              status: qrResponse.status,
+            }),
           );
         });
       }
@@ -1060,13 +1179,22 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
     socket.on('connect', () => {
       debug(`Socket.IO connected for ${serviceId}, joining room`);
-      socket.emit('join-session', serviceId);
+      socket.emit('join-session', {
+        sessionId: serviceId,
+        supportDuplicateAccountStatus: true,
+      });
       this._resolveSocketConnectWaiters(serviceId);
     });
 
     socket.on(
       'connection.update',
-      (update: { status: string; qr?: string; pairingCode?: string }) => {
+      (update: {
+        status: string;
+        qr?: string;
+        pairingCode?: string;
+        duplicateSessionId?: string;
+        error?: string;
+      }) => {
         debug(`Socket.IO connection.update for ${serviceId}:`, update.status);
         this._handleSocketConnectionUpdate(serviceId, update);
       },
@@ -1125,7 +1253,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   /** Handle real-time connection.update events from Socket.IO. */
   _handleSocketConnectionUpdate = (
     serviceId: string,
-    update: { status: string },
+    update: {
+      status: string;
+      duplicateSessionId?: string;
+      error?: string;
+    },
   ) => {
     const { status } = update;
     debug(`Socket.IO connection.update for ${serviceId}:`, status);
@@ -1182,7 +1314,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       case WA_SESSION_STATUS.STOPPED: {
         debug('Session stopped', serviceId);
         runInAction(() => {
-          this.errorMessages.set(serviceId, 'WhatsApp session was stopped.');
+          this.errorMessages.set(
+            serviceId,
+            formatMessage(messages.sessionStopped),
+          );
           this.isLoadingQr.set(serviceId, false);
         });
         break;
@@ -1193,7 +1328,19 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         runInAction(() => {
           this.errorMessages.set(
             serviceId,
-            'WhatsApp session was logged out. Please re-add the service.',
+            formatMessage(messages.sessionLoggedOut),
+          );
+          this.isLoadingQr.set(serviceId, false);
+        });
+        break;
+      }
+
+      case WA_SESSION_STATUS.DUPLICATE_ACCOUNT: {
+        debug('Session duplicate account detected', serviceId, update);
+        runInAction(() => {
+          this.errorMessages.set(
+            serviceId,
+            update.error || formatMessage(messages.duplicateAccount),
           );
           this.isLoadingQr.set(serviceId, false);
         });
@@ -1217,12 +1364,70 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     }
   };
 
+  _attachQrModalActionListener = (serviceId: string) => {
+    const service = this._getService(serviceId);
+    if (!service?.webview) return;
+    if (this._qrModalActionListeners.has(serviceId)) return;
+
+    service.webview.addEventListener(
+      'ipc-message',
+      this._handleQrModalIpcMessage,
+    );
+    this._qrModalActionListeners.set(serviceId, this._handleQrModalIpcMessage);
+  };
+
+  _handleQrModalIpcMessage = (event: { channel: string; args: unknown[] }) => {
+    const parsed = parseQrModalActionEvent(event);
+    if (!parsed) return;
+    this._handleClientMessage({
+      channel: event.channel,
+      message: parsed,
+    });
+  };
+
+  _refreshQrAfterDuplicate = async (serviceId: string): Promise<void> => {
+    const authenticated = await this._ensureAuthenticated();
+    if (!authenticated) return;
+
+    runInAction(() => {
+      this.isLoadingQr.set(serviceId, true);
+      this.errorMessages.set(serviceId, undefined);
+      this.sessionStatuses.set(serviceId, WA_SESSION_STATUS.CONNECTING);
+    });
+
+    this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.CONNECTING);
+
+    try {
+      this._startSocketIoForSession(serviceId);
+      await this._waitForSocketConnected(serviceId);
+      await postSessionsIdAction(serviceId, 'restart');
+    } catch (error) {
+      debug('Failed to restart WA session after duplicate account:', error);
+      runInAction(() => {
+        this.isLoadingQr.set(serviceId, false);
+        this.errorMessages.set(
+          serviceId,
+          error instanceof Error ? error.message : String(error),
+        );
+      });
+      this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.SERVER_ERROR);
+    }
+  };
+
   @action _cleanUpSessionState = (serviceId: string) => {
     this._initializedServices.delete(serviceId);
     this._retryCounts.delete(serviceId);
     this.sessionInfo.delete(serviceId);
     this._socketConnectWaiters.delete(serviceId);
     this._stopSocketIoForSession(serviceId);
+
+    const listener = this._qrModalActionListeners.get(serviceId);
+    if (listener) {
+      const svc = this._getService(serviceId);
+      svc?.webview?.removeEventListener?.('ipc-message', listener);
+      this._qrModalActionListeners.delete(serviceId);
+    }
+
     this.sessionStatuses.delete(serviceId);
     this.qrCodes.delete(serviceId);
     this.isLoadingQr.delete(serviceId);
@@ -1237,23 +1442,76 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const { color, label } = this._statusStyle(status);
     const escColor = color.replaceAll("'", "\\'");
     const escLabel = label.replaceAll("'", "\\'");
+    const escStatus = status.replaceAll("'", "\\'");
+    const escRefreshText = formatMessage(messages.qrModalRefresh)
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
 
     const script = `
 (function() {
   try {
+    var status = '${escStatus}';
     var bar = document.querySelector('#wa-akg-qr-modal .waa-status-bar');
-    if (!bar) return;
-    bar.textContent = '${escLabel}';
-    bar.style.color = '${escColor}';
-    bar.style.display = 'block';
+    if (bar) {
+      bar.textContent = '${escLabel}';
+      bar.style.color = '${escColor}';
+      bar.style.display = 'block';
+    }
+
+    var dupErr = document.querySelector('#wa-akg-qr-modal .waa-duplicate-error');
+    if (dupErr) {
+      dupErr.style.display = status === 'DUPLICATE_ACCOUNT' ? 'block' : 'none';
+    }
+
+    var qrOverlay = document.querySelector('#wa-akg-qr-modal .waa-qr-overlay');
+    var qrSpinner = document.querySelector('#wa-akg-qr-modal #waa-qr-loading-spinner');
+    var refreshBtn = document.querySelector('#wa-akg-qr-modal .waa-refresh-btn');
+
+    if (status === 'DUPLICATE_ACCOUNT') {
+      if (qrOverlay) qrOverlay.style.display = 'flex';
+      if (qrSpinner) qrSpinner.style.display = 'none';
+      if (refreshBtn) {
+        refreshBtn.style.display = 'inline-flex';
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = '${escRefreshText}';
+      }
+      return;
+    }
+
+    if (status === 'CONNECTING' || status === 'DISCONNECTED') {
+      if (qrOverlay) qrOverlay.style.display = 'flex';
+      if (qrSpinner) qrSpinner.style.display = 'block';
+      if (refreshBtn) {
+        refreshBtn.style.display = 'none';
+        refreshBtn.disabled = true;
+      }
+      return;
+    }
+
+    if (status === 'SCAN_QR') {
+      if (qrOverlay) qrOverlay.style.display = 'none';
+      if (qrSpinner) qrSpinner.style.display = 'none';
+      if (refreshBtn) {
+        refreshBtn.style.display = 'inline-flex';
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = '${escRefreshText}';
+      }
+      return;
+    }
+
+    if (qrOverlay) qrOverlay.style.display = 'none';
+    if (qrSpinner) qrSpinner.style.display = 'none';
+    if (refreshBtn) {
+      refreshBtn.style.display = 'inline-flex';
+      refreshBtn.disabled = false;
+      refreshBtn.textContent = '刷新二维码';
+    }
   } catch(e) {
     debug('[WA-AKG] Error updating modal status:', e);
   }
 })();
 `;
-    service.webview.executeJavaScript(script).catch(() => {
-      // Ignore - webview might already be navigating
-    });
+    service.webview.executeJavaScript(script).catch(() => {});
   };
 
   /** Status indicator colors per state */
@@ -1286,6 +1544,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       [WA_SESSION_STATUS.SERVER_ERROR]: {
         color: '#FF1744',
         label: 'Server Error',
+      },
+      [WA_SESSION_STATUS.DUPLICATE_ACCOUNT]: {
+        color: '#FF1744',
+        label: 'Duplicate Account',
       },
     };
     return map[status] || { color: '#9E9E9E', label: status };
@@ -1407,6 +1669,18 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const escapedBg = backgroundBase64
       .replaceAll('\\', '\\\\')
       .replaceAll("'", "\\'");
+    const escapedTitle = formatMessage(messages.qrModalTitle)
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
+    const escapedRefresh = formatMessage(messages.qrModalRefresh)
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
+    const escapedDuplicateText = formatMessage(messages.qrModalDuplicateText)
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
+    const escapedDesc = formatMessage(messages.qrModalDesc)
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
 
     return `
 (function() {
@@ -1416,6 +1690,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     var SERVICE_ID = '${escapedServiceId}';
     var BASE64_QR = '${escapedBase64}';
     var BG_IMAGE = '${escapedBg}';
+    var ACCENT = ${JSON.stringify(this.stores?.app?.accentColor || '#7266F0')};
 
     /* ── Inject styles ── */
     var s = document.createElement('style');
@@ -1425,9 +1700,21 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       '.waa-card{position:relative;width:465px;height:577px;border-radius:12px;overflow:hidden;background:#fff}',
       '.waa-card-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-size:100% 100%;background-position:center;background-repeat:no-repeat}',
       '.waa-title{position:absolute;left:48px;top:58px;color:#FFFFFF;font-size:28px;font-weight:700;line-height:36px;margin:0;z-index:2}',
-      '.waa-qr-box{position:absolute;left:50%;top:225px;transform:translateX(-50%);width:216px;height:216px;border-radius:8px;border:1px solid #E1E1E1;background:#FFFFFF;display:flex;align-items:center;justify-content:center;z-index:2}',
+      '.waa-content{position:absolute;bottom:20px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:2}',
+      '.waa-status-bar{font-size:16px;font-weight:600;line-height:22px;text-align:center;display:none}',
+      '.waa-qr-wrapper{position:relative;width:256px;height:256px}',
+      '.waa-qr-box{width:256px;height:256px;border-radius:8px;border:1px solid #E1E1E1;background:#FFFFFF;display:flex;align-items:center;justify-content:center;overflow:hidden}',
       '.waa-qrimg{width:256px;height:256px;image-rendering:pixelated}',
-      '.waa-desc{position:absolute;left:50%;top:479px;transform:translateX(-50%);color:#111111;font-size:26px;font-weight:600;line-height:34px;text-align:center;white-space:nowrap;margin:0;z-index:2}'
+      '.waa-duplicate-error{width:340px;padding:6px 10px;border-radius:8px;background:rgba(255,23,68,0.1);border:1px solid rgba(255,23,68,0.35);display:none;box-sizing:border-box}',
+      '.waa-duplicate-text{color:#D50000;font-size:12px;font-weight:600;line-height:16px;margin:0;text-align:center}',
+      '.waa-qr-overlay{position:absolute;inset:0;border-radius:8px;z-index:4;display:flex;align-items:center;justify-content:center}',
+      '.waa-qr-overlay[hidden]{display:none}',
+      '.waa-qr-blur{position:absolute;inset:0;background:rgba(255,255,255,0.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-radius:8px}',
+      '.waa-qr-spinner{position:relative;width:40px;height:40px;border:3px solid rgba(0,0,0,0.1);border-top-color:'+ACCENT+';border-radius:50%;animation:waa-spin 0.8s linear infinite}',
+      '.waa-refresh-btn{position:relative;min-width:132px;height:40px;padding:0 18px;border:none;border-radius:999px;background:#FF1744;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(255,23,68,0.25);display:inline-flex;align-items:center;justify-content:center;text-align:center}',
+      '.waa-refresh-btn[disabled]{opacity:0.65;cursor:not-allowed}',
+      '@keyframes waa-spin{to{transform:rotate(360deg)}}',
+      '.waa-desc{color:#111111;font-size:26px;font-weight:600;line-height:34px;text-align:center;white-space:nowrap;margin:0}'
     ].join('');
     document.head.appendChild(s);
 
@@ -1442,16 +1729,45 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         '<div class=\"waa-wrapper\">' +
           '<div class=\"waa-card\">' +
             '<div class=\"waa-card-bg\" style=\"' + cardBgStyle + '\"></div>' +
-            '<h2 class=\"waa-title\">扫码验证</h2>' +
-            '<div class=\"waa-qr-box\" id=\"waa-body\">' +
-              (BASE64_QR ? '<img src=\"' + BASE64_QR + '\" alt=\"QR Code\" class=\"waa-qrimg\"/>' : '') +
+            '<h2 class=\"waa-title\">${escapedTitle}</h2>' +
+            '<div class=\"waa-content\">' +
+              '<p class=\"waa-status-bar\"></p>' +
+              '<div class=\"waa-qr-wrapper\">' +
+                '<div class=\"waa-qr-box\" id=\"waa-body\">' +
+                  (BASE64_QR ? '<img src=\"' + BASE64_QR + '\" alt=\"QR Code\" class=\"waa-qrimg\"/>' : '') +
+                '</div>' +
+                '<div class=\"waa-qr-overlay\" style=\"display:none\">' +
+                  '<div class=\"waa-qr-blur\"></div>' +
+                  '<div class=\"waa-qr-spinner\" id=\"waa-qr-loading-spinner\"></div>' +
+                  '<button class=\"waa-refresh-btn\" type=\"button\">${escapedRefresh}</button>' +
+                '</div>' +
+              '</div>' +
+              '<div class=\"waa-duplicate-error\">' +
+                '<p class=\"waa-duplicate-text\">${escapedDuplicateText}</p>' +
+              '</div>' +
+              '<p class=\"waa-desc\">${escapedDesc}</p>' +
             '</div>' +
-            '<p class=\"waa-desc\">扫码关联你的AI数字员工</p>' +
           '</div>' +
         '</div>' +
       '</div>';
 
     document.body.appendChild(modal);
+
+    var refreshBtn = modal.querySelector('.waa-refresh-btn');
+    var qrOverlay = modal.querySelector('.waa-qr-overlay');
+    var qrSpinner = modal.querySelector('#waa-qr-loading-spinner');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', function() {
+        refreshBtn.setAttribute('disabled', 'disabled');
+        refreshBtn.style.display = 'none';
+        if (qrSpinner) qrSpinner.style.display = 'block';
+        if (qrOverlay) qrOverlay.style.display = 'flex';
+        window.postMessage({
+          type: '${WINDOW_MESSAGE_CHANNELS.QR_MODAL_ACTION}',
+          payload: { action: 'restart-session', serviceId: SERVICE_ID }
+        }, window.location.origin);
+      });
+    }
 
     /* ── Block navigation while QR is showing ── */
     var _keydownHandler = function(e) {
@@ -1511,6 +1827,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const escapedSuccessVideo = successVideoBase64
       .replaceAll('\\', '\\\\')
       .replaceAll("'", "\\'");
+    const escapedSuccessText = formatMessage(messages.successModalText)
+      .replaceAll('\\', '\\\\')
+      .replaceAll("'", "\\'");
 
     return `
 (function() {
@@ -1545,7 +1864,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             '<div class=\"waas-gif-container\">' +
               '<video src=\"' + SUCCESS_VIDEO + '\" autoplay muted playsinline class=\"waas-gif\" id=\"waas-success-video\"></video>' +
             '</div>' +
-            '<p class=\"waas-main-text\">恭喜你可以使用数字员工啦~</p>' +
+            '<p class=\"waas-main-text\">${escapedSuccessText}</p>' +
           '</div>' +
           '<button class=\"waas-close-btn\" id=\"waas-close-btn\" aria-label=\"Close\">' +
             '<svg viewBox=\"0 0 24 24\" fill=\"none\">' +

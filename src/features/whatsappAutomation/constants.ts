@@ -21,6 +21,7 @@ export const WINDOW_MESSAGE_CHANNELS = {
   QR_CODE_SCANNED: 'wa-akg:qr-code-scanned',
   INJECT_QR_MODAL: 'wa-akg:inject-qr-modal',
   REMOVE_QR_MODAL: 'wa-akg:remove-qr-modal',
+  QR_MODAL_ACTION: 'wa-akg:qr-modal-action',
 } as const;
 
 /** Socket.IO path on WA-AKG backend */
@@ -35,4 +36,5 @@ export const WA_SESSION_STATUS = {
   LOGGED_OUT: 'LOGGED_OUT',
   STOPPED: 'STOPPED',
   SERVER_ERROR: 'SERVER_ERROR',
+  DUPLICATE_ACCOUNT: 'DUPLICATE_ACCOUNT',
 } as const;

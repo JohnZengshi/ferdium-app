@@ -23,38 +23,75 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import { useCustomInstance } from '../../customInstance';
 
 export type getChatsByLabelLabelIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type getChatsByLabelLabelIdResponseSuccess =
-  getChatsByLabelLabelIdResponse200 & {
-    headers: Headers;
-  };
-export type getChatsByLabelLabelIdResponse =
-  getChatsByLabelLabelIdResponseSuccess;
-
-export const getGetChatsByLabelLabelIdUrl = (labelId: string) => {
-  return `http://localhost:3000/api/chats/by-label/${labelId}`;
+export type getChatsByLabelLabelIdResponseSuccess = (getChatsByLabelLabelIdResponse200) & {
+  headers: Headers;
 };
+;
+
+export type getChatsByLabelLabelIdResponse = (getChatsByLabelLabelIdResponseSuccess)
+
+export const getGetChatsByLabelLabelIdUrl = (labelId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chats/by-label/${labelId}`
+}
 
 /**
  * @summary Get chats by label ID
  */
-export const getChatsByLabelLabelId = async (
-  labelId: string,
-  options?: RequestInit,
-): Promise<getChatsByLabelLabelIdResponse> => {
-  return useCustomInstance<getChatsByLabelLabelIdResponse>(
-    getGetChatsByLabelLabelIdUrl(labelId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getChatsByLabelLabelId = async (labelId: string, options?: RequestInit): Promise<getChatsByLabelLabelIdResponse> => {
+
+  return useCustomInstance<getChatsByLabelLabelIdResponse>(getGetChatsByLabelLabelIdUrl(labelId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

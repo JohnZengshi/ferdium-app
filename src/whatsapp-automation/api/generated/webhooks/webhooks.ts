@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
@@ -33,401 +66,395 @@ import type {
   PostWebhooksSessionIdBody,
   PutWebhooksSessionIdIdBody,
   ServerErrorResponse,
-  UnauthorizedResponse,
+  UnauthorizedResponse
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getWebhooksSessionIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
 export type getWebhooksSessionIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type getWebhooksSessionIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
-export type getWebhooksSessionIdResponseSuccess =
-  getWebhooksSessionIdResponse200 & {
-    headers: Headers;
-  };
-export type getWebhooksSessionIdResponseError = (
-  | getWebhooksSessionIdResponse401
-  | getWebhooksSessionIdResponse403
-) & {
+export type getWebhooksSessionIdResponseSuccess = (getWebhooksSessionIdResponse200) & {
+  headers: Headers;
+};
+export type getWebhooksSessionIdResponseError = (getWebhooksSessionIdResponse401 | getWebhooksSessionIdResponse403) & {
   headers: Headers;
 };
 
-export type getWebhooksSessionIdResponse =
-  | getWebhooksSessionIdResponseSuccess
-  | getWebhooksSessionIdResponseError;
+export type getWebhooksSessionIdResponse = (getWebhooksSessionIdResponseSuccess | getWebhooksSessionIdResponseError)
 
-export const getGetWebhooksSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/webhooks/${sessionId}`;
-};
+export const getGetWebhooksSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/webhooks/${sessionId}`
+}
 
 /**
  * @summary List webhooks for a session
  */
-export const getWebhooksSessionId = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<getWebhooksSessionIdResponse> => {
-  return useCustomInstance<getWebhooksSessionIdResponse>(
-    getGetWebhooksSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getWebhooksSessionId = async (sessionId: string, options?: RequestInit): Promise<getWebhooksSessionIdResponse> => {
+
+  return useCustomInstance<getWebhooksSessionIdResponse>(getGetWebhooksSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type postWebhooksSessionIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
 export type postWebhooksSessionIdResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type postWebhooksSessionIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postWebhooksSessionIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
-export type postWebhooksSessionIdResponseSuccess =
-  postWebhooksSessionIdResponse200 & {
-    headers: Headers;
-  };
-export type postWebhooksSessionIdResponseError = (
-  | postWebhooksSessionIdResponse400
-  | postWebhooksSessionIdResponse401
-  | postWebhooksSessionIdResponse403
-) & {
+export type postWebhooksSessionIdResponseSuccess = (postWebhooksSessionIdResponse200) & {
+  headers: Headers;
+};
+export type postWebhooksSessionIdResponseError = (postWebhooksSessionIdResponse400 | postWebhooksSessionIdResponse401 | postWebhooksSessionIdResponse403) & {
   headers: Headers;
 };
 
-export type postWebhooksSessionIdResponse =
-  | postWebhooksSessionIdResponseSuccess
-  | postWebhooksSessionIdResponseError;
+export type postWebhooksSessionIdResponse = (postWebhooksSessionIdResponseSuccess | postWebhooksSessionIdResponseError)
 
-export const getPostWebhooksSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/webhooks/${sessionId}`;
-};
+export const getPostWebhooksSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/webhooks/${sessionId}`
+}
 
 /**
  * @summary Create a webhook
  */
-export const postWebhooksSessionId = async (
-  sessionId: string,
-  postWebhooksSessionIdBody?: PostWebhooksSessionIdBody,
-  options?: RequestInit,
-): Promise<postWebhooksSessionIdResponse> => {
-  return useCustomInstance<postWebhooksSessionIdResponse>(
-    getPostWebhooksSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postWebhooksSessionIdBody),
-    },
-  );
-};
+export const postWebhooksSessionId = async (sessionId: string,
+    postWebhooksSessionIdBody?: PostWebhooksSessionIdBody, options?: RequestInit): Promise<postWebhooksSessionIdResponse> => {
+
+  return useCustomInstance<postWebhooksSessionIdResponse>(getPostWebhooksSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postWebhooksSessionIdBody)
+  }
+);}
+
 
 export type deleteWebhooksSessionIdIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
 export type deleteWebhooksSessionIdIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type deleteWebhooksSessionIdIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type deleteWebhooksSessionIdIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
-export type deleteWebhooksSessionIdIdResponseSuccess =
-  deleteWebhooksSessionIdIdResponse200 & {
-    headers: Headers;
-  };
-export type deleteWebhooksSessionIdIdResponseError = (
-  | deleteWebhooksSessionIdIdResponse401
-  | deleteWebhooksSessionIdIdResponse403
-  | deleteWebhooksSessionIdIdResponse404
-) & {
+export type deleteWebhooksSessionIdIdResponseSuccess = (deleteWebhooksSessionIdIdResponse200) & {
+  headers: Headers;
+};
+export type deleteWebhooksSessionIdIdResponseError = (deleteWebhooksSessionIdIdResponse401 | deleteWebhooksSessionIdIdResponse403 | deleteWebhooksSessionIdIdResponse404) & {
   headers: Headers;
 };
 
-export type deleteWebhooksSessionIdIdResponse =
-  | deleteWebhooksSessionIdIdResponseSuccess
-  | deleteWebhooksSessionIdIdResponseError;
+export type deleteWebhooksSessionIdIdResponse = (deleteWebhooksSessionIdIdResponseSuccess | deleteWebhooksSessionIdIdResponseError)
 
-export const getDeleteWebhooksSessionIdIdUrl = (
-  sessionId: string,
-  id: string,
-) => {
-  return `http://localhost:3000/api/webhooks/${sessionId}/${id}`;
-};
+export const getDeleteWebhooksSessionIdIdUrl = (sessionId: string,
+    id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/webhooks/${sessionId}/${id}`
+}
 
 /**
  * @summary Delete webhook
  */
-export const deleteWebhooksSessionIdId = async (
-  sessionId: string,
-  id: string,
-  options?: RequestInit,
-): Promise<deleteWebhooksSessionIdIdResponse> => {
-  return useCustomInstance<deleteWebhooksSessionIdIdResponse>(
-    getDeleteWebhooksSessionIdIdUrl(sessionId, id),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteWebhooksSessionIdId = async (sessionId: string,
+    id: string, options?: RequestInit): Promise<deleteWebhooksSessionIdIdResponse> => {
+
+  return useCustomInstance<deleteWebhooksSessionIdIdResponse>(getDeleteWebhooksSessionIdIdUrl(sessionId,id),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type putWebhooksSessionIdIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
 export type putWebhooksSessionIdIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putWebhooksSessionIdIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putWebhooksSessionIdIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
-export type putWebhooksSessionIdIdResponseSuccess =
-  putWebhooksSessionIdIdResponse200 & {
-    headers: Headers;
-  };
-export type putWebhooksSessionIdIdResponseError = (
-  | putWebhooksSessionIdIdResponse401
-  | putWebhooksSessionIdIdResponse403
-  | putWebhooksSessionIdIdResponse404
-) & {
+export type putWebhooksSessionIdIdResponseSuccess = (putWebhooksSessionIdIdResponse200) & {
+  headers: Headers;
+};
+export type putWebhooksSessionIdIdResponseError = (putWebhooksSessionIdIdResponse401 | putWebhooksSessionIdIdResponse403 | putWebhooksSessionIdIdResponse404) & {
   headers: Headers;
 };
 
-export type putWebhooksSessionIdIdResponse =
-  | putWebhooksSessionIdIdResponseSuccess
-  | putWebhooksSessionIdIdResponseError;
+export type putWebhooksSessionIdIdResponse = (putWebhooksSessionIdIdResponseSuccess | putWebhooksSessionIdIdResponseError)
 
-export const getPutWebhooksSessionIdIdUrl = (sessionId: string, id: string) => {
-  return `http://localhost:3000/api/webhooks/${sessionId}/${id}`;
-};
+export const getPutWebhooksSessionIdIdUrl = (sessionId: string,
+    id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/webhooks/${sessionId}/${id}`
+}
 
 /**
  * @summary Update webhook
  */
-export const putWebhooksSessionIdId = async (
-  sessionId: string,
-  id: string,
-  putWebhooksSessionIdIdBody?: PutWebhooksSessionIdIdBody,
-  options?: RequestInit,
-): Promise<putWebhooksSessionIdIdResponse> => {
-  return useCustomInstance<putWebhooksSessionIdIdResponse>(
-    getPutWebhooksSessionIdIdUrl(sessionId, id),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putWebhooksSessionIdIdBody),
-    },
-  );
-};
+export const putWebhooksSessionIdId = async (sessionId: string,
+    id: string,
+    putWebhooksSessionIdIdBody?: PutWebhooksSessionIdIdBody, options?: RequestInit): Promise<putWebhooksSessionIdIdResponse> => {
+
+  return useCustomInstance<putWebhooksSessionIdIdResponse>(getPutWebhooksSessionIdIdUrl(sessionId,id),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putWebhooksSessionIdIdBody)
+  }
+);}
+
 
 export type getWebhooksResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type getWebhooksResponseSuccess = getWebhooksResponse200 & {
+export type getWebhooksResponseSuccess = (getWebhooksResponse200) & {
   headers: Headers;
 };
-export type getWebhooksResponse = getWebhooksResponseSuccess;
+;
+
+export type getWebhooksResponse = (getWebhooksResponseSuccess)
 
 export const getGetWebhooksUrl = () => {
-  return `http://localhost:3000/api/webhooks`;
-};
+
+
+
+
+  return `http://localhost:3000/api/webhooks`
+}
 
 /**
  * @deprecated
  * @summary List webhooks (DEPRECATED)
  */
-export const getWebhooks = async (
-  options?: RequestInit,
-): Promise<getWebhooksResponse> => {
-  return useCustomInstance<getWebhooksResponse>(getGetWebhooksUrl(), {
+export const getWebhooks = async ( options?: RequestInit): Promise<getWebhooksResponse> => {
+
+  return useCustomInstance<getWebhooksResponse>(getGetWebhooksUrl(),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type postWebhooksResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type postWebhooksResponseSuccess = postWebhooksResponse200 & {
+export type postWebhooksResponseSuccess = (postWebhooksResponse200) & {
   headers: Headers;
 };
-export type postWebhooksResponse = postWebhooksResponseSuccess;
+;
+
+export type postWebhooksResponse = (postWebhooksResponseSuccess)
 
 export const getPostWebhooksUrl = () => {
-  return `http://localhost:3000/api/webhooks`;
-};
+
+
+
+
+  return `http://localhost:3000/api/webhooks`
+}
 
 /**
  * @deprecated
  * @summary Create webhook (DEPRECATED)
  */
-export const postWebhooks = async (
-  options?: RequestInit,
-): Promise<postWebhooksResponse> => {
-  return useCustomInstance<postWebhooksResponse>(getPostWebhooksUrl(), {
+export const postWebhooks = async ( options?: RequestInit): Promise<postWebhooksResponse> => {
+
+  return useCustomInstance<postWebhooksResponse>(getPostWebhooksUrl(),
+  {
     ...options,
-    method: 'POST',
-  });
-};
+    method: 'POST'
+
+
+  }
+);}
+
 
 export type patchWebhooksIdResponse200 = {
-  data: PatchWebhooksId200;
-  status: 200;
-};
+  data: PatchWebhooksId200
+  status: 200
+}
 
 export type patchWebhooksIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type patchWebhooksIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
 export type patchWebhooksIdResponse500 = {
-  data: ServerErrorResponse;
-  status: 500;
-};
+  data: ServerErrorResponse
+  status: 500
+}
 
-export type patchWebhooksIdResponseSuccess = patchWebhooksIdResponse200 & {
+export type patchWebhooksIdResponseSuccess = (patchWebhooksIdResponse200) & {
   headers: Headers;
 };
-export type patchWebhooksIdResponseError = (
-  | patchWebhooksIdResponse401
-  | patchWebhooksIdResponse404
-  | patchWebhooksIdResponse500
-) & {
+export type patchWebhooksIdResponseError = (patchWebhooksIdResponse401 | patchWebhooksIdResponse404 | patchWebhooksIdResponse500) & {
   headers: Headers;
 };
 
-export type patchWebhooksIdResponse =
-  | patchWebhooksIdResponseSuccess
-  | patchWebhooksIdResponseError;
+export type patchWebhooksIdResponse = (patchWebhooksIdResponseSuccess | patchWebhooksIdResponseError)
 
-export const getPatchWebhooksIdUrl = (id: string) => {
-  return `http://localhost:3000/api/webhooks/${id}`;
-};
+export const getPatchWebhooksIdUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/webhooks/${id}`
+}
 
 /**
  * @deprecated
  * @summary Update webhook (DEPRECATED)
  */
-export const patchWebhooksId = async (
-  id: string,
-  patchWebhooksIdBody?: PatchWebhooksIdBody,
-  options?: RequestInit,
-): Promise<patchWebhooksIdResponse> => {
-  return useCustomInstance<patchWebhooksIdResponse>(getPatchWebhooksIdUrl(id), {
+export const patchWebhooksId = async (id: string,
+    patchWebhooksIdBody?: PatchWebhooksIdBody, options?: RequestInit): Promise<patchWebhooksIdResponse> => {
+
+  return useCustomInstance<patchWebhooksIdResponse>(getPatchWebhooksIdUrl(id),
+  {
     ...options,
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(patchWebhooksIdBody),
-  });
-};
+    body: JSON.stringify(patchWebhooksIdBody)
+  }
+);}
+
 
 export type deleteWebhooksIdResponse200 = {
-  data: DeleteWebhooksId200;
-  status: 200;
-};
+  data: DeleteWebhooksId200
+  status: 200
+}
 
 export type deleteWebhooksIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type deleteWebhooksIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
 export type deleteWebhooksIdResponse500 = {
-  data: ServerErrorResponse;
-  status: 500;
-};
+  data: ServerErrorResponse
+  status: 500
+}
 
-export type deleteWebhooksIdResponseSuccess = deleteWebhooksIdResponse200 & {
+export type deleteWebhooksIdResponseSuccess = (deleteWebhooksIdResponse200) & {
   headers: Headers;
 };
-export type deleteWebhooksIdResponseError = (
-  | deleteWebhooksIdResponse401
-  | deleteWebhooksIdResponse404
-  | deleteWebhooksIdResponse500
-) & {
+export type deleteWebhooksIdResponseError = (deleteWebhooksIdResponse401 | deleteWebhooksIdResponse404 | deleteWebhooksIdResponse500) & {
   headers: Headers;
 };
 
-export type deleteWebhooksIdResponse =
-  | deleteWebhooksIdResponseSuccess
-  | deleteWebhooksIdResponseError;
+export type deleteWebhooksIdResponse = (deleteWebhooksIdResponseSuccess | deleteWebhooksIdResponseError)
 
-export const getDeleteWebhooksIdUrl = (id: string) => {
-  return `http://localhost:3000/api/webhooks/${id}`;
-};
+export const getDeleteWebhooksIdUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/webhooks/${id}`
+}
 
 /**
  * @summary Delete webhook
  */
-export const deleteWebhooksId = async (
-  id: string,
-  options?: RequestInit,
-): Promise<deleteWebhooksIdResponse> => {
-  return useCustomInstance<deleteWebhooksIdResponse>(
-    getDeleteWebhooksIdUrl(id),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteWebhooksId = async (id: string, options?: RequestInit): Promise<deleteWebhooksIdResponse> => {
+
+  return useCustomInstance<deleteWebhooksIdResponse>(getDeleteWebhooksIdUrl(id),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+

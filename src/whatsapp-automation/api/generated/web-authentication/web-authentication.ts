@@ -23,96 +23,154 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
   GetAuthCsrf200,
   GetAuthSession200,
-  PostAuthRegisterBody,
+  PostAuthRegisterBody
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postAuthRegisterResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type postAuthRegisterResponseSuccess = postAuthRegisterResponse200 & {
+export type postAuthRegisterResponseSuccess = (postAuthRegisterResponse200) & {
   headers: Headers;
 };
-export type postAuthRegisterResponse = postAuthRegisterResponseSuccess;
+;
+
+export type postAuthRegisterResponse = (postAuthRegisterResponseSuccess)
 
 export const getPostAuthRegisterUrl = () => {
-  return `http://localhost:3000/api/auth/register`;
-};
+
+
+
+
+  return `http://localhost:3000/api/auth/register`
+}
 
 /**
  * Register a user via web.
  * @summary Register a new user
  */
-export const postAuthRegister = async (
-  postAuthRegisterBody: PostAuthRegisterBody,
-  options?: RequestInit,
-): Promise<postAuthRegisterResponse> => {
-  return useCustomInstance<postAuthRegisterResponse>(getPostAuthRegisterUrl(), {
+export const postAuthRegister = async (postAuthRegisterBody: PostAuthRegisterBody, options?: RequestInit): Promise<postAuthRegisterResponse> => {
+
+  return useCustomInstance<postAuthRegisterResponse>(getPostAuthRegisterUrl(),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postAuthRegisterBody),
-  });
-};
+    body: JSON.stringify(postAuthRegisterBody)
+  }
+);}
+
 
 export type getAuthSessionResponse200 = {
-  data: GetAuthSession200;
-  status: 200;
-};
+  data: GetAuthSession200
+  status: 200
+}
 
-export type getAuthSessionResponseSuccess = getAuthSessionResponse200 & {
+export type getAuthSessionResponseSuccess = (getAuthSessionResponse200) & {
   headers: Headers;
 };
-export type getAuthSessionResponse = getAuthSessionResponseSuccess;
+;
+
+export type getAuthSessionResponse = (getAuthSessionResponseSuccess)
 
 export const getGetAuthSessionUrl = () => {
-  return `http://localhost:3000/api/auth/session`;
-};
+
+
+
+
+  return `http://localhost:3000/api/auth/session`
+}
 
 /**
  * Check if the user is authenticated in the web dashboard
  * @summary Get current web session
  */
-export const getAuthSession = async (
-  options?: RequestInit,
-): Promise<getAuthSessionResponse> => {
-  return useCustomInstance<getAuthSessionResponse>(getGetAuthSessionUrl(), {
+export const getAuthSession = async ( options?: RequestInit): Promise<getAuthSessionResponse> => {
+
+  return useCustomInstance<getAuthSessionResponse>(getGetAuthSessionUrl(),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getAuthCsrfResponse200 = {
-  data: GetAuthCsrf200;
-  status: 200;
-};
+  data: GetAuthCsrf200
+  status: 200
+}
 
-export type getAuthCsrfResponseSuccess = getAuthCsrfResponse200 & {
+export type getAuthCsrfResponseSuccess = (getAuthCsrfResponse200) & {
   headers: Headers;
 };
-export type getAuthCsrfResponse = getAuthCsrfResponseSuccess;
+;
+
+export type getAuthCsrfResponse = (getAuthCsrfResponseSuccess)
 
 export const getGetAuthCsrfUrl = () => {
-  return `http://localhost:3000/api/auth/csrf`;
-};
+
+
+
+
+  return `http://localhost:3000/api/auth/csrf`
+}
 
 /**
  * Retrieve CSRF token for form submissions
  * @summary Get CSRF token
  */
-export const getAuthCsrf = async (
-  options?: RequestInit,
-): Promise<getAuthCsrfResponse> => {
-  return useCustomInstance<getAuthCsrfResponse>(getGetAuthCsrfUrl(), {
+export const getAuthCsrf = async ( options?: RequestInit): Promise<getAuthCsrfResponse> => {
+
+  return useCustomInstance<getAuthCsrfResponse>(getGetAuthCsrfUrl(),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
+

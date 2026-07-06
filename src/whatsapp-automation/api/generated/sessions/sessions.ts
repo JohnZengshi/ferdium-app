@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
@@ -35,400 +68,405 @@ import type {
   PostSessionsIdBotConfigBody,
   Session,
   Success,
-  UnauthorizedResponse,
+  UnauthorizedResponse
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getSessionsResponse200 = {
-  data: Session[];
-  status: 200;
-};
+  data: Session[]
+  status: 200
+}
 
 export type getSessionsResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
-export type getSessionsResponseSuccess = getSessionsResponse200 & {
+export type getSessionsResponseSuccess = (getSessionsResponse200) & {
   headers: Headers;
 };
-export type getSessionsResponseError = getSessionsResponse401 & {
+export type getSessionsResponseError = (getSessionsResponse401) & {
   headers: Headers;
 };
 
-export type getSessionsResponse =
-  | getSessionsResponseSuccess
-  | getSessionsResponseError;
+export type getSessionsResponse = (getSessionsResponseSuccess | getSessionsResponseError)
 
 export const getGetSessionsUrl = () => {
-  return `http://localhost:3000/api/sessions`;
-};
+
+
+
+
+  return `http://localhost:3000/api/sessions`
+}
 
 /**
  * Get all sessions accessible to the authenticated user (role-based filtering)
  * @summary List all accessible sessions
  */
-export const getSessions = async (
-  options?: RequestInit,
-): Promise<getSessionsResponse> => {
-  return useCustomInstance<getSessionsResponse>(getGetSessionsUrl(), {
+export const getSessions = async ( options?: RequestInit): Promise<getSessionsResponse> => {
+
+  return useCustomInstance<getSessionsResponse>(getGetSessionsUrl(),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type postSessionsResponse200 = {
-  data: Session;
-  status: 200;
-};
+  data: Session
+  status: 200
+}
 
 export type postSessionsResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type postSessionsResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
-export type postSessionsResponseSuccess = postSessionsResponse200 & {
+export type postSessionsResponseSuccess = (postSessionsResponse200) & {
   headers: Headers;
 };
-export type postSessionsResponseError = (
-  | postSessionsResponse400
-  | postSessionsResponse401
-) & {
+export type postSessionsResponseError = (postSessionsResponse400 | postSessionsResponse401) & {
   headers: Headers;
 };
 
-export type postSessionsResponse =
-  | postSessionsResponseSuccess
-  | postSessionsResponseError;
+export type postSessionsResponse = (postSessionsResponseSuccess | postSessionsResponseError)
 
 export const getPostSessionsUrl = () => {
-  return `http://localhost:3000/api/sessions`;
-};
+
+
+
+
+  return `http://localhost:3000/api/sessions`
+}
 
 /**
  * Creates a new WhatsApp session for QR code pairing
  * @summary Create new WhatsApp session
  */
-export const postSessions = async (
-  postSessionsBody: PostSessionsBody,
-  options?: RequestInit,
-): Promise<postSessionsResponse> => {
-  return useCustomInstance<postSessionsResponse>(getPostSessionsUrl(), {
+export const postSessions = async (postSessionsBody: PostSessionsBody, options?: RequestInit): Promise<postSessionsResponse> => {
+
+  return useCustomInstance<postSessionsResponse>(getPostSessionsUrl(),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postSessionsBody),
-  });
-};
+    body: JSON.stringify(postSessionsBody)
+  }
+);}
+
 
 export type getSessionsIdQrResponse200 = {
-  data: GetSessionsIdQr200;
-  status: 200;
-};
+  data: GetSessionsIdQr200
+  status: 200
+}
 
 export type getSessionsIdQrResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type getSessionsIdQrResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
-export type getSessionsIdQrResponseSuccess = getSessionsIdQrResponse200 & {
+export type getSessionsIdQrResponseSuccess = (getSessionsIdQrResponse200) & {
   headers: Headers;
 };
-export type getSessionsIdQrResponseError = (
-  | getSessionsIdQrResponse400
-  | getSessionsIdQrResponse404
-) & {
+export type getSessionsIdQrResponseError = (getSessionsIdQrResponse400 | getSessionsIdQrResponse404) & {
   headers: Headers;
 };
 
-export type getSessionsIdQrResponse =
-  | getSessionsIdQrResponseSuccess
-  | getSessionsIdQrResponseError;
+export type getSessionsIdQrResponse = (getSessionsIdQrResponseSuccess | getSessionsIdQrResponseError)
 
-export const getGetSessionsIdQrUrl = (id: string) => {
-  return `http://localhost:3000/api/sessions/${id}/qr`;
-};
+export const getGetSessionsIdQrUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/sessions/${id}/qr`
+}
 
 /**
  * Retrieve QR code (string and base64 image) for WhatsApp pairing
  * @summary Get QR code for pairing
  */
-export const getSessionsIdQr = async (
-  id: string,
-  options?: RequestInit,
-): Promise<getSessionsIdQrResponse> => {
-  return useCustomInstance<getSessionsIdQrResponse>(getGetSessionsIdQrUrl(id), {
+export const getSessionsIdQr = async (id: string, options?: RequestInit): Promise<getSessionsIdQrResponse> => {
+
+  return useCustomInstance<getSessionsIdQrResponse>(getGetSessionsIdQrUrl(id),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getSessionsIdBotConfigResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type getSessionsIdBotConfigResponseSuccess =
-  getSessionsIdBotConfigResponse200 & {
-    headers: Headers;
-  };
-export type getSessionsIdBotConfigResponse =
-  getSessionsIdBotConfigResponseSuccess;
-
-export const getGetSessionsIdBotConfigUrl = (id: string) => {
-  return `http://localhost:3000/api/sessions/${id}/bot-config`;
+export type getSessionsIdBotConfigResponseSuccess = (getSessionsIdBotConfigResponse200) & {
+  headers: Headers;
 };
+;
+
+export type getSessionsIdBotConfigResponse = (getSessionsIdBotConfigResponseSuccess)
+
+export const getGetSessionsIdBotConfigUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/sessions/${id}/bot-config`
+}
 
 /**
  * @summary Get bot configuration
  */
-export const getSessionsIdBotConfig = async (
-  id: string,
-  options?: RequestInit,
-): Promise<getSessionsIdBotConfigResponse> => {
-  return useCustomInstance<getSessionsIdBotConfigResponse>(
-    getGetSessionsIdBotConfigUrl(id),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getSessionsIdBotConfig = async (id: string, options?: RequestInit): Promise<getSessionsIdBotConfigResponse> => {
+
+  return useCustomInstance<getSessionsIdBotConfigResponse>(getGetSessionsIdBotConfigUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type postSessionsIdBotConfigResponse200 = {
-  data: PostSessionsIdBotConfig200;
-  status: 200;
-};
+  data: PostSessionsIdBotConfig200
+  status: 200
+}
 
 export type postSessionsIdBotConfigResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postSessionsIdBotConfigResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type postSessionsIdBotConfigResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
 export type postSessionsIdBotConfigResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
-export type postSessionsIdBotConfigResponseSuccess =
-  postSessionsIdBotConfigResponse200 & {
-    headers: Headers;
-  };
-export type postSessionsIdBotConfigResponseError = (
-  | postSessionsIdBotConfigResponse401
-  | postSessionsIdBotConfigResponse403
-  | postSessionsIdBotConfigResponse404
-  | postSessionsIdBotConfigResponse500
-) & {
+export type postSessionsIdBotConfigResponseSuccess = (postSessionsIdBotConfigResponse200) & {
+  headers: Headers;
+};
+export type postSessionsIdBotConfigResponseError = (postSessionsIdBotConfigResponse401 | postSessionsIdBotConfigResponse403 | postSessionsIdBotConfigResponse404 | postSessionsIdBotConfigResponse500) & {
   headers: Headers;
 };
 
-export type postSessionsIdBotConfigResponse =
-  | postSessionsIdBotConfigResponseSuccess
-  | postSessionsIdBotConfigResponseError;
+export type postSessionsIdBotConfigResponse = (postSessionsIdBotConfigResponseSuccess | postSessionsIdBotConfigResponseError)
 
-export const getPostSessionsIdBotConfigUrl = (id: string) => {
-  return `http://localhost:3000/api/sessions/${id}/bot-config`;
-};
+export const getPostSessionsIdBotConfigUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/sessions/${id}/bot-config`
+}
 
 /**
  * @summary Update bot configuration
  */
-export const postSessionsIdBotConfig = async (
-  id: string,
-  postSessionsIdBotConfigBody?: PostSessionsIdBotConfigBody,
-  options?: RequestInit,
-): Promise<postSessionsIdBotConfigResponse> => {
-  return useCustomInstance<postSessionsIdBotConfigResponse>(
-    getPostSessionsIdBotConfigUrl(id),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postSessionsIdBotConfigBody),
-    },
-  );
-};
+export const postSessionsIdBotConfig = async (id: string,
+    postSessionsIdBotConfigBody?: PostSessionsIdBotConfigBody, options?: RequestInit): Promise<postSessionsIdBotConfigResponse> => {
+
+  return useCustomInstance<postSessionsIdBotConfigResponse>(getPostSessionsIdBotConfigUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postSessionsIdBotConfigBody)
+  }
+);}
+
 
 export type getSessionsIdResponse200 = {
-  data: GetSessionsId200;
-  status: 200;
-};
+  data: GetSessionsId200
+  status: 200
+}
 
 export type getSessionsIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
-export type getSessionsIdResponseSuccess = getSessionsIdResponse200 & {
+export type getSessionsIdResponseSuccess = (getSessionsIdResponse200) & {
   headers: Headers;
 };
-export type getSessionsIdResponseError = getSessionsIdResponse404 & {
+export type getSessionsIdResponseError = (getSessionsIdResponse404) & {
   headers: Headers;
 };
 
-export type getSessionsIdResponse =
-  | getSessionsIdResponseSuccess
-  | getSessionsIdResponseError;
+export type getSessionsIdResponse = (getSessionsIdResponseSuccess | getSessionsIdResponseError)
 
-export const getGetSessionsIdUrl = (id: string) => {
-  return `http://localhost:3000/api/sessions/${id}`;
-};
+export const getGetSessionsIdUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/sessions/${id}`
+}
 
 /**
  * Get detailed information about a specific session including uptime and status
  * @summary Get session details
  */
-export const getSessionsId = async (
-  id: string,
-  options?: RequestInit,
-): Promise<getSessionsIdResponse> => {
-  return useCustomInstance<getSessionsIdResponse>(getGetSessionsIdUrl(id), {
+export const getSessionsId = async (id: string, options?: RequestInit): Promise<getSessionsIdResponse> => {
+
+  return useCustomInstance<getSessionsIdResponse>(getGetSessionsIdUrl(id),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type postSessionsIdActionResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type postSessionsIdActionResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type postSessionsIdActionResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
-export type postSessionsIdActionResponseSuccess =
-  postSessionsIdActionResponse200 & {
-    headers: Headers;
-  };
-export type postSessionsIdActionResponseError = (
-  | postSessionsIdActionResponse400
-  | postSessionsIdActionResponse500
-) & {
+export type postSessionsIdActionResponseSuccess = (postSessionsIdActionResponse200) & {
+  headers: Headers;
+};
+export type postSessionsIdActionResponseError = (postSessionsIdActionResponse400 | postSessionsIdActionResponse500) & {
   headers: Headers;
 };
 
-export type postSessionsIdActionResponse =
-  | postSessionsIdActionResponseSuccess
-  | postSessionsIdActionResponseError;
+export type postSessionsIdActionResponse = (postSessionsIdActionResponseSuccess | postSessionsIdActionResponseError)
 
-export const getPostSessionsIdActionUrl = (
-  id: string,
-  action: 'start' | 'stop' | 'restart' | 'logout',
-) => {
-  return `http://localhost:3000/api/sessions/${id}/${action}`;
-};
+export const getPostSessionsIdActionUrl = (id: string,
+    action: 'start' | 'stop' | 'restart' | 'logout',) => {
+
+
+
+
+  return `http://localhost:3000/api/sessions/${id}/${action}`
+}
 
 /**
  * Start, stop, restart, or logout a session
  * @summary Perform session action
  */
-export const postSessionsIdAction = async (
-  id: string,
-  action: 'start' | 'stop' | 'restart' | 'logout',
-  options?: RequestInit,
-): Promise<postSessionsIdActionResponse> => {
-  return useCustomInstance<postSessionsIdActionResponse>(
-    getPostSessionsIdActionUrl(id, action),
-    {
-      ...options,
-      method: 'POST',
-    },
-  );
-};
+export const postSessionsIdAction = async (id: string,
+    action: 'start' | 'stop' | 'restart' | 'logout', options?: RequestInit): Promise<postSessionsIdActionResponse> => {
+
+  return useCustomInstance<postSessionsIdActionResponse>(getPostSessionsIdActionUrl(id,action),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
 
 export type patchSessionsIdSettingsResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type patchSessionsIdSettingsResponseSuccess =
-  patchSessionsIdSettingsResponse200 & {
-    headers: Headers;
-  };
-export type patchSessionsIdSettingsResponse =
-  patchSessionsIdSettingsResponseSuccess;
-
-export const getPatchSessionsIdSettingsUrl = (id: string) => {
-  return `http://localhost:3000/api/sessions/${id}/settings`;
+export type patchSessionsIdSettingsResponseSuccess = (patchSessionsIdSettingsResponse200) & {
+  headers: Headers;
 };
+;
+
+export type patchSessionsIdSettingsResponse = (patchSessionsIdSettingsResponseSuccess)
+
+export const getPatchSessionsIdSettingsUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/sessions/${id}/settings`
+}
 
 /**
  * @summary Update session settings
  */
-export const patchSessionsIdSettings = async (
-  id: string,
-  patchSessionsIdSettingsBody?: PatchSessionsIdSettingsBody,
-  options?: RequestInit,
-): Promise<patchSessionsIdSettingsResponse> => {
-  return useCustomInstance<patchSessionsIdSettingsResponse>(
-    getPatchSessionsIdSettingsUrl(id),
-    {
-      ...options,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(patchSessionsIdSettingsBody),
-    },
-  );
-};
+export const patchSessionsIdSettings = async (id: string,
+    patchSessionsIdSettingsBody?: PatchSessionsIdSettingsBody, options?: RequestInit): Promise<patchSessionsIdSettingsResponse> => {
+
+  return useCustomInstance<patchSessionsIdSettingsResponse>(getPatchSessionsIdSettingsUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(patchSessionsIdSettingsBody)
+  }
+);}
+
 
 export type deleteSessionsIdSettingsResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
-export type deleteSessionsIdSettingsResponseSuccess =
-  deleteSessionsIdSettingsResponse200 & {
-    headers: Headers;
-  };
-export type deleteSessionsIdSettingsResponse =
-  deleteSessionsIdSettingsResponseSuccess;
-
-export const getDeleteSessionsIdSettingsUrl = (id: string) => {
-  return `http://localhost:3000/api/sessions/${id}/settings`;
+export type deleteSessionsIdSettingsResponseSuccess = (deleteSessionsIdSettingsResponse200) & {
+  headers: Headers;
 };
+;
+
+export type deleteSessionsIdSettingsResponse = (deleteSessionsIdSettingsResponseSuccess)
+
+export const getDeleteSessionsIdSettingsUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/sessions/${id}/settings`
+}
 
 /**
  * Permanently deletes session and logs out from WhatsApp
  * @summary Delete session and logout
  */
-export const deleteSessionsIdSettings = async (
-  id: string,
-  options?: RequestInit,
-): Promise<deleteSessionsIdSettingsResponse> => {
-  return useCustomInstance<deleteSessionsIdSettingsResponse>(
-    getDeleteSessionsIdSettingsUrl(id),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteSessionsIdSettings = async (id: string, options?: RequestInit): Promise<deleteSessionsIdSettingsResponse> => {
+
+  return useCustomInstance<deleteSessionsIdSettingsResponse>(getDeleteSessionsIdSettingsUrl(id),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+

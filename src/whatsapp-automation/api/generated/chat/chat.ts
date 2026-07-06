@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
@@ -51,806 +84,790 @@ import type {
   PutChatSessionIdJidRead200,
   PutChatSessionIdJidReadBody,
   SessionNotReadyResponse,
-  UnauthorizedResponse,
+  UnauthorizedResponse
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getChatSessionIdResponse200 = {
-  data: Contact[];
-  status: 200;
-};
+  data: Contact[]
+  status: 200
+}
 
-export type getChatSessionIdResponseSuccess = getChatSessionIdResponse200 & {
+export type getChatSessionIdResponseSuccess = (getChatSessionIdResponse200) & {
   headers: Headers;
 };
-export type getChatSessionIdResponse = getChatSessionIdResponseSuccess;
+;
 
-export const getGetChatSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/chat/${sessionId}`;
-};
+export type getChatSessionIdResponse = (getChatSessionIdResponseSuccess)
+
+export const getGetChatSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}`
+}
 
 /**
  * Retrieve all contacts with last message for a session
  * @summary Get chat list with contacts
  */
-export const getChatSessionId = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<getChatSessionIdResponse> => {
-  return useCustomInstance<getChatSessionIdResponse>(
-    getGetChatSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getChatSessionId = async (sessionId: string, options?: RequestInit): Promise<getChatSessionIdResponse> => {
+
+  return useCustomInstance<getChatSessionIdResponse>(getGetChatSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getChatSessionIdJidResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type getChatSessionIdJidResponseSuccess =
-  getChatSessionIdJidResponse200 & {
-    headers: Headers;
-  };
-export type getChatSessionIdJidResponse = getChatSessionIdJidResponseSuccess;
-
-export const getGetChatSessionIdJidUrl = (sessionId: string, jid: string) => {
-  return `http://localhost:3000/api/chat/${sessionId}/${jid}`;
+export type getChatSessionIdJidResponseSuccess = (getChatSessionIdJidResponse200) & {
+  headers: Headers;
 };
+;
+
+export type getChatSessionIdJidResponse = (getChatSessionIdJidResponseSuccess)
+
+export const getGetChatSessionIdJidUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/${jid}`
+}
 
 /**
  * Fetch up to 100 messages for a chat (enriched with participant info for groups)
  * @summary Get message history
  */
-export const getChatSessionIdJid = async (
-  sessionId: string,
-  jid: string,
-  options?: RequestInit,
-): Promise<getChatSessionIdJidResponse> => {
-  return useCustomInstance<getChatSessionIdJidResponse>(
-    getGetChatSessionIdJidUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getChatSessionIdJid = async (sessionId: string,
+    jid: string, options?: RequestInit): Promise<getChatSessionIdJidResponse> => {
+
+  return useCustomInstance<getChatSessionIdJidResponse>(getGetChatSessionIdJidUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type putChatSessionIdJidReadResponse200 = {
-  data: PutChatSessionIdJidRead200;
-  status: 200;
-};
+  data: PutChatSessionIdJidRead200
+  status: 200
+}
 
 export type putChatSessionIdJidReadResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putChatSessionIdJidReadResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putChatSessionIdJidReadResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
 export type putChatSessionIdJidReadResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type putChatSessionIdJidReadResponseSuccess =
-  putChatSessionIdJidReadResponse200 & {
-    headers: Headers;
-  };
-export type putChatSessionIdJidReadResponseError = (
-  | putChatSessionIdJidReadResponse401
-  | putChatSessionIdJidReadResponse403
-  | putChatSessionIdJidReadResponse500
-  | putChatSessionIdJidReadResponse503
-) & {
+export type putChatSessionIdJidReadResponseSuccess = (putChatSessionIdJidReadResponse200) & {
+  headers: Headers;
+};
+export type putChatSessionIdJidReadResponseError = (putChatSessionIdJidReadResponse401 | putChatSessionIdJidReadResponse403 | putChatSessionIdJidReadResponse500 | putChatSessionIdJidReadResponse503) & {
   headers: Headers;
 };
 
-export type putChatSessionIdJidReadResponse =
-  | putChatSessionIdJidReadResponseSuccess
-  | putChatSessionIdJidReadResponseError;
+export type putChatSessionIdJidReadResponse = (putChatSessionIdJidReadResponseSuccess | putChatSessionIdJidReadResponseError)
 
-export const getPutChatSessionIdJidReadUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/chat/${sessionId}/${jid}/read`;
-};
+export const getPutChatSessionIdJidReadUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/${jid}/read`
+}
 
 /**
  * Mark specific messages or entire chat as read using RESTful path parameters
  * @summary Mark messages as read
  */
-export const putChatSessionIdJidRead = async (
-  sessionId: string,
-  jid: string,
-  putChatSessionIdJidReadBody?: PutChatSessionIdJidReadBody,
-  options?: RequestInit,
-): Promise<putChatSessionIdJidReadResponse> => {
-  return useCustomInstance<putChatSessionIdJidReadResponse>(
-    getPutChatSessionIdJidReadUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putChatSessionIdJidReadBody),
-    },
-  );
-};
+export const putChatSessionIdJidRead = async (sessionId: string,
+    jid: string,
+    putChatSessionIdJidReadBody?: PutChatSessionIdJidReadBody, options?: RequestInit): Promise<putChatSessionIdJidReadResponse> => {
+
+  return useCustomInstance<putChatSessionIdJidReadResponse>(getPutChatSessionIdJidReadUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putChatSessionIdJidReadBody)
+  }
+);}
+
 
 export type putChatSessionIdJidArchiveResponse200 = {
-  data: PutChatSessionIdJidArchive200;
-  status: 200;
-};
+  data: PutChatSessionIdJidArchive200
+  status: 200
+}
 
 export type putChatSessionIdJidArchiveResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type putChatSessionIdJidArchiveResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putChatSessionIdJidArchiveResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putChatSessionIdJidArchiveResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
 export type putChatSessionIdJidArchiveResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type putChatSessionIdJidArchiveResponseSuccess =
-  putChatSessionIdJidArchiveResponse200 & {
-    headers: Headers;
-  };
-export type putChatSessionIdJidArchiveResponseError = (
-  | putChatSessionIdJidArchiveResponse400
-  | putChatSessionIdJidArchiveResponse401
-  | putChatSessionIdJidArchiveResponse403
-  | putChatSessionIdJidArchiveResponse500
-  | putChatSessionIdJidArchiveResponse503
-) & {
+export type putChatSessionIdJidArchiveResponseSuccess = (putChatSessionIdJidArchiveResponse200) & {
+  headers: Headers;
+};
+export type putChatSessionIdJidArchiveResponseError = (putChatSessionIdJidArchiveResponse400 | putChatSessionIdJidArchiveResponse401 | putChatSessionIdJidArchiveResponse403 | putChatSessionIdJidArchiveResponse500 | putChatSessionIdJidArchiveResponse503) & {
   headers: Headers;
 };
 
-export type putChatSessionIdJidArchiveResponse =
-  | putChatSessionIdJidArchiveResponseSuccess
-  | putChatSessionIdJidArchiveResponseError;
+export type putChatSessionIdJidArchiveResponse = (putChatSessionIdJidArchiveResponseSuccess | putChatSessionIdJidArchiveResponseError)
 
-export const getPutChatSessionIdJidArchiveUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/chat/${sessionId}/${jid}/archive`;
-};
+export const getPutChatSessionIdJidArchiveUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/${jid}/archive`
+}
 
 /**
  * Archive or unarchive a chat using RESTful path parameters
  * @summary Archive/unarchive chat
  */
-export const putChatSessionIdJidArchive = async (
-  sessionId: string,
-  jid: string,
-  putChatSessionIdJidArchiveBody?: PutChatSessionIdJidArchiveBody,
-  options?: RequestInit,
-): Promise<putChatSessionIdJidArchiveResponse> => {
-  return useCustomInstance<putChatSessionIdJidArchiveResponse>(
-    getPutChatSessionIdJidArchiveUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putChatSessionIdJidArchiveBody),
-    },
-  );
-};
+export const putChatSessionIdJidArchive = async (sessionId: string,
+    jid: string,
+    putChatSessionIdJidArchiveBody?: PutChatSessionIdJidArchiveBody, options?: RequestInit): Promise<putChatSessionIdJidArchiveResponse> => {
+
+  return useCustomInstance<putChatSessionIdJidArchiveResponse>(getPutChatSessionIdJidArchiveUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putChatSessionIdJidArchiveBody)
+  }
+);}
+
 
 export type putChatSessionIdJidMuteResponse200 = {
-  data: PutChatSessionIdJidMute200;
-  status: 200;
-};
+  data: PutChatSessionIdJidMute200
+  status: 200
+}
 
 export type putChatSessionIdJidMuteResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type putChatSessionIdJidMuteResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putChatSessionIdJidMuteResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putChatSessionIdJidMuteResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
 export type putChatSessionIdJidMuteResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type putChatSessionIdJidMuteResponseSuccess =
-  putChatSessionIdJidMuteResponse200 & {
-    headers: Headers;
-  };
-export type putChatSessionIdJidMuteResponseError = (
-  | putChatSessionIdJidMuteResponse400
-  | putChatSessionIdJidMuteResponse401
-  | putChatSessionIdJidMuteResponse403
-  | putChatSessionIdJidMuteResponse500
-  | putChatSessionIdJidMuteResponse503
-) & {
+export type putChatSessionIdJidMuteResponseSuccess = (putChatSessionIdJidMuteResponse200) & {
+  headers: Headers;
+};
+export type putChatSessionIdJidMuteResponseError = (putChatSessionIdJidMuteResponse400 | putChatSessionIdJidMuteResponse401 | putChatSessionIdJidMuteResponse403 | putChatSessionIdJidMuteResponse500 | putChatSessionIdJidMuteResponse503) & {
   headers: Headers;
 };
 
-export type putChatSessionIdJidMuteResponse =
-  | putChatSessionIdJidMuteResponseSuccess
-  | putChatSessionIdJidMuteResponseError;
+export type putChatSessionIdJidMuteResponse = (putChatSessionIdJidMuteResponseSuccess | putChatSessionIdJidMuteResponseError)
 
-export const getPutChatSessionIdJidMuteUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/chat/${sessionId}/${jid}/mute`;
-};
+export const getPutChatSessionIdJidMuteUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/${jid}/mute`
+}
 
 /**
  * Mute chat with optional duration (default 8 hours)
  * @summary Mute/unmute chat
  */
-export const putChatSessionIdJidMute = async (
-  sessionId: string,
-  jid: string,
-  putChatSessionIdJidMuteBody?: PutChatSessionIdJidMuteBody,
-  options?: RequestInit,
-): Promise<putChatSessionIdJidMuteResponse> => {
-  return useCustomInstance<putChatSessionIdJidMuteResponse>(
-    getPutChatSessionIdJidMuteUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putChatSessionIdJidMuteBody),
-    },
-  );
-};
+export const putChatSessionIdJidMute = async (sessionId: string,
+    jid: string,
+    putChatSessionIdJidMuteBody?: PutChatSessionIdJidMuteBody, options?: RequestInit): Promise<putChatSessionIdJidMuteResponse> => {
+
+  return useCustomInstance<putChatSessionIdJidMuteResponse>(getPutChatSessionIdJidMuteUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putChatSessionIdJidMuteBody)
+  }
+);}
+
 
 export type putChatSessionIdJidPinResponse200 = {
-  data: PutChatSessionIdJidPin200;
-  status: 200;
-};
+  data: PutChatSessionIdJidPin200
+  status: 200
+}
 
 export type putChatSessionIdJidPinResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type putChatSessionIdJidPinResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putChatSessionIdJidPinResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putChatSessionIdJidPinResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
 export type putChatSessionIdJidPinResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type putChatSessionIdJidPinResponseSuccess =
-  putChatSessionIdJidPinResponse200 & {
-    headers: Headers;
-  };
-export type putChatSessionIdJidPinResponseError = (
-  | putChatSessionIdJidPinResponse400
-  | putChatSessionIdJidPinResponse401
-  | putChatSessionIdJidPinResponse403
-  | putChatSessionIdJidPinResponse500
-  | putChatSessionIdJidPinResponse503
-) & {
+export type putChatSessionIdJidPinResponseSuccess = (putChatSessionIdJidPinResponse200) & {
+  headers: Headers;
+};
+export type putChatSessionIdJidPinResponseError = (putChatSessionIdJidPinResponse400 | putChatSessionIdJidPinResponse401 | putChatSessionIdJidPinResponse403 | putChatSessionIdJidPinResponse500 | putChatSessionIdJidPinResponse503) & {
   headers: Headers;
 };
 
-export type putChatSessionIdJidPinResponse =
-  | putChatSessionIdJidPinResponseSuccess
-  | putChatSessionIdJidPinResponseError;
+export type putChatSessionIdJidPinResponse = (putChatSessionIdJidPinResponseSuccess | putChatSessionIdJidPinResponseError)
 
-export const getPutChatSessionIdJidPinUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/chat/${sessionId}/${jid}/pin`;
-};
+export const getPutChatSessionIdJidPinUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/${jid}/pin`
+}
 
 /**
  * Pin or unpin a chat
  * @summary Pin/unpin chat
  */
-export const putChatSessionIdJidPin = async (
-  sessionId: string,
-  jid: string,
-  putChatSessionIdJidPinBody?: PutChatSessionIdJidPinBody,
-  options?: RequestInit,
-): Promise<putChatSessionIdJidPinResponse> => {
-  return useCustomInstance<putChatSessionIdJidPinResponse>(
-    getPutChatSessionIdJidPinUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putChatSessionIdJidPinBody),
-    },
-  );
-};
+export const putChatSessionIdJidPin = async (sessionId: string,
+    jid: string,
+    putChatSessionIdJidPinBody?: PutChatSessionIdJidPinBody, options?: RequestInit): Promise<putChatSessionIdJidPinResponse> => {
+
+  return useCustomInstance<putChatSessionIdJidPinResponse>(getPutChatSessionIdJidPinUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putChatSessionIdJidPinBody)
+  }
+);}
+
 
 export type postChatSessionIdJidPresenceResponse200 = {
-  data: PostChatSessionIdJidPresence200;
-  status: 200;
-};
+  data: PostChatSessionIdJidPresence200
+  status: 200
+}
 
 export type postChatSessionIdJidPresenceResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type postChatSessionIdJidPresenceResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postChatSessionIdJidPresenceResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type postChatSessionIdJidPresenceResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
 export type postChatSessionIdJidPresenceResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type postChatSessionIdJidPresenceResponseSuccess =
-  postChatSessionIdJidPresenceResponse200 & {
-    headers: Headers;
-  };
-export type postChatSessionIdJidPresenceResponseError = (
-  | postChatSessionIdJidPresenceResponse400
-  | postChatSessionIdJidPresenceResponse401
-  | postChatSessionIdJidPresenceResponse403
-  | postChatSessionIdJidPresenceResponse500
-  | postChatSessionIdJidPresenceResponse503
-) & {
+export type postChatSessionIdJidPresenceResponseSuccess = (postChatSessionIdJidPresenceResponse200) & {
+  headers: Headers;
+};
+export type postChatSessionIdJidPresenceResponseError = (postChatSessionIdJidPresenceResponse400 | postChatSessionIdJidPresenceResponse401 | postChatSessionIdJidPresenceResponse403 | postChatSessionIdJidPresenceResponse500 | postChatSessionIdJidPresenceResponse503) & {
   headers: Headers;
 };
 
-export type postChatSessionIdJidPresenceResponse =
-  | postChatSessionIdJidPresenceResponseSuccess
-  | postChatSessionIdJidPresenceResponseError;
+export type postChatSessionIdJidPresenceResponse = (postChatSessionIdJidPresenceResponseSuccess | postChatSessionIdJidPresenceResponseError)
 
-export const getPostChatSessionIdJidPresenceUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/chat/${sessionId}/${jid}/presence`;
-};
+export const getPostChatSessionIdJidPresenceUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/${jid}/presence`
+}
 
 /**
  * Send presence status (typing, recording, online, etc.) to a chat
  * @summary Send presence (typing/recording)
  */
-export const postChatSessionIdJidPresence = async (
-  sessionId: string,
-  jid: string,
-  postChatSessionIdJidPresenceBody?: PostChatSessionIdJidPresenceBody,
-  options?: RequestInit,
-): Promise<postChatSessionIdJidPresenceResponse> => {
-  return useCustomInstance<postChatSessionIdJidPresenceResponse>(
-    getPostChatSessionIdJidPresenceUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postChatSessionIdJidPresenceBody),
-    },
-  );
-};
+export const postChatSessionIdJidPresence = async (sessionId: string,
+    jid: string,
+    postChatSessionIdJidPresenceBody?: PostChatSessionIdJidPresenceBody, options?: RequestInit): Promise<postChatSessionIdJidPresenceResponse> => {
+
+  return useCustomInstance<postChatSessionIdJidPresenceResponse>(getPostChatSessionIdJidPresenceUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postChatSessionIdJidPresenceBody)
+  }
+);}
+
 
 export type postChatSessionIdJidProfilePictureResponse200 = {
-  data: PostChatSessionIdJidProfilePicture200;
-  status: 200;
-};
+  data: PostChatSessionIdJidProfilePicture200
+  status: 200
+}
 
 export type postChatSessionIdJidProfilePictureResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postChatSessionIdJidProfilePictureResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type postChatSessionIdJidProfilePictureResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
 export type postChatSessionIdJidProfilePictureResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type postChatSessionIdJidProfilePictureResponseSuccess =
-  postChatSessionIdJidProfilePictureResponse200 & {
-    headers: Headers;
-  };
-export type postChatSessionIdJidProfilePictureResponseError = (
-  | postChatSessionIdJidProfilePictureResponse401
-  | postChatSessionIdJidProfilePictureResponse403
-  | postChatSessionIdJidProfilePictureResponse500
-  | postChatSessionIdJidProfilePictureResponse503
-) & {
+export type postChatSessionIdJidProfilePictureResponseSuccess = (postChatSessionIdJidProfilePictureResponse200) & {
+  headers: Headers;
+};
+export type postChatSessionIdJidProfilePictureResponseError = (postChatSessionIdJidProfilePictureResponse401 | postChatSessionIdJidProfilePictureResponse403 | postChatSessionIdJidProfilePictureResponse500 | postChatSessionIdJidProfilePictureResponse503) & {
   headers: Headers;
 };
 
-export type postChatSessionIdJidProfilePictureResponse =
-  | postChatSessionIdJidProfilePictureResponseSuccess
-  | postChatSessionIdJidProfilePictureResponseError;
+export type postChatSessionIdJidProfilePictureResponse = (postChatSessionIdJidProfilePictureResponseSuccess | postChatSessionIdJidProfilePictureResponseError)
 
-export const getPostChatSessionIdJidProfilePictureUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/chat/${sessionId}/${jid}/profile-picture`;
-};
+export const getPostChatSessionIdJidProfilePictureUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/${jid}/profile-picture`
+}
 
 /**
  * Get profile picture URL for a contact or group
  * @summary Get profile picture URL
  */
-export const postChatSessionIdJidProfilePicture = async (
-  sessionId: string,
-  jid: string,
-  options?: RequestInit,
-): Promise<postChatSessionIdJidProfilePictureResponse> => {
-  return useCustomInstance<postChatSessionIdJidProfilePictureResponse>(
-    getPostChatSessionIdJidProfilePictureUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'POST',
-    },
-  );
-};
+export const postChatSessionIdJidProfilePicture = async (sessionId: string,
+    jid: string, options?: RequestInit): Promise<postChatSessionIdJidProfilePictureResponse> => {
+
+  return useCustomInstance<postChatSessionIdJidProfilePictureResponse>(getPostChatSessionIdJidProfilePictureUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
 
 export type postChatSessionIdCheckResponse200 = {
-  data: PostChatSessionIdCheck200;
-  status: 200;
-};
+  data: PostChatSessionIdCheck200
+  status: 200
+}
 
 export type postChatSessionIdCheckResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type postChatSessionIdCheckResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postChatSessionIdCheckResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type postChatSessionIdCheckResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
 export type postChatSessionIdCheckResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type postChatSessionIdCheckResponseSuccess =
-  postChatSessionIdCheckResponse200 & {
-    headers: Headers;
-  };
-export type postChatSessionIdCheckResponseError = (
-  | postChatSessionIdCheckResponse400
-  | postChatSessionIdCheckResponse401
-  | postChatSessionIdCheckResponse403
-  | postChatSessionIdCheckResponse500
-  | postChatSessionIdCheckResponse503
-) & {
+export type postChatSessionIdCheckResponseSuccess = (postChatSessionIdCheckResponse200) & {
+  headers: Headers;
+};
+export type postChatSessionIdCheckResponseError = (postChatSessionIdCheckResponse400 | postChatSessionIdCheckResponse401 | postChatSessionIdCheckResponse403 | postChatSessionIdCheckResponse500 | postChatSessionIdCheckResponse503) & {
   headers: Headers;
 };
 
-export type postChatSessionIdCheckResponse =
-  | postChatSessionIdCheckResponseSuccess
-  | postChatSessionIdCheckResponseError;
+export type postChatSessionIdCheckResponse = (postChatSessionIdCheckResponseSuccess | postChatSessionIdCheckResponseError)
 
-export const getPostChatSessionIdCheckUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/chat/${sessionId}/check`;
-};
+export const getPostChatSessionIdCheckUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/check`
+}
 
 /**
  * Validate phone numbers (max 50 per request)
  * @summary Check if numbers exist on WhatsApp
  */
-export const postChatSessionIdCheck = async (
-  sessionId: string,
-  postChatSessionIdCheckBody?: PostChatSessionIdCheckBody,
-  options?: RequestInit,
-): Promise<postChatSessionIdCheckResponse> => {
-  return useCustomInstance<postChatSessionIdCheckResponse>(
-    getPostChatSessionIdCheckUrl(sessionId),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postChatSessionIdCheckBody),
-    },
-  );
-};
+export const postChatSessionIdCheck = async (sessionId: string,
+    postChatSessionIdCheckBody?: PostChatSessionIdCheckBody, options?: RequestInit): Promise<postChatSessionIdCheckResponse> => {
+
+  return useCustomInstance<postChatSessionIdCheckResponse>(getPostChatSessionIdCheckUrl(sessionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postChatSessionIdCheckBody)
+  }
+);}
+
 
 export type postChatCheckResponse200 = {
-  data: PostChatCheck200;
-  status: 200;
-};
+  data: PostChatCheck200
+  status: 200
+}
 
-export type postChatCheckResponseSuccess = postChatCheckResponse200 & {
+export type postChatCheckResponseSuccess = (postChatCheckResponse200) & {
   headers: Headers;
 };
-export type postChatCheckResponse = postChatCheckResponseSuccess;
+;
+
+export type postChatCheckResponse = (postChatCheckResponseSuccess)
 
 export const getPostChatCheckUrl = () => {
-  return `http://localhost:3000/api/chat/check`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/check`
+}
 
 /**
  * **DEPRECATED:** Use POST /chat/{sessionId}/check instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Check numbers (DEPRECATED)
  */
-export const postChatCheck = async (
-  postChatCheckBody?: PostChatCheckBody,
-  options?: RequestInit,
-): Promise<postChatCheckResponse> => {
-  return useCustomInstance<postChatCheckResponse>(getPostChatCheckUrl(), {
+export const postChatCheck = async (postChatCheckBody?: PostChatCheckBody, options?: RequestInit): Promise<postChatCheckResponse> => {
+
+  return useCustomInstance<postChatCheckResponse>(getPostChatCheckUrl(),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postChatCheckBody),
-  });
-};
+    body: JSON.stringify(postChatCheckBody)
+  }
+);}
+
 
 export type putChatReadResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putChatReadResponseSuccess = putChatReadResponse200 & {
+export type putChatReadResponseSuccess = (putChatReadResponse200) & {
   headers: Headers;
 };
-export type putChatReadResponse = putChatReadResponseSuccess;
+;
+
+export type putChatReadResponse = (putChatReadResponseSuccess)
 
 export const getPutChatReadUrl = () => {
-  return `http://localhost:3000/api/chat/read`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/read`
+}
 
 /**
  * **DEPRECATED:** Use PUT /chat/{sessionId}/{jid}/read instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Mark messages as read (DEPRECATED)
  */
-export const putChatRead = async (
-  putChatReadBody?: PutChatReadBody,
-  options?: RequestInit,
-): Promise<putChatReadResponse> => {
-  return useCustomInstance<putChatReadResponse>(getPutChatReadUrl(), {
+export const putChatRead = async (putChatReadBody?: PutChatReadBody, options?: RequestInit): Promise<putChatReadResponse> => {
+
+  return useCustomInstance<putChatReadResponse>(getPutChatReadUrl(),
+  {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putChatReadBody),
-  });
-};
+    body: JSON.stringify(putChatReadBody)
+  }
+);}
+
 
 export type putChatArchiveResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putChatArchiveResponseSuccess = putChatArchiveResponse200 & {
+export type putChatArchiveResponseSuccess = (putChatArchiveResponse200) & {
   headers: Headers;
 };
-export type putChatArchiveResponse = putChatArchiveResponseSuccess;
+;
+
+export type putChatArchiveResponse = (putChatArchiveResponseSuccess)
 
 export const getPutChatArchiveUrl = () => {
-  return `http://localhost:3000/api/chat/archive`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/archive`
+}
 
 /**
  * **DEPRECATED:** Use PUT /chat/{sessionId}/{jid}/archive instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Archive/unarchive chat (DEPRECATED)
  */
-export const putChatArchive = async (
-  putChatArchiveBody?: PutChatArchiveBody,
-  options?: RequestInit,
-): Promise<putChatArchiveResponse> => {
-  return useCustomInstance<putChatArchiveResponse>(getPutChatArchiveUrl(), {
+export const putChatArchive = async (putChatArchiveBody?: PutChatArchiveBody, options?: RequestInit): Promise<putChatArchiveResponse> => {
+
+  return useCustomInstance<putChatArchiveResponse>(getPutChatArchiveUrl(),
+  {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putChatArchiveBody),
-  });
-};
+    body: JSON.stringify(putChatArchiveBody)
+  }
+);}
+
 
 export type putChatMuteResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putChatMuteResponseSuccess = putChatMuteResponse200 & {
+export type putChatMuteResponseSuccess = (putChatMuteResponse200) & {
   headers: Headers;
 };
-export type putChatMuteResponse = putChatMuteResponseSuccess;
+;
+
+export type putChatMuteResponse = (putChatMuteResponseSuccess)
 
 export const getPutChatMuteUrl = () => {
-  return `http://localhost:3000/api/chat/mute`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/mute`
+}
 
 /**
  * **DEPRECATED:** Use PUT /chat/{sessionId}/{jid}/mute instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Mute/unmute chat (DEPRECATED)
  */
-export const putChatMute = async (
-  putChatMuteBody?: PutChatMuteBody,
-  options?: RequestInit,
-): Promise<putChatMuteResponse> => {
-  return useCustomInstance<putChatMuteResponse>(getPutChatMuteUrl(), {
+export const putChatMute = async (putChatMuteBody?: PutChatMuteBody, options?: RequestInit): Promise<putChatMuteResponse> => {
+
+  return useCustomInstance<putChatMuteResponse>(getPutChatMuteUrl(),
+  {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putChatMuteBody),
-  });
-};
+    body: JSON.stringify(putChatMuteBody)
+  }
+);}
+
 
 export type putChatPinResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putChatPinResponseSuccess = putChatPinResponse200 & {
+export type putChatPinResponseSuccess = (putChatPinResponse200) & {
   headers: Headers;
 };
-export type putChatPinResponse = putChatPinResponseSuccess;
+;
+
+export type putChatPinResponse = (putChatPinResponseSuccess)
 
 export const getPutChatPinUrl = () => {
-  return `http://localhost:3000/api/chat/pin`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/pin`
+}
 
 /**
  * **DEPRECATED:** Use PUT /chat/{sessionId}/{jid}/pin instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Pin/unpin chat (DEPRECATED)
  */
-export const putChatPin = async (
-  putChatPinBody?: PutChatPinBody,
-  options?: RequestInit,
-): Promise<putChatPinResponse> => {
-  return useCustomInstance<putChatPinResponse>(getPutChatPinUrl(), {
+export const putChatPin = async (putChatPinBody?: PutChatPinBody, options?: RequestInit): Promise<putChatPinResponse> => {
+
+  return useCustomInstance<putChatPinResponse>(getPutChatPinUrl(),
+  {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putChatPinBody),
-  });
-};
+    body: JSON.stringify(putChatPinBody)
+  }
+);}
+
 
 export type postChatPresenceResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type postChatPresenceResponseSuccess = postChatPresenceResponse200 & {
+export type postChatPresenceResponseSuccess = (postChatPresenceResponse200) & {
   headers: Headers;
 };
-export type postChatPresenceResponse = postChatPresenceResponseSuccess;
+;
+
+export type postChatPresenceResponse = (postChatPresenceResponseSuccess)
 
 export const getPostChatPresenceUrl = () => {
-  return `http://localhost:3000/api/chat/presence`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/presence`
+}
 
 /**
  * **DEPRECATED:** Use POST /chat/{sessionId}/{jid}/presence instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Send presence (DEPRECATED)
  */
-export const postChatPresence = async (
-  postChatPresenceBody?: PostChatPresenceBody,
-  options?: RequestInit,
-): Promise<postChatPresenceResponse> => {
-  return useCustomInstance<postChatPresenceResponse>(getPostChatPresenceUrl(), {
+export const postChatPresence = async (postChatPresenceBody?: PostChatPresenceBody, options?: RequestInit): Promise<postChatPresenceResponse> => {
+
+  return useCustomInstance<postChatPresenceResponse>(getPostChatPresenceUrl(),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postChatPresenceBody),
-  });
-};
+    body: JSON.stringify(postChatPresenceBody)
+  }
+);}
+
 
 export type postChatProfilePictureResponse200 = {
-  data: PostChatProfilePicture200;
-  status: 200;
-};
+  data: PostChatProfilePicture200
+  status: 200
+}
 
-export type postChatProfilePictureResponseSuccess =
-  postChatProfilePictureResponse200 & {
-    headers: Headers;
-  };
-export type postChatProfilePictureResponse =
-  postChatProfilePictureResponseSuccess;
+export type postChatProfilePictureResponseSuccess = (postChatProfilePictureResponse200) & {
+  headers: Headers;
+};
+;
+
+export type postChatProfilePictureResponse = (postChatProfilePictureResponseSuccess)
 
 export const getPostChatProfilePictureUrl = () => {
-  return `http://localhost:3000/api/chat/profile-picture`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/profile-picture`
+}
 
 /**
  * **DEPRECATED:** Use POST /chat/{sessionId}/{jid}/profile-picture instead. This endpoint will be removed in a future version.
  * @deprecated
  * @summary Get profile picture URL (DEPRECATED)
  */
-export const postChatProfilePicture = async (
-  postChatProfilePictureBody?: PostChatProfilePictureBody,
-  options?: RequestInit,
-): Promise<postChatProfilePictureResponse> => {
-  return useCustomInstance<postChatProfilePictureResponse>(
-    getPostChatProfilePictureUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postChatProfilePictureBody),
-    },
-  );
-};
+export const postChatProfilePicture = async (postChatProfilePictureBody?: PostChatProfilePictureBody, options?: RequestInit): Promise<postChatProfilePictureResponse> => {
+
+  return useCustomInstance<postChatProfilePictureResponse>(getPostChatProfilePictureUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postChatProfilePictureBody)
+  }
+);}
+
+

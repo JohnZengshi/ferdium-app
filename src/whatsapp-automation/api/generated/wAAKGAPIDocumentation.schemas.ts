@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 export interface Error {
@@ -43,12 +76,16 @@ export interface Success {
   data?: SuccessData;
 }
 
-export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus];
+export type SessionStatus = typeof SessionStatus[keyof typeof SessionStatus];
+
 
 export const SessionStatus = {
-  Connected: 'Connected',
-  Disconnected: 'Disconnected',
-  Connecting: 'Connecting',
+  DISCONNECTED: 'DISCONNECTED',
+  SCAN_QR: 'SCAN_QR',
+  CONNECTED: 'CONNECTED',
+  STOPPED: 'STOPPED',
+  LOGGED_OUT: 'LOGGED_OUT',
+  DUPLICATE_ACCOUNT: 'DUPLICATE_ACCOUNT',
 } as const;
 
 /**
@@ -74,6 +111,11 @@ export interface Session {
   name?: string;
   sessionId?: string;
   status?: SessionStatus;
+  /**
+     * Connected WhatsApp account JID. Unique when present. Duplicate binding attempts are rejected after scan with DUPLICATE_ACCOUNT status.
+     * @nullable
+     */
+  waJid?: string | null;
   userId?: string;
   /** @nullable */
   botConfig?: SessionBotConfig;
@@ -130,9 +172,9 @@ export interface Group {
   /** Whether this group is a WhatsApp Community announcement group */
   isCommunity?: boolean;
   /**
-   * JID of the parent community if this is a sub-group
-   * @nullable
-   */
+     * JID of the parent community if this is a sub-group
+     * @nullable
+     */
   linkedParentJid?: string | null;
   participants?: GroupParticipantsItem[];
 }
@@ -225,8 +267,8 @@ export type GetSessionsIdQr200 = {
   base64?: string;
 };
 
-export type PostSessionsIdBotConfigBodyBotMode =
-  (typeof PostSessionsIdBotConfigBodyBotMode)[keyof typeof PostSessionsIdBotConfigBodyBotMode];
+export type PostSessionsIdBotConfigBodyBotMode = typeof PostSessionsIdBotConfigBodyBotMode[keyof typeof PostSessionsIdBotConfigBodyBotMode];
+
 
 export const PostSessionsIdBotConfigBodyBotMode = {
   OWNER: 'OWNER',
@@ -235,8 +277,8 @@ export const PostSessionsIdBotConfigBodyBotMode = {
   ALL: 'ALL',
 } as const;
 
-export type PostSessionsIdBotConfigBodyAutoReplyMode =
-  (typeof PostSessionsIdBotConfigBodyAutoReplyMode)[keyof typeof PostSessionsIdBotConfigBodyAutoReplyMode];
+export type PostSessionsIdBotConfigBodyAutoReplyMode = typeof PostSessionsIdBotConfigBodyAutoReplyMode[keyof typeof PostSessionsIdBotConfigBodyAutoReplyMode];
+
 
 export const PostSessionsIdBotConfigBodyAutoReplyMode = {
   OWNER: 'OWNER',
@@ -301,7 +343,7 @@ export type PatchSessionsIdSettingsBodyConfig = {
   readReceipts?: boolean;
   rejectCalls?: boolean;
   /** SOCKS5/HTTP proxy URL for WhatsApp connection */
-  proxyUrl?: string | null;
+  proxyUrl?: string;
 };
 
 export type PatchSessionsIdSettingsBody = {
@@ -363,16 +405,14 @@ export type DeleteSessionsSessionIdAccessBody = {
 /**
  * Message content (text, image, sticker, etc.)
  */
-export type PostChatSendBodyMessage =
-  | {
-      text?: string;
-    }
-  | {
-      image?: {
-        url?: string;
-      };
-      caption?: string;
-    };
+export type PostChatSendBodyMessage = {
+  text?: string;
+} | {
+  image?: {
+  url?: string;
+};
+  caption?: string;
+};
 
 export type PostChatSendBody = {
   sessionId: string;
@@ -393,25 +433,20 @@ export type PostChatSessionIdSendBody = {
 /**
  * Message content (text, image, sticker, etc.)
  */
-export type PostMessagesSessionIdJidSendBodyMessage =
-  | {
-      text?: string;
-    }
-  | {
-      image?: {
-        url?: string;
-      };
-      caption?: string;
-    }
-  | {
-      sticker?:
-        | string
-        | {
-            url?: string;
-            pack?: string;
-            author?: string;
-          };
-    };
+export type PostMessagesSessionIdJidSendBodyMessage = {
+  text?: string;
+} | {
+  image?: {
+  url?: string;
+};
+  caption?: string;
+} | {
+  sticker?: string | {
+  url?: string;
+  pack?: string;
+  author?: string;
+};
+};
 
 export type PostMessagesSessionIdJidSendBody = {
   /** Message content (text, image, sticker, etc.) */
@@ -420,8 +455,8 @@ export type PostMessagesSessionIdJidSendBody = {
   mentions?: string[];
 };
 
-export type PostMessagesSessionIdJidMediaBodyType =
-  (typeof PostMessagesSessionIdJidMediaBodyType)[keyof typeof PostMessagesSessionIdJidMediaBodyType];
+export type PostMessagesSessionIdJidMediaBodyType = typeof PostMessagesSessionIdJidMediaBodyType[keyof typeof PostMessagesSessionIdJidMediaBodyType];
+
 
 export const PostMessagesSessionIdJidMediaBodyType = {
   image: 'image',
@@ -455,10 +490,10 @@ export type PostMessagesBroadcastBody = {
   recipients: string[];
   message: string;
   /**
-   * Intended delay between messages (ms). Note: implementation uses additional random 10-20s delay.
-   * @minimum 500
-   * @maximum 60000
-   */
+     * Intended delay between messages (ms). Note: implementation uses additional random 10-20s delay.
+     * @minimum 500
+     * @maximum 60000
+     */
   delay?: number;
 };
 
@@ -470,9 +505,9 @@ export type PostMessagesBroadcast200 = {
 export type PostMessagesSessionIdJidPollBody = {
   question: string;
   /**
-   * @minItems 2
-   * @maxItems 12
-   */
+     * @minItems 2
+     * @maxItems 12
+     */
   options: string[];
   /** @minimum 1 */
   selectableCount?: number;
@@ -487,9 +522,9 @@ export type PostMessagesPollBody = {
   jid: string;
   question: string;
   /**
-   * @minItems 2
-   * @maxItems 12
-   */
+     * @minItems 2
+     * @maxItems 12
+     */
   options: string[];
   /** @minimum 1 */
   selectableCount?: number;
@@ -497,14 +532,14 @@ export type PostMessagesPollBody = {
 
 export type PostMessagesSessionIdJidLocationBody = {
   /**
-   * @minimum -90
-   * @maximum 90
-   */
+     * @minimum -90
+     * @maximum 90
+     */
   latitude: number;
   /**
-   * @minimum -180
-   * @maximum 180
-   */
+     * @minimum -180
+     * @maximum 180
+     */
   longitude: number;
   name?: string;
   address?: string;
@@ -518,14 +553,14 @@ export type PostMessagesLocationBody = {
   sessionId: string;
   jid: string;
   /**
-   * @minimum -90
-   * @maximum 90
-   */
+     * @minimum -90
+     * @maximum 90
+     */
   latitude: number;
   /**
-   * @minimum -180
-   * @maximum 180
-   */
+     * @minimum -180
+     * @maximum 180
+     */
   longitude: number;
   name?: string;
   address?: string;
@@ -556,7 +591,7 @@ export type PostMessagesContactBody = {
 };
 
 export type GetMessagesIdMediaParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 export type PostMessagesSessionIdJidMessageIdReactBody = {
@@ -572,9 +607,7 @@ export type PostMessagesSessionIdJidMessageIdReact200 = {
 /**
  * Message content — same format as /send (text, image, video, etc.)
  */
-export type PostMessagesSessionIdJidMessageIdReplyBodyMessage = {
-  [key: string]: unknown;
-};
+export type PostMessagesSessionIdJidMessageIdReplyBodyMessage = { [key: string]: unknown };
 
 export type PostMessagesSessionIdJidMessageIdReplyBody = {
   /** Message content — same format as /send (text, image, video, etc.) */
@@ -593,9 +626,7 @@ export type PostMessagesSessionIdJidMessageIdReply200 = {
 /**
  * Message content — same format as /send (text, image, video, etc.)
  */
-export type PostMessagesSessionIdJidReplyBodyMessage = {
-  [key: string]: unknown;
-};
+export type PostMessagesSessionIdJidReplyBodyMessage = { [key: string]: unknown };
 
 export type PostMessagesSessionIdJidReplyBody = {
   /** ID of the message to reply to */
@@ -621,34 +652,34 @@ export type PostMessagesSessionIdJidMessageIdStar200 = {
 };
 
 export type GetMessagesSessionIdSearchParams = {
-  /**
-   * Text to search for in message content
-   */
-  q?: string;
-  /**
-   * Filter by chat JID
-   */
-  jid?: string;
-  /**
-   * Filter by message type
-   */
-  type?: GetMessagesSessionIdSearchType;
-  /**
-   * Filter by sender (true=outgoing, false=incoming)
-   */
-  fromMe?: boolean;
-  /**
-   * @minimum 1
-   */
-  page?: number;
-  /**
-   * @maximum 100
-   */
-  limit?: number;
+/**
+ * Text to search for in message content
+ */
+q?: string;
+/**
+ * Filter by chat JID
+ */
+jid?: string;
+/**
+ * Filter by message type
+ */
+type?: GetMessagesSessionIdSearchType;
+/**
+ * Filter by sender (true=outgoing, false=incoming)
+ */
+fromMe?: boolean;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @maximum 100
+ */
+limit?: number;
 };
 
-export type GetMessagesSessionIdSearchType =
-  (typeof GetMessagesSessionIdSearchType)[keyof typeof GetMessagesSessionIdSearchType];
+export type GetMessagesSessionIdSearchType = typeof GetMessagesSessionIdSearchType[keyof typeof GetMessagesSessionIdSearchType];
+
 
 export const GetMessagesSessionIdSearchType = {
   TEXT: 'TEXT',
@@ -748,8 +779,8 @@ export type PostMessagesSpam200 = {
 /**
  * Sticker crop type (default: full)
  */
-export type PostMessagesSessionIdJidStickerBodyType =
-  (typeof PostMessagesSessionIdJidStickerBodyType)[keyof typeof PostMessagesSessionIdJidStickerBodyType];
+export type PostMessagesSessionIdJidStickerBodyType = typeof PostMessagesSessionIdJidStickerBodyType[keyof typeof PostMessagesSessionIdJidStickerBodyType];
+
 
 export const PostMessagesSessionIdJidStickerBodyType = {
   full: 'full',
@@ -766,10 +797,10 @@ export type PostMessagesSessionIdJidStickerBody = {
   /** Sticker crop type (default: full) */
   type?: PostMessagesSessionIdJidStickerBodyType;
   /**
-   * Image quality (default: 50)
-   * @minimum 1
-   * @maximum 100
-   */
+     * Image quality (default: 50)
+     * @minimum 1
+     * @maximum 100
+     */
   quality?: number;
 };
 
@@ -866,8 +897,8 @@ export type PutChatSessionIdJidPin200 = {
   message?: string;
 };
 
-export type PostChatSessionIdJidPresenceBodyPresence =
-  (typeof PostChatSessionIdJidPresenceBodyPresence)[keyof typeof PostChatSessionIdJidPresenceBodyPresence];
+export type PostChatSessionIdJidPresenceBodyPresence = typeof PostChatSessionIdJidPresenceBodyPresence[keyof typeof PostChatSessionIdJidPresenceBodyPresence];
+
 
 export const PostChatSessionIdJidPresenceBodyPresence = {
   composing: 'composing',
@@ -961,8 +992,8 @@ export type PutChatPinBody = {
   pin: boolean;
 };
 
-export type PostChatPresenceBodyPresence =
-  (typeof PostChatPresenceBodyPresence)[keyof typeof PostChatPresenceBodyPresence];
+export type PostChatPresenceBodyPresence = typeof PostChatPresenceBodyPresence[keyof typeof PostChatPresenceBodyPresence];
+
 
 export const PostChatPresenceBodyPresence = {
   composing: 'composing',
@@ -991,7 +1022,7 @@ export type PostChatProfilePicture200 = {
 };
 
 export type GetGroupsParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 export type PostGroupsSessionIdCreateBody = {
@@ -1035,8 +1066,8 @@ export type PutGroupsJidSubject200 = {
   subject?: string;
 };
 
-export type PutGroupsSessionIdJidMembersBodyAction =
-  (typeof PutGroupsSessionIdJidMembersBodyAction)[keyof typeof PutGroupsSessionIdJidMembersBodyAction];
+export type PutGroupsSessionIdJidMembersBodyAction = typeof PutGroupsSessionIdJidMembersBodyAction[keyof typeof PutGroupsSessionIdJidMembersBodyAction];
+
 
 export const PutGroupsSessionIdJidMembersBodyAction = {
   add: 'add',
@@ -1050,9 +1081,7 @@ export type PutGroupsSessionIdJidMembersBody = {
   participants: string[];
 };
 
-export type PutGroupsSessionIdJidMembers200ResultItem = {
-  [key: string]: unknown;
-};
+export type PutGroupsSessionIdJidMembers200ResultItem = { [key: string]: unknown };
 
 export type PutGroupsSessionIdJidMembers200 = {
   success?: boolean;
@@ -1060,8 +1089,8 @@ export type PutGroupsSessionIdJidMembers200 = {
   result?: PutGroupsSessionIdJidMembers200ResultItem[];
 };
 
-export type PutGroupsJidMembersBodyAction =
-  (typeof PutGroupsJidMembersBodyAction)[keyof typeof PutGroupsJidMembersBodyAction];
+export type PutGroupsJidMembersBodyAction = typeof PutGroupsJidMembersBodyAction[keyof typeof PutGroupsJidMembersBodyAction];
+
 
 export const PutGroupsJidMembersBodyAction = {
   add: 'add',
@@ -1090,7 +1119,7 @@ export type GetGroupsSessionIdJidInvite200 = {
 };
 
 export type GetGroupsJidInviteParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 export type GetGroupsJidInvite200 = {
@@ -1104,12 +1133,12 @@ export type PutGroupsJidInviteBody = {
 };
 
 export type GetContactsSessionIdParams = {
-  page?: number;
-  limit?: number;
-  /**
-   * Search by name, notify, jid
-   */
-  search?: string;
+page?: number;
+limit?: number;
+/**
+ * Search by name, notify, jid
+ */
+search?: string;
 };
 
 export type GetContactsSessionId200Meta = {
@@ -1125,13 +1154,13 @@ export type GetContactsSessionId200 = {
 };
 
 export type GetContactsParams = {
-  sessionId: string;
-  page?: number;
-  limit?: number;
-  /**
-   * Search by name, notify, jid
-   */
-  search?: string;
+sessionId: string;
+page?: number;
+limit?: number;
+/**
+ * Search by name, notify, jid
+ */
+search?: string;
 };
 
 export type GetContacts200Meta = {
@@ -1186,15 +1215,15 @@ export type PutProfilePictureBody = {
 };
 
 export type DeleteProfilePictureParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 export type GetProfileParams = {
-  sessionId: string;
+sessionId: string;
 };
 
-export type PostAutorepliesSessionIdBodyMatchType =
-  (typeof PostAutorepliesSessionIdBodyMatchType)[keyof typeof PostAutorepliesSessionIdBodyMatchType];
+export type PostAutorepliesSessionIdBodyMatchType = typeof PostAutorepliesSessionIdBodyMatchType[keyof typeof PostAutorepliesSessionIdBodyMatchType];
+
 
 export const PostAutorepliesSessionIdBodyMatchType = {
   EXACT: 'EXACT',
@@ -1203,8 +1232,8 @@ export const PostAutorepliesSessionIdBodyMatchType = {
   REGEX: 'REGEX',
 } as const;
 
-export type PostAutorepliesSessionIdBodyTriggerType =
-  (typeof PostAutorepliesSessionIdBodyTriggerType)[keyof typeof PostAutorepliesSessionIdBodyTriggerType];
+export type PostAutorepliesSessionIdBodyTriggerType = typeof PostAutorepliesSessionIdBodyTriggerType[keyof typeof PostAutorepliesSessionIdBodyTriggerType];
+
 
 export const PostAutorepliesSessionIdBodyTriggerType = {
   ALL: 'ALL',
@@ -1221,8 +1250,8 @@ export type PostAutorepliesSessionIdBody = {
   triggerType?: PostAutorepliesSessionIdBodyTriggerType;
 };
 
-export type PutAutorepliesSessionIdReplyIdBodyTriggerType =
-  (typeof PutAutorepliesSessionIdReplyIdBodyTriggerType)[keyof typeof PutAutorepliesSessionIdReplyIdBodyTriggerType];
+export type PutAutorepliesSessionIdReplyIdBodyTriggerType = typeof PutAutorepliesSessionIdReplyIdBodyTriggerType[keyof typeof PutAutorepliesSessionIdReplyIdBodyTriggerType];
+
 
 export const PutAutorepliesSessionIdReplyIdBodyTriggerType = {
   ALL: 'ALL',
@@ -1239,11 +1268,11 @@ export type PutAutorepliesSessionIdReplyIdBody = {
 };
 
 export type GetAutorepliesParams = {
-  sessionId: string;
+sessionId: string;
 };
 
-export type PostAutorepliesBodyMatchType =
-  (typeof PostAutorepliesBodyMatchType)[keyof typeof PostAutorepliesBodyMatchType];
+export type PostAutorepliesBodyMatchType = typeof PostAutorepliesBodyMatchType[keyof typeof PostAutorepliesBodyMatchType];
+
 
 export const PostAutorepliesBodyMatchType = {
   EXACT: 'EXACT',
@@ -1258,8 +1287,8 @@ export type PostAutorepliesBody = {
   matchType?: PostAutorepliesBodyMatchType;
 };
 
-export type PutAutorepliesIdBodyMatchType =
-  (typeof PutAutorepliesIdBodyMatchType)[keyof typeof PutAutorepliesIdBodyMatchType];
+export type PutAutorepliesIdBodyMatchType = typeof PutAutorepliesIdBodyMatchType[keyof typeof PutAutorepliesIdBodyMatchType];
+
 
 export const PutAutorepliesIdBodyMatchType = {
   EXACT: 'EXACT',
@@ -1273,8 +1302,8 @@ export type PutAutorepliesIdBody = {
   matchType?: PutAutorepliesIdBodyMatchType;
 };
 
-export type PostSchedulerSessionIdBodyMediaType =
-  (typeof PostSchedulerSessionIdBodyMediaType)[keyof typeof PostSchedulerSessionIdBodyMediaType];
+export type PostSchedulerSessionIdBodyMediaType = typeof PostSchedulerSessionIdBodyMediaType[keyof typeof PostSchedulerSessionIdBodyMediaType];
+
 
 export const PostSchedulerSessionIdBodyMediaType = {
   image: 'image',
@@ -1290,8 +1319,8 @@ export type PostSchedulerSessionIdBody = {
   mediaType?: PostSchedulerSessionIdBodyMediaType;
 };
 
-export type PutSchedulerSessionIdScheduleIdBodyMediaType =
-  (typeof PutSchedulerSessionIdScheduleIdBodyMediaType)[keyof typeof PutSchedulerSessionIdScheduleIdBodyMediaType];
+export type PutSchedulerSessionIdScheduleIdBodyMediaType = typeof PutSchedulerSessionIdScheduleIdBodyMediaType[keyof typeof PutSchedulerSessionIdScheduleIdBodyMediaType];
+
 
 export const PutSchedulerSessionIdScheduleIdBodyMediaType = {
   image: 'image',
@@ -1317,7 +1346,7 @@ export type PostSchedulerBody = {
 };
 
 export type GetSchedulerParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 export type PostWebhooksSessionIdBody = {
@@ -1361,8 +1390,8 @@ export type DeleteWebhooksId200 = {
   success?: boolean;
 };
 
-export type PostUsersBodyRole =
-  (typeof PostUsersBodyRole)[keyof typeof PostUsersBodyRole];
+export type PostUsersBodyRole = typeof PostUsersBodyRole[keyof typeof PostUsersBodyRole];
+
 
 export const PostUsersBodyRole = {
   SUPERADMIN: 'SUPERADMIN',
@@ -1405,8 +1434,8 @@ export type DeleteUsersId200 = {
   message?: string;
 };
 
-export type PatchUsersIdBodyRole =
-  (typeof PatchUsersIdBodyRole)[keyof typeof PatchUsersIdBodyRole];
+export type PatchUsersIdBodyRole = typeof PatchUsersIdBodyRole[keyof typeof PatchUsersIdBodyRole];
+
 
 export const PatchUsersIdBodyRole = {
   SUPERADMIN: 'SUPERADMIN',
@@ -1449,7 +1478,7 @@ export type GetUserApiKey200 = {
 };
 
 export type GetGroupsJidParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 export type GetGroupsJid200ParticipantsItem = {
@@ -1506,14 +1535,14 @@ export type PutGroupsJidPictureBody = {
 };
 
 export type DeleteGroupsJidPictureParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 /**
  * announcement (admins only send), not_announcement (all send), locked (admins only edit), unlocked (all edit)
  */
-export type PutGroupsSessionIdJidSettingsBodySetting =
-  (typeof PutGroupsSessionIdJidSettingsBodySetting)[keyof typeof PutGroupsSessionIdJidSettingsBodySetting];
+export type PutGroupsSessionIdJidSettingsBodySetting = typeof PutGroupsSessionIdJidSettingsBodySetting[keyof typeof PutGroupsSessionIdJidSettingsBodySetting];
+
 
 export const PutGroupsSessionIdJidSettingsBodySetting = {
   announcement: 'announcement',
@@ -1532,8 +1561,8 @@ export type PutGroupsSessionIdJidSettingsBody = {
 /**
  * announcement (admins only send), not_announcement (all send), locked (admins only edit), unlocked (all edit)
  */
-export type PutGroupsJidSettingsBodySetting =
-  (typeof PutGroupsJidSettingsBodySetting)[keyof typeof PutGroupsJidSettingsBodySetting];
+export type PutGroupsJidSettingsBodySetting = typeof PutGroupsJidSettingsBodySetting[keyof typeof PutGroupsJidSettingsBodySetting];
+
 
 export const PutGroupsJidSettingsBodySetting = {
   announcement: 'announcement',
@@ -1565,8 +1594,8 @@ export type PutGroupsJidDescriptionBody = {
   description?: string;
 };
 
-export type PutGroupsSessionIdJidEphemeralBodyExpiration =
-  (typeof PutGroupsSessionIdJidEphemeralBodyExpiration)[keyof typeof PutGroupsSessionIdJidEphemeralBodyExpiration];
+export type PutGroupsSessionIdJidEphemeralBodyExpiration = typeof PutGroupsSessionIdJidEphemeralBodyExpiration[keyof typeof PutGroupsSessionIdJidEphemeralBodyExpiration];
+
 
 export const PutGroupsSessionIdJidEphemeralBodyExpiration = {
   NUMBER_0: 0,
@@ -1587,8 +1616,8 @@ export type PutGroupsSessionIdJidEphemeral200 = {
 /**
  * 0 (off), 86400 (24h), 604800 (7d), 7776000 (90d)
  */
-export type PutGroupsJidEphemeralBodyExpiration =
-  (typeof PutGroupsJidEphemeralBodyExpiration)[keyof typeof PutGroupsJidEphemeralBodyExpiration];
+export type PutGroupsJidEphemeralBodyExpiration = typeof PutGroupsJidEphemeralBodyExpiration[keyof typeof PutGroupsJidEphemeralBodyExpiration];
+
 
 export const PutGroupsJidEphemeralBodyExpiration = {
   NUMBER_0: 0,
@@ -1606,10 +1635,10 @@ export type PutGroupsJidEphemeralBody = {
 export type PostLabelsSessionIdBody = {
   name: string;
   /**
-   * Color index (0-19)
-   * @minimum 0
-   * @maximum 19
-   */
+     * Color index (0-19)
+     * @minimum 0
+     * @maximum 19
+     */
   color?: number;
 };
 
@@ -1624,7 +1653,7 @@ export type GetLabelsSessionId200 = {
 };
 
 export type GetLabelsParams = {
-  sessionId: string;
+sessionId: string;
 };
 
 export type PostLabelsBody = {
@@ -1636,9 +1665,9 @@ export type PostLabelsBody = {
 export type PutLabelsSessionIdLabelIdBody = {
   name?: string;
   /**
-   * @minimum 0
-   * @maximum 19
-   */
+     * @minimum 0
+     * @maximum 19
+     */
   color?: number;
 };
 
@@ -1657,8 +1686,8 @@ export type GetLabelsSessionIdChatJidLabels200 = {
   labels?: Label[];
 };
 
-export type PutLabelsSessionIdChatJidLabelsBodyAction =
-  (typeof PutLabelsSessionIdChatJidLabelsBodyAction)[keyof typeof PutLabelsSessionIdChatJidLabelsBodyAction];
+export type PutLabelsSessionIdChatJidLabelsBodyAction = typeof PutLabelsSessionIdChatJidLabelsBodyAction[keyof typeof PutLabelsSessionIdChatJidLabelsBodyAction];
+
 
 export const PutLabelsSessionIdChatJidLabelsBodyAction = {
   add: 'add',
@@ -1677,16 +1706,16 @@ export type PutLabelsSessionIdChatJidLabels200 = {
 };
 
 export type GetLabelsChatLabelsParams = {
-  jid: string;
-  sessionId: string;
+jid: string;
+sessionId: string;
 };
 
 export type PutLabelsChatLabelsParams = {
-  jid: string;
+jid: string;
 };
 
-export type PutLabelsChatLabelsBodyAction =
-  (typeof PutLabelsChatLabelsBodyAction)[keyof typeof PutLabelsChatLabelsBodyAction];
+export type PutLabelsChatLabelsBodyAction = typeof PutLabelsChatLabelsBodyAction[keyof typeof PutLabelsChatLabelsBodyAction];
+
 
 export const PutLabelsChatLabelsBodyAction = {
   add: 'add',
@@ -1699,8 +1728,8 @@ export type PutLabelsChatLabelsBody = {
   action: PutLabelsChatLabelsBodyAction;
 };
 
-export type PostNotificationsBodyType =
-  (typeof PostNotificationsBodyType)[keyof typeof PostNotificationsBodyType];
+export type PostNotificationsBodyType = typeof PostNotificationsBodyType[keyof typeof PostNotificationsBodyType];
+
 
 export const PostNotificationsBodyType = {
   INFO: 'INFO',
@@ -1743,10 +1772,10 @@ export type PatchNotificationsReadBody = {
 };
 
 export type DeleteNotificationsDeleteParams = {
-  /**
-   * Notification UUID
-   */
-  id: string;
+/**
+ * Notification UUID
+ */
+id: string;
 };
 
 export type PostSettingsSystemBody = {
@@ -1770,8 +1799,8 @@ export type GetSettingsSystem200 = {
   timezone?: string;
 };
 
-export type PostStatusSessionIdUpdateBodyType =
-  (typeof PostStatusSessionIdUpdateBodyType)[keyof typeof PostStatusSessionIdUpdateBodyType];
+export type PostStatusSessionIdUpdateBodyType = typeof PostStatusSessionIdUpdateBodyType[keyof typeof PostStatusSessionIdUpdateBodyType];
+
 
 export const PostStatusSessionIdUpdateBodyType = {
   TEXT: 'TEXT',
@@ -1790,8 +1819,8 @@ export type PostStatusSessionIdUpdateBody = {
   mentions?: string[];
 };
 
-export type PostStatusUpdateBodyType =
-  (typeof PostStatusUpdateBodyType)[keyof typeof PostStatusUpdateBodyType];
+export type PostStatusUpdateBodyType = typeof PostStatusUpdateBodyType[keyof typeof PostStatusUpdateBodyType];
+
 
 export const PostStatusUpdateBodyType = {
   TEXT: 'TEXT',
@@ -1841,9 +1870,7 @@ export type PostContactsUnblockBody = {
   jid: string;
 };
 
-export type GetChatsSessionIdByLabelLabelId200Label = {
-  [key: string]: unknown;
-};
+export type GetChatsSessionIdByLabelLabelId200Label = { [key: string]: unknown };
 
 export type GetChatsSessionIdByLabelLabelId200 = {
   success?: boolean;
@@ -1851,3 +1878,4 @@ export type GetChatsSessionIdByLabelLabelId200 = {
   chats?: string[];
   count?: number;
 };
+

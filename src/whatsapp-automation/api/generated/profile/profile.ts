@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
@@ -38,495 +71,485 @@ import type {
   PutProfileStatusBody,
   SessionNotReadyResponse,
   Success,
-  UnauthorizedResponse,
+  UnauthorizedResponse
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type getProfileSessionIdResponse200 = {
-  data: GetProfileSessionId200;
-  status: 200;
-};
+  data: GetProfileSessionId200
+  status: 200
+}
 
 export type getProfileSessionIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type getProfileSessionIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type getProfileSessionIdResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type getProfileSessionIdResponseSuccess =
-  getProfileSessionIdResponse200 & {
-    headers: Headers;
-  };
-export type getProfileSessionIdResponseError = (
-  | getProfileSessionIdResponse401
-  | getProfileSessionIdResponse403
-  | getProfileSessionIdResponse503
-) & {
+export type getProfileSessionIdResponseSuccess = (getProfileSessionIdResponse200) & {
+  headers: Headers;
+};
+export type getProfileSessionIdResponseError = (getProfileSessionIdResponse401 | getProfileSessionIdResponse403 | getProfileSessionIdResponse503) & {
   headers: Headers;
 };
 
-export type getProfileSessionIdResponse =
-  | getProfileSessionIdResponseSuccess
-  | getProfileSessionIdResponseError;
+export type getProfileSessionIdResponse = (getProfileSessionIdResponseSuccess | getProfileSessionIdResponseError)
 
-export const getGetProfileSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/profile/${sessionId}`;
-};
+export const getGetProfileSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/profile/${sessionId}`
+}
 
 /**
  * Fetch profile information of the connected WhatsApp account
  * @summary Get own profile
  */
-export const getProfileSessionId = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<getProfileSessionIdResponse> => {
-  return useCustomInstance<getProfileSessionIdResponse>(
-    getGetProfileSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getProfileSessionId = async (sessionId: string, options?: RequestInit): Promise<getProfileSessionIdResponse> => {
+
+  return useCustomInstance<getProfileSessionIdResponse>(getGetProfileSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type putProfileSessionIdNameResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type putProfileSessionIdNameResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putProfileSessionIdNameResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putProfileSessionIdNameResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type putProfileSessionIdNameResponseSuccess =
-  putProfileSessionIdNameResponse200 & {
-    headers: Headers;
-  };
-export type putProfileSessionIdNameResponseError = (
-  | putProfileSessionIdNameResponse401
-  | putProfileSessionIdNameResponse403
-  | putProfileSessionIdNameResponse503
-) & {
+export type putProfileSessionIdNameResponseSuccess = (putProfileSessionIdNameResponse200) & {
+  headers: Headers;
+};
+export type putProfileSessionIdNameResponseError = (putProfileSessionIdNameResponse401 | putProfileSessionIdNameResponse403 | putProfileSessionIdNameResponse503) & {
   headers: Headers;
 };
 
-export type putProfileSessionIdNameResponse =
-  | putProfileSessionIdNameResponseSuccess
-  | putProfileSessionIdNameResponseError;
+export type putProfileSessionIdNameResponse = (putProfileSessionIdNameResponseSuccess | putProfileSessionIdNameResponseError)
 
-export const getPutProfileSessionIdNameUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/profile/${sessionId}/name`;
-};
+export const getPutProfileSessionIdNameUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/profile/${sessionId}/name`
+}
 
 /**
  * Update the WhatsApp display name (max 25 chars)
  * @summary Update profile name
  */
-export const putProfileSessionIdName = async (
-  sessionId: string,
-  putProfileSessionIdNameBody?: PutProfileSessionIdNameBody,
-  options?: RequestInit,
-): Promise<putProfileSessionIdNameResponse> => {
-  return useCustomInstance<putProfileSessionIdNameResponse>(
-    getPutProfileSessionIdNameUrl(sessionId),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putProfileSessionIdNameBody),
-    },
-  );
-};
+export const putProfileSessionIdName = async (sessionId: string,
+    putProfileSessionIdNameBody?: PutProfileSessionIdNameBody, options?: RequestInit): Promise<putProfileSessionIdNameResponse> => {
+
+  return useCustomInstance<putProfileSessionIdNameResponse>(getPutProfileSessionIdNameUrl(sessionId),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putProfileSessionIdNameBody)
+  }
+);}
+
 
 export type putProfileSessionIdStatusResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type putProfileSessionIdStatusResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putProfileSessionIdStatusResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putProfileSessionIdStatusResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type putProfileSessionIdStatusResponseSuccess =
-  putProfileSessionIdStatusResponse200 & {
-    headers: Headers;
-  };
-export type putProfileSessionIdStatusResponseError = (
-  | putProfileSessionIdStatusResponse401
-  | putProfileSessionIdStatusResponse403
-  | putProfileSessionIdStatusResponse503
-) & {
+export type putProfileSessionIdStatusResponseSuccess = (putProfileSessionIdStatusResponse200) & {
+  headers: Headers;
+};
+export type putProfileSessionIdStatusResponseError = (putProfileSessionIdStatusResponse401 | putProfileSessionIdStatusResponse403 | putProfileSessionIdStatusResponse503) & {
   headers: Headers;
 };
 
-export type putProfileSessionIdStatusResponse =
-  | putProfileSessionIdStatusResponseSuccess
-  | putProfileSessionIdStatusResponseError;
+export type putProfileSessionIdStatusResponse = (putProfileSessionIdStatusResponseSuccess | putProfileSessionIdStatusResponseError)
 
-export const getPutProfileSessionIdStatusUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/profile/${sessionId}/status`;
-};
+export const getPutProfileSessionIdStatusUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/profile/${sessionId}/status`
+}
 
 /**
  * Update the WhatsApp about/status (max 139 chars)
  * @summary Update profile status
  */
-export const putProfileSessionIdStatus = async (
-  sessionId: string,
-  putProfileSessionIdStatusBody?: PutProfileSessionIdStatusBody,
-  options?: RequestInit,
-): Promise<putProfileSessionIdStatusResponse> => {
-  return useCustomInstance<putProfileSessionIdStatusResponse>(
-    getPutProfileSessionIdStatusUrl(sessionId),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putProfileSessionIdStatusBody),
-    },
-  );
-};
+export const putProfileSessionIdStatus = async (sessionId: string,
+    putProfileSessionIdStatusBody?: PutProfileSessionIdStatusBody, options?: RequestInit): Promise<putProfileSessionIdStatusResponse> => {
+
+  return useCustomInstance<putProfileSessionIdStatusResponse>(getPutProfileSessionIdStatusUrl(sessionId),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putProfileSessionIdStatusBody)
+  }
+);}
+
 
 export type deleteProfileSessionIdPictureResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type deleteProfileSessionIdPictureResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type deleteProfileSessionIdPictureResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type deleteProfileSessionIdPictureResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type deleteProfileSessionIdPictureResponseSuccess =
-  deleteProfileSessionIdPictureResponse200 & {
-    headers: Headers;
-  };
-export type deleteProfileSessionIdPictureResponseError = (
-  | deleteProfileSessionIdPictureResponse401
-  | deleteProfileSessionIdPictureResponse403
-  | deleteProfileSessionIdPictureResponse503
-) & {
+export type deleteProfileSessionIdPictureResponseSuccess = (deleteProfileSessionIdPictureResponse200) & {
+  headers: Headers;
+};
+export type deleteProfileSessionIdPictureResponseError = (deleteProfileSessionIdPictureResponse401 | deleteProfileSessionIdPictureResponse403 | deleteProfileSessionIdPictureResponse503) & {
   headers: Headers;
 };
 
-export type deleteProfileSessionIdPictureResponse =
-  | deleteProfileSessionIdPictureResponseSuccess
-  | deleteProfileSessionIdPictureResponseError;
+export type deleteProfileSessionIdPictureResponse = (deleteProfileSessionIdPictureResponseSuccess | deleteProfileSessionIdPictureResponseError)
 
-export const getDeleteProfileSessionIdPictureUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/profile/${sessionId}/picture`;
-};
+export const getDeleteProfileSessionIdPictureUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/profile/${sessionId}/picture`
+}
 
 /**
  * @summary Remove profile picture
  */
-export const deleteProfileSessionIdPicture = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<deleteProfileSessionIdPictureResponse> => {
-  return useCustomInstance<deleteProfileSessionIdPictureResponse>(
-    getDeleteProfileSessionIdPictureUrl(sessionId),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteProfileSessionIdPicture = async (sessionId: string, options?: RequestInit): Promise<deleteProfileSessionIdPictureResponse> => {
+
+  return useCustomInstance<deleteProfileSessionIdPictureResponse>(getDeleteProfileSessionIdPictureUrl(sessionId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type putProfileSessionIdPictureResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type putProfileSessionIdPictureResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type putProfileSessionIdPictureResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type putProfileSessionIdPictureResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type putProfileSessionIdPictureResponseSuccess =
-  putProfileSessionIdPictureResponse200 & {
-    headers: Headers;
-  };
-export type putProfileSessionIdPictureResponseError = (
-  | putProfileSessionIdPictureResponse401
-  | putProfileSessionIdPictureResponse403
-  | putProfileSessionIdPictureResponse503
-) & {
+export type putProfileSessionIdPictureResponseSuccess = (putProfileSessionIdPictureResponse200) & {
+  headers: Headers;
+};
+export type putProfileSessionIdPictureResponseError = (putProfileSessionIdPictureResponse401 | putProfileSessionIdPictureResponse403 | putProfileSessionIdPictureResponse503) & {
   headers: Headers;
 };
 
-export type putProfileSessionIdPictureResponse =
-  | putProfileSessionIdPictureResponseSuccess
-  | putProfileSessionIdPictureResponseError;
+export type putProfileSessionIdPictureResponse = (putProfileSessionIdPictureResponseSuccess | putProfileSessionIdPictureResponseError)
 
-export const getPutProfileSessionIdPictureUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/profile/${sessionId}/picture`;
-};
+export const getPutProfileSessionIdPictureUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/profile/${sessionId}/picture`
+}
 
 /**
  * Upload a new profile picture
  * @summary Update profile picture
  */
-export const putProfileSessionIdPicture = async (
-  sessionId: string,
-  putProfileSessionIdPictureBody?: PutProfileSessionIdPictureBody,
-  options?: RequestInit,
-): Promise<putProfileSessionIdPictureResponse> => {
-  const formData = new FormData();
-  if (putProfileSessionIdPictureBody?.file !== undefined) {
-    formData.append(`file`, putProfileSessionIdPictureBody.file);
-  }
+export const putProfileSessionIdPicture = async (sessionId: string,
+    putProfileSessionIdPictureBody?: PutProfileSessionIdPictureBody, options?: RequestInit): Promise<putProfileSessionIdPictureResponse> => {
+    const formData = new FormData();
+if(putProfileSessionIdPictureBody?.file !== undefined) {
+ formData.append(`file`, putProfileSessionIdPictureBody.file);
+ }
 
-  return useCustomInstance<putProfileSessionIdPictureResponse>(
-    getPutProfileSessionIdPictureUrl(sessionId),
-    {
-      ...options,
-      method: 'PUT',
-      body: formData,
-    },
-  );
-};
+  return useCustomInstance<putProfileSessionIdPictureResponse>(getPutProfileSessionIdPictureUrl(sessionId),
+  {
+    ...options,
+    method: 'PUT'
+    ,
+    body: formData
+  }
+);}
+
 
 export type putProfileNameResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putProfileNameResponseSuccess = putProfileNameResponse200 & {
+export type putProfileNameResponseSuccess = (putProfileNameResponse200) & {
   headers: Headers;
 };
-export type putProfileNameResponse = putProfileNameResponseSuccess;
+;
+
+export type putProfileNameResponse = (putProfileNameResponseSuccess)
 
 export const getPutProfileNameUrl = () => {
-  return `http://localhost:3000/api/profile/name`;
-};
+
+
+
+
+  return `http://localhost:3000/api/profile/name`
+}
 
 /**
  * **DEPRECATED:** Use PUT /profile/{sessionId}/name instead.
  * @deprecated
  * @summary Update profile name (DEPRECATED)
  */
-export const putProfileName = async (
-  putProfileNameBody?: PutProfileNameBody,
-  options?: RequestInit,
-): Promise<putProfileNameResponse> => {
-  return useCustomInstance<putProfileNameResponse>(getPutProfileNameUrl(), {
+export const putProfileName = async (putProfileNameBody?: PutProfileNameBody, options?: RequestInit): Promise<putProfileNameResponse> => {
+
+  return useCustomInstance<putProfileNameResponse>(getPutProfileNameUrl(),
+  {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putProfileNameBody),
-  });
-};
+    body: JSON.stringify(putProfileNameBody)
+  }
+);}
+
 
 export type putProfileStatusResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putProfileStatusResponseSuccess = putProfileStatusResponse200 & {
+export type putProfileStatusResponseSuccess = (putProfileStatusResponse200) & {
   headers: Headers;
 };
-export type putProfileStatusResponse = putProfileStatusResponseSuccess;
+;
+
+export type putProfileStatusResponse = (putProfileStatusResponseSuccess)
 
 export const getPutProfileStatusUrl = () => {
-  return `http://localhost:3000/api/profile/status`;
-};
+
+
+
+
+  return `http://localhost:3000/api/profile/status`
+}
 
 /**
  * **DEPRECATED:** Use PUT /profile/{sessionId}/status instead.
  * @deprecated
  * @summary Update profile status (DEPRECATED)
  */
-export const putProfileStatus = async (
-  putProfileStatusBody?: PutProfileStatusBody,
-  options?: RequestInit,
-): Promise<putProfileStatusResponse> => {
-  return useCustomInstance<putProfileStatusResponse>(getPutProfileStatusUrl(), {
+export const putProfileStatus = async (putProfileStatusBody?: PutProfileStatusBody, options?: RequestInit): Promise<putProfileStatusResponse> => {
+
+  return useCustomInstance<putProfileStatusResponse>(getPutProfileStatusUrl(),
+  {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putProfileStatusBody),
-  });
-};
+    body: JSON.stringify(putProfileStatusBody)
+  }
+);}
+
 
 export type putProfilePictureResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putProfilePictureResponseSuccess = putProfilePictureResponse200 & {
+export type putProfilePictureResponseSuccess = (putProfilePictureResponse200) & {
   headers: Headers;
 };
-export type putProfilePictureResponse = putProfilePictureResponseSuccess;
+;
+
+export type putProfilePictureResponse = (putProfilePictureResponseSuccess)
 
 export const getPutProfilePictureUrl = () => {
-  return `http://localhost:3000/api/profile/picture`;
-};
+
+
+
+
+  return `http://localhost:3000/api/profile/picture`
+}
 
 /**
  * **DEPRECATED:** Use PUT /profile/{sessionId}/picture instead.
  * @deprecated
  * @summary Update profile picture (DEPRECATED)
  */
-export const putProfilePicture = async (
-  putProfilePictureBody?: PutProfilePictureBody,
-  options?: RequestInit,
-): Promise<putProfilePictureResponse> => {
-  const formData = new FormData();
-  if (putProfilePictureBody?.sessionId !== undefined) {
-    formData.append(`sessionId`, putProfilePictureBody.sessionId);
-  }
-  if (putProfilePictureBody?.file !== undefined) {
-    formData.append(`file`, putProfilePictureBody.file);
-  }
+export const putProfilePicture = async (putProfilePictureBody?: PutProfilePictureBody, options?: RequestInit): Promise<putProfilePictureResponse> => {
+    const formData = new FormData();
+if(putProfilePictureBody?.sessionId !== undefined) {
+ formData.append(`sessionId`, putProfilePictureBody.sessionId);
+ }
+if(putProfilePictureBody?.file !== undefined) {
+ formData.append(`file`, putProfilePictureBody.file);
+ }
 
-  return useCustomInstance<putProfilePictureResponse>(
-    getPutProfilePictureUrl(),
-    {
-      ...options,
-      method: 'PUT',
-      body: formData,
-    },
-  );
-};
+  return useCustomInstance<putProfilePictureResponse>(getPutProfilePictureUrl(),
+  {
+    ...options,
+    method: 'PUT'
+    ,
+    body: formData
+  }
+);}
+
 
 export type deleteProfilePictureResponse200 = {
-  data: void;
-  status: 200;
+  data: void
+  status: 200
+}
+
+export type deleteProfilePictureResponseSuccess = (deleteProfilePictureResponse200) & {
+  headers: Headers;
 };
+;
 
-export type deleteProfilePictureResponseSuccess =
-  deleteProfilePictureResponse200 & {
-    headers: Headers;
-  };
-export type deleteProfilePictureResponse = deleteProfilePictureResponseSuccess;
+export type deleteProfilePictureResponse = (deleteProfilePictureResponseSuccess)
 
-export const getDeleteProfilePictureUrl = (
-  params: DeleteProfilePictureParams,
-) => {
+export const getDeleteProfilePictureUrl = (params: DeleteProfilePictureParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://localhost:3000/api/profile/picture?${stringifiedParams}`
-    : `http://localhost:3000/api/profile/picture`;
-};
+  return stringifiedParams.length > 0 ? `http://localhost:3000/api/profile/picture?${stringifiedParams}` : `http://localhost:3000/api/profile/picture`
+}
 
 /**
  * **DEPRECATED:** Use DELETE /profile/{sessionId}/picture instead.
  * @deprecated
  * @summary Remove profile picture (DEPRECATED)
  */
-export const deleteProfilePicture = async (
-  params: DeleteProfilePictureParams,
-  options?: RequestInit,
-): Promise<deleteProfilePictureResponse> => {
-  return useCustomInstance<deleteProfilePictureResponse>(
-    getDeleteProfilePictureUrl(params),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteProfilePicture = async (params: DeleteProfilePictureParams, options?: RequestInit): Promise<deleteProfilePictureResponse> => {
+
+  return useCustomInstance<deleteProfilePictureResponse>(getDeleteProfilePictureUrl(params),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type getProfileResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type getProfileResponseSuccess = getProfileResponse200 & {
+export type getProfileResponseSuccess = (getProfileResponse200) & {
   headers: Headers;
 };
-export type getProfileResponse = getProfileResponseSuccess;
+;
 
-export const getGetProfileUrl = (params: GetProfileParams) => {
+export type getProfileResponse = (getProfileResponseSuccess)
+
+export const getGetProfileUrl = (params: GetProfileParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://localhost:3000/api/profile?${stringifiedParams}`
-    : `http://localhost:3000/api/profile`;
-};
+  return stringifiedParams.length > 0 ? `http://localhost:3000/api/profile?${stringifiedParams}` : `http://localhost:3000/api/profile`
+}
 
 /**
  * **DEPRECATED:** Use GET /profile/{sessionId} instead.
  * @deprecated
  * @summary Get own profile (DEPRECATED)
  */
-export const getProfile = async (
-  params: GetProfileParams,
-  options?: RequestInit,
-): Promise<getProfileResponse> => {
-  return useCustomInstance<getProfileResponse>(getGetProfileUrl(params), {
+export const getProfile = async (params: GetProfileParams, options?: RequestInit): Promise<getProfileResponse> => {
+
+  return useCustomInstance<getProfileResponse>(getGetProfileUrl(params),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
+

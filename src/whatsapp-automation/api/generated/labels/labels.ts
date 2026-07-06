@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
@@ -43,628 +76,635 @@ import type {
   PutLabelsSessionIdLabelId200,
   PutLabelsSessionIdLabelIdBody,
   Success,
-  UnauthorizedResponse,
+  UnauthorizedResponse
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postLabelsSessionIdResponse200 = {
-  data: PostLabelsSessionId200;
-  status: 200;
-};
+  data: PostLabelsSessionId200
+  status: 200
+}
 
 export type postLabelsSessionIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postLabelsSessionIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type postLabelsSessionIdResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
-export type postLabelsSessionIdResponseSuccess =
-  postLabelsSessionIdResponse200 & {
-    headers: Headers;
-  };
-export type postLabelsSessionIdResponseError = (
-  | postLabelsSessionIdResponse401
-  | postLabelsSessionIdResponse403
-  | postLabelsSessionIdResponse500
-) & {
+export type postLabelsSessionIdResponseSuccess = (postLabelsSessionIdResponse200) & {
+  headers: Headers;
+};
+export type postLabelsSessionIdResponseError = (postLabelsSessionIdResponse401 | postLabelsSessionIdResponse403 | postLabelsSessionIdResponse500) & {
   headers: Headers;
 };
 
-export type postLabelsSessionIdResponse =
-  | postLabelsSessionIdResponseSuccess
-  | postLabelsSessionIdResponseError;
+export type postLabelsSessionIdResponse = (postLabelsSessionIdResponseSuccess | postLabelsSessionIdResponseError)
 
-export const getPostLabelsSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/labels/${sessionId}`;
-};
+export const getPostLabelsSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}`
+}
 
 /**
  * Create new label with color (0-19 index)
  * @summary Create label
  */
-export const postLabelsSessionId = async (
-  sessionId: string,
-  postLabelsSessionIdBody?: PostLabelsSessionIdBody,
-  options?: RequestInit,
-): Promise<postLabelsSessionIdResponse> => {
-  return useCustomInstance<postLabelsSessionIdResponse>(
-    getPostLabelsSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postLabelsSessionIdBody),
-    },
-  );
-};
+export const postLabelsSessionId = async (sessionId: string,
+    postLabelsSessionIdBody?: PostLabelsSessionIdBody, options?: RequestInit): Promise<postLabelsSessionIdResponse> => {
+
+  return useCustomInstance<postLabelsSessionIdResponse>(getPostLabelsSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postLabelsSessionIdBody)
+  }
+);}
+
 
 export type putLabelsSessionIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putLabelsSessionIdResponseSuccess =
-  putLabelsSessionIdResponse200 & {
-    headers: Headers;
-  };
-export type putLabelsSessionIdResponse = putLabelsSessionIdResponseSuccess;
-
-export const getPutLabelsSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/labels/${sessionId}`;
+export type putLabelsSessionIdResponseSuccess = (putLabelsSessionIdResponse200) & {
+  headers: Headers;
 };
+;
+
+export type putLabelsSessionIdResponse = (putLabelsSessionIdResponseSuccess)
+
+export const getPutLabelsSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}`
+}
 
 /**
  * @summary Update all labels or bulk update
  */
-export const putLabelsSessionId = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<putLabelsSessionIdResponse> => {
-  return useCustomInstance<putLabelsSessionIdResponse>(
-    getPutLabelsSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'PUT',
-    },
-  );
-};
+export const putLabelsSessionId = async (sessionId: string, options?: RequestInit): Promise<putLabelsSessionIdResponse> => {
+
+  return useCustomInstance<putLabelsSessionIdResponse>(getPutLabelsSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'PUT'
+
+
+  }
+);}
+
 
 export type deleteLabelsSessionIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type deleteLabelsSessionIdResponseSuccess =
-  deleteLabelsSessionIdResponse200 & {
-    headers: Headers;
-  };
-export type deleteLabelsSessionIdResponse =
-  deleteLabelsSessionIdResponseSuccess;
-
-export const getDeleteLabelsSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/labels/${sessionId}`;
+export type deleteLabelsSessionIdResponseSuccess = (deleteLabelsSessionIdResponse200) & {
+  headers: Headers;
 };
+;
+
+export type deleteLabelsSessionIdResponse = (deleteLabelsSessionIdResponseSuccess)
+
+export const getDeleteLabelsSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}`
+}
 
 /**
  * @summary Delete labels
  */
-export const deleteLabelsSessionId = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<deleteLabelsSessionIdResponse> => {
-  return useCustomInstance<deleteLabelsSessionIdResponse>(
-    getDeleteLabelsSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteLabelsSessionId = async (sessionId: string, options?: RequestInit): Promise<deleteLabelsSessionIdResponse> => {
+
+  return useCustomInstance<deleteLabelsSessionIdResponse>(getDeleteLabelsSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type getLabelsSessionIdResponse200 = {
-  data: GetLabelsSessionId200;
-  status: 200;
-};
+  data: GetLabelsSessionId200
+  status: 200
+}
 
 export type getLabelsSessionIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type getLabelsSessionIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type getLabelsSessionIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
-export type getLabelsSessionIdResponseSuccess =
-  getLabelsSessionIdResponse200 & {
-    headers: Headers;
-  };
-export type getLabelsSessionIdResponseError = (
-  | getLabelsSessionIdResponse401
-  | getLabelsSessionIdResponse403
-  | getLabelsSessionIdResponse404
-) & {
+export type getLabelsSessionIdResponseSuccess = (getLabelsSessionIdResponse200) & {
+  headers: Headers;
+};
+export type getLabelsSessionIdResponseError = (getLabelsSessionIdResponse401 | getLabelsSessionIdResponse403 | getLabelsSessionIdResponse404) & {
   headers: Headers;
 };
 
-export type getLabelsSessionIdResponse =
-  | getLabelsSessionIdResponseSuccess
-  | getLabelsSessionIdResponseError;
+export type getLabelsSessionIdResponse = (getLabelsSessionIdResponseSuccess | getLabelsSessionIdResponseError)
 
-export const getGetLabelsSessionIdUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/labels/${sessionId}`;
-};
+export const getGetLabelsSessionIdUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}`
+}
 
 /**
  * Get all labels with chat count
  * @summary List labels
  */
-export const getLabelsSessionId = async (
-  sessionId: string,
-  options?: RequestInit,
-): Promise<getLabelsSessionIdResponse> => {
-  return useCustomInstance<getLabelsSessionIdResponse>(
-    getGetLabelsSessionIdUrl(sessionId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getLabelsSessionId = async (sessionId: string, options?: RequestInit): Promise<getLabelsSessionIdResponse> => {
+
+  return useCustomInstance<getLabelsSessionIdResponse>(getGetLabelsSessionIdUrl(sessionId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type getLabelsResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type getLabelsResponseSuccess = getLabelsResponse200 & {
+export type getLabelsResponseSuccess = (getLabelsResponse200) & {
   headers: Headers;
 };
-export type getLabelsResponse = getLabelsResponseSuccess;
+;
 
-export const getGetLabelsUrl = (params: GetLabelsParams) => {
+export type getLabelsResponse = (getLabelsResponseSuccess)
+
+export const getGetLabelsUrl = (params: GetLabelsParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://localhost:3000/api/labels?${stringifiedParams}`
-    : `http://localhost:3000/api/labels`;
-};
+  return stringifiedParams.length > 0 ? `http://localhost:3000/api/labels?${stringifiedParams}` : `http://localhost:3000/api/labels`
+}
 
 /**
  * **DEPRECATED:** Use GET /labels/{sessionId} instead.
  * @deprecated
  * @summary List all labels (DEPRECATED)
  */
-export const getLabels = async (
-  params: GetLabelsParams,
-  options?: RequestInit,
-): Promise<getLabelsResponse> => {
-  return useCustomInstance<getLabelsResponse>(getGetLabelsUrl(params), {
+export const getLabels = async (params: GetLabelsParams, options?: RequestInit): Promise<getLabelsResponse> => {
+
+  return useCustomInstance<getLabelsResponse>(getGetLabelsUrl(params),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type postLabelsResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type postLabelsResponseSuccess = postLabelsResponse200 & {
+export type postLabelsResponseSuccess = (postLabelsResponse200) & {
   headers: Headers;
 };
-export type postLabelsResponse = postLabelsResponseSuccess;
+;
+
+export type postLabelsResponse = (postLabelsResponseSuccess)
 
 export const getPostLabelsUrl = () => {
-  return `http://localhost:3000/api/labels`;
-};
+
+
+
+
+  return `http://localhost:3000/api/labels`
+}
 
 /**
  * **DEPRECATED:** Use POST /labels/{sessionId} instead.
  * @deprecated
  * @summary Create label (DEPRECATED)
  */
-export const postLabels = async (
-  postLabelsBody?: PostLabelsBody,
-  options?: RequestInit,
-): Promise<postLabelsResponse> => {
-  return useCustomInstance<postLabelsResponse>(getPostLabelsUrl(), {
+export const postLabels = async (postLabelsBody?: PostLabelsBody, options?: RequestInit): Promise<postLabelsResponse> => {
+
+  return useCustomInstance<postLabelsResponse>(getPostLabelsUrl(),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postLabelsBody),
-  });
-};
+    body: JSON.stringify(postLabelsBody)
+  }
+);}
+
 
 export type deleteLabelsSessionIdLabelIdResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
-export type deleteLabelsSessionIdLabelIdResponseSuccess =
-  deleteLabelsSessionIdLabelIdResponse200 & {
-    headers: Headers;
-  };
-export type deleteLabelsSessionIdLabelIdResponse =
-  deleteLabelsSessionIdLabelIdResponseSuccess;
-
-export const getDeleteLabelsSessionIdLabelIdUrl = (
-  sessionId: string,
-  labelId: string,
-) => {
-  return `http://localhost:3000/api/labels/${sessionId}/${labelId}`;
+export type deleteLabelsSessionIdLabelIdResponseSuccess = (deleteLabelsSessionIdLabelIdResponse200) & {
+  headers: Headers;
 };
+;
+
+export type deleteLabelsSessionIdLabelIdResponse = (deleteLabelsSessionIdLabelIdResponseSuccess)
+
+export const getDeleteLabelsSessionIdLabelIdUrl = (sessionId: string,
+    labelId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}/${labelId}`
+}
 
 /**
  * @summary Delete label
  */
-export const deleteLabelsSessionIdLabelId = async (
-  sessionId: string,
-  labelId: string,
-  options?: RequestInit,
-): Promise<deleteLabelsSessionIdLabelIdResponse> => {
-  return useCustomInstance<deleteLabelsSessionIdLabelIdResponse>(
-    getDeleteLabelsSessionIdLabelIdUrl(sessionId, labelId),
-    {
-      ...options,
-      method: 'DELETE',
-    },
-  );
-};
+export const deleteLabelsSessionIdLabelId = async (sessionId: string,
+    labelId: string, options?: RequestInit): Promise<deleteLabelsSessionIdLabelIdResponse> => {
+
+  return useCustomInstance<deleteLabelsSessionIdLabelIdResponse>(getDeleteLabelsSessionIdLabelIdUrl(sessionId,labelId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type putLabelsSessionIdLabelIdResponse200 = {
-  data: PutLabelsSessionIdLabelId200;
-  status: 200;
-};
+  data: PutLabelsSessionIdLabelId200
+  status: 200
+}
 
-export type putLabelsSessionIdLabelIdResponseSuccess =
-  putLabelsSessionIdLabelIdResponse200 & {
-    headers: Headers;
-  };
-export type putLabelsSessionIdLabelIdResponse =
-  putLabelsSessionIdLabelIdResponseSuccess;
-
-export const getPutLabelsSessionIdLabelIdUrl = (
-  sessionId: string,
-  labelId: string,
-) => {
-  return `http://localhost:3000/api/labels/${sessionId}/${labelId}`;
+export type putLabelsSessionIdLabelIdResponseSuccess = (putLabelsSessionIdLabelIdResponse200) & {
+  headers: Headers;
 };
+;
+
+export type putLabelsSessionIdLabelIdResponse = (putLabelsSessionIdLabelIdResponseSuccess)
+
+export const getPutLabelsSessionIdLabelIdUrl = (sessionId: string,
+    labelId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}/${labelId}`
+}
 
 /**
  * @summary Update label
  */
-export const putLabelsSessionIdLabelId = async (
-  sessionId: string,
-  labelId: string,
-  putLabelsSessionIdLabelIdBody?: PutLabelsSessionIdLabelIdBody,
-  options?: RequestInit,
-): Promise<putLabelsSessionIdLabelIdResponse> => {
-  return useCustomInstance<putLabelsSessionIdLabelIdResponse>(
-    getPutLabelsSessionIdLabelIdUrl(sessionId, labelId),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putLabelsSessionIdLabelIdBody),
-    },
-  );
-};
+export const putLabelsSessionIdLabelId = async (sessionId: string,
+    labelId: string,
+    putLabelsSessionIdLabelIdBody?: PutLabelsSessionIdLabelIdBody, options?: RequestInit): Promise<putLabelsSessionIdLabelIdResponse> => {
+
+  return useCustomInstance<putLabelsSessionIdLabelIdResponse>(getPutLabelsSessionIdLabelIdUrl(sessionId,labelId),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putLabelsSessionIdLabelIdBody)
+  }
+);}
+
 
 export type putLabelsIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type putLabelsIdResponseSuccess = putLabelsIdResponse200 & {
+export type putLabelsIdResponseSuccess = (putLabelsIdResponse200) & {
   headers: Headers;
 };
-export type putLabelsIdResponse = putLabelsIdResponseSuccess;
+;
 
-export const getPutLabelsIdUrl = (id: string) => {
-  return `http://localhost:3000/api/labels/${id}`;
-};
+export type putLabelsIdResponse = (putLabelsIdResponseSuccess)
+
+export const getPutLabelsIdUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${id}`
+}
 
 /**
  * **DEPRECATED:** Use PUT /labels/{sessionId}/{labelId} instead.
  * @deprecated
  * @summary Update label (DEPRECATED)
  */
-export const putLabelsId = async (
-  id: string,
-  putLabelsIdBody?: PutLabelsIdBody,
-  options?: RequestInit,
-): Promise<putLabelsIdResponse> => {
-  return useCustomInstance<putLabelsIdResponse>(getPutLabelsIdUrl(id), {
+export const putLabelsId = async (id: string,
+    putLabelsIdBody?: PutLabelsIdBody, options?: RequestInit): Promise<putLabelsIdResponse> => {
+
+  return useCustomInstance<putLabelsIdResponse>(getPutLabelsIdUrl(id),
+  {
     ...options,
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(putLabelsIdBody),
-  });
-};
+    body: JSON.stringify(putLabelsIdBody)
+  }
+);}
+
 
 export type deleteLabelsIdResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type deleteLabelsIdResponseSuccess = deleteLabelsIdResponse200 & {
+export type deleteLabelsIdResponseSuccess = (deleteLabelsIdResponse200) & {
   headers: Headers;
 };
-export type deleteLabelsIdResponse = deleteLabelsIdResponseSuccess;
+;
 
-export const getDeleteLabelsIdUrl = (id: string) => {
-  return `http://localhost:3000/api/labels/${id}`;
-};
+export type deleteLabelsIdResponse = (deleteLabelsIdResponseSuccess)
+
+export const getDeleteLabelsIdUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${id}`
+}
 
 /**
  * **DEPRECATED:** Use DELETE /labels/{sessionId}/{labelId} instead.
  * @deprecated
  * @summary Delete label (DEPRECATED)
  */
-export const deleteLabelsId = async (
-  id: string,
-  options?: RequestInit,
-): Promise<deleteLabelsIdResponse> => {
-  return useCustomInstance<deleteLabelsIdResponse>(getDeleteLabelsIdUrl(id), {
+export const deleteLabelsId = async (id: string, options?: RequestInit): Promise<deleteLabelsIdResponse> => {
+
+  return useCustomInstance<deleteLabelsIdResponse>(getDeleteLabelsIdUrl(id),
+  {
     ...options,
-    method: 'DELETE',
-  });
-};
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type getLabelsSessionIdChatJidLabelsResponse200 = {
-  data: GetLabelsSessionIdChatJidLabels200;
-  status: 200;
-};
+  data: GetLabelsSessionIdChatJidLabels200
+  status: 200
+}
 
-export type getLabelsSessionIdChatJidLabelsResponseSuccess =
-  getLabelsSessionIdChatJidLabelsResponse200 & {
-    headers: Headers;
-  };
-export type getLabelsSessionIdChatJidLabelsResponse =
-  getLabelsSessionIdChatJidLabelsResponseSuccess;
-
-export const getGetLabelsSessionIdChatJidLabelsUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/labels/${sessionId}/chat/${jid}/labels`;
+export type getLabelsSessionIdChatJidLabelsResponseSuccess = (getLabelsSessionIdChatJidLabelsResponse200) & {
+  headers: Headers;
 };
+;
+
+export type getLabelsSessionIdChatJidLabelsResponse = (getLabelsSessionIdChatJidLabelsResponseSuccess)
+
+export const getGetLabelsSessionIdChatJidLabelsUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}/chat/${jid}/labels`
+}
 
 /**
  * @summary Get chat labels
  */
-export const getLabelsSessionIdChatJidLabels = async (
-  sessionId: string,
-  jid: string,
-  options?: RequestInit,
-): Promise<getLabelsSessionIdChatJidLabelsResponse> => {
-  return useCustomInstance<getLabelsSessionIdChatJidLabelsResponse>(
-    getGetLabelsSessionIdChatJidLabelsUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getLabelsSessionIdChatJidLabels = async (sessionId: string,
+    jid: string, options?: RequestInit): Promise<getLabelsSessionIdChatJidLabelsResponse> => {
+
+  return useCustomInstance<getLabelsSessionIdChatJidLabelsResponse>(getGetLabelsSessionIdChatJidLabelsUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type putLabelsSessionIdChatJidLabelsResponse200 = {
-  data: PutLabelsSessionIdChatJidLabels200;
-  status: 200;
-};
+  data: PutLabelsSessionIdChatJidLabels200
+  status: 200
+}
 
-export type putLabelsSessionIdChatJidLabelsResponseSuccess =
-  putLabelsSessionIdChatJidLabelsResponse200 & {
-    headers: Headers;
-  };
-export type putLabelsSessionIdChatJidLabelsResponse =
-  putLabelsSessionIdChatJidLabelsResponseSuccess;
-
-export const getPutLabelsSessionIdChatJidLabelsUrl = (
-  sessionId: string,
-  jid: string,
-) => {
-  return `http://localhost:3000/api/labels/${sessionId}/chat/${jid}/labels`;
+export type putLabelsSessionIdChatJidLabelsResponseSuccess = (putLabelsSessionIdChatJidLabelsResponse200) & {
+  headers: Headers;
 };
+;
+
+export type putLabelsSessionIdChatJidLabelsResponse = (putLabelsSessionIdChatJidLabelsResponseSuccess)
+
+export const getPutLabelsSessionIdChatJidLabelsUrl = (sessionId: string,
+    jid: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/labels/${sessionId}/chat/${jid}/labels`
+}
 
 /**
  * @summary Update chat labels
  */
-export const putLabelsSessionIdChatJidLabels = async (
-  sessionId: string,
-  jid: string,
-  putLabelsSessionIdChatJidLabelsBody?: PutLabelsSessionIdChatJidLabelsBody,
-  options?: RequestInit,
-): Promise<putLabelsSessionIdChatJidLabelsResponse> => {
-  return useCustomInstance<putLabelsSessionIdChatJidLabelsResponse>(
-    getPutLabelsSessionIdChatJidLabelsUrl(sessionId, jid),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putLabelsSessionIdChatJidLabelsBody),
-    },
-  );
-};
+export const putLabelsSessionIdChatJidLabels = async (sessionId: string,
+    jid: string,
+    putLabelsSessionIdChatJidLabelsBody?: PutLabelsSessionIdChatJidLabelsBody, options?: RequestInit): Promise<putLabelsSessionIdChatJidLabelsResponse> => {
+
+  return useCustomInstance<putLabelsSessionIdChatJidLabelsResponse>(getPutLabelsSessionIdChatJidLabelsUrl(sessionId,jid),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putLabelsSessionIdChatJidLabelsBody)
+  }
+);}
+
 
 export type getLabelsChatLabelsResponse200 = {
-  data: void;
-  status: 200;
+  data: void
+  status: 200
+}
+
+export type getLabelsChatLabelsResponseSuccess = (getLabelsChatLabelsResponse200) & {
+  headers: Headers;
 };
+;
 
-export type getLabelsChatLabelsResponseSuccess =
-  getLabelsChatLabelsResponse200 & {
-    headers: Headers;
-  };
-export type getLabelsChatLabelsResponse = getLabelsChatLabelsResponseSuccess;
+export type getLabelsChatLabelsResponse = (getLabelsChatLabelsResponseSuccess)
 
-export const getGetLabelsChatLabelsUrl = (
-  params: GetLabelsChatLabelsParams,
-) => {
+export const getGetLabelsChatLabelsUrl = (params: GetLabelsChatLabelsParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://localhost:3000/api/labels/chat-labels?${stringifiedParams}`
-    : `http://localhost:3000/api/labels/chat-labels`;
-};
+  return stringifiedParams.length > 0 ? `http://localhost:3000/api/labels/chat-labels?${stringifiedParams}` : `http://localhost:3000/api/labels/chat-labels`
+}
 
 /**
  * **DEPRECATED:** Use GET /labels/{sessionId}/chat/{jid}/labels instead.
  * @deprecated
  * @summary Get chat labels (DEPRECATED)
  */
-export const getLabelsChatLabels = async (
-  params: GetLabelsChatLabelsParams,
-  options?: RequestInit,
-): Promise<getLabelsChatLabelsResponse> => {
-  return useCustomInstance<getLabelsChatLabelsResponse>(
-    getGetLabelsChatLabelsUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getLabelsChatLabels = async (params: GetLabelsChatLabelsParams, options?: RequestInit): Promise<getLabelsChatLabelsResponse> => {
+
+  return useCustomInstance<getLabelsChatLabelsResponse>(getGetLabelsChatLabelsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type putLabelsChatLabelsResponse200 = {
-  data: void;
-  status: 200;
+  data: void
+  status: 200
+}
+
+export type putLabelsChatLabelsResponseSuccess = (putLabelsChatLabelsResponse200) & {
+  headers: Headers;
 };
+;
 
-export type putLabelsChatLabelsResponseSuccess =
-  putLabelsChatLabelsResponse200 & {
-    headers: Headers;
-  };
-export type putLabelsChatLabelsResponse = putLabelsChatLabelsResponseSuccess;
+export type putLabelsChatLabelsResponse = (putLabelsChatLabelsResponseSuccess)
 
-export const getPutLabelsChatLabelsUrl = (
-  params: PutLabelsChatLabelsParams,
-) => {
+export const getPutLabelsChatLabelsUrl = (params: PutLabelsChatLabelsParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
+
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value));
+      normalizedParams.append(key, value === null ? 'null' : String(value))
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0
-    ? `http://localhost:3000/api/labels/chat-labels?${stringifiedParams}`
-    : `http://localhost:3000/api/labels/chat-labels`;
-};
+  return stringifiedParams.length > 0 ? `http://localhost:3000/api/labels/chat-labels?${stringifiedParams}` : `http://localhost:3000/api/labels/chat-labels`
+}
 
 /**
  * **DEPRECATED:** Use PUT /labels/{sessionId}/chat/{jid}/labels instead.
  * @deprecated
  * @summary Add or remove labels from chat (DEPRECATED)
  */
-export const putLabelsChatLabels = async (
-  params: PutLabelsChatLabelsParams,
-  putLabelsChatLabelsBody?: PutLabelsChatLabelsBody,
-  options?: RequestInit,
-): Promise<putLabelsChatLabelsResponse> => {
-  return useCustomInstance<putLabelsChatLabelsResponse>(
-    getPutLabelsChatLabelsUrl(params),
-    {
-      ...options,
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(putLabelsChatLabelsBody),
-    },
-  );
-};
+export const putLabelsChatLabels = async (params: PutLabelsChatLabelsParams,
+    putLabelsChatLabelsBody?: PutLabelsChatLabelsBody, options?: RequestInit): Promise<putLabelsChatLabelsResponse> => {
+
+  return useCustomInstance<putLabelsChatLabelsResponse>(getPutLabelsChatLabelsUrl(params),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(putLabelsChatLabelsBody)
+  }
+);}
+
 
 export type getChatsSessionIdByLabelLabelIdResponse200 = {
-  data: GetChatsSessionIdByLabelLabelId200;
-  status: 200;
-};
+  data: GetChatsSessionIdByLabelLabelId200
+  status: 200
+}
 
 export type getChatsSessionIdByLabelLabelIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type getChatsSessionIdByLabelLabelIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type getChatsSessionIdByLabelLabelIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
-export type getChatsSessionIdByLabelLabelIdResponseSuccess =
-  getChatsSessionIdByLabelLabelIdResponse200 & {
-    headers: Headers;
-  };
-export type getChatsSessionIdByLabelLabelIdResponseError = (
-  | getChatsSessionIdByLabelLabelIdResponse401
-  | getChatsSessionIdByLabelLabelIdResponse403
-  | getChatsSessionIdByLabelLabelIdResponse404
-) & {
+export type getChatsSessionIdByLabelLabelIdResponseSuccess = (getChatsSessionIdByLabelLabelIdResponse200) & {
+  headers: Headers;
+};
+export type getChatsSessionIdByLabelLabelIdResponseError = (getChatsSessionIdByLabelLabelIdResponse401 | getChatsSessionIdByLabelLabelIdResponse403 | getChatsSessionIdByLabelLabelIdResponse404) & {
   headers: Headers;
 };
 
-export type getChatsSessionIdByLabelLabelIdResponse =
-  | getChatsSessionIdByLabelLabelIdResponseSuccess
-  | getChatsSessionIdByLabelLabelIdResponseError;
+export type getChatsSessionIdByLabelLabelIdResponse = (getChatsSessionIdByLabelLabelIdResponseSuccess | getChatsSessionIdByLabelLabelIdResponseError)
 
-export const getGetChatsSessionIdByLabelLabelIdUrl = (
-  sessionId: string,
-  labelId: string,
-) => {
-  return `http://localhost:3000/api/chats/${sessionId}/by-label/${labelId}`;
-};
+export const getGetChatsSessionIdByLabelLabelIdUrl = (sessionId: string,
+    labelId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chats/${sessionId}/by-label/${labelId}`
+}
 
 /**
  * Get all chats associated with a specific label
  * @summary Get chats by label
  */
-export const getChatsSessionIdByLabelLabelId = async (
-  sessionId: string,
-  labelId: string,
-  options?: RequestInit,
-): Promise<getChatsSessionIdByLabelLabelIdResponse> => {
-  return useCustomInstance<getChatsSessionIdByLabelLabelIdResponse>(
-    getGetChatsSessionIdByLabelLabelIdUrl(sessionId, labelId),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getChatsSessionIdByLabelLabelId = async (sessionId: string,
+    labelId: string, options?: RequestInit): Promise<getChatsSessionIdByLabelLabelIdResponse> => {
+
+  return useCustomInstance<getChatsSessionIdByLabelLabelIdResponse>(getGetChatsSessionIdByLabelLabelIdUrl(sessionId,labelId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+

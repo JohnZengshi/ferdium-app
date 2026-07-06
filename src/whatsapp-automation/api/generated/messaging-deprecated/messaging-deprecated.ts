@@ -23,92 +23,129 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
   PostChatSendBody,
   PostChatSessionIdSendBody,
   SessionNotReadyResponse,
-  Success,
+  Success
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postChatSendResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type postChatSendResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type postChatSendResponseSuccess = postChatSendResponse200 & {
+export type postChatSendResponseSuccess = (postChatSendResponse200) & {
   headers: Headers;
 };
-export type postChatSendResponseError = postChatSendResponse503 & {
+export type postChatSendResponseError = (postChatSendResponse503) & {
   headers: Headers;
 };
 
-export type postChatSendResponse =
-  | postChatSendResponseSuccess
-  | postChatSendResponseError;
+export type postChatSendResponse = (postChatSendResponseSuccess | postChatSendResponseError)
 
 export const getPostChatSendUrl = () => {
-  return `http://localhost:3000/api/chat/send`;
-};
+
+
+
+
+  return `http://localhost:3000/api/chat/send`
+}
 
 /**
  * ⚠️ **DEPRECATED**: Use POST /messages/{sessionId}/{jid}/send instead. This endpoint will be removed in a future version.\n\nUniversal endpoint for sending text, images, videos, documents, and stickers
  * @deprecated
  * @summary [DEPRECATED] Send message (text/media/sticker)
  */
-export const postChatSend = async (
-  postChatSendBody: PostChatSendBody,
-  options?: RequestInit,
-): Promise<postChatSendResponse> => {
-  return useCustomInstance<postChatSendResponse>(getPostChatSendUrl(), {
+export const postChatSend = async (postChatSendBody: PostChatSendBody, options?: RequestInit): Promise<postChatSendResponse> => {
+
+  return useCustomInstance<postChatSendResponse>(getPostChatSendUrl(),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postChatSendBody),
-  });
-};
+    body: JSON.stringify(postChatSendBody)
+  }
+);}
+
 
 export type postChatSessionIdSendResponse200 = {
-  data: void;
-  status: 200;
-};
+  data: void
+  status: 200
+}
 
-export type postChatSessionIdSendResponseSuccess =
-  postChatSessionIdSendResponse200 & {
-    headers: Headers;
-  };
-export type postChatSessionIdSendResponse =
-  postChatSessionIdSendResponseSuccess;
-
-export const getPostChatSessionIdSendUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/chat/${sessionId}/send`;
+export type postChatSessionIdSendResponseSuccess = (postChatSessionIdSendResponse200) & {
+  headers: Headers;
 };
+;
+
+export type postChatSessionIdSendResponse = (postChatSessionIdSendResponseSuccess)
+
+export const getPostChatSessionIdSendUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/chat/${sessionId}/send`
+}
 
 /**
  * ⚠️ **DEPRECATED**: Use POST /messages/{sessionId}/{jid}/send instead.
  * @deprecated
  * @summary [DEPRECATED] Send message
  */
-export const postChatSessionIdSend = async (
-  sessionId: string,
-  postChatSessionIdSendBody: PostChatSessionIdSendBody,
-  options?: RequestInit,
-): Promise<postChatSessionIdSendResponse> => {
-  return useCustomInstance<postChatSessionIdSendResponse>(
-    getPostChatSessionIdSendUrl(sessionId),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postChatSessionIdSendBody),
-    },
-  );
-};
+export const postChatSessionIdSend = async (sessionId: string,
+    postChatSessionIdSendBody: PostChatSessionIdSendBody, options?: RequestInit): Promise<postChatSessionIdSendResponse> => {
+
+  return useCustomInstance<postChatSessionIdSendResponse>(getPostChatSessionIdSendUrl(sessionId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postChatSessionIdSendBody)
+  }
+);}
+
+

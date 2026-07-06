@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
@@ -35,272 +68,261 @@ import type {
   PostSystemCheckUpdates200,
   SessionNotReadyResponse,
   Success,
-  UnauthorizedResponse,
+  UnauthorizedResponse
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postSettingsSystemResponse200 = {
-  data: PostSettingsSystem200;
-  status: 200;
-};
+  data: PostSettingsSystem200
+  status: 200
+}
 
 export type postSettingsSystemResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postSettingsSystemResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
-export type postSettingsSystemResponseSuccess =
-  postSettingsSystemResponse200 & {
-    headers: Headers;
-  };
-export type postSettingsSystemResponseError = (
-  | postSettingsSystemResponse401
-  | postSettingsSystemResponse500
-) & {
+export type postSettingsSystemResponseSuccess = (postSettingsSystemResponse200) & {
+  headers: Headers;
+};
+export type postSettingsSystemResponseError = (postSettingsSystemResponse401 | postSettingsSystemResponse500) & {
   headers: Headers;
 };
 
-export type postSettingsSystemResponse =
-  | postSettingsSystemResponseSuccess
-  | postSettingsSystemResponseError;
+export type postSettingsSystemResponse = (postSettingsSystemResponseSuccess | postSettingsSystemResponseError)
 
 export const getPostSettingsSystemUrl = () => {
-  return `http://localhost:3000/api/settings/system`;
-};
+
+
+
+
+  return `http://localhost:3000/api/settings/system`
+}
 
 /**
  * Update global system configuration (Superadmin/Owner only)
  * @summary Update system settings
  */
-export const postSettingsSystem = async (
-  postSettingsSystemBody?: PostSettingsSystemBody,
-  options?: RequestInit,
-): Promise<postSettingsSystemResponse> => {
-  return useCustomInstance<postSettingsSystemResponse>(
-    getPostSettingsSystemUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postSettingsSystemBody),
-    },
-  );
-};
+export const postSettingsSystem = async (postSettingsSystemBody?: PostSettingsSystemBody, options?: RequestInit): Promise<postSettingsSystemResponse> => {
+
+  return useCustomInstance<postSettingsSystemResponse>(getPostSettingsSystemUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postSettingsSystemBody)
+  }
+);}
+
 
 export type getSettingsSystemResponse200 = {
-  data: GetSettingsSystem200;
-  status: 200;
-};
+  data: GetSettingsSystem200
+  status: 200
+}
 
-export type getSettingsSystemResponseSuccess = getSettingsSystemResponse200 & {
+export type getSettingsSystemResponseSuccess = (getSettingsSystemResponse200) & {
   headers: Headers;
 };
-export type getSettingsSystemResponse = getSettingsSystemResponseSuccess;
+;
+
+export type getSettingsSystemResponse = (getSettingsSystemResponseSuccess)
 
 export const getGetSettingsSystemUrl = () => {
-  return `http://localhost:3000/api/settings/system`;
-};
+
+
+
+
+  return `http://localhost:3000/api/settings/system`
+}
 
 /**
  * @summary Get system settings
  */
-export const getSettingsSystem = async (
-  options?: RequestInit,
-): Promise<getSettingsSystemResponse> => {
-  return useCustomInstance<getSettingsSystemResponse>(
-    getGetSettingsSystemUrl(),
-    {
-      ...options,
-      method: 'GET',
-    },
-  );
-};
+export const getSettingsSystem = async ( options?: RequestInit): Promise<getSettingsSystemResponse> => {
+
+  return useCustomInstance<getSettingsSystemResponse>(getGetSettingsSystemUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type postStatusSessionIdUpdateResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type postStatusSessionIdUpdateResponse400 = {
-  data: void;
-  status: 400;
-};
+  data: void
+  status: 400
+}
 
 export type postStatusSessionIdUpdateResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postStatusSessionIdUpdateResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type postStatusSessionIdUpdateResponse503 = {
-  data: SessionNotReadyResponse;
-  status: 503;
-};
+  data: SessionNotReadyResponse
+  status: 503
+}
 
-export type postStatusSessionIdUpdateResponseSuccess =
-  postStatusSessionIdUpdateResponse200 & {
-    headers: Headers;
-  };
-export type postStatusSessionIdUpdateResponseError = (
-  | postStatusSessionIdUpdateResponse400
-  | postStatusSessionIdUpdateResponse401
-  | postStatusSessionIdUpdateResponse403
-  | postStatusSessionIdUpdateResponse503
-) & {
+export type postStatusSessionIdUpdateResponseSuccess = (postStatusSessionIdUpdateResponse200) & {
+  headers: Headers;
+};
+export type postStatusSessionIdUpdateResponseError = (postStatusSessionIdUpdateResponse400 | postStatusSessionIdUpdateResponse401 | postStatusSessionIdUpdateResponse403 | postStatusSessionIdUpdateResponse503) & {
   headers: Headers;
 };
 
-export type postStatusSessionIdUpdateResponse =
-  | postStatusSessionIdUpdateResponseSuccess
-  | postStatusSessionIdUpdateResponseError;
+export type postStatusSessionIdUpdateResponse = (postStatusSessionIdUpdateResponseSuccess | postStatusSessionIdUpdateResponseError)
 
-export const getPostStatusSessionIdUpdateUrl = (sessionId: string) => {
-  return `http://localhost:3000/api/status/${sessionId}/update`;
-};
+export const getPostStatusSessionIdUpdateUrl = (sessionId: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/status/${sessionId}/update`
+}
 
 /**
  * Post a status update (story) to WhatsApp. Supports text, image, and video.
  * @summary Update status
  */
-export const postStatusSessionIdUpdate = async (
-  sessionId: string,
-  postStatusSessionIdUpdateBody: PostStatusSessionIdUpdateBody,
-  options?: RequestInit,
-): Promise<postStatusSessionIdUpdateResponse> => {
-  return useCustomInstance<postStatusSessionIdUpdateResponse>(
-    getPostStatusSessionIdUpdateUrl(sessionId),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(postStatusSessionIdUpdateBody),
-    },
-  );
-};
+export const postStatusSessionIdUpdate = async (sessionId: string,
+    postStatusSessionIdUpdateBody: PostStatusSessionIdUpdateBody, options?: RequestInit): Promise<postStatusSessionIdUpdateResponse> => {
 
-export type postStatusUpdateResponse200 = {
-  data: Success;
-  status: 200;
-};
-
-export type postStatusUpdateResponse400 = {
-  data: void;
-  status: 400;
-};
-
-export type postStatusUpdateResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
-
-export type postStatusUpdateResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
-
-export type postStatusUpdateResponse500 = {
-  data: void;
-  status: 500;
-};
-
-export type postStatusUpdateResponse503 = {
-  data: void;
-  status: 503;
-};
-
-export type postStatusUpdateResponseSuccess = postStatusUpdateResponse200 & {
-  headers: Headers;
-};
-export type postStatusUpdateResponseError = (
-  | postStatusUpdateResponse400
-  | postStatusUpdateResponse401
-  | postStatusUpdateResponse403
-  | postStatusUpdateResponse500
-  | postStatusUpdateResponse503
-) & {
-  headers: Headers;
-};
-
-export type postStatusUpdateResponse =
-  | postStatusUpdateResponseSuccess
-  | postStatusUpdateResponseError;
-
-export const getPostStatusUpdateUrl = () => {
-  return `http://localhost:3000/api/status/update`;
-};
-
-/**
- * Post a status update (story) to WhatsApp. Supports text, image, and video.
- * @summary Update status
- */
-export const postStatusUpdate = async (
-  postStatusUpdateBody: PostStatusUpdateBody,
-  options?: RequestInit,
-): Promise<postStatusUpdateResponse> => {
-  return useCustomInstance<postStatusUpdateResponse>(getPostStatusUpdateUrl(), {
+  return useCustomInstance<postStatusSessionIdUpdateResponse>(getPostStatusSessionIdUpdateUrl(sessionId),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postStatusUpdateBody),
-  });
-};
+    body: JSON.stringify(postStatusSessionIdUpdateBody)
+  }
+);}
 
-export type postSystemCheckUpdatesResponse200 = {
-  data: PostSystemCheckUpdates200;
-  status: 200;
-};
 
-export type postSystemCheckUpdatesResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+export type postStatusUpdateResponse200 = {
+  data: Success
+  status: 200
+}
 
-export type postSystemCheckUpdatesResponse500 = {
-  data: void;
-  status: 500;
-};
+export type postStatusUpdateResponse400 = {
+  data: void
+  status: 400
+}
 
-export type postSystemCheckUpdatesResponseSuccess =
-  postSystemCheckUpdatesResponse200 & {
-    headers: Headers;
-  };
-export type postSystemCheckUpdatesResponseError = (
-  | postSystemCheckUpdatesResponse401
-  | postSystemCheckUpdatesResponse500
-) & {
+export type postStatusUpdateResponse401 = {
+  data: UnauthorizedResponse
+  status: 401
+}
+
+export type postStatusUpdateResponse403 = {
+  data: ForbiddenResponse
+  status: 403
+}
+
+export type postStatusUpdateResponse500 = {
+  data: void
+  status: 500
+}
+
+export type postStatusUpdateResponse503 = {
+  data: void
+  status: 503
+}
+
+export type postStatusUpdateResponseSuccess = (postStatusUpdateResponse200) & {
+  headers: Headers;
+};
+export type postStatusUpdateResponseError = (postStatusUpdateResponse400 | postStatusUpdateResponse401 | postStatusUpdateResponse403 | postStatusUpdateResponse500 | postStatusUpdateResponse503) & {
   headers: Headers;
 };
 
-export type postSystemCheckUpdatesResponse =
-  | postSystemCheckUpdatesResponseSuccess
-  | postSystemCheckUpdatesResponseError;
+export type postStatusUpdateResponse = (postStatusUpdateResponseSuccess | postStatusUpdateResponseError)
+
+export const getPostStatusUpdateUrl = () => {
+
+
+
+
+  return `http://localhost:3000/api/status/update`
+}
+
+/**
+ * Post a status update (story) to WhatsApp. Supports text, image, and video.
+ * @summary Update status
+ */
+export const postStatusUpdate = async (postStatusUpdateBody: PostStatusUpdateBody, options?: RequestInit): Promise<postStatusUpdateResponse> => {
+
+  return useCustomInstance<postStatusUpdateResponse>(getPostStatusUpdateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(postStatusUpdateBody)
+  }
+);}
+
+
+export type postSystemCheckUpdatesResponse200 = {
+  data: PostSystemCheckUpdates200
+  status: 200
+}
+
+export type postSystemCheckUpdatesResponse401 = {
+  data: UnauthorizedResponse
+  status: 401
+}
+
+export type postSystemCheckUpdatesResponse500 = {
+  data: void
+  status: 500
+}
+
+export type postSystemCheckUpdatesResponseSuccess = (postSystemCheckUpdatesResponse200) & {
+  headers: Headers;
+};
+export type postSystemCheckUpdatesResponseError = (postSystemCheckUpdatesResponse401 | postSystemCheckUpdatesResponse500) & {
+  headers: Headers;
+};
+
+export type postSystemCheckUpdatesResponse = (postSystemCheckUpdatesResponseSuccess | postSystemCheckUpdatesResponseError)
 
 export const getPostSystemCheckUpdatesUrl = () => {
-  return `http://localhost:3000/api/system/check-updates`;
-};
+
+
+
+
+  return `http://localhost:3000/api/system/check-updates`
+}
 
 /**
  * Checks for new releases on GitHub and creates a system notification if a newer version is available.
  * @summary Check for updates
  */
-export const postSystemCheckUpdates = async (
-  options?: RequestInit,
-): Promise<postSystemCheckUpdatesResponse> => {
-  return useCustomInstance<postSystemCheckUpdatesResponse>(
-    getPostSystemCheckUpdatesUrl(),
-    {
-      ...options,
-      method: 'POST',
-    },
-  );
-};
+export const postSystemCheckUpdates = async ( options?: RequestInit): Promise<postSystemCheckUpdatesResponse> => {
+
+  return useCustomInstance<postSystemCheckUpdatesResponse>(getPostSystemCheckUpdatesUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+

@@ -23,6 +23,39 @@
  * - Broadcast: 10-20s random delay between messages
  * - Message history: Max 100 messages
  *
+ * ## 🔌 Socket.IO Events (Real-time)
+ * WA-AKG uses Socket.IO at `/api/socket/io` for real-time connection updates.
+ *
+ * ### Join Session
+ * ```js
+ * // Legacy (no duplicate account status)
+ * socket.emit("join-session", "sales-01");
+ * // or: socket.emit("join-session", { sessionId: "sales-01" });
+ *
+ * // Opt-in (receives DUPLICATE_ACCOUNT status)
+ * socket.emit("join-session", { sessionId: "sales-01", supportDuplicateAccountStatus: true });
+ * ```
+ *
+ * | Parameter | Type | Required | Description |
+ * |---|---|---|---|
+ * | `sessionId` | string | ✅ | Session identifier |
+ * | `supportDuplicateAccountStatus` | boolean | ❌ (default: false) | Opt into `DUPLICATE_ACCOUNT` status |
+ *
+ * ### connection.update Event
+ * Emitted when session status changes.
+ *
+ * | Field | Type | Description |
+ * |---|---|---|
+ * | `sessionId` | string | Session identifier |
+ * | `status` | string | One of: `DISCONNECTED`, `SCAN_QR`, `CONNECTED`, `STOPPED`, `LOGGED_OUT`, `DUPLICATE_ACCOUNT` |
+ * | `qr` | string \| null | QR code raw string (only when `SCAN_QR`) |
+ * | `pairingCode` | string | Pairing code (optional, when using phone number pairing) |
+ * | `error` | string | Error message (only when `DUPLICATE_ACCOUNT`) |
+ * | `duplicateSessionId` | string | Conflicting session ID (only when `DUPLICATE_ACCOUNT`) |
+ *
+ * ### Duplicate Account Behavior
+ * - **Legacy clients** (without `supportDuplicateAccountStatus`): backend still detects duplicate WhatsApp binding. The duplicate session is logged out and restarted automatically so the client can scan a new QR code. No `DUPLICATE_ACCOUNT` status is emitted.
+ * - **Opt-in clients** (with `supportDuplicateAccountStatus: true`): backend emits `connection.update` with `status: "DUPLICATE_ACCOUNT"`, `qr: null`, `error`, and `duplicateSessionId`. The duplicate session is stopped; the original session remains connected.
  * OpenAPI spec version: 1.2.0
  */
 import type {
@@ -38,368 +71,373 @@ import type {
   PostUsersBody,
   ServerErrorResponse,
   Success,
-  UnauthorizedResponse,
+  UnauthorizedResponse
 } from '../wAAKGAPIDocumentation.schemas';
 
 import { useCustomInstance } from '../../customInstance';
 
 export type postUsersResponse200 = {
-  data: PostUsers200;
-  status: 200;
-};
+  data: PostUsers200
+  status: 200
+}
 
 export type postUsersResponse400 = {
-  data: BadRequestResponse;
-  status: 400;
-};
+  data: BadRequestResponse
+  status: 400
+}
 
 export type postUsersResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postUsersResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type postUsersResponse500 = {
-  data: ServerErrorResponse;
-  status: 500;
-};
+  data: ServerErrorResponse
+  status: 500
+}
 
-export type postUsersResponseSuccess = postUsersResponse200 & {
+export type postUsersResponseSuccess = (postUsersResponse200) & {
   headers: Headers;
 };
-export type postUsersResponseError = (
-  | postUsersResponse400
-  | postUsersResponse401
-  | postUsersResponse403
-  | postUsersResponse500
-) & {
+export type postUsersResponseError = (postUsersResponse400 | postUsersResponse401 | postUsersResponse403 | postUsersResponse500) & {
   headers: Headers;
 };
 
-export type postUsersResponse =
-  | postUsersResponseSuccess
-  | postUsersResponseError;
+export type postUsersResponse = (postUsersResponseSuccess | postUsersResponseError)
 
 export const getPostUsersUrl = () => {
-  return `http://localhost:3000/api/users`;
-};
+
+
+
+
+  return `http://localhost:3000/api/users`
+}
 
 /**
  * @summary Create user (SUPERADMIN only)
  */
-export const postUsers = async (
-  postUsersBody?: PostUsersBody,
-  options?: RequestInit,
-): Promise<postUsersResponse> => {
-  return useCustomInstance<postUsersResponse>(getPostUsersUrl(), {
+export const postUsers = async (postUsersBody?: PostUsersBody, options?: RequestInit): Promise<postUsersResponse> => {
+
+  return useCustomInstance<postUsersResponse>(getPostUsersUrl(),
+  {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(postUsersBody),
-  });
-};
+    body: JSON.stringify(postUsersBody)
+  }
+);}
+
 
 export type getUsersResponse200 = {
-  data: GetUsers200Item[];
-  status: 200;
-};
+  data: GetUsers200Item[]
+  status: 200
+}
 
 export type getUsersResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type getUsersResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type getUsersResponse500 = {
-  data: ServerErrorResponse;
-  status: 500;
-};
+  data: ServerErrorResponse
+  status: 500
+}
 
-export type getUsersResponseSuccess = getUsersResponse200 & {
+export type getUsersResponseSuccess = (getUsersResponse200) & {
   headers: Headers;
 };
-export type getUsersResponseError = (
-  | getUsersResponse401
-  | getUsersResponse403
-  | getUsersResponse500
-) & {
+export type getUsersResponseError = (getUsersResponse401 | getUsersResponse403 | getUsersResponse500) & {
   headers: Headers;
 };
 
-export type getUsersResponse = getUsersResponseSuccess | getUsersResponseError;
+export type getUsersResponse = (getUsersResponseSuccess | getUsersResponseError)
 
 export const getGetUsersUrl = () => {
-  return `http://localhost:3000/api/users`;
-};
+
+
+
+
+  return `http://localhost:3000/api/users`
+}
 
 /**
  * @summary List users (SUPERADMIN only)
  */
-export const getUsers = async (
-  options?: RequestInit,
-): Promise<getUsersResponse> => {
-  return useCustomInstance<getUsersResponse>(getGetUsersUrl(), {
+export const getUsers = async ( options?: RequestInit): Promise<getUsersResponse> => {
+
+  return useCustomInstance<getUsersResponse>(getGetUsersUrl(),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
 
 export type deleteUsersIdResponse200 = {
-  data: DeleteUsersId200;
-  status: 200;
-};
+  data: DeleteUsersId200
+  status: 200
+}
 
 export type deleteUsersIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type deleteUsersIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type deleteUsersIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
 export type deleteUsersIdResponse500 = {
-  data: ServerErrorResponse;
-  status: 500;
-};
+  data: ServerErrorResponse
+  status: 500
+}
 
-export type deleteUsersIdResponseSuccess = deleteUsersIdResponse200 & {
+export type deleteUsersIdResponseSuccess = (deleteUsersIdResponse200) & {
   headers: Headers;
 };
-export type deleteUsersIdResponseError = (
-  | deleteUsersIdResponse401
-  | deleteUsersIdResponse403
-  | deleteUsersIdResponse404
-  | deleteUsersIdResponse500
-) & {
+export type deleteUsersIdResponseError = (deleteUsersIdResponse401 | deleteUsersIdResponse403 | deleteUsersIdResponse404 | deleteUsersIdResponse500) & {
   headers: Headers;
 };
 
-export type deleteUsersIdResponse =
-  | deleteUsersIdResponseSuccess
-  | deleteUsersIdResponseError;
+export type deleteUsersIdResponse = (deleteUsersIdResponseSuccess | deleteUsersIdResponseError)
 
-export const getDeleteUsersIdUrl = (id: string) => {
-  return `http://localhost:3000/api/users/${id}`;
-};
+export const getDeleteUsersIdUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/users/${id}`
+}
 
 /**
  * @summary Delete user (SUPERADMIN only)
  */
-export const deleteUsersId = async (
-  id: string,
-  options?: RequestInit,
-): Promise<deleteUsersIdResponse> => {
-  return useCustomInstance<deleteUsersIdResponse>(getDeleteUsersIdUrl(id), {
+export const deleteUsersId = async (id: string, options?: RequestInit): Promise<deleteUsersIdResponse> => {
+
+  return useCustomInstance<deleteUsersIdResponse>(getDeleteUsersIdUrl(id),
+  {
     ...options,
-    method: 'DELETE',
-  });
-};
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type patchUsersIdResponse200 = {
-  data: PatchUsersId200;
-  status: 200;
-};
+  data: PatchUsersId200
+  status: 200
+}
 
 export type patchUsersIdResponse400 = {
-  data: BadRequestResponse;
-  status: 400;
-};
+  data: BadRequestResponse
+  status: 400
+}
 
 export type patchUsersIdResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type patchUsersIdResponse403 = {
-  data: ForbiddenResponse;
-  status: 403;
-};
+  data: ForbiddenResponse
+  status: 403
+}
 
 export type patchUsersIdResponse404 = {
-  data: void;
-  status: 404;
-};
+  data: void
+  status: 404
+}
 
 export type patchUsersIdResponse500 = {
-  data: ServerErrorResponse;
-  status: 500;
-};
+  data: ServerErrorResponse
+  status: 500
+}
 
-export type patchUsersIdResponseSuccess = patchUsersIdResponse200 & {
+export type patchUsersIdResponseSuccess = (patchUsersIdResponse200) & {
   headers: Headers;
 };
-export type patchUsersIdResponseError = (
-  | patchUsersIdResponse400
-  | patchUsersIdResponse401
-  | patchUsersIdResponse403
-  | patchUsersIdResponse404
-  | patchUsersIdResponse500
-) & {
+export type patchUsersIdResponseError = (patchUsersIdResponse400 | patchUsersIdResponse401 | patchUsersIdResponse403 | patchUsersIdResponse404 | patchUsersIdResponse500) & {
   headers: Headers;
 };
 
-export type patchUsersIdResponse =
-  | patchUsersIdResponseSuccess
-  | patchUsersIdResponseError;
+export type patchUsersIdResponse = (patchUsersIdResponseSuccess | patchUsersIdResponseError)
 
-export const getPatchUsersIdUrl = (id: string) => {
-  return `http://localhost:3000/api/users/${id}`;
-};
+export const getPatchUsersIdUrl = (id: string,) => {
+
+
+
+
+  return `http://localhost:3000/api/users/${id}`
+}
 
 /**
  * @summary Update user (SUPERADMIN only)
  */
-export const patchUsersId = async (
-  id: string,
-  patchUsersIdBody?: PatchUsersIdBody,
-  options?: RequestInit,
-): Promise<patchUsersIdResponse> => {
-  return useCustomInstance<patchUsersIdResponse>(getPatchUsersIdUrl(id), {
+export const patchUsersId = async (id: string,
+    patchUsersIdBody?: PatchUsersIdBody, options?: RequestInit): Promise<patchUsersIdResponse> => {
+
+  return useCustomInstance<patchUsersIdResponse>(getPatchUsersIdUrl(id),
+  {
     ...options,
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(patchUsersIdBody),
-  });
-};
+    body: JSON.stringify(patchUsersIdBody)
+  }
+);}
+
 
 export type postUserApiKeyResponse200 = {
-  data: PostUserApiKey200;
-  status: 200;
-};
+  data: PostUserApiKey200
+  status: 200
+}
 
 export type postUserApiKeyResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type postUserApiKeyResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
-export type postUserApiKeyResponseSuccess = postUserApiKeyResponse200 & {
+export type postUserApiKeyResponseSuccess = (postUserApiKeyResponse200) & {
   headers: Headers;
 };
-export type postUserApiKeyResponseError = (
-  | postUserApiKeyResponse401
-  | postUserApiKeyResponse500
-) & {
+export type postUserApiKeyResponseError = (postUserApiKeyResponse401 | postUserApiKeyResponse500) & {
   headers: Headers;
 };
 
-export type postUserApiKeyResponse =
-  | postUserApiKeyResponseSuccess
-  | postUserApiKeyResponseError;
+export type postUserApiKeyResponse = (postUserApiKeyResponseSuccess | postUserApiKeyResponseError)
 
 export const getPostUserApiKeyUrl = () => {
-  return `http://localhost:3000/api/user/api-key`;
-};
+
+
+
+
+  return `http://localhost:3000/api/user/api-key`
+}
 
 /**
  * @summary Generate new API key
  */
-export const postUserApiKey = async (
-  options?: RequestInit,
-): Promise<postUserApiKeyResponse> => {
-  return useCustomInstance<postUserApiKeyResponse>(getPostUserApiKeyUrl(), {
+export const postUserApiKey = async ( options?: RequestInit): Promise<postUserApiKeyResponse> => {
+
+  return useCustomInstance<postUserApiKeyResponse>(getPostUserApiKeyUrl(),
+  {
     ...options,
-    method: 'POST',
-  });
-};
+    method: 'POST'
+
+
+  }
+);}
+
 
 export type deleteUserApiKeyResponse200 = {
-  data: Success;
-  status: 200;
-};
+  data: Success
+  status: 200
+}
 
 export type deleteUserApiKeyResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
 export type deleteUserApiKeyResponse500 = {
-  data: void;
-  status: 500;
-};
+  data: void
+  status: 500
+}
 
-export type deleteUserApiKeyResponseSuccess = deleteUserApiKeyResponse200 & {
+export type deleteUserApiKeyResponseSuccess = (deleteUserApiKeyResponse200) & {
   headers: Headers;
 };
-export type deleteUserApiKeyResponseError = (
-  | deleteUserApiKeyResponse401
-  | deleteUserApiKeyResponse500
-) & {
+export type deleteUserApiKeyResponseError = (deleteUserApiKeyResponse401 | deleteUserApiKeyResponse500) & {
   headers: Headers;
 };
 
-export type deleteUserApiKeyResponse =
-  | deleteUserApiKeyResponseSuccess
-  | deleteUserApiKeyResponseError;
+export type deleteUserApiKeyResponse = (deleteUserApiKeyResponseSuccess | deleteUserApiKeyResponseError)
 
 export const getDeleteUserApiKeyUrl = () => {
-  return `http://localhost:3000/api/user/api-key`;
-};
+
+
+
+
+  return `http://localhost:3000/api/user/api-key`
+}
 
 /**
  * @summary Revoke API key
  */
-export const deleteUserApiKey = async (
-  options?: RequestInit,
-): Promise<deleteUserApiKeyResponse> => {
-  return useCustomInstance<deleteUserApiKeyResponse>(getDeleteUserApiKeyUrl(), {
+export const deleteUserApiKey = async ( options?: RequestInit): Promise<deleteUserApiKeyResponse> => {
+
+  return useCustomInstance<deleteUserApiKeyResponse>(getDeleteUserApiKeyUrl(),
+  {
     ...options,
-    method: 'DELETE',
-  });
-};
+    method: 'DELETE'
+
+
+  }
+);}
+
 
 export type getUserApiKeyResponse200 = {
-  data: GetUserApiKey200;
-  status: 200;
-};
+  data: GetUserApiKey200
+  status: 200
+}
 
 export type getUserApiKeyResponse401 = {
-  data: UnauthorizedResponse;
-  status: 401;
-};
+  data: UnauthorizedResponse
+  status: 401
+}
 
-export type getUserApiKeyResponseSuccess = getUserApiKeyResponse200 & {
+export type getUserApiKeyResponseSuccess = (getUserApiKeyResponse200) & {
   headers: Headers;
 };
-export type getUserApiKeyResponseError = getUserApiKeyResponse401 & {
+export type getUserApiKeyResponseError = (getUserApiKeyResponse401) & {
   headers: Headers;
 };
 
-export type getUserApiKeyResponse =
-  | getUserApiKeyResponseSuccess
-  | getUserApiKeyResponseError;
+export type getUserApiKeyResponse = (getUserApiKeyResponseSuccess | getUserApiKeyResponseError)
 
 export const getGetUserApiKeyUrl = () => {
-  return `http://localhost:3000/api/user/api-key`;
-};
+
+
+
+
+  return `http://localhost:3000/api/user/api-key`
+}
 
 /**
  * @summary Get current API key
  */
-export const getUserApiKey = async (
-  options?: RequestInit,
-): Promise<getUserApiKeyResponse> => {
-  return useCustomInstance<getUserApiKeyResponse>(getGetUserApiKeyUrl(), {
+export const getUserApiKey = async ( options?: RequestInit): Promise<getUserApiKeyResponse> => {
+
+  return useCustomInstance<getUserApiKeyResponse>(getGetUserApiKeyUrl(),
+  {
     ...options,
-    method: 'GET',
-  });
-};
+    method: 'GET'
+
+
+  }
+);}
+
+

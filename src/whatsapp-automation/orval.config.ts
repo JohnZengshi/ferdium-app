@@ -3,7 +3,7 @@ import { defineConfig } from 'orval';
 export default defineConfig({
   whatsapp: {
     input: {
-      target: 'http://localhost:3000/api/docs',
+      target: 'http://10.0.0.228:3333/api/docs',
     },
     output: {
       target: './api/generated',

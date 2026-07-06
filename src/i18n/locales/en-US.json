@@ -1338,5 +1338,20 @@
   "workspaceDrawer.workspaceFeatureInfo": "<p>AITALK Workspaces let you focus on what's important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Edit workspaces settings",
   "workspaces.switchingIndicator.allServices": "All services",
-  "workspaces.switchingIndicator.switchingTo": "Switching to"
+  "workspaces.switchingIndicator.switchingTo": "Switching to",
+  "waAkg.apiReturnedStatus": "API returned status {status}",
+  "waAkg.authExpired": "Authentication expired. Please log in again.",
+  "waAkg.authFailed": "WA-AKG authentication failed. Is the backend running?",
+  "waAkg.duplicateAccount": "This WhatsApp account is already connected to another session. Use a different account, or unbind original session before retrying.",
+  "waAkg.failedToCreateSession": "Failed to create session",
+  "waAkg.injectQrFailed": "Could not inject QR code into WhatsApp page. Please check your network connection and try reloading the service.",
+  "waAkg.noQrDataYet": "No QR data available yet",
+  "waAkg.qrApiReturnedStatus": "QR API returned status {status}",
+  "waAkg.qrModalDesc": "Scan to link your AI digital employee",
+  "waAkg.qrModalDuplicateText": "This account is already connected in another session. Use another account or unbind it before refreshing.",
+  "waAkg.qrModalRefresh": "Refresh QR Code",
+  "waAkg.qrModalTitle": "Scan QR Code",
+  "waAkg.sessionLoggedOut": "WhatsApp session was logged out. Please re-add the service.",
+  "waAkg.sessionStopped": "WhatsApp session was stopped.",
+  "waAkg.successModalText": "Your digital employee is ready to use~"
 }

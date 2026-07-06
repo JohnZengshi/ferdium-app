@@ -1519,5 +1519,20 @@
   "workspaceDrawer.workspaceFeatureInfo": "<p>AITALK Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "編輯工作區設定",
   "workspaces.switchingIndicator.allServices": "所有服務",
-  "workspaces.switchingIndicator.switchingTo": "切換到"
+  "workspaces.switchingIndicator.switchingTo": "切換到",
+  "waAkg.apiReturnedStatus": "API 回傳狀態 {status}",
+  "waAkg.authExpired": "認證已過期，請重新登入。",
+  "waAkg.authFailed": "WA-AKG 認證失敗，請檢查後端是否運行。",
+  "waAkg.duplicateAccount": "該 WhatsApp 帳號已在其他工作階段中連接。請使用其他帳號，或解除綁定原工作階段後重試。",
+  "waAkg.failedToCreateSession": "建立工作階段失敗",
+  "waAkg.injectQrFailed": "無法注入二維碼到 WhatsApp 頁面。請檢查網路連接並嘗試重新載入服務。",
+  "waAkg.noQrDataYet": "暫無二維碼資料",
+  "waAkg.qrApiReturnedStatus": "二維碼 API 回傳狀態 {status}",
+  "waAkg.qrModalDesc": "掃碼關聯你的AI數位員工",
+  "waAkg.qrModalDuplicateText": "該帳號已在其他工作階段連接，請換號或解除綁定後刷新",
+  "waAkg.qrModalRefresh": "刷新二維碼",
+  "waAkg.qrModalTitle": "掃碼驗證",
+  "waAkg.sessionLoggedOut": "WhatsApp 工作階段已登出，請重新新增服務。",
+  "waAkg.sessionStopped": "WhatsApp 工作階段已停止。",
+  "waAkg.successModalText": "恭喜你可以使用數位員工啦~"
 }

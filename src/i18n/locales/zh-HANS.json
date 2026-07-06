@@ -1579,5 +1579,20 @@
   "workspaceDrawer.workspaceFeatureInfo": "<p>AITALK 工作区让您专注于当前重要的事务。设置不同的服务组合，随时轻松切换。</p><p>您决定何时何地需要哪些服务，帮助您掌握工作节奏——或随时轻松从工作中抽身。</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "编辑工作区设置",
   "workspaces.switchingIndicator.allServices": "所有服务",
-  "workspaces.switchingIndicator.switchingTo": "正在切换到"
+  "workspaces.switchingIndicator.switchingTo": "正在切换到",
+  "waAkg.apiReturnedStatus": "API 返回状态 {status}",
+  "waAkg.authExpired": "认证已过期，请重新登录。",
+  "waAkg.authFailed": "WA-AKG 认证失败，请检查后端是否运行。",
+  "waAkg.duplicateAccount": "该 WhatsApp 账号已在其他会话中连接。请使用其他账号，或解绑原会话后重试。",
+  "waAkg.failedToCreateSession": "创建会话失败",
+  "waAkg.injectQrFailed": "无法注入二维码到 WhatsApp 页面。请检查网络连接并尝试重新加载服务。",
+  "waAkg.noQrDataYet": "暂无二维码数据",
+  "waAkg.qrApiReturnedStatus": "二维码 API 返回状态 {status}",
+  "waAkg.qrModalDesc": "扫码关联你的AI数字员工",
+  "waAkg.qrModalDuplicateText": "该账号已在其他会话连接，请换号或解绑后刷新",
+  "waAkg.qrModalRefresh": "刷新二维码",
+  "waAkg.qrModalTitle": "扫码验证",
+  "waAkg.sessionLoggedOut": "WhatsApp 会话已登出，请重新添加服务。",
+  "waAkg.sessionStopped": "WhatsApp 会话已停止。",
+  "waAkg.successModalText": "恭喜你可以使用数字员工啦~"
 }

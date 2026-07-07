@@ -12,8 +12,8 @@ const setSettingsProfile = (
 export default (params: { mainWindow: BrowserWindow; settings: Settings }) => {
   ipcMain.on('getAppSettings', (_event, args) => {
     const type = typeof args === 'string' ? args : args.type;
-    if (typeof args !== 'string' && 'waAkgEmail' in args) {
-      setSettingsProfile(params.settings, args.waAkgEmail);
+    if (typeof args !== 'string' && 'profileEmail' in args) {
+      setSettingsProfile(params.settings, args.profileEmail);
     }
     params.mainWindow.webContents.send('appSettings', {
       type,
@@ -22,8 +22,8 @@ export default (params: { mainWindow: BrowserWindow; settings: Settings }) => {
   });
 
   ipcMain.on('updateAppSettings', (_event, args) => {
-    if ('waAkgEmail' in args) {
-      setSettingsProfile(params.settings, args.waAkgEmail);
+    if ('profileEmail' in args) {
+      setSettingsProfile(params.settings, args.profileEmail);
     }
     params.settings[args.type].set(args.data);
   });

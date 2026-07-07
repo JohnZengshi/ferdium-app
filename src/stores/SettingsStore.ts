@@ -70,9 +70,9 @@ export default class SettingsStore extends TypedStore {
             : process.env.FERDIUM_SERVER
           : server;
 
-        if (effectiveServer === LOCAL_SERVER && this.waAkgEmail) {
+        if (effectiveServer === LOCAL_SERVER && this.profileEmail) {
           ipcRenderer.send('startLocalServer', {
-            waAkgEmail: this.waAkgEmail,
+            profileEmail: this.profileEmail,
           });
         }
       },
@@ -161,7 +161,7 @@ export default class SettingsStore extends TypedStore {
   loadFileSystemSettings(type: string): void {
     ipcRenderer.send('getAppSettings', {
       type,
-      waAkgEmail: this.waAkgEmail,
+      profileEmail: this.profileEmail,
     });
   }
 
@@ -225,7 +225,7 @@ export default class SettingsStore extends TypedStore {
       ipcRenderer.send('updateAppSettings', {
         type,
         data,
-        waAkgEmail: this.waAkgEmail,
+        profileEmail: this.profileEmail,
       });
 
       Object.assign(this._fileSystemSettingsCache[type], data);
@@ -305,7 +305,7 @@ export default class SettingsStore extends TypedStore {
     });
   }
 
-  get waAkgEmail(): string | null {
+  get profileEmail(): string | null {
     return localStorage.getItem(WA_USER_EMAIL_STORAGE_KEY);
   }
 

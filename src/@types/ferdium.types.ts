@@ -17,6 +17,11 @@ declare global {
       APPDATA?: string;
       FERDIUM_SERVER?: string;
       WA_AKG_BASE?: string;
+      AGENT_FLOW_CS_BASE?: string;
+      AGENT_FLOW_TOKEN_STORAGE_KEY?: string;
+      USE_AGENT_FLOW_AUTH?: string;
+      PROFILE_EMAIL?: string;
+      WA_AKG_PROFILE_EMAIL?: string;
       API_KEY_KEY?: string;
       API_KEY_STORAGE_KEY?: string;
       USE_LOCAL_API?: string;

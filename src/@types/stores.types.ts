@@ -300,10 +300,10 @@ interface UserStore extends TypedStore {
   PASSWORD_ROUTE: '/auth/password';
   SETUP_ROUTE: '/auth/signup/setup';
   SIGNUP_ROUTE: '/auth/signup';
-  WA_AKG_LOGIN_ROUTE: '/auth/wa-akg/login';
+  LOCAL_AUTH_LOGIN_ROUTE: '/auth/local/login';
   WELCOME_ROUTE: '/auth/welcome';
-  waAkgEmail: string | null;
-  waAkgUserId: string | null;
+  profileEmail: string | null;
+  profileUserId: string | null;
   accountType: () => void;
   authToken: () => void;
   deleteAccountRequest: () => void;
@@ -332,6 +332,7 @@ interface UserStore extends TypedStore {
   isLoggedIn: boolean;
   isTokenExpired: boolean;
   loginRoute: string;
+  logoutRedirectRoute: string;
   passwordRoute: string;
   signupRoute: string;
   team: () => void;

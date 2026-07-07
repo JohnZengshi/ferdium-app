@@ -31,6 +31,8 @@ export default class Settings {
 
   @action setProfileEmail(email?: string | null): void {
     this.profileEmail = email?.trim().toLowerCase() ?? '';
+    // App settings are always global; skip profile-based hydrate/write
+    if (this.type === 'app') return;
     if (pathExistsSync(this.settingsFile)) {
       this._hydrate();
     } else {
@@ -83,7 +85,8 @@ export default class Settings {
 
   get settingsFile(): string {
     const filename = `${this.type === 'app' ? 'settings' : this.type}.json`;
-    if (!this.profileEmail) {
+    // App settings always use global path; proxy/shortcuts remain profile-isolated
+    if (this.type === 'app' || !this.profileEmail) {
       return userDataPath('config', filename);
     }
     const profileHash = createHash('sha256')

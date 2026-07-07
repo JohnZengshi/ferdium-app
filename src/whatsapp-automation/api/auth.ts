@@ -40,35 +40,35 @@ async function waitForLocalServer(): Promise<void> {
   });
 }
 
-function markFerdiumLoggedInForWaAkg(): void {
+function markProfileLoggedIn(): void {
   localStorage.setItem('authToken', 'wa-akg');
   window.localStorage.setItem('authToken', 'wa-akg');
 }
 
-function setWaAkgIdentity(email: string, userId?: string): void {
+function setProfileIdentity(email: string, userId?: string): void {
   switchLocalStorageProfile(email);
   window.localStorage.setItem(WA_USER_EMAIL_STORAGE_KEY, email);
   if (userId) {
     window.localStorage.setItem(WA_USER_ID_STORAGE_KEY, userId);
   }
   const { user } = (window as any).ferdium?.stores || {};
-  user?.setWaAkgEmail?.(email);
+  user?.setProfileEmail?.(email);
   if (userId) {
-    user?.setWaAkgUserId?.(userId);
+    user?.setProfileUserId?.(userId);
   }
   (window as any).ferdium?.stores?.settings?.reloadFileSystemSettings?.();
 }
 
-async function switchLocalFerdiumProfile(email: string): Promise<void> {
+async function switchLocalProfile(email: string): Promise<void> {
   try {
-    const result = await ipcRenderer.invoke('setWaAkgProfile', { email });
-    markFerdiumLoggedInForWaAkg();
+    const result = await ipcRenderer.invoke('setProfile', { email });
+    markProfileLoggedIn();
     if (result?.requiresRestart) {
-      await ipcRenderer.invoke('relaunchForWaAkgProfile');
+      await ipcRenderer.invoke('relaunchForProfile');
       await new Promise(() => {});
       return;
     }
-    ipcRenderer.send('startLocalServer', { waAkgEmail: email });
+    ipcRenderer.send('startLocalServer', { profileEmail: email });
     if (!result?.isLocalServerStarted) {
       await waitForLocalServer();
     }
@@ -230,7 +230,7 @@ export const setApiKey = (key: string): void => {
  */
 export const clearApiKey = (): void => {
   localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
-  (window as any).ferdium?.stores?.user?.setWaAkgEmail?.(null);
+  (window as any).ferdium?.stores?.user?.setProfileEmail?.(null);
   localStorage.removeItem(API_KEY_STORAGE_KEY);
   try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
@@ -341,7 +341,7 @@ export const initializeAuth = async (
         console.error('[WhatsApp Automation] Session check failed', session);
         return null;
       }
-      setWaAkgIdentity(session.user.email, session.user.id);
+      setProfileIdentity(session.user.email, session.user.id);
       authenticatedEmail = session.user.email;
     } catch (error) {
       console.error('[WhatsApp Automation] Session check error', error);
@@ -389,7 +389,7 @@ export const initializeAuth = async (
 
     if (apiKey) {
       setApiKey(apiKey);
-      await switchLocalFerdiumProfile(authenticatedEmail);
+      await switchLocalProfile(authenticatedEmail);
       return apiKey;
     }
 

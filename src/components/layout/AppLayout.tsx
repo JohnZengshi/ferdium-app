@@ -255,11 +255,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
         showServicesUpdatedInfoBar);
     const rawUserName =
       `${stores?.user?.data?.firstname || ''} ${stores?.user?.data?.lastname || ''}`.trim();
-    const normalizedWaAkgName = (stores?.user?.waAkgEmail || '').split('@')[0];
+    const normalizedProfileName = (stores?.user?.profileEmail || '').split(
+      '@',
+    )[0];
     const displayUserName =
       rawUserName && rawUserName !== 'Aitalk Application'
         ? rawUserName
-        : normalizedWaAkgName || rawUserName;
+        : normalizedProfileName || rawUserName;
 
     const renderMainContent = () => {
       // IMPORTANT: keep the services/webview container mounted and toggle visibility with CSS only.

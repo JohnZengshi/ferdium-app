@@ -31,7 +31,7 @@ export async function launchApp() {
 }
 
 /**
- * 启动应用但不启动 WA-AKG 后端（使用不存在的端口）
+ * 启动应用但不启动本地 NextAuth 后端（使用不存在的端口）
  */
 export async function launchAppWithoutBackend() {
   const appDataDir = createTempAppDataDir();
@@ -68,8 +68,8 @@ export async function getMainWindow(app: ElectronApplication) {
   return window;
 }
 
-export async function waitForWaAkgLogin(window: any) {
-  await window.waitForURL(/\/auth\/wa-akg\/login/, { timeout: 30_000 });
+export async function waitForLocalAuthLogin(window: any) {
+  await window.waitForURL(/\/auth\/local\/login/, { timeout: 30_000 });
   await window.waitForLoadState('networkidle');
 }
 

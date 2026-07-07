@@ -1,7 +1,9 @@
 import { createHash } from 'node:crypto';
 import { API_KEY_STORAGE_KEY, WA_USER_EMAIL_STORAGE_KEY } from './constants';
 
-const PROFILE_STORAGE_PREFIX = 'waAkgProfileLocalStorage:';
+const PROFILE_STORAGE_PREFIX = 'profileLocalStorage:';
+// compat: legacy prefix
+const LEGACY_PROFILE_STORAGE_PREFIX = 'waAkgProfileLocalStorage:';
 
 // 登录态相关的 key，不应保存到 profile 快照中
 const EXCLUDED_KEYS = new Set([
@@ -21,8 +23,15 @@ const profileStorageKey = (email: string): string =>
     .update(normalizeProfileEmail(email))
     .digest('hex')}`;
 
+const legacyProfileStorageKey = (email: string): string =>
+  `${LEGACY_PROFILE_STORAGE_PREFIX}${createHash('sha256')
+    .update(normalizeProfileEmail(email))
+    .digest('hex')}`;
+
 const isProfileInfrastructureKey = (key: string): boolean =>
-  key === WA_USER_EMAIL_STORAGE_KEY || key.startsWith(PROFILE_STORAGE_PREFIX);
+  key === WA_USER_EMAIL_STORAGE_KEY ||
+  key.startsWith(PROFILE_STORAGE_PREFIX) ||
+  key.startsWith(LEGACY_PROFILE_STORAGE_PREFIX);
 
 const snapshotLocalStorage = (): Record<string, string> => {
   const snapshot: Record<string, string> = {};
@@ -57,9 +66,9 @@ export const switchLocalStorageProfile = (email: string): void => {
 
   saveLocalStorageProfile(currentEmail);
 
-  const nextSnapshotRaw = window.localStorage.getItem(
-    profileStorageKey(normalizedEmail),
-  );
+  const nextSnapshotRaw =
+    window.localStorage.getItem(profileStorageKey(normalizedEmail)) ||
+    window.localStorage.getItem(legacyProfileStorageKey(normalizedEmail));
 
   for (const key of Object.keys(window.localStorage)) {
     if (!isProfileInfrastructureKey(key)) {

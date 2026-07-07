@@ -15,13 +15,13 @@
 |     Make sure to pass a relative path from the project root.
 */
 
-import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import fold from '@adonisjs/fold';
 import { Ignitor, hooks } from '@adonisjs/ignitor';
 import { chmod, ensureDir, readFile, stat, writeFile } from 'fs-extra';
 import { LOCAL_HOSTNAME } from '../config';
 import { isWindows } from '../environment';
+import { resolveProfilePath } from '../helpers/profilePath';
 
 process.env.ENV_PATH = join(__dirname, 'env.ini');
 
@@ -46,15 +46,13 @@ async function ensureDB(dbPath: string): Promise<void> {
 }
 
 export const server = async (userPath: string, port: number, token: string) => {
-  const waAkgEmail = process.env.WA_AKG_PROFILE_EMAIL?.trim().toLowerCase();
-  const profilePath = waAkgEmail
-    ? join(
-        userPath,
-        'profiles',
-        'wa-akg',
-        createHash('sha256').update(waAkgEmail).digest('hex'),
-      )
-    : userPath;
+  const profileEmail =
+    process.env.PROFILE_EMAIL?.trim().toLowerCase() ||
+    process.env.WA_AKG_PROFILE_EMAIL?.trim().toLowerCase();
+  let profilePath = userPath;
+  if (profileEmail) {
+    profilePath = resolveProfilePath(userPath, profileEmail);
+  }
   await ensureDir(profilePath);
   const dbPath = join(profilePath, 'server.sqlite');
   await ensureDB(dbPath);

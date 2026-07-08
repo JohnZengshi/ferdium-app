@@ -194,6 +194,7 @@ interface EditServiceDrawerProps {
   } | null;
   onClose: () => void;
   onConfirm: (data: { name: string; proxy: ServiceProxy }) => void;
+  defaultName?: string;
 }
 
 export default function EditServiceDrawer({
@@ -201,6 +202,7 @@ export default function EditServiceDrawer({
   initialData,
   onClose,
   onConfirm,
+  defaultName = 'WhatsApp',
 }: EditServiceDrawerProps) {
   const intl = useIntl();
 
@@ -301,7 +303,7 @@ export default function EditServiceDrawer({
         }
       : { isEnabled: false };
 
-    onConfirm({ name: remark || 'WhatsApp', proxy });
+    onConfirm({ name: remark || defaultName, proxy });
   };
 
   return (

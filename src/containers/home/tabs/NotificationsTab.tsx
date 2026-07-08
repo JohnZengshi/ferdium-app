@@ -378,7 +378,7 @@ const NotificationsTab = (): ReactElement => {
 
       // 切换到对应 WhatsApp 服务
       ferdium?.actions?.service?.setActive({ serviceId: sessionId });
-      navigationStore.setModule('service-type');
+      navigationStore.setModule('whatsapp');
 
       // Tier 1: 等待 webview 挂载 + 页面加载完成（最多 30s）
       const wv = await new Promise<WebviewLoader | null>(resolve => {

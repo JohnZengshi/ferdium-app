@@ -357,6 +357,14 @@ export default class ServicesStore extends TypedStore {
     return workspaceStore.filterServicesByActiveWorkspace(services);
   }
 
+  @computed get telegramServices(): Service[] {
+    return this.allDisplayed.filter(s => s.recipe?.id === 'telegram');
+  }
+
+  @computed get whatsAppServices(): Service[] {
+    return this.allDisplayed.filter(s => s.recipe?.id === WHATSAPP_RECIPE_ID);
+  }
+
   // This is just used to avoid unnecessary rerendering of resource-heavy webviews
   @computed get allDisplayedUnordered() {
     const { showDisabledServices } = this.stores.settings.all.app;
@@ -1381,6 +1389,14 @@ export default class ServicesStore extends TypedStore {
    * @returns {null} - when badges are disabled via settings or there are no unreads
    */
   @computed get mainModuleBadge(): number | null {
+    return this.getBadgeCount(this.whatsAppServices);
+  }
+
+  @computed get telegramBadge(): number | null {
+    return this.getBadgeCount(this.telegramServices);
+  }
+
+  getBadgeCount(services: Service[]): number | null {
     const { showMessageBadgeWhenMuted } = this.stores.settings.all.app;
     const { showMessageBadgesEvenWhenMuted } = this.stores.ui;
 
@@ -1389,7 +1405,7 @@ export default class ServicesStore extends TypedStore {
     let direct = 0;
     let indirect = 0;
 
-    for (const s of this.allDisplayed) {
+    for (const s of services) {
       if (s.isBadgeEnabled) {
         direct +=
           showMessageBadgeWhenMuted || s.isNotificationEnabled

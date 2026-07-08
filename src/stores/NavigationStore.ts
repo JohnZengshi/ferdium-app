@@ -2,7 +2,8 @@ import { action, makeObservable, observable } from 'mobx';
 
 export type FerdiumModule =
   | 'home'
-  | 'service-type'
+  | 'whatsapp'
+  | 'telegram'
   | 'knowledge-base'
   | 'settings';
 export type ServiceSubTab = 'messages' | 'account' | 'profile';
@@ -14,13 +15,37 @@ export type StrategyConfigTab =
   | 'notifications';
 
 class NavigationStore {
-  @observable activeModule: FerdiumModule = 'service-type';
+  @observable activeModule: FerdiumModule = 'whatsapp';
 
   @observable activeServiceTab: ServiceSubTab = 'messages';
 
   @observable activeHomeView: HomeViewMode = 'dashboard';
 
   @observable activeStrategyTab: StrategyConfigTab = 'resume';
+
+  @observable moduleActiveService: Record<FerdiumModule, string | null> = {
+    home: null,
+    whatsapp: null,
+    telegram: null,
+    'knowledge-base': null,
+    settings: null,
+  };
+
+  @observable moduleServiceTab: Record<FerdiumModule, ServiceSubTab> = {
+    home: 'messages',
+    whatsapp: 'messages',
+    telegram: 'messages',
+    'knowledge-base': 'messages',
+    settings: 'messages',
+  };
+
+  @observable moduleCollapsed: Record<FerdiumModule, boolean> = {
+    home: false,
+    whatsapp: false,
+    telegram: false,
+    'knowledge-base': false,
+    settings: false,
+  };
 
   constructor() {
     makeObservable(this);
@@ -29,11 +54,23 @@ class NavigationStore {
   @action
   setModule(module: FerdiumModule) {
     this.activeModule = module;
+    this.activeServiceTab = this.moduleServiceTab[module] ?? 'messages';
+  }
+
+  @action
+  setModuleActiveService(module: FerdiumModule, serviceId: string | null) {
+    this.moduleActiveService[module] = serviceId;
   }
 
   @action
   setServiceTab(tab: ServiceSubTab) {
+    this.moduleServiceTab[this.activeModule] = tab;
     this.activeServiceTab = tab;
+  }
+
+  @action
+  toggleModuleCollapsed(module: FerdiumModule) {
+    this.moduleCollapsed[module] = !this.moduleCollapsed[module];
   }
 
   @action

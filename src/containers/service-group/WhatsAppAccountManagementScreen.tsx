@@ -30,6 +30,7 @@ import {
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import AvatarCell from '../../components/ui/AvatarCell';
 import EditServiceDrawer from '../../components/ui/EditServiceDrawer';
+import type { ServiceProxy } from '../../components/ui/EditServiceDrawer';
 import FilterToolbar from '../../components/ui/FilterToolbar';
 import {
   type MappedAccountStatus,
@@ -39,6 +40,8 @@ import {
 import type Service from '../../models/Service';
 import { getSessions } from '../../whatsapp-automation/api/generated/sessions/sessions';
 import type { Session } from '../../whatsapp-automation/api/generated/wAAKGAPIDocumentation.schemas';
+
+import { formatProxy } from '../../helpers/formatProxy';
 
 const messages = defineMessages({
   colId: { id: 'accountMgmt.col.id', defaultMessage: '#' },
@@ -146,32 +149,15 @@ interface Account {
   autoChatStatus: string;
 }
 
-interface ServiceProxyConfig {
-  isEnabled?: boolean;
-  host?: string;
-  port?: string | number;
-}
-
-const formatProxy = (proxy: unknown): string => {
-  if (!proxy || typeof proxy !== 'object') {
-    return '';
-  }
-
-  const config = proxy as ServiceProxyConfig;
-
-  if (!config.isEnabled || !config.host) {
-    return '';
-  }
-
-  return config.port ? `${config.host}:${config.port}` : config.host;
-};
-
 interface IProps {
   stores?: any;
   actions?: any;
 }
 
-function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
+function WhatsAppAccountManagementScreen({
+  stores,
+  actions,
+}: IProps): ReactElement {
   const intl = useIntl();
 
   const [sessionCreatedAtMap, setSessionCreatedAtMap] = useState<
@@ -191,7 +177,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
   const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
   const [refreshVersion, setRefreshVersion] = useState(0);
 
-  const allServices: Service[] = stores?.services?.all ?? [];
+  const allServices: Service[] = stores?.services?.whatsAppServices ?? [];
   const serviceIdsKey = allServices.map(service => service.id).join('\u0000');
   const waStatuses: Map<string, WhatsAppSessionStatus> =
     stores?.whatsappAutomation?.sessionStatuses ?? new Map();
@@ -661,7 +647,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
             editingService
               ? {
                   name: editingService.name,
-                  proxy: editingService.proxy as ServiceProxyConfig | null,
+                  proxy: editingService.proxy as ServiceProxy | null,
                   cookie: (editingService as { cookie?: string }).cookie || '',
                 }
               : null
@@ -674,4 +660,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
   );
 }
 
-export default inject('stores', 'actions')(observer(AccountManagementScreen));
+export default inject(
+  'stores',
+  'actions',
+)(observer(WhatsAppAccountManagementScreen));

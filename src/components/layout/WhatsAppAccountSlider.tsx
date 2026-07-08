@@ -1,14 +1,12 @@
-import { Menu, dialog, app as electronApp } from '@electron/remote';
 import { clipboard } from 'electron';
 import { inject, observer } from 'mobx-react';
-import React, { Component, useEffect, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import type { IntlShape, WrappedComponentProps } from 'react-intl';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { AddIcon, UserIcon } from 'tdesign-icons-react';
+import { AddIcon } from 'tdesign-icons-react';
 import {
-  Avatar,
   Badge,
   Button,
   DialogPlugin,
@@ -24,7 +22,9 @@ import {
   getWhatsappBindingApiV1WhatsappBindGet,
   switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
+import { WHATSAPP_RECIPE_ID } from '../../features/whatsappAutomation/constants';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
+import { openServiceContextMenu } from '../../helpers/service-context-menu';
 import EditServiceDrawer from '../ui/EditServiceDrawer';
 import type { ServiceProxy } from '../ui/EditServiceDrawer';
 
@@ -34,6 +34,8 @@ import {
 } from '../../features/whatsappAutomation/helpers';
 import type Service from '../../models/Service';
 import type { RealStores } from '../../stores';
+import { ResizableSidebar } from './ResizableSidebar';
+import { ServiceSliderItemShell } from './ServiceSliderItemShell';
 
 const messages = defineMessages({
   personaSales: {
@@ -116,6 +118,14 @@ const messages = defineMessages({
   bindPersonaFailed: {
     id: 'accountSlider.bindPersonaFailed',
     defaultMessage: 'Failed to bind persona',
+  },
+  updateSuccess: {
+    id: 'accountSlider.updateSuccess',
+    defaultMessage: 'Update successful',
+  },
+  bindSuccess: {
+    id: 'accountSlider.bindSuccess',
+    defaultMessage: 'Bind successful',
   },
   cancel: {
     id: 'accountSlider.cancel',
@@ -244,8 +254,6 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
         waStatus,
         intl,
       }: AccountSliderItemProps & WrappedComponentProps): ReactElement => {
-        const unread =
-          service.unreadDirectMessageCount + service.unreadIndirectMessageCount;
         const statusTag = getStatusTag(waStatus, intl);
         const personaLabel = intl.formatMessage(messages.personaFallback);
         const presenceColor = (() => {
@@ -303,38 +311,13 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
         }, [service.id]);
 
         return (
-          <div
-            role="button"
-            tabIndex={0}
-            className={`flex items-center h-[72px] shrink-0 w-full px-[12px] gap-[15px] rounded-[8px] cursor-pointer ${service.isActive ? 'bg-brand-light' : 'bg-transparent'} hover:!bg-secondary-container`}
-            onClick={() =>
-              actions?.service?.setActive?.({ serviceId: service.id })
-            }
-            onKeyDown={(e: React.KeyboardEvent) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                actions?.service?.setActive?.({ serviceId: service.id });
-              }
-            }}
-            onContextMenu={() => onContextMenu(service)}
+          <ServiceSliderItemShell
+            service={service}
+            actions={actions}
+            onContextMenu={onContextMenu}
+            moduleId="whatsapp"
+            presenceColor={presenceColor}
           >
-            <div className="relative w-[56px] h-[56px] [.compact-mode_&]:hidden">
-              <Avatar
-                image={service.icon || ''}
-                icon={<UserIcon />}
-                className="!w-full !h-full"
-              />
-              {unread > 0 && (
-                <div className="absolute -top-[2px] -right-[2px] min-w-[16px] h-[16px] bg-error rounded-full flex items-center justify-center px-[3px] border border-container">
-                  <span className="text-[9px] text-text-anti leading-[15px] font-normal">
-                    {unread > 99 ? '99+' : unread}
-                  </span>
-                </div>
-              )}
-              <div
-                className={`absolute bottom-0 right-0 w-[8px] h-[8px] rounded-full border border-container ${presenceColor}`}
-              />
-            </div>
             <div className="flex flex-col items-start justify-center gap-[9px] h-fit flex-auto min-w-0">
               <div className="flex items-center justify-between w-full">
                 <span className="text-[16px] font-normal leading-[26px] text-primary truncate">
@@ -467,7 +450,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                 </Button>
               </div>
             </div>
-          </div>
+          </ServiceSliderItemShell>
         );
       },
     ),
@@ -524,61 +507,20 @@ interface IAccountSliderState {
   activeTab: TabId;
   isBindDrawerVisible: boolean;
   editingService: ServiceDrawerData | null;
-  width: number;
-  isDragging: boolean;
   bindDrawerKey: number;
 }
 
 @inject('stores', 'actions')
 @observer
-class AccountSlider extends Component<IProps, IAccountSliderState> {
+class WhatsAppAccountSlider extends Component<IProps, IAccountSliderState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
       activeTab: 'all',
       isBindDrawerVisible: false,
-      width: props.stores?.settings.all.app.accountSliderWidth ?? 300,
-      isDragging: false,
       editingService: null,
       bindDrawerKey: 0,
     };
-  }
-
-  private sliderRef = React.createRef<HTMLDivElement>();
-
-  private resizeStartX = 0;
-
-  private resizeStartWidth = 0;
-
-  handleResizeMouseDown = (event: React.MouseEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.resizeStartX = event.clientX;
-    this.resizeStartWidth = this.state.width;
-    document.body.style.cursor = 'col-resize';
-    document.body.style.userSelect = 'none';
-    this.setState({ isDragging: true });
-  };
-
-  handleResizeMouseMove = (event: MouseEvent) => {
-    const deltaX = event.clientX - this.resizeStartX;
-    const newWidth = this.resizeStartWidth + deltaX;
-    this.setState({ width: Math.max(200, newWidth) });
-  };
-
-  handleResizeMouseUp = () => {
-    document.body.style.cursor = '';
-    document.body.style.userSelect = '';
-    this.setState({ isDragging: false });
-    this.props.actions?.settings.update({
-      type: 'app',
-      data: { accountSliderWidth: this.state.width },
-    });
-  };
-
-  componentWillUnmount(): void {
-    document.body.style.cursor = '';
-    document.body.style.userSelect = '';
   }
 
   onSortEnd = ({
@@ -618,95 +560,22 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
   handleContextMenu = (service: Service) => {
     const { actions, stores } = this.props;
     const waMe = stores?.whatsappAutomation?.sessionInfo.get(service.id)?.me;
+    const extras: any[] = waMe?.jid
+      ? [
+          {
+            label: `Copy JID (${waMe.jid})`,
+            click: () => clipboard.writeText(waMe.jid ?? ''),
+          },
+        ]
+      : [];
 
-    const menuTemplate: any[] = [
-      {
-        label: service.name || service.recipe.name,
-        enabled: false,
-      },
-      {
-        label: `AKG Session ID (${service.id})`,
-        click: () => clipboard.writeText(service.id),
-      },
-      ...(waMe?.jid
-        ? [
-            {
-              label: `Copy JID (${waMe.jid})`,
-              click: () => clipboard.writeText(waMe.jid ?? ''),
-            },
-          ]
-        : []),
-      { type: 'separator' as const },
-      {
-        label: 'Reload',
-        click: () => actions?.service?.reload?.({ serviceId: service.id }),
-      },
-      {
-        label: 'Edit',
-        click: () => this.openBindDrawer(service),
-      },
-      { type: 'separator' as const },
-      {
-        label: service.isNotificationEnabled
-          ? 'Disable Notifications'
-          : 'Enable Notifications',
-        click: () =>
-          actions?.service?.toggleNotifications?.({ serviceId: service.id }),
-      },
-      {
-        label: service.isMuted ? 'Unmute Service' : 'Mute Service',
-        click: () => actions?.service?.toggleAudio?.({ serviceId: service.id }),
-      },
-      {
-        label: service.isDarkModeEnabled
-          ? 'Disable Dark Mode'
-          : 'Enable Dark Mode',
-        click: () =>
-          actions?.service?.toggleDarkMode?.({ serviceId: service.id }),
-      },
-      { type: 'separator' as const },
-      {
-        label: service.isEnabled ? 'Disable Service' : 'Enable Service',
-        click: () =>
-          actions?.service?.updateService?.({
-            serviceId: service.id,
-            serviceData: { isEnabled: !service.isEnabled },
-          }),
-      },
-      {
-        label: service.isHibernating ? 'Wake Up' : 'Hibernate',
-        click: () =>
-          service.isHibernating
-            ? actions?.service?.awake?.({ serviceId: service.id })
-            : actions?.service?.hibernate?.({ serviceId: service.id }),
-      },
-      {
-        label: 'Clear Cache',
-        click: () => actions?.service?.clearCache?.({ serviceId: service.id }),
-      },
-      { type: 'separator' as const },
-      {
-        label: 'Delete Service',
-        click: () => {
-          const selection = dialog.showMessageBoxSync(
-            (electronApp as any).mainWindow,
-            {
-              type: 'question',
-              buttons: ['Yes', 'No'],
-              title: 'Confirm',
-              message: `Are you sure you want to delete ${service.name || service.recipe.name}?`,
-            },
-          );
-
-          if (selection === 0) {
-            actions?.service?.deleteService?.({ serviceId: service.id });
-          }
-        },
-      },
-    ];
-
-    const menu = Menu.buildFromTemplate(menuTemplate);
-    menu.popup();
+    openServiceContextMenu(
+      service,
+      actions,
+      () => this.openBindDrawer(service),
+      `AKG Session ID (${service.id})`,
+      extras,
+    );
   };
 
   setActiveTab = (id: TabId) => {
@@ -738,10 +607,13 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         },
         redirect: false,
       });
-      MessagePlugin.success({ content: '更新成功', duration: 3000 });
+      MessagePlugin.success({
+        content: this.props.intl.formatMessage(messages.updateSuccess),
+        duration: 3000,
+      });
     } else {
       actions?.service?.createService?.({
-        recipeId: 'whatsapp',
+        recipeId: WHATSAPP_RECIPE_ID,
         serviceData: {
           name: data.name || 'WhatsApp',
           proxy: data.proxy,
@@ -749,7 +621,10 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
         },
         redirect: false,
       });
-      MessagePlugin.success({ content: '绑定成功', duration: 3000 });
+      MessagePlugin.success({
+        content: this.props.intl.formatMessage(messages.bindSuccess),
+        duration: 3000,
+      });
     }
 
     this.closeBindDrawer();
@@ -758,7 +633,7 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
   render(): ReactElement {
     const { stores, actions, intl } = this.props;
     const { activeTab } = this.state;
-    const allServices = stores?.services?.all ?? [];
+    const allServices = stores?.services?.whatsAppServices ?? [];
     const waStatuses =
       (stores?.whatsappAutomation?.sessionStatuses as Map<
         string,
@@ -770,26 +645,15 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
     const tabs = getTabs(intl);
 
     return (
-      <div
-        ref={this.sliderRef}
-        className={`flex flex-col h-full bg-container px-[8px] py-[16px] gap-[16px] overflow-hidden relative flex-shrink-0 ${this.state.width < 250 ? 'compact-mode' : ''}`}
-        style={{ width: `${this.state.width}px` }}
+      <ResizableSidebar
+        defaultWidth={stores?.settings.all.app.accountSliderWidth ?? 300}
+        onWidthChange={width =>
+          actions?.settings.update({
+            type: 'app',
+            data: { accountSliderWidth: width },
+          })
+        }
       >
-        <button
-          type="button"
-          aria-label="拖拽调整侧边栏宽度"
-          className="absolute right-0 top-0 bottom-0 w-[4px] cursor-col-resize hover:bg-brand z-10 transition-colors border-0 p-0 bg-transparent"
-          onMouseDown={this.handleResizeMouseDown}
-        />
-        {this.state.isDragging && (
-          <div
-            role="presentation"
-            className="fixed inset-0 z-[9999] cursor-col-resize"
-            onMouseMove={e => this.handleResizeMouseMove(e.nativeEvent)}
-            onMouseUp={this.handleResizeMouseUp}
-            onMouseLeave={this.handleResizeMouseUp}
-          />
-        )}
         <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0 w-full">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
@@ -875,9 +739,9 @@ class AccountSlider extends Component<IProps, IAccountSliderState> {
           onClose={this.closeBindDrawer}
           onConfirm={this.handleBindConfirm}
         />
-      </div>
+      </ResizableSidebar>
     );
   }
 }
 
-export default injectIntl(AccountSlider);
+export default injectIntl(WhatsAppAccountSlider);

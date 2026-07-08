@@ -71,11 +71,15 @@ const mockRemote = {
     getVersion: jest.fn(() => '0.0.0-test'),
     getName: jest.fn(() => 'Ferdium'),
     getPath: jest.fn(name => `/mock/${name}`),
+    setPath: jest.fn(),
+    getLocale: jest.fn(() => 'en-US'),
+    isPackaged: false,
   },
   dialog: {
     showOpenDialog: jest.fn(),
     showSaveDialog: jest.fn(),
     showMessageBox: jest.fn(),
+    showMessageBoxSync: jest.fn(() => 0),
   },
   shell: {
     openExternal: jest.fn(),

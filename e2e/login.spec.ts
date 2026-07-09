@@ -4,16 +4,16 @@ import {
   fillLoginForm,
   getMainWindow,
   launchApp,
-  waitForWaAkgLogin,
+  waitForLocalAuthLogin,
 } from './helpers';
 
-test.describe('WA-AKG 登录页面 - 基础表单', () => {
-  test('自动登录后跳转到 WA-AKG 登录页面', async () => {
+test.describe('本地 NextAuth 登录页面 - 基础表单', () => {
+  test('自动登录后跳转到本地登录页面', async () => {
     const { app, appDataDir } = await launchApp();
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
 
       const emailInput = window.locator(
         'input[type="email"], input[name="email"]',
@@ -34,7 +34,7 @@ test.describe('WA-AKG 登录页面 - 基础表单', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await fillLoginForm(window, 'test@example.com', 'wrongpassword');
 
       const submitButton = window.locator('button[type="submit"]');
@@ -52,7 +52,7 @@ test.describe('WA-AKG 登录页面 - 基础表单', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
 
       const submitButton = window.locator('button[type="submit"]');
       await submitButton.click();
@@ -74,7 +74,7 @@ test.describe('WA-AKG 登录页面 - 基础表单', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
 
       const emailInput = window.locator(
         'input[type="email"], input[name="email"]',

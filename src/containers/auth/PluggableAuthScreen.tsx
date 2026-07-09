@@ -29,9 +29,9 @@ interface IProps extends StoresProps {
  * Generic auth screen that works with any registered AuthProvider.
  *
  * - providerType="ferdium" → creates FerdiumProvider directly (for Ferdium JWT login)
- * - providerType="nextauth" → uses authManager's active NextAuthProvider (for WA-AKG login)
+ * - providerType="nextauth" → uses authManager's active NextAuthProvider (for local auth login)
  *
- * Merges WaAkgLoginScreen + DynamicLoginScreen into one component.
+ * Merges local auth login + DynamicLoginScreen into one component.
  */
 @inject('stores', 'actions')
 @observer
@@ -73,7 +73,7 @@ class PluggableAuthScreen extends Component<IProps> {
 
       // Agent Flow CS 模式：apiKey 已经在 FerdiumProvider 中存储
     } else {
-      // WA-AKG login: apiKey is already stored by initializeAuth() → setApiKey().
+      // Local auth login: apiKey is already stored by initializeAuth() → setApiKey().
       // Also set authToken so UserStore.isLoggedIn returns true after _logout() cleared it.
       if (result.apiKey) {
         localStorage.setItem('authToken', 'wa-akg');

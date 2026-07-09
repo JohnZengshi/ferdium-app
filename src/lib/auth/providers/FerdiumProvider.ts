@@ -14,6 +14,7 @@ import {
   API_KEY_STORAGE_KEY,
   WA_USER_EMAIL_STORAGE_KEY,
 } from '../../../whatsapp-automation/constants';
+import { switchLocalStorageProfile } from '../../../whatsapp-automation/profileStorage';
 
 const debug = require('../../../preload-safe-debug')(
   'Ferdium:auth:FerdiumProvider',
@@ -25,7 +26,8 @@ const AGENT_FLOW_CS_BASE =
 
 // 新增：独立的认证模式控制（不依赖 FERDIUM_SERVER）
 // 如果设置了 USE_AGENT_FLOW_AUTH=true，强制使用 Agent Flow CS 认证
-const USE_AGENT_FLOW_AUTH = process.env.USE_AGENT_FLOW_AUTH === 'true';
+const USE_AGENT_FLOW_AUTH = (): boolean =>
+  process.env.USE_AGENT_FLOW_AUTH === 'true';
 
 /**
  * Ferdium JWT Authentication Provider (双模式支持)
@@ -49,7 +51,7 @@ export default class FerdiumProvider implements AuthProvider {
    * 判断是否使用 Agent Flow CS 认证
    */
   private get isCloudMode(): boolean {
-    return USE_AGENT_FLOW_AUTH;
+    return USE_AGENT_FLOW_AUTH();
   }
 
   /**
@@ -128,13 +130,19 @@ export default class FerdiumProvider implements AuthProvider {
           debug('Authentication successful, user_id:', data.user_id);
 
           // 正常登录流程（不在登录时处理重启，统一在退出时重启）
+          switchLocalStorageProfile(username);
           localStorage.setItem(WA_USER_EMAIL_STORAGE_KEY, username);
 
           // 同步更新 UserStore 中的用户邮箱，确保 UI 显示正确
           const userStore = (window as any).ferdium?.stores?.user;
-          if (userStore?.setWaAkgEmail) {
-            userStore.setWaAkgEmail(username);
+          if (userStore?.setProfileEmail) {
+            userStore.setProfileEmail(username);
           }
+
+          // 刷新文件系统 settings 缓存（darkMode 等仅存于文件系统，不从服务器同步）
+          (
+            window as any
+          ).ferdium?.stores?.settings?.reloadFileSystemSettings?.();
 
           if (data.akg_api_key) {
             localStorage.setItem(API_KEY_STORAGE_KEY, data.akg_api_key);
@@ -149,7 +157,7 @@ export default class FerdiumProvider implements AuthProvider {
           window.localStorage.setItem('agentFlowToken', data.access_token);
 
           if (process.env.FERDIUM_SERVER === 'local') {
-            ipcRenderer.send('startLocalServer', { waAkgEmail: username });
+            ipcRenderer.send('startLocalServer', { profileEmail: username });
 
             setTimeout(async () => {
               try {
@@ -292,9 +300,7 @@ export default class FerdiumProvider implements AuthProvider {
   }
 
   getAuthHeader(): string | null {
-    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-
-    if (useAgentFlowAuth) {
+    if (USE_AGENT_FLOW_AUTH()) {
       // Agent Flow 模式：使用 agentFlowToken
       const token = localStorage.getItem('agentFlowToken');
       if (!token) return null;
@@ -308,9 +314,7 @@ export default class FerdiumProvider implements AuthProvider {
   }
 
   isAuthenticated(): boolean {
-    const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-
-    if (useAgentFlowAuth) {
+    if (USE_AGENT_FLOW_AUTH()) {
       // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
       return !!(
         localStorage.getItem('agentFlowToken') &&

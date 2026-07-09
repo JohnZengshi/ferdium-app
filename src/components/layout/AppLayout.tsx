@@ -33,8 +33,9 @@ import type SettingsStore from '../../stores/SettingsStore';
 
 import HomeScreen from '../../containers/home/HomeScreen';
 import KnowledgeScreen from '../../containers/knowledge-base/KnowledgeScreen';
-import AccountManagementScreen from '../../containers/service-group/AccountManagementScreen';
+import TelegramAccountManagementScreen from '../../containers/service-group/TelegramAccountManagementScreen';
 import UserProfileScreen from '../../containers/service-group/UserProfileScreen';
+import WhatsAppAccountManagementScreen from '../../containers/service-group/WhatsAppAccountManagementScreen';
 import { navigationStore } from '../../stores/NavigationStore';
 import type { FerdiumModule } from '../../stores/NavigationStore';
 import MainModuleTabs from './MainModuleTabs';
@@ -66,6 +67,10 @@ const messages = defineMessages({
   moduleServiceType: {
     id: 'appLayout.moduleServiceType',
     defaultMessage: 'Whats',
+  },
+  moduleTelegram: {
+    id: 'appLayout.moduleTelegram',
+    defaultMessage: 'Telegram',
   },
   moduleKnowledgeBase: {
     id: 'appLayout.moduleKnowledgeBase',
@@ -127,7 +132,9 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   updateVersion: string;
   isFullScreen: boolean;
   sidebar: React.ReactElement;
-  services: React.ReactElement;
+  telegramSidebar: React.ReactElement;
+  whatsappServices: React.ReactElement;
+  telegramServices: React.ReactElement;
   showServicesUpdatedInfoBar: boolean;
   appUpdateIsDownloaded: boolean;
   authRequestFailed: boolean;
@@ -204,7 +211,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       classes,
       isFullScreen,
       sidebar,
-      services,
+      telegramSidebar,
+      whatsappServices,
+      telegramServices,
       showServicesUpdatedInfoBar,
       appUpdateIsDownloaded,
       authRequestFailed,
@@ -224,14 +233,16 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const MODULE_LABELS: Record<FerdiumModule, string> = {
       home: intl.formatMessage(messages.moduleHome),
-      'service-type': intl.formatMessage(messages.moduleServiceType),
+      whatsapp: intl.formatMessage(messages.moduleServiceType),
+      telegram: intl.formatMessage(messages.moduleTelegram),
       'knowledge-base': intl.formatMessage(messages.moduleKnowledgeBase),
       settings: intl.formatMessage(messages.moduleSettings),
     };
 
     const MODULE_ICONS: Partial<Record<FerdiumModule, string>> = {
       home: './assets/images/desktop-1.svg',
-      'service-type': './assets/images/chat-ws.svg',
+      whatsapp: './assets/images/chat-ws.svg',
+      telegram: './assets/images/telegram.svg',
       'knowledge-base': './assets/images/collection.svg',
     };
 
@@ -243,7 +254,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { activeModule, activeServiceTab } = navigationStore;
     const isServiceTypeMessagesMode =
-      activeModule === 'service-type' && activeServiceTab === 'messages';
+      activeModule === 'whatsapp' && activeServiceTab === 'messages';
+    const isTelegramMessagesMode =
+      activeModule === 'telegram' && activeServiceTab === 'messages';
 
     const appUpdateStatus = (stores?.app?.updateStatus ??
       '') as unknown as string;
@@ -255,17 +268,19 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
         showServicesUpdatedInfoBar);
     const rawUserName =
       `${stores?.user?.data?.firstname || ''} ${stores?.user?.data?.lastname || ''}`.trim();
-    const normalizedWaAkgName = (stores?.user?.waAkgEmail || '').split('@')[0];
+    const normalizedProfileName = (stores?.user?.profileEmail || '').split(
+      '@',
+    )[0];
     const displayUserName =
       rawUserName && rawUserName !== 'Aitalk Application'
         ? rawUserName
-        : normalizedWaAkgName || rawUserName;
+        : normalizedProfileName || rawUserName;
 
     const renderMainContent = () => {
       // IMPORTANT: keep the services/webview container mounted and toggle visibility with CSS only.
       // Unmounting here will recreate webviews on tab switch, which breaks the cached session state
       // and causes a visible reload that hurts user experience.
-      const isMessages = isServiceTypeMessagesMode;
+      const isMessages = isServiceTypeMessagesMode || isTelegramMessagesMode;
       return (
         <>
           <div className={`flex flex-1 flex-col${isMessages ? '' : ' hidden'}`}>
@@ -325,7 +340,16 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             <BasicAuth />
             <QuickSwitch />
             <PublishDebugInfo />
-            {services}
+            <div
+              className={`flex-1 flex flex-col min-h-0 ${isServiceTypeMessagesMode ? '' : 'hidden'}`}
+            >
+              {whatsappServices}
+            </div>
+            <div
+              className={`flex-1 flex flex-col min-h-0 ${isTelegramMessagesMode ? '' : 'hidden'}`}
+            >
+              {telegramServices}
+            </div>
             <Outlet />
           </div>
 
@@ -334,10 +358,20 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             <KnowledgeScreen />
           )}
           {!isMessages &&
-            activeModule === 'service-type' &&
-            activeServiceTab === 'account' && <AccountManagementScreen />}
+            activeModule === 'whatsapp' &&
+            activeServiceTab === 'account' && (
+              <WhatsAppAccountManagementScreen />
+            )}
           {!isMessages &&
-            activeModule === 'service-type' &&
+            activeModule === 'whatsapp' &&
+            activeServiceTab === 'profile' && <UserProfileScreen />}
+          {!isMessages &&
+            activeModule === 'telegram' &&
+            activeServiceTab === 'account' && (
+              <TelegramAccountManagementScreen />
+            )}
+          {!isMessages &&
+            activeModule === 'telegram' &&
             activeServiceTab === 'profile' && <UserProfileScreen />}
         </>
       );
@@ -365,13 +399,29 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               <div className="flex flex-col flex-1 min-w-0">
                 <div className="flex-shrink-0 w-full h-[56px] bg-container border-b border-solid border-b-line flex items-center justify-between px-[24px]">
                   <span className="flex items-center gap-[12px] text-[16px] font-semibold leading-[24px] text-primary">
-                    {MODULE_ICONS[activeModule] && (
-                      <img
-                        src={MODULE_ICONS[activeModule]}
-                        alt=""
-                        aria-hidden="true"
-                        className="h-[24px] w-[24px] flex-shrink-0"
+                    {activeModule === 'telegram' ? (
+                      <span
+                        className="h-[24px] w-[24px] flex-shrink-0 inline-block bg-brand"
+                        style={{
+                          maskImage: `url(${MODULE_ICONS.telegram})`,
+                          WebkitMaskImage: `url(${MODULE_ICONS.telegram})`,
+                          maskSize: 'contain',
+                          WebkitMaskSize: 'contain',
+                          maskRepeat: 'no-repeat',
+                          WebkitMaskRepeat: 'no-repeat',
+                          maskPosition: 'center',
+                          WebkitMaskPosition: 'center',
+                        }}
                       />
+                    ) : (
+                      MODULE_ICONS[activeModule] && (
+                        <img
+                          src={MODULE_ICONS[activeModule]}
+                          alt=""
+                          aria-hidden="true"
+                          className="h-[24px] w-[24px] flex-shrink-0"
+                        />
+                      )
                     )}
                     {MODULE_LABELS[navigationStore.activeModule]}
                   </span>
@@ -491,9 +541,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 </div>
 
                 <div className="flex flex-row flex-1 min-h-0">
-                  {activeModule === 'service-type' && <ServiceSubTabs />}
+                  {activeModule === 'whatsapp' && <ServiceSubTabs />}
+                  {activeModule === 'telegram' && (
+                    <ServiceSubTabs moduleId="telegram" />
+                  )}
 
                   {isServiceTypeMessagesMode && sidebar}
+                  {isTelegramMessagesMode && telegramSidebar}
 
                   <div className="app__service flex-auto min-w-0">
                     {renderMainContent()}

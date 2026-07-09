@@ -4,16 +4,16 @@ import {
   fillLoginForm,
   getMainWindow,
   launchAppWithoutBackend,
-  waitForWaAkgLogin,
+  waitForLocalAuthLogin,
 } from './helpers';
 
-test.describe('WA-AKG 登录页面 - 后端不可用', () => {
+test.describe('本地 NextAuth 登录页面 - 后端不可用', () => {
   test('后端不可用时登录页面正常显示', async () => {
     const { app, appDataDir } = await launchAppWithoutBackend();
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
 
       const emailInput = window.locator(
         'input[type="email"], input[name="email"]',
@@ -36,7 +36,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await fillLoginForm(window, 'test@example.com', 'password123');
 
       const submitButton = window.locator('button[type="submit"]');
@@ -58,7 +58,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await fillLoginForm(window, 'test@example.com', 'password123');
 
       const submitButton = window.locator('button[type="submit"]');
@@ -67,7 +67,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
       await window.waitForTimeout(5000);
 
       const currentUrl = window.url();
-      expect(currentUrl).toContain('/auth/wa-akg/login');
+      expect(currentUrl).toContain('/auth/local/login');
 
       const apiKey = await window.evaluate(() =>
         localStorage.getItem('whatsappAutomationApiKey'),
@@ -83,7 +83,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await fillLoginForm(window, 'test@example.com', 'password123');
 
       const submitButton = window.locator('button[type="submit"]');
@@ -113,7 +113,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await fillLoginForm(window, 'test@example.com', 'password123');
 
       const submitButton = window.locator('button[type="submit"]');
@@ -152,7 +152,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
 
       const emailInput = window.locator(
         'input[type="email"], input[name="email"]',
@@ -189,7 +189,7 @@ test.describe('WA-AKG 登录页面 - 后端不可用', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
 
       const emailInput = window.locator(
         'input[type="email"], input[name="email"]',

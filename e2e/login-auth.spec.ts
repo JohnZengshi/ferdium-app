@@ -6,16 +6,16 @@ import {
   launchApp,
   launchAppWithoutBackend,
   navigateToSettings,
-  waitForWaAkgLogin,
+  waitForLocalAuthLogin,
 } from './helpers';
 
-test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
+test.describe('本地 NextAuth 登录页面 - 登录登出流程', () => {
   test('输入正确密码登录成功后跳转到主页', async () => {
     const { app, appDataDir } = await launchApp();
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       const currentUrl = window.url();
@@ -85,7 +85,7 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       let apiKey = await window.evaluate(() =>
@@ -112,7 +112,7 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       await window.evaluate(() => {
@@ -141,7 +141,7 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
 
     try {
       // --- First login ---
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       let apiKey = await window.evaluate(() =>
@@ -158,8 +158,8 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       let url = window.url();
       if (url.includes('/auth/')) {
         // Case 2: Session lost after reload — need to re-login
-        await window.waitForURL(/\/auth\/wa-akg\/login/, { timeout: 15_000 });
-        await waitForWaAkgLogin(window);
+        await window.waitForURL(/\/auth\/local\/login/, { timeout: 15_000 });
+        await waitForLocalAuthLogin(window);
         await doLogin(window);
       } else {
         // Already on main app — verify session is intact
@@ -203,7 +203,7 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       await navigateToSettings(window);
@@ -227,7 +227,7 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       await navigateToSettings(window);
@@ -269,7 +269,7 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
 
     try {
       // --- First login ---
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       // Verify on main page
@@ -301,9 +301,9 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
       );
       expect(authTokenAfterLogout).toBeNull();
 
-      // --- Second login (re-login) — auto-redirects to WA-AKG login ---
-      // After logout, _requireAuthenticatedUser redirects from /auth/logout to /auth/wa-akg/login
-      await waitForWaAkgLogin(window);
+      // --- Second login (re-login) — auto-redirects to local auth login ---
+      // After logout, _requireAuthenticatedUser redirects from /auth/logout to /auth/local/login
+      await waitForLocalAuthLogin(window);
       await doLogin(window);
 
       // Verify authToken is set again
@@ -336,7 +336,7 @@ test.describe('WA-AKG 登录页面 - 登录登出流程', () => {
     const window = await getMainWindow(app);
 
     try {
-      await waitForWaAkgLogin(window);
+      await waitForLocalAuthLogin(window);
 
       const emailInput = window.locator(
         'input[type="email"], input[name="email"]',

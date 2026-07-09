@@ -1,3 +1,4 @@
+import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import { ThemeProvider } from 'react-jss';
@@ -5,17 +6,60 @@ import { Outlet } from 'react-router-dom';
 import tinycolor from 'tinycolor2';
 
 import type { StoresProps } from '../../@types/ferdium-components.types';
-import AccountSlider from '../../components/layout/AccountSlider';
 import AppLayout from '../../components/layout/AppLayout';
 import AppLoading from '../../components/layout/AppLoading';
+import TelegramAccountSlider from '../../components/layout/TelegramAccountSlider';
+import WhatsAppAccountSlider from '../../components/layout/WhatsAppAccountSlider';
 import Services from '../../components/services/content/Services';
 import { DEFAULT_ACCENT_COLOR } from '../../config';
+import { navigationStore } from '../../stores/NavigationStore';
 
 interface IProps extends StoresProps {}
 
 @inject('stores', 'actions')
 @observer
 class AppLayoutContainer extends Component<IProps> {
+  private _moduleDisposer?: () => void;
+
+  componentDidMount(): void {
+    const { actions } = this.props;
+    this._moduleDisposer = reaction(
+      () => ({
+        module: navigationStore.activeModule,
+        waCount: this.props.stores?.services?.whatsAppServices?.length ?? 0,
+        tgCount: this.props.stores?.services?.telegramServices?.length ?? 0,
+      }),
+      ({ module }) => {
+        const { stores } = this.props;
+        if (!stores || !actions) return;
+        const serviceId = navigationStore.moduleActiveService[module];
+        const currentActive = stores.services.all.find(s => s.isActive);
+        if (serviceId) {
+          if (currentActive?.id !== serviceId) {
+            actions.service.setActive({ serviceId });
+          }
+          return;
+        }
+        const moduleList =
+          module === 'whatsapp'
+            ? stores.services.whatsAppServices
+            : module === 'telegram'
+              ? stores.services.telegramServices
+              : [];
+        const first = moduleList[0];
+        if (first && currentActive?.id !== first.id) {
+          navigationStore.setModuleActiveService(module, first.id);
+          actions.service.setActive({ serviceId: first.id });
+        }
+      },
+      { fireImmediately: true },
+    );
+  }
+
+  componentWillUnmount(): void {
+    this._moduleDisposer?.();
+  }
+
   render(): ReactElement {
     const { app, features, services, ui, settings, requests, user, router } =
       this.props.stores;
@@ -70,21 +114,25 @@ class AppLayoutContainer extends Component<IProps> {
       return <AppLoading theme={ui.theme} />;
     }
 
-    const sidebar = <AccountSlider />;
+    const sidebar = <WhatsAppAccountSlider />;
+    const telegramSidebar = <TelegramAccountSlider />;
 
-    const servicesContainer = (
-      <Services
-        services={services.allDisplayedUnordered}
-        // handleIPCMessage={handleIPCMessage} // TODO: [TECH DEBT] check it later
-        setWebviewReference={setWebviewReference}
-        detachService={detachService}
-        // openWindow={openWindow} // TODO: [TECH DEBT] check it later
-        reload={reload}
-        openSettings={openSettings}
-        update={updateService}
-        userHasCompletedSignup={user.hasCompletedSignup}
-        isSpellcheckerEnabled={settings.app.enableSpellchecking}
-      />
+    const commonServiceProps = {
+      setWebviewReference,
+      detachService,
+      reload,
+      openSettings,
+      update: updateService,
+      userHasCompletedSignup: user.hasCompletedSignup,
+      isSpellcheckerEnabled: settings.app.enableSpellchecking,
+    } as const;
+
+    const whatsappServicesContainer = (
+      <Services services={services.whatsAppServices} {...commonServiceProps} />
+    );
+
+    const telegramServicesContainer = (
+      <Services services={services.telegramServices} {...commonServiceProps} />
     );
 
     return (
@@ -98,7 +146,9 @@ class AppLayoutContainer extends Component<IProps> {
           }
           authRequestFailed={app.authRequestFailed}
           sidebar={sidebar}
-          services={servicesContainer}
+          telegramSidebar={telegramSidebar}
+          whatsappServices={whatsappServicesContainer}
+          telegramServices={telegramServicesContainer}
           installAppUpdate={installUpdate}
           showRequiredRequestsError={requests.showRequiredRequestsError}
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}

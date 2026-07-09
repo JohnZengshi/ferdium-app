@@ -25,17 +25,23 @@ const portInUse = (port: number): Promise<boolean> =>
 let localServerStarted = false;
 let port = LOCAL_PORT;
 let token = '';
-let waAkgProfileEmail = '';
+let profileEmail = '';
 
 const normalizeProfileEmail = (email?: string | null): string =>
   email?.trim().toLowerCase() ?? '';
 
-const setWaAkgProfileEmail = (email?: string | null): boolean => {
+const setProfileEmail = (email?: string | null): boolean => {
   const nextEmail = normalizeProfileEmail(email);
-  const changed = nextEmail !== waAkgProfileEmail;
-  waAkgProfileEmail = nextEmail;
-  if (waAkgProfileEmail) {
-    process.env.WA_AKG_PROFILE_EMAIL = waAkgProfileEmail;
+  const changed = nextEmail !== profileEmail;
+  profileEmail = nextEmail;
+  if (profileEmail) {
+    process.env.PROFILE_EMAIL = profileEmail;
+  } else {
+    delete process.env.PROFILE_EMAIL;
+  }
+  // compat: legacy env var
+  if (profileEmail) {
+    process.env.WA_AKG_PROFILE_EMAIL = profileEmail;
   } else {
     delete process.env.WA_AKG_PROFILE_EMAIL;
   }
@@ -47,16 +53,16 @@ ipcMain.handle('getLocalServerToken', () => {
   return { port, token };
 });
 
-ipcMain.handle('setWaAkgProfile', (_event, data?: { email?: string }) => {
+ipcMain.handle('setProfile', (_event, data?: { email?: string }) => {
   const nextEmail = normalizeProfileEmail(data?.email);
-  if (localServerStarted && nextEmail !== waAkgProfileEmail) {
+  if (localServerStarted && nextEmail !== profileEmail) {
     return {
       changed: true,
       isLocalServerStarted: true,
       requiresRestart: true,
     };
   }
-  const changed = setWaAkgProfileEmail(data?.email);
+  const changed = setProfileEmail(data?.email);
   return {
     changed,
     isLocalServerStarted: localServerStarted,
@@ -64,15 +70,15 @@ ipcMain.handle('setWaAkgProfile', (_event, data?: { email?: string }) => {
   };
 });
 
-ipcMain.handle('relaunchForWaAkgProfile', () => {
+ipcMain.handle('relaunchForProfile', () => {
   app.relaunch();
   app.quit();
 });
 
 export default (params: { mainWindow: BrowserWindow }) => {
-  ipcMain.on('startLocalServer', (_event, data?: { waAkgEmail?: string }) => {
+  ipcMain.on('startLocalServer', (_event, data?: { profileEmail?: string }) => {
     (async () => {
-      if (!normalizeProfileEmail(data?.waAkgEmail)) {
+      if (!normalizeProfileEmail(data?.profileEmail)) {
         return;
       }
 
@@ -80,7 +86,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
         // Set flag immediately to prevent race condition
         localServerStarted = true;
 
-        setWaAkgProfileEmail(data?.waAkgEmail);
+        setProfileEmail(data?.profileEmail);
 
         // Find next unused port for server
         port = LOCAL_PORT;

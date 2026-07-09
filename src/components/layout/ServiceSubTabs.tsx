@@ -10,7 +10,10 @@ import type { Actions } from '../../actions/lib/actions';
 import type { RealStores } from '../../stores';
 
 import { navigationStore } from '../../stores/NavigationStore';
-import type { ServiceSubTab } from '../../stores/NavigationStore';
+import type {
+  FerdiumModule,
+  ServiceSubTab,
+} from '../../stores/NavigationStore';
 
 const messages = defineMessages({
   tabMessages: { id: 'serviceSubTabs.messages', defaultMessage: 'Messages' },
@@ -22,6 +25,10 @@ const messages = defineMessages({
   whatsappHeader: {
     id: 'serviceSubTabs.whatsappHeader',
     defaultMessage: 'Whatsapp',
+  },
+  telegramHeader: {
+    id: 'serviceSubTabs.telegramHeader',
+    defaultMessage: 'Telegram',
   },
   expand: { id: 'serviceSubTabs.expand', defaultMessage: 'expand' },
   collapse: { id: 'serviceSubTabs.collapse', defaultMessage: 'collapse' },
@@ -53,36 +60,26 @@ const SUB_TABS: {
   },
 ];
 
-interface ServiceSubTabsState {
-  isCollapsed: boolean;
-}
-
 interface ServiceSubTabsProps {
   stores?: RealStores;
   actions?: Actions;
+  moduleId?: FerdiumModule;
 }
 
 @inject('stores', 'actions')
 @observer
 class ServiceSubTabs extends Component<
-  ServiceSubTabsProps & WrappedComponentProps,
-  ServiceSubTabsState
+  ServiceSubTabsProps & WrappedComponentProps
 > {
-  constructor(props: ServiceSubTabsProps & WrappedComponentProps) {
-    super(props);
-    this.state = {
-      isCollapsed: props.stores?.settings.all.app.isMenuCollapsed ?? false,
-    };
-  }
-
   toggleCollapse = () => {
-    this.props.actions?.app.toggleCollapseMenu();
-    this.setState(prevState => ({ isCollapsed: !prevState.isCollapsed }));
+    navigationStore.toggleModuleCollapsed(navigationStore.activeModule);
   };
 
   render(): ReactElement {
-    const { isCollapsed } = this.state;
+    const isCollapsed =
+      navigationStore.moduleCollapsed[navigationStore.activeModule] ?? false;
     const { intl, stores } = this.props;
+    const isTelegram = this.props.moduleId === 'telegram';
     return (
       <nav
         className={`flex flex-col h-full bg-container border-r border-solid border-line overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}
@@ -93,7 +90,9 @@ class ServiceSubTabs extends Component<
         >
           {!isCollapsed && (
             <span className="text-[18px] font-semibold leading-[26px] text-primary">
-              {intl.formatMessage(messages.whatsappHeader)}
+              {intl.formatMessage(
+                isTelegram ? messages.telegramHeader : messages.whatsappHeader,
+              )}
             </span>
           )}
           <button
@@ -122,7 +121,11 @@ class ServiceSubTabs extends Component<
           {SUB_TABS.map(tab => {
             const isActive = navigationStore.activeServiceTab === tab.id;
             const badge =
-              tab.id === 'messages' ? stores?.services.mainModuleBadge : null;
+              tab.id === 'messages'
+                ? isTelegram
+                  ? stores?.services.telegramBadge
+                  : stores?.services.mainModuleBadge
+                : null;
             return (
               <button
                 key={tab.id}

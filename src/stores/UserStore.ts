@@ -48,7 +48,7 @@ export default class UserStore extends TypedStore {
 
   HOME_ROUTE: string = '/';
 
-  WA_AKG_LOGIN_ROUTE: string = `${this.BASE_ROUTE}/wa-akg/login`;
+  LOCAL_AUTH_LOGIN_ROUTE: string = `${this.BASE_ROUTE}/local/login`;
 
   @observable loginRequest: Request = new Request(this.api.user, 'login');
 
@@ -101,11 +101,11 @@ export default class UserStore extends TypedStore {
 
   @observable logoutReason: string | null = null;
 
-  @observable waAkgEmail: string | null = localStorage.getItem(
+  @observable profileEmail: string | null = localStorage.getItem(
     WA_USER_EMAIL_STORAGE_KEY,
   );
 
-  @observable waAkgUserId: string | null = localStorage.getItem(
+  @observable profileUserId: string | null = localStorage.getItem(
     WA_USER_ID_STORAGE_KEY,
   );
 
@@ -181,6 +181,12 @@ export default class UserStore extends TypedStore {
     return this.CHANGE_SERVER_ROUTE;
   }
 
+  @computed get logoutRedirectRoute(): string {
+    return process.env.USE_AGENT_FLOW_AUTH === 'true'
+      ? this.LOGIN_ROUTE
+      : this.LOCAL_AUTH_LOGIN_ROUTE;
+  }
+
   // Data
   @computed get isLoggedIn(): boolean {
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
@@ -240,14 +246,14 @@ export default class UserStore extends TypedStore {
     });
 
     // Don't push('/') here — _requireAuthenticatedUser reaction handles
-    // the correct redirect (including WA-AKG login check).
+    // the correct redirect (including local auth login check).
   }
 
   @action _tokenLogin(authToken: string): void {
     this._setUserData(authToken);
 
     // Don't push('/') here — _requireAuthenticatedUser reaction handles
-    // the correct redirect (including WA-AKG login check).
+    // the correct redirect (including local auth login check).
   }
 
   @action async _signup({
@@ -338,8 +344,8 @@ export default class UserStore extends TypedStore {
     localStorage.removeItem(API_KEY_STORAGE_KEY);
     window.localStorage.removeItem(API_KEY_STORAGE_KEY);
 
-    this.waAkgEmail = null;
-    this.waAkgUserId = null;
+    this.profileEmail = null;
+    this.profileUserId = null;
 
     // 清除后再保存 profile 快照（此时快照中不包含登录态）
     saveLocalStorageProfile(localStorage.getItem(WA_USER_EMAIL_STORAGE_KEY));
@@ -361,7 +367,7 @@ export default class UserStore extends TypedStore {
     // 退出后触发应用重启（确保下次登录时状态干净）
     if (process.env.FERDIUM_SERVER === 'local') {
       try {
-        await ipcRenderer.invoke('relaunchForWaAkgProfile');
+        await ipcRenderer.invoke('relaunchForProfile');
       } catch (error) {
         debug('Failed to relaunch app: %O', error);
       }
@@ -422,10 +428,10 @@ export default class UserStore extends TypedStore {
       }
 
       if (!hasWaAkgKey) {
-        if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {
-          router.push(this.WA_AKG_LOGIN_ROUTE);
+        if (!route.includes(this.LOCAL_AUTH_LOGIN_ROUTE)) {
+          router.push(this.LOCAL_AUTH_LOGIN_ROUTE);
         }
-      } else if (route.includes(this.WA_AKG_LOGIN_ROUTE)) {
+      } else if (route.includes(this.LOCAL_AUTH_LOGIN_ROUTE)) {
         router.push(this.HOME_ROUTE);
       }
       return;
@@ -459,8 +465,8 @@ export default class UserStore extends TypedStore {
     }
 
     if (!hasWaAkgKey) {
-      if (!route.includes(this.WA_AKG_LOGIN_ROUTE)) {
-        router.push(this.WA_AKG_LOGIN_ROUTE);
+      if (!route.includes(this.LOCAL_AUTH_LOGIN_ROUTE)) {
+        router.push(this.LOCAL_AUTH_LOGIN_ROUTE);
       }
       return;
     }
@@ -550,8 +556,8 @@ export default class UserStore extends TypedStore {
     }
   }
 
-  @action setWaAkgEmail(email: string | null): void {
-    this.waAkgEmail = email;
+  @action setProfileEmail(email: string | null): void {
+    this.profileEmail = email;
     if (email) {
       localStorage.setItem(WA_USER_EMAIL_STORAGE_KEY, email);
     } else {
@@ -559,8 +565,8 @@ export default class UserStore extends TypedStore {
     }
   }
 
-  @action setWaAkgUserId(userId: string | null): void {
-    this.waAkgUserId = userId;
+  @action setProfileUserId(userId: string | null): void {
+    this.profileUserId = userId;
     if (userId) {
       localStorage.setItem(WA_USER_ID_STORAGE_KEY, userId);
     } else {

@@ -262,11 +262,7 @@ class SettingsModal extends Component<IProps, IState> {
         }
         stores!.user.isLoggingOut = true;
         actions!.user.logout();
-        stores!.router.push(
-          process.env.USE_AGENT_FLOW_AUTH === 'true'
-            ? stores!.user.LOGIN_ROUTE
-            : stores!.user.WA_AKG_LOGIN_ROUTE,
-        );
+        stores!.router.push(stores!.user.logoutRedirectRoute);
         confirmDia.hide();
       },
       onClose: () => {

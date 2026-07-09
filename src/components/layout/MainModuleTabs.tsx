@@ -186,6 +186,45 @@ const CollectionIcon = ({
     </svg>
   );
 
+const TelegramTabIcon = ({
+  isActive,
+  isHovered,
+}: {
+  isActive: boolean;
+  isHovered: boolean;
+}): ReactElement => {
+  const mask = {
+    maskImage: 'url(./assets/images/telegram.svg)',
+    WebkitMaskImage: 'url(./assets/images/telegram.svg)',
+    maskSize: 'contain' as const,
+    WebkitMaskSize: 'contain' as const,
+    maskRepeat: 'no-repeat' as const,
+    WebkitMaskRepeat: 'no-repeat' as const,
+  };
+
+  return (
+    <div
+      className={`flex items-center justify-center w-[48px] h-[48px] rounded-[24px] ${
+        isActive
+          ? 'bg-[var(--td-brand-color-light)]'
+          : isHovered
+            ? 'bg-[var(--td-bg-color-component)]'
+            : ''
+      }`}
+    >
+      <span
+        className="inline-block w-[24px] h-[24px]"
+        style={{
+          ...mask,
+          backgroundColor: isActive
+            ? 'var(--td-brand-color)'
+            : 'var(--td-text-color-secondary)',
+        }}
+      />
+    </div>
+  );
+};
+
 const MODULES: {
   id: FerdiumModule;
   icon: (isActive: boolean, isHovered: boolean) => ReactElement;
@@ -197,9 +236,15 @@ const MODULES: {
     ),
   },
   {
-    id: 'service-type',
+    id: 'whatsapp',
     icon: (isActive: boolean, isHovered: boolean) => (
       <ChatWsIcon isActive={isActive} isHovered={isHovered} />
+    ),
+  },
+  {
+    id: 'telegram',
+    icon: (isActive: boolean, isHovered: boolean) => (
+      <TelegramTabIcon isActive={isActive} isHovered={isHovered} />
     ),
   },
   {
@@ -218,6 +263,10 @@ const messages = defineMessages({
   serviceType: {
     id: 'mainModuleTabs.serviceType',
     defaultMessage: 'Whats',
+  },
+  telegram: {
+    id: 'mainModuleTabs.telegram',
+    defaultMessage: 'Telegram',
   },
   knowledgeBase: {
     id: 'mainModuleTabs.knowledgeBase',
@@ -284,11 +333,13 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
               >
                 <Badge
                   count={
-                    mod.id === 'service-type'
+                    mod.id === 'whatsapp'
                       ? badge
-                      : mod.id === 'home'
-                        ? handoffBadge
-                        : null
+                      : mod.id === 'telegram'
+                        ? stores?.services.telegramBadge
+                        : mod.id === 'home'
+                          ? handoffBadge
+                          : null
                   }
                   size="small"
                   offset={[5, 5]}
@@ -302,7 +353,8 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
                     (
                       {
                         home: messages.home,
-                        'service-type': messages.serviceType,
+                        whatsapp: messages.serviceType,
+                        telegram: messages.telegram,
                         'knowledge-base': messages.knowledgeBase,
                       } as const
                     )[mod.id],

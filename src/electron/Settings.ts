@@ -1,8 +1,7 @@
-import { createHash } from 'node:crypto';
-import { join } from 'node:path';
 import { outputJsonSync, pathExistsSync, readJsonSync } from 'fs-extra';
 import { action, makeObservable, observable, toJS } from 'mobx';
 import { userDataPath } from '../environment-remote';
+import { resolveProfilePath } from '../helpers/profilePath';
 
 const debug = require('../preload-safe-debug')('Ferdium:Settings');
 
@@ -89,14 +88,9 @@ export default class Settings {
     if (this.type === 'app' || !this.profileEmail) {
       return userDataPath('config', filename);
     }
-    const profileHash = createHash('sha256')
-      .update(this.profileEmail)
-      .digest('hex');
-    return join(
+    return resolveProfilePath(
       userDataPath(),
-      'profiles',
-      'wa-akg',
-      profileHash,
+      this.profileEmail,
       'config',
       filename,
     );

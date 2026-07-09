@@ -119,7 +119,7 @@ class FerdiumRoutes extends Component<IProps> {
               }
             />
             <Route
-              path="wa-akg/login"
+              path="local/login"
               element={
                 <PluggableAuthScreen
                   providerType="nextauth"

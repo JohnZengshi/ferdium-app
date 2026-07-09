@@ -240,6 +240,21 @@ export default class ServicesStore extends TypedStore {
         this._shareSettingsWithServiceProcess();
       },
     );
+
+    // Fetch the services list when the user is logged in. Triggered here
+    // (and not lazily inside the `all` computed getter) so the MobX
+    // observable update happens outside of React's render cycle, avoiding
+    // "Can't perform a React state update on a component that hasn't
+    // mounted yet" warnings in ServicesScreen.
+    reaction(
+      () => this.stores.user.isLoggedIn,
+      isLoggedIn => {
+        if (isLoggedIn) {
+          this.allServicesRequest.execute();
+        }
+      },
+      { fireImmediately: true },
+    );
   }
 
   initialize() {
@@ -329,7 +344,7 @@ export default class ServicesStore extends TypedStore {
   // Computed props
   @computed get all(): Service[] {
     if (this.stores.user.isLoggedIn) {
-      const services = this.allServicesRequest.execute().result;
+      const services = this.allServicesRequest.result;
       if (services) {
         return observable(
           [...services]
@@ -369,7 +384,7 @@ export default class ServicesStore extends TypedStore {
   @computed get allDisplayedUnordered() {
     const { showDisabledServices } = this.stores.settings.all.app;
     const { keepAllWorkspacesLoaded } = this.stores.workspaces.settings;
-    const services = this.allServicesRequest.execute().result || [];
+    const services = this.allServicesRequest.result || [];
     const filteredServices = showDisabledServices
       ? services
       : services.filter(service => service.isEnabled);

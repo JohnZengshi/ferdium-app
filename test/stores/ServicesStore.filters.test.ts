@@ -119,6 +119,7 @@ describe('ServicesStore module filters', () => {
     );
     // Override allServicesRequest to return mock services
     (store as any).allServicesRequest = {
+      result: services,
       execute: () => ({
         result: services,
       }),

@@ -154,9 +154,7 @@ class InstagramDMAccountSlider extends Component<IProps, IState> {
           proxy: data.proxy,
         },
       });
-      MessagePlugin.success(
-        this.props.intl.formatMessage(messages.addSuccess),
-      );
+      MessagePlugin.success(this.props.intl.formatMessage(messages.addSuccess));
     }
 
     this.handleEditClose();
@@ -287,4 +285,3 @@ class InstagramDMAccountSlider extends Component<IProps, IState> {
 }
 
 export default injectIntl(InstagramDMAccountSlider);
-

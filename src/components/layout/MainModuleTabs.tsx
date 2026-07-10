@@ -438,8 +438,8 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
                         : mod.id === 'tiktok'
                           ? stores?.services.tiktokBadge
                           : mod.id === 'instagramDM'
-                          ? stores?.services.instagramBadge
-                          : mod.id === 'home'
+                            ? stores?.services.instagramBadge
+                            : mod.id === 'home'
                               ? handoffBadge
                               : null
                   }

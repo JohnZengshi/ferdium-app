@@ -411,3 +411,7 @@ server*.log
 openapi-docs.json
 
 temp/
+.omo/
+
+# Trae IDE files
+.omo/

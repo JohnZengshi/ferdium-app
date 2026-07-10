@@ -296,7 +296,11 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       // IMPORTANT: keep the services/webview container mounted and toggle visibility with CSS only.
       // Unmounting here will recreate webviews on tab switch, which breaks the cached session state
       // and causes a visible reload that hurts user experience.
-      const isMessages = isServiceTypeMessagesMode || isTelegramMessagesMode || isTikTokMessagesMode || isInstagramDMMessagesMode;
+      const isMessages =
+        isServiceTypeMessagesMode ||
+        isTelegramMessagesMode ||
+        isTikTokMessagesMode ||
+        isInstagramDMMessagesMode;
       return (
         <>
           <div className={`flex flex-1 flex-col${isMessages ? '' : ' hidden'}`}>
@@ -401,9 +405,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             activeServiceTab === 'profile' && <UserProfileScreen />}
           {!isMessages &&
             activeModule === 'tiktok' &&
-            activeServiceTab === 'account' && (
-              <TikTokAccountManagementScreen />
-            )}
+            activeServiceTab === 'account' && <TikTokAccountManagementScreen />}
           {!isMessages &&
             activeModule === 'tiktok' &&
             activeServiceTab === 'profile' && <UserProfileScreen />}

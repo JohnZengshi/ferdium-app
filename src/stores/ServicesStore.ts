@@ -8,7 +8,12 @@ import ms from 'ms';
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
-import { DEFAULT_SERVICE_SETTINGS, INSTAGRAM_DM_RECIPE_ID, KEEP_WS_LOADED_USID, TIKTOK_RECIPE_ID } from '../config';
+import {
+  DEFAULT_SERVICE_SETTINGS,
+  INSTAGRAM_DM_RECIPE_ID,
+  KEEP_WS_LOADED_USID,
+  TIKTOK_RECIPE_ID,
+} from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { whatsappAutomationActions } from '../features/whatsappAutomation/actions';
 import { WHATSAPP_RECIPE_ID } from '../features/whatsappAutomation/constants';
@@ -370,7 +375,9 @@ export default class ServicesStore extends TypedStore {
   }
 
   @computed get instagramServices(): Service[] {
-    return this.allDisplayed.filter(s => s.recipe?.id === INSTAGRAM_DM_RECIPE_ID);
+    return this.allDisplayed.filter(
+      s => s.recipe?.id === INSTAGRAM_DM_RECIPE_ID,
+    );
   }
 
   // This is just used to avoid unnecessary rerendering of resource-heavy webviews

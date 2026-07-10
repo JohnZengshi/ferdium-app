@@ -90,15 +90,15 @@ class ServiceSubTabs extends Component<
     const isTelegram = this.props.moduleId === 'telegram';
     const isTikTok = this.props.moduleId === 'tiktok';
     const isInstagramDM = this.props.moduleId === 'instagramDM';
-    
-    const headerMessage = isTelegram 
-      ? messages.telegramHeader 
-      : isTikTok 
-        ? messages.tiktokHeader 
+
+    const headerMessage = isTelegram
+      ? messages.telegramHeader
+      : isTikTok
+        ? messages.tiktokHeader
         : isInstagramDM
           ? messages.instagramDMHeader
           : messages.whatsappHeader;
-    
+
     return (
       <nav
         className={`flex flex-col h-full bg-container border-r border-solid border-line overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}

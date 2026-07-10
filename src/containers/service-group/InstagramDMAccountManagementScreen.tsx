@@ -72,7 +72,8 @@ function InstagramDMAccountManagementScreen({
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
 
-  const instagramServices: Service[] = stores?.services?.instagramServices ?? [];
+  const instagramServices: Service[] =
+    stores?.services?.instagramServices ?? [];
 
   const handleEdit = useCallback((serviceId: string) => {
     setEditingServiceId(serviceId);

@@ -117,6 +117,7 @@ function createStoreWithServices(services: MockService[]) {
     createActions() as any,
   );
   (store as any).allServicesRequest = {
+    result: services,
     execute: () => ({ result: services }),
   };
   return store;

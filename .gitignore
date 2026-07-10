@@ -412,10 +412,3 @@ openapi-docs.json
 
 temp/
 .omo/
-<<<<<<< HEAD
-
-# Trae IDE files
-.omo/
-=======
-.omo/
->>>>>>> refs/remotes/origin/dev

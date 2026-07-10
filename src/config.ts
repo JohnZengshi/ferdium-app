@@ -531,7 +531,8 @@ export const TODOS_PARTITION_ID = 'persist:todos';
 export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';
 
 export const TELEGRAM_RECIPE_ID = 'telegram';
-
+export const TIKTOK_RECIPE_ID = 'tiktok';
+export const INSTAGRAM_DM_RECIPE_ID = 'instagram-direct-messages';
 export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets added to the end of the already-added services on the left sidebar
 
 export const SPLIT_COLUMNS_MIN = 1;

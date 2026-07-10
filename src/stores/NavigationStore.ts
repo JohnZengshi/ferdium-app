@@ -4,6 +4,8 @@ export type FerdiumModule =
   | 'home'
   | 'whatsapp'
   | 'telegram'
+  | 'tiktok'
+  | 'instagramDM'
   | 'knowledge-base'
   | 'settings';
 export type ServiceSubTab = 'messages' | 'account' | 'profile';
@@ -27,22 +29,48 @@ class NavigationStore {
     home: null,
     whatsapp: null,
     telegram: null,
+    tiktok: null,
+    instagramDM: null,
     'knowledge-base': null,
     settings: null,
+  };
+
+  @observable moduleActiveServiceTab: Record<FerdiumModule, ServiceSubTab> = {
+    home: 'messages',
+    whatsapp: 'messages',
+    telegram: 'messages',
+    tiktok: 'messages',
+    instagramDM: 'messages',
+    'knowledge-base': 'messages',
+    settings: 'messages',
   };
 
   @observable moduleServiceTab: Record<FerdiumModule, ServiceSubTab> = {
     home: 'messages',
     whatsapp: 'messages',
     telegram: 'messages',
+    tiktok: 'messages',
+    instagramDM: 'messages',
     'knowledge-base': 'messages',
     settings: 'messages',
+  };
+
+  @observable moduleSidebarOpen: Record<FerdiumModule, boolean> = {
+    home: false,
+    whatsapp: false,
+    telegram: false,
+    tiktok: false,
+    instagramDM: false,
+    'knowledge-base': false,
+    settings: false,
   };
 
   @observable moduleCollapsed: Record<FerdiumModule, boolean> = {
     home: false,
     whatsapp: false,
     telegram: false,
+    tiktok: false,
+    instagramDM: false,
     'knowledge-base': false,
     settings: false,
   };

@@ -225,6 +225,84 @@ const TelegramTabIcon = ({
   );
 };
 
+const TikTokTabIcon = ({
+  isActive,
+  isHovered,
+}: {
+  isActive: boolean;
+  isHovered: boolean;
+}): ReactElement => {
+  const mask = {
+    maskImage: 'url(./assets/images/tiktok.svg)',
+    WebkitMaskImage: 'url(./assets/images/tiktok.svg)',
+    maskSize: 'contain' as const,
+    WebkitMaskSize: 'contain' as const,
+    maskRepeat: 'no-repeat' as const,
+    WebkitMaskRepeat: 'no-repeat' as const,
+  };
+
+  return (
+    <div
+      className={`flex items-center justify-center w-[48px] h-[48px] rounded-[24px] ${
+        isActive
+          ? 'bg-[var(--td-brand-color-light)]'
+          : isHovered
+            ? 'bg-[var(--td-bg-color-component)]'
+            : ''
+      }`}
+    >
+      <span
+        className="inline-block w-[24px] h-[24px]"
+        style={{
+          ...mask,
+          backgroundColor: isActive
+            ? 'var(--td-brand-color)'
+            : 'var(--td-text-color-secondary)',
+        }}
+      />
+    </div>
+  );
+};
+
+const InstagramDMTabIcon = ({
+  isActive,
+  isHovered,
+}: {
+  isActive: boolean;
+  isHovered: boolean;
+}): ReactElement => {
+  const mask = {
+    maskImage: 'url(./assets/images/instagram-dm.svg)',
+    WebkitMaskImage: 'url(./assets/images/instagram-dm.svg)',
+    maskSize: 'contain' as const,
+    WebkitMaskSize: 'contain' as const,
+    maskRepeat: 'no-repeat' as const,
+    WebkitMaskRepeat: 'no-repeat' as const,
+  };
+
+  return (
+    <div
+      className={`flex items-center justify-center w-[48px] h-[48px] rounded-[24px] ${
+        isActive
+          ? 'bg-[var(--td-brand-color-light)]'
+          : isHovered
+            ? 'bg-[var(--td-bg-color-component)]'
+            : ''
+      }`}
+    >
+      <span
+        className="inline-block w-[24px] h-[24px]"
+        style={{
+          ...mask,
+          backgroundColor: isActive
+            ? 'var(--td-brand-color)'
+            : 'var(--td-text-color-secondary)',
+        }}
+      />
+    </div>
+  );
+};
+
 const MODULES: {
   id: FerdiumModule;
   icon: (isActive: boolean, isHovered: boolean) => ReactElement;
@@ -248,6 +326,18 @@ const MODULES: {
     ),
   },
   {
+    id: 'tiktok',
+    icon: (isActive: boolean, isHovered: boolean) => (
+      <TikTokTabIcon isActive={isActive} isHovered={isHovered} />
+    ),
+  },
+  {
+    id: 'instagramDM',
+    icon: (isActive: boolean, isHovered: boolean) => (
+      <InstagramDMTabIcon isActive={isActive} isHovered={isHovered} />
+    ),
+  },
+  {
     id: 'knowledge-base',
     icon: (isActive: boolean, isHovered: boolean) => (
       <CollectionIcon isActive={isActive} isHovered={isHovered} />
@@ -267,6 +357,14 @@ const messages = defineMessages({
   telegram: {
     id: 'mainModuleTabs.telegram',
     defaultMessage: 'Telegram',
+  },
+  tiktok: {
+    id: 'mainModuleTabs.tiktok',
+    defaultMessage: 'TikTok',
+  },
+  instagramDM: {
+    id: 'mainModuleTabs.instagramDM',
+    defaultMessage: 'Ins DM',
   },
   knowledgeBase: {
     id: 'mainModuleTabs.knowledgeBase',
@@ -337,9 +435,13 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
                       ? badge
                       : mod.id === 'telegram'
                         ? stores?.services.telegramBadge
-                        : mod.id === 'home'
-                          ? handoffBadge
-                          : null
+                        : mod.id === 'tiktok'
+                          ? stores?.services.tiktokBadge
+                          : mod.id === 'instagramDM'
+                          ? stores?.services.instagramBadge
+                          : mod.id === 'home'
+                              ? handoffBadge
+                              : null
                   }
                   size="small"
                   offset={[5, 5]}
@@ -355,6 +457,8 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
                         home: messages.home,
                         whatsapp: messages.serviceType,
                         telegram: messages.telegram,
+                        tiktok: messages.tiktok,
+                        instagramDM: messages.instagramDM,
                         'knowledge-base': messages.knowledgeBase,
                       } as const
                     )[mod.id],

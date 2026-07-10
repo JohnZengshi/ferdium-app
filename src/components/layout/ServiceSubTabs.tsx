@@ -30,6 +30,14 @@ const messages = defineMessages({
     id: 'serviceSubTabs.telegramHeader',
     defaultMessage: 'Telegram',
   },
+  tiktokHeader: {
+    id: 'serviceSubTabs.tiktokHeader',
+    defaultMessage: 'TikTok',
+  },
+  instagramDMHeader: {
+    id: 'serviceSubTabs.instagramDMHeader',
+    defaultMessage: 'Instagram DM',
+  },
   expand: { id: 'serviceSubTabs.expand', defaultMessage: 'expand' },
   collapse: { id: 'serviceSubTabs.collapse', defaultMessage: 'collapse' },
 });
@@ -80,6 +88,17 @@ class ServiceSubTabs extends Component<
       navigationStore.moduleCollapsed[navigationStore.activeModule] ?? false;
     const { intl, stores } = this.props;
     const isTelegram = this.props.moduleId === 'telegram';
+    const isTikTok = this.props.moduleId === 'tiktok';
+    const isInstagramDM = this.props.moduleId === 'instagramDM';
+    
+    const headerMessage = isTelegram 
+      ? messages.telegramHeader 
+      : isTikTok 
+        ? messages.tiktokHeader 
+        : isInstagramDM
+          ? messages.instagramDMHeader
+          : messages.whatsappHeader;
+    
     return (
       <nav
         className={`flex flex-col h-full bg-container border-r border-solid border-line overflow-hidden transition-all ${isCollapsed ? 'min-w-[64px]' : 'min-w-[232px]'}`}
@@ -90,9 +109,7 @@ class ServiceSubTabs extends Component<
         >
           {!isCollapsed && (
             <span className="text-[18px] font-semibold leading-[26px] text-primary">
-              {intl.formatMessage(
-                isTelegram ? messages.telegramHeader : messages.whatsappHeader,
-              )}
+              {intl.formatMessage(headerMessage)}
             </span>
           )}
           <button
@@ -118,13 +135,23 @@ class ServiceSubTabs extends Component<
         <div
           className={`flex flex-col gap-[4px] ${isCollapsed ? 'items-center' : 'px-[8px]'}`}
         >
-          {SUB_TABS.map(tab => {
+          {SUB_TABS.filter(tab => {
+            // 隐藏 TikTok 和 Instagram DM 的用户画像标签
+            if (tab.id === 'profile' && (isTikTok || isInstagramDM)) {
+              return false;
+            }
+            return true;
+          }).map(tab => {
             const isActive = navigationStore.activeServiceTab === tab.id;
             const badge =
               tab.id === 'messages'
                 ? isTelegram
                   ? stores?.services.telegramBadge
-                  : stores?.services.mainModuleBadge
+                  : isTikTok
+                    ? stores?.services.tiktokBadge
+                    : isInstagramDM
+                      ? stores?.services.instagramBadge
+                      : stores?.services.mainModuleBadge
                 : null;
             return (
               <button

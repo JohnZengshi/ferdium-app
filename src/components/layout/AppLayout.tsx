@@ -33,7 +33,9 @@ import type SettingsStore from '../../stores/SettingsStore';
 
 import HomeScreen from '../../containers/home/HomeScreen';
 import KnowledgeScreen from '../../containers/knowledge-base/KnowledgeScreen';
+import InstagramDMAccountManagementScreen from '../../containers/service-group/InstagramDMAccountManagementScreen';
 import TelegramAccountManagementScreen from '../../containers/service-group/TelegramAccountManagementScreen';
+import TikTokAccountManagementScreen from '../../containers/service-group/TikTokAccountManagementScreen';
 import UserProfileScreen from '../../containers/service-group/UserProfileScreen';
 import WhatsAppAccountManagementScreen from '../../containers/service-group/WhatsAppAccountManagementScreen';
 import { navigationStore } from '../../stores/NavigationStore';
@@ -133,8 +135,12 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   isFullScreen: boolean;
   sidebar: React.ReactElement;
   telegramSidebar: React.ReactElement;
+  tiktokSidebar: React.ReactElement;
+  instagramSidebar: React.ReactElement;
   whatsappServices: React.ReactElement;
   telegramServices: React.ReactElement;
+  tiktokServices: React.ReactElement;
+  instagramServices: React.ReactElement;
   showServicesUpdatedInfoBar: boolean;
   appUpdateIsDownloaded: boolean;
   authRequestFailed: boolean;
@@ -212,8 +218,12 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       isFullScreen,
       sidebar,
       telegramSidebar,
+      tiktokSidebar,
+      instagramSidebar,
       whatsappServices,
       telegramServices,
+      tiktokServices,
+      instagramServices,
       showServicesUpdatedInfoBar,
       appUpdateIsDownloaded,
       authRequestFailed,
@@ -231,10 +241,12 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { intl } = this.props;
 
-    const MODULE_LABELS: Record<FerdiumModule, string> = {
+    const moduleNames: Record<FerdiumModule, string> = {
       home: intl.formatMessage(messages.moduleHome),
       whatsapp: intl.formatMessage(messages.moduleServiceType),
       telegram: intl.formatMessage(messages.moduleTelegram),
+      tiktok: 'TikTok',
+      instagramDM: 'Instagram DM',
       'knowledge-base': intl.formatMessage(messages.moduleKnowledgeBase),
       settings: intl.formatMessage(messages.moduleSettings),
     };
@@ -257,6 +269,10 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       activeModule === 'whatsapp' && activeServiceTab === 'messages';
     const isTelegramMessagesMode =
       activeModule === 'telegram' && activeServiceTab === 'messages';
+    const isTikTokMessagesMode =
+      activeModule === 'tiktok' && activeServiceTab === 'messages';
+    const isInstagramDMMessagesMode =
+      activeModule === 'instagramDM' && activeServiceTab === 'messages';
 
     const appUpdateStatus = (stores?.app?.updateStatus ??
       '') as unknown as string;
@@ -280,7 +296,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       // IMPORTANT: keep the services/webview container mounted and toggle visibility with CSS only.
       // Unmounting here will recreate webviews on tab switch, which breaks the cached session state
       // and causes a visible reload that hurts user experience.
-      const isMessages = isServiceTypeMessagesMode || isTelegramMessagesMode;
+      const isMessages = isServiceTypeMessagesMode || isTelegramMessagesMode || isTikTokMessagesMode || isInstagramDMMessagesMode;
       return (
         <>
           <div className={`flex flex-1 flex-col${isMessages ? '' : ' hidden'}`}>
@@ -350,6 +366,16 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             >
               {telegramServices}
             </div>
+            <div
+              className={`flex-1 flex flex-col min-h-0 ${isTikTokMessagesMode ? '' : 'hidden'}`}
+            >
+              {tiktokServices}
+            </div>
+            <div
+              className={`flex-1 flex flex-col min-h-0 ${isInstagramDMMessagesMode ? '' : 'hidden'}`}
+            >
+              {instagramServices}
+            </div>
             <Outlet />
           </div>
 
@@ -372,6 +398,22 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             )}
           {!isMessages &&
             activeModule === 'telegram' &&
+            activeServiceTab === 'profile' && <UserProfileScreen />}
+          {!isMessages &&
+            activeModule === 'tiktok' &&
+            activeServiceTab === 'account' && (
+              <TikTokAccountManagementScreen />
+            )}
+          {!isMessages &&
+            activeModule === 'tiktok' &&
+            activeServiceTab === 'profile' && <UserProfileScreen />}
+          {!isMessages &&
+            activeModule === 'instagramDM' &&
+            activeServiceTab === 'account' && (
+              <InstagramDMAccountManagementScreen />
+            )}
+          {!isMessages &&
+            activeModule === 'instagramDM' &&
             activeServiceTab === 'profile' && <UserProfileScreen />}
         </>
       );
@@ -423,7 +465,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         />
                       )
                     )}
-                    {MODULE_LABELS[navigationStore.activeModule]}
+                    {moduleNames[navigationStore.activeModule]}
                   </span>
 
                   {stores?.user.data && (
@@ -545,9 +587,17 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                   {activeModule === 'telegram' && (
                     <ServiceSubTabs moduleId="telegram" />
                   )}
+                  {activeModule === 'tiktok' && (
+                    <ServiceSubTabs moduleId="tiktok" />
+                  )}
+                  {activeModule === 'instagramDM' && (
+                    <ServiceSubTabs moduleId="instagramDM" />
+                  )}
 
                   {isServiceTypeMessagesMode && sidebar}
                   {isTelegramMessagesMode && telegramSidebar}
+                  {isTikTokMessagesMode && tiktokSidebar}
+                  {isInstagramDMMessagesMode && instagramSidebar}
 
                   <div className="app__service flex-auto min-w-0">
                     {renderMainContent()}

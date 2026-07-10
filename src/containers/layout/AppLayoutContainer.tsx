@@ -8,7 +8,9 @@ import tinycolor from 'tinycolor2';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import AppLoading from '../../components/layout/AppLoading';
+import InstagramDMAccountSlider from '../../components/layout/InstagramDMAccountSlider';
 import TelegramAccountSlider from '../../components/layout/TelegramAccountSlider';
+import TikTokAccountSlider from '../../components/layout/TikTokAccountSlider';
 import WhatsAppAccountSlider from '../../components/layout/WhatsAppAccountSlider';
 import Services from '../../components/services/content/Services';
 import { DEFAULT_ACCENT_COLOR } from '../../config';
@@ -28,6 +30,8 @@ class AppLayoutContainer extends Component<IProps> {
         module: navigationStore.activeModule,
         waCount: this.props.stores?.services?.whatsAppServices?.length ?? 0,
         tgCount: this.props.stores?.services?.telegramServices?.length ?? 0,
+        ttCount: this.props.stores?.services?.tiktokServices?.length ?? 0,
+        igCount: this.props.stores?.services?.instagramServices?.length ?? 0,
       }),
       ({ module }) => {
         const { stores } = this.props;
@@ -45,7 +49,11 @@ class AppLayoutContainer extends Component<IProps> {
             ? stores.services.whatsAppServices
             : module === 'telegram'
               ? stores.services.telegramServices
-              : [];
+              : module === 'tiktok'
+                ? stores.services.tiktokServices
+                : module === 'instagramDM'
+                  ? stores.services.instagramServices
+                  : [];
         const first = moduleList[0];
         if (first && currentActive?.id !== first.id) {
           navigationStore.setModuleActiveService(module, first.id);
@@ -116,6 +124,8 @@ class AppLayoutContainer extends Component<IProps> {
 
     const sidebar = <WhatsAppAccountSlider />;
     const telegramSidebar = <TelegramAccountSlider />;
+    const tiktokSidebar = <TikTokAccountSlider />;
+    const instagramSidebar = <InstagramDMAccountSlider />;
 
     const commonServiceProps = {
       setWebviewReference,
@@ -135,6 +145,14 @@ class AppLayoutContainer extends Component<IProps> {
       <Services services={services.telegramServices} {...commonServiceProps} />
     );
 
+    const tiktokServicesContainer = (
+      <Services services={services.tiktokServices} {...commonServiceProps} />
+    );
+
+    const instagramServicesContainer = (
+      <Services services={services.instagramServices} {...commonServiceProps} />
+    );
+
     return (
       <ThemeProvider theme={ui.theme}>
         <AppLayout
@@ -147,8 +165,12 @@ class AppLayoutContainer extends Component<IProps> {
           authRequestFailed={app.authRequestFailed}
           sidebar={sidebar}
           telegramSidebar={telegramSidebar}
+          tiktokSidebar={tiktokSidebar}
+          instagramSidebar={instagramSidebar}
           whatsappServices={whatsappServicesContainer}
           telegramServices={telegramServicesContainer}
+          tiktokServices={tiktokServicesContainer}
+          instagramServices={instagramServicesContainer}
           installAppUpdate={installUpdate}
           showRequiredRequestsError={requests.showRequiredRequestsError}
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}

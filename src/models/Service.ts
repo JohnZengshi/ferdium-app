@@ -578,13 +578,18 @@ export default class Service {
     this.webview.addEventListener('ipc-message', async e => {
       switch (e.channel) {
         case 'inject-js-unsafe': {
-          await Promise.all(
-            e.args.map(script =>
-              this.webview.executeJavaScript(
-                `"use strict"; (() => { ${script} })();`,
-              ),
-            ),
-          );
+          const executeSequentially = async (
+            scripts: string[],
+            index = 0,
+          ): Promise<void> => {
+            if (index >= scripts.length) return;
+            await this.webview.executeJavaScript(
+              `"use strict"; (() => { ${scripts[index]} })();`,
+            );
+            await executeSequentially(scripts, index + 1);
+          };
+
+          await executeSequentially(e.args);
 
           break;
         }

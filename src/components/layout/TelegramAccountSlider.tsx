@@ -207,11 +207,13 @@ class TelegramAccountSlider extends Component<
 
     return (
       <ResizableSidebar
-        defaultWidth={stores?.settings.all.app.accountSliderWidth ?? 300}
+        defaultWidth={
+          stores?.settings.all.app.telegramAccountSliderWidth ?? 300
+        }
         onWidthChange={width =>
           actions?.settings.update({
             type: 'app',
-            data: { accountSliderWidth: width },
+            data: { telegramAccountSliderWidth: width },
           })
         }
       >

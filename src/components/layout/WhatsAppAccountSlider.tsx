@@ -646,11 +646,13 @@ class WhatsAppAccountSlider extends Component<IProps, IAccountSliderState> {
 
     return (
       <ResizableSidebar
-        defaultWidth={stores?.settings.all.app.accountSliderWidth ?? 300}
+        defaultWidth={
+          stores?.settings.all.app.whatsappAccountSliderWidth ?? 300
+        }
         onWidthChange={width =>
           actions?.settings.update({
             type: 'app',
-            data: { accountSliderWidth: width },
+            data: { whatsappAccountSliderWidth: width },
           })
         }
       >

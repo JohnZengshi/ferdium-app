@@ -40,10 +40,15 @@ interface IProps extends WrappedComponentProps {
   actions?: Actions;
 }
 
-interface IState {
-  activeTab: string;
-  drawerVisible: boolean;
-  editingServiceId: string | null;
+type ServiceDrawerData = Service & {
+  proxy?: ServiceProxy | null;
+  cookie?: string;
+};
+
+interface IInstagramDMAccountSliderState {
+  isBindDrawerVisible: boolean;
+  editingService: ServiceDrawerData | null;
+  bindDrawerKey: number;
 }
 
 interface InstagramSliderItemProps {
@@ -101,79 +106,18 @@ const InstagramSliderList = SortableContainer<InstagramSliderListProps>(
 
 @inject('stores', 'actions')
 @observer
-class InstagramDMAccountSlider extends Component<IProps, IState> {
+class InstagramDMAccountSlider extends Component<
+  IProps,
+  IInstagramDMAccountSliderState
+> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      activeTab: 'all',
-      drawerVisible: false,
-      editingServiceId: null,
+      isBindDrawerVisible: false,
+      editingService: null,
+      bindDrawerKey: 0,
     };
   }
-
-  setActiveTab = (tabId: string) => {
-    this.setState({ activeTab: tabId });
-  };
-
-  openBindDrawer = () => {
-    this.setState({ drawerVisible: true, editingServiceId: null });
-  };
-
-  handleEditClose = () => {
-    this.setState({ drawerVisible: false, editingServiceId: null });
-  };
-
-  handleEditConfirm = async (data: {
-    name: string;
-    proxy: ServiceProxy | null;
-  }) => {
-    const { actions } = this.props;
-    const { editingServiceId } = this.state;
-
-    if (!actions) return;
-
-    if (editingServiceId) {
-      // Update existing service
-      await actions.service.updateService({
-        serviceId: editingServiceId,
-        serviceData: {
-          name: data.name,
-          proxy: data.proxy,
-        },
-        redirect: false,
-      });
-      MessagePlugin.success(
-        this.props.intl.formatMessage(messages.updateSuccess),
-      );
-    } else {
-      // Create new service
-      await actions.service.createService({
-        recipeId: INSTAGRAM_DM_RECIPE_ID,
-        serviceData: {
-          name: data.name,
-          proxy: data.proxy,
-        },
-      });
-      MessagePlugin.success(this.props.intl.formatMessage(messages.addSuccess));
-    }
-
-    this.handleEditClose();
-  };
-
-  handleContextMenu = (service: Service) => {
-    const { actions } = this.props;
-    openServiceContextMenu(
-      service,
-      actions,
-      () => {
-        this.setState({
-          drawerVisible: true,
-          editingServiceId: service.id,
-        });
-      },
-      `Service ID (${service.id})`,
-    );
-  };
 
   onSortEnd = ({
     oldIndex,
@@ -183,101 +127,166 @@ class InstagramDMAccountSlider extends Component<IProps, IState> {
     newIndex: number;
   }) => {
     const { actions, stores } = this.props;
-    if (!actions || !stores) return;
+    const filtered = stores?.services?.instagramServices ?? [];
+    const all = stores?.services?.all ?? [];
 
-    const services = stores.services.instagramServices;
-    if (oldIndex === newIndex || !services[oldIndex] || !services[newIndex]) {
-      return;
+    const service = filtered[oldIndex];
+    if (!service) return;
+
+    const realOldIdx = all.indexOf(service);
+    const target = filtered[newIndex];
+    const realNewIdx = target ? all.indexOf(target) : all.length - 1;
+
+    actions?.service?.reorder?.({
+      oldIndex: realOldIdx,
+      newIndex: realNewIdx,
+    });
+  };
+
+  handleContextMenu = (service: Service) => {
+    const { actions } = this.props;
+    openServiceContextMenu(
+      service,
+      actions,
+      () => this.openBindDrawer(service),
+      `Service ID (${service.id})`,
+    );
+  };
+
+  openBindDrawer = (editingService: ServiceDrawerData | null = null) => {
+    this.setState(prev => ({
+      isBindDrawerVisible: true,
+      editingService,
+      bindDrawerKey: prev.bindDrawerKey + 1,
+    }));
+  };
+
+  closeBindDrawer = () => {
+    this.setState({ isBindDrawerVisible: false, editingService: null });
+  };
+
+  handleBindConfirm = (data: { name: string; proxy: ServiceProxy }) => {
+    const { actions } = this.props;
+    const { editingService } = this.state;
+
+    if (editingService) {
+      actions?.service?.updateService?.({
+        serviceId: editingService.id,
+        serviceData: {
+          name: data.name || 'Instagram',
+          proxy: data.proxy,
+        },
+        redirect: false,
+      });
+      MessagePlugin.success({
+        content: this.props.intl.formatMessage(messages.updateSuccess),
+        duration: 3000,
+      });
+    } else {
+      actions?.service?.createService?.({
+        recipeId: INSTAGRAM_DM_RECIPE_ID,
+        serviceData: {
+          name: data.name || 'Instagram',
+          proxy: data.proxy,
+          isHibernationEnabled: true,
+        },
+        redirect: false,
+      });
+      MessagePlugin.success({
+        content: this.props.intl.formatMessage(messages.addSuccess),
+        duration: 3000,
+      });
     }
 
-    actions.service.reorder({
-      oldIndex,
-      newIndex,
-    });
+    this.closeBindDrawer();
   };
 
   render(): ReactElement {
     const { stores, actions, intl } = this.props;
-    const { activeTab, drawerVisible, editingServiceId } = this.state;
-
-    const services = stores?.services.instagramServices || [];
-    const editingService = services.find(s => s.id === editingServiceId);
-
-    const tabs = [
-      {
-        id: 'all',
-        label: intl.formatMessage(messages.tabAll),
-        count: services.length,
-      },
-    ];
-
-    const filteredServices = services;
+    const instagramServices = stores?.services?.instagramServices ?? [];
 
     return (
       <ResizableSidebar
-        defaultWidth={320}
-        onWidthChange={() => {}}
-        minWidth={240}
+        defaultWidth={
+          stores?.settings.all.app.instagramAccountSliderWidth ?? 300
+        }
+        onWidthChange={width =>
+          actions?.settings.update({
+            type: 'app',
+            data: { instagramAccountSliderWidth: width },
+          })
+        }
       >
-        <div className="flex flex-col h-full p-[16px] gap-[12px]">
-          <div className="flex gap-[8px] items-center flex-wrap">
-            {tabs.map(tab => {
-              const isActive = activeTab === tab.id;
-              return (
-                <Badge key={tab.id} count={tab.count} offset={[8, 0]}>
-                  <Button
-                    size="small"
-                    theme="default"
-                    variant={isActive ? 'base' : 'text'}
-                    onClick={() => this.setActiveTab(tab.id)}
-                  >
-                    <span className="text-[14px]">{tab.label}</span>
-                  </Button>
-                </Badge>
-              );
-            })}
-          </div>
-          <Button
-            height="40px"
-            className="rounded-[6px] flex-shrink-0"
-            icon={<AddIcon />}
-            onClick={() => this.openBindDrawer()}
+        <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0 w-full">
+          <Badge
+            count={instagramServices.length > 0 || null}
+            size="small"
+            offset={[10, 0]}
+            className="flex-1 min-w-0 [&_.t-badge--circle]:!bg-brand"
           >
-            {intl.formatMessage(messages.bindAccount)}
-          </Button>
-
-          {filteredServices.length > 0 ? (
-            <InstagramSliderList
-              services={filteredServices}
-              actions={actions}
-              onContextMenu={this.handleContextMenu}
-              onSortEnd={this.onSortEnd}
-              distance={20}
-              axis="y"
-              lockAxis="y"
-              helperClass="is-reordering"
-            />
-          ) : (
-            <div className="flex items-center justify-center flex-1">
-              <Empty description="No accounts" />
-            </div>
-          )}
+            <Button
+              className="h-[32px] w-full min-w-0"
+              theme="default"
+              variant="base"
+            >
+              <div className="flex items-center gap-[8px] justify-center">
+                <img
+                  src="./assets/images/sidebar-services.svg"
+                  className="w-[16px] h-[16px] [.compact-mode_&]:hidden"
+                  alt=""
+                />
+                <span className="text-[14px] font-normal leading-[22px] text-brand">
+                  {intl.formatMessage(messages.tabAll)}
+                </span>
+              </div>
+            </Button>
+          </Badge>
         </div>
+        <Button
+          height="40px"
+          className="rounded-[6px] flex-shrink-0"
+          icon={<AddIcon />}
+          onClick={() => this.openBindDrawer()}
+        >
+          {intl.formatMessage(messages.bindAccount)}
+        </Button>
+
+        {instagramServices.length > 0 ? (
+          <InstagramSliderList
+            services={instagramServices}
+            actions={actions}
+            onContextMenu={this.handleContextMenu}
+            onSortEnd={this.onSortEnd}
+            distance={20}
+            axis="y"
+            lockAxis="y"
+            helperClass="is-reordering"
+          />
+        ) : (
+          <div className="flex-1 flex items-center justify-center">
+            <Empty
+              className="h-fit w-full flex flex-col items-center [&_svg]:w-full [&_svg]:h-full"
+              size="large"
+              imageStyle={{ width: '80px', height: '80px' }}
+            />
+          </div>
+        )}
 
         <EditServiceDrawer
-          key={editingServiceId ?? 'closed'}
-          visible={drawerVisible}
+          key={this.state.bindDrawerKey}
+          visible={this.state.isBindDrawerVisible}
           initialData={
-            editingService
+            this.state.editingService
               ? {
-                  name: editingService.name,
-                  proxy: editingService.proxy as ServiceProxy | null,
-                  cookie: '',
+                  name: this.state.editingService.name,
+                  proxy: this.state.editingService?.proxy,
+                  cookie: this.state.editingService?.cookie || '',
                 }
               : null
           }
-          onClose={this.handleEditClose}
-          onConfirm={this.handleEditConfirm}
+          onClose={this.closeBindDrawer}
+          onConfirm={this.handleBindConfirm}
+          defaultName="Instagram"
         />
       </ResizableSidebar>
     );

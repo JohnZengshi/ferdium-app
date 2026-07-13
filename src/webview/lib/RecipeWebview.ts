@@ -1,6 +1,6 @@
+import { basename } from 'node:path';
 import { BrowserWindow } from '@electron/remote';
 import { ipcRenderer } from 'electron';
-import { basename } from 'node:path';
 import { existsSync, pathExistsSync, readFileSync } from 'fs-extra';
 import { safeParseInt } from '../../jsUtils';
 

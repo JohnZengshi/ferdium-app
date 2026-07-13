@@ -6,6 +6,8 @@ import type ElectronWebView from 'react-electron-web-view';
 
 import { v4 as uuidV4 } from 'uuid';
 import * as conversationsApi from '../agent-flow-cs/api/generated/conversations/conversations';
+import * as ownersApi from '../agent-flow-cs/api/generated/owners/owners';
+import * as suggestionApi from '../agent-flow-cs/api/generated/suggestion/suggestion';
 import * as translateApi from '../agent-flow-cs/api/generated/translate/translate';
 import * as whatsappApi from '../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import {
@@ -591,7 +593,12 @@ export default class Service {
         case 'wa-ai-api-request': {
           const { requestId, api, method, args } = e.args[0] as {
             requestId: string;
-            api: 'conversations' | 'translate' | 'whatsapp';
+            api:
+              | 'conversations'
+              | 'suggestion'
+              | 'translate'
+              | 'whatsapp'
+              | 'owners';
             method: string;
             args: unknown[];
           };
@@ -615,7 +622,11 @@ export default class Service {
                 ? conversationsApi
                 : api === 'whatsapp'
                   ? whatsappApi
-                  : translateApi;
+                  : api === 'suggestion'
+                    ? suggestionApi
+                    : api === 'owners'
+                      ? ownersApi
+                      : translateApi;
             const apiMethod = (apiModule as Record<string, unknown>)[method];
 
             if (typeof apiMethod !== 'function') {
@@ -647,6 +658,21 @@ export default class Service {
                 enhancedArgs[0] = {};
               }
               (enhancedArgs[0] as Record<string, unknown>).session_id = this.id;
+            }
+
+            if (
+              api === 'owners' &&
+              method.includes('getConversationDaySummary')
+            ) {
+              if (
+                enhancedArgs.length === 0 ||
+                typeof enhancedArgs[0] !== 'object' ||
+                enhancedArgs[0] === null
+              ) {
+                enhancedArgs[0] = {};
+              }
+              (enhancedArgs[0] as Record<string, unknown>).wa_session_id =
+                this.id;
             }
 
             const result = await (

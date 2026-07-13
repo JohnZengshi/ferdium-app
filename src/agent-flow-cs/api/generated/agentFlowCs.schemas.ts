@@ -251,6 +251,11 @@ export interface AuditLogResponse {
   created_at: string;
 }
 
+export interface BodySendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPost {
+  file: Blob;
+  caption?: string | null;
+}
+
 export interface BodyUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost {
   file: Blob;
 }
@@ -504,6 +509,40 @@ export interface ConversationCreateRequest {
   title?: string;
 }
 
+/**
+ * 指定会话在所选 UTC 日期当天的聊天记录摘要。
+ */
+export interface ConversationDaySummaryResponse {
+  conversation_id: string;
+  customer_id?: string | null;
+  wa_session_id?: string;
+  platform: string;
+  title: string;
+  /** UTC 日期，格式 YYYY-MM-DD */
+  date: string;
+  /**
+     * 当天消息数（全量）
+     * @minimum 0
+     */
+  message_count: number;
+  /**
+     * 因上限省略的旧消息数（message_count - 实际送入模型数）
+     * @minimum 0
+     */
+  omitted_messages?: number;
+  /**
+     * 命中的会话数；>1 表示多子账号同三元组，仅总结最近活跃一条
+     * @minimum 1
+     */
+  matched_conversation_count?: number;
+  /** LLM 生成的中文当日聊天总结（Markdown） */
+  summary: string;
+  /** 摘要生成时间（UTC） */
+  generated_at: string;
+  /** 是否复用了消息快照未变化的已存摘要 */
+  cached?: boolean;
+}
+
 export interface AppApiSchemasOwnersConversationResponse {
   id: string;
   owner_user_id: string;
@@ -658,7 +697,7 @@ export interface DigitalHumanAdminUpdateRequest {
   platform?: string | null;
   persona_config?: DigitalHumanAdminUpdateRequestPersonaConfig;
   persona_prompt?: string | null;
-  knowledge_collection?: string | null;
+  knowledge_collections?: string[] | null;
   knowledge_domain?: string | null;
   status?: string | null;
   remark?: string | null;
@@ -732,7 +771,7 @@ export interface DigitalHumanCreate {
   account_handle?: string | null;
   platform?: string | null;
   persona_config?: PersonaConfig;
-  knowledge_collection?: string | null;
+  knowledge_collections?: string[] | null;
   knowledge_domain?: string | null;
   is_enabled?: boolean;
   remark?: string | null;
@@ -756,7 +795,7 @@ export interface DigitalHumanCreateRequest {
   persona_config?: DigitalHumanCreateRequestPersonaConfig;
   /** 自然语言人设描述，作为 prompt 注入消息合成和各专家 Agent，深度影响回复风格与角色演绎 */
   persona_prompt?: string | null;
-  knowledge_collection?: string | null;
+  knowledge_collections?: string[] | null;
   knowledge_domain?: string | null;
   status?: string;
   remark?: string | null;
@@ -849,7 +888,7 @@ export interface DigitalHumanUpdate {
   account_handle?: string | null;
   platform?: string | null;
   persona_config?: PersonaConfigPatch | null;
-  knowledge_collection?: string | null;
+  knowledge_collections?: string[] | null;
   knowledge_domain?: string | null;
   is_enabled?: boolean | null;
   remark?: string | null;
@@ -868,7 +907,7 @@ export interface DigitalHumanUpdateRequest {
   platform?: string | null;
   persona_config?: DigitalHumanUpdateRequestPersonaConfig;
   persona_prompt?: string | null;
-  knowledge_collection?: string | null;
+  knowledge_collections?: string[] | null;
   knowledge_domain?: string | null;
   status?: string | null;
   remark?: string | null;
@@ -1153,94 +1192,24 @@ export interface HumanCaseListResponse {
 }
 
 /**
- * Admin: 将集合分配给主账号。
- */
-export interface KnowledgeAssignRequest {
-  owner_id: string;
-}
-
-/**
- * 分配操作响应。
- */
-export interface KnowledgeAssignmentResponse {
-  id: string;
-  collection_id: string;
-  collection_name: string;
-  owner_id: string;
-  is_active: boolean;
-  created_at: string;
-}
-
-/**
- * Admin: 将集合批量分配给多个主账号。
- */
-export interface KnowledgeBatchAssignRequest {
-  owner_ids: string[];
-}
-
-/**
- * 批量分配结果项（成功分配或提交前已活跃）。
- */
-export interface KnowledgeBatchAssignmentItem {
-  owner_id: string;
-  username: string;
-}
-
-/**
- * 批量分配结果项（跳过：主账号不存在或非主账号角色）。
- */
-export interface KnowledgeBatchSkippedItem {
-  owner_id: string;
-  reason: string;
-}
-
-/**
- * 批量分配汇总响应。
- */
-export interface KnowledgeBatchAssignmentResponse {
-  collection_id: string;
-  collection_name: string;
-  assigned?: KnowledgeBatchAssignmentItem[];
-  already_active?: KnowledgeBatchAssignmentItem[];
-  skipped?: KnowledgeBatchSkippedItem[];
-  /** @minimum 0 */
-  total_requested: number;
-}
-
-/**
- * Admin: 创建共享知识库集合。
- */
-export interface KnowledgeCollectionCreateRequest {
-  /**
-     * @minLength 1
-     * @maxLength 128
-     */
-  display_name: string;
-  description?: string | null;
-}
-
-/**
- * 知识库集合详情（admin 视图）。
+ * 知识库集合信息（超管跨租户视角）。
  */
 export interface KnowledgeCollectionResponse {
-  id?: string | null;
+  id: string;
   display_name: string;
   rag_collection_name: string;
   source: string;
   description?: string | null;
   document_count?: number;
   is_deleted?: boolean;
-  creator_admin_id?: string | null;
   owner_id?: string | null;
   owner_username?: string | null;
-  assignment_count?: number | null;
-  assigned_owner_usernames?: string[];
-  created_at?: string | null;
-  updated_at?: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 /**
- * 知识库集合分页列表。
+ * 知识库集合分页列表响应（超管）。
  */
 export interface KnowledgeCollectionListResponse {
   items?: KnowledgeCollectionResponse[];
@@ -1253,13 +1222,15 @@ export interface KnowledgeCollectionListResponse {
 }
 
 /**
- * Owner 视图的集合信息（含来源标签）。
+ * Owner 视图的自建集合信息。
  */
 export interface KnowledgeCollectionOwnerResponse {
   name: string;
   display_name?: string | null;
   source?: string | null;
+  description?: string | null;
   document_count?: number;
+  created_at?: string | null;
 }
 
 /**
@@ -1321,6 +1292,7 @@ export interface KnowledgeDocumentItem {
   collection?: string;
   domain?: string;
   created_at?: string;
+  enabled?: boolean;
 }
 
 /**
@@ -1346,15 +1318,15 @@ export interface KnowledgeDocumentResponse {
 }
 
 /**
- * 知识库概览统计。
+ * 知识库全局统计概览（超管，仅 owner 自建维度）。
  */
 export interface KnowledgeOverviewResponse {
-  total_collections?: number;
-  admin_shared_count?: number;
-  owner_selfbuilt_count?: number;
-  system_count?: number;
-  total_assignments?: number;
-  assigned_owner_count?: number;
+  /** @minimum 0 */
+  total_collections: number;
+  /** @minimum 0 */
+  owner_count: number;
+  /** @minimum 0 */
+  total_documents: number;
 }
 
 /**
@@ -1382,6 +1354,18 @@ export interface KnowledgeOwnerCollectionCreateResponse {
   created_at: string;
 }
 
+/**
+ * Owner: 更新自建知识库集合显示信息。
+ */
+export interface KnowledgeOwnerCollectionUpdateRequest {
+  /**
+     * @minLength 1
+     * @maxLength 128
+     */
+  display_name: string;
+  description?: string | null;
+}
+
 export type KnowledgeRetrieveChunkItemMetadata = { [key: string]: unknown };
 
 /**
@@ -1405,7 +1389,7 @@ export interface KnowledgeRetrieveRequest {
      * @maxLength 512
      */
   query: string;
-  collection: string;
+  collection?: string | null;
   top_k?: number | null;
   domain?: string | null;
 }
@@ -1932,6 +1916,39 @@ export interface SubAccountListResponse {
 }
 
 /**
+ * 根据调用方提交的当前消息与上下文生成客服推荐回复。
+ */
+export interface SuggestionRequest {
+  /**
+     * 当前需要回复的客户消息
+     * @minLength 1
+     * @maxLength 50000
+     */
+  message: string;
+  /** 当前消息之前的对话上下文 */
+  context?: string | null;
+  /** 指定模型，不传则取 LLM_MODEL_SUGGESTION 环境变量或全局默认模型 */
+  model?: string | null;
+  /**
+     * 采样温度
+     * @minimum 0
+     * @maximum 2
+     */
+  temperature?: number;
+}
+
+/**
+ * 客服可直接发送的推荐回复。
+ */
+export interface SuggestionResponse {
+  /**
+     * 推荐回复
+     * @minLength 0
+     */
+  suggested_reply: string;
+}
+
+/**
  * 主账号创建自定义标签。
  */
 export interface TagCreateRequest {
@@ -1979,6 +1996,44 @@ export interface TagListResponse {
 export interface TagUpdateRequest {
   name?: string | null;
   sort_order?: number | null;
+}
+
+/**
+ * 子账号将 Telegram instance 绑定到数字人。
+ */
+export interface TelegramBindRequest {
+  /**
+     * @minLength 1
+     * @maxLength 128
+     */
+  instance_id: string;
+  /** 要绑定的数字人ID；不传则先创建未配置绑定，后续通过 PATCH /bind 补配 */
+  digital_human_id?: string | null;
+}
+
+/**
+ * 子账号切换 Telegram 通道所绑定的数字人。
+ */
+export interface TelegramBindSwitchRequest {
+  /** 已分配给当前账号的数字人 ID */
+  digital_human_id: string;
+  /** 指定通道 instance_id；不传则切换当前用户绑定的通道 */
+  instance_id?: string | null;
+}
+
+/**
+ * Telegram（Flux）绑定记录响应。
+ */
+export interface TelegramBindingResponse {
+  id: string;
+  owner_user_id: string;
+  digital_human_id: string | null;
+  instance_id: string;
+  webhook_id: string | null;
+  is_active: boolean;
+  status: string;
+  created_at: string;
+  updated_at: string;
 }
 
 /**
@@ -2069,6 +2124,75 @@ export interface TelegramBotVerifyTokenRequest {
      * @maxLength 128
      */
   chat_id: string;
+}
+
+export type TelegramCreateInstanceRequestEngine = typeof TelegramCreateInstanceRequestEngine[keyof typeof TelegramCreateInstanceRequestEngine] | null;
+
+
+export const TelegramCreateInstanceRequestEngine = {
+  gramjs: 'gramjs',
+  telegraf: 'telegraf',
+} as const;
+
+/**
+ * 创建 Telegram instance 请求体（label 缺省由服务层补 "Telegram"）。
+ */
+export interface TelegramCreateInstanceRequest {
+  label?: string | null;
+  engine?: TelegramCreateInstanceRequestEngine;
+  api_id?: string | null;
+  api_hash?: string | null;
+  /** Flux instance-level proxy URL */
+  proxy_url?: string | null;
+  device_model?: string | null;
+  system_version?: string | null;
+  app_version?: string | null;
+  lang_code?: string | null;
+  system_lang_code?: string | null;
+}
+
+/**
+ * Telegram 验证码登录请求体。
+ */
+export interface TelegramLoginCodeRequest {
+  /**
+     * @minLength 1
+     * @maxLength 64
+     */
+  code: string;
+}
+
+/**
+ * Telegram 两步密码登录请求体。
+ */
+export interface TelegramLoginPasswordRequest {
+  /**
+     * @minLength 1
+     * @maxLength 256
+     */
+  password: string;
+}
+
+/**
+ * Telegram 手机号登录请求体。
+ */
+export interface TelegramLoginPhoneRequest {
+  /**
+     * @minLength 1
+     * @maxLength 32
+     */
+  phone: string;
+}
+
+/**
+ * 发送 Telegram 文本消息请求体。
+ */
+export interface TelegramSendTextRequest {
+  /**
+     * @minLength 1
+     * @maxLength 4096
+     */
+  text: string;
 }
 
 /**
@@ -2248,10 +2372,11 @@ export interface AppApiSchemasDigitalHumanResponse {
   platform?: string | null;
   persona_config?: AppApiSchemasDigitalHumanResponsePersonaConfig;
   persona_prompt?: string | null;
-  knowledge_collection?: string | null;
+  knowledge_collections?: string[] | null;
   knowledge_domain?: string | null;
   status?: string;
   remark?: string | null;
+  creator_user_id: string;
   created_by?: string | null;
   created_at: string;
   gender?: string | null;
@@ -2317,7 +2442,7 @@ export interface AppApiSchemasOwnersDigitalHumanResponse {
   account_handle: string | null;
   platform: string | null;
   persona_config: AppApiSchemasOwnersDigitalHumanResponsePersonaConfig;
-  knowledge_collection: string | null;
+  knowledge_collections: string[] | null;
   knowledge_domain: string | null;
   is_enabled: boolean;
   remark?: string | null;
@@ -2859,6 +2984,25 @@ before?: string | null;
 limit?: number;
 };
 
+export type GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams = {
+/**
+ * 终端客户标识
+ */
+customer_id: string;
+/**
+ * 平台，如 whatsapp
+ */
+platform: string;
+/**
+ * UTC 日期，格式 YYYY-MM-DD
+ */
+date: string;
+/**
+ * WhatsApp session ID；非 WA 平台传空串
+ */
+wa_session_id?: string;
+};
+
 export type StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams = {
 /**
  * WhatsApp session 标识
@@ -2930,6 +3074,11 @@ domain?: string | null;
 keyword?: string | null;
 };
 
+export type PreviewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetParams = {
+collection?: string | null;
+domain?: string | null;
+};
+
 export type UpdateDocumentChunkApiV1OwnersKnowledgeDocumentsDocIdChunksChunkIdPutParams = {
 collection?: string | null;
 domain?: string | null;
@@ -2964,6 +3113,41 @@ offset?: number;
  * @maximum 200
  */
 limit?: number;
+};
+
+export type TelegramWebhookApiV1TelegramWebhooksInstanceIdPost200 = { [key: string]: unknown };
+
+export type ListTelegramInstancesApiV1TelegramInstancesGet200Item = { [key: string]: unknown };
+
+export type CreateInstanceApiV1TelegramInstancesPost201 = { [key: string]: unknown };
+
+export type GetTelegramInstanceApiV1TelegramInstancesInstanceIdGet200 = { [key: string]: unknown };
+
+export type GetTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGet200 = { [key: string]: unknown };
+
+export type StopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPost200 = { [key: string]: unknown };
+
+export type ListTelegramChatsApiV1TelegramInstancesInstanceIdChatsGet200Item = { [key: string]: unknown };
+
+export type ListTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetParams = {
+cursor?: string | null;
+limit?: number | null;
+};
+
+export type ListTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGet200Item = { [key: string]: unknown };
+
+export type SendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPost200 = { [key: string]: unknown };
+
+export type SendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPost200 = { [key: string]: unknown };
+
+export type LoginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePost200 = { [key: string]: unknown };
+
+export type LoginCodeApiV1TelegramInstancesInstanceIdLoginCodePost200 = { [key: string]: unknown };
+
+export type LoginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPost200 = { [key: string]: unknown };
+
+export type GetTelegramBindingApiV1TelegramBindGetParams = {
+instance_id?: string | null;
 };
 
 export type HealthzHealthzGet200 = {[key: string]: string};

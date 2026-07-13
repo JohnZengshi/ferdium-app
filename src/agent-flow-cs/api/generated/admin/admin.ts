@@ -33,13 +33,7 @@ import type {
   HTTPValidationError,
   HandoffListResponse,
   HealthCheckResponse,
-  KnowledgeAssignRequest,
-  KnowledgeAssignmentResponse,
-  KnowledgeBatchAssignRequest,
-  KnowledgeBatchAssignmentResponse,
-  KnowledgeCollectionCreateRequest,
   KnowledgeCollectionListResponse,
-  KnowledgeCollectionResponse,
   KnowledgeDeleteResponse,
   KnowledgeDocumentChunkItem,
   KnowledgeDocumentChunkListResponse,
@@ -1498,44 +1492,6 @@ export const healthCheckApiV1AdminHealthGet = async ( options?: RequestInit): Pr
 );}
 
 
-export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200 = {
-  data: MemoryOverviewResponse
-  status: 200
-}
-
-export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200) & {
-  headers: Headers;
-};
-;
-
-export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess)
-
-export const getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl = () => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/admin/memory/overview`
-}
-
-/**
- * 跨租户记忆存储概览（命名空间数和估算记忆总量）。
- *
- * 依赖 LangGraph BaseStore，若 store 未初始化则返回全零并附带说明。
- * @summary Get Memory Overview
- */
-export const getMemoryOverviewApiV1AdminMemoryOverviewGet = async ( options?: RequestInit): Promise<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse> => {
-
-  return useCustomInstance<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse>(getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
 export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse200 = {
   data: KnowledgeOverviewResponse
   status: 200
@@ -1557,7 +1513,7 @@ export const getKnowledgeOverviewApiV1AdminKnowledgeOverviewGetUrl = () => {
 }
 
 /**
- * 知识库全局统计概览。
+ * 知识库全局统计概览（仅 owner 自建维度）。
  * @summary Knowledge Overview
  */
 export const knowledgeOverviewApiV1AdminKnowledgeOverviewGet = async ( options?: RequestInit): Promise<knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse> => {
@@ -1607,7 +1563,7 @@ export const getListCollectionsApiV1AdminKnowledgeCollectionsGetUrl = (params?: 
 }
 
 /**
- * 跨租户分页列出知识库集合。
+ * 跨租户分页列出主账号自建知识库集合。
  * @summary List Collections
  */
 export const listCollectionsApiV1AdminKnowledgeCollectionsGet = async (params?: ListCollectionsApiV1AdminKnowledgeCollectionsGetParams, options?: RequestInit): Promise<listCollectionsApiV1AdminKnowledgeCollectionsGetResponse> => {
@@ -1616,225 +1572,6 @@ export const listCollectionsApiV1AdminKnowledgeCollectionsGet = async (params?: 
   {
     ...options,
     method: 'GET'
-
-
-  }
-);}
-
-
-export type createCollectionApiV1AdminKnowledgeCollectionsPostResponse201 = {
-  data: KnowledgeCollectionResponse
-  status: 201
-}
-
-export type createCollectionApiV1AdminKnowledgeCollectionsPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type createCollectionApiV1AdminKnowledgeCollectionsPostResponseSuccess = (createCollectionApiV1AdminKnowledgeCollectionsPostResponse201) & {
-  headers: Headers;
-};
-export type createCollectionApiV1AdminKnowledgeCollectionsPostResponseError = (createCollectionApiV1AdminKnowledgeCollectionsPostResponse422) & {
-  headers: Headers;
-};
-
-export type createCollectionApiV1AdminKnowledgeCollectionsPostResponse = (createCollectionApiV1AdminKnowledgeCollectionsPostResponseSuccess | createCollectionApiV1AdminKnowledgeCollectionsPostResponseError)
-
-export const getCreateCollectionApiV1AdminKnowledgeCollectionsPostUrl = () => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections`
-}
-
-/**
- * 创建共享知识库集合。
- * @summary Create Collection
- */
-export const createCollectionApiV1AdminKnowledgeCollectionsPost = async (knowledgeCollectionCreateRequest: KnowledgeCollectionCreateRequest, options?: RequestInit): Promise<createCollectionApiV1AdminKnowledgeCollectionsPostResponse> => {
-
-  return useCustomInstance<createCollectionApiV1AdminKnowledgeCollectionsPostResponse>(getCreateCollectionApiV1AdminKnowledgeCollectionsPostUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(knowledgeCollectionCreateRequest)
-  }
-);}
-
-
-export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse200 = {
-  data: KnowledgeDeleteResponse
-  status: 200
-}
-
-export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseSuccess = (deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse200) & {
-  headers: Headers;
-};
-export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseError = (deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse422) & {
-  headers: Headers;
-};
-
-export type deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse = (deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseSuccess | deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponseError)
-
-export const getDeleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteUrl = (collectionId: string,) => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}`
-}
-
-/**
- * 软删除知识库集合并批量撤销所有分配。
- * @summary Delete Collection
- */
-export const deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDelete = async (collectionId: string, options?: RequestInit): Promise<deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse> => {
-
-  return useCustomInstance<deleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteResponse>(getDeleteCollectionApiV1AdminKnowledgeCollectionsCollectionIdDeleteUrl(collectionId),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
-export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse201 = {
-  data: KnowledgeAssignmentResponse
-  status: 201
-}
-
-export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseSuccess = (assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse201) & {
-  headers: Headers;
-};
-export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseError = (assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse422) & {
-  headers: Headers;
-};
-
-export type assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse = (assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseSuccess | assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponseError)
-
-export const getAssignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostUrl = (collectionId: string,) => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/assign`
-}
-
-/**
- * 将共享集合分配给主账号。
- * @summary Assign Collection
- */
-export const assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPost = async (collectionId: string,
-    knowledgeAssignRequest: KnowledgeAssignRequest, options?: RequestInit): Promise<assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse> => {
-
-  return useCustomInstance<assignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostResponse>(getAssignCollectionApiV1AdminKnowledgeCollectionsCollectionIdAssignPostUrl(collectionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(knowledgeAssignRequest)
-  }
-);}
-
-
-export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse201 = {
-  data: KnowledgeBatchAssignmentResponse
-  status: 201
-}
-
-export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseSuccess = (assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse201) & {
-  headers: Headers;
-};
-export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseError = (assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse422) & {
-  headers: Headers;
-};
-
-export type assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse = (assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseSuccess | assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponseError)
-
-export const getAssignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostUrl = (collectionId: string,) => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/assign/batch`
-}
-
-/**
- * 将共享集合批量分配给多个主账号（幂等）。
- * @summary Assign Collection Batch
- */
-export const assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPost = async (collectionId: string,
-    knowledgeBatchAssignRequest: KnowledgeBatchAssignRequest, options?: RequestInit): Promise<assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse> => {
-
-  return useCustomInstance<assignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostResponse>(getAssignCollectionBatchApiV1AdminKnowledgeCollectionsCollectionIdAssignBatchPostUrl(collectionId),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(knowledgeBatchAssignRequest)
-  }
-);}
-
-
-export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse200 = {
-  data: KnowledgeDeleteResponse
-  status: 200
-}
-
-export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse422 = {
-  data: HTTPValidationError
-  status: 422
-}
-
-export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseSuccess = (revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse200) & {
-  headers: Headers;
-};
-export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseError = (revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse422) & {
-  headers: Headers;
-};
-
-export type revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse = (revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseSuccess | revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponseError)
-
-export const getRevokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteUrl = (collectionId: string,
-    ownerId: string,) => {
-
-
-
-
-  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/assign/${ownerId}`
-}
-
-/**
- * 撤销知识库集合分配。
- * @summary Revoke Assignment
- */
-export const revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDelete = async (collectionId: string,
-    ownerId: string, options?: RequestInit): Promise<revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse> => {
-
-  return useCustomInstance<revokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteResponse>(getRevokeAssignmentApiV1AdminKnowledgeCollectionsCollectionIdAssignOwnerIdDeleteUrl(collectionId,ownerId),
-  {
-    ...options,
-    method: 'DELETE'
 
 
   }
@@ -1965,7 +1702,7 @@ export const getUploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocument
 }
 
 /**
- * 上传文档到指定知识库集合（超管专用，可用于默认库文件维护）。
+ * 上传文档到指定知识库集合（超管专用，归属记 collection.owner_id）。
  * @summary Upload Document
  */
 export const uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPost = async (collectionId: string,
@@ -2028,6 +1765,51 @@ export const listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumen
     params?: ListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetParams, options?: RequestInit): Promise<listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse> => {
 
   return useCustomInstance<listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse>(getListDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetUrl(collectionId,docId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse200 = {
+  data: unknown
+  status: 200
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponseSuccess = (previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse200) & {
+  headers: Headers;
+};
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponseError = (previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse422) & {
+  headers: Headers;
+};
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse = (previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponseSuccess | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponseError)
+
+export const getPreviewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetUrl = (collectionId: string,
+    docId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/knowledge/collections/${collectionId}/documents/${docId}/preview`
+}
+
+/**
+ * 代理知识文档原文件预览流（超管专用，跨租户）。
+ * @summary Preview Document
+ */
+export const previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGet = async (collectionId: string,
+    docId: string, options?: RequestInit): Promise<previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse> => {
+
+  return useCustomInstance<previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse>(getPreviewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetUrl(collectionId,docId),
   {
     ...options,
     method: 'GET'
@@ -2121,7 +1903,7 @@ export const getDeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteUrl = (docI
 }
 
 /**
- * 删除知识库集合中的文档（超管专用，可用于默认库文件）。
+ * 删除知识库集合中的文档（超管专用）。
  * @summary Delete Document
  */
 export const deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDelete = async (docId: string,
@@ -2131,6 +1913,44 @@ export const deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDelete = async (docI
   {
     ...options,
     method: 'DELETE'
+
+
+  }
+);}
+
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200 = {
+  data: MemoryOverviewResponse
+  status: 200
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess)
+
+export const getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl = () => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/admin/memory/overview`
+}
+
+/**
+ * 跨租户记忆存储概览（命名空间数和估算记忆总量）。
+ *
+ * 依赖 LangGraph BaseStore，若 store 未初始化则返回全零并附带说明。
+ * @summary Get Memory Overview
+ */
+export const getMemoryOverviewApiV1AdminMemoryOverviewGet = async ( options?: RequestInit): Promise<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse> => {
+
+  return useCustomInstance<getMemoryOverviewApiV1AdminMemoryOverviewGetResponse>(getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl(),
+  {
+    ...options,
+    method: 'GET'
 
 
   }

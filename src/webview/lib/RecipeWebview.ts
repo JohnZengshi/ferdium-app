@@ -1,5 +1,6 @@
 import { BrowserWindow } from '@electron/remote';
 import { ipcRenderer } from 'electron';
+import { basename } from 'node:path';
 import { existsSync, pathExistsSync, readFileSync } from 'fs-extra';
 import { safeParseInt } from '../../jsUtils';
 
@@ -144,21 +145,75 @@ class RecipeWebview {
   }
 
   injectJSUnsafe(...files) {
-    Promise.all(
-      files.map(file => {
-        if (existsSync(file)) {
-          return readFileSync(file, 'utf8');
-        }
+    const scripts = files.flatMap(file => {
+      if (!existsSync(file)) {
         debug('Script not found', file);
-        return null;
-      }),
-    ).then(scripts => {
-      const scriptsFound = scripts.filter(script => script !== null);
-      if (scriptsFound.length > 0) {
-        debug('Inject scripts to main world', scriptsFound);
-        ipcRenderer.sendToHost('inject-js-unsafe', ...scriptsFound);
+        return [];
+      }
+
+      try {
+        return [{ name: basename(file), source: readFileSync(file, 'utf8') }];
+      } catch (error) {
+        debug('Unable to read script', file, error);
+        return [];
       }
     });
+
+    if (scripts.length === 0) {
+      return;
+    }
+
+    let index = 0;
+    let seq = 0;
+    const sendNext = () => {
+      const script = scripts[index];
+      if (!script) {
+        ipcRenderer.removeListener('inject-js-unsafe-ack', onAck);
+        return;
+      }
+
+      const currentSeq = seq;
+      try {
+        debug('Inject script to main world', script.name);
+        ipcRenderer.sendToHost('inject-js-unsafe', {
+          ...script,
+          seq: currentSeq,
+        });
+      } catch (error) {
+        debug('Unable to inject script', script.name, error);
+        ipcRenderer.removeListener('inject-js-unsafe-ack', onAck);
+        return;
+      }
+      seq += 1;
+    };
+    const onAck = (
+      _event: Electron.IpcRendererEvent,
+      ack: {
+        name?: string;
+        seq?: number;
+        success?: boolean;
+        error?: string;
+      },
+    ) => {
+      const script = scripts[index];
+      if (!script || ack.name !== script.name || ack.seq !== seq - 1) {
+        return;
+      }
+
+      if (!ack.success) {
+        console.error('Unsafe script injection failed', {
+          script: script.name,
+          seq: ack.seq,
+          error: ack.error,
+        });
+      }
+
+      index += 1;
+      sendNext();
+    };
+
+    ipcRenderer.on('inject-js-unsafe-ack', onAck);
+    sendNext();
   }
 
   /**

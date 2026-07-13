@@ -578,18 +578,71 @@ export default class Service {
     this.webview.addEventListener('ipc-message', async e => {
       switch (e.channel) {
         case 'inject-js-unsafe': {
-          const executeSequentially = async (
-            scripts: string[],
-            index = 0,
-          ): Promise<void> => {
-            if (index >= scripts.length) return;
-            await this.webview.executeJavaScript(
-              `"use strict"; (() => { ${scripts[index]} })();`,
+          const scripts = e.args
+            .map((script, index) => {
+              if (typeof script === 'string') {
+                return {
+                  name: `unsafe-script-${index}`,
+                  source: script,
+                  seq: undefined,
+                };
+              }
+              if (script && typeof script === 'object') {
+                const obj = script as Record<string, unknown>;
+                if (typeof obj.source === 'string') {
+                  return {
+                    name:
+                      typeof obj.name === 'string'
+                        ? obj.name
+                        : `unsafe-script-${index}`,
+                    source: obj.source,
+                    seq: typeof obj.seq === 'number' ? obj.seq : undefined,
+                  };
+                }
+              }
+              debug('inject-js-unsafe: malformed script argument skipped', {
+                serviceId: this.id,
+                index,
+              });
+              return null;
+            })
+            .filter(
+              (s): s is { name: string; source: string; seq?: number } =>
+                s !== null,
             );
-            await executeSequentially(scripts, index + 1);
-          };
 
-          await executeSequentially(e.args);
+          for (const [index, script] of scripts.entries()) {
+            try {
+              // Scripts share page state and must execute in declared order.
+              // eslint-disable-next-line no-await-in-loop
+              await this.webview.executeJavaScript(
+                `"use strict"; (() => { ${script.source} })();`,
+              );
+              this.webview.send('inject-js-unsafe-ack', {
+                name: script.name,
+                index,
+                seq: script.seq,
+                success: true,
+              });
+            } catch (error) {
+              const message =
+                error instanceof Error ? error.message : String(error);
+              console.error('Unsafe script injection failed', {
+                serviceId: this.id,
+                script: script.name,
+                index,
+                seq: script.seq,
+                error: message,
+              });
+              this.webview.send('inject-js-unsafe-ack', {
+                name: script.name,
+                index,
+                seq: script.seq,
+                success: false,
+                error: message,
+              });
+            }
+          }
 
           break;
         }

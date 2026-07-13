@@ -171,6 +171,7 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     );
   });
 
+
   ipcRenderer.on('wa-ai-force-refresh-status', () => {
     window.postMessage(
       {
@@ -199,6 +200,16 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     window.postMessage(
       {
         type: 'wa-ai-live-event',
+        payload,
+      },
+      window.location.origin,
+    );
+  });
+
+  ipcRenderer.on('inject-js-unsafe-ack', (_event, payload) => {
+    window.postMessage(
+      {
+        type: 'ferdium-injection-ack',
         payload,
       },
       window.location.origin,

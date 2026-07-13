@@ -18,6 +18,10 @@ import {
 } from '../constants';
 import { switchLocalStorageProfile } from '../profileStorage';
 
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:WhatsAppAutomation:Auth',
+);
+
 const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
 const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
 
@@ -76,10 +80,7 @@ async function switchLocalProfile(email: string): Promise<void> {
     if (error instanceof Error) {
       throw error;
     }
-    console.warn(
-      '[WhatsApp Automation] Failed to switch Ferdium profile',
-      error,
-    );
+    debug('[WhatsApp Automation] Failed to switch Ferdium profile', error);
   }
 }
 
@@ -170,9 +171,7 @@ export const getApiKey = (): string => {
       return settings[API_KEY_KEY];
     }
   } catch {
-    console.warn(
-      '[WhatsApp Automation] Settings store not available in getApiKey',
-    );
+    debug('[WhatsApp Automation] Settings store not available in getApiKey');
   }
 
   // 2. Try localStorage
@@ -190,9 +189,7 @@ export const getApiKey = (): string => {
       }
     }
   } catch {
-    console.warn(
-      '[WhatsApp Automation] localStorage not available in getApiKey',
-    );
+    debug('[WhatsApp Automation] localStorage not available in getApiKey');
   }
 
   return '';
@@ -208,9 +205,7 @@ export const setApiKey = (key: string): void => {
   try {
     localStorage.setItem(API_KEY_STORAGE_KEY, key);
   } catch {
-    console.warn(
-      '[WhatsApp Automation] Failed to write API key to localStorage',
-    );
+    debug('[WhatsApp Automation] Failed to write API key to localStorage');
   }
   try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
@@ -218,9 +213,7 @@ export const setApiKey = (key: string): void => {
       settingsApp[API_KEY_KEY] = key;
     }
   } catch {
-    console.warn(
-      '[WhatsApp Automation] Failed to sync API key to settings store',
-    );
+    debug('[WhatsApp Automation] Failed to sync API key to settings store');
   }
 };
 
@@ -238,9 +231,7 @@ export const clearApiKey = (): void => {
       settingsApp[API_KEY_KEY] = '';
     }
   } catch {
-    console.warn(
-      '[WhatsApp Automation] Failed to clear API key from settings store',
-    );
+    debug('[WhatsApp Automation] Failed to clear API key from settings store');
   }
 };
 
@@ -263,7 +254,7 @@ export const initializeAuth = async (
   const { email, password } = credentials;
 
   if (authInProgress) {
-    console.warn(
+    debug(
       '[WhatsApp Automation] Auth already in progress, skipping concurrent call',
     );
     return null;

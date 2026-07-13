@@ -625,7 +625,7 @@ export default class ServerApi {
       const recipe = this.recipes.find(r => r.id === service.recipeId);
 
       if (!recipe) {
-        console.warn(`Recipe ${service.recipeId} not loaded`);
+        debug(`Recipe ${service.recipeId} not loaded`);
         return null;
       }
 
@@ -647,7 +647,7 @@ export default class ServerApi {
         let recipe = this.recipes.find(r => r.id === recipeId);
 
         if (!recipe) {
-          console.warn(
+          debug(
             `Recipe '${recipeId}' not installed, trying to fetch from server`,
           );
 
@@ -659,7 +659,7 @@ export default class ServerApi {
           recipe = this.recipes.find(r => r.id === recipeId);
 
           if (!recipe) {
-            console.warn(`Could not load recipe ${recipeId}`);
+            debug(`Could not load recipe ${recipeId}`);
             return null;
           }
         }

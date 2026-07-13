@@ -3,6 +3,8 @@
  * Uses Bearer token authentication (POST /api/v1/auth/login).
  */
 
+const debug = require('../../preload-safe-debug')('Ferdium:AgentFlow:Auth');
+
 const AGENT_FLOW_CS_BASE =
   process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.228:8000';
 const TOKEN_STORAGE_KEY =
@@ -24,9 +26,7 @@ export const getAccessToken = (): string => {
       return settings[TOKEN_STORAGE_KEY];
     }
   } catch {
-    console.warn(
-      '[Agent Flow CS] Settings store not available in getAccessToken',
-    );
+    debug('[Agent Flow CS] Settings store not available in getAccessToken');
   }
 
   // 2. Try localStorage
@@ -40,9 +40,7 @@ export const getAccessToken = (): string => {
       }
     }
   } catch {
-    console.warn(
-      '[Agent Flow CS] localStorage not available in getAccessToken',
-    );
+    debug('[Agent Flow CS] localStorage not available in getAccessToken');
   }
 
   return '';
@@ -55,9 +53,7 @@ export const setAccessToken = (token: string): void => {
   try {
     localStorage.setItem(TOKEN_STORAGE_KEY, token);
   } catch {
-    console.warn(
-      '[Agent Flow CS] Failed to write access token to localStorage',
-    );
+    debug('[Agent Flow CS] Failed to write access token to localStorage');
   }
   try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
@@ -65,9 +61,7 @@ export const setAccessToken = (token: string): void => {
       settingsApp[TOKEN_STORAGE_KEY] = token;
     }
   } catch {
-    console.warn(
-      '[Agent Flow CS] Failed to sync access token to settings store',
-    );
+    debug('[Agent Flow CS] Failed to sync access token to settings store');
   }
 };
 
@@ -78,9 +72,7 @@ export const clearAccessToken = (): void => {
   try {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
   } catch {
-    console.warn(
-      '[Agent Flow CS] Failed to remove access token from localStorage',
-    );
+    debug('[Agent Flow CS] Failed to remove access token from localStorage');
   }
   try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
@@ -88,9 +80,7 @@ export const clearAccessToken = (): void => {
       settingsApp[TOKEN_STORAGE_KEY] = '';
     }
   } catch {
-    console.warn(
-      '[Agent Flow CS] Failed to clear access token from settings store',
-    );
+    debug('[Agent Flow CS] Failed to clear access token from settings store');
   }
 };
 
@@ -127,8 +117,7 @@ export const initializeAuth = async (
     }
 
     setAccessToken(token);
-    // eslint-disable-next-line no-console
-    console.log('[Agent Flow CS] Authenticated as', username);
+    debug('[Agent Flow CS] Authenticated as', username);
     return token;
   } catch (error) {
     console.error('[Agent Flow CS] Login request failed', error);

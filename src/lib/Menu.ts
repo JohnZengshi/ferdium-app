@@ -55,6 +55,8 @@ import { acceleratorString, ifUndefined } from '../jsUtils';
 import type Service from '../models/Service';
 import type { RealStores } from '../stores';
 
+const debug = require('../preload-safe-debug')('Ferdium:Lib:Menu');
+
 export const menuItems = defineMessages({
   edit: {
     id: 'menu.edit',
@@ -757,8 +759,7 @@ class FranzMenu implements StoresProps {
 
     // Don't initialize when window['ferdium'] is undefined
     if (window['ferdium'] === undefined) {
-      // eslint-disable-next-line no-console
-      console.log('skipping menu init');
+      debug('skipping menu init');
       return;
     }
 

@@ -143,8 +143,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
     runFinalCheck(best.channel);
   };
 
-  // eslint-disable-next-line no-console
-  console.log('[autoUpdate] IPC handler registered');
+  debug('[autoUpdate] IPC handler registered');
   ipcMain.on('autoUpdate', (event, args) => {
     try {
       autoUpdater.autoInstallOnAppQuit = false;

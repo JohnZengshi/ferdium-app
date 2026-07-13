@@ -26,6 +26,10 @@ import ImageUpload from '../../ui/imageUpload';
 import Input from '../../ui/input/index';
 import Toggle from '../../ui/toggle';
 
+const debug = require('../../../preload-safe-debug')(
+  'Ferdium:Settings:Services',
+);
+
 const messages = defineMessages({
   saveService: {
     id: 'settings.service.form.saveButton',
@@ -211,7 +215,7 @@ class EditServiceForm extends Component<IProps, IState> {
             values.customUrl = normalizedUrl(values.customUrl);
             isValid = await recipe.validateUrl(values.customUrl);
           } catch (error) {
-            console.warn('ValidateURL', error);
+            debug('ValidateURL', error);
             isValid = false;
           }
         }

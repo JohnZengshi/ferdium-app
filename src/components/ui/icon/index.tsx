@@ -2,8 +2,9 @@ import MdiIcon from '@mdi/react';
 import classnames from 'classnames';
 import { Component, type ReactElement } from 'react';
 import injectStyle, { type WithStylesProps } from 'react-jss';
-
 import type { Theme } from '../../../themes';
+
+const debug = require('../../../preload-safe-debug')('Ferdium:Components:Icon');
 
 const styles = (theme: Theme) => ({
   icon: {
@@ -22,7 +23,7 @@ class IconComponent extends Component<IProps> {
     const { classes, icon, size = 1, className } = this.props;
 
     if (!icon) {
-      console.warn('No Icon specified');
+      debug('No Icon specified');
     }
 
     return (

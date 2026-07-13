@@ -9,6 +9,10 @@ import type { Theme } from '../../../themes';
 import Loader from '../loader/index';
 import type { IFormField } from '../typings/generic';
 
+const debug = require('../../../preload-safe-debug')(
+  'Ferdium:Components:Button',
+);
+
 type ButtonType =
   | 'primary'
   | 'secondary'
@@ -181,7 +185,7 @@ class ButtonComponent extends Component<IProps, IState> {
 
     if (loaded) {
       showLoader = !loaded;
-      console.warn(
+      debug(
         'Ferdium Button prop `loaded` will be deprecated in the future. Please use `busy` instead',
       );
     }

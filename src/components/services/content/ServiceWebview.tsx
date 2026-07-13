@@ -35,12 +35,17 @@ class ServiceWebview extends Component<IProps> {
 
     reaction(
       () => this.webview,
-      () => {
-        if (this.webview?.view) {
-          this.webview.view.addEventListener('console-message', e => {
-            debug('Service logged a message:', e.message);
-          });
-          this.webview.view.addEventListener('did-navigate', () => {
+      webview => {
+        if (webview?.view) {
+          const onConsoleMessage = (e: Electron.ConsoleMessageEvent) => {
+            // Electron ConsoleMessageEvent.level: 0=verbose,1=info,2=warning,3=error.
+            // Forward only errors; info/verbose/warn from service pages flood the host console.
+            if (e.level === 3) {
+              debug('Service console error:', e.message);
+            }
+          };
+          webview.view.addEventListener('console-message', onConsoleMessage);
+          webview.view.addEventListener('did-navigate', () => {
             if (this.props.service._webview) {
               document.title = `AITALK - ${this.props.service.name} ${
                 this.props.service.dialogTitle

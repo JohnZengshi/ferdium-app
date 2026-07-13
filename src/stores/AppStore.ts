@@ -258,7 +258,7 @@ export default class AppStore extends TypedStore {
         if (data.error) {
           if (data.error.message?.startsWith('404')) {
             this.updateStatus = this.updateStatusTypes.NOT_AVAILABLE;
-            console.warn(
+            debug(
               'Updater warning: there seems to be unpublished pre-release(s) available on GitHub',
               data.error,
             );
@@ -571,7 +571,7 @@ export default class AppStore extends TypedStore {
         autoLauncher.disable();
       }
     } catch (error) {
-      console.warn(error);
+      debug(error);
     }
   }
 
@@ -650,8 +650,10 @@ export default class AppStore extends TypedStore {
         allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)),
       );
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Error while deleting service partition directory -', error);
+      console.error(
+        'Error while deleting service partition directory -',
+        error,
+      );
     }
     await Promise.all(
       this.stores.services.all.map(s =>

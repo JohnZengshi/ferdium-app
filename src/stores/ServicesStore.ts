@@ -283,7 +283,6 @@ export default class ServicesStore extends TypedStore {
   _serviceMaintenanceTicker() {
     this._serviceMaintenance();
     this.serviceMaintenanceTick();
-    debug('Service maintenance tick');
   }
 
   /**
@@ -702,7 +701,6 @@ export default class ServicesStore extends TypedStore {
           filePath,
           `module.exports = (config, Ferdium) => {
   // Write your scripts here
-  console.log("Hello, World!", config);
 };
 `,
         );
@@ -924,8 +922,6 @@ export default class ServicesStore extends TypedStore {
         break;
       }
       case 'message-counts': {
-        debug(`Received unread message info from '${serviceId}'`, args[0]);
-
         this.actions.service.setUnreadMessageCount({
           serviceId,
           count: {
@@ -937,8 +933,6 @@ export default class ServicesStore extends TypedStore {
         break;
       }
       case 'active-dialog-title': {
-        debug(`Received active dialog title from '${serviceId}'`, args[0]);
-
         this.actions.service.setDialogTitle({
           serviceId,
           dialogTitle: args[0],
@@ -962,12 +956,6 @@ export default class ServicesStore extends TypedStore {
         const { isTwoFactorAutoCatcherEnabled, twoFactorAutoCatcherMatcher } =
           this.stores.settings.all.app;
 
-        debug(
-          'Settings for catch tokens',
-          isTwoFactorAutoCatcherEnabled,
-          twoFactorAutoCatcherMatcher,
-        );
-
         if (isTwoFactorAutoCatcherEnabled) {
           /*
         parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
@@ -989,8 +977,6 @@ export default class ServicesStore extends TypedStore {
           const wordsToCatch = twoFactorAutoCatcherMatcher
             .replaceAll(', ', ',')
             .split(',');
-
-          debug('wordsToCatch', wordsToCatch);
 
           if (
             token &&
@@ -1079,7 +1065,7 @@ export default class ServicesStore extends TypedStore {
             redirect: false,
           });
         } else {
-          console.warn('Did not receive locale');
+          debug('Did not receive locale');
         }
 
         break;
@@ -1314,8 +1300,9 @@ export default class ServicesStore extends TypedStore {
       //
       const mainStrategy = this.stores.settings.all.app.hibernationStrategy;
       let strategy = this.stores.settings.all.app.wakeUpHibernationStrategy;
-      debug(`wakeUpHibernationStrategy = ${strategy}`);
-      debug(`hibernationStrategy = ${mainStrategy}`);
+      debug(
+        `wakeUpHibernationStrategy = ${strategy}, hibernationStrategy = ${mainStrategy}`,
+      );
       if (!strategy || strategy < 1) {
         strategy = this.stores.settings.all.app.hibernationStrategy;
       }
@@ -1628,7 +1615,7 @@ export default class ServicesStore extends TypedStore {
         try {
           service.webview.send('poll');
         } catch (error) {
-          console.warn(
+          debug(
             `RecipePolling: failed to poll service ${service.id} — webview detached`,
             error,
           );

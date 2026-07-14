@@ -411,7 +411,7 @@ class MainModuleTabs extends Component<IProps & WrappedComponentProps, IState> {
         <img src="./assets/images/sidebar-logo.svg" alt="logo" />
 
         <div className="flex flex-col items-center h-fit my-auto gap-[4px] w-[64px] p-[8px] rounded-xl shadow-[0px_5px_5px_-3px_rgba(0,0,0,0.10),0px_8px_10px_1px_rgba(0,0,0,0.06),0px_3px_14px_2px_rgba(0,0,0,0.05)]">
-          {MODULES.map(mod => {
+          {MODULES.filter(mod => mod.id !== 'tiktok').map(mod => {
             const isActive = navigationStore.activeModule === mod.id;
             const isHovered = this.state.hoveredModule === mod.id;
             return (

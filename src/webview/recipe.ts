@@ -178,10 +178,13 @@ ipcRenderer.sendToHost(
 );
 
 // ─── Agent Flow CS API Bridge ───
-const isWhatsAppHost = () => {
+const isAgentFlowMessagingHost = () => {
   const { hostname } = window.location;
   return (
-    hostname === 'web.whatsapp.com' || hostname.endsWith('.web.whatsapp.com')
+    hostname === 'web.whatsapp.com' ||
+    hostname.endsWith('.web.whatsapp.com') ||
+    hostname === 'www.instagram.com' ||
+    hostname === 'instagram.com'
   );
 };
 
@@ -194,7 +197,7 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
   window.addEventListener('message', event => {
     if (event.source !== window) return;
     if (event.origin !== window.location.origin) return;
-    if (!isWhatsAppHost()) return;
+    if (!isAgentFlowMessagingHost()) return;
     if (event.data?.type === 'wa-ai-api-request') {
       ipcRenderer.sendToHost('wa-ai-api-request', event.data.payload);
     }

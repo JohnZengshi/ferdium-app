@@ -151,6 +151,7 @@ describe('recipe preload injection ACK bridge', () => {
   it.each([
     ['web.whatsapp.com', 1],
     ['chat.web.whatsapp.com', 1],
+    ['www.instagram.com', 1],
     ['service.example', 0],
   ])('gates WhatsApp bridge messages on hostname %s', (hostname, callCount) => {
     jest.resetModules();

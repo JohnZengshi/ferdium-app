@@ -30,6 +30,16 @@ const debug = require('../preload-safe-debug')('Ferdium:Service');
 // This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
 const activePartitions = new Set<string>();
 
+interface WebviewEventBinding {
+  owner: Service;
+  recipeEvents: Set<string>;
+}
+
+const webviewEventBindings = new WeakMap<
+  ElectronWebView,
+  WebviewEventBinding
+>();
+
 // 全局去重：防止旧 Service 实例残留监听器时，同一 wa-ai 请求被处理多次
 // 模块级锁：确保同一 requestId 只触发一次 HTTP 请求，无论有多少个 listener
 const waAiRequestInFlight = new Set<string>();
@@ -559,14 +569,19 @@ export default class Service {
   }
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
-    if (this.webviewEventsInitialized) return;
+    const { webview } = this;
+    if (!webview) return;
+
+    const existingBinding = webviewEventBindings.get(webview);
+    const binding: WebviewEventBinding = existingBinding ?? {
+      owner: this,
+      recipeEvents: new Set(),
+    };
+    binding.owner = this;
+    if (!existingBinding) webviewEventBindings.set(webview, binding);
     this.webviewEventsInitialized = true;
 
-    const webviewWebContents = webContents.fromId(
-      this.webview.getWebContentsId(),
-    );
-
-    this.userAgentModel.setWebviewReference(this.webview);
+    this.userAgentModel.setWebviewReference(webview);
 
     // If the recipe has implemented 'modifyRequestHeaders',
     // Send those headers to ipcMain so that it can be set in session
@@ -593,7 +608,12 @@ export default class Service {
       debug(this.name, 'knownCertificateHosts is not defined in the recipe');
     }
 
-    this.webview.addEventListener('ipc-message', async e => {
+    if (existingBinding) return;
+
+    const webviewWebContents = webContents.fromId(webview.getWebContentsId());
+
+    webview.addEventListener('ipc-message', async e => {
+      const service = binding.owner;
       switch (e.channel) {
         case 'inject-js-unsafe': {
           const scripts = e.args
@@ -619,7 +639,7 @@ export default class Service {
                 }
               }
               debug('inject-js-unsafe: malformed script argument skipped', {
-                serviceId: this.id,
+                serviceId: service.id,
                 index,
               });
               return null;
@@ -633,10 +653,10 @@ export default class Service {
             try {
               // Scripts share page state and must execute in declared order.
               // eslint-disable-next-line no-await-in-loop
-              await this.webview.executeJavaScript(
+              await service.webview.executeJavaScript(
                 `"use strict"; (() => { ${script.source} })();`,
               );
-              this.webview.send('inject-js-unsafe-ack', {
+              service.webview.send('inject-js-unsafe-ack', {
                 name: script.name,
                 index,
                 seq: script.seq,
@@ -646,13 +666,13 @@ export default class Service {
               const message =
                 error instanceof Error ? error.message : String(error);
               console.error('Unsafe script injection failed', {
-                serviceId: this.id,
+                serviceId: service.id,
                 script: script.name,
                 index,
                 seq: script.seq,
                 error: message,
               });
-              this.webview.send('inject-js-unsafe-ack', {
+              service.webview.send('inject-js-unsafe-ack', {
                 name: script.name,
                 index,
                 seq: script.seq,
@@ -698,7 +718,7 @@ export default class Service {
               method,
               requestId,
             });
-            this.webview.send('wa-ai-api-response-host', {
+            service.webview.send('wa-ai-api-response-host', {
               requestId,
               success: false,
               error: 'Operation not allowed',
@@ -717,7 +737,7 @@ export default class Service {
               method,
               requestId,
             });
-            this.webview.send('wa-ai-api-response-host', {
+            service.webview.send('wa-ai-api-response-host', {
               requestId,
               success: false,
               error: 'Rate limit exceeded',
@@ -769,7 +789,7 @@ export default class Service {
               typeof enhancedArgs[1] === 'object'
             ) {
               (enhancedArgs[1] as Record<string, unknown>).wa_session_id =
-                this.id;
+                service.id;
             }
 
             if (api === 'whatsapp' && method.includes('getWhatsappBinding')) {
@@ -780,7 +800,8 @@ export default class Service {
               ) {
                 enhancedArgs[0] = {};
               }
-              (enhancedArgs[0] as Record<string, unknown>).session_id = this.id;
+              (enhancedArgs[0] as Record<string, unknown>).session_id =
+                service.id;
             }
 
             if (
@@ -795,7 +816,7 @@ export default class Service {
                 enhancedArgs[0] = {};
               }
               (enhancedArgs[0] as Record<string, unknown>).wa_session_id =
-                this.id;
+                service.id;
             }
 
             const result = await (
@@ -808,11 +829,11 @@ export default class Service {
               enhancedArgs.length > 0
             ) {
               const customerId = enhancedArgs[0] as string;
-              this._subscribeConversationStatusSSE(customerId);
-              this._subscribeConversationLiveSSE(customerId);
+              service._subscribeConversationStatusSSE(customerId);
+              service._subscribeConversationLiveSSE(customerId);
             }
 
-            this.webview.send('wa-ai-api-response-host', {
+            service.webview.send('wa-ai-api-response-host', {
               requestId,
               success: true,
               result,
@@ -828,7 +849,7 @@ export default class Service {
               url: (errorObj as any).url as string | undefined,
             };
 
-            this.webview.send('wa-ai-api-response-host', {
+            service.webview.send('wa-ai-api-response-host', {
               requestId,
               success: false,
               error: errorObj.message,
@@ -859,7 +880,7 @@ export default class Service {
               detail: {
                 theme: payload.theme ?? 'error',
                 message: payload.message ?? '接口错误',
-                serviceId: this.id,
+                serviceId: service.id,
               },
             }),
           );
@@ -868,7 +889,7 @@ export default class Service {
         }
         default: {
           handleIPCMessage({
-            serviceId: this.id,
+            serviceId: service.id,
             channel: e.channel,
             args: e.args,
           });
@@ -876,83 +897,86 @@ export default class Service {
       }
     });
 
-    this.webview.addEventListener(
-      'new-window',
-      (event, url, frameName, options) => {
-        debug('new-window', event, url, frameName, options);
-        if (!isValidExternalURL(event.url)) {
-          return;
-        }
-        if (
-          event.disposition === 'foreground-tab' ||
-          event.disposition === 'background-tab'
-        ) {
-          openWindow({
-            event,
-            url,
-            frameName,
-            options,
-          });
-        } else {
-          ipcRenderer.send('open-browser-window', {
-            url: event.url,
-            serviceId: this.id,
-          });
-        }
-      },
-    );
+    webview.addEventListener('new-window', (event, url, frameName, options) => {
+      const service = binding.owner;
+      debug('new-window', event, url, frameName, options);
+      if (!isValidExternalURL(event.url)) {
+        return;
+      }
+      if (
+        event.disposition === 'foreground-tab' ||
+        event.disposition === 'background-tab'
+      ) {
+        openWindow({
+          event,
+          url,
+          frameName,
+          options,
+        });
+      } else {
+        ipcRenderer.send('open-browser-window', {
+          url: event.url,
+          serviceId: service.id,
+        });
+      }
+    });
 
-    this.webview.addEventListener('did-start-loading', event => {
-      debug('Did start load', this.name, event);
+    webview.addEventListener('did-start-loading', event => {
+      const service = binding.owner;
+      debug('Did start load', service.name, event);
 
       // Navigation reaches the old preload early enough to release its observer.
-      this.webview.send('dark-mode-disconnect-cleanup');
-      this._didStartLoading();
+      service.webview.send('dark-mode-disconnect-cleanup');
+      service._didStartLoading();
     });
 
-    this.webview.addEventListener('did-stop-loading', event => {
-      debug('Did stop load', this.name, event);
+    webview.addEventListener('did-stop-loading', event => {
+      const service = binding.owner;
+      debug('Did stop load', service.name, event);
 
-      this._didStopLoading();
+      service._didStopLoading();
     });
 
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     const didLoad = () => {
-      this._didLoad();
+      binding.owner._didLoad();
     };
 
-    this.webview.addEventListener('did-frame-finish-load', didLoad.bind(this));
-    this.webview.addEventListener('did-navigate', didLoad.bind(this));
+    webview.addEventListener('did-frame-finish-load', didLoad);
+    webview.addEventListener('did-navigate', didLoad);
 
-    this.webview.addEventListener('did-fail-load', event => {
-      debug('Service failed to load', this.name, event);
+    webview.addEventListener('did-fail-load', event => {
+      const service = binding.owner;
+      debug('Service failed to load', service.name, event);
       if (
         event.isMainFrame &&
         event.errorCode !== -21 &&
         event.errorCode !== -3
       ) {
-        this._didFailLoad(event);
+        service._didFailLoad(event);
       }
     });
 
-    this.webview.addEventListener('crashed', () => {
-      debug('Service crashed', this.name);
-      this._hasCrashed();
+    webview.addEventListener('crashed', () => {
+      const service = binding.owner;
+      debug('Service crashed', service.name);
+      service._hasCrashed();
     });
 
-    this.webview.addEventListener('found-in-page', ({ result }) => {
+    webview.addEventListener('found-in-page', ({ result }) => {
       debug('Found in page', result);
-      this.webview.send('found-in-page', result);
+      binding.owner.webview.send('found-in-page', result);
     });
 
-    this.webview.addEventListener('media-started-playing', event => {
-      debug('Started Playing media', this.name, event);
-      this._didMediaPlaying();
+    webview.addEventListener('media-started-playing', event => {
+      const service = binding.owner;
+      debug('Started Playing media', service.name, event);
+      service._didMediaPlaying();
     });
 
-    this.webview.addEventListener('media-paused', event => {
-      debug('Stopped Playing media', this.name, event);
-      this._didMediaPaused();
+    webview.addEventListener('media-paused', event => {
+      const service = binding.owner;
+      debug('Stopped Playing media', service.name, event);
+      service._didMediaPaused();
     });
 
     if (webviewWebContents) {
@@ -975,8 +999,8 @@ export default class Service {
         webviewWebContents.on('before-input-event', (event, input) => {
           if (input.control && input.key === '+' && input.type === 'keyDown') {
             event.preventDefault();
-            const currentZoom = this.webview?.getZoomLevel();
-            this.webview?.setZoomLevel(currentZoom + 0.5);
+            const currentZoom = binding.owner.webview?.getZoomLevel();
+            binding.owner.webview?.setZoomLevel(currentZoom + 0.5);
           }
         });
       }
@@ -988,7 +1012,7 @@ export default class Service {
 
         window['ferdium'].actions.app.addDownload({
           id: downloadId,
-          serviceId: this.id,
+          serviceId: binding.owner.id,
           filename: item.getFilename(),
           url: item.getURL(),
           savePath: item.getSavePath(),
@@ -1006,7 +1030,7 @@ export default class Service {
           }
           window['ferdium'].actions.app.updateDownload({
             id: downloadId,
-            serviceId: this.id,
+            serviceId: binding.owner.id,
             filename: basename(item.getSavePath()),
             url: item.getURL(),
             savePath: item.getSavePath(),
@@ -1030,7 +1054,7 @@ export default class Service {
 
           window['ferdium'].actions.app.endedDownload({
             id: downloadId,
-            serviceId: this.id,
+            serviceId: binding.owner.id,
             receivedBytes: item.getReceivedBytes(),
             totalBytes: item.getTotalBytes(),
             state,
@@ -1068,15 +1092,15 @@ export default class Service {
           debug('Sending service echo ping');
           webviewWebContents.send('get-service-id');
 
-          debug('Received service id', this.id);
+          debug('Received service id', binding.owner.id);
 
-          const ps = stores.settings.proxy[this.id];
+          const ps = stores.settings.proxy[binding.owner.id];
 
           if (ps) {
-            debug('Sending proxy auth callback for service', this.id);
+            debug('Sending proxy auth callback for service', binding.owner.id);
             callback(ps.user, ps.password);
           } else {
-            debug('No proxy auth config found for', this.id);
+            debug('No proxy auth config found for', binding.owner.id);
           }
         }
       });
@@ -1084,11 +1108,24 @@ export default class Service {
   }
 
   initializeWebViewListener(): void {
-    if (this.webview && this.recipe.events) {
+    const { webview } = this;
+    const binding = webview && webviewEventBindings.get(webview);
+    if (webview && binding && this.recipe.events) {
       for (const eventName of Object.keys(this.recipe.events)) {
-        const eventHandler = this.recipe[this.recipe.events[eventName]];
-        if (typeof eventHandler === 'function') {
-          this.webview.addEventListener(eventName, eventHandler);
+        if (!binding.recipeEvents.has(eventName)) {
+          const eventHandler = this.recipe[this.recipe.events[eventName]];
+          if (typeof eventHandler === 'function') {
+            webview.addEventListener(eventName, event => {
+              const eventHandlerName =
+                binding.owner.recipe.events?.[eventName];
+              if (!eventHandlerName) return;
+              const currentHandler = binding.owner.recipe[eventHandlerName];
+              if (typeof currentHandler === 'function') {
+                currentHandler.call(webview, event);
+              }
+            });
+            binding.recipeEvents.add(eventName);
+          }
         }
       }
     }

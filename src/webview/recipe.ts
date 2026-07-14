@@ -4,8 +4,8 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import {
-  disable as disableDarkMode,
-  enable as enableDarkMode,
+  disable as disableDarkModeRaw,
+  enable as enableDarkModeRaw,
 } from 'darkreader';
 import { contextBridge, ipcRenderer } from 'electron';
 import { pathExistsSync, readFileSync } from 'fs-extra';
@@ -43,6 +43,45 @@ import type { AppStore } from '../@types/stores.types';
 import { DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject, ifUndefined, safeParseInt } from '../jsUtils';
 import type Service from '../models/Service';
+
+// Dark Reader's removeDynamicTheme/createOrUpdateDynamicThemeInternal access
+// document.documentElement without a null guard and throw when invoked while the
+// root element is missing (webview navigation/teardown). Keep only the latest
+// requested operation and replay it once the replacement root appears.
+let pendingDarkModeOperation: (() => void) | null = null;
+let darkModeRootObserver: MutationObserver | null = null;
+
+const runPendingDarkModeOperation = () => {
+  if (!document.documentElement || !pendingDarkModeOperation) return;
+
+  const operation = pendingDarkModeOperation;
+  pendingDarkModeOperation = null;
+  darkModeRootObserver?.disconnect();
+  darkModeRootObserver = null;
+  operation();
+};
+
+const scheduleDarkModeOperation = (operation: () => void) => {
+  pendingDarkModeOperation = operation;
+  if (document.documentElement) {
+    runPendingDarkModeOperation();
+  } else if (!darkModeRootObserver) {
+    darkModeRootObserver = new MutationObserver(runPendingDarkModeOperation);
+    darkModeRootObserver.observe(document, { childList: true });
+  }
+};
+
+// Exported for the focused unit test in test/webview/recipe.bridge.test.ts only.
+export const disableDarkMode = () =>
+  scheduleDarkModeOperation(() => disableDarkModeRaw());
+export const enableDarkMode: typeof enableDarkModeRaw = (...args) =>
+  scheduleDarkModeOperation(() => enableDarkModeRaw(...args));
+
+ipcRenderer.on('dark-mode-disconnect-cleanup', () => {
+  darkModeRootObserver?.disconnect();
+  darkModeRootObserver = null;
+  pendingDarkModeOperation = null;
+});
 
 // For some services darkreader tries to use the chrome extension message API
 // This will cause the service to fail loading
@@ -139,6 +178,13 @@ ipcRenderer.sendToHost(
 );
 
 // ─── Agent Flow CS API Bridge ───
+const isWhatsAppHost = () => {
+  const { hostname } = window.location;
+  return (
+    hostname === 'web.whatsapp.com' || hostname.endsWith('.web.whatsapp.com')
+  );
+};
+
 // 模块级守卫：确保 preload 脚本即使被多次加载，监听器也只注册一次
 if (!(window as any).__waAiPreloadBridgeRegistered) {
   (window as any).__waAiPreloadBridgeRegistered = true;
@@ -148,6 +194,7 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
   window.addEventListener('message', event => {
     if (event.source !== window) return;
     if (event.origin !== window.location.origin) return;
+    if (!isWhatsAppHost()) return;
     if (event.data?.type === 'wa-ai-api-request') {
       ipcRenderer.sendToHost('wa-ai-api-request', event.data.payload);
     }

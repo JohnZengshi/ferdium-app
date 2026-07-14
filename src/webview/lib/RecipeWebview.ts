@@ -8,6 +8,10 @@ const debug = require('../../preload-safe-debug')(
   'Ferdium:Plugin:RecipeWebview',
 );
 
+// Time to wait for a webview to ACK an injected unsafe script before
+// aborting the rest of the current batch.
+const INJECT_JS_UNSAFE_ACK_TIMEOUT_MS = 30_000;
+
 class RecipeWebview {
   badgeHandler: any;
 
@@ -16,6 +20,12 @@ class RecipeWebview {
   notificationsHandler: any;
 
   sessionHandler: any;
+
+  injectJSUnsafeChain: Promise<void> = Promise.resolve();
+
+  injectJSUnsafeSeq = 0;
+
+  injectJSUnsafeRunning = false;
 
   constructor(
     badgeHandler,
@@ -144,7 +154,7 @@ class RecipeWebview {
     });
   }
 
-  injectJSUnsafe(...files) {
+  injectJSUnsafe(...files): Promise<void> {
     const scripts = files.flatMap(file => {
       if (!existsSync(file)) {
         debug('Script not found', file);
@@ -160,60 +170,128 @@ class RecipeWebview {
     });
 
     if (scripts.length === 0) {
-      return;
+      return Promise.resolve();
     }
 
-    let index = 0;
-    let seq = 0;
-    const sendNext = () => {
-      const script = scripts[index];
-      if (!script) {
-        ipcRenderer.removeListener('inject-js-unsafe-ack', onAck);
-        return;
-      }
+    const runBatch = () =>
+      new Promise<void>((resolve, reject) => {
+        let index = 0;
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        let currentSeq: number | undefined;
+        let finished = false;
+        const finish = (error?: unknown) => {
+          if (finished) {
+            return;
+          }
+          finished = true;
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = undefined;
+          }
+          ipcRenderer.removeListener('inject-js-unsafe-ack', onAck);
+          if (error) {
+            reject(error);
+          } else {
+            resolve();
+          }
+        };
+        const sendNext = () => {
+          const script = scripts[index];
+          if (!script) {
+            finish();
+            return;
+          }
 
-      const currentSeq = seq;
-      try {
-        debug('Inject script to main world', script.name);
-        ipcRenderer.sendToHost('inject-js-unsafe', {
-          ...script,
-          seq: currentSeq,
-        });
-      } catch (error) {
-        debug('Unable to inject script', script.name, error);
-        ipcRenderer.removeListener('inject-js-unsafe-ack', onAck);
-        return;
-      }
-      seq += 1;
-    };
-    const onAck = (
-      _event: Electron.IpcRendererEvent,
-      ack: {
-        name?: string;
-        seq?: number;
-        success?: boolean;
-        error?: string;
-      },
-    ) => {
-      const script = scripts[index];
-      if (!script || ack.name !== script.name || ack.seq !== seq - 1) {
-        return;
-      }
+          currentSeq = this.injectJSUnsafeSeq;
+          this.injectJSUnsafeSeq += 1;
+          try {
+            debug('Inject script to main world', script.name);
+            ipcRenderer.sendToHost('inject-js-unsafe', {
+              ...script,
+              seq: currentSeq,
+            });
+            timeout = setTimeout(
+              () =>
+                finish(
+                  new Error(`injectJSUnsafe: ACK timeout for "${script.name}"`),
+                ),
+              INJECT_JS_UNSAFE_ACK_TIMEOUT_MS,
+            );
+          } catch (error) {
+            debug('Unable to inject script', script.name, error);
+            finish(error);
+          }
+        };
+        const onAck = (
+          _event: Electron.IpcRendererEvent,
+          ack: {
+            name?: string;
+            seq?: number;
+            success?: boolean;
+            error?: string;
+          },
+        ) => {
+          const script = scripts[index];
+          if (
+            finished ||
+            !script ||
+            ack.name !== script.name ||
+            ack.seq !== currentSeq
+          ) {
+            return;
+          }
 
-      if (!ack.success) {
-        console.error('Unsafe script injection failed', {
-          script: script.name,
-          seq: ack.seq,
-          error: ack.error,
-        });
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = undefined;
+          }
+          if (!ack.success) {
+            console.error('Unsafe script injection failed', {
+              script: script.name,
+              seq: ack.seq,
+              error: ack.error,
+            });
+            finish(
+              new Error(
+                `injectJSUnsafe: injection failed for "${script.name}": ${ack.error ?? 'unknown error'}`,
+              ),
+            );
+            return;
+          }
+
+          index += 1;
+          sendNext();
+        };
+
+        ipcRenderer.on('inject-js-unsafe-ack', onAck);
+        sendNext();
+      });
+
+    const runningBefore = this.injectJSUnsafeRunning;
+    this.injectJSUnsafeRunning = true;
+    const batchPromise = runningBefore
+      ? this.injectJSUnsafeChain.then(runBatch)
+      : runBatch();
+    let batchError: Error | undefined;
+    const nextChain = batchPromise
+      .catch(error => {
+        batchError = error instanceof Error ? error : new Error(String(error));
+      })
+      .then(() => {
+        if (this.injectJSUnsafeChain === nextChain) {
+          this.injectJSUnsafeRunning = false;
+        }
+      });
+    this.injectJSUnsafeChain = nextChain;
+    const result = nextChain.then(() => {
+      if (batchError) {
+        throw batchError;
       }
-
-      index += 1;
-      sendNext();
-    };
-
-    ipcRenderer.on('inject-js-unsafe-ack', onAck);
-    sendNext();
+    });
+    // Recipes historically discard this result. Mark it handled while
+    // preserving rejection for callers that await or catch the same promise.
+    result.catch(() => {});
+    return result;
   }
 
   /**

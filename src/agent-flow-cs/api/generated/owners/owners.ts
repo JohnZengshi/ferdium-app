@@ -15,6 +15,7 @@ import type {
   AssignRequest,
   AssigneeResponse,
   BodyUploadDocumentApiV1OwnersKnowledgeUploadPost,
+  ConversationDaySummaryResponse,
   ConversationDetailResponse,
   DashboardStats,
   DeleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteParams,
@@ -23,6 +24,7 @@ import type {
   DigitalHumanUpdate,
   EnterpriseCodeResponse,
   EnterpriseCodeSetRequest,
+  GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams,
   GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetParams,
   HTTPValidationError,
   HandoffWithContextListResponse,
@@ -34,6 +36,7 @@ import type {
   KnowledgeDocumentListResponse,
   KnowledgeOwnerCollectionCreateRequest,
   KnowledgeOwnerCollectionCreateResponse,
+  KnowledgeOwnerCollectionUpdateRequest,
   KnowledgeRetrieveRequest,
   KnowledgeRetrieveResponse,
   KnowledgeUploadResponse,
@@ -46,6 +49,7 @@ import type {
   ListHandoffsApiV1OwnersHandoffsGetParams,
   ListSubAccountsApiV1OwnersSubAccountsGetParams,
   ListTagsApiV1OwnersTagsGetParams,
+  PreviewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetParams,
   ResetPasswordApiV1OwnersSubAccountsUserIdResetPasswordPost200,
   ResetPasswordRequest,
   StreamConversationLiveApiV1OwnersConversationsBySessionStreamGetParams,
@@ -1006,6 +1010,56 @@ export const getConversationMessagesApiV1OwnersConversationsConvIdMessagesGet = 
 );}
 
 
+export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse200 = {
+  data: ConversationDaySummaryResponse
+  status: 200
+}
+
+export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseSuccess = (getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse200) & {
+  headers: Headers;
+};
+export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseError = (getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse422) & {
+  headers: Headers;
+};
+
+export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse = (getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseSuccess | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseError)
+
+export const getGetConversationDaySummaryApiV1OwnersConversationsSummaryGetUrl = (params: GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/conversations/summary?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/conversations/summary`
+}
+
+/**
+ * 生成指定会话在所选 UTC 日期当天的聊天记录摘要总结。
+ * @summary Get Conversation Day Summary
+ */
+export const getConversationDaySummaryApiV1OwnersConversationsSummaryGet = async (params: GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams, options?: RequestInit): Promise<getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse> => {
+
+  return useCustomInstance<getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse>(getGetConversationDaySummaryApiV1OwnersConversationsSummaryGetUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
 export type streamConversationLiveApiV1OwnersConversationsBySessionStreamGetResponse200 = {
   data: unknown
   status: 200
@@ -1292,10 +1346,9 @@ export const getRetrieveKnowledgeApiV1OwnersKnowledgeRetrievePostUrl = () => {
 }
 
 /**
- * 知识库召回测试：对 owner 有权访问的 collection 执行检索，返回命中片段。
+ * 知识库召回测试：对 owner 自建 collection 执行检索，返回命中片段。
  *
- * 只读操作，权限口径与 list_documents 一致（allow_default=True）——
- * owner 对被分配的默认库也可测试召回，但 collection 必须在白名单内，否则 403。
+ * collection 必须在 owner 自建白名单内，否则 403。
  * @summary Retrieve Knowledge
  */
 export const retrieveKnowledgeApiV1OwnersKnowledgeRetrievePost = async (knowledgeRetrieveRequest: KnowledgeRetrieveRequest, options?: RequestInit): Promise<retrieveKnowledgeApiV1OwnersKnowledgeRetrievePostResponse> => {
@@ -1348,13 +1401,65 @@ export const getListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetUrl
 /**
  * 列出单个知识库文档的全部切片。
  *
- * 权限口径与文档列表一致：collection 必须在 owner 白名单内，默认库只读可见。
+ * collection 必须在 owner 自建白名单内，否则 403。
  * @summary List Document Chunks
  */
 export const listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGet = async (docId: string,
     params?: ListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetParams, options?: RequestInit): Promise<listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse> => {
 
   return useCustomInstance<listDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetResponse>(getListDocumentChunksApiV1OwnersKnowledgeDocumentsDocIdChunksGetUrl(docId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+export type previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponse200 = {
+  data: unknown
+  status: 200
+}
+
+export type previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponseSuccess = (previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponse200) & {
+  headers: Headers;
+};
+export type previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponseError = (previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponse422) & {
+  headers: Headers;
+};
+
+export type previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponse = (previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponseSuccess | previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponseError)
+
+export const getPreviewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetUrl = (docId: string,
+    params?: PreviewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}/preview?${stringifiedParams}` : `http://10.0.0.228:8000/api/v1/owners/knowledge/documents/${docId}/preview`
+}
+
+/**
+ * 代理 owner 可访问知识文档的原文件预览流。
+ * @summary Preview Document
+ */
+export const previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGet = async (docId: string,
+    params?: PreviewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetParams, options?: RequestInit): Promise<previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponse> => {
+
+  return useCustomInstance<previewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetResponse>(getPreviewDocumentApiV1OwnersKnowledgeDocumentsDocIdPreviewGetUrl(docId,params),
   {
     ...options,
     method: 'GET'
@@ -1492,12 +1597,7 @@ export const getListCollectionsApiV1OwnersKnowledgeCollectionsGetUrl = () => {
 }
 
 /**
- * 列出知识库中可用的 collection（含来源标签）。
- *
- * 来源分为：
- * - 'default': 配置的默认集合
- * - 'admin': 超管分配的共享集合
- * - 'owner': 自建集合
+ * 返回 owner 可用的逻辑集合列表。
  * @summary List Collections
  */
 export const listCollectionsApiV1OwnersKnowledgeCollectionsGet = async ( options?: RequestInit): Promise<listCollectionsApiV1OwnersKnowledgeCollectionsGetResponse> => {
@@ -1540,7 +1640,6 @@ export const getCreateCollectionApiV1OwnersKnowledgeCollectionsPostUrl = () => {
 }
 
 /**
- * 主账号自建知识库集合（创建后自动拥有使用权限）。
  * @summary Create Collection
  */
 export const createCollectionApiV1OwnersKnowledgeCollectionsPost = async (knowledgeOwnerCollectionCreateRequest: KnowledgeOwnerCollectionCreateRequest, options?: RequestInit): Promise<createCollectionApiV1OwnersKnowledgeCollectionsPostResponse> => {
@@ -1551,6 +1650,91 @@ export const createCollectionApiV1OwnersKnowledgeCollectionsPost = async (knowle
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(knowledgeOwnerCollectionCreateRequest)
+  }
+);}
+
+
+export type updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponse200 = {
+  data: KnowledgeCollectionOwnerResponse
+  status: 200
+}
+
+export type updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponseSuccess = (updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponse200) & {
+  headers: Headers;
+};
+export type updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponseError = (updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponse422) & {
+  headers: Headers;
+};
+
+export type updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponse = (updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponseSuccess | updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponseError)
+
+export const getUpdateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchUrl = (collectionName: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/knowledge/collections/${collectionName}`
+}
+
+/**
+ * @summary Update Collection
+ */
+export const updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatch = async (collectionName: string,
+    knowledgeOwnerCollectionUpdateRequest: KnowledgeOwnerCollectionUpdateRequest, options?: RequestInit): Promise<updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponse> => {
+
+  return useCustomInstance<updateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchResponse>(getUpdateCollectionApiV1OwnersKnowledgeCollectionsCollectionNamePatchUrl(collectionName),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(knowledgeOwnerCollectionUpdateRequest)
+  }
+);}
+
+
+export type deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponse200 = {
+  data: KnowledgeDeleteResponse
+  status: 200
+}
+
+export type deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponse422 = {
+  data: HTTPValidationError
+  status: 422
+}
+
+export type deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponseSuccess = (deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponse200) & {
+  headers: Headers;
+};
+export type deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponseError = (deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponse422) & {
+  headers: Headers;
+};
+
+export type deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponse = (deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponseSuccess | deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponseError)
+
+export const getDeleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteUrl = (collectionName: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/owners/knowledge/collections/${collectionName}`
+}
+
+/**
+ * @summary Delete Collection
+ */
+export const deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDelete = async (collectionName: string, options?: RequestInit): Promise<deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponse> => {
+
+  return useCustomInstance<deleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteResponse>(getDeleteCollectionApiV1OwnersKnowledgeCollectionsCollectionNameDeleteUrl(collectionName),
+  {
+    ...options,
+    method: 'DELETE'
+
+
   }
 );}
 

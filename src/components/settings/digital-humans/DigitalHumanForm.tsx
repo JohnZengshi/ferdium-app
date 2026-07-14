@@ -171,7 +171,7 @@ class DigitalHumanForm extends Component<
         platform: 'whatsapp',
         persona_config: undefined,
         persona_prompt: undefined,
-        knowledge_collection: undefined,
+        knowledge_collections: undefined,
         status: 'active',
       },
     };
@@ -189,8 +189,8 @@ class DigitalHumanForm extends Component<
           platform: this.props.digitalHuman.platform || 'whatsapp',
           persona_config: this.props.digitalHuman.persona_config,
           persona_prompt: this.props.digitalHuman.persona_prompt || undefined,
-          knowledge_collection:
-            this.props.digitalHuman.knowledge_collection || undefined,
+          knowledge_collections:
+            this.props.digitalHuman.knowledge_collections || undefined,
           status: this.props.digitalHuman.status || 'active',
         },
       });
@@ -220,7 +220,7 @@ class DigitalHumanForm extends Component<
           type: 'warning',
         },
       ],
-      knowledge_collection: [
+      knowledge_collections: [
         {
           max: 128,
           message: intl.formatMessage(
@@ -370,15 +370,18 @@ class DigitalHumanForm extends Component<
 
             <Form.FormItem
               label={intl.formatMessage(messages.labelKnowledgeCollection)}
-              name="knowledge_collection"
+              name="knowledge_collections"
             >
               <Input
-                value={formData.knowledge_collection || ''}
+                value={formData.knowledge_collections?.[0] || ''}
                 placeholder={intl.formatMessage(
                   messages.placeholderKnowledgeCollection,
                 )}
                 onChange={value =>
-                  this.handleFieldChange('knowledge_collection', value)
+                  this.handleFieldChange(
+                    'knowledge_collections',
+                    value ? [value] : [],
+                  )
                 }
               />
             </Form.FormItem>

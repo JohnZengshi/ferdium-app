@@ -43,6 +43,7 @@ export const getKnowledgeSearchApiV1KnowledgeSearchPostUrl = () => {
  * 检索知识库（仅主账号可用，用于调试验证 RAG 模块）。
  *
  * 直接调用外部 RAG 服务并返回原始检索结果，不经过 Agent 链路。
+ * 仅召回当前主账号上传且未删除的文档（按 owner 文档白名单过滤）。
  * @summary Knowledge Search
  */
 export const knowledgeSearchApiV1KnowledgeSearchPost = async (knowledgeSearchRequest: KnowledgeSearchRequest, options?: RequestInit): Promise<knowledgeSearchApiV1KnowledgeSearchPostResponse> => {

@@ -30,9 +30,19 @@ const debug = require('../preload-safe-debug')('Ferdium:Service');
 // This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
 const activePartitions = new Set<string>();
 
+interface PartitionBinding {
+  ownerId: string;
+  owner: Service;
+}
+const activePartitionBindings = new Map<string, PartitionBinding>();
+
 interface WebviewEventBinding {
   owner: Service;
+  generation: number;
   recipeEvents: Set<string>;
+  handleIPCMessage: (...args: unknown[]) => unknown;
+  openWindow: (...args: unknown[]) => unknown;
+  stores: object;
 }
 
 const webviewEventBindings = new WeakMap<
@@ -86,9 +96,6 @@ export default class Service {
   lastApiCallFingerprint = '';
 
   lastApiCallTime = 0;
-
-  // 防止 initializeWebViewEvents 被多次调用导致重复绑定事件监听器
-  webviewEventsInitialized = false;
 
   private _sseConversationSubscription: { close: () => void } | null = null;
 
@@ -575,11 +582,18 @@ export default class Service {
     const existingBinding = webviewEventBindings.get(webview);
     const binding: WebviewEventBinding = existingBinding ?? {
       owner: this,
+      generation: 0,
       recipeEvents: new Set(),
+      handleIPCMessage,
+      openWindow,
+      stores,
     };
     binding.owner = this;
+    binding.generation += 1;
+    binding.handleIPCMessage = handleIPCMessage;
+    binding.openWindow = openWindow;
+    binding.stores = stores;
     if (!existingBinding) webviewEventBindings.set(webview, binding);
-    this.webviewEventsInitialized = true;
 
     this.userAgentModel.setWebviewReference(webview);
 
@@ -608,12 +622,21 @@ export default class Service {
       debug(this.name, 'knownCertificateHosts is not defined in the recipe');
     }
 
-    if (existingBinding) return;
-
     const webviewWebContents = webContents.fromId(webview.getWebContentsId());
+    const webviewPartition = webviewWebContents?.session.getStoragePath();
+    if (webviewPartition) {
+      activePartitionBindings.set(webviewPartition, {
+        ownerId: this.id,
+        owner: this,
+      });
+    }
+
+    if (existingBinding) return;
 
     webview.addEventListener('ipc-message', async e => {
       const service = binding.owner;
+      const genAtStart = binding.generation;
+      const eventWebview = webview;
       switch (e.channel) {
         case 'inject-js-unsafe': {
           const scripts = e.args
@@ -656,7 +679,7 @@ export default class Service {
               await service.webview.executeJavaScript(
                 `"use strict"; (() => { ${script.source} })();`,
               );
-              service.webview.send('inject-js-unsafe-ack', {
+              eventWebview.send('inject-js-unsafe-ack', {
                 name: script.name,
                 index,
                 seq: script.seq,
@@ -672,7 +695,7 @@ export default class Service {
                 seq: script.seq,
                 error: message,
               });
-              service.webview.send('inject-js-unsafe-ack', {
+              eventWebview.send('inject-js-unsafe-ack', {
                 name: script.name,
                 index,
                 seq: script.seq,
@@ -718,7 +741,7 @@ export default class Service {
               method,
               requestId,
             });
-            service.webview.send('wa-ai-api-response-host', {
+            eventWebview.send('wa-ai-api-response-host', {
               requestId,
               success: false,
               error: 'Operation not allowed',
@@ -737,7 +760,7 @@ export default class Service {
               method,
               requestId,
             });
-            service.webview.send('wa-ai-api-response-host', {
+            eventWebview.send('wa-ai-api-response-host', {
               requestId,
               success: false,
               error: 'Rate limit exceeded',
@@ -825,15 +848,16 @@ export default class Service {
 
             // 自动订阅/更新 SSE
             if (
+              binding.generation === genAtStart &&
               method.includes('getConversationByCustomer') &&
               enhancedArgs.length > 0
             ) {
               const customerId = enhancedArgs[0] as string;
-              service._subscribeConversationStatusSSE(customerId);
-              service._subscribeConversationLiveSSE(customerId);
+              binding.owner._subscribeConversationStatusSSE(customerId);
+              binding.owner._subscribeConversationLiveSSE(customerId);
             }
 
-            service.webview.send('wa-ai-api-response-host', {
+            eventWebview.send('wa-ai-api-response-host', {
               requestId,
               success: true,
               result,
@@ -849,7 +873,7 @@ export default class Service {
               url: (errorObj as any).url as string | undefined,
             };
 
-            service.webview.send('wa-ai-api-response-host', {
+            eventWebview.send('wa-ai-api-response-host', {
               requestId,
               success: false,
               error: errorObj.message,
@@ -888,7 +912,7 @@ export default class Service {
           break;
         }
         default: {
-          handleIPCMessage({
+          binding.handleIPCMessage({
             serviceId: service.id,
             channel: e.channel,
             args: e.args,
@@ -907,7 +931,7 @@ export default class Service {
         event.disposition === 'foreground-tab' ||
         event.disposition === 'background-tab'
       ) {
-        openWindow({
+        binding.openWindow({
           event,
           url,
           frameName,
@@ -980,109 +1004,107 @@ export default class Service {
     });
 
     if (webviewWebContents) {
-      // This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
-      const webviewPartition = webviewWebContents.session.getStoragePath();
-      if (webviewPartition) {
-        // Check if the partition is already active
-        if (activePartitions.has(webviewPartition)) {
-          return;
-        }
-
-        // Add the partition to the active partitions
-        activePartitions.add(webviewPartition);
-      }
-      // -----
-
       // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
       // This is a workaround for the issue where the zoom in shortcut is not working
       if (!isMac) {
         webviewWebContents.on('before-input-event', (event, input) => {
           if (input.control && input.key === '+' && input.type === 'keyDown') {
             event.preventDefault();
-            const currentZoom = binding.owner.webview?.getZoomLevel();
-            binding.owner.webview?.setZoomLevel(currentZoom + 0.5);
+            const current = binding.owner;
+            const currentZoom = current.webview?.getZoomLevel();
+            current.webview?.setZoomLevel(currentZoom + 0.5);
           }
         });
       }
 
-      webviewWebContents.session.on('will-download', (event, item) => {
-        event.preventDefault();
+      if (webviewPartition && !activePartitions.has(webviewPartition)) {
+        activePartitions.add(webviewPartition);
+        webviewWebContents.session.on('will-download', (event, item) => {
+          event.preventDefault();
 
-        const downloadId = uuidV4();
+          const pBinding = activePartitionBindings.get(webviewPartition);
+          const ownerId = pBinding?.ownerId ?? 'unknown';
+          const downloadId = uuidV4();
+          const downloadOwnerId = ownerId;
 
-        window['ferdium'].actions.app.addDownload({
-          id: downloadId,
-          serviceId: binding.owner.id,
-          filename: item.getFilename(),
-          url: item.getURL(),
-          savePath: item.getSavePath(),
-        });
-
-        item.addListener('updated', (event, state) => {
-          if (state === 'interrupted') {
-            debug('Download is interrupted but can be resumed');
-          } else if (state === 'progressing') {
-            if (item.isPaused()) {
-              debug('Download is paused');
-            } else {
-              debug(`Received bytes: ${item.getReceivedBytes()}`);
-            }
-          }
-          window['ferdium'].actions.app.updateDownload({
+          window['ferdium'].actions.app.addDownload({
             id: downloadId,
-            serviceId: binding.owner.id,
-            filename: basename(item.getSavePath()),
+            serviceId: ownerId,
+            filename: item.getFilename(),
             url: item.getURL(),
             savePath: item.getSavePath(),
-            receivedBytes: item.getReceivedBytes(),
-            totalBytes: item.getTotalBytes(),
-            state,
           });
-          debug('download updated', event, state);
-        });
-        item.addListener('done', (event, state) => {
-          debug('download done', event, state);
-          if (state === 'completed') {
-            debug('Download successfully');
-          } else {
-            if (state === 'cancelled' && item.getSavePath() === '') {
-              window['ferdium'].actions.app.removeDownload(downloadId);
-              debug('Download is cancelled');
+
+          item.addListener('updated', (event, state) => {
+            if (state === 'interrupted') {
+              debug('Download is interrupted but can be resumed');
+            } else if (state === 'progressing') {
+              if (item.isPaused()) {
+                debug('Download is paused');
+              } else {
+                debug(`Received bytes: ${item.getReceivedBytes()}`);
+              }
             }
-            debug(`Download failed: ${state}`);
-          }
-
-          window['ferdium'].actions.app.endedDownload({
-            id: downloadId,
-            serviceId: binding.owner.id,
-            receivedBytes: item.getReceivedBytes(),
-            totalBytes: item.getTotalBytes(),
-            state,
+            window['ferdium'].actions.app.updateDownload({
+              id: downloadId,
+              serviceId: downloadOwnerId,
+              filename: basename(item.getSavePath()),
+              url: item.getURL(),
+              savePath: item.getSavePath(),
+              receivedBytes: item.getReceivedBytes(),
+              totalBytes: item.getTotalBytes(),
+              state,
+            });
+            debug('download updated', event, state);
           });
-        });
-
-        ipcRenderer.on('toggle-pause-download', (_, data) => {
-          debug('toggle-pause-download', item.isPaused(), item.getState());
-          if (data.downloadId === downloadId || data.downloadId === undefined) {
-            if (item.isPaused()) {
-              item.resume();
+          item.addListener('done', (event, state) => {
+            debug('download done', event, state);
+            if (state === 'completed') {
+              debug('Download successfully');
             } else {
-              item.pause();
+              if (state === 'cancelled' && item.getSavePath() === '') {
+                window['ferdium'].actions.app.removeDownload(downloadId);
+                debug('Download is cancelled');
+              }
+              debug(`Download failed: ${state}`);
             }
-          }
-          debug('toggle-pause-download', item.isPaused(), item.getState());
-          window['ferdium'].actions.app.updateDownload({
-            id: downloadId,
-            paused: item.isPaused(),
+
+            window['ferdium'].actions.app.endedDownload({
+              id: downloadId,
+              serviceId: downloadOwnerId,
+              receivedBytes: item.getReceivedBytes(),
+              totalBytes: item.getTotalBytes(),
+              state,
+            });
+          });
+
+          ipcRenderer.on('toggle-pause-download', (_, data) => {
+            debug('toggle-pause-download', item.isPaused(), item.getState());
+            if (
+              data.downloadId === downloadId ||
+              data.downloadId === undefined
+            ) {
+              if (item.isPaused()) {
+                item.resume();
+              } else {
+                item.pause();
+              }
+            }
+            debug('toggle-pause-download', item.isPaused(), item.getState());
+            window['ferdium'].actions.app.updateDownload({
+              id: downloadId,
+              paused: item.isPaused(),
+            });
+          });
+
+          ipcRenderer.on('stop-download', (_, data) => {
+            if (data === undefined || downloadId === data.downloadId) {
+              item.cancel();
+            }
           });
         });
+      }
 
-        ipcRenderer.on('stop-download', (_, data) => {
-          if (data === undefined || downloadId === data.downloadId) {
-            item.cancel();
-          }
-        });
-      });
       webviewWebContents.on('login', (event, _, authInfo, callback) => {
         // const authCallback = callback;
         debug('browser login event', authInfo);
@@ -1092,15 +1114,22 @@ export default class Service {
           debug('Sending service echo ping');
           webviewWebContents.send('get-service-id');
 
-          debug('Received service id', binding.owner.id);
+          const currentOwner = binding.owner;
+          const currentStores = binding.stores as {
+            settings: {
+              proxy: Record<string, { user: string; password: string }>;
+            };
+          };
 
-          const ps = stores.settings.proxy[binding.owner.id];
+          debug('Received service id', currentOwner.id);
+
+          const ps = currentStores.settings.proxy[currentOwner.id];
 
           if (ps) {
-            debug('Sending proxy auth callback for service', binding.owner.id);
+            debug('Sending proxy auth callback for service', currentOwner.id);
             callback(ps.user, ps.password);
           } else {
-            debug('No proxy auth config found for', binding.owner.id);
+            debug('No proxy auth config found for', currentOwner.id);
           }
         }
       });
@@ -1116,8 +1145,7 @@ export default class Service {
           const eventHandler = this.recipe[this.recipe.events[eventName]];
           if (typeof eventHandler === 'function') {
             webview.addEventListener(eventName, event => {
-              const eventHandlerName =
-                binding.owner.recipe.events?.[eventName];
+              const eventHandlerName = binding.owner.recipe.events?.[eventName];
               if (!eventHandlerName) return;
               const currentHandler = binding.owner.recipe[eventHandlerName];
               if (typeof currentHandler === 'function') {

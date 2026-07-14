@@ -34,6 +34,22 @@ const activePartitions = new Set<string>();
 // 模块级锁：确保同一 requestId 只触发一次 HTTP 请求，无论有多少个 listener
 const waAiRequestInFlight = new Set<string>();
 const waAiRequestRecentlyHandled = new Set<string>();
+const WA_AI_ALLOWED_OPERATIONS: Record<string, ReadonlySet<string>> = {
+  conversations: new Set([
+    'getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGet',
+    'resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatch',
+    'pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatch',
+  ]),
+  translate: new Set(['translateApiV1TranslatePost']),
+  whatsapp: new Set(['getWhatsappBindingApiV1WhatsappBindGet']),
+  suggestion: new Set(['generateSuggestionApiV1SuggestionPost']),
+  owners: new Set([
+    'getConversationDaySummaryApiV1OwnersConversationsSummaryGet',
+  ]),
+};
+const WA_AI_RATE_LIMIT = 20;
+const WA_AI_RATE_WINDOW_MS = 1000;
+const waAiRequestTimestamps = new Map<string, number[]>();
 
 interface DarkReaderInterface {
   brightness: number;
@@ -649,7 +665,22 @@ export default class Service {
           break;
         }
         case 'wa-ai-api-request': {
-          const { requestId, api, method, args } = e.args[0] as {
+          const payload: unknown = e.args[0];
+          if (
+            typeof payload !== 'object' ||
+            payload === null ||
+            typeof (payload as Record<string, unknown>).requestId !==
+              'string' ||
+            (payload as Record<string, unknown>).requestId === '' ||
+            typeof (payload as Record<string, unknown>).api !== 'string' ||
+            typeof (payload as Record<string, unknown>).method !== 'string' ||
+            !Array.isArray((payload as Record<string, unknown>).args)
+          ) {
+            debug('Malformed wa-ai-api-request ignored');
+            return;
+          }
+
+          const { requestId, api, method, args } = payload as {
             requestId: string;
             api:
               | 'conversations'
@@ -660,6 +691,40 @@ export default class Service {
             method: string;
             args: unknown[];
           };
+
+          if (!WA_AI_ALLOWED_OPERATIONS[api]?.has(method)) {
+            debug('Disallowed wa-ai-api-request ignored', {
+              api,
+              method,
+              requestId,
+            });
+            this.webview.send('wa-ai-api-response-host', {
+              requestId,
+              success: false,
+              error: 'Operation not allowed',
+            });
+            return;
+          }
+
+          const now = Date.now();
+          const recentRequests = (waAiRequestTimestamps.get(api) ?? []).filter(
+            timestamp => now - timestamp < WA_AI_RATE_WINDOW_MS,
+          );
+          waAiRequestTimestamps.set(api, recentRequests);
+          if (recentRequests.length >= WA_AI_RATE_LIMIT) {
+            debug('Rate-limited wa-ai-api-request rejected', {
+              api,
+              method,
+              requestId,
+            });
+            this.webview.send('wa-ai-api-response-host', {
+              requestId,
+              success: false,
+              error: 'Rate limit exceeded',
+            });
+            return;
+          }
+          recentRequests.push(now);
 
           // 模块级全局锁：确保同一 requestId 只触发一次 HTTP 请求
           if (
@@ -840,6 +905,8 @@ export default class Service {
     this.webview.addEventListener('did-start-loading', event => {
       debug('Did start load', this.name, event);
 
+      // Navigation reaches the old preload early enough to release its observer.
+      this.webview.send('dark-mode-disconnect-cleanup');
       this._didStartLoading();
     });
 

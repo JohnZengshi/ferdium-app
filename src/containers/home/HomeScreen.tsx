@@ -139,7 +139,10 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   fetchWorkflow = async (): Promise<void> => {
     try {
       const response = await getWorkflowApiV1AgentWorkflowGet();
-      this.setState({ isAutoReply: (response.data as WorkflowSettingsResponse).agent_workflow_enabled });
+      this.setState({
+        isAutoReply: (response.data as WorkflowSettingsResponse)
+          .agent_workflow_enabled,
+      });
     } catch (error) {
       console.error('Failed to fetch workflow settings:', error);
     }

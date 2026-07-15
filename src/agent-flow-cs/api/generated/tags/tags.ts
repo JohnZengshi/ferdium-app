@@ -5,6 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
+  ErrorResponse,
   MemberTagListResponse
 } from '../agentFlowCs.schemas';
 
@@ -15,12 +16,69 @@ export type listTagsForMemberApiV1TagsGetResponse200 = {
   status: 200
 }
 
+export type listTagsForMemberApiV1TagsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listTagsForMemberApiV1TagsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listTagsForMemberApiV1TagsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listTagsForMemberApiV1TagsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listTagsForMemberApiV1TagsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listTagsForMemberApiV1TagsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type listTagsForMemberApiV1TagsGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type listTagsForMemberApiV1TagsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listTagsForMemberApiV1TagsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listTagsForMemberApiV1TagsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listTagsForMemberApiV1TagsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type listTagsForMemberApiV1TagsGetResponseSuccess = (listTagsForMemberApiV1TagsGetResponse200) & {
   headers: Headers;
 };
-;
+export type listTagsForMemberApiV1TagsGetResponseError = (listTagsForMemberApiV1TagsGetResponse400 | listTagsForMemberApiV1TagsGetResponse401 | listTagsForMemberApiV1TagsGetResponse403 | listTagsForMemberApiV1TagsGetResponse404 | listTagsForMemberApiV1TagsGetResponse409 | listTagsForMemberApiV1TagsGetResponse413 | listTagsForMemberApiV1TagsGetResponse422 | listTagsForMemberApiV1TagsGetResponse429 | listTagsForMemberApiV1TagsGetResponse500 | listTagsForMemberApiV1TagsGetResponse502 | listTagsForMemberApiV1TagsGetResponse503) & {
+  headers: Headers;
+};
 
-export type listTagsForMemberApiV1TagsGetResponse = (listTagsForMemberApiV1TagsGetResponseSuccess)
+export type listTagsForMemberApiV1TagsGetResponse = (listTagsForMemberApiV1TagsGetResponseSuccess | listTagsForMemberApiV1TagsGetResponseError)
 
 export const getListTagsForMemberApiV1TagsGetUrl = () => {
 

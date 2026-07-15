@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   HumanCaseIngestRequest,
   HumanCaseIngestResponse,
   HumanCaseListResponse,
@@ -20,15 +20,65 @@ export type ingestHumanCasesApiV1HumanCasesIngestPostResponse200 = {
   status: 200
 }
 
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type ingestHumanCasesApiV1HumanCasesIngestPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type ingestHumanCasesApiV1HumanCasesIngestPostResponseSuccess = (ingestHumanCasesApiV1HumanCasesIngestPostResponse200) & {
   headers: Headers;
 };
-export type ingestHumanCasesApiV1HumanCasesIngestPostResponseError = (ingestHumanCasesApiV1HumanCasesIngestPostResponse422) & {
+export type ingestHumanCasesApiV1HumanCasesIngestPostResponseError = (ingestHumanCasesApiV1HumanCasesIngestPostResponse400 | ingestHumanCasesApiV1HumanCasesIngestPostResponse401 | ingestHumanCasesApiV1HumanCasesIngestPostResponse403 | ingestHumanCasesApiV1HumanCasesIngestPostResponse404 | ingestHumanCasesApiV1HumanCasesIngestPostResponse409 | ingestHumanCasesApiV1HumanCasesIngestPostResponse413 | ingestHumanCasesApiV1HumanCasesIngestPostResponse422 | ingestHumanCasesApiV1HumanCasesIngestPostResponse429 | ingestHumanCasesApiV1HumanCasesIngestPostResponse500 | ingestHumanCasesApiV1HumanCasesIngestPostResponse502 | ingestHumanCasesApiV1HumanCasesIngestPostResponse503) & {
   headers: Headers;
 };
 
@@ -63,15 +113,65 @@ export type listHumanCasesEndpointApiV1HumanCasesGetResponse200 = {
   status: 200
 }
 
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listHumanCasesEndpointApiV1HumanCasesGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listHumanCasesEndpointApiV1HumanCasesGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listHumanCasesEndpointApiV1HumanCasesGetResponseSuccess = (listHumanCasesEndpointApiV1HumanCasesGetResponse200) & {
   headers: Headers;
 };
-export type listHumanCasesEndpointApiV1HumanCasesGetResponseError = (listHumanCasesEndpointApiV1HumanCasesGetResponse422) & {
+export type listHumanCasesEndpointApiV1HumanCasesGetResponseError = (listHumanCasesEndpointApiV1HumanCasesGetResponse400 | listHumanCasesEndpointApiV1HumanCasesGetResponse401 | listHumanCasesEndpointApiV1HumanCasesGetResponse403 | listHumanCasesEndpointApiV1HumanCasesGetResponse404 | listHumanCasesEndpointApiV1HumanCasesGetResponse409 | listHumanCasesEndpointApiV1HumanCasesGetResponse413 | listHumanCasesEndpointApiV1HumanCasesGetResponse422 | listHumanCasesEndpointApiV1HumanCasesGetResponse429 | listHumanCasesEndpointApiV1HumanCasesGetResponse500 | listHumanCasesEndpointApiV1HumanCasesGetResponse502 | listHumanCasesEndpointApiV1HumanCasesGetResponse503) & {
   headers: Headers;
 };
 
@@ -113,15 +213,65 @@ export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse200 = {
   status: 200
 }
 
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponseSuccess = (getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse200) & {
   headers: Headers;
 };
-export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponseError = (getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse422) & {
+export type getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponseError = (getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse400 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse401 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse403 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse404 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse409 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse413 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse422 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse429 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse500 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse502 | getHumanCaseEndpointApiV1HumanCasesCaseKeyGetResponse503) & {
   headers: Headers;
 };
 
@@ -156,15 +306,65 @@ export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse204 = {
   status: 204
 }
 
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponseSuccess = (deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse204) & {
   headers: Headers;
 };
-export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponseError = (deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse422) & {
+export type deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponseError = (deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse400 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse401 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse403 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse404 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse409 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse413 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse422 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse429 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse500 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse502 | deleteHumanCaseEndpointApiV1HumanCasesCaseKeyDeleteResponse503) & {
   headers: Headers;
 };
 

@@ -6,7 +6,7 @@
  */
 import type {
   AppApiSchemasMessageResponse,
-  HTTPValidationError,
+  ErrorResponse,
   MessageCreateRequest
 } from '../agentFlowCs.schemas';
 
@@ -17,15 +17,65 @@ export type createMessageApiV1MessagesPostResponse200 = {
   status: 200
 }
 
+export type createMessageApiV1MessagesPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createMessageApiV1MessagesPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createMessageApiV1MessagesPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createMessageApiV1MessagesPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createMessageApiV1MessagesPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createMessageApiV1MessagesPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createMessageApiV1MessagesPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createMessageApiV1MessagesPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createMessageApiV1MessagesPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createMessageApiV1MessagesPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createMessageApiV1MessagesPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createMessageApiV1MessagesPostResponseSuccess = (createMessageApiV1MessagesPostResponse200) & {
   headers: Headers;
 };
-export type createMessageApiV1MessagesPostResponseError = (createMessageApiV1MessagesPostResponse422) & {
+export type createMessageApiV1MessagesPostResponseError = (createMessageApiV1MessagesPostResponse400 | createMessageApiV1MessagesPostResponse401 | createMessageApiV1MessagesPostResponse403 | createMessageApiV1MessagesPostResponse404 | createMessageApiV1MessagesPostResponse409 | createMessageApiV1MessagesPostResponse413 | createMessageApiV1MessagesPostResponse422 | createMessageApiV1MessagesPostResponse429 | createMessageApiV1MessagesPostResponse500 | createMessageApiV1MessagesPostResponse502 | createMessageApiV1MessagesPostResponse503) & {
   headers: Headers;
 };
 
@@ -60,15 +110,65 @@ export type listMessagesApiV1MessagesConversationIdGetResponse200 = {
   status: 200
 }
 
+export type listMessagesApiV1MessagesConversationIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listMessagesApiV1MessagesConversationIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listMessagesApiV1MessagesConversationIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listMessagesApiV1MessagesConversationIdGetResponseSuccess = (listMessagesApiV1MessagesConversationIdGetResponse200) & {
   headers: Headers;
 };
-export type listMessagesApiV1MessagesConversationIdGetResponseError = (listMessagesApiV1MessagesConversationIdGetResponse422) & {
+export type listMessagesApiV1MessagesConversationIdGetResponseError = (listMessagesApiV1MessagesConversationIdGetResponse400 | listMessagesApiV1MessagesConversationIdGetResponse401 | listMessagesApiV1MessagesConversationIdGetResponse403 | listMessagesApiV1MessagesConversationIdGetResponse404 | listMessagesApiV1MessagesConversationIdGetResponse409 | listMessagesApiV1MessagesConversationIdGetResponse413 | listMessagesApiV1MessagesConversationIdGetResponse422 | listMessagesApiV1MessagesConversationIdGetResponse429 | listMessagesApiV1MessagesConversationIdGetResponse500 | listMessagesApiV1MessagesConversationIdGetResponse502 | listMessagesApiV1MessagesConversationIdGetResponse503) & {
   headers: Headers;
 };
 

@@ -9,7 +9,7 @@ import type {
   AgentRuleListResponse,
   AgentRuleResponse,
   AgentRuleUpdateRequest,
-  HTTPValidationError,
+  ErrorResponse,
   ListRulesApiV1RulesGetParams
 } from '../agentFlowCs.schemas';
 
@@ -20,15 +20,65 @@ export type listRulesApiV1RulesGetResponse200 = {
   status: 200
 }
 
+export type listRulesApiV1RulesGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listRulesApiV1RulesGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listRulesApiV1RulesGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listRulesApiV1RulesGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listRulesApiV1RulesGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listRulesApiV1RulesGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listRulesApiV1RulesGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listRulesApiV1RulesGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listRulesApiV1RulesGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listRulesApiV1RulesGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listRulesApiV1RulesGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listRulesApiV1RulesGetResponseSuccess = (listRulesApiV1RulesGetResponse200) & {
   headers: Headers;
 };
-export type listRulesApiV1RulesGetResponseError = (listRulesApiV1RulesGetResponse422) & {
+export type listRulesApiV1RulesGetResponseError = (listRulesApiV1RulesGetResponse400 | listRulesApiV1RulesGetResponse401 | listRulesApiV1RulesGetResponse403 | listRulesApiV1RulesGetResponse404 | listRulesApiV1RulesGetResponse409 | listRulesApiV1RulesGetResponse413 | listRulesApiV1RulesGetResponse422 | listRulesApiV1RulesGetResponse429 | listRulesApiV1RulesGetResponse500 | listRulesApiV1RulesGetResponse502 | listRulesApiV1RulesGetResponse503) & {
   headers: Headers;
 };
 
@@ -70,15 +120,65 @@ export type createRuleApiV1RulesPostResponse201 = {
   status: 201
 }
 
+export type createRuleApiV1RulesPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createRuleApiV1RulesPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createRuleApiV1RulesPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createRuleApiV1RulesPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createRuleApiV1RulesPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createRuleApiV1RulesPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createRuleApiV1RulesPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createRuleApiV1RulesPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createRuleApiV1RulesPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createRuleApiV1RulesPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createRuleApiV1RulesPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createRuleApiV1RulesPostResponseSuccess = (createRuleApiV1RulesPostResponse201) & {
   headers: Headers;
 };
-export type createRuleApiV1RulesPostResponseError = (createRuleApiV1RulesPostResponse422) & {
+export type createRuleApiV1RulesPostResponseError = (createRuleApiV1RulesPostResponse400 | createRuleApiV1RulesPostResponse401 | createRuleApiV1RulesPostResponse403 | createRuleApiV1RulesPostResponse404 | createRuleApiV1RulesPostResponse409 | createRuleApiV1RulesPostResponse413 | createRuleApiV1RulesPostResponse422 | createRuleApiV1RulesPostResponse429 | createRuleApiV1RulesPostResponse500 | createRuleApiV1RulesPostResponse502 | createRuleApiV1RulesPostResponse503) & {
   headers: Headers;
 };
 
@@ -113,15 +213,65 @@ export type getRuleApiV1RulesRuleIdGetResponse200 = {
   status: 200
 }
 
+export type getRuleApiV1RulesRuleIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getRuleApiV1RulesRuleIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getRuleApiV1RulesRuleIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getRuleApiV1RulesRuleIdGetResponseSuccess = (getRuleApiV1RulesRuleIdGetResponse200) & {
   headers: Headers;
 };
-export type getRuleApiV1RulesRuleIdGetResponseError = (getRuleApiV1RulesRuleIdGetResponse422) & {
+export type getRuleApiV1RulesRuleIdGetResponseError = (getRuleApiV1RulesRuleIdGetResponse400 | getRuleApiV1RulesRuleIdGetResponse401 | getRuleApiV1RulesRuleIdGetResponse403 | getRuleApiV1RulesRuleIdGetResponse404 | getRuleApiV1RulesRuleIdGetResponse409 | getRuleApiV1RulesRuleIdGetResponse413 | getRuleApiV1RulesRuleIdGetResponse422 | getRuleApiV1RulesRuleIdGetResponse429 | getRuleApiV1RulesRuleIdGetResponse500 | getRuleApiV1RulesRuleIdGetResponse502 | getRuleApiV1RulesRuleIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -156,15 +306,65 @@ export type updateRuleApiV1RulesRuleIdPatchResponse200 = {
   status: 200
 }
 
+export type updateRuleApiV1RulesRuleIdPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateRuleApiV1RulesRuleIdPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateRuleApiV1RulesRuleIdPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateRuleApiV1RulesRuleIdPatchResponseSuccess = (updateRuleApiV1RulesRuleIdPatchResponse200) & {
   headers: Headers;
 };
-export type updateRuleApiV1RulesRuleIdPatchResponseError = (updateRuleApiV1RulesRuleIdPatchResponse422) & {
+export type updateRuleApiV1RulesRuleIdPatchResponseError = (updateRuleApiV1RulesRuleIdPatchResponse400 | updateRuleApiV1RulesRuleIdPatchResponse401 | updateRuleApiV1RulesRuleIdPatchResponse403 | updateRuleApiV1RulesRuleIdPatchResponse404 | updateRuleApiV1RulesRuleIdPatchResponse409 | updateRuleApiV1RulesRuleIdPatchResponse413 | updateRuleApiV1RulesRuleIdPatchResponse422 | updateRuleApiV1RulesRuleIdPatchResponse429 | updateRuleApiV1RulesRuleIdPatchResponse500 | updateRuleApiV1RulesRuleIdPatchResponse502 | updateRuleApiV1RulesRuleIdPatchResponse503) & {
   headers: Headers;
 };
 
@@ -200,15 +400,65 @@ export type deleteRuleApiV1RulesRuleIdDeleteResponse204 = {
   status: 204
 }
 
+export type deleteRuleApiV1RulesRuleIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteRuleApiV1RulesRuleIdDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteRuleApiV1RulesRuleIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteRuleApiV1RulesRuleIdDeleteResponseSuccess = (deleteRuleApiV1RulesRuleIdDeleteResponse204) & {
   headers: Headers;
 };
-export type deleteRuleApiV1RulesRuleIdDeleteResponseError = (deleteRuleApiV1RulesRuleIdDeleteResponse422) & {
+export type deleteRuleApiV1RulesRuleIdDeleteResponseError = (deleteRuleApiV1RulesRuleIdDeleteResponse400 | deleteRuleApiV1RulesRuleIdDeleteResponse401 | deleteRuleApiV1RulesRuleIdDeleteResponse403 | deleteRuleApiV1RulesRuleIdDeleteResponse404 | deleteRuleApiV1RulesRuleIdDeleteResponse409 | deleteRuleApiV1RulesRuleIdDeleteResponse413 | deleteRuleApiV1RulesRuleIdDeleteResponse422 | deleteRuleApiV1RulesRuleIdDeleteResponse429 | deleteRuleApiV1RulesRuleIdDeleteResponse500 | deleteRuleApiV1RulesRuleIdDeleteResponse502 | deleteRuleApiV1RulesRuleIdDeleteResponse503) & {
   headers: Headers;
 };
 

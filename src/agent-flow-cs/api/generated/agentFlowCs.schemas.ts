@@ -945,6 +945,51 @@ export interface EnterpriseCodeSetRequest {
   enterprise_code: string;
 }
 
+/**
+ * 客户端可以稳定依赖的错误码。
+ */
+export type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
+
+
+export const ErrorCode = {
+  BAD_REQUEST: 'BAD_REQUEST',
+  INVALID_REQUEST: 'INVALID_REQUEST',
+  AUTHENTICATION_REQUIRED: 'AUTHENTICATION_REQUIRED',
+  INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
+  PERMISSION_DENIED: 'PERMISSION_DENIED',
+  RESOURCE_NOT_FOUND: 'RESOURCE_NOT_FOUND',
+  RESOURCE_CONFLICT: 'RESOURCE_CONFLICT',
+  METHOD_NOT_ALLOWED: 'METHOD_NOT_ALLOWED',
+  PAYLOAD_TOO_LARGE: 'PAYLOAD_TOO_LARGE',
+  RATE_LIMITED: 'RATE_LIMITED',
+  FEATURE_DISABLED: 'FEATURE_DISABLED',
+  UPSTREAM_FAILURE: 'UPSTREAM_FAILURE',
+  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
+  DIGITAL_HUMAN_INACTIVE: 'DIGITAL_HUMAN_INACTIVE',
+  DIGITAL_HUMAN_NAME_CONFLICT: 'DIGITAL_HUMAN_NAME_CONFLICT',
+  DIGITAL_HUMAN_NOT_ASSIGNED: 'DIGITAL_HUMAN_NOT_ASSIGNED',
+  KNOWLEDGE_BASE_DISABLED: 'KNOWLEDGE_BASE_DISABLED',
+  KNOWLEDGE_COLLECTION_FORBIDDEN: 'KNOWLEDGE_COLLECTION_FORBIDDEN',
+} as const;
+
+/**
+ * 单个请求字段的安全校验信息。
+ */
+export interface ValidationIssue {
+  field: string;
+  message: string;
+}
+
+/**
+ * 所有 API 错误共享的最小响应结构。
+ */
+export interface ErrorResponse {
+  code: ErrorCode;
+  message: string;
+  errors?: ValidationIssue[] | null;
+}
+
 export type FollowupStateResponseStrategyJson = { [key: string]: unknown };
 
 export interface FollowupStateResponse {
@@ -994,20 +1039,6 @@ export interface FollowupStrategyRequest {
      * @maximum 365
      */
   valid_days?: number;
-}
-
-export type ValidationErrorCtx = { [key: string]: unknown };
-
-export interface ValidationError {
-  loc: (string | number)[];
-  msg: string;
-  type: string;
-  input?: unknown;
-  ctx?: ValidationErrorCtx;
-}
-
-export interface HTTPValidationError {
-  detail?: ValidationError[];
 }
 
 /**

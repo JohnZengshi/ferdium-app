@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   ListBotsApiV1TelegramBotsGetParams,
   TelegramBotCreateRequest,
   TelegramBotListResponse,
@@ -22,15 +22,65 @@ export type listBotsApiV1TelegramBotsGetResponse200 = {
   status: 200
 }
 
+export type listBotsApiV1TelegramBotsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listBotsApiV1TelegramBotsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listBotsApiV1TelegramBotsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listBotsApiV1TelegramBotsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listBotsApiV1TelegramBotsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listBotsApiV1TelegramBotsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listBotsApiV1TelegramBotsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listBotsApiV1TelegramBotsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listBotsApiV1TelegramBotsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listBotsApiV1TelegramBotsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listBotsApiV1TelegramBotsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listBotsApiV1TelegramBotsGetResponseSuccess = (listBotsApiV1TelegramBotsGetResponse200) & {
   headers: Headers;
 };
-export type listBotsApiV1TelegramBotsGetResponseError = (listBotsApiV1TelegramBotsGetResponse422) & {
+export type listBotsApiV1TelegramBotsGetResponseError = (listBotsApiV1TelegramBotsGetResponse400 | listBotsApiV1TelegramBotsGetResponse401 | listBotsApiV1TelegramBotsGetResponse403 | listBotsApiV1TelegramBotsGetResponse404 | listBotsApiV1TelegramBotsGetResponse409 | listBotsApiV1TelegramBotsGetResponse413 | listBotsApiV1TelegramBotsGetResponse422 | listBotsApiV1TelegramBotsGetResponse429 | listBotsApiV1TelegramBotsGetResponse500 | listBotsApiV1TelegramBotsGetResponse502 | listBotsApiV1TelegramBotsGetResponse503) & {
   headers: Headers;
 };
 
@@ -72,15 +122,65 @@ export type createBotApiV1TelegramBotsPostResponse201 = {
   status: 201
 }
 
+export type createBotApiV1TelegramBotsPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createBotApiV1TelegramBotsPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createBotApiV1TelegramBotsPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createBotApiV1TelegramBotsPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createBotApiV1TelegramBotsPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createBotApiV1TelegramBotsPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createBotApiV1TelegramBotsPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createBotApiV1TelegramBotsPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createBotApiV1TelegramBotsPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createBotApiV1TelegramBotsPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createBotApiV1TelegramBotsPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createBotApiV1TelegramBotsPostResponseSuccess = (createBotApiV1TelegramBotsPostResponse201) & {
   headers: Headers;
 };
-export type createBotApiV1TelegramBotsPostResponseError = (createBotApiV1TelegramBotsPostResponse422) & {
+export type createBotApiV1TelegramBotsPostResponseError = (createBotApiV1TelegramBotsPostResponse400 | createBotApiV1TelegramBotsPostResponse401 | createBotApiV1TelegramBotsPostResponse403 | createBotApiV1TelegramBotsPostResponse404 | createBotApiV1TelegramBotsPostResponse409 | createBotApiV1TelegramBotsPostResponse413 | createBotApiV1TelegramBotsPostResponse422 | createBotApiV1TelegramBotsPostResponse429 | createBotApiV1TelegramBotsPostResponse500 | createBotApiV1TelegramBotsPostResponse502 | createBotApiV1TelegramBotsPostResponse503) & {
   headers: Headers;
 };
 
@@ -115,15 +215,65 @@ export type getBotApiV1TelegramBotsBotIdGetResponse200 = {
   status: 200
 }
 
+export type getBotApiV1TelegramBotsBotIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getBotApiV1TelegramBotsBotIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getBotApiV1TelegramBotsBotIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getBotApiV1TelegramBotsBotIdGetResponseSuccess = (getBotApiV1TelegramBotsBotIdGetResponse200) & {
   headers: Headers;
 };
-export type getBotApiV1TelegramBotsBotIdGetResponseError = (getBotApiV1TelegramBotsBotIdGetResponse422) & {
+export type getBotApiV1TelegramBotsBotIdGetResponseError = (getBotApiV1TelegramBotsBotIdGetResponse400 | getBotApiV1TelegramBotsBotIdGetResponse401 | getBotApiV1TelegramBotsBotIdGetResponse403 | getBotApiV1TelegramBotsBotIdGetResponse404 | getBotApiV1TelegramBotsBotIdGetResponse409 | getBotApiV1TelegramBotsBotIdGetResponse413 | getBotApiV1TelegramBotsBotIdGetResponse422 | getBotApiV1TelegramBotsBotIdGetResponse429 | getBotApiV1TelegramBotsBotIdGetResponse500 | getBotApiV1TelegramBotsBotIdGetResponse502 | getBotApiV1TelegramBotsBotIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -158,15 +308,65 @@ export type updateBotApiV1TelegramBotsBotIdPatchResponse200 = {
   status: 200
 }
 
+export type updateBotApiV1TelegramBotsBotIdPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateBotApiV1TelegramBotsBotIdPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateBotApiV1TelegramBotsBotIdPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateBotApiV1TelegramBotsBotIdPatchResponseSuccess = (updateBotApiV1TelegramBotsBotIdPatchResponse200) & {
   headers: Headers;
 };
-export type updateBotApiV1TelegramBotsBotIdPatchResponseError = (updateBotApiV1TelegramBotsBotIdPatchResponse422) & {
+export type updateBotApiV1TelegramBotsBotIdPatchResponseError = (updateBotApiV1TelegramBotsBotIdPatchResponse400 | updateBotApiV1TelegramBotsBotIdPatchResponse401 | updateBotApiV1TelegramBotsBotIdPatchResponse403 | updateBotApiV1TelegramBotsBotIdPatchResponse404 | updateBotApiV1TelegramBotsBotIdPatchResponse409 | updateBotApiV1TelegramBotsBotIdPatchResponse413 | updateBotApiV1TelegramBotsBotIdPatchResponse422 | updateBotApiV1TelegramBotsBotIdPatchResponse429 | updateBotApiV1TelegramBotsBotIdPatchResponse500 | updateBotApiV1TelegramBotsBotIdPatchResponse502 | updateBotApiV1TelegramBotsBotIdPatchResponse503) & {
   headers: Headers;
 };
 
@@ -202,15 +402,65 @@ export type deleteBotApiV1TelegramBotsBotIdDeleteResponse204 = {
   status: 204
 }
 
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteBotApiV1TelegramBotsBotIdDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteBotApiV1TelegramBotsBotIdDeleteResponseSuccess = (deleteBotApiV1TelegramBotsBotIdDeleteResponse204) & {
   headers: Headers;
 };
-export type deleteBotApiV1TelegramBotsBotIdDeleteResponseError = (deleteBotApiV1TelegramBotsBotIdDeleteResponse422) & {
+export type deleteBotApiV1TelegramBotsBotIdDeleteResponseError = (deleteBotApiV1TelegramBotsBotIdDeleteResponse400 | deleteBotApiV1TelegramBotsBotIdDeleteResponse401 | deleteBotApiV1TelegramBotsBotIdDeleteResponse403 | deleteBotApiV1TelegramBotsBotIdDeleteResponse404 | deleteBotApiV1TelegramBotsBotIdDeleteResponse409 | deleteBotApiV1TelegramBotsBotIdDeleteResponse413 | deleteBotApiV1TelegramBotsBotIdDeleteResponse422 | deleteBotApiV1TelegramBotsBotIdDeleteResponse429 | deleteBotApiV1TelegramBotsBotIdDeleteResponse500 | deleteBotApiV1TelegramBotsBotIdDeleteResponse502 | deleteBotApiV1TelegramBotsBotIdDeleteResponse503) & {
   headers: Headers;
 };
 
@@ -245,15 +495,65 @@ export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse200 = {
   status: 200
 }
 
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponseSuccess = (verifyTokenApiV1TelegramBotsVerifyTokenPostResponse200) & {
   headers: Headers;
 };
-export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponseError = (verifyTokenApiV1TelegramBotsVerifyTokenPostResponse422) & {
+export type verifyTokenApiV1TelegramBotsVerifyTokenPostResponseError = (verifyTokenApiV1TelegramBotsVerifyTokenPostResponse400 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse401 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse403 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse404 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse409 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse413 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse422 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse429 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse500 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse502 | verifyTokenApiV1TelegramBotsVerifyTokenPostResponse503) & {
   headers: Headers;
 };
 
@@ -288,15 +588,65 @@ export type testBotApiV1TelegramBotsBotIdTestPostResponse200 = {
   status: 200
 }
 
+export type testBotApiV1TelegramBotsBotIdTestPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type testBotApiV1TelegramBotsBotIdTestPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type testBotApiV1TelegramBotsBotIdTestPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type testBotApiV1TelegramBotsBotIdTestPostResponseSuccess = (testBotApiV1TelegramBotsBotIdTestPostResponse200) & {
   headers: Headers;
 };
-export type testBotApiV1TelegramBotsBotIdTestPostResponseError = (testBotApiV1TelegramBotsBotIdTestPostResponse422) & {
+export type testBotApiV1TelegramBotsBotIdTestPostResponseError = (testBotApiV1TelegramBotsBotIdTestPostResponse400 | testBotApiV1TelegramBotsBotIdTestPostResponse401 | testBotApiV1TelegramBotsBotIdTestPostResponse403 | testBotApiV1TelegramBotsBotIdTestPostResponse404 | testBotApiV1TelegramBotsBotIdTestPostResponse409 | testBotApiV1TelegramBotsBotIdTestPostResponse413 | testBotApiV1TelegramBotsBotIdTestPostResponse422 | testBotApiV1TelegramBotsBotIdTestPostResponse429 | testBotApiV1TelegramBotsBotIdTestPostResponse500 | testBotApiV1TelegramBotsBotIdTestPostResponse502 | testBotApiV1TelegramBotsBotIdTestPostResponse503) & {
   headers: Headers;
 };
 

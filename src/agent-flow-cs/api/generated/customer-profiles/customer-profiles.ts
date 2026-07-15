@@ -7,7 +7,7 @@
 import type {
   AppApiSchemasOwnersCustomerProfileListResponse,
   CustomerProfileResponse,
-  HTTPValidationError,
+  ErrorResponse,
   ListCustomerProfilesApiV1CustomerProfilesGetParams,
   ToggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchParams
 } from '../agentFlowCs.schemas';
@@ -19,15 +19,65 @@ export type listCustomerProfilesApiV1CustomerProfilesGetResponse200 = {
   status: 200
 }
 
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listCustomerProfilesApiV1CustomerProfilesGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listCustomerProfilesApiV1CustomerProfilesGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listCustomerProfilesApiV1CustomerProfilesGetResponseSuccess = (listCustomerProfilesApiV1CustomerProfilesGetResponse200) & {
   headers: Headers;
 };
-export type listCustomerProfilesApiV1CustomerProfilesGetResponseError = (listCustomerProfilesApiV1CustomerProfilesGetResponse422) & {
+export type listCustomerProfilesApiV1CustomerProfilesGetResponseError = (listCustomerProfilesApiV1CustomerProfilesGetResponse400 | listCustomerProfilesApiV1CustomerProfilesGetResponse401 | listCustomerProfilesApiV1CustomerProfilesGetResponse403 | listCustomerProfilesApiV1CustomerProfilesGetResponse404 | listCustomerProfilesApiV1CustomerProfilesGetResponse409 | listCustomerProfilesApiV1CustomerProfilesGetResponse413 | listCustomerProfilesApiV1CustomerProfilesGetResponse422 | listCustomerProfilesApiV1CustomerProfilesGetResponse429 | listCustomerProfilesApiV1CustomerProfilesGetResponse500 | listCustomerProfilesApiV1CustomerProfilesGetResponse502 | listCustomerProfilesApiV1CustomerProfilesGetResponse503) & {
   headers: Headers;
 };
 
@@ -69,15 +119,65 @@ export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse200
   status: 200
 }
 
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseSuccess = (toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse200) & {
   headers: Headers;
 };
-export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseError = (toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse422) & {
+export type toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponseError = (toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse400 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse401 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse403 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse404 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse409 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse413 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse422 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse429 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse500 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse502 | toggleHeavyFanApiV1CustomerProfilesProfileIdHeavyFanPatchResponse503) & {
   headers: Headers;
 };
 

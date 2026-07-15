@@ -11,7 +11,7 @@ import type {
   DigitalHumanCreateRequest,
   DigitalHumanGenerateRequest,
   DigitalHumanUpdateRequest,
-  HTTPValidationError,
+  ErrorResponse,
   ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGet200,
   UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelete200,
   UnassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteParams
@@ -24,15 +24,65 @@ export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse200
   status: 200
 }
 
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponseSuccess = (generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse200) & {
   headers: Headers;
 };
-export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponseError = (generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse422) & {
+export type generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponseError = (generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse400 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse401 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse403 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse404 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse409 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse413 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse422 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse429 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse500 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse502 | generateDigitalHumanPersonaApiV1DigitalHumansGeneratePostResponse503) & {
   headers: Headers;
 };
 
@@ -71,12 +121,69 @@ export type listDigitalHumansApiV1DigitalHumansGetResponse200 = {
   status: 200
 }
 
+export type listDigitalHumansApiV1DigitalHumansGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listDigitalHumansApiV1DigitalHumansGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type listDigitalHumansApiV1DigitalHumansGetResponseSuccess = (listDigitalHumansApiV1DigitalHumansGetResponse200) & {
   headers: Headers;
 };
-;
+export type listDigitalHumansApiV1DigitalHumansGetResponseError = (listDigitalHumansApiV1DigitalHumansGetResponse400 | listDigitalHumansApiV1DigitalHumansGetResponse401 | listDigitalHumansApiV1DigitalHumansGetResponse403 | listDigitalHumansApiV1DigitalHumansGetResponse404 | listDigitalHumansApiV1DigitalHumansGetResponse409 | listDigitalHumansApiV1DigitalHumansGetResponse413 | listDigitalHumansApiV1DigitalHumansGetResponse422 | listDigitalHumansApiV1DigitalHumansGetResponse429 | listDigitalHumansApiV1DigitalHumansGetResponse500 | listDigitalHumansApiV1DigitalHumansGetResponse502 | listDigitalHumansApiV1DigitalHumansGetResponse503) & {
+  headers: Headers;
+};
 
-export type listDigitalHumansApiV1DigitalHumansGetResponse = (listDigitalHumansApiV1DigitalHumansGetResponseSuccess)
+export type listDigitalHumansApiV1DigitalHumansGetResponse = (listDigitalHumansApiV1DigitalHumansGetResponseSuccess | listDigitalHumansApiV1DigitalHumansGetResponseError)
 
 export const getListDigitalHumansApiV1DigitalHumansGetUrl = () => {
 
@@ -107,15 +214,65 @@ export type createDigitalHumanApiV1DigitalHumansPostResponse200 = {
   status: 200
 }
 
+export type createDigitalHumanApiV1DigitalHumansPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createDigitalHumanApiV1DigitalHumansPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createDigitalHumanApiV1DigitalHumansPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createDigitalHumanApiV1DigitalHumansPostResponseSuccess = (createDigitalHumanApiV1DigitalHumansPostResponse200) & {
   headers: Headers;
 };
-export type createDigitalHumanApiV1DigitalHumansPostResponseError = (createDigitalHumanApiV1DigitalHumansPostResponse422) & {
+export type createDigitalHumanApiV1DigitalHumansPostResponseError = (createDigitalHumanApiV1DigitalHumansPostResponse400 | createDigitalHumanApiV1DigitalHumansPostResponse401 | createDigitalHumanApiV1DigitalHumansPostResponse403 | createDigitalHumanApiV1DigitalHumansPostResponse404 | createDigitalHumanApiV1DigitalHumansPostResponse409 | createDigitalHumanApiV1DigitalHumansPostResponse413 | createDigitalHumanApiV1DigitalHumansPostResponse422 | createDigitalHumanApiV1DigitalHumansPostResponse429 | createDigitalHumanApiV1DigitalHumansPostResponse500 | createDigitalHumanApiV1DigitalHumansPostResponse502 | createDigitalHumanApiV1DigitalHumansPostResponse503) & {
   headers: Headers;
 };
 
@@ -150,15 +307,65 @@ export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse200 = {
   status: 200
 }
 
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseSuccess = (getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse200) & {
   headers: Headers;
 };
-export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseError = (getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse422) & {
+export type getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponseError = (getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse400 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse401 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse403 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse404 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse409 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse413 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse422 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse429 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse500 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse502 | getDigitalHumanApiV1DigitalHumansDigitalHumanIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -193,15 +400,65 @@ export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse200 = {
   status: 200
 }
 
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseSuccess = (updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse200) & {
   headers: Headers;
 };
-export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseError = (updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse422) & {
+export type updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponseError = (updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse400 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse401 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse403 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse404 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse409 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse413 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse422 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse429 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse500 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse502 | updateDigitalHumanApiV1DigitalHumansDigitalHumanIdPutResponse503) & {
   headers: Headers;
 };
 
@@ -237,15 +494,65 @@ export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse204 
   status: 204
 }
 
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseSuccess = (deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse204) & {
   headers: Headers;
 };
-export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseError = (deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse422) & {
+export type deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponseError = (deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse400 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse401 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse403 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse404 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse409 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse413 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse422 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse429 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse500 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse502 | deleteDigitalHumanApiV1DigitalHumansDigitalHumanIdDeleteResponse503) & {
   headers: Headers;
 };
 
@@ -283,15 +590,65 @@ export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostRes
   status: 201
 }
 
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseSuccess = (assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse201) & {
   headers: Headers;
 };
-export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseError = (assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse422) & {
+export type assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponseError = (assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse400 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse401 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse403 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse404 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse409 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse413 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse422 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse429 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse500 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse502 | assignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsPostResponse503) & {
   headers: Headers;
 };
 
@@ -335,15 +692,65 @@ export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDelet
   status: 200
 }
 
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseSuccess = (unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse200) & {
   headers: Headers;
 };
-export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseError = (unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse422) & {
+export type unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponseError = (unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse400 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse401 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse403 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse404 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse409 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse413 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse422 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse429 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse500 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse502 | unassignDigitalHumanApiV1DigitalHumansDigitalHumanIdAssignmentsDeleteResponse503) & {
   headers: Headers;
 };
 
@@ -387,15 +794,65 @@ export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmen
   status: 200
 }
 
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseSuccess = (listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse200) & {
   headers: Headers;
 };
-export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseError = (listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse422) & {
+export type listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponseError = (listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse400 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse401 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse403 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse404 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse409 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse413 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse422 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse429 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse500 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse502 | listDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmentsGetResponse503) & {
   headers: Headers;
 };
 

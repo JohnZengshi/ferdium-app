@@ -7,10 +7,10 @@
 import type {
   BodySendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPost,
   CreateInstanceApiV1TelegramInstancesPost201,
+  ErrorResponse,
   GetTelegramBindingApiV1TelegramBindGetParams,
   GetTelegramInstanceApiV1TelegramInstancesInstanceIdGet200,
   GetTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGet200,
-  HTTPValidationError,
   ListTelegramChatsApiV1TelegramInstancesInstanceIdChatsGet200Item,
   ListTelegramInstancesApiV1TelegramInstancesGet200Item,
   ListTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGet200Item,
@@ -39,15 +39,65 @@ export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse200 = {
   status: 200
 }
 
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponseSuccess = (telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse200) & {
   headers: Headers;
 };
-export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponseError = (telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse422) & {
+export type telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponseError = (telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse400 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse401 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse403 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse404 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse409 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse413 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse422 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse429 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse500 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse502 | telegramWebhookApiV1TelegramWebhooksInstanceIdPostResponse503) & {
   headers: Headers;
 };
 
@@ -82,12 +132,69 @@ export type listTelegramInstancesApiV1TelegramInstancesGetResponse200 = {
   status: 200
 }
 
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type listTelegramInstancesApiV1TelegramInstancesGetResponseSuccess = (listTelegramInstancesApiV1TelegramInstancesGetResponse200) & {
   headers: Headers;
 };
-;
+export type listTelegramInstancesApiV1TelegramInstancesGetResponseError = (listTelegramInstancesApiV1TelegramInstancesGetResponse400 | listTelegramInstancesApiV1TelegramInstancesGetResponse401 | listTelegramInstancesApiV1TelegramInstancesGetResponse403 | listTelegramInstancesApiV1TelegramInstancesGetResponse404 | listTelegramInstancesApiV1TelegramInstancesGetResponse409 | listTelegramInstancesApiV1TelegramInstancesGetResponse413 | listTelegramInstancesApiV1TelegramInstancesGetResponse422 | listTelegramInstancesApiV1TelegramInstancesGetResponse429 | listTelegramInstancesApiV1TelegramInstancesGetResponse500 | listTelegramInstancesApiV1TelegramInstancesGetResponse502 | listTelegramInstancesApiV1TelegramInstancesGetResponse503) & {
+  headers: Headers;
+};
 
-export type listTelegramInstancesApiV1TelegramInstancesGetResponse = (listTelegramInstancesApiV1TelegramInstancesGetResponseSuccess)
+export type listTelegramInstancesApiV1TelegramInstancesGetResponse = (listTelegramInstancesApiV1TelegramInstancesGetResponseSuccess | listTelegramInstancesApiV1TelegramInstancesGetResponseError)
 
 export const getListTelegramInstancesApiV1TelegramInstancesGetUrl = () => {
 
@@ -117,15 +224,65 @@ export type createInstanceApiV1TelegramInstancesPostResponse201 = {
   status: 201
 }
 
+export type createInstanceApiV1TelegramInstancesPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createInstanceApiV1TelegramInstancesPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createInstanceApiV1TelegramInstancesPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createInstanceApiV1TelegramInstancesPostResponseSuccess = (createInstanceApiV1TelegramInstancesPostResponse201) & {
   headers: Headers;
 };
-export type createInstanceApiV1TelegramInstancesPostResponseError = (createInstanceApiV1TelegramInstancesPostResponse422) & {
+export type createInstanceApiV1TelegramInstancesPostResponseError = (createInstanceApiV1TelegramInstancesPostResponse400 | createInstanceApiV1TelegramInstancesPostResponse401 | createInstanceApiV1TelegramInstancesPostResponse403 | createInstanceApiV1TelegramInstancesPostResponse404 | createInstanceApiV1TelegramInstancesPostResponse409 | createInstanceApiV1TelegramInstancesPostResponse413 | createInstanceApiV1TelegramInstancesPostResponse422 | createInstanceApiV1TelegramInstancesPostResponse429 | createInstanceApiV1TelegramInstancesPostResponse500 | createInstanceApiV1TelegramInstancesPostResponse502 | createInstanceApiV1TelegramInstancesPostResponse503) & {
   headers: Headers;
 };
 
@@ -163,12 +320,69 @@ export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse200
   status: 200
 }
 
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponseSuccess = (instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse200) & {
   headers: Headers;
 };
-;
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponseError = (instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse400 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse401 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse403 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse404 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse409 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse413 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse422 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse429 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse500 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse502 | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse503) & {
+  headers: Headers;
+};
 
-export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse = (instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponseSuccess)
+export type instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponse = (instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponseSuccess | instanceStatusStreamApiV1TelegramInstancesStatusStreamGetResponseError)
 
 export const getInstanceStatusStreamApiV1TelegramInstancesStatusStreamGetUrl = () => {
 
@@ -198,15 +412,65 @@ export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse200 = 
   status: 200
 }
 
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponseSuccess = (getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse200) & {
   headers: Headers;
 };
-export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponseError = (getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse422) & {
+export type getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponseError = (getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse400 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse401 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse403 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse404 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse409 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse413 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse422 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse429 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse500 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse502 | getTelegramInstanceApiV1TelegramInstancesInstanceIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -235,20 +499,166 @@ export const getTelegramInstanceApiV1TelegramInstancesInstanceIdGet = async (ins
 );}
 
 
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse204 = {
+  data: void
+  status: 204
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponseSuccess = (deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse204) & {
+  headers: Headers;
+};
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponseError = (deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse400 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse401 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse403 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse404 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse409 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse413 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse422 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse429 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse500 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse502 | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse503) & {
+  headers: Headers;
+};
+
+export type deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse = (deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponseSuccess | deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponseError)
+
+export const getDeleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteUrl = (instanceId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/telegram/instances/${instanceId}`
+}
+
+/**
+ * 彻底删除 Telegram instance：注销 Flux webhook → 删除远端 instance → 硬删本地 binding。
+ *
+ * 远端 instance 已不存在（404）视为终态达成，仍清理本地 binding。
+ * 远端其他错误保留本地 binding 供重试。
+ * @summary Delete Telegram Instance
+ */
+export const deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDelete = async (instanceId: string, options?: RequestInit): Promise<deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse> => {
+
+  return useCustomInstance<deleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteResponse>(getDeleteTelegramInstanceApiV1TelegramInstancesInstanceIdDeleteUrl(instanceId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
 export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse200 = {
   data: GetTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGet200
   status: 200
 }
 
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponseSuccess = (getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse200) & {
   headers: Headers;
 };
-export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponseError = (getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse422) & {
+export type getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponseError = (getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse400 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse401 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse403 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse404 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse409 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse413 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse422 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse429 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse500 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse502 | getTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGetResponse503) & {
   headers: Headers;
 };
 
@@ -282,15 +692,65 @@ export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse200 =
   status: 200
 }
 
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponseSuccess = (loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse200) & {
   headers: Headers;
 };
-export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponseError = (loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse422) & {
+export type loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponseError = (loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse400 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse401 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse403 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse404 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse409 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse413 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse422 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse429 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse500 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse502 | loginQrStreamApiV1TelegramInstancesInstanceIdLoginQrGetResponse503) & {
   headers: Headers;
 };
 
@@ -325,15 +785,65 @@ export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse
   status: 200
 }
 
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponseSuccess = (stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse200) & {
   headers: Headers;
 };
-export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponseError = (stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse422) & {
+export type stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponseError = (stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse400 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse401 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse403 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse404 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse409 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse413 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse422 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse429 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse500 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse502 | stopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPostResponse503) & {
   headers: Headers;
 };
 
@@ -367,15 +877,65 @@ export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse200
   status: 200
 }
 
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponseSuccess = (listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse200) & {
   headers: Headers;
 };
-export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponseError = (listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse422) & {
+export type listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponseError = (listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse400 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse401 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse403 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse404 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse409 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse413 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse422 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse429 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse500 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse502 | listTelegramChatsApiV1TelegramInstancesInstanceIdChatsGetResponse503) & {
   headers: Headers;
 };
 
@@ -409,15 +969,65 @@ export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessa
   status: 200
 }
 
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponseSuccess = (listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse200) & {
   headers: Headers;
 };
-export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponseError = (listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse422) & {
+export type listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponseError = (listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse400 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse401 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse403 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse404 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse409 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse413 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse422 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse429 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse500 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse502 | listTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetResponse503) & {
   headers: Headers;
 };
 
@@ -462,15 +1072,65 @@ export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesP
   status: 200
 }
 
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponseSuccess = (sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse200) & {
   headers: Headers;
 };
-export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponseError = (sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse422) & {
+export type sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponseError = (sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse400 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse401 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse403 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse404 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse409 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse413 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse422 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse429 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse500 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse502 | sendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPostResponse503) & {
   headers: Headers;
 };
 
@@ -507,15 +1167,65 @@ export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPos
   status: 200
 }
 
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponseSuccess = (sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse200) & {
   headers: Headers;
 };
-export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponseError = (sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse422) & {
+export type sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponseError = (sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse400 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse401 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse403 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse404 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse409 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse413 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse422 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse429 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse500 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse502 | sendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPostResponse503) & {
   headers: Headers;
 };
 
@@ -557,15 +1267,65 @@ export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStream
   status: 200
 }
 
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponseSuccess = (telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse200) & {
   headers: Headers;
 };
-export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponseError = (telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse422) & {
+export type telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponseError = (telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse400 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse401 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse403 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse404 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse409 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse413 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse422 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse429 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse500 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse502 | telegramMessagesStreamApiV1TelegramInstancesInstanceIdMessagesStreamGetResponse503) & {
   headers: Headers;
 };
 
@@ -599,15 +1359,65 @@ export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGet
   status: 200
 }
 
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponseSuccess = (telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse200) & {
   headers: Headers;
 };
-export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponseError = (telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse422) & {
+export type telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponseError = (telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse400 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse401 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse403 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse404 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse409 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse413 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse422 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse429 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse500 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse502 | telegramChatPhotoApiV1TelegramInstancesInstanceIdChatsChatIdPhotoGetResponse503) & {
   headers: Headers;
 };
 
@@ -643,15 +1453,65 @@ export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactI
   status: 200
 }
 
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponseSuccess = (telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse200) & {
   headers: Headers;
 };
-export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponseError = (telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse422) & {
+export type telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponseError = (telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse400 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse401 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse403 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse404 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse409 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse413 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse422 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse429 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse500 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse502 | telegramContactPhotoApiV1TelegramInstancesInstanceIdContactsContactIdPhotoGetResponse503) & {
   headers: Headers;
 };
 
@@ -687,15 +1547,65 @@ export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse200 
   status: 200
 }
 
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponseSuccess = (loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse200) & {
   headers: Headers;
 };
-export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponseError = (loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse422) & {
+export type loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponseError = (loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse400 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse401 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse403 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse404 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse409 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse413 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse422 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse429 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse500 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse502 | loginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePostResponse503) & {
   headers: Headers;
 };
 
@@ -730,15 +1640,65 @@ export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse200 = 
   status: 200
 }
 
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponseSuccess = (loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse200) & {
   headers: Headers;
 };
-export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponseError = (loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse422) & {
+export type loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponseError = (loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse400 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse401 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse403 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse404 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse409 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse413 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse422 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse429 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse500 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse502 | loginCodeApiV1TelegramInstancesInstanceIdLoginCodePostResponse503) & {
   headers: Headers;
 };
 
@@ -773,15 +1733,65 @@ export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostRespon
   status: 200
 }
 
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponseSuccess = (loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse200) & {
   headers: Headers;
 };
-export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponseError = (loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse422) & {
+export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponseError = (loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse400 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse401 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse403 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse404 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse409 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse413 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse422 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse429 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse500 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse502 | loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse503) & {
   headers: Headers;
 };
 
@@ -816,15 +1826,65 @@ export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse201 = 
   status: 201
 }
 
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponseSuccess = (startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse201) & {
   headers: Headers;
 };
-export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponseError = (startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse422) & {
+export type startInstanceApiV1TelegramInstancesInstanceIdStartPostResponseError = (startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse400 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse401 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse403 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse404 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse409 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse413 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse422 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse429 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse500 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse502 | startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse503) & {
   headers: Headers;
 };
 
@@ -861,15 +1921,65 @@ export type createTelegramBindingApiV1TelegramBindPostResponse201 = {
   status: 201
 }
 
+export type createTelegramBindingApiV1TelegramBindPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createTelegramBindingApiV1TelegramBindPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createTelegramBindingApiV1TelegramBindPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createTelegramBindingApiV1TelegramBindPostResponseSuccess = (createTelegramBindingApiV1TelegramBindPostResponse201) & {
   headers: Headers;
 };
-export type createTelegramBindingApiV1TelegramBindPostResponseError = (createTelegramBindingApiV1TelegramBindPostResponse422) & {
+export type createTelegramBindingApiV1TelegramBindPostResponseError = (createTelegramBindingApiV1TelegramBindPostResponse400 | createTelegramBindingApiV1TelegramBindPostResponse401 | createTelegramBindingApiV1TelegramBindPostResponse403 | createTelegramBindingApiV1TelegramBindPostResponse404 | createTelegramBindingApiV1TelegramBindPostResponse409 | createTelegramBindingApiV1TelegramBindPostResponse413 | createTelegramBindingApiV1TelegramBindPostResponse422 | createTelegramBindingApiV1TelegramBindPostResponse429 | createTelegramBindingApiV1TelegramBindPostResponse500 | createTelegramBindingApiV1TelegramBindPostResponse502 | createTelegramBindingApiV1TelegramBindPostResponse503) & {
   headers: Headers;
 };
 
@@ -906,15 +2016,65 @@ export type getTelegramBindingApiV1TelegramBindGetResponse200 = {
   status: 200
 }
 
+export type getTelegramBindingApiV1TelegramBindGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getTelegramBindingApiV1TelegramBindGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getTelegramBindingApiV1TelegramBindGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getTelegramBindingApiV1TelegramBindGetResponseSuccess = (getTelegramBindingApiV1TelegramBindGetResponse200) & {
   headers: Headers;
 };
-export type getTelegramBindingApiV1TelegramBindGetResponseError = (getTelegramBindingApiV1TelegramBindGetResponse422) & {
+export type getTelegramBindingApiV1TelegramBindGetResponseError = (getTelegramBindingApiV1TelegramBindGetResponse400 | getTelegramBindingApiV1TelegramBindGetResponse401 | getTelegramBindingApiV1TelegramBindGetResponse403 | getTelegramBindingApiV1TelegramBindGetResponse404 | getTelegramBindingApiV1TelegramBindGetResponse409 | getTelegramBindingApiV1TelegramBindGetResponse413 | getTelegramBindingApiV1TelegramBindGetResponse422 | getTelegramBindingApiV1TelegramBindGetResponse429 | getTelegramBindingApiV1TelegramBindGetResponse500 | getTelegramBindingApiV1TelegramBindGetResponse502 | getTelegramBindingApiV1TelegramBindGetResponse503) & {
   headers: Headers;
 };
 
@@ -956,15 +2116,65 @@ export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse200 =
   status: 200
 }
 
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponseSuccess = (switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse200) & {
   headers: Headers;
 };
-export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponseError = (switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse422) & {
+export type switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponseError = (switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse400 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse401 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse403 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse404 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse409 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse413 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse422 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse429 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse500 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse502 | switchTelegramBindingDigitalHumanApiV1TelegramBindPatchResponse503) & {
   headers: Headers;
 };
 
@@ -999,15 +2209,65 @@ export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse
   status: 200
 }
 
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponseSuccess = (pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse200) & {
   headers: Headers;
 };
-export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponseError = (pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse422) & {
+export type pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponseError = (pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse400 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse401 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse403 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse404 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse409 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse413 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse422 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse429 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse500 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse502 | pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePostResponse503) & {
   headers: Headers;
 };
 
@@ -1042,15 +2302,65 @@ export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostRespon
   status: 200
 }
 
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponseSuccess = (resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse200) & {
   headers: Headers;
 };
-export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponseError = (resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse422) & {
+export type resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponseError = (resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse400 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse401 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse403 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse404 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse409 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse413 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse422 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse429 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse500 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse502 | resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePostResponse503) & {
   headers: Headers;
 };
 

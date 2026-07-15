@@ -24,13 +24,13 @@ import type {
   CustomerProfileDetailResponse,
   DeleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteParams,
   DigitalHumanAdminUpdateRequest,
+  ErrorResponse,
   GetAgentStatsApiV1AdminStatsAgentStatsGetParams,
   GetConversationTrendsApiV1AdminStatsTrendsGetParams,
   GetLlmCostBreakdownApiV1AdminLlmCostBreakdownGetParams,
   GetLlmCostOwnersApiV1AdminLlmCostOwnersGetParams,
   GetLlmCostSummaryApiV1AdminLlmCostSummaryGetParams,
   GetLlmCostTrendsApiV1AdminLlmCostTrendsGetParams,
-  HTTPValidationError,
   HandoffListResponse,
   HealthCheckResponse,
   KnowledgeCollectionListResponse,
@@ -82,15 +82,65 @@ export type adminLoginApiV1AdminAuthLoginPostResponse200 = {
   status: 200
 }
 
+export type adminLoginApiV1AdminAuthLoginPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type adminLoginApiV1AdminAuthLoginPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type adminLoginApiV1AdminAuthLoginPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type adminLoginApiV1AdminAuthLoginPostResponseSuccess = (adminLoginApiV1AdminAuthLoginPostResponse200) & {
   headers: Headers;
 };
-export type adminLoginApiV1AdminAuthLoginPostResponseError = (adminLoginApiV1AdminAuthLoginPostResponse422) & {
+export type adminLoginApiV1AdminAuthLoginPostResponseError = (adminLoginApiV1AdminAuthLoginPostResponse400 | adminLoginApiV1AdminAuthLoginPostResponse401 | adminLoginApiV1AdminAuthLoginPostResponse403 | adminLoginApiV1AdminAuthLoginPostResponse404 | adminLoginApiV1AdminAuthLoginPostResponse409 | adminLoginApiV1AdminAuthLoginPostResponse413 | adminLoginApiV1AdminAuthLoginPostResponse422 | adminLoginApiV1AdminAuthLoginPostResponse429 | adminLoginApiV1AdminAuthLoginPostResponse500 | adminLoginApiV1AdminAuthLoginPostResponse502 | adminLoginApiV1AdminAuthLoginPostResponse503) & {
   headers: Headers;
 };
 
@@ -125,15 +175,65 @@ export type listAdminsApiV1AdminAdminsGetResponse200 = {
   status: 200
 }
 
+export type listAdminsApiV1AdminAdminsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listAdminsApiV1AdminAdminsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listAdminsApiV1AdminAdminsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listAdminsApiV1AdminAdminsGetResponseSuccess = (listAdminsApiV1AdminAdminsGetResponse200) & {
   headers: Headers;
 };
-export type listAdminsApiV1AdminAdminsGetResponseError = (listAdminsApiV1AdminAdminsGetResponse422) & {
+export type listAdminsApiV1AdminAdminsGetResponseError = (listAdminsApiV1AdminAdminsGetResponse400 | listAdminsApiV1AdminAdminsGetResponse401 | listAdminsApiV1AdminAdminsGetResponse403 | listAdminsApiV1AdminAdminsGetResponse404 | listAdminsApiV1AdminAdminsGetResponse409 | listAdminsApiV1AdminAdminsGetResponse413 | listAdminsApiV1AdminAdminsGetResponse422 | listAdminsApiV1AdminAdminsGetResponse429 | listAdminsApiV1AdminAdminsGetResponse500 | listAdminsApiV1AdminAdminsGetResponse502 | listAdminsApiV1AdminAdminsGetResponse503) & {
   headers: Headers;
 };
 
@@ -175,15 +275,65 @@ export type createAdminApiV1AdminAdminsPostResponse201 = {
   status: 201
 }
 
+export type createAdminApiV1AdminAdminsPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createAdminApiV1AdminAdminsPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createAdminApiV1AdminAdminsPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createAdminApiV1AdminAdminsPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createAdminApiV1AdminAdminsPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createAdminApiV1AdminAdminsPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createAdminApiV1AdminAdminsPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createAdminApiV1AdminAdminsPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createAdminApiV1AdminAdminsPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createAdminApiV1AdminAdminsPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createAdminApiV1AdminAdminsPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createAdminApiV1AdminAdminsPostResponseSuccess = (createAdminApiV1AdminAdminsPostResponse201) & {
   headers: Headers;
 };
-export type createAdminApiV1AdminAdminsPostResponseError = (createAdminApiV1AdminAdminsPostResponse422) & {
+export type createAdminApiV1AdminAdminsPostResponseError = (createAdminApiV1AdminAdminsPostResponse400 | createAdminApiV1AdminAdminsPostResponse401 | createAdminApiV1AdminAdminsPostResponse403 | createAdminApiV1AdminAdminsPostResponse404 | createAdminApiV1AdminAdminsPostResponse409 | createAdminApiV1AdminAdminsPostResponse413 | createAdminApiV1AdminAdminsPostResponse422 | createAdminApiV1AdminAdminsPostResponse429 | createAdminApiV1AdminAdminsPostResponse500 | createAdminApiV1AdminAdminsPostResponse502 | createAdminApiV1AdminAdminsPostResponse503) & {
   headers: Headers;
 };
 
@@ -218,15 +368,65 @@ export type getAdminApiV1AdminAdminsAdminIdGetResponse200 = {
   status: 200
 }
 
+export type getAdminApiV1AdminAdminsAdminIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getAdminApiV1AdminAdminsAdminIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getAdminApiV1AdminAdminsAdminIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getAdminApiV1AdminAdminsAdminIdGetResponseSuccess = (getAdminApiV1AdminAdminsAdminIdGetResponse200) & {
   headers: Headers;
 };
-export type getAdminApiV1AdminAdminsAdminIdGetResponseError = (getAdminApiV1AdminAdminsAdminIdGetResponse422) & {
+export type getAdminApiV1AdminAdminsAdminIdGetResponseError = (getAdminApiV1AdminAdminsAdminIdGetResponse400 | getAdminApiV1AdminAdminsAdminIdGetResponse401 | getAdminApiV1AdminAdminsAdminIdGetResponse403 | getAdminApiV1AdminAdminsAdminIdGetResponse404 | getAdminApiV1AdminAdminsAdminIdGetResponse409 | getAdminApiV1AdminAdminsAdminIdGetResponse413 | getAdminApiV1AdminAdminsAdminIdGetResponse422 | getAdminApiV1AdminAdminsAdminIdGetResponse429 | getAdminApiV1AdminAdminsAdminIdGetResponse500 | getAdminApiV1AdminAdminsAdminIdGetResponse502 | getAdminApiV1AdminAdminsAdminIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -261,15 +461,65 @@ export type updateAdminApiV1AdminAdminsAdminIdPatchResponse200 = {
   status: 200
 }
 
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateAdminApiV1AdminAdminsAdminIdPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateAdminApiV1AdminAdminsAdminIdPatchResponseSuccess = (updateAdminApiV1AdminAdminsAdminIdPatchResponse200) & {
   headers: Headers;
 };
-export type updateAdminApiV1AdminAdminsAdminIdPatchResponseError = (updateAdminApiV1AdminAdminsAdminIdPatchResponse422) & {
+export type updateAdminApiV1AdminAdminsAdminIdPatchResponseError = (updateAdminApiV1AdminAdminsAdminIdPatchResponse400 | updateAdminApiV1AdminAdminsAdminIdPatchResponse401 | updateAdminApiV1AdminAdminsAdminIdPatchResponse403 | updateAdminApiV1AdminAdminsAdminIdPatchResponse404 | updateAdminApiV1AdminAdminsAdminIdPatchResponse409 | updateAdminApiV1AdminAdminsAdminIdPatchResponse413 | updateAdminApiV1AdminAdminsAdminIdPatchResponse422 | updateAdminApiV1AdminAdminsAdminIdPatchResponse429 | updateAdminApiV1AdminAdminsAdminIdPatchResponse500 | updateAdminApiV1AdminAdminsAdminIdPatchResponse502 | updateAdminApiV1AdminAdminsAdminIdPatchResponse503) & {
   headers: Headers;
 };
 
@@ -305,15 +555,65 @@ export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse20
   status: 204
 }
 
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseSuccess = (resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse204) & {
   headers: Headers;
 };
-export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseError = (resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse422) & {
+export type resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponseError = (resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse400 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse401 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse403 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse404 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse409 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse413 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse422 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse429 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse500 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse502 | resetAdminPasswordApiV1AdminAdminsAdminIdResetPasswordPostResponse503) & {
   headers: Headers;
 };
 
@@ -349,15 +649,65 @@ export type createOwnerApiV1AdminAccountsOwnersPostResponse201 = {
   status: 201
 }
 
+export type createOwnerApiV1AdminAccountsOwnersPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createOwnerApiV1AdminAccountsOwnersPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createOwnerApiV1AdminAccountsOwnersPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createOwnerApiV1AdminAccountsOwnersPostResponseSuccess = (createOwnerApiV1AdminAccountsOwnersPostResponse201) & {
   headers: Headers;
 };
-export type createOwnerApiV1AdminAccountsOwnersPostResponseError = (createOwnerApiV1AdminAccountsOwnersPostResponse422) & {
+export type createOwnerApiV1AdminAccountsOwnersPostResponseError = (createOwnerApiV1AdminAccountsOwnersPostResponse400 | createOwnerApiV1AdminAccountsOwnersPostResponse401 | createOwnerApiV1AdminAccountsOwnersPostResponse403 | createOwnerApiV1AdminAccountsOwnersPostResponse404 | createOwnerApiV1AdminAccountsOwnersPostResponse409 | createOwnerApiV1AdminAccountsOwnersPostResponse413 | createOwnerApiV1AdminAccountsOwnersPostResponse422 | createOwnerApiV1AdminAccountsOwnersPostResponse429 | createOwnerApiV1AdminAccountsOwnersPostResponse500 | createOwnerApiV1AdminAccountsOwnersPostResponse502 | createOwnerApiV1AdminAccountsOwnersPostResponse503) & {
   headers: Headers;
 };
 
@@ -392,15 +742,65 @@ export type listOwnersApiV1AdminAccountsOwnersGetResponse200 = {
   status: 200
 }
 
+export type listOwnersApiV1AdminAccountsOwnersGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listOwnersApiV1AdminAccountsOwnersGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listOwnersApiV1AdminAccountsOwnersGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listOwnersApiV1AdminAccountsOwnersGetResponseSuccess = (listOwnersApiV1AdminAccountsOwnersGetResponse200) & {
   headers: Headers;
 };
-export type listOwnersApiV1AdminAccountsOwnersGetResponseError = (listOwnersApiV1AdminAccountsOwnersGetResponse422) & {
+export type listOwnersApiV1AdminAccountsOwnersGetResponseError = (listOwnersApiV1AdminAccountsOwnersGetResponse400 | listOwnersApiV1AdminAccountsOwnersGetResponse401 | listOwnersApiV1AdminAccountsOwnersGetResponse403 | listOwnersApiV1AdminAccountsOwnersGetResponse404 | listOwnersApiV1AdminAccountsOwnersGetResponse409 | listOwnersApiV1AdminAccountsOwnersGetResponse413 | listOwnersApiV1AdminAccountsOwnersGetResponse422 | listOwnersApiV1AdminAccountsOwnersGetResponse429 | listOwnersApiV1AdminAccountsOwnersGetResponse500 | listOwnersApiV1AdminAccountsOwnersGetResponse502 | listOwnersApiV1AdminAccountsOwnersGetResponse503) & {
   headers: Headers;
 };
 
@@ -442,15 +842,65 @@ export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse200 = {
   status: 200
 }
 
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseSuccess = (getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse200) & {
   headers: Headers;
 };
-export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseError = (getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse422) & {
+export type getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponseError = (getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse400 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse401 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse403 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse404 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse409 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse413 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse422 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse429 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse500 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse502 | getOwnerWithMembersApiV1AdminAccountsOwnersOwnerIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -485,15 +935,65 @@ export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse200 =
   status: 200
 }
 
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseSuccess = (suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse200) & {
   headers: Headers;
 };
-export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseError = (suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse422) & {
+export type suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponseError = (suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse400 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse401 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse403 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse404 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse409 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse413 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse422 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse429 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse500 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse502 | suspendOwnerApiV1AdminAccountsOwnersOwnerIdSuspendPatchResponse503) & {
   headers: Headers;
 };
 
@@ -529,15 +1029,65 @@ export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse20
   status: 200
 }
 
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseSuccess = (suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse200) & {
   headers: Headers;
 };
-export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseError = (suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse422) & {
+export type suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponseError = (suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse400 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse401 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse403 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse404 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse409 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse413 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse422 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse429 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse500 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse502 | suspendMemberApiV1AdminAccountsMembersMemberIdSuspendPatchResponse503) & {
   headers: Headers;
 };
 
@@ -573,15 +1123,65 @@ export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdRes
   status: 204
 }
 
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseSuccess = (resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse204) & {
   headers: Headers;
 };
-export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseError = (resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse422) & {
+export type resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponseError = (resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse400 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse401 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse403 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse404 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse409 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse413 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse422 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse429 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse500 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse502 | resetMemberPasswordApiV1AdminAccountsOwnersOwnerIdMembersMemberIdResetPasswordPostResponse503) & {
   headers: Headers;
 };
 
@@ -619,15 +1219,65 @@ export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostRe
   status: 204
 }
 
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseSuccess = (resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse204) & {
   headers: Headers;
 };
-export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseError = (resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse422) & {
+export type resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponseError = (resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse400 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse401 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse403 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse404 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse409 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse413 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse422 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse429 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse500 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse502 | resetOwnerPasswordApiV1AdminAccountsOwnersOwnerIdResetPasswordPostResponse503) & {
   headers: Headers;
 };
 
@@ -663,15 +1313,65 @@ export type listConversationsApiV1AdminOverviewConversationsGetResponse200 = {
   status: 200
 }
 
+export type listConversationsApiV1AdminOverviewConversationsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listConversationsApiV1AdminOverviewConversationsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listConversationsApiV1AdminOverviewConversationsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listConversationsApiV1AdminOverviewConversationsGetResponseSuccess = (listConversationsApiV1AdminOverviewConversationsGetResponse200) & {
   headers: Headers;
 };
-export type listConversationsApiV1AdminOverviewConversationsGetResponseError = (listConversationsApiV1AdminOverviewConversationsGetResponse422) & {
+export type listConversationsApiV1AdminOverviewConversationsGetResponseError = (listConversationsApiV1AdminOverviewConversationsGetResponse400 | listConversationsApiV1AdminOverviewConversationsGetResponse401 | listConversationsApiV1AdminOverviewConversationsGetResponse403 | listConversationsApiV1AdminOverviewConversationsGetResponse404 | listConversationsApiV1AdminOverviewConversationsGetResponse409 | listConversationsApiV1AdminOverviewConversationsGetResponse413 | listConversationsApiV1AdminOverviewConversationsGetResponse422 | listConversationsApiV1AdminOverviewConversationsGetResponse429 | listConversationsApiV1AdminOverviewConversationsGetResponse500 | listConversationsApiV1AdminOverviewConversationsGetResponse502 | listConversationsApiV1AdminOverviewConversationsGetResponse503) & {
   headers: Headers;
 };
 
@@ -713,15 +1413,65 @@ export type getConversationApiV1AdminOverviewConversationsConversationIdGetRespo
   status: 200
 }
 
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponseSuccess = (getConversationApiV1AdminOverviewConversationsConversationIdGetResponse200) & {
   headers: Headers;
 };
-export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponseError = (getConversationApiV1AdminOverviewConversationsConversationIdGetResponse422) & {
+export type getConversationApiV1AdminOverviewConversationsConversationIdGetResponseError = (getConversationApiV1AdminOverviewConversationsConversationIdGetResponse400 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse401 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse403 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse404 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse409 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse413 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse422 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse429 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse500 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse502 | getConversationApiV1AdminOverviewConversationsConversationIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -756,15 +1506,65 @@ export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse200 = {
   status: 200
 }
 
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseSuccess = (listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse200) & {
   headers: Headers;
 };
-export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseError = (listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse422) & {
+export type listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponseError = (listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse400 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse401 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse403 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse404 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse409 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse413 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse422 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse429 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse500 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse502 | listDigitalHumansApiV1AdminOverviewDigitalHumansGetResponse503) & {
   headers: Headers;
 };
 
@@ -806,15 +1606,65 @@ export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGet
   status: 200
 }
 
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseSuccess = (listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse200) & {
   headers: Headers;
 };
-export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseError = (listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse422) & {
+export type listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponseError = (listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse400 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse401 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse403 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse404 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse409 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse413 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse422 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse429 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse500 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse502 | listMessagesApiV1AdminOverviewConversationsConversationIdMessagesGetResponse503) & {
   headers: Headers;
 };
 
@@ -858,15 +1708,65 @@ export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentRep
   status: 200
 }
 
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseSuccess = (adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse200) & {
   headers: Headers;
 };
-export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseError = (adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse422) & {
+export type adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponseError = (adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse400 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse401 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse403 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse404 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse409 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse413 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse422 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse429 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse500 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse502 | adminAgentReplyApiV1AdminOverviewConversationsConversationIdAgentReplyPostResponse503) & {
   headers: Headers;
 };
 
@@ -904,15 +1804,65 @@ export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse200
   status: 200
 }
 
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseSuccess = (listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse200) & {
   headers: Headers;
 };
-export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseError = (listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse422) & {
+export type listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponseError = (listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse400 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse401 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse403 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse404 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse409 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse413 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse422 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse429 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse500 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse502 | listCustomerProfilesApiV1AdminOverviewCustomerProfilesGetResponse503) & {
   headers: Headers;
 };
 
@@ -954,15 +1904,65 @@ export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResp
   status: 200
 }
 
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseSuccess = (getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse200) & {
   headers: Headers;
 };
-export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseError = (getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse422) & {
+export type getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponseError = (getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse400 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse401 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse403 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse404 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse409 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse413 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse422 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse429 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse500 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse502 | getCustomerProfileApiV1AdminOverviewCustomerProfilesProfileIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -997,15 +1997,65 @@ export type listHandoffsApiV1AdminOverviewHandoffsGetResponse200 = {
   status: 200
 }
 
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listHandoffsApiV1AdminOverviewHandoffsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listHandoffsApiV1AdminOverviewHandoffsGetResponseSuccess = (listHandoffsApiV1AdminOverviewHandoffsGetResponse200) & {
   headers: Headers;
 };
-export type listHandoffsApiV1AdminOverviewHandoffsGetResponseError = (listHandoffsApiV1AdminOverviewHandoffsGetResponse422) & {
+export type listHandoffsApiV1AdminOverviewHandoffsGetResponseError = (listHandoffsApiV1AdminOverviewHandoffsGetResponse400 | listHandoffsApiV1AdminOverviewHandoffsGetResponse401 | listHandoffsApiV1AdminOverviewHandoffsGetResponse403 | listHandoffsApiV1AdminOverviewHandoffsGetResponse404 | listHandoffsApiV1AdminOverviewHandoffsGetResponse409 | listHandoffsApiV1AdminOverviewHandoffsGetResponse413 | listHandoffsApiV1AdminOverviewHandoffsGetResponse422 | listHandoffsApiV1AdminOverviewHandoffsGetResponse429 | listHandoffsApiV1AdminOverviewHandoffsGetResponse500 | listHandoffsApiV1AdminOverviewHandoffsGetResponse502 | listHandoffsApiV1AdminOverviewHandoffsGetResponse503) & {
   headers: Headers;
 };
 
@@ -1047,15 +2097,65 @@ export type streamConversationStatusApiV1AdminOverviewConversationsConversationI
   status: 200
 }
 
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponseSuccess = (streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse200) & {
   headers: Headers;
 };
-export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponseError = (streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse422) & {
+export type streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponseError = (streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse400 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse401 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse403 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse404 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse409 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse413 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse422 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse429 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse500 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse502 | streamConversationStatusApiV1AdminOverviewConversationsConversationIdStatusStreamGetResponse503) & {
   headers: Headers;
 };
 
@@ -1094,12 +2194,69 @@ export type getPlatformStatsApiV1AdminStatsGetResponse200 = {
   status: 200
 }
 
+export type getPlatformStatsApiV1AdminStatsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getPlatformStatsApiV1AdminStatsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type getPlatformStatsApiV1AdminStatsGetResponseSuccess = (getPlatformStatsApiV1AdminStatsGetResponse200) & {
   headers: Headers;
 };
-;
+export type getPlatformStatsApiV1AdminStatsGetResponseError = (getPlatformStatsApiV1AdminStatsGetResponse400 | getPlatformStatsApiV1AdminStatsGetResponse401 | getPlatformStatsApiV1AdminStatsGetResponse403 | getPlatformStatsApiV1AdminStatsGetResponse404 | getPlatformStatsApiV1AdminStatsGetResponse409 | getPlatformStatsApiV1AdminStatsGetResponse413 | getPlatformStatsApiV1AdminStatsGetResponse422 | getPlatformStatsApiV1AdminStatsGetResponse429 | getPlatformStatsApiV1AdminStatsGetResponse500 | getPlatformStatsApiV1AdminStatsGetResponse502 | getPlatformStatsApiV1AdminStatsGetResponse503) & {
+  headers: Headers;
+};
 
-export type getPlatformStatsApiV1AdminStatsGetResponse = (getPlatformStatsApiV1AdminStatsGetResponseSuccess)
+export type getPlatformStatsApiV1AdminStatsGetResponse = (getPlatformStatsApiV1AdminStatsGetResponseSuccess | getPlatformStatsApiV1AdminStatsGetResponseError)
 
 export const getGetPlatformStatsApiV1AdminStatsGetUrl = () => {
 
@@ -1130,15 +2287,65 @@ export type getConversationTrendsApiV1AdminStatsTrendsGetResponse200 = {
   status: 200
 }
 
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getConversationTrendsApiV1AdminStatsTrendsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getConversationTrendsApiV1AdminStatsTrendsGetResponseSuccess = (getConversationTrendsApiV1AdminStatsTrendsGetResponse200) & {
   headers: Headers;
 };
-export type getConversationTrendsApiV1AdminStatsTrendsGetResponseError = (getConversationTrendsApiV1AdminStatsTrendsGetResponse422) & {
+export type getConversationTrendsApiV1AdminStatsTrendsGetResponseError = (getConversationTrendsApiV1AdminStatsTrendsGetResponse400 | getConversationTrendsApiV1AdminStatsTrendsGetResponse401 | getConversationTrendsApiV1AdminStatsTrendsGetResponse403 | getConversationTrendsApiV1AdminStatsTrendsGetResponse404 | getConversationTrendsApiV1AdminStatsTrendsGetResponse409 | getConversationTrendsApiV1AdminStatsTrendsGetResponse413 | getConversationTrendsApiV1AdminStatsTrendsGetResponse422 | getConversationTrendsApiV1AdminStatsTrendsGetResponse429 | getConversationTrendsApiV1AdminStatsTrendsGetResponse500 | getConversationTrendsApiV1AdminStatsTrendsGetResponse502 | getConversationTrendsApiV1AdminStatsTrendsGetResponse503) & {
   headers: Headers;
 };
 
@@ -1180,15 +2387,65 @@ export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse200 = {
   status: 200
 }
 
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getAgentStatsApiV1AdminStatsAgentStatsGetResponseSuccess = (getAgentStatsApiV1AdminStatsAgentStatsGetResponse200) & {
   headers: Headers;
 };
-export type getAgentStatsApiV1AdminStatsAgentStatsGetResponseError = (getAgentStatsApiV1AdminStatsAgentStatsGetResponse422) & {
+export type getAgentStatsApiV1AdminStatsAgentStatsGetResponseError = (getAgentStatsApiV1AdminStatsAgentStatsGetResponse400 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse401 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse403 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse404 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse409 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse413 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse422 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse429 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse500 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse502 | getAgentStatsApiV1AdminStatsAgentStatsGetResponse503) & {
   headers: Headers;
 };
 
@@ -1230,15 +2487,65 @@ export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse200 = {
   status: 200
 }
 
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listAuditLogsApiV1AdminAuditAuditLogsGetResponseSuccess = (listAuditLogsApiV1AdminAuditAuditLogsGetResponse200) & {
   headers: Headers;
 };
-export type listAuditLogsApiV1AdminAuditAuditLogsGetResponseError = (listAuditLogsApiV1AdminAuditAuditLogsGetResponse422) & {
+export type listAuditLogsApiV1AdminAuditAuditLogsGetResponseError = (listAuditLogsApiV1AdminAuditAuditLogsGetResponse400 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse401 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse403 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse404 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse409 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse413 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse422 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse429 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse500 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse502 | listAuditLogsApiV1AdminAuditAuditLogsGetResponse503) & {
   headers: Headers;
 };
 
@@ -1280,15 +2587,65 @@ export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceG
   status: 200
 }
 
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseSuccess = (getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse200) & {
   headers: Headers;
 };
-export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseError = (getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse422) & {
+export type getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponseError = (getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse400 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse401 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse403 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse404 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse409 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse413 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse422 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse429 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse500 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse502 | getConversationTraceApiV1AdminAuditConversationsConversationIdTraceGetResponse503) & {
   headers: Headers;
 };
 
@@ -1323,15 +2680,65 @@ export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTra
   status: 200
 }
 
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseSuccess = (streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse200) & {
   headers: Headers;
 };
-export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseError = (streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse422) & {
+export type streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponseError = (streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse400 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse401 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse403 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse404 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse409 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse413 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse422 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse429 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse500 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse502 | streamConversationTraceApiV1AdminAuditConversationsConversationIdTraceStreamGetResponse503) & {
   headers: Headers;
 };
 
@@ -1371,15 +2778,65 @@ export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetRespons
   status: 200
 }
 
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseSuccess = (getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse200) & {
   headers: Headers;
 };
-export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseError = (getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse422) & {
+export type getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponseError = (getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse400 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse401 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse403 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse404 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse409 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse413 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse422 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse429 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse500 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse502 | getDigitalHumanDetailApiV1AdminDigitalHumansDigitalHumanIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -1414,15 +2871,65 @@ export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse20
   status: 200
 }
 
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseSuccess = (updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse200) & {
   headers: Headers;
 };
-export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseError = (updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse422) & {
+export type updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponseError = (updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse400 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse401 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse403 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse404 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse409 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse413 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse422 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse429 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse500 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse502 | updateDigitalHumanApiV1AdminDigitalHumansDigitalHumanIdPutResponse503) & {
   headers: Headers;
 };
 
@@ -1458,12 +2965,69 @@ export type healthCheckApiV1AdminHealthGetResponse200 = {
   status: 200
 }
 
+export type healthCheckApiV1AdminHealthGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type healthCheckApiV1AdminHealthGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type healthCheckApiV1AdminHealthGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type healthCheckApiV1AdminHealthGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type healthCheckApiV1AdminHealthGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type healthCheckApiV1AdminHealthGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type healthCheckApiV1AdminHealthGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type healthCheckApiV1AdminHealthGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type healthCheckApiV1AdminHealthGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type healthCheckApiV1AdminHealthGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type healthCheckApiV1AdminHealthGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type healthCheckApiV1AdminHealthGetResponseSuccess = (healthCheckApiV1AdminHealthGetResponse200) & {
   headers: Headers;
 };
-;
+export type healthCheckApiV1AdminHealthGetResponseError = (healthCheckApiV1AdminHealthGetResponse400 | healthCheckApiV1AdminHealthGetResponse401 | healthCheckApiV1AdminHealthGetResponse403 | healthCheckApiV1AdminHealthGetResponse404 | healthCheckApiV1AdminHealthGetResponse409 | healthCheckApiV1AdminHealthGetResponse413 | healthCheckApiV1AdminHealthGetResponse422 | healthCheckApiV1AdminHealthGetResponse429 | healthCheckApiV1AdminHealthGetResponse500 | healthCheckApiV1AdminHealthGetResponse502 | healthCheckApiV1AdminHealthGetResponse503) & {
+  headers: Headers;
+};
 
-export type healthCheckApiV1AdminHealthGetResponse = (healthCheckApiV1AdminHealthGetResponseSuccess)
+export type healthCheckApiV1AdminHealthGetResponse = (healthCheckApiV1AdminHealthGetResponseSuccess | healthCheckApiV1AdminHealthGetResponseError)
 
 export const getHealthCheckApiV1AdminHealthGetUrl = () => {
 
@@ -1497,12 +3061,69 @@ export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse200 = {
   status: 200
 }
 
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponseSuccess = (knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse200) & {
   headers: Headers;
 };
-;
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponseError = (knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse400 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse401 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse403 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse404 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse409 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse413 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse422 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse429 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse500 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse502 | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse503) & {
+  headers: Headers;
+};
 
-export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse = (knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponseSuccess)
+export type knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponse = (knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponseSuccess | knowledgeOverviewApiV1AdminKnowledgeOverviewGetResponseError)
 
 export const getKnowledgeOverviewApiV1AdminKnowledgeOverviewGetUrl = () => {
 
@@ -1533,15 +3154,65 @@ export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse200 = {
   status: 200
 }
 
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponseSuccess = (listCollectionsApiV1AdminKnowledgeCollectionsGetResponse200) & {
   headers: Headers;
 };
-export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponseError = (listCollectionsApiV1AdminKnowledgeCollectionsGetResponse422) & {
+export type listCollectionsApiV1AdminKnowledgeCollectionsGetResponseError = (listCollectionsApiV1AdminKnowledgeCollectionsGetResponse400 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse401 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse403 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse404 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse409 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse413 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse422 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse429 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse500 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse502 | listCollectionsApiV1AdminKnowledgeCollectionsGetResponse503) & {
   headers: Headers;
 };
 
@@ -1583,15 +3254,65 @@ export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrieveP
   status: 200
 }
 
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponseSuccess = (retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse200) & {
   headers: Headers;
 };
-export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponseError = (retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse422) & {
+export type retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponseError = (retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse400 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse401 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse403 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse404 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse409 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse413 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse422 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse429 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse500 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse502 | retrieveKnowledgeApiV1AdminKnowledgeCollectionsCollectionIdRetrievePostResponse503) & {
   headers: Headers;
 };
 
@@ -1627,15 +3348,65 @@ export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDoc
   status: 200
 }
 
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponseSuccess = (listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse200) & {
   headers: Headers;
 };
-export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponseError = (listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse422) & {
+export type listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponseError = (listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse400 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse401 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse403 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse404 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse409 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse413 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse422 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse429 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse500 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse502 | listCollectionDocumentsApiV1AdminKnowledgeCollectionsCollectionIdDocumentsGetResponse503) & {
   headers: Headers;
 };
 
@@ -1679,15 +3450,65 @@ export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPos
   status: 201
 }
 
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponseSuccess = (uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse201) & {
   headers: Headers;
 };
-export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponseError = (uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse422) & {
+export type uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponseError = (uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse400 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse401 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse403 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse404 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse409 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse413 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse422 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse429 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse500 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse502 | uploadDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsPostResponse503) & {
   headers: Headers;
 };
 
@@ -1725,15 +3546,65 @@ export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocument
   status: 200
 }
 
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponseSuccess = (listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse200) & {
   headers: Headers;
 };
-export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponseError = (listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse422) & {
+export type listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponseError = (listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse400 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse401 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse403 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse404 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse409 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse413 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse422 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse429 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse500 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse502 | listDocumentChunksApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksGetResponse503) & {
   headers: Headers;
 };
 
@@ -1779,15 +3650,65 @@ export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDo
   status: 200
 }
 
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponseSuccess = (previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse200) & {
   headers: Headers;
 };
-export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponseError = (previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse422) & {
+export type previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponseError = (previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse400 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse401 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse403 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse404 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse409 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse413 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse422 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse429 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse500 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse502 | previewDocumentApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdPreviewGetResponse503) & {
   headers: Headers;
 };
 
@@ -1824,15 +3745,65 @@ export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumen
   status: 200
 }
 
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponseSuccess = (updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse200) & {
   headers: Headers;
 };
-export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponseError = (updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse422) & {
+export type updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponseError = (updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse400 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse401 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse403 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse404 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse409 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse413 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse422 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse429 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse500 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse502 | updateDocumentChunkApiV1AdminKnowledgeCollectionsCollectionIdDocumentsDocIdChunksChunkIdPutResponse503) & {
   headers: Headers;
 };
 
@@ -1872,15 +3843,65 @@ export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse200 = {
   status: 200
 }
 
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponseSuccess = (deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse200) & {
   headers: Headers;
 };
-export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponseError = (deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse422) & {
+export type deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponseError = (deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse400 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse401 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse403 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse404 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse409 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse413 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse422 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse429 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse500 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse502 | deleteDocumentApiV1AdminKnowledgeDocumentsDocIdDeleteResponse503) & {
   headers: Headers;
 };
 
@@ -1924,12 +3945,69 @@ export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200 = {
   status: 200
 }
 
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponse200) & {
   headers: Headers;
 };
-;
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponseError = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponse400 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse401 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse403 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse404 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse409 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse413 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse422 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse429 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse500 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse502 | getMemoryOverviewApiV1AdminMemoryOverviewGetResponse503) & {
+  headers: Headers;
+};
 
-export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess)
+export type getMemoryOverviewApiV1AdminMemoryOverviewGetResponse = (getMemoryOverviewApiV1AdminMemoryOverviewGetResponseSuccess | getMemoryOverviewApiV1AdminMemoryOverviewGetResponseError)
 
 export const getGetMemoryOverviewApiV1AdminMemoryOverviewGetUrl = () => {
 
@@ -1962,15 +4040,65 @@ export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse200 = {
   status: 200
 }
 
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponseSuccess = (getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse200) & {
   headers: Headers;
 };
-export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponseError = (getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse422) & {
+export type getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponseError = (getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse400 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse401 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse403 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse404 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse409 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse413 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse422 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse429 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse500 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse502 | getLlmCostSummaryApiV1AdminLlmCostSummaryGetResponse503) & {
   headers: Headers;
 };
 
@@ -2012,15 +4140,65 @@ export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse200 = {
   status: 200
 }
 
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponseSuccess = (getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse200) & {
   headers: Headers;
 };
-export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponseError = (getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse422) & {
+export type getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponseError = (getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse400 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse401 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse403 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse404 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse409 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse413 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse422 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse429 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse500 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse502 | getLlmCostOwnersApiV1AdminLlmCostOwnersGetResponse503) & {
   headers: Headers;
 };
 
@@ -2062,15 +4240,65 @@ export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse200 = {
   status: 200
 }
 
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponseSuccess = (getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse200) & {
   headers: Headers;
 };
-export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponseError = (getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse422) & {
+export type getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponseError = (getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse400 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse401 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse403 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse404 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse409 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse413 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse422 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse429 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse500 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse502 | getLlmCostTrendsApiV1AdminLlmCostTrendsGetResponse503) & {
   headers: Headers;
 };
 
@@ -2112,15 +4340,65 @@ export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse200 = {
   status: 200
 }
 
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponseSuccess = (getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse200) & {
   headers: Headers;
 };
-export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponseError = (getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse422) & {
+export type getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponseError = (getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse400 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse401 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse403 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse404 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse409 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse413 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse422 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse429 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse500 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse502 | getLlmCostBreakdownApiV1AdminLlmCostBreakdownGetResponse503) & {
   headers: Headers;
 };
 
@@ -2165,12 +4443,69 @@ export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse200 = {
   status: 200
 }
 
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponseSuccess = (listRuntimeConfigApiV1AdminRuntimeConfigGetResponse200) & {
   headers: Headers;
 };
-;
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponseError = (listRuntimeConfigApiV1AdminRuntimeConfigGetResponse400 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse401 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse403 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse404 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse409 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse413 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse422 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse429 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse500 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse502 | listRuntimeConfigApiV1AdminRuntimeConfigGetResponse503) & {
+  headers: Headers;
+};
 
-export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse = (listRuntimeConfigApiV1AdminRuntimeConfigGetResponseSuccess)
+export type listRuntimeConfigApiV1AdminRuntimeConfigGetResponse = (listRuntimeConfigApiV1AdminRuntimeConfigGetResponseSuccess | listRuntimeConfigApiV1AdminRuntimeConfigGetResponseError)
 
 export const getListRuntimeConfigApiV1AdminRuntimeConfigGetUrl = () => {
 
@@ -2201,15 +4536,65 @@ export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse200 = {
   status: 200
 }
 
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponseSuccess = (updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse200) & {
   headers: Headers;
 };
-export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponseError = (updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse422) & {
+export type updateRuntimeConfigApiV1AdminRuntimeConfigPutResponseError = (updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse400 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse401 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse403 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse404 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse409 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse413 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse422 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse429 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse500 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse502 | updateRuntimeConfigApiV1AdminRuntimeConfigPutResponse503) & {
   headers: Headers;
 };
 
@@ -2244,15 +4629,65 @@ export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse200 = {
   status: 200
 }
 
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponseSuccess = (resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse200) & {
   headers: Headers;
 };
-export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponseError = (resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse422) & {
+export type resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponseError = (resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse400 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse401 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse403 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse404 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse409 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse413 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse422 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse429 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse500 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse502 | resetRuntimeConfigApiV1AdminRuntimeConfigKeyResetPostResponse503) & {
   headers: Headers;
 };
 

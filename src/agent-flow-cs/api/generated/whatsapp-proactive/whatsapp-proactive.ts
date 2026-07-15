@@ -8,9 +8,9 @@ import type {
   CampaignTaskCreateRequest,
   CampaignTaskResponse,
   CampaignTaskRunResponse,
+  ErrorResponse,
   FollowupStateResponse,
-  FollowupStrategyRequest,
-  HTTPValidationError
+  FollowupStrategyRequest
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
@@ -20,12 +20,69 @@ export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse200 = {
   status: 200
 }
 
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess = (listCampaignTasksApiV1WhatsappCampaignTasksGetResponse200) & {
   headers: Headers;
 };
-;
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponseError = (listCampaignTasksApiV1WhatsappCampaignTasksGetResponse400 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse401 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse403 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse404 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse409 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse413 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse422 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse429 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse500 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse502 | listCampaignTasksApiV1WhatsappCampaignTasksGetResponse503) & {
+  headers: Headers;
+};
 
-export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse = (listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess)
+export type listCampaignTasksApiV1WhatsappCampaignTasksGetResponse = (listCampaignTasksApiV1WhatsappCampaignTasksGetResponseSuccess | listCampaignTasksApiV1WhatsappCampaignTasksGetResponseError)
 
 export const getListCampaignTasksApiV1WhatsappCampaignTasksGetUrl = () => {
 
@@ -56,15 +113,65 @@ export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse201 = {
   status: 201
 }
 
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponseSuccess = (createCampaignTaskApiV1WhatsappCampaignTasksPostResponse201) & {
   headers: Headers;
 };
-export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponseError = (createCampaignTaskApiV1WhatsappCampaignTasksPostResponse422) & {
+export type createCampaignTaskApiV1WhatsappCampaignTasksPostResponseError = (createCampaignTaskApiV1WhatsappCampaignTasksPostResponse400 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse401 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse403 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse404 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse409 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse413 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse422 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse429 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse500 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse502 | createCampaignTaskApiV1WhatsappCampaignTasksPostResponse503) & {
   headers: Headers;
 };
 
@@ -99,15 +206,65 @@ export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse200 = {
   status: 200
 }
 
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseSuccess = (getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse200) & {
   headers: Headers;
 };
-export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseError = (getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse422) & {
+export type getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponseError = (getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse400 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse401 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse403 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse404 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse409 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse413 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse422 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse429 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse500 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse502 | getCampaignTaskApiV1WhatsappCampaignTasksTaskIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -142,15 +299,65 @@ export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse204 
   status: 204
 }
 
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseSuccess = (deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse204) & {
   headers: Headers;
 };
-export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseError = (deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse422) & {
+export type deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponseError = (deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse400 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse401 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse403 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse404 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse409 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse413 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse422 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse429 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse500 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse502 | deleteCampaignTaskApiV1WhatsappCampaignTasksTaskIdDeleteResponse503) & {
   headers: Headers;
 };
 
@@ -185,15 +392,65 @@ export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse20
   status: 200
 }
 
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseSuccess = (pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse200) & {
   headers: Headers;
 };
-export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseError = (pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse422) & {
+export type pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponseError = (pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse400 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse401 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse403 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse404 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse409 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse413 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse422 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse429 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse500 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse502 | pauseCampaignTaskApiV1WhatsappCampaignTasksTaskIdPausePostResponse503) & {
   headers: Headers;
 };
 
@@ -228,15 +485,65 @@ export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse
   status: 200
 }
 
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseSuccess = (resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse200) & {
   headers: Headers;
 };
-export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseError = (resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse422) & {
+export type resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponseError = (resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse400 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse401 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse403 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse404 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse409 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse413 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse422 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse429 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse500 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse502 | resumeCampaignTaskApiV1WhatsappCampaignTasksTaskIdResumePostResponse503) & {
   headers: Headers;
 };
 
@@ -271,15 +578,65 @@ export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse2
   status: 200
 }
 
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseSuccess = (listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse200) & {
   headers: Headers;
 };
-export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseError = (listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse422) & {
+export type listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponseError = (listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse400 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse401 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse403 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse404 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse409 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse413 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse422 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse429 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse500 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse502 | listCampaignTaskRunsApiV1WhatsappCampaignTasksTaskIdRunsGetResponse503) & {
   headers: Headers;
 };
 
@@ -314,15 +671,65 @@ export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse200 
   status: 200
 }
 
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseSuccess = (configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse200) & {
   headers: Headers;
 };
-export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseError = (configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse422) & {
+export type configureFollowupApiV1WhatsappFollowupsConversationIdPutResponseError = (configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse400 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse401 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse403 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse404 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse409 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse413 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse422 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse429 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse500 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse502 | configureFollowupApiV1WhatsappFollowupsConversationIdPutResponse503) & {
   headers: Headers;
 };
 
@@ -358,15 +765,65 @@ export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse200 = {
   status: 200
 }
 
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponseSuccess = (getFollowupApiV1WhatsappFollowupsConversationIdGetResponse200) & {
   headers: Headers;
 };
-export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponseError = (getFollowupApiV1WhatsappFollowupsConversationIdGetResponse422) & {
+export type getFollowupApiV1WhatsappFollowupsConversationIdGetResponseError = (getFollowupApiV1WhatsappFollowupsConversationIdGetResponse400 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse401 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse403 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse404 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse409 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse413 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse422 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse429 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse500 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse502 | getFollowupApiV1WhatsappFollowupsConversationIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -401,15 +858,65 @@ export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse20
   status: 200
 }
 
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseSuccess = (pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse200) & {
   headers: Headers;
 };
-export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseError = (pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse422) & {
+export type pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponseError = (pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse400 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse401 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse403 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse404 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse409 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse413 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse422 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse429 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse500 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse502 | pauseFollowupApiV1WhatsappFollowupsConversationIdPausePostResponse503) & {
   headers: Headers;
 };
 
@@ -444,15 +951,65 @@ export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse
   status: 200
 }
 
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseSuccess = (resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse200) & {
   headers: Headers;
 };
-export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseError = (resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse422) & {
+export type resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponseError = (resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse400 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse401 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse403 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse404 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse409 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse413 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse422 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse429 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse500 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse502 | resumeFollowupApiV1WhatsappFollowupsConversationIdResumePostResponse503) & {
   headers: Headers;
 };
 
@@ -487,15 +1044,65 @@ export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse200 
   status: 200
 }
 
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseSuccess = (stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse200) & {
   headers: Headers;
 };
-export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseError = (stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse422) & {
+export type stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponseError = (stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse400 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse401 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse403 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse404 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse409 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse413 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse422 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse429 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse500 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse502 | stopFollowupApiV1WhatsappFollowupsConversationIdStopPostResponse503) & {
   headers: Headers;
 };
 

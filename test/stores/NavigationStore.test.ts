@@ -40,8 +40,8 @@ describe('NavigationStore - FerdiumModule "whatsapp" / "telegram"', () => {
     resetSnapshot(navigationStore, snap);
   });
 
-  it('defaults activeModule to whatsapp', () => {
-    expect(navigationStore.activeModule).toBe('whatsapp');
+  it('defaults activeModule to home', () => {
+    expect(navigationStore.activeModule).toBe('home');
   });
 
   it('defaults activeServiceTab to messages', () => {
@@ -51,7 +51,7 @@ describe('NavigationStore - FerdiumModule "whatsapp" / "telegram"', () => {
   describe('setModule', () => {
     it('updates activeModule and restores moduleServiceTab', () => {
       navigationStore.setServiceTab('account');
-      expect(navigationStore.moduleServiceTab['whatsapp']).toBe('account');
+      expect(navigationStore.moduleServiceTab['home']).toBe('account');
 
       navigationStore.setModule('telegram');
       expect(navigationStore.activeModule).toBe('telegram');

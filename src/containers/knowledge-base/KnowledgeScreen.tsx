@@ -651,6 +651,7 @@ const KnowledgeScreen: React.FC = () => {
   const fetchDigitalHumans = useCallback(async () => {
     try {
       const response = await listDigitalHumansApiV1DigitalHumansGet();
+      if (response.status !== 200) return;
       setDigitalHumans(response.data);
     } catch {
       await MessagePlugin.error(intl.formatMessage(messages.loadFailed));
@@ -664,6 +665,7 @@ const KnowledgeScreen: React.FC = () => {
   const fetchTags = useCallback(async () => {
     try {
       const response = await listTagsForMemberApiV1TagsGet();
+      if (response.status !== 200) return;
       setTags(response.data.items ?? []);
     } catch {
       await MessagePlugin.error(intl.formatMessage(messages.tagLoadFailed));

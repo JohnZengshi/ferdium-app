@@ -206,6 +206,7 @@ function WhatsAppAccountManagementScreen({
     let digitalHumanList: AppApiSchemasDigitalHumanResponse[] = [];
     try {
       const listRes = await listDigitalHumansApiV1DigitalHumansGet();
+      if (listRes.status !== 200) return;
       digitalHumanList = listRes.data;
     } catch {
       return;

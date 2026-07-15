@@ -292,7 +292,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               const boundId = bindRes.data.digital_human_id;
               try {
                 const listRes = await listDigitalHumansApiV1DigitalHumansGet();
-                if (cancelled) return;
+                if (cancelled || listRes.status !== 200) return;
                 const found = listRes.data.find(dh => dh.id === boundId);
                 setBoundPersonaName(found?.name ?? '');
               } catch {
@@ -351,6 +351,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                     try {
                       const res =
                         await listDigitalHumansApiV1DigitalHumansGet();
+                      if (res.status !== 200) return;
                       options = res.data.map(item => ({
                         label: item.name,
                         value: item.id,

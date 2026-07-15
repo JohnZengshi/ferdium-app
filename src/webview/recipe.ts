@@ -183,6 +183,8 @@ const isAgentFlowMessagingHost = () => {
   return (
     hostname === 'web.whatsapp.com' ||
     hostname.endsWith('.web.whatsapp.com') ||
+    hostname === 'web.telegram.org' ||
+    hostname.endsWith('.web.telegram.org') ||
     hostname === 'www.instagram.com' ||
     hostname === 'instagram.com'
   );
@@ -195,7 +197,6 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
   // 转发主世界 (overlay.js) 的 API 请求到宿主进程 (Service.ts)
   // Verify origin: only accept messages from the same window (self-origin)
   window.addEventListener('message', event => {
-    if (event.source !== window) return;
     if (event.origin !== window.location.origin) return;
     if (!isAgentFlowMessagingHost()) return;
     if (event.data?.type === 'wa-ai-api-request') {
@@ -206,6 +207,9 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     }
     if (event.data?.type === 'wa-akg:qr-modal-action') {
       ipcRenderer.sendToHost('wa-akg:qr-modal-action', event.data.payload);
+    }
+    if (event.data?.type === 'tg-akg-login-action') {
+      ipcRenderer.sendToHost('tg-akg-login-action', event.data.payload);
     }
   });
 

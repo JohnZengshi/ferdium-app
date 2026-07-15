@@ -1,13 +1,26 @@
 import { inject, observer } from 'mobx-react';
-import { Component } from 'react';
+import { Component, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import type { WrappedComponentProps } from 'react-intl';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { AddIcon } from 'tdesign-icons-react';
-import { Badge, Button, Empty, MessagePlugin } from 'tdesign-react';
+import {
+  Badge,
+  Button,
+  DialogPlugin,
+  Empty,
+  Form,
+  MessagePlugin,
+  Select,
+} from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
-import { TELEGRAM_RECIPE_ID } from '../../config';
+import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
+import {
+  createTelegramBindingApiV1TelegramBindPost,
+  getTelegramBindingApiV1TelegramBindGet,
+  switchTelegramBindingDigitalHumanApiV1TelegramBindPatch,
+} from '../../agent-flow-cs/api/generated/telegram/telegram';
 import { openServiceContextMenu } from '../../helpers/service-context-menu';
 import type Service from '../../models/Service';
 import type { RealStores } from '../../stores';
@@ -29,9 +42,50 @@ const messages = defineMessages({
     id: 'telegramAccountMgmt.updateSuccess',
     defaultMessage: 'Update successful',
   },
-  addSuccess: {
-    id: 'telegramAccountMgmt.addSuccess',
-    defaultMessage: 'Added successfully',
+  bindPersona: {
+    id: 'telegramAccountSlider.bindPersona',
+    defaultMessage: 'Bind',
+  },
+  bindPersonaDialogTitle: {
+    id: 'telegramAccountSlider.bindPersonaDialogTitle',
+    defaultMessage: 'Bind Telegram Account Persona Profile',
+  },
+  selectPersona: {
+    id: 'telegramAccountSlider.selectPersona',
+    defaultMessage: 'Select Persona',
+  },
+  selectPersonaPlaceholder: {
+    id: 'telegramAccountSlider.selectPersonaPlaceholder',
+    defaultMessage: 'Please select a persona',
+  },
+  personaHint: {
+    id: 'telegramAccountSlider.personaHint',
+    defaultMessage:
+      '提示：如没有人设资料，请在左侧菜单资料库中社交人设中添加资料后进行绑定',
+  },
+  confirmText: {
+    id: 'telegramAccountSlider.confirmText',
+    defaultMessage: 'Confirm',
+  },
+  selectPersonaFirst: {
+    id: 'telegramAccountSlider.selectPersonaFirst',
+    defaultMessage: 'Please select a persona first',
+  },
+  bindPersonaSuccess: {
+    id: 'telegramAccountSlider.bindPersonaSuccess',
+    defaultMessage: 'Persona bound successfully',
+  },
+  bindPersonaFailed: {
+    id: 'telegramAccountSlider.bindPersonaFailed',
+    defaultMessage: 'Failed to bind persona',
+  },
+  cancel: {
+    id: 'telegramAccountSlider.cancel',
+    defaultMessage: 'Cancel',
+  },
+  personaFallback: {
+    id: 'telegramAccountSlider.personaFallback',
+    defaultMessage: '人设',
   },
 });
 
@@ -42,23 +96,182 @@ interface TelegramSliderItemProps {
 }
 
 const TelegramSliderItem = SortableElement<TelegramSliderItemProps>(
-  observer(({ service, actions, onContextMenu }: TelegramSliderItemProps) => (
-    <ServiceSliderItemShell
-      service={service}
-      actions={actions}
-      onContextMenu={onContextMenu}
-      moduleId="telegram"
-    >
-      <div className="flex flex-col items-start justify-center gap-[4px] h-fit flex-auto min-w-0">
-        <span className="text-[16px] font-normal leading-[26px] text-primary truncate w-full">
-          {service.name}
-        </span>
-        <span className="text-[14px] text-secondary leading-[22px] truncate w-full">
-          {service.id}
-        </span>
-      </div>
-    </ServiceSliderItemShell>
-  )),
+  injectIntl(
+    observer(
+      ({
+        service,
+        actions,
+        onContextMenu,
+        intl,
+      }: TelegramSliderItemProps & WrappedComponentProps): ReactElement => {
+        const [boundPersonaName, setBoundPersonaName] = useState<string>('');
+        const [isLoadingBinding, setIsLoadingBinding] = useState<boolean>(true);
+        const personaLabel = intl.formatMessage(messages.personaFallback);
+
+        useEffect(() => {
+          let cancelled = false;
+          const loadBinding = async () => {
+            try {
+              const bindRes = await getTelegramBindingApiV1TelegramBindGet({
+                instance_id: service.id,
+              });
+              if (
+                cancelled ||
+                bindRes.status !== 200 ||
+                !bindRes.data?.digital_human_id
+              )
+                return;
+              const boundId = bindRes.data.digital_human_id;
+              try {
+                const listRes = await listDigitalHumansApiV1DigitalHumansGet();
+                if (cancelled || listRes.status !== 200) return;
+                const found = listRes.data.find(dh => dh.id === boundId);
+                setBoundPersonaName(found?.name ?? '');
+              } catch {
+                /* best-effort */
+              }
+            } catch {
+              /* best-effort */
+            } finally {
+              if (!cancelled) setIsLoadingBinding(false);
+            }
+          };
+          loadBinding();
+          return () => {
+            cancelled = true;
+          };
+        }, [service.id]);
+
+        return (
+          <ServiceSliderItemShell
+            service={service}
+            actions={actions}
+            onContextMenu={onContextMenu}
+            moduleId="telegram"
+          >
+            <div className="flex flex-col items-start justify-center gap-[4px] h-fit flex-auto min-w-0">
+              <span className="text-[16px] font-normal leading-[26px] text-primary truncate w-full">
+                {service.name}
+              </span>
+              <div className="flex items-center gap-[4px] w-full">
+                <span className="text-[14px] text-secondary leading-[22px] truncate">
+                  {personaLabel}
+                </span>
+                <Button
+                  variant="outline"
+                  className="!h-[20px] !min-w-[37px] text-[12px] !px-[4px] ml-auto"
+                  ghost
+                  theme={boundPersonaName ? 'primary' : 'success'}
+                  loading={isLoadingBinding}
+                  onClick={async event => {
+                    event.stopPropagation();
+                    let options: { label: string; value: string }[] = [];
+                    try {
+                      const res =
+                        await listDigitalHumansApiV1DigitalHumansGet();
+                      if (res.status !== 200) {
+                        MessagePlugin.error('获取人设列表失败');
+                        return;
+                      }
+                      options = res.data.map(item => ({
+                        label: item.name,
+                        value: item.id,
+                      }));
+                    } catch {
+                      MessagePlugin.error('获取人设列表失败');
+                      return;
+                    }
+
+                    let selectedPersonaId = '';
+
+                    const confirmDia = DialogPlugin.confirm({
+                      placement: 'center',
+                      header: intl.formatMessage(
+                        messages.bindPersonaDialogTitle,
+                      ),
+                      cancelBtn: intl.formatMessage(messages.cancel),
+                      body: (
+                        <Form
+                          colon
+                          labelWidth={130}
+                          labelAlign="left"
+                          className="py-[16px]"
+                        >
+                          <Form.FormItem
+                            label={intl.formatMessage(messages.selectPersona)}
+                            name="persona"
+                          >
+                            <Select
+                              placeholder={intl.formatMessage(
+                                messages.selectPersonaPlaceholder,
+                              )}
+                              options={options}
+                              onChange={value => {
+                                selectedPersonaId =
+                                  typeof value === 'string'
+                                    ? value
+                                    : String(value ?? '');
+                              }}
+                            />
+                          </Form.FormItem>
+
+                          <span className="text-[12px] text-placeholder leading-[20px]">
+                            {intl.formatMessage(messages.personaHint)}
+                          </span>
+                        </Form>
+                      ),
+                      confirmBtn: intl.formatMessage(messages.confirmText),
+                      onConfirm: async () => {
+                        if (!selectedPersonaId) {
+                          MessagePlugin.warning(
+                            intl.formatMessage(messages.selectPersonaFirst),
+                          );
+                          return;
+                        }
+
+                        try {
+                          await (boundPersonaName
+                            ? switchTelegramBindingDigitalHumanApiV1TelegramBindPatch(
+                                {
+                                  digital_human_id: selectedPersonaId,
+                                  instance_id: service.id,
+                                },
+                              )
+                            : createTelegramBindingApiV1TelegramBindPost({
+                                instance_id: service.id,
+                                digital_human_id: selectedPersonaId,
+                              }));
+                          setBoundPersonaName(
+                            options.find(o => o.value === selectedPersonaId)
+                              ?.label ?? '',
+                          );
+                          MessagePlugin.success(
+                            intl.formatMessage(messages.bindPersonaSuccess),
+                          );
+                          confirmDia.hide();
+                        } catch (error) {
+                          const message =
+                            error instanceof Error
+                              ? error.message
+                              : intl.formatMessage(messages.bindPersonaFailed);
+                          MessagePlugin.error(message);
+                        }
+                      },
+                      onClose: () => {
+                        confirmDia.hide();
+                      },
+                    });
+                  }}
+                >
+                  {boundPersonaName || intl.formatMessage(messages.bindPersona)}
+                </Button>
+              </div>
+            </div>
+          </ServiceSliderItemShell>
+        );
+      },
+    ),
+  ),
 );
 
 interface TelegramSliderListProps {
@@ -165,8 +378,8 @@ class TelegramAccountSlider extends Component<
     this.setState({ isBindDrawerVisible: false, editingService: null });
   };
 
-  handleBindConfirm = (data: { name: string; proxy: ServiceProxy }) => {
-    const { actions } = this.props;
+  handleBindConfirm = async (data: { name: string; proxy: ServiceProxy }) => {
+    const { actions, intl, stores } = this.props;
     const { editingService } = this.state;
 
     if (editingService) {
@@ -179,25 +392,17 @@ class TelegramAccountSlider extends Component<
         redirect: false,
       });
       MessagePlugin.success({
-        content: this.props.intl.formatMessage(messages.updateSuccess),
+        content: intl.formatMessage(messages.updateSuccess),
         duration: 3000,
       });
-    } else {
-      actions?.service?.createService?.({
-        recipeId: TELEGRAM_RECIPE_ID,
-        serviceData: {
-          name: data.name || 'Telegram',
-          proxy: data.proxy,
-          isHibernationEnabled: true,
-        },
-        redirect: false,
-      });
-      MessagePlugin.success({
-        content: this.props.intl.formatMessage(messages.addSuccess),
-        duration: 3000,
-      });
+      this.closeBindDrawer();
+      return;
     }
 
+    stores?.telegramAutomation?.beginBinding({
+      name: data.name || 'Telegram',
+      proxy: data.proxy,
+    });
     this.closeBindDrawer();
   };
 

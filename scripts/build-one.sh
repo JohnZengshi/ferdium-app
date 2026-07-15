@@ -57,17 +57,18 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-if [ $# -gt 1 ]; then
-  echo "❌ 不再支持版本号参数: $2"
-  echo "版本号统一由 package.json 管理。请先用 pnpm version 更新版本号，再打包。"
-  echo "示例:"
-  echo "      pnpm run version:beta"
-  echo "  $0 $1"
-  echo "运行 '$0 --help' 查看 pnpm version 参数说明"
-  exit 1
-fi
+# if [ $# -gt 1 ]; then
+#   echo "❌ 不再支持版本号参数: $2"
+#   echo "版本号统一由 package.json 管理。请先用 pnpm version 更新版本号，再打包。"
+#   echo "示例:"
+#   echo "      pnpm run version:beta"
+#   echo "  $0 $1"
+#   echo "运行 '$0 --help' 查看 pnpm version 参数说明"
+#   exit 1
+# fi
 
 PLATFORM=$1
+ISPROD=$2
 
 #切换目录
 cd "$(dirname "$0")/../"
@@ -90,6 +91,15 @@ generate_local_update_files() {
   echo "正在生成本地更新文件: $source_path ..."
   ./scripts/generate-local-update-yml.sh "$source_path"
 }
+
+
+if [ -z "$ISPROD" ]; then
+    echo "使用内部环境配置"
+else
+    mv .env .env.development.local
+    cp .env.production.local .env
+fi
+
 
 # 根据平台选择不同的包路径和文件名
 case "$PLATFORM" in
@@ -166,4 +176,10 @@ if [ $? -eq 0 ]; then
   echo "✅ 打包成功: $REMOTE_FILE"
 else
   echo "❌ 打包失败"
+fi
+
+if [ -z "$ISPROD" ]; then
+  echo "使用内部环境配置"
+else
+  mv .env.development.local .env
 fi

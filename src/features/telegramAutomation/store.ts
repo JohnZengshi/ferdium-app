@@ -558,7 +558,7 @@ export default class TelegramAutomationStore extends FeatureStore {
               runInAction(() => {
                 this.qrUrl = url;
               });
-              this._handleQrUrl(instanceId, url).catch(() => {
+              this._handleQrUrl(instanceId, url, attempt).catch(() => {
                 debug('[TG-FLUX] Failed to process QR for injection');
               });
             }
@@ -676,9 +676,13 @@ export default class TelegramAutomationStore extends FeatureStore {
     }
   }
 
-  @action _handleQrUrl = async (serviceId: string, url: string) => {
+  @action _handleQrUrl = async (
+    serviceId: string,
+    url: string,
+    attempt: number,
+  ) => {
     if (
-      !this._sseSubscriptions.has(serviceId) ||
+      this._serviceBindAttempts.get(serviceId) !== attempt ||
       this._serviceBindStatus.get(serviceId) !==
         TELEGRAM_BIND_STATUS.WAITING_FOR_QR
     ) {
@@ -691,7 +695,7 @@ export default class TelegramAutomationStore extends FeatureStore {
         errorCorrectionLevel: 'M',
       });
       if (
-        !this._sseSubscriptions.has(serviceId) ||
+        this._serviceBindAttempts.get(serviceId) !== attempt ||
         this._serviceBindStatus.get(serviceId) !==
           TELEGRAM_BIND_STATUS.WAITING_FOR_QR
       ) {

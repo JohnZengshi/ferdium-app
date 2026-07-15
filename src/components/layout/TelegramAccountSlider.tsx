@@ -15,6 +15,7 @@ import {
   Select,
 } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
+import { SUPPRESS_ERROR_TOAST } from '../../agent-flow-cs/api/customInstance';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
   createTelegramBindingApiV1TelegramBindPost,
@@ -112,9 +113,10 @@ const TelegramSliderItem = SortableElement<TelegramSliderItemProps>(
           let cancelled = false;
           const loadBinding = async () => {
             try {
-              const bindRes = await getTelegramBindingApiV1TelegramBindGet({
-                instance_id: service.id,
-              });
+              const bindRes = await getTelegramBindingApiV1TelegramBindGet(
+                { instance_id: service.id },
+                SUPPRESS_ERROR_TOAST,
+              );
               if (
                 cancelled ||
                 bindRes.status !== 200 ||

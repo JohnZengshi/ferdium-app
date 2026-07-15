@@ -11,6 +11,11 @@ import { getAccessToken } from './auth';
 export const AGENT_FLOW_CS_BASE =
   process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.228:8000';
 
+/** Pass as options to generated API functions to suppress the automatic error toast. */
+export const SUPPRESS_ERROR_TOAST: RequestInit = {
+  headers: { 'X-Suppress-Error-Toast': 'true' },
+};
+
 type OrvalResponse<T> = {
   data: T;
   status: number;
@@ -178,7 +183,20 @@ export const useCustomInstance = <T>(
       response.statusText,
     );
 
-    MessagePlugin.error(errorMessage);
+    // Callers that manage their own error display (e.g. TelegramAccountSlider
+    // bind query) can suppress the toast by passing X-Suppress-Error-Toast: true.
+    const rawHeaders = options?.headers;
+    const suppressToast =
+      rawHeaders &&
+      typeof rawHeaders === 'object' &&
+      !Array.isArray(rawHeaders) &&
+      !(rawHeaders instanceof Headers) &&
+      (rawHeaders as Record<string, string>)['X-Suppress-Error-Toast'] ===
+        'true';
+
+    if (!suppressToast) {
+      MessagePlugin.error(errorMessage);
+    }
     throw new AgentFlowApiError(errorMessage, response, body, parsedBody);
   });
 };

@@ -16,6 +16,7 @@ import {
   Select,
 } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
+import type { AppApiSchemasDigitalHumanResponse } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
   createWhatsappBindingApiV1WhatsappBindPost,
@@ -292,8 +293,10 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               const boundId = bindRes.data.digital_human_id;
               try {
                 const listRes = await listDigitalHumansApiV1DigitalHumansGet();
-                if (cancelled || listRes.status !== 200) return;
-                const found = listRes.data.find(dh => dh.id === boundId);
+                if (cancelled) return;
+                const found = (
+                  listRes.data as AppApiSchemasDigitalHumanResponse[]
+                ).find(dh => dh.id === boundId);
                 setBoundPersonaName(found?.name ?? '');
               } catch {
                 /* best-effort */
@@ -351,8 +354,9 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                     try {
                       const res =
                         await listDigitalHumansApiV1DigitalHumansGet();
-                      if (res.status !== 200) return;
-                      options = res.data.map(item => ({
+                      options = (
+                        res.data as AppApiSchemasDigitalHumanResponse[]
+                      ).map(item => ({
                         label: item.name,
                         value: item.id,
                       }));

@@ -15,8 +15,8 @@ import type {
   AssignRequest,
   AssigneeResponse,
   BodyUploadDocumentApiV1OwnersKnowledgeUploadPost,
-  ConversationDaySummaryResponse,
   ConversationDetailResponse,
+  ConversationRangeSummaryResponse,
   DashboardStats,
   DeleteDocumentApiV1OwnersKnowledgeDocumentsDocIdDeleteParams,
   DigitalHumanCreate,
@@ -25,8 +25,8 @@ import type {
   EnterpriseCodeResponse,
   EnterpriseCodeSetRequest,
   ErrorResponse,
-  GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams,
   GetConversationMessagesApiV1OwnersConversationsConvIdMessagesGetParams,
+  GetConversationRangeSummaryApiV1OwnersConversationsSummaryGetParams,
   HandoffWithContextListResponse,
   KnowledgeCollectionOwnerResponse,
   KnowledgeDeleteResponse,
@@ -2060,76 +2060,76 @@ export const getConversationMessagesApiV1OwnersConversationsConvIdMessagesGet = 
 );}
 
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse200 = {
-  data: ConversationDaySummaryResponse
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse200 = {
+  data: ConversationRangeSummaryResponse
   status: 200
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse400 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse400 = {
   data: ErrorResponse
   status: 400
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse401 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse401 = {
   data: ErrorResponse
   status: 401
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse403 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse403 = {
   data: ErrorResponse
   status: 403
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse404 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse404 = {
   data: ErrorResponse
   status: 404
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse409 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse409 = {
   data: ErrorResponse
   status: 409
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse413 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse413 = {
   data: ErrorResponse
   status: 413
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse422 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse422 = {
   data: ErrorResponse
   status: 422
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse429 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse429 = {
   data: ErrorResponse
   status: 429
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse500 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse500 = {
   data: ErrorResponse
   status: 500
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse502 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse502 = {
   data: ErrorResponse
   status: 502
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse503 = {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse503 = {
   data: ErrorResponse
   status: 503
 }
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseSuccess = (getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse200) & {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponseSuccess = (getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse200) & {
   headers: Headers;
 };
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseError = (getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse400 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse401 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse403 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse404 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse409 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse413 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse422 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse429 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse500 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse502 | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse503) & {
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponseError = (getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse400 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse401 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse403 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse404 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse409 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse413 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse422 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse429 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse500 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse502 | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse503) & {
   headers: Headers;
 };
 
-export type getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse = (getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseSuccess | getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponseError)
+export type getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse = (getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponseSuccess | getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponseError)
 
-export const getGetConversationDaySummaryApiV1OwnersConversationsSummaryGetUrl = (params: GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams,) => {
+export const getGetConversationRangeSummaryApiV1OwnersConversationsSummaryGetUrl = (params: GetConversationRangeSummaryApiV1OwnersConversationsSummaryGetParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
@@ -2145,12 +2145,12 @@ export const getGetConversationDaySummaryApiV1OwnersConversationsSummaryGetUrl =
 }
 
 /**
- * 生成指定会话在所选 UTC 日期当天的聊天记录摘要总结。
- * @summary Get Conversation Day Summary
+ * 生成指定会话在 [start, end) 时间区间内的聊天记录摘要总结。
+ * @summary Get Conversation Range Summary
  */
-export const getConversationDaySummaryApiV1OwnersConversationsSummaryGet = async (params: GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams, options?: RequestInit): Promise<getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse> => {
+export const getConversationRangeSummaryApiV1OwnersConversationsSummaryGet = async (params: GetConversationRangeSummaryApiV1OwnersConversationsSummaryGetParams, options?: RequestInit): Promise<getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse> => {
 
-  return useCustomInstance<getConversationDaySummaryApiV1OwnersConversationsSummaryGetResponse>(getGetConversationDaySummaryApiV1OwnersConversationsSummaryGetUrl(params),
+  return useCustomInstance<getConversationRangeSummaryApiV1OwnersConversationsSummaryGetResponse>(getGetConversationRangeSummaryApiV1OwnersConversationsSummaryGetUrl(params),
   {
     ...options,
     method: 'GET'

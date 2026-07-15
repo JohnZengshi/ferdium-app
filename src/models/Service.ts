@@ -878,7 +878,7 @@ export default class Service {
 
             if (
               api === 'owners' &&
-              method.includes('getConversationDaySummary')
+              method.includes('getConversationRangeSummary')
             ) {
               if (
                 enhancedArgs.length === 0 ||

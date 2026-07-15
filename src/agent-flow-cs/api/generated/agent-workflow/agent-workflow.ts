@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   WorkflowSettingsResponse,
   WorkflowSettingsUpdate
 } from '../agentFlowCs.schemas';
@@ -17,12 +17,69 @@ export type getWorkflowApiV1AgentWorkflowGetResponse200 = {
   status: 200
 }
 
+export type getWorkflowApiV1AgentWorkflowGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getWorkflowApiV1AgentWorkflowGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type getWorkflowApiV1AgentWorkflowGetResponseSuccess = (getWorkflowApiV1AgentWorkflowGetResponse200) & {
   headers: Headers;
 };
-;
+export type getWorkflowApiV1AgentWorkflowGetResponseError = (getWorkflowApiV1AgentWorkflowGetResponse400 | getWorkflowApiV1AgentWorkflowGetResponse401 | getWorkflowApiV1AgentWorkflowGetResponse403 | getWorkflowApiV1AgentWorkflowGetResponse404 | getWorkflowApiV1AgentWorkflowGetResponse409 | getWorkflowApiV1AgentWorkflowGetResponse413 | getWorkflowApiV1AgentWorkflowGetResponse422 | getWorkflowApiV1AgentWorkflowGetResponse429 | getWorkflowApiV1AgentWorkflowGetResponse500 | getWorkflowApiV1AgentWorkflowGetResponse502 | getWorkflowApiV1AgentWorkflowGetResponse503) & {
+  headers: Headers;
+};
 
-export type getWorkflowApiV1AgentWorkflowGetResponse = (getWorkflowApiV1AgentWorkflowGetResponseSuccess)
+export type getWorkflowApiV1AgentWorkflowGetResponse = (getWorkflowApiV1AgentWorkflowGetResponseSuccess | getWorkflowApiV1AgentWorkflowGetResponseError)
 
 export const getGetWorkflowApiV1AgentWorkflowGetUrl = () => {
 
@@ -53,15 +110,65 @@ export type updateWorkflowApiV1AgentWorkflowPutResponse200 = {
   status: 200
 }
 
+export type updateWorkflowApiV1AgentWorkflowPutResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateWorkflowApiV1AgentWorkflowPutResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateWorkflowApiV1AgentWorkflowPutResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateWorkflowApiV1AgentWorkflowPutResponseSuccess = (updateWorkflowApiV1AgentWorkflowPutResponse200) & {
   headers: Headers;
 };
-export type updateWorkflowApiV1AgentWorkflowPutResponseError = (updateWorkflowApiV1AgentWorkflowPutResponse422) & {
+export type updateWorkflowApiV1AgentWorkflowPutResponseError = (updateWorkflowApiV1AgentWorkflowPutResponse400 | updateWorkflowApiV1AgentWorkflowPutResponse401 | updateWorkflowApiV1AgentWorkflowPutResponse403 | updateWorkflowApiV1AgentWorkflowPutResponse404 | updateWorkflowApiV1AgentWorkflowPutResponse409 | updateWorkflowApiV1AgentWorkflowPutResponse413 | updateWorkflowApiV1AgentWorkflowPutResponse422 | updateWorkflowApiV1AgentWorkflowPutResponse429 | updateWorkflowApiV1AgentWorkflowPutResponse500 | updateWorkflowApiV1AgentWorkflowPutResponse502 | updateWorkflowApiV1AgentWorkflowPutResponse503) & {
   headers: Headers;
 };
 

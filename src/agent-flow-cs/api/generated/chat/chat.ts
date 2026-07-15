@@ -7,8 +7,8 @@
 import type {
   ChatRequest,
   ChatResponse,
+  ErrorResponse,
   GetConversationTraceApiV1ChatConversationIdTraceGetParams,
-  HTTPValidationError,
   TraceResponse
 } from '../agentFlowCs.schemas';
 
@@ -19,15 +19,65 @@ export type chatSyncApiV1ChatSyncPostResponse200 = {
   status: 200
 }
 
+export type chatSyncApiV1ChatSyncPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type chatSyncApiV1ChatSyncPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type chatSyncApiV1ChatSyncPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type chatSyncApiV1ChatSyncPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type chatSyncApiV1ChatSyncPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type chatSyncApiV1ChatSyncPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type chatSyncApiV1ChatSyncPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type chatSyncApiV1ChatSyncPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type chatSyncApiV1ChatSyncPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type chatSyncApiV1ChatSyncPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type chatSyncApiV1ChatSyncPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type chatSyncApiV1ChatSyncPostResponseSuccess = (chatSyncApiV1ChatSyncPostResponse200) & {
   headers: Headers;
 };
-export type chatSyncApiV1ChatSyncPostResponseError = (chatSyncApiV1ChatSyncPostResponse422) & {
+export type chatSyncApiV1ChatSyncPostResponseError = (chatSyncApiV1ChatSyncPostResponse400 | chatSyncApiV1ChatSyncPostResponse401 | chatSyncApiV1ChatSyncPostResponse403 | chatSyncApiV1ChatSyncPostResponse404 | chatSyncApiV1ChatSyncPostResponse409 | chatSyncApiV1ChatSyncPostResponse413 | chatSyncApiV1ChatSyncPostResponse422 | chatSyncApiV1ChatSyncPostResponse429 | chatSyncApiV1ChatSyncPostResponse500 | chatSyncApiV1ChatSyncPostResponse502 | chatSyncApiV1ChatSyncPostResponse503) & {
   headers: Headers;
 };
 
@@ -62,15 +112,65 @@ export type getConversationTraceApiV1ChatConversationIdTraceGetResponse200 = {
   status: 200
 }
 
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getConversationTraceApiV1ChatConversationIdTraceGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getConversationTraceApiV1ChatConversationIdTraceGetResponseSuccess = (getConversationTraceApiV1ChatConversationIdTraceGetResponse200) & {
   headers: Headers;
 };
-export type getConversationTraceApiV1ChatConversationIdTraceGetResponseError = (getConversationTraceApiV1ChatConversationIdTraceGetResponse422) & {
+export type getConversationTraceApiV1ChatConversationIdTraceGetResponseError = (getConversationTraceApiV1ChatConversationIdTraceGetResponse400 | getConversationTraceApiV1ChatConversationIdTraceGetResponse401 | getConversationTraceApiV1ChatConversationIdTraceGetResponse403 | getConversationTraceApiV1ChatConversationIdTraceGetResponse404 | getConversationTraceApiV1ChatConversationIdTraceGetResponse409 | getConversationTraceApiV1ChatConversationIdTraceGetResponse413 | getConversationTraceApiV1ChatConversationIdTraceGetResponse422 | getConversationTraceApiV1ChatConversationIdTraceGetResponse429 | getConversationTraceApiV1ChatConversationIdTraceGetResponse500 | getConversationTraceApiV1ChatConversationIdTraceGetResponse502 | getConversationTraceApiV1ChatConversationIdTraceGetResponse503) & {
   headers: Headers;
 };
 
@@ -114,15 +214,65 @@ export type chatStreamApiV1ChatStreamPostResponse200 = {
   status: 200
 }
 
+export type chatStreamApiV1ChatStreamPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type chatStreamApiV1ChatStreamPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type chatStreamApiV1ChatStreamPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type chatStreamApiV1ChatStreamPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type chatStreamApiV1ChatStreamPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type chatStreamApiV1ChatStreamPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type chatStreamApiV1ChatStreamPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type chatStreamApiV1ChatStreamPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type chatStreamApiV1ChatStreamPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type chatStreamApiV1ChatStreamPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type chatStreamApiV1ChatStreamPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type chatStreamApiV1ChatStreamPostResponseSuccess = (chatStreamApiV1ChatStreamPostResponse200) & {
   headers: Headers;
 };
-export type chatStreamApiV1ChatStreamPostResponseError = (chatStreamApiV1ChatStreamPostResponse422) & {
+export type chatStreamApiV1ChatStreamPostResponseError = (chatStreamApiV1ChatStreamPostResponse400 | chatStreamApiV1ChatStreamPostResponse401 | chatStreamApiV1ChatStreamPostResponse403 | chatStreamApiV1ChatStreamPostResponse404 | chatStreamApiV1ChatStreamPostResponse409 | chatStreamApiV1ChatStreamPostResponse413 | chatStreamApiV1ChatStreamPostResponse422 | chatStreamApiV1ChatStreamPostResponse429 | chatStreamApiV1ChatStreamPostResponse500 | chatStreamApiV1ChatStreamPostResponse502 | chatStreamApiV1ChatStreamPostResponse503) & {
   headers: Headers;
 };
 

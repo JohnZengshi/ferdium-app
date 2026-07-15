@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   TranslateRequest,
   TranslateResponse
 } from '../agentFlowCs.schemas';
@@ -17,15 +17,65 @@ export type translateApiV1TranslatePostResponse200 = {
   status: 200
 }
 
+export type translateApiV1TranslatePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type translateApiV1TranslatePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type translateApiV1TranslatePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type translateApiV1TranslatePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type translateApiV1TranslatePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type translateApiV1TranslatePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type translateApiV1TranslatePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type translateApiV1TranslatePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type translateApiV1TranslatePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type translateApiV1TranslatePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type translateApiV1TranslatePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type translateApiV1TranslatePostResponseSuccess = (translateApiV1TranslatePostResponse200) & {
   headers: Headers;
 };
-export type translateApiV1TranslatePostResponseError = (translateApiV1TranslatePostResponse422) & {
+export type translateApiV1TranslatePostResponseError = (translateApiV1TranslatePostResponse400 | translateApiV1TranslatePostResponse401 | translateApiV1TranslatePostResponse403 | translateApiV1TranslatePostResponse404 | translateApiV1TranslatePostResponse409 | translateApiV1TranslatePostResponse413 | translateApiV1TranslatePostResponse422 | translateApiV1TranslatePostResponse429 | translateApiV1TranslatePostResponse500 | translateApiV1TranslatePostResponse502 | translateApiV1TranslatePostResponse503) & {
   headers: Headers;
 };
 

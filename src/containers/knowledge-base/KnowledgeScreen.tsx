@@ -25,6 +25,7 @@ import type {
   AppApiSchemasDigitalHumanResponse,
   DigitalHumanCreateRequest,
   DigitalHumanUpdateRequest,
+  MemberTagListResponse,
   MemberTagResponse,
 } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import {
@@ -651,7 +652,7 @@ const KnowledgeScreen: React.FC = () => {
   const fetchDigitalHumans = useCallback(async () => {
     try {
       const response = await listDigitalHumansApiV1DigitalHumansGet();
-      setDigitalHumans(response.data);
+      setDigitalHumans(response.data as AppApiSchemasDigitalHumanResponse[]);
     } catch {
       await MessagePlugin.error(intl.formatMessage(messages.loadFailed));
     }
@@ -664,7 +665,7 @@ const KnowledgeScreen: React.FC = () => {
   const fetchTags = useCallback(async () => {
     try {
       const response = await listTagsForMemberApiV1TagsGet();
-      setTags(response.data.items ?? []);
+      setTags((response.data as MemberTagListResponse).items ?? []);
     } catch {
       await MessagePlugin.error(intl.formatMessage(messages.tagLoadFailed));
     }

@@ -6,9 +6,9 @@
  */
 import type {
   DeleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteParams,
+  ErrorResponse,
   ExportCustomerMemoryApiV1MemoryCustomersCustomerIdGetParams,
   ExportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetParams,
-  HTTPValidationError,
   MemoryDeleteResponse,
   MemoryExportResponse,
   MemoryMetricsResponse,
@@ -22,12 +22,69 @@ export type getMemoryMetricsApiV1MemoryMetricsGetResponse200 = {
   status: 200
 }
 
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type getMemoryMetricsApiV1MemoryMetricsGetResponseSuccess = (getMemoryMetricsApiV1MemoryMetricsGetResponse200) & {
   headers: Headers;
 };
-;
+export type getMemoryMetricsApiV1MemoryMetricsGetResponseError = (getMemoryMetricsApiV1MemoryMetricsGetResponse400 | getMemoryMetricsApiV1MemoryMetricsGetResponse401 | getMemoryMetricsApiV1MemoryMetricsGetResponse403 | getMemoryMetricsApiV1MemoryMetricsGetResponse404 | getMemoryMetricsApiV1MemoryMetricsGetResponse409 | getMemoryMetricsApiV1MemoryMetricsGetResponse413 | getMemoryMetricsApiV1MemoryMetricsGetResponse422 | getMemoryMetricsApiV1MemoryMetricsGetResponse429 | getMemoryMetricsApiV1MemoryMetricsGetResponse500 | getMemoryMetricsApiV1MemoryMetricsGetResponse502 | getMemoryMetricsApiV1MemoryMetricsGetResponse503) & {
+  headers: Headers;
+};
 
-export type getMemoryMetricsApiV1MemoryMetricsGetResponse = (getMemoryMetricsApiV1MemoryMetricsGetResponseSuccess)
+export type getMemoryMetricsApiV1MemoryMetricsGetResponse = (getMemoryMetricsApiV1MemoryMetricsGetResponseSuccess | getMemoryMetricsApiV1MemoryMetricsGetResponseError)
 
 export const getGetMemoryMetricsApiV1MemoryMetricsGetUrl = () => {
 
@@ -58,15 +115,65 @@ export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse200 = {
   status: 200
 }
 
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseSuccess = (exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse200) & {
   headers: Headers;
 };
-export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseError = (exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse422) & {
+export type exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponseError = (exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse400 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse401 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse403 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse404 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse409 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse413 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse422 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse429 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse500 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse502 | exportCustomerMemoryApiV1MemoryCustomersCustomerIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -110,15 +217,65 @@ export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResp
   status: 200
 }
 
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseSuccess = (deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse200) & {
   headers: Headers;
 };
-export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseError = (deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse422) & {
+export type deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponseError = (deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse400 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse401 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse403 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse404 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse409 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse413 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse422 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse429 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse500 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse502 | deleteCustomerMemoryEndpointApiV1MemoryCustomersCustomerIdDeleteResponse503) & {
   headers: Headers;
 };
 
@@ -162,15 +319,65 @@ export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMark
   status: 200
 }
 
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseSuccess = (exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse200) & {
   headers: Headers;
 };
-export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseError = (exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse422) & {
+export type exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponseError = (exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse400 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse401 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse403 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse404 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse409 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse413 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse422 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse429 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse500 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse502 | exportCustomerMemoryMarkdownApiV1MemoryCustomersCustomerIdExportMarkdownGetResponse503) & {
   headers: Headers;
 };
 
@@ -217,12 +424,69 @@ export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse200 = {
   status: 200
 }
 
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseSuccess = (runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse200) & {
   headers: Headers;
 };
-;
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseError = (runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse400 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse401 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse403 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse404 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse409 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse413 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse422 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse429 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse500 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse502 | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse503) & {
+  headers: Headers;
+};
 
-export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse = (runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseSuccess)
+export type runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponse = (runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseSuccess | runMemoryRetentionCleanupApiV1MemoryRetentionRunPostResponseError)
 
 export const getRunMemoryRetentionCleanupApiV1MemoryRetentionRunPostUrl = () => {
 

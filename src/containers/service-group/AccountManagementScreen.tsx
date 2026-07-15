@@ -220,7 +220,7 @@ function AccountManagementScreen({ stores, actions }: IProps): ReactElement {
     let digitalHumanList: AppApiSchemasDigitalHumanResponse[] = [];
     try {
       const listRes = await listDigitalHumansApiV1DigitalHumansGet();
-      digitalHumanList = listRes.data;
+      digitalHumanList = listRes.data as AppApiSchemasDigitalHumanResponse[];
     } catch {
       return;
     }

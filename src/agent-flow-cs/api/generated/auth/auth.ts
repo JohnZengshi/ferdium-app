@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   LoginRequest,
   LoginResponse,
   RegisterRequest
@@ -18,15 +18,65 @@ export type registerApiV1AuthRegisterPostResponse200 = {
   status: 200
 }
 
+export type registerApiV1AuthRegisterPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type registerApiV1AuthRegisterPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type registerApiV1AuthRegisterPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type registerApiV1AuthRegisterPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type registerApiV1AuthRegisterPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type registerApiV1AuthRegisterPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type registerApiV1AuthRegisterPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type registerApiV1AuthRegisterPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type registerApiV1AuthRegisterPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type registerApiV1AuthRegisterPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type registerApiV1AuthRegisterPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type registerApiV1AuthRegisterPostResponseSuccess = (registerApiV1AuthRegisterPostResponse200) & {
   headers: Headers;
 };
-export type registerApiV1AuthRegisterPostResponseError = (registerApiV1AuthRegisterPostResponse422) & {
+export type registerApiV1AuthRegisterPostResponseError = (registerApiV1AuthRegisterPostResponse400 | registerApiV1AuthRegisterPostResponse401 | registerApiV1AuthRegisterPostResponse403 | registerApiV1AuthRegisterPostResponse404 | registerApiV1AuthRegisterPostResponse409 | registerApiV1AuthRegisterPostResponse413 | registerApiV1AuthRegisterPostResponse422 | registerApiV1AuthRegisterPostResponse429 | registerApiV1AuthRegisterPostResponse500 | registerApiV1AuthRegisterPostResponse502 | registerApiV1AuthRegisterPostResponse503) & {
   headers: Headers;
 };
 
@@ -61,15 +111,65 @@ export type loginApiV1AuthLoginPostResponse200 = {
   status: 200
 }
 
+export type loginApiV1AuthLoginPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type loginApiV1AuthLoginPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type loginApiV1AuthLoginPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type loginApiV1AuthLoginPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type loginApiV1AuthLoginPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type loginApiV1AuthLoginPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type loginApiV1AuthLoginPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type loginApiV1AuthLoginPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type loginApiV1AuthLoginPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type loginApiV1AuthLoginPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type loginApiV1AuthLoginPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type loginApiV1AuthLoginPostResponseSuccess = (loginApiV1AuthLoginPostResponse200) & {
   headers: Headers;
 };
-export type loginApiV1AuthLoginPostResponseError = (loginApiV1AuthLoginPostResponse422) & {
+export type loginApiV1AuthLoginPostResponseError = (loginApiV1AuthLoginPostResponse400 | loginApiV1AuthLoginPostResponse401 | loginApiV1AuthLoginPostResponse403 | loginApiV1AuthLoginPostResponse404 | loginApiV1AuthLoginPostResponse409 | loginApiV1AuthLoginPostResponse413 | loginApiV1AuthLoginPostResponse422 | loginApiV1AuthLoginPostResponse429 | loginApiV1AuthLoginPostResponse500 | loginApiV1AuthLoginPostResponse502 | loginApiV1AuthLoginPostResponse503) & {
   headers: Headers;
 };
 

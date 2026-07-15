@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   KnowledgeSearchRequest,
   KnowledgeSearchResponse
 } from '../agentFlowCs.schemas';
@@ -17,15 +17,65 @@ export type knowledgeSearchApiV1KnowledgeSearchPostResponse200 = {
   status: 200
 }
 
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type knowledgeSearchApiV1KnowledgeSearchPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type knowledgeSearchApiV1KnowledgeSearchPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type knowledgeSearchApiV1KnowledgeSearchPostResponseSuccess = (knowledgeSearchApiV1KnowledgeSearchPostResponse200) & {
   headers: Headers;
 };
-export type knowledgeSearchApiV1KnowledgeSearchPostResponseError = (knowledgeSearchApiV1KnowledgeSearchPostResponse422) & {
+export type knowledgeSearchApiV1KnowledgeSearchPostResponseError = (knowledgeSearchApiV1KnowledgeSearchPostResponse400 | knowledgeSearchApiV1KnowledgeSearchPostResponse401 | knowledgeSearchApiV1KnowledgeSearchPostResponse403 | knowledgeSearchApiV1KnowledgeSearchPostResponse404 | knowledgeSearchApiV1KnowledgeSearchPostResponse409 | knowledgeSearchApiV1KnowledgeSearchPostResponse413 | knowledgeSearchApiV1KnowledgeSearchPostResponse422 | knowledgeSearchApiV1KnowledgeSearchPostResponse429 | knowledgeSearchApiV1KnowledgeSearchPostResponse500 | knowledgeSearchApiV1KnowledgeSearchPostResponse502 | knowledgeSearchApiV1KnowledgeSearchPostResponse503) & {
   headers: Headers;
 };
 

@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   HandoffCreateRequest,
   HandoffListResponse,
   HandoffResponse,
@@ -20,15 +20,65 @@ export type listMemberHandoffsApiV1HandoffGetResponse200 = {
   status: 200
 }
 
+export type listMemberHandoffsApiV1HandoffGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listMemberHandoffsApiV1HandoffGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listMemberHandoffsApiV1HandoffGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listMemberHandoffsApiV1HandoffGetResponseSuccess = (listMemberHandoffsApiV1HandoffGetResponse200) & {
   headers: Headers;
 };
-export type listMemberHandoffsApiV1HandoffGetResponseError = (listMemberHandoffsApiV1HandoffGetResponse422) & {
+export type listMemberHandoffsApiV1HandoffGetResponseError = (listMemberHandoffsApiV1HandoffGetResponse400 | listMemberHandoffsApiV1HandoffGetResponse401 | listMemberHandoffsApiV1HandoffGetResponse403 | listMemberHandoffsApiV1HandoffGetResponse404 | listMemberHandoffsApiV1HandoffGetResponse409 | listMemberHandoffsApiV1HandoffGetResponse413 | listMemberHandoffsApiV1HandoffGetResponse422 | listMemberHandoffsApiV1HandoffGetResponse429 | listMemberHandoffsApiV1HandoffGetResponse500 | listMemberHandoffsApiV1HandoffGetResponse502 | listMemberHandoffsApiV1HandoffGetResponse503) & {
   headers: Headers;
 };
 
@@ -74,15 +124,65 @@ export type createHandoffApiV1HandoffPostResponse200 = {
   status: 200
 }
 
+export type createHandoffApiV1HandoffPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createHandoffApiV1HandoffPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createHandoffApiV1HandoffPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createHandoffApiV1HandoffPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createHandoffApiV1HandoffPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createHandoffApiV1HandoffPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createHandoffApiV1HandoffPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createHandoffApiV1HandoffPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createHandoffApiV1HandoffPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createHandoffApiV1HandoffPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createHandoffApiV1HandoffPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createHandoffApiV1HandoffPostResponseSuccess = (createHandoffApiV1HandoffPostResponse200) & {
   headers: Headers;
 };
-export type createHandoffApiV1HandoffPostResponseError = (createHandoffApiV1HandoffPostResponse422) & {
+export type createHandoffApiV1HandoffPostResponseError = (createHandoffApiV1HandoffPostResponse400 | createHandoffApiV1HandoffPostResponse401 | createHandoffApiV1HandoffPostResponse403 | createHandoffApiV1HandoffPostResponse404 | createHandoffApiV1HandoffPostResponse409 | createHandoffApiV1HandoffPostResponse413 | createHandoffApiV1HandoffPostResponse422 | createHandoffApiV1HandoffPostResponse429 | createHandoffApiV1HandoffPostResponse500 | createHandoffApiV1HandoffPostResponse502 | createHandoffApiV1HandoffPostResponse503) & {
   headers: Headers;
 };
 
@@ -117,15 +217,65 @@ export type listHandoffsByReadApiV1HandoffReadGetResponse200 = {
   status: 200
 }
 
+export type listHandoffsByReadApiV1HandoffReadGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listHandoffsByReadApiV1HandoffReadGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listHandoffsByReadApiV1HandoffReadGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listHandoffsByReadApiV1HandoffReadGetResponseSuccess = (listHandoffsByReadApiV1HandoffReadGetResponse200) & {
   headers: Headers;
 };
-export type listHandoffsByReadApiV1HandoffReadGetResponseError = (listHandoffsByReadApiV1HandoffReadGetResponse422) & {
+export type listHandoffsByReadApiV1HandoffReadGetResponseError = (listHandoffsByReadApiV1HandoffReadGetResponse400 | listHandoffsByReadApiV1HandoffReadGetResponse401 | listHandoffsByReadApiV1HandoffReadGetResponse403 | listHandoffsByReadApiV1HandoffReadGetResponse404 | listHandoffsByReadApiV1HandoffReadGetResponse409 | listHandoffsByReadApiV1HandoffReadGetResponse413 | listHandoffsByReadApiV1HandoffReadGetResponse422 | listHandoffsByReadApiV1HandoffReadGetResponse429 | listHandoffsByReadApiV1HandoffReadGetResponse500 | listHandoffsByReadApiV1HandoffReadGetResponse502 | listHandoffsByReadApiV1HandoffReadGetResponse503) & {
   headers: Headers;
 };
 
@@ -171,15 +321,65 @@ export type listHandoffsApiV1HandoffConversationIdGetResponse200 = {
   status: 200
 }
 
+export type listHandoffsApiV1HandoffConversationIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type listHandoffsApiV1HandoffConversationIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listHandoffsApiV1HandoffConversationIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type listHandoffsApiV1HandoffConversationIdGetResponseSuccess = (listHandoffsApiV1HandoffConversationIdGetResponse200) & {
   headers: Headers;
 };
-export type listHandoffsApiV1HandoffConversationIdGetResponseError = (listHandoffsApiV1HandoffConversationIdGetResponse422) & {
+export type listHandoffsApiV1HandoffConversationIdGetResponseError = (listHandoffsApiV1HandoffConversationIdGetResponse400 | listHandoffsApiV1HandoffConversationIdGetResponse401 | listHandoffsApiV1HandoffConversationIdGetResponse403 | listHandoffsApiV1HandoffConversationIdGetResponse404 | listHandoffsApiV1HandoffConversationIdGetResponse409 | listHandoffsApiV1HandoffConversationIdGetResponse413 | listHandoffsApiV1HandoffConversationIdGetResponse422 | listHandoffsApiV1HandoffConversationIdGetResponse429 | listHandoffsApiV1HandoffConversationIdGetResponse500 | listHandoffsApiV1HandoffConversationIdGetResponse502 | listHandoffsApiV1HandoffConversationIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -214,15 +414,65 @@ export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse200 = {
   status: 200
 }
 
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type markHandoffReadApiV1HandoffHandoffIdReadPostResponseSuccess = (markHandoffReadApiV1HandoffHandoffIdReadPostResponse200) & {
   headers: Headers;
 };
-export type markHandoffReadApiV1HandoffHandoffIdReadPostResponseError = (markHandoffReadApiV1HandoffHandoffIdReadPostResponse422) & {
+export type markHandoffReadApiV1HandoffHandoffIdReadPostResponseError = (markHandoffReadApiV1HandoffHandoffIdReadPostResponse400 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse401 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse403 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse404 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse409 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse413 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse422 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse429 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse500 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse502 | markHandoffReadApiV1HandoffHandoffIdReadPostResponse503) & {
   headers: Headers;
 };
 

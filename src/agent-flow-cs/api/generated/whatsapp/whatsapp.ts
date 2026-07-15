@@ -6,8 +6,8 @@
  */
 import type {
   AppApiSchemasWhatsAppBindRequest,
+  ErrorResponse,
   GetWhatsappBindingApiV1WhatsappBindGetParams,
-  HTTPValidationError,
   TriggerHistorySyncApiV1WhatsappSyncHistorySessionIdPost202,
   WhatsAppBindSwitchRequest,
   WhatsAppBindingResponse,
@@ -21,15 +21,65 @@ export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200 = {
   status: 200
 }
 
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseSuccess = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse200) & {
   headers: Headers;
 };
-export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422) & {
+export type whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponseError = (whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse400 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse401 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse403 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse404 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse409 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse413 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse422 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse429 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse500 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse502 | whatsappWebhookApiV1WhatsappWebhooksSessionIdPostResponse503) & {
   headers: Headers;
 };
 
@@ -64,15 +114,65 @@ export type createWhatsappBindingApiV1WhatsappBindPostResponse201 = {
   status: 201
 }
 
+export type createWhatsappBindingApiV1WhatsappBindPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createWhatsappBindingApiV1WhatsappBindPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createWhatsappBindingApiV1WhatsappBindPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createWhatsappBindingApiV1WhatsappBindPostResponseSuccess = (createWhatsappBindingApiV1WhatsappBindPostResponse201) & {
   headers: Headers;
 };
-export type createWhatsappBindingApiV1WhatsappBindPostResponseError = (createWhatsappBindingApiV1WhatsappBindPostResponse422) & {
+export type createWhatsappBindingApiV1WhatsappBindPostResponseError = (createWhatsappBindingApiV1WhatsappBindPostResponse400 | createWhatsappBindingApiV1WhatsappBindPostResponse401 | createWhatsappBindingApiV1WhatsappBindPostResponse403 | createWhatsappBindingApiV1WhatsappBindPostResponse404 | createWhatsappBindingApiV1WhatsappBindPostResponse409 | createWhatsappBindingApiV1WhatsappBindPostResponse413 | createWhatsappBindingApiV1WhatsappBindPostResponse422 | createWhatsappBindingApiV1WhatsappBindPostResponse429 | createWhatsappBindingApiV1WhatsappBindPostResponse500 | createWhatsappBindingApiV1WhatsappBindPostResponse502 | createWhatsappBindingApiV1WhatsappBindPostResponse503) & {
   headers: Headers;
 };
 
@@ -111,15 +211,65 @@ export type getWhatsappBindingApiV1WhatsappBindGetResponse200 = {
   status: 200
 }
 
+export type getWhatsappBindingApiV1WhatsappBindGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getWhatsappBindingApiV1WhatsappBindGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getWhatsappBindingApiV1WhatsappBindGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getWhatsappBindingApiV1WhatsappBindGetResponseSuccess = (getWhatsappBindingApiV1WhatsappBindGetResponse200) & {
   headers: Headers;
 };
-export type getWhatsappBindingApiV1WhatsappBindGetResponseError = (getWhatsappBindingApiV1WhatsappBindGetResponse422) & {
+export type getWhatsappBindingApiV1WhatsappBindGetResponseError = (getWhatsappBindingApiV1WhatsappBindGetResponse400 | getWhatsappBindingApiV1WhatsappBindGetResponse401 | getWhatsappBindingApiV1WhatsappBindGetResponse403 | getWhatsappBindingApiV1WhatsappBindGetResponse404 | getWhatsappBindingApiV1WhatsappBindGetResponse409 | getWhatsappBindingApiV1WhatsappBindGetResponse413 | getWhatsappBindingApiV1WhatsappBindGetResponse422 | getWhatsappBindingApiV1WhatsappBindGetResponse429 | getWhatsappBindingApiV1WhatsappBindGetResponse500 | getWhatsappBindingApiV1WhatsappBindGetResponse502 | getWhatsappBindingApiV1WhatsappBindGetResponse503) & {
   headers: Headers;
 };
 
@@ -161,15 +311,65 @@ export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse200 =
   status: 200
 }
 
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseSuccess = (switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse200) & {
   headers: Headers;
 };
-export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseError = (switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse422) & {
+export type switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponseError = (switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse400 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse401 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse403 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse404 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse409 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse413 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse422 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse429 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse500 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse502 | switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatchResponse503) & {
   headers: Headers;
 };
 
@@ -204,15 +404,65 @@ export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse202 =
   status: 202
 }
 
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponseSuccess = (triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse202) & {
   headers: Headers;
 };
-export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponseError = (triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse422) & {
+export type triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponseError = (triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse400 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse401 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse403 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse404 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse409 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse413 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse422 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse429 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse500 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse502 | triggerHistorySyncApiV1WhatsappSyncHistorySessionIdPostResponse503) & {
   headers: Headers;
 };
 
@@ -250,15 +500,65 @@ export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse2
   status: 200
 }
 
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponseSuccess = (pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse200) & {
   headers: Headers;
 };
-export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponseError = (pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse422) & {
+export type pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponseError = (pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse400 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse401 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse403 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse404 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse409 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse413 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse422 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse429 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse500 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse502 | pauseWhatsappSessionApiV1WhatsappSessionsSessionIdPausePostResponse503) & {
   headers: Headers;
 };
 
@@ -297,15 +597,65 @@ export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostRespons
   status: 200
 }
 
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponseSuccess = (resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse200) & {
   headers: Headers;
 };
-export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponseError = (resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse422) & {
+export type resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponseError = (resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse400 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse401 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse403 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse404 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse409 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse413 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse422 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse429 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse500 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse502 | resumeWhatsappSessionApiV1WhatsappSessionsSessionIdResumePostResponse503) & {
   headers: Headers;
 };
 

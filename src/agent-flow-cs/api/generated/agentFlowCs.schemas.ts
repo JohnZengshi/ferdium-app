@@ -509,40 +509,6 @@ export interface ConversationCreateRequest {
   title?: string;
 }
 
-/**
- * 指定会话在所选 UTC 日期当天的聊天记录摘要。
- */
-export interface ConversationDaySummaryResponse {
-  conversation_id: string;
-  customer_id?: string | null;
-  wa_session_id?: string;
-  platform: string;
-  title: string;
-  /** UTC 日期，格式 YYYY-MM-DD */
-  date: string;
-  /**
-     * 当天消息数（全量）
-     * @minimum 0
-     */
-  message_count: number;
-  /**
-     * 因上限省略的旧消息数（message_count - 实际送入模型数）
-     * @minimum 0
-     */
-  omitted_messages?: number;
-  /**
-     * 命中的会话数；>1 表示多子账号同三元组，仅总结最近活跃一条
-     * @minimum 1
-     */
-  matched_conversation_count?: number;
-  /** LLM 生成的中文当日聊天总结（Markdown） */
-  summary: string;
-  /** 摘要生成时间（UTC） */
-  generated_at: string;
-  /** 是否复用了消息快照未变化的已存摘要 */
-  cached?: boolean;
-}
-
 export interface AppApiSchemasOwnersConversationResponse {
   id: string;
   owner_user_id: string;
@@ -575,6 +541,45 @@ export interface ConversationDetailResponse {
   messages: AppApiSchemasOwnersMessageResponse[];
   next_cursor?: string | null;
   has_more?: boolean;
+}
+
+/**
+ * 指定会话在所选时间区间内的聊天记录摘要（无缓存实时生成）。
+ */
+export interface ConversationRangeSummaryResponse {
+  conversation_id: string;
+  customer_id?: string | null;
+  wa_session_id?: string;
+  platform: string;
+  title: string;
+  /** 起始时间（ISO 8601，UTC） */
+  start: string;
+  /** 结束时间（ISO 8601，UTC） */
+  end: string;
+  /**
+     * 区间内消息数（全量）
+     * @minimum 0
+     */
+  message_count: number;
+  /**
+     * 因上限省略的旧消息数（message_count - 实际送入模型数）
+     * @minimum 0
+     */
+  omitted_messages?: number;
+  /**
+     * 命中的会话数；>1 表示多子账号同三元组，仅总结最近活跃一条
+     * @minimum 1
+     */
+  matched_conversation_count?: number;
+  /** LLM 生成的中文区间聊天总结（Markdown） */
+  summary: string;
+  /** 摘要生成时间（UTC） */
+  generated_at: string;
+  /**
+     * map-reduce 分批数；0 表示无消息未生成，1 表示单次生成
+     * @minimum 0
+     */
+  batch_count?: number;
 }
 
 /**
@@ -945,6 +950,51 @@ export interface EnterpriseCodeSetRequest {
   enterprise_code: string;
 }
 
+/**
+ * 客户端可以稳定依赖的错误码。
+ */
+export type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
+
+
+export const ErrorCode = {
+  BAD_REQUEST: 'BAD_REQUEST',
+  INVALID_REQUEST: 'INVALID_REQUEST',
+  AUTHENTICATION_REQUIRED: 'AUTHENTICATION_REQUIRED',
+  INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
+  PERMISSION_DENIED: 'PERMISSION_DENIED',
+  RESOURCE_NOT_FOUND: 'RESOURCE_NOT_FOUND',
+  RESOURCE_CONFLICT: 'RESOURCE_CONFLICT',
+  METHOD_NOT_ALLOWED: 'METHOD_NOT_ALLOWED',
+  PAYLOAD_TOO_LARGE: 'PAYLOAD_TOO_LARGE',
+  RATE_LIMITED: 'RATE_LIMITED',
+  FEATURE_DISABLED: 'FEATURE_DISABLED',
+  UPSTREAM_FAILURE: 'UPSTREAM_FAILURE',
+  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
+  DIGITAL_HUMAN_INACTIVE: 'DIGITAL_HUMAN_INACTIVE',
+  DIGITAL_HUMAN_NAME_CONFLICT: 'DIGITAL_HUMAN_NAME_CONFLICT',
+  DIGITAL_HUMAN_NOT_ASSIGNED: 'DIGITAL_HUMAN_NOT_ASSIGNED',
+  KNOWLEDGE_BASE_DISABLED: 'KNOWLEDGE_BASE_DISABLED',
+  KNOWLEDGE_COLLECTION_FORBIDDEN: 'KNOWLEDGE_COLLECTION_FORBIDDEN',
+} as const;
+
+/**
+ * 单个请求字段的安全校验信息。
+ */
+export interface ValidationIssue {
+  field: string;
+  message: string;
+}
+
+/**
+ * 所有 API 错误共享的最小响应结构。
+ */
+export interface ErrorResponse {
+  code: ErrorCode;
+  message: string;
+  errors?: ValidationIssue[] | null;
+}
+
 export type FollowupStateResponseStrategyJson = { [key: string]: unknown };
 
 export interface FollowupStateResponse {
@@ -994,20 +1044,6 @@ export interface FollowupStrategyRequest {
      * @maximum 365
      */
   valid_days?: number;
-}
-
-export type ValidationErrorCtx = { [key: string]: unknown };
-
-export interface ValidationError {
-  loc: (string | number)[];
-  msg: string;
-  type: string;
-  input?: unknown;
-  ctx?: ValidationErrorCtx;
-}
-
-export interface HTTPValidationError {
-  detail?: ValidationError[];
 }
 
 /**
@@ -2984,7 +3020,7 @@ before?: string | null;
 limit?: number;
 };
 
-export type GetConversationDaySummaryApiV1OwnersConversationsSummaryGetParams = {
+export type GetConversationRangeSummaryApiV1OwnersConversationsSummaryGetParams = {
 /**
  * 终端客户标识
  */
@@ -2994,9 +3030,13 @@ customer_id: string;
  */
 platform: string;
 /**
- * UTC 日期，格式 YYYY-MM-DD
+ * 起始时间 ISO 8601（UTC）
  */
-date: string;
+start: string;
+/**
+ * 结束时间 ISO 8601（UTC）
+ */
+end: string;
 /**
  * WhatsApp session ID；非 WA 平台传空串
  */

@@ -5,7 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type {
-  HTTPValidationError,
+  ErrorResponse,
   SuggestionRequest,
   SuggestionResponse
 } from '../agentFlowCs.schemas';
@@ -17,15 +17,65 @@ export type generateSuggestionApiV1SuggestionPostResponse200 = {
   status: 200
 }
 
+export type generateSuggestionApiV1SuggestionPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type generateSuggestionApiV1SuggestionPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type generateSuggestionApiV1SuggestionPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type generateSuggestionApiV1SuggestionPostResponseSuccess = (generateSuggestionApiV1SuggestionPostResponse200) & {
   headers: Headers;
 };
-export type generateSuggestionApiV1SuggestionPostResponseError = (generateSuggestionApiV1SuggestionPostResponse422) & {
+export type generateSuggestionApiV1SuggestionPostResponseError = (generateSuggestionApiV1SuggestionPostResponse400 | generateSuggestionApiV1SuggestionPostResponse401 | generateSuggestionApiV1SuggestionPostResponse403 | generateSuggestionApiV1SuggestionPostResponse404 | generateSuggestionApiV1SuggestionPostResponse409 | generateSuggestionApiV1SuggestionPostResponse413 | generateSuggestionApiV1SuggestionPostResponse422 | generateSuggestionApiV1SuggestionPostResponse429 | generateSuggestionApiV1SuggestionPostResponse500 | generateSuggestionApiV1SuggestionPostResponse502 | generateSuggestionApiV1SuggestionPostResponse503) & {
   headers: Headers;
 };
 

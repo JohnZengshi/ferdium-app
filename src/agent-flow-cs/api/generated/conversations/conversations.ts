@@ -10,8 +10,8 @@ import type {
   AppApiSchemasMessageResponse,
   ConversationCreateRequest,
   ConversationUpdateRequest,
+  ErrorResponse,
   GetConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetParams,
-  HTTPValidationError,
   PauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchParams,
   ResumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchParams,
   StreamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetParams
@@ -24,15 +24,65 @@ export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetRe
   status: 200
 }
 
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponseSuccess = (getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse200) & {
   headers: Headers;
 };
-export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponseError = (getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse422) & {
+export type getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponseError = (getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse400 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse401 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse403 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse404 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse409 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse413 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse422 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse429 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse500 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse502 | getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -81,15 +131,65 @@ export type getConversationApiV1ConversationsConversationIdGetResponse200 = {
   status: 200
 }
 
+export type getConversationApiV1ConversationsConversationIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getConversationApiV1ConversationsConversationIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getConversationApiV1ConversationsConversationIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getConversationApiV1ConversationsConversationIdGetResponseSuccess = (getConversationApiV1ConversationsConversationIdGetResponse200) & {
   headers: Headers;
 };
-export type getConversationApiV1ConversationsConversationIdGetResponseError = (getConversationApiV1ConversationsConversationIdGetResponse422) & {
+export type getConversationApiV1ConversationsConversationIdGetResponseError = (getConversationApiV1ConversationsConversationIdGetResponse400 | getConversationApiV1ConversationsConversationIdGetResponse401 | getConversationApiV1ConversationsConversationIdGetResponse403 | getConversationApiV1ConversationsConversationIdGetResponse404 | getConversationApiV1ConversationsConversationIdGetResponse409 | getConversationApiV1ConversationsConversationIdGetResponse413 | getConversationApiV1ConversationsConversationIdGetResponse422 | getConversationApiV1ConversationsConversationIdGetResponse429 | getConversationApiV1ConversationsConversationIdGetResponse500 | getConversationApiV1ConversationsConversationIdGetResponse502 | getConversationApiV1ConversationsConversationIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -124,15 +224,65 @@ export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchR
   status: 200
 }
 
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseSuccess = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse200) & {
   headers: Headers;
 };
-export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422) & {
+export type updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponseError = (updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse400 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse401 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse403 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse404 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse409 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse413 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse422 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse429 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse500 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse502 | updateConversationDigitalHumanApiV1ConversationsConversationIdPatchResponse503) & {
   headers: Headers;
 };
 
@@ -168,12 +318,69 @@ export type listConversationsApiV1ConversationsGetResponse200 = {
   status: 200
 }
 
+export type listConversationsApiV1ConversationsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listConversationsApiV1ConversationsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listConversationsApiV1ConversationsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listConversationsApiV1ConversationsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listConversationsApiV1ConversationsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listConversationsApiV1ConversationsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type listConversationsApiV1ConversationsGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type listConversationsApiV1ConversationsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listConversationsApiV1ConversationsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listConversationsApiV1ConversationsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listConversationsApiV1ConversationsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type listConversationsApiV1ConversationsGetResponseSuccess = (listConversationsApiV1ConversationsGetResponse200) & {
   headers: Headers;
 };
-;
+export type listConversationsApiV1ConversationsGetResponseError = (listConversationsApiV1ConversationsGetResponse400 | listConversationsApiV1ConversationsGetResponse401 | listConversationsApiV1ConversationsGetResponse403 | listConversationsApiV1ConversationsGetResponse404 | listConversationsApiV1ConversationsGetResponse409 | listConversationsApiV1ConversationsGetResponse413 | listConversationsApiV1ConversationsGetResponse422 | listConversationsApiV1ConversationsGetResponse429 | listConversationsApiV1ConversationsGetResponse500 | listConversationsApiV1ConversationsGetResponse502 | listConversationsApiV1ConversationsGetResponse503) & {
+  headers: Headers;
+};
 
-export type listConversationsApiV1ConversationsGetResponse = (listConversationsApiV1ConversationsGetResponseSuccess)
+export type listConversationsApiV1ConversationsGetResponse = (listConversationsApiV1ConversationsGetResponseSuccess | listConversationsApiV1ConversationsGetResponseError)
 
 export const getListConversationsApiV1ConversationsGetUrl = () => {
 
@@ -204,15 +411,65 @@ export type createConversationApiV1ConversationsPostResponse200 = {
   status: 200
 }
 
+export type createConversationApiV1ConversationsPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createConversationApiV1ConversationsPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createConversationApiV1ConversationsPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createConversationApiV1ConversationsPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createConversationApiV1ConversationsPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createConversationApiV1ConversationsPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createConversationApiV1ConversationsPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createConversationApiV1ConversationsPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createConversationApiV1ConversationsPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createConversationApiV1ConversationsPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createConversationApiV1ConversationsPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createConversationApiV1ConversationsPostResponseSuccess = (createConversationApiV1ConversationsPostResponse200) & {
   headers: Headers;
 };
-export type createConversationApiV1ConversationsPostResponseError = (createConversationApiV1ConversationsPostResponse422) & {
+export type createConversationApiV1ConversationsPostResponseError = (createConversationApiV1ConversationsPostResponse400 | createConversationApiV1ConversationsPostResponse401 | createConversationApiV1ConversationsPostResponse403 | createConversationApiV1ConversationsPostResponse404 | createConversationApiV1ConversationsPostResponse409 | createConversationApiV1ConversationsPostResponse413 | createConversationApiV1ConversationsPostResponse422 | createConversationApiV1ConversationsPostResponse429 | createConversationApiV1ConversationsPostResponse500 | createConversationApiV1ConversationsPostResponse502 | createConversationApiV1ConversationsPostResponse503) & {
   headers: Headers;
 };
 
@@ -247,15 +504,65 @@ export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200 
   status: 200
 }
 
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseSuccess = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse200) & {
   headers: Headers;
 };
-export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422) & {
+export type agentReplyApiV1ConversationsConversationIdAgentReplyPostResponseError = (agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse400 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse401 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse403 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse404 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse409 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse413 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse422 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse429 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse500 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse502 | agentReplyApiV1ConversationsConversationIdAgentReplyPostResponse503) & {
   headers: Headers;
 };
 
@@ -294,15 +601,65 @@ export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse2
   status: 200
 }
 
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type pauseConversationApiV1ConversationsConversationIdPausePatchResponseSuccess = (pauseConversationApiV1ConversationsConversationIdPausePatchResponse200) & {
   headers: Headers;
 };
-export type pauseConversationApiV1ConversationsConversationIdPausePatchResponseError = (pauseConversationApiV1ConversationsConversationIdPausePatchResponse422) & {
+export type pauseConversationApiV1ConversationsConversationIdPausePatchResponseError = (pauseConversationApiV1ConversationsConversationIdPausePatchResponse400 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse401 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse403 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse404 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse409 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse413 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse422 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse429 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse500 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse502 | pauseConversationApiV1ConversationsConversationIdPausePatchResponse503) & {
   headers: Headers;
 };
 
@@ -342,15 +699,65 @@ export type resumeConversationApiV1ConversationsConversationIdResumePatchRespons
   status: 200
 }
 
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resumeConversationApiV1ConversationsConversationIdResumePatchResponseSuccess = (resumeConversationApiV1ConversationsConversationIdResumePatchResponse200) & {
   headers: Headers;
 };
-export type resumeConversationApiV1ConversationsConversationIdResumePatchResponseError = (resumeConversationApiV1ConversationsConversationIdResumePatchResponse422) & {
+export type resumeConversationApiV1ConversationsConversationIdResumePatchResponseError = (resumeConversationApiV1ConversationsConversationIdResumePatchResponse400 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse401 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse403 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse404 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse409 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse413 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse422 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse429 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse500 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse502 | resumeConversationApiV1ConversationsConversationIdResumePatchResponse503) & {
   headers: Headers;
 };
 
@@ -387,15 +794,65 @@ export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustom
   status: 200
 }
 
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponseSuccess = (streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse200) & {
   headers: Headers;
 };
-export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponseError = (streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse422) & {
+export type streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponseError = (streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse400 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse401 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse403 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse404 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse409 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse413 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse422 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse429 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse500 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse502 | streamConversationStatusByCustomerApiV1ConversationsByCustomerCustomerIdStatusStreamGetResponse503) & {
   headers: Headers;
 };
 
@@ -444,15 +901,65 @@ export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPau
   status: 200
 }
 
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseSuccess = (pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse200) & {
   headers: Headers;
 };
-export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseError = (pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse422) & {
+export type pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponseError = (pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse400 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse401 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse403 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse404 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse409 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse413 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse422 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse429 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse500 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse502 | pauseConversationByCustomerApiV1ConversationsByCustomerCustomerIdPausePatchResponse503) & {
   headers: Headers;
 };
 
@@ -501,15 +1008,65 @@ export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdRe
   status: 200
 }
 
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseSuccess = (resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse200) & {
   headers: Headers;
 };
-export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseError = (resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse422) & {
+export type resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponseError = (resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse400 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse401 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse403 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse404 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse409 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse413 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse422 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse429 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse500 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse502 | resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatchResponse503) & {
   headers: Headers;
 };
 

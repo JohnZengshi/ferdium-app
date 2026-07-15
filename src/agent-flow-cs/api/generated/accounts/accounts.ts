@@ -7,7 +7,7 @@
 import type {
   AppApiSchemasConversationResponse,
   AppApiSchemasDigitalHumanResponse,
-  HTTPValidationError,
+  ErrorResponse,
   MemberCreateRequest,
   MemberResponse,
   MemberUpdateRequest
@@ -20,12 +20,69 @@ export type listMembersApiV1AccountsMembersGetResponse200 = {
   status: 200
 }
 
+export type listMembersApiV1AccountsMembersGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type listMembersApiV1AccountsMembersGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type listMembersApiV1AccountsMembersGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type listMembersApiV1AccountsMembersGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type listMembersApiV1AccountsMembersGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type listMembersApiV1AccountsMembersGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type listMembersApiV1AccountsMembersGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type listMembersApiV1AccountsMembersGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type listMembersApiV1AccountsMembersGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type listMembersApiV1AccountsMembersGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type listMembersApiV1AccountsMembersGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type listMembersApiV1AccountsMembersGetResponseSuccess = (listMembersApiV1AccountsMembersGetResponse200) & {
   headers: Headers;
 };
-;
+export type listMembersApiV1AccountsMembersGetResponseError = (listMembersApiV1AccountsMembersGetResponse400 | listMembersApiV1AccountsMembersGetResponse401 | listMembersApiV1AccountsMembersGetResponse403 | listMembersApiV1AccountsMembersGetResponse404 | listMembersApiV1AccountsMembersGetResponse409 | listMembersApiV1AccountsMembersGetResponse413 | listMembersApiV1AccountsMembersGetResponse422 | listMembersApiV1AccountsMembersGetResponse429 | listMembersApiV1AccountsMembersGetResponse500 | listMembersApiV1AccountsMembersGetResponse502 | listMembersApiV1AccountsMembersGetResponse503) & {
+  headers: Headers;
+};
 
-export type listMembersApiV1AccountsMembersGetResponse = (listMembersApiV1AccountsMembersGetResponseSuccess)
+export type listMembersApiV1AccountsMembersGetResponse = (listMembersApiV1AccountsMembersGetResponseSuccess | listMembersApiV1AccountsMembersGetResponseError)
 
 export const getListMembersApiV1AccountsMembersGetUrl = () => {
 
@@ -56,15 +113,65 @@ export type createMemberApiV1AccountsMembersPostResponse201 = {
   status: 201
 }
 
+export type createMemberApiV1AccountsMembersPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type createMemberApiV1AccountsMembersPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type createMemberApiV1AccountsMembersPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type createMemberApiV1AccountsMembersPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type createMemberApiV1AccountsMembersPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type createMemberApiV1AccountsMembersPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type createMemberApiV1AccountsMembersPostResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type createMemberApiV1AccountsMembersPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type createMemberApiV1AccountsMembersPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type createMemberApiV1AccountsMembersPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type createMemberApiV1AccountsMembersPostResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type createMemberApiV1AccountsMembersPostResponseSuccess = (createMemberApiV1AccountsMembersPostResponse201) & {
   headers: Headers;
 };
-export type createMemberApiV1AccountsMembersPostResponseError = (createMemberApiV1AccountsMembersPostResponse422) & {
+export type createMemberApiV1AccountsMembersPostResponseError = (createMemberApiV1AccountsMembersPostResponse400 | createMemberApiV1AccountsMembersPostResponse401 | createMemberApiV1AccountsMembersPostResponse403 | createMemberApiV1AccountsMembersPostResponse404 | createMemberApiV1AccountsMembersPostResponse409 | createMemberApiV1AccountsMembersPostResponse413 | createMemberApiV1AccountsMembersPostResponse422 | createMemberApiV1AccountsMembersPostResponse429 | createMemberApiV1AccountsMembersPostResponse500 | createMemberApiV1AccountsMembersPostResponse502 | createMemberApiV1AccountsMembersPostResponse503) & {
   headers: Headers;
 };
 
@@ -99,15 +206,65 @@ export type getMemberApiV1AccountsMembersMemberIdGetResponse200 = {
   status: 200
 }
 
+export type getMemberApiV1AccountsMembersMemberIdGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type getMemberApiV1AccountsMembersMemberIdGetResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type getMemberApiV1AccountsMembersMemberIdGetResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type getMemberApiV1AccountsMembersMemberIdGetResponseSuccess = (getMemberApiV1AccountsMembersMemberIdGetResponse200) & {
   headers: Headers;
 };
-export type getMemberApiV1AccountsMembersMemberIdGetResponseError = (getMemberApiV1AccountsMembersMemberIdGetResponse422) & {
+export type getMemberApiV1AccountsMembersMemberIdGetResponseError = (getMemberApiV1AccountsMembersMemberIdGetResponse400 | getMemberApiV1AccountsMembersMemberIdGetResponse401 | getMemberApiV1AccountsMembersMemberIdGetResponse403 | getMemberApiV1AccountsMembersMemberIdGetResponse404 | getMemberApiV1AccountsMembersMemberIdGetResponse409 | getMemberApiV1AccountsMembersMemberIdGetResponse413 | getMemberApiV1AccountsMembersMemberIdGetResponse422 | getMemberApiV1AccountsMembersMemberIdGetResponse429 | getMemberApiV1AccountsMembersMemberIdGetResponse500 | getMemberApiV1AccountsMembersMemberIdGetResponse502 | getMemberApiV1AccountsMembersMemberIdGetResponse503) & {
   headers: Headers;
 };
 
@@ -142,15 +299,65 @@ export type updateMemberApiV1AccountsMembersMemberIdPatchResponse200 = {
   status: 200
 }
 
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type updateMemberApiV1AccountsMembersMemberIdPatchResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type updateMemberApiV1AccountsMembersMemberIdPatchResponseSuccess = (updateMemberApiV1AccountsMembersMemberIdPatchResponse200) & {
   headers: Headers;
 };
-export type updateMemberApiV1AccountsMembersMemberIdPatchResponseError = (updateMemberApiV1AccountsMembersMemberIdPatchResponse422) & {
+export type updateMemberApiV1AccountsMembersMemberIdPatchResponseError = (updateMemberApiV1AccountsMembersMemberIdPatchResponse400 | updateMemberApiV1AccountsMembersMemberIdPatchResponse401 | updateMemberApiV1AccountsMembersMemberIdPatchResponse403 | updateMemberApiV1AccountsMembersMemberIdPatchResponse404 | updateMemberApiV1AccountsMembersMemberIdPatchResponse409 | updateMemberApiV1AccountsMembersMemberIdPatchResponse413 | updateMemberApiV1AccountsMembersMemberIdPatchResponse422 | updateMemberApiV1AccountsMembersMemberIdPatchResponse429 | updateMemberApiV1AccountsMembersMemberIdPatchResponse500 | updateMemberApiV1AccountsMembersMemberIdPatchResponse502 | updateMemberApiV1AccountsMembersMemberIdPatchResponse503) & {
   headers: Headers;
 };
 
@@ -186,15 +393,65 @@ export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse204 = {
   status: 204
 }
 
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
 export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse422 = {
-  data: HTTPValidationError
+  data: ErrorResponse
   status: 422
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponse503 = {
+  data: ErrorResponse
+  status: 503
 }
 
 export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponseSuccess = (deleteMemberApiV1AccountsMembersMemberIdDeleteResponse204) & {
   headers: Headers;
 };
-export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponseError = (deleteMemberApiV1AccountsMembersMemberIdDeleteResponse422) & {
+export type deleteMemberApiV1AccountsMembersMemberIdDeleteResponseError = (deleteMemberApiV1AccountsMembersMemberIdDeleteResponse400 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse401 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse403 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse404 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse409 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse413 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse422 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse429 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse500 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse502 | deleteMemberApiV1AccountsMembersMemberIdDeleteResponse503) & {
   headers: Headers;
 };
 
@@ -230,12 +487,69 @@ export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse20
   status: 200
 }
 
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type overviewConversationsApiV1AccountsOverviewConversationsGetResponseSuccess = (overviewConversationsApiV1AccountsOverviewConversationsGetResponse200) & {
   headers: Headers;
 };
-;
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponseError = (overviewConversationsApiV1AccountsOverviewConversationsGetResponse400 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse401 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse403 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse404 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse409 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse413 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse422 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse429 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse500 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse502 | overviewConversationsApiV1AccountsOverviewConversationsGetResponse503) & {
+  headers: Headers;
+};
 
-export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse = (overviewConversationsApiV1AccountsOverviewConversationsGetResponseSuccess)
+export type overviewConversationsApiV1AccountsOverviewConversationsGetResponse = (overviewConversationsApiV1AccountsOverviewConversationsGetResponseSuccess | overviewConversationsApiV1AccountsOverviewConversationsGetResponseError)
 
 export const getOverviewConversationsApiV1AccountsOverviewConversationsGetUrl = () => {
 
@@ -266,12 +580,69 @@ export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse20
   status: 200
 }
 
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
 export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseSuccess = (overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse200) & {
   headers: Headers;
 };
-;
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseError = (overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse400 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse401 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse403 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse404 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse409 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse413 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse422 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse429 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse500 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse502 | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse503) & {
+  headers: Headers;
+};
 
-export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse = (overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseSuccess)
+export type overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponse = (overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseSuccess | overviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetResponseError)
 
 export const getOverviewDigitalHumansApiV1AccountsOverviewDigitalHumansGetUrl = () => {
 

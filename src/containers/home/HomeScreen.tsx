@@ -20,6 +20,7 @@ import {
   getWorkflowApiV1AgentWorkflowGet,
   updateWorkflowApiV1AgentWorkflowPut,
 } from '../../agent-flow-cs/api/generated/agent-workflow/agent-workflow';
+import type { WorkflowSettingsResponse } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import { SectionHeader } from '../../components/home/SectionHeader';
 import { StepItem } from '../../components/home/StepItem';
 import {
@@ -138,7 +139,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
   fetchWorkflow = async (): Promise<void> => {
     try {
       const response = await getWorkflowApiV1AgentWorkflowGet();
-      this.setState({ isAutoReply: response.data.agent_workflow_enabled });
+      this.setState({ isAutoReply: (response.data as WorkflowSettingsResponse).agent_workflow_enabled });
     } catch (error) {
       console.error('Failed to fetch workflow settings:', error);
     }

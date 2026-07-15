@@ -1,4 +1,5 @@
 import type CustomerProfileStore from '../features/customerProfile/store';
+import type TelegramAutomationStore from '../features/telegramAutomation/store';
 import type WhatsAppAutomationStore from '../features/whatsappAutomation/store';
 import type Workspace from '../features/workspaces/models/Workspace';
 import type Recipe from '../models/Recipe';
@@ -27,6 +28,7 @@ export interface FerdiumStores {
   services: ServicesStore;
   settings: SettingsStore;
   todos: TodosStore;
+  telegramAutomation: TelegramAutomationStore;
   ui: UIStore;
   user: UserStore;
   whatsappAutomation: WhatsAppAutomationStore;
@@ -47,6 +49,7 @@ export interface Stores {
   services: ServicesStore;
   settings: SettingsStore;
   todos: TodosStore;
+  telegramAutomation: TelegramAutomationStore;
   ui: UIStore;
   user: UserStore;
   whatsappAutomation: WhatsAppAutomationStore;

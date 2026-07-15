@@ -15,6 +15,7 @@ import customerProfile from '../features/customerProfile';
 import publishDebugInfo from '../features/publishDebugInfo';
 import quickSwitch from '../features/quickSwitch';
 import serviceProxy from '../features/serviceProxy';
+import telegramAutomation from '../features/telegramAutomation';
 import todos from '../features/todos';
 import whatsappAutomation from '../features/whatsappAutomation';
 import workspaces from '../features/workspaces';
@@ -91,6 +92,7 @@ export default class FeaturesStore extends TypedStore {
     todos(this.stores, this.actions);
     appearance(this.stores);
     whatsappAutomation(this.stores, this.actions);
+    telegramAutomation(this.stores, this.actions);
     customerProfile(this.stores, this.actions);
   }
 }

@@ -3,6 +3,7 @@ import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
 import { communityRecipesStore } from '../features/communityRecipes';
 import { customerProfileStore } from '../features/customerProfile';
+import { telegramAutomationStore } from '../features/telegramAutomation';
 import { todosStore } from '../features/todos';
 import { whatsappAutomationStore } from '../features/whatsappAutomation';
 import { workspaceStore } from '../features/workspaces';
@@ -35,6 +36,7 @@ export interface RealStores {
   communityRecipes: typeof communityRecipesStore;
   todos: typeof todosStore;
   whatsappAutomation: typeof whatsappAutomationStore;
+  telegramAutomation: typeof telegramAutomationStore;
   customerProfile: typeof customerProfileStore;
   digitalHuman: DigitalHumanStore;
   handoff: HandoffStore;
@@ -62,6 +64,7 @@ export default (
     communityRecipes: communityRecipesStore,
     todos: todosStore,
     whatsappAutomation: whatsappAutomationStore,
+    telegramAutomation: telegramAutomationStore,
     customerProfile: customerProfileStore,
     digitalHuman: new DigitalHumanStore(stores, api, actions),
     handoff: new HandoffStore(stores, api, actions),

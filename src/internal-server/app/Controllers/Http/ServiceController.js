@@ -1,7 +1,11 @@
 const Service = use('App/Models/Service');
 const { validateAll } = use('Validator');
 
-const { v4: uuid } = require('uuid');
+const {
+  v4: uuid,
+  validate: isValidUuid,
+  version: uuidVersion,
+} = require('uuid');
 const {
   DEFAULT_SERVICE_ORDER,
   DEFAULT_SERVICE_SETTINGS,
@@ -27,15 +31,39 @@ class ServiceController {
       });
     }
 
-    // Get new, unused uuid
+    // Determine serviceId: use a caller-provided id when it is a valid
+    // UUID v4 (e.g. Telegram/Flux instance id), otherwise generate a new
+    // random UUID. Validate before use to avoid persisting malformed ids.
     let serviceId;
-    do {
-      serviceId = uuid();
-    } while (
-      // eslint-disable-next-line no-await-in-loop, unicorn/no-await-expression-member
-      (await Service.query().where('serviceId', serviceId).fetch()).rows
-        .length > 0
-    );
+    if (data.id) {
+      if (!isValidUuid(data.id) || uuidVersion(data.id) !== 4) {
+        return response.status(400).send({
+          message: 'Invalid service id',
+          status: 400,
+        });
+      }
+      serviceId = data.id;
+
+      // Reject collision without inserting
+      const existing = await Service.query()
+        .where('serviceId', serviceId)
+        .fetch();
+      if (existing.rows.length > 0) {
+        return response.status(409).send({
+          message: 'Service id already exists',
+          status: 409,
+        });
+      }
+    } else {
+      // Get new, unused uuid
+      do {
+        serviceId = uuid();
+      } while (
+        // eslint-disable-next-line no-await-in-loop, unicorn/no-await-expression-member
+        (await Service.query().where('serviceId', serviceId).fetch()).rows
+          .length > 0
+      );
+    }
 
     await Service.create({
       serviceId,

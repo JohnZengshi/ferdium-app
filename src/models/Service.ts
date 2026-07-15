@@ -8,6 +8,7 @@ import { v4 as uuidV4 } from 'uuid';
 import * as conversationsApi from '../agent-flow-cs/api/generated/conversations/conversations';
 import * as ownersApi from '../agent-flow-cs/api/generated/owners/owners';
 import * as suggestionApi from '../agent-flow-cs/api/generated/suggestion/suggestion';
+import * as telegramApi from '../agent-flow-cs/api/generated/telegram/telegram';
 import * as translateApi from '../agent-flow-cs/api/generated/translate/translate';
 import * as whatsappApi from '../agent-flow-cs/api/generated/whatsapp/whatsapp';
 import {
@@ -67,6 +68,14 @@ const WA_AI_ALLOWED_OPERATIONS: Record<string, ReadonlySet<string>> = {
     'getConversationDaySummaryApiV1OwnersConversationsSummaryGet',
   ]),
 };
+const TG_AI_ALLOWED_OPERATIONS: Record<string, ReadonlySet<string>> = {
+  conversations: WA_AI_ALLOWED_OPERATIONS.conversations,
+  translate: WA_AI_ALLOWED_OPERATIONS.translate,
+  telegram: new Set(['getTelegramBindingApiV1TelegramBindGet']),
+  suggestion: WA_AI_ALLOWED_OPERATIONS.suggestion,
+  owners: WA_AI_ALLOWED_OPERATIONS.owners,
+};
+type AiApi = keyof typeof WA_AI_ALLOWED_OPERATIONS | 'telegram';
 const WA_AI_RATE_LIMIT = 20;
 const WA_AI_RATE_WINDOW_MS = 1000;
 const waAiRequestTimestamps = new Map<string, number[]>();
@@ -101,9 +110,13 @@ export default class Service {
 
   private _sseCustomerId: string | null = null;
 
+  private _ssePlatform: 'telegram' | 'whatsapp' | null = null;
+
   private _sseConversationLiveSubscription: { close: () => void } | null = null;
 
   private _sseLiveCustomerId: string | null = null;
+
+  private _sseLivePlatform: 'telegram' | 'whatsapp' | null = null;
 
   @observable isAttached: boolean = false;
 
@@ -480,10 +493,14 @@ export default class Service {
   }
 
   // SSE 会话状态订阅管理
-  private _subscribeConversationStatusSSE(customerId: string): void {
+  private _subscribeConversationStatusSSE(
+    customerId: string,
+    platform: 'telegram' | 'whatsapp' = 'whatsapp',
+  ): void {
     if (!customerId) return;
     if (
       this._sseCustomerId === customerId &&
+      this._ssePlatform === platform &&
       this._sseConversationSubscription
     ) {
       debug('SSE already subscribed to customer %s, skipping', customerId);
@@ -492,12 +509,16 @@ export default class Service {
 
     this._unsubscribeConversationStatusSSE();
     this._sseCustomerId = customerId;
+    this._ssePlatform = platform;
     this._sseConversationSubscription = subscribeConversationStatus(
       customerId,
       {
         onEvent: evt => {
           if (evt.data?.type === 'status_change') {
-            this.webview?.send('wa-ai-status-change', evt.data);
+            this.webview?.send(
+              `${platform === 'telegram' ? 'tg' : 'wa'}-ai-status-change`,
+              evt.data,
+            );
           }
         },
         onError: error => {
@@ -508,10 +529,11 @@ export default class Service {
           if (this._sseCustomerId === customerId) {
             this._sseConversationSubscription = null;
             this._sseCustomerId = null;
+            this._ssePlatform = null;
           }
         },
       },
-      { waSessionId: this.id },
+      { platform, waSessionId: this.id },
     );
 
     debug('SSE subscribed to customer %s', customerId);
@@ -523,13 +545,18 @@ export default class Service {
       this._sseConversationSubscription = null;
       debug('SSE unsubscribed from customer %s', this._sseCustomerId);
       this._sseCustomerId = null;
+      this._ssePlatform = null;
     }
   }
 
-  private _subscribeConversationLiveSSE(customerId: string): void {
+  private _subscribeConversationLiveSSE(
+    customerId: string,
+    platform: 'telegram' | 'whatsapp' = 'whatsapp',
+  ): void {
     if (!customerId) return;
     if (
       this._sseLiveCustomerId === customerId &&
+      this._sseLivePlatform === platform &&
       this._sseConversationLiveSubscription
     ) {
       debug('SSE live already subscribed to customer %s, skipping', customerId);
@@ -537,8 +564,10 @@ export default class Service {
     }
 
     this._unsubscribeConversationLiveSSE();
-    this.webview?.send('wa-ai-live-reset');
+    const channelPrefix = platform === 'telegram' ? 'tg' : 'wa';
+    this.webview?.send(`${channelPrefix}-ai-live-reset`);
     this._sseLiveCustomerId = customerId;
+    this._sseLivePlatform = platform;
     this._sseConversationLiveSubscription = subscribeConversationLive(
       customerId,
       {
@@ -547,7 +576,7 @@ export default class Service {
             event: evt.event,
             data: evt.data,
           });
-          this.webview?.send('wa-ai-live-event', evt.data);
+          this.webview?.send(`${channelPrefix}-ai-live-event`, evt.data);
         },
         onError: error => {
           debug('SSE live error for customer %s: %o', customerId, error);
@@ -557,10 +586,11 @@ export default class Service {
           if (this._sseLiveCustomerId === customerId) {
             this._sseConversationLiveSubscription = null;
             this._sseLiveCustomerId = null;
+            this._sseLivePlatform = null;
           }
         },
       },
-      { waSessionId: this.id },
+      { platform, waSessionId: this.id },
     );
 
     debug('SSE live subscribed to customer %s', customerId);
@@ -572,6 +602,7 @@ export default class Service {
       this._sseConversationLiveSubscription = null;
       debug('SSE live unsubscribed from customer %s', this._sseLiveCustomerId);
       this._sseLiveCustomerId = null;
+      this._sseLivePlatform = null;
     }
   }
 
@@ -707,7 +738,13 @@ export default class Service {
 
           break;
         }
+        case 'tg-ai-api-request':
         case 'wa-ai-api-request': {
+          const isTelegram = e.channel === 'tg-ai-api-request';
+          const channelPrefix = isTelegram ? 'tg' : 'wa';
+          const allowedOperations = isTelegram
+            ? TG_AI_ALLOWED_OPERATIONS
+            : WA_AI_ALLOWED_OPERATIONS;
           const payload: unknown = e.args[0];
           if (
             typeof payload !== 'object' ||
@@ -719,29 +756,24 @@ export default class Service {
             typeof (payload as Record<string, unknown>).method !== 'string' ||
             !Array.isArray((payload as Record<string, unknown>).args)
           ) {
-            debug('Malformed wa-ai-api-request ignored');
+            debug(`Malformed ${channelPrefix}-ai-api-request ignored`);
             return;
           }
 
           const { requestId, api, method, args } = payload as {
             requestId: string;
-            api:
-              | 'conversations'
-              | 'suggestion'
-              | 'translate'
-              | 'whatsapp'
-              | 'owners';
+            api: AiApi;
             method: string;
             args: unknown[];
           };
 
-          if (!WA_AI_ALLOWED_OPERATIONS[api]?.has(method)) {
-            debug('Disallowed wa-ai-api-request ignored', {
+          if (!allowedOperations[api]?.has(method)) {
+            debug(`Disallowed ${channelPrefix}-ai-api-request ignored`, {
               api,
               method,
               requestId,
             });
-            eventWebview.send('wa-ai-api-response-host', {
+            eventWebview.send(`${channelPrefix}-ai-api-response-host`, {
               requestId,
               success: false,
               error: 'Operation not allowed',
@@ -755,12 +787,12 @@ export default class Service {
           );
           waAiRequestTimestamps.set(api, recentRequests);
           if (recentRequests.length >= WA_AI_RATE_LIMIT) {
-            debug('Rate-limited wa-ai-api-request rejected', {
+            debug(`Rate-limited ${channelPrefix}-ai-api-request rejected`, {
               api,
               method,
               requestId,
             });
-            eventWebview.send('wa-ai-api-response-host', {
+            eventWebview.send(`${channelPrefix}-ai-api-response-host`, {
               requestId,
               success: false,
               error: 'Rate limit exceeded',
@@ -788,11 +820,13 @@ export default class Service {
                 ? conversationsApi
                 : api === 'whatsapp'
                   ? whatsappApi
-                  : api === 'suggestion'
-                    ? suggestionApi
-                    : api === 'owners'
-                      ? ownersApi
-                      : translateApi;
+                  : api === 'telegram'
+                    ? telegramApi
+                    : api === 'suggestion'
+                      ? suggestionApi
+                      : api === 'owners'
+                        ? ownersApi
+                        : translateApi;
             const apiMethod = (apiModule as Record<string, unknown>)[method];
 
             if (typeof apiMethod !== 'function') {
@@ -813,6 +847,9 @@ export default class Service {
             ) {
               (enhancedArgs[1] as Record<string, unknown>).wa_session_id =
                 service.id;
+              (enhancedArgs[1] as Record<string, unknown>).platform = isTelegram
+                ? 'telegram'
+                : 'whatsapp';
             }
 
             if (api === 'whatsapp' && method.includes('getWhatsappBinding')) {
@@ -824,6 +861,18 @@ export default class Service {
                 enhancedArgs[0] = {};
               }
               (enhancedArgs[0] as Record<string, unknown>).session_id =
+                service.id;
+            }
+
+            if (api === 'telegram' && method.includes('getTelegramBinding')) {
+              if (
+                enhancedArgs.length === 0 ||
+                typeof enhancedArgs[0] !== 'object' ||
+                enhancedArgs[0] === null
+              ) {
+                enhancedArgs[0] = {};
+              }
+              (enhancedArgs[0] as Record<string, unknown>).instance_id =
                 service.id;
             }
 
@@ -840,6 +889,9 @@ export default class Service {
               }
               (enhancedArgs[0] as Record<string, unknown>).wa_session_id =
                 service.id;
+              (enhancedArgs[0] as Record<string, unknown>).platform = isTelegram
+                ? 'telegram'
+                : 'whatsapp';
             }
 
             const result = await (
@@ -853,11 +905,15 @@ export default class Service {
               enhancedArgs.length > 0
             ) {
               const customerId = enhancedArgs[0] as string;
-              binding.owner._subscribeConversationStatusSSE(customerId);
-              binding.owner._subscribeConversationLiveSSE(customerId);
+              const platform = isTelegram ? 'telegram' : 'whatsapp';
+              binding.owner._subscribeConversationStatusSSE(
+                customerId,
+                platform,
+              );
+              binding.owner._subscribeConversationLiveSSE(customerId, platform);
             }
 
-            eventWebview.send('wa-ai-api-response-host', {
+            eventWebview.send(`${channelPrefix}-ai-api-response-host`, {
               requestId,
               success: true,
               result,
@@ -873,7 +929,7 @@ export default class Service {
               url: (errorObj as any).url as string | undefined,
             };
 
-            eventWebview.send('wa-ai-api-response-host', {
+            eventWebview.send(`${channelPrefix}-ai-api-response-host`, {
               requestId,
               success: false,
               error: errorObj.message,
@@ -893,6 +949,7 @@ export default class Service {
 
           break;
         }
+        case 'tg-ai-toast-request':
         case 'wa-ai-toast-request': {
           const payload = (e.args[0] ?? {}) as {
             theme?: 'error' | 'warning' | 'success' | 'info';
@@ -900,13 +957,18 @@ export default class Service {
           };
 
           window.dispatchEvent(
-            new CustomEvent('wa-ai-toast', {
-              detail: {
-                theme: payload.theme ?? 'error',
-                message: payload.message ?? '接口错误',
-                serviceId: service.id,
+            new CustomEvent(
+              e.channel === 'tg-ai-toast-request'
+                ? 'tg-ai-toast'
+                : 'wa-ai-toast',
+              {
+                detail: {
+                  theme: payload.theme ?? 'error',
+                  message: payload.message ?? '接口错误',
+                  serviceId: service.id,
+                },
               },
-            }),
+            ),
           );
 
           break;

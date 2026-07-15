@@ -202,8 +202,14 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     if (event.data?.type === 'wa-ai-api-request') {
       ipcRenderer.sendToHost('wa-ai-api-request', event.data.payload);
     }
+    if (event.data?.type === 'tg-ai-api-request') {
+      ipcRenderer.sendToHost('tg-ai-api-request', event.data.payload);
+    }
     if (event.data?.type === 'wa-ai-toast-request') {
       ipcRenderer.sendToHost('wa-ai-toast-request', event.data.payload);
+    }
+    if (event.data?.type === 'tg-ai-toast-request') {
+      ipcRenderer.sendToHost('tg-ai-toast-request', event.data.payload);
     }
     if (event.data?.type === 'wa-akg:qr-modal-action') {
       ipcRenderer.sendToHost('wa-akg:qr-modal-action', event.data.payload);
@@ -219,6 +225,16 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     window.postMessage(
       {
         type: 'wa-ai-api-response',
+        payload,
+      },
+      window.location.origin,
+    );
+  });
+
+  ipcRenderer.on('tg-ai-api-response-host', (_event, payload) => {
+    window.postMessage(
+      {
+        type: 'tg-ai-api-response',
         payload,
       },
       window.location.origin,
@@ -245,14 +261,38 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     );
   });
 
+  ipcRenderer.on('tg-ai-status-change', (_event, payload) => {
+    window.postMessage(
+      {
+        type: 'tg-ai-status-change',
+        payload,
+      },
+      window.location.origin,
+    );
+  });
+
   ipcRenderer.on('wa-ai-live-reset', () => {
     window.postMessage({ type: 'wa-ai-live-reset' }, window.location.origin);
+  });
+
+  ipcRenderer.on('tg-ai-live-reset', () => {
+    window.postMessage({ type: 'tg-ai-live-reset' }, window.location.origin);
   });
 
   ipcRenderer.on('wa-ai-live-event', (_event, payload) => {
     window.postMessage(
       {
         type: 'wa-ai-live-event',
+        payload,
+      },
+      window.location.origin,
+    );
+  });
+
+  ipcRenderer.on('tg-ai-live-event', (_event, payload) => {
+    window.postMessage(
+      {
+        type: 'tg-ai-live-event',
         payload,
       },
       window.location.origin,

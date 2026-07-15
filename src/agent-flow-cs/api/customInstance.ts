@@ -1,3 +1,4 @@
+import { MessagePlugin } from 'tdesign-react';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 /**
  * Custom fetch instance for orval-generated API client.
@@ -15,6 +16,110 @@ type OrvalResponse<T> = {
   status: number;
   headers: Headers;
 };
+
+type ErrorBody = {
+  code?: string;
+  detail?: unknown;
+  error?: string;
+  message?: string;
+};
+
+const ERROR_CODE_MESSAGES: Readonly<Record<string, string>> = {
+  BAD_REQUEST: 'Invalid request.',
+  AUTHENTICATION_REQUIRED: 'Authentication required. Please sign in again.',
+  INVALID_CREDENTIALS: 'Invalid credentials.',
+  PERMISSION_DENIED: 'You do not have permission to perform this action.',
+  DIGITAL_HUMAN_NOT_ASSIGNED: 'Digital human is not assigned to this account.',
+  KNOWLEDGE_COLLECTION_FORBIDDEN:
+    'You do not have permission to access this knowledge collection.',
+  RESOURCE_NOT_FOUND: 'Requested resource was not found.',
+  FEATURE_DISABLED: 'This feature is disabled.',
+  RESOURCE_CONFLICT: 'Request conflicts with existing data.',
+  DIGITAL_HUMAN_INACTIVE: 'Digital human is inactive.',
+  DIGITAL_HUMAN_NAME_CONFLICT:
+    'A digital human with this name already exists under this account.',
+  PAYLOAD_TOO_LARGE: 'Request payload is too large.',
+  INVALID_REQUEST: 'Request validation failed.',
+  RATE_LIMITED: 'Too many requests. Please try again later.',
+  INTERNAL_ERROR: 'Server error. Please try again later.',
+  UPSTREAM_FAILURE: 'Upstream service failed. Please try again later.',
+  SERVICE_UNAVAILABLE:
+    'Service is temporarily unavailable. Please try again later.',
+  KNOWLEDGE_BASE_DISABLED: 'Knowledge base is disabled.',
+};
+
+const HTTP_STATUS_MESSAGES: Readonly<Record<number, string>> = {
+  400: 'Invalid request.',
+  401: 'Authentication required. Please sign in again.',
+  403: 'You do not have permission to perform this action.',
+  404: 'Requested resource was not found.',
+  409: 'Request conflicts with existing data.',
+  422: 'Request validation failed.',
+  429: 'Too many requests. Please try again later.',
+  500: 'Server error. Please try again later.',
+  502: 'Service is temporarily unavailable. Please try again later.',
+  503: 'Service is temporarily unavailable. Please try again later.',
+};
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const nonEmptyString = (value: unknown): string | undefined =>
+  typeof value === 'string' && value.trim() ? value : undefined;
+
+const parseErrorBody = (body: unknown): ErrorBody => {
+  if (!isRecord(body)) return {};
+
+  return {
+    code: nonEmptyString(body.code),
+    detail: body.detail,
+    error: nonEmptyString(body.error),
+    message: nonEmptyString(body.message),
+  };
+};
+
+const getErrorMessage = (
+  body: ErrorBody,
+  status: number,
+  statusText: string,
+): string =>
+  (body.code && ERROR_CODE_MESSAGES[body.code]) ||
+  HTTP_STATUS_MESSAGES[status] ||
+  body.message ||
+  body.error ||
+  nonEmptyString(body.detail) ||
+  nonEmptyString(statusText) ||
+  `Request failed (HTTP ${status}).`;
+
+export class AgentFlowApiError extends Error {
+  readonly status: number;
+
+  readonly statusText: string;
+
+  readonly url: string;
+
+  readonly code?: string;
+
+  readonly detail?: unknown;
+
+  readonly body: unknown;
+
+  constructor(
+    message: string,
+    response: Pick<Response, 'status' | 'statusText' | 'url'>,
+    body: unknown,
+    parsedBody: ErrorBody,
+  ) {
+    super(message);
+    this.name = 'AgentFlowApiError';
+    this.status = response.status;
+    this.statusText = response.statusText;
+    this.url = response.url;
+    this.code = parsedBody.code;
+    this.detail = parsedBody.detail;
+    this.body = body;
+  }
+}
 
 export const useCustomInstance = <T>(
   url: string,
@@ -66,18 +171,15 @@ export const useCustomInstance = <T>(
       return payload as T;
     }
 
-    const errorMessage =
-      body.message || body.error || body.detail || response.statusText;
+    const parsedBody = parseErrorBody(body);
+    const errorMessage = getErrorMessage(
+      parsedBody,
+      response.status,
+      response.statusText,
+    );
 
-    const error = new Error(errorMessage);
-    (error as any).status = response.status;
-    (error as any).statusText = response.statusText;
-    (error as any).url = response.url;
-    (error as any).detail = body.detail;
-    (error as any).code = body.code;
-    (error as any).body = body;
-
-    throw error;
+    MessagePlugin.error(errorMessage);
+    throw new AgentFlowApiError(errorMessage, response, body, parsedBody);
   });
 };
 

@@ -17,7 +17,7 @@ export type StrategyConfigTab =
   | 'notifications';
 
 class NavigationStore {
-  @observable activeModule: FerdiumModule = 'whatsapp';
+  @observable activeModule: FerdiumModule = 'home';
 
   @observable activeServiceTab: ServiceSubTab = 'messages';
 

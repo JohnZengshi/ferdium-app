@@ -66,6 +66,7 @@ const WA_AI_ALLOWED_OPERATIONS: Record<string, ReadonlySet<string>> = {
   suggestion: new Set(['generateSuggestionApiV1SuggestionPost']),
   owners: new Set([
     'getConversationDaySummaryApiV1OwnersConversationsSummaryGet',
+    'getConversationRangeSummaryApiV1OwnersConversationsSummaryGet',
   ]),
 };
 const TG_AI_ALLOWED_OPERATIONS: Record<string, ReadonlySet<string>> = {

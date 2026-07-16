@@ -625,6 +625,7 @@ export default class Service {
     binding.openWindow = openWindow;
     binding.stores = stores;
     if (!existingBinding) webviewEventBindings.set(webview, binding);
+    const bindingGeneration = binding.generation;
 
     this.userAgentModel.setWebviewReference(webview);
 
@@ -653,13 +654,49 @@ export default class Service {
       debug(this.name, 'knownCertificateHosts is not defined in the recipe');
     }
 
-    const webviewWebContents = webContents.fromId(webview.getWebContentsId());
-    const webviewPartition = webviewWebContents?.session.getStoragePath();
+    let webviewPartition: string | undefined;
+    let webviewWebContents: Electron.WebContents | undefined;
+    try {
+      webviewWebContents = webContents.fromId(webview.getWebContentsId());
+      webviewPartition =
+        webviewWebContents?.session.getStoragePath() ?? undefined;
+    } catch {
+      debug('Webview not dom-ready yet, skipping partition binding');
+    }
     if (webviewPartition) {
       activePartitionBindings.set(webviewPartition, {
         ownerId: this.id,
         owner: this,
       });
+    } else {
+      webview.addEventListener(
+        'dom-ready',
+        () => {
+          if (
+            webviewEventBindings.get(webview) !== binding ||
+            binding.generation !== bindingGeneration ||
+            binding.owner !== this ||
+            this.webview !== webview
+          ) {
+            return;
+          }
+          try {
+            webviewWebContents = webContents.fromId(webview.getWebContentsId());
+            webviewPartition =
+              webviewWebContents?.session.getStoragePath() ?? undefined;
+            if (webviewPartition) {
+              activePartitionBindings.set(webviewPartition, {
+                ownerId: this.id,
+                owner: this,
+              });
+            }
+            registerWebContentsEvents();
+          } catch {
+            debug('Webview still not dom-ready, skipping partition binding');
+          }
+        },
+        { once: true },
+      );
     }
 
     if (existingBinding) return;
@@ -1065,7 +1102,8 @@ export default class Service {
       service._didMediaPaused();
     });
 
-    if (webviewWebContents) {
+    function registerWebContentsEvents() {
+      if (!webviewWebContents) return;
       // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
       // This is a workaround for the issue where the zoom in shortcut is not working
       if (!isMac) {
@@ -1080,11 +1118,12 @@ export default class Service {
       }
 
       if (webviewPartition && !activePartitions.has(webviewPartition)) {
-        activePartitions.add(webviewPartition);
+        const partition = webviewPartition;
+        activePartitions.add(partition);
         webviewWebContents.session.on('will-download', (event, item) => {
           event.preventDefault();
 
-          const pBinding = activePartitionBindings.get(webviewPartition);
+          const pBinding = activePartitionBindings.get(partition);
           const ownerId = pBinding?.ownerId ?? 'unknown';
           const downloadId = uuidV4();
           const downloadOwnerId = ownerId;
@@ -1167,14 +1206,15 @@ export default class Service {
         });
       }
 
-      webviewWebContents.on('login', (event, _, authInfo, callback) => {
+      const currentWebContents = webviewWebContents;
+      currentWebContents.on('login', (event, _, authInfo, callback) => {
         // const authCallback = callback;
         debug('browser login event', authInfo);
         event.preventDefault();
 
         if (authInfo.isProxy && authInfo.scheme === 'basic') {
           debug('Sending service echo ping');
-          webviewWebContents.send('get-service-id');
+          currentWebContents.send('get-service-id');
 
           const currentOwner = binding.owner;
           const currentStores = binding.stores as {
@@ -1196,6 +1236,7 @@ export default class Service {
         }
       });
     }
+    registerWebContentsEvents();
   }
 
   initializeWebViewListener(): void {

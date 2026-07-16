@@ -182,7 +182,10 @@ export default class TelegramAutomationStore extends FeatureStore {
 
   _retryIntervalMs = 1000;
 
-  _loginNavListeners = new Map<string, () => void>();
+  _loginNavListeners = new Map<
+    string,
+    { handler: () => void; webview: NonNullable<Service['webview']> }
+  >();
 
   _tgReactionDisposer: (() => void) | null = null;
 
@@ -192,11 +195,15 @@ export default class TelegramAutomationStore extends FeatureStore {
 
   _deleteListener: ((params: { serviceId: string }) => void) | null = null;
 
+  _bindingSafetyTimers = new Map<string, ReturnType<typeof setTimeout>>();
+
+  _bindingResumesInFlight = new Set<string>();
+
   _loginListeners = new Map<
     string,
     {
       handler: (e: { channel: string; args: unknown[] }) => void;
-      webview: unknown;
+      webview: NonNullable<Service['webview']>;
     }
   >();
 
@@ -228,6 +235,7 @@ export default class TelegramAutomationStore extends FeatureStore {
           this._moduleActivated = true;
           this._startStatusStream();
           this._hydrateInstanceStatuses();
+          this._detectTelegramServices();
         }
       },
       { fireImmediately: true },
@@ -283,6 +291,11 @@ export default class TelegramAutomationStore extends FeatureStore {
     this._sseSubscriptions.clear();
     this._loginListeners.clear();
     this._loginNavListeners.clear();
+    for (const [, timer] of this._bindingSafetyTimers) {
+      clearTimeout(timer);
+    }
+    this._bindingSafetyTimers.clear();
+    this._bindingResumesInFlight.clear();
     this._retryCounts.clear();
     this._serviceBindAttempts.clear();
     this._authorizedServiceIds.clear();
@@ -300,6 +313,7 @@ export default class TelegramAutomationStore extends FeatureStore {
   }
 
   @action beginBinding = async (payload: TelegramBindingInput) => {
+    const t0 = Date.now();
     debug('beginBinding', payload.name);
 
     this._closeSse();
@@ -321,6 +335,7 @@ export default class TelegramAutomationStore extends FeatureStore {
         label: payload.name || 'Telegram',
         engine: 'gramjs',
       });
+      debug('[TG-PERF] createInstance took', Date.now() - t0, 'ms');
       instanceId = parseInstanceId(response);
     } catch {
       if (attempt !== this._bindAttempt) return;
@@ -362,6 +377,7 @@ export default class TelegramAutomationStore extends FeatureStore {
         },
         redirect: false,
       });
+      debug('[TG-PERF] _createService took', Date.now() - t0, 'ms');
     } catch {
       if (attempt !== this._bindAttempt) return;
       runInAction(() => {
@@ -378,13 +394,13 @@ export default class TelegramAutomationStore extends FeatureStore {
       this.bindStatus = TELEGRAM_BIND_STATUS.WAITING_FOR_QR;
       this._serviceBindStatus.set(validId, TELEGRAM_BIND_STATUS.WAITING_FOR_QR);
     });
+    this._scheduleBindingSafetyNet(validId);
 
     // TODO: Flux instance + Ferdium service deletion cleanup deferred - the
     // generated Agent Flow CS delete API is missing, so neither side is
     // torn down when the binding is cancelled or the service is removed.
 
     this._serviceBindAttempts.set(validId, attempt);
-    this._openQrStream(validId, attempt);
   };
 
   @action closeBinding = (serviceId?: string) => {
@@ -394,7 +410,9 @@ export default class TelegramAutomationStore extends FeatureStore {
       : [...this._serviceBindStatus.keys()];
     for (const sid of serviceIds) {
       this._removeQrModal({ serviceId: sid });
+      this._cancelBindingSafetyNet(sid);
       this._closeSse(sid);
+      this._bindingResumesInFlight.delete(sid);
       this._serviceBindAttempts.delete(sid);
       this._serviceBindStatus.delete(sid);
       this._serviceQrDataUrl.delete(sid);
@@ -489,7 +507,16 @@ export default class TelegramAutomationStore extends FeatureStore {
           };
           const displayStatus = statusMap[perStatus || ''] || 'awaiting_qr';
           this._injectOrUpdateStatusIndicator(service.id, displayStatus);
-        } else {
+
+          if (
+            perStatus === TELEGRAM_BIND_STATUS.WAITING_FOR_QR &&
+            service.webview &&
+            !this._sseSubscriptions.has(service.id)
+          ) {
+            this._cancelBindingSafetyNet(service.id);
+            this._resumeBindingForService(service.id);
+          }
+        } else if (this.stores?.services.active?.id === service.id) {
           debug('Resuming binding for Telegram service:', service.id);
           this._resumeBindingForService(service.id);
         }
@@ -498,48 +525,72 @@ export default class TelegramAutomationStore extends FeatureStore {
   };
 
   _resumeBindingForService = (serviceId: string): void => {
-    if (this._authorizedServiceIds.has(serviceId)) return;
-    this._closeSse(serviceId);
-    this._authorized = false;
-    const attempt = (this._serviceBindAttempts.get(serviceId) ?? 0) + 1;
-    this._serviceBindAttempts.set(serviceId, attempt);
-
-    runInAction(() => {
-      this.instanceId = serviceId;
-      this.bindStatus = TELEGRAM_BIND_STATUS.WAITING_FOR_QR;
-      this._serviceBindStatus.set(
-        serviceId,
-        TELEGRAM_BIND_STATUS.WAITING_FOR_QR,
-      );
-      this.qrUrl = null;
-      this.bindError = null;
-    });
-
-    const backgroundBase64 = getAssetBase64(
-      '../../assets/images/whatsapp/qr-modal-background.png',
-    );
-    this._attachLoginListener(serviceId);
-    const script = this._buildQrModalScript(serviceId, '', backgroundBase64);
-    const service = this._getService(serviceId);
-    if (service?.webview) {
-      service.webview
-        .executeJavaScript(script)
-        .then(() => {
-          debug('[TG-FLUX] loading modal injected');
-          this._attachReInjectOnNavigate(serviceId);
-        })
-        .catch(() => {
-          debug(
-            '[TG-FLUX] loading modal injection failed, will retry via _scheduleRetryInjection',
-          );
-          this._scheduleRetryInjection(serviceId, '', backgroundBase64);
-        });
-    } else {
-      this._scheduleRetryInjection(serviceId, '', backgroundBase64);
+    if (
+      this._authorizedServiceIds.has(serviceId) ||
+      this._bindingResumesInFlight.has(serviceId)
+    ) {
+      return;
     }
+    this._bindingResumesInFlight.add(serviceId);
+    try {
+      const t0 = Date.now();
+      debug('[TG-PERF] _resumeBindingForService start', serviceId);
+      this._closeSse(serviceId);
+      this._authorized = false;
+      const attempt = (this._serviceBindAttempts.get(serviceId) ?? 0) + 1;
+      this._serviceBindAttempts.set(serviceId, attempt);
 
-    this._injectOrUpdateStatusIndicator(serviceId, 'awaiting_qr');
-    this._openQrStream(serviceId, attempt);
+      runInAction(() => {
+        this.instanceId = serviceId;
+        this.bindStatus = TELEGRAM_BIND_STATUS.WAITING_FOR_QR;
+        this._serviceBindStatus.set(
+          serviceId,
+          TELEGRAM_BIND_STATUS.WAITING_FOR_QR,
+        );
+        this.qrUrl = null;
+        this.bindError = null;
+      });
+
+      const backgroundBase64 = getAssetBase64(
+        '../../assets/images/whatsapp/qr-modal-background.png',
+      );
+      this._attachLoginListener(serviceId);
+      const script = this._buildQrModalScript(serviceId, '', backgroundBase64);
+      const service = this._getService(serviceId);
+      debug(
+        '[TG-PERF] _resumeBindingForService webview ready?',
+        !!service?.webview,
+        Date.now() - t0,
+        'ms',
+      );
+      if (service?.webview) {
+        service.webview
+          .executeJavaScript(script)
+          .then(() => {
+            debug('[TG-PERF] loading modal injected at', Date.now() - t0, 'ms');
+            this._attachReInjectOnNavigate(serviceId);
+          })
+          .catch(() => {
+            debug(
+              '[TG-PERF] loading modal injection failed at',
+              Date.now() - t0,
+              'ms, will retry via _scheduleRetryInjection',
+            );
+            this._scheduleRetryInjection(serviceId, '', backgroundBase64);
+          });
+      } else {
+        debug(
+          '[TG-PERF] no webview yet, scheduling retry for loading modal',
+          serviceId,
+        );
+        this._scheduleRetryInjection(serviceId, '', backgroundBase64);
+      }
+
+      this._injectOrUpdateStatusIndicator(serviceId, 'awaiting_qr');
+      this._openQrStream(serviceId, attempt);
+    } finally {
+      this._bindingResumesInFlight.delete(serviceId);
+    }
   };
 
   _openQrStream = (instanceId: string, attempt: number): void => {
@@ -555,12 +606,16 @@ export default class TelegramAutomationStore extends FeatureStore {
           if (isQrEvent(event, evtData)) {
             const url = extractQrUrl(evtData);
             if (url) {
+              const perfStart = Date.now();
+              debug('[TG-PERF] QR SSE event received');
               runInAction(() => {
                 this.qrUrl = url;
               });
-              this._handleQrUrl(instanceId, url, attempt).catch(() => {
-                debug('[TG-FLUX] Failed to process QR for injection');
-              });
+              this._handleQrUrl(instanceId, url, attempt, perfStart).catch(
+                () => {
+                  debug('[TG-FLUX] Failed to process QR for injection');
+                },
+              );
             }
             return;
           }
@@ -680,6 +735,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     serviceId: string,
     url: string,
     attempt: number,
+    perfStart?: number,
   ) => {
     if (
       this._serviceBindAttempts.get(serviceId) !== attempt ||
@@ -689,11 +745,13 @@ export default class TelegramAutomationStore extends FeatureStore {
       return;
     }
     try {
+      const t0 = perfStart ?? Date.now();
       const dataUrl = await QRCode.toDataURL(url, {
         width: 256,
         margin: 1,
         errorCorrectionLevel: 'M',
       });
+      debug('[TG-PERF] QRCode.toDataURL took', Date.now() - t0, 'ms');
       if (
         this._serviceBindAttempts.get(serviceId) !== attempt ||
         this._serviceBindStatus.get(serviceId) !==
@@ -705,6 +763,7 @@ export default class TelegramAutomationStore extends FeatureStore {
       const backgroundBase64 = getAssetBase64(
         '../../assets/images/whatsapp/qr-modal-background.png',
       );
+      debug('[TG-PERF] getAssetBase64 done');
       this._injectQrModal({ serviceId, base64: dataUrl, backgroundBase64 });
       this._updateQrOnModal(serviceId, dataUrl);
     } catch {
@@ -721,6 +780,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     base64: string;
     backgroundBase64?: string;
   }) => {
+    const t0 = Date.now();
     if (
       this._serviceBindStatus.get(serviceId) !==
       TELEGRAM_BIND_STATUS.WAITING_FOR_QR
@@ -732,7 +792,9 @@ export default class TelegramAutomationStore extends FeatureStore {
     const service = this._getService(serviceId);
     if (!service?.webview) {
       debug(
-        '[TG-FLUX] Cannot inject QR modal - no webview for service, scheduling retry',
+        '[TG-PERF] No webview at',
+        Date.now() - t0,
+        'ms - scheduling retry',
         serviceId,
       );
       this._scheduleRetryInjection(serviceId, base64, backgroundBase64);
@@ -750,14 +812,50 @@ export default class TelegramAutomationStore extends FeatureStore {
     service.webview
       .executeJavaScript(script)
       .then(() => {
-        debug('[TG-FLUX] QR modal script injected into service', serviceId);
+        debug('[TG-PERF] executeJavaScript done at', Date.now() - t0, 'ms');
         this._retryCounts.delete(serviceId);
         this._attachReInjectOnNavigate(serviceId);
       })
       .catch(() => {
-        debug('[TG-FLUX] QR modal injection failed');
+        debug('[TG-PERF] executeJavaScript failed at', Date.now() - t0, 'ms');
         this._scheduleRetryInjection(serviceId, base64, backgroundBase64);
       });
+  };
+
+  _scheduleBindingSafetyNet = (serviceId: string): void => {
+    this._cancelBindingSafetyNet(serviceId);
+    this._bindingSafetyTimers.set(
+      serviceId,
+      setTimeout(() => {
+        if (!this._statusStreamReady) return;
+        this._bindingSafetyTimers.delete(serviceId);
+        if (
+          this._serviceBindStatus.get(serviceId) ===
+            TELEGRAM_BIND_STATUS.WAITING_FOR_QR &&
+          !this._sseSubscriptions.has(serviceId)
+        ) {
+          debug('[TG-FLUX] binding safety net detection', serviceId);
+          this._detectTelegramServices();
+        }
+      }, 0),
+    );
+  };
+
+  _cancelBindingSafetyNet = (serviceId: string): void => {
+    const timer = this._bindingSafetyTimers.get(serviceId);
+    if (timer) {
+      clearTimeout(timer);
+      this._bindingSafetyTimers.delete(serviceId);
+    }
+  };
+
+  _markStatusStreamReady = (): void => {
+    if (this._statusStreamReady) return;
+    this._statusStreamReady = true;
+    for (const serviceId of this._bindingSafetyTimers.keys()) {
+      this._cancelBindingSafetyNet(serviceId);
+    }
+    this._detectTelegramServices();
   };
 
   _scheduleRetryInjection = (
@@ -804,11 +902,33 @@ export default class TelegramAutomationStore extends FeatureStore {
         `
       (function() {
         try {
-          var el = document.getElementById('tg-akg-qr-modal');
+          var el = document.getElementById('telegram-qr-modal');
           if (el) {
             el.style.opacity = '0';
             setTimeout(function() { el.remove(); }, 300);
           }
+          if (window.__telegramQrListeners) {
+            document.removeEventListener('keydown', window.__telegramQrListeners.keydown, true);
+            document.removeEventListener('keydown', window.__telegramQrListeners.enter, true);
+            window.removeEventListener('popstate', window.__telegramQrListeners.popstate);
+            delete window.__telegramQrListeners;
+          }
+          if (window.__telegramOriginalPushState) {
+            if (history.pushState === window.__telegramInjectedPushState) {
+              history.pushState = window.__telegramOriginalPushState;
+            }
+            delete window.__telegramOriginalPushState;
+            delete window.__telegramInjectedPushState;
+          }
+          delete window.__telegramSetView;
+          delete window.__telegramSetQr;
+          delete window.__telegramShowError;
+          delete window.__telegramClearError;
+          delete window.__telegramSetLoading;
+
+          // Legacy: clean up old AKG names from existing webviews
+          var oldEl = document.getElementById('tg-akg-qr-modal');
+          if (oldEl) oldEl.remove();
           if (window.__tgAkgQrListeners) {
             document.removeEventListener('keydown', window.__tgAkgQrListeners.keydown, true);
             document.removeEventListener('keydown', window.__tgAkgQrListeners.enter, true);
@@ -870,13 +990,13 @@ export default class TelegramAutomationStore extends FeatureStore {
     const escColor = color.replaceAll("'", "\\'");
     const escLabel = label.replaceAll("'", "\\'");
     const escStatus = status.replaceAll("'", "\\'");
-    const SID = 'tg-akg-si';
+    const SID = 'telegram-status-indicator';
 
     const script = `
 (function() {
   var old = document.getElementById('${SID}');
   if (old) {
-    old.dataset.tgAkgStatus = '${escStatus}';
+    old.dataset.telegramStatus = '${escStatus}';
     var dot = old.querySelector('.tga-si-dot');
     if (dot) dot.style.background = '${escColor}';
     var txt = old.querySelector('.tga-si-label');
@@ -896,7 +1016,7 @@ export default class TelegramAutomationStore extends FeatureStore {
   document.head.appendChild(s);
   var el = document.createElement('div');
   el.id = '${SID}';
-  el.dataset.tgAkgStatus = '${escStatus}';
+  el.dataset.telegramStatus = '${escStatus}';
   el.innerHTML = '<div class="tga-si-radar"><div class="tga-si-dot"></div><div class="tga-si-sweep"></div></div><span class="tga-si-label">${escLabel}</span>';
   document.body.appendChild(el);
   (function(ind) {
@@ -934,11 +1054,17 @@ export default class TelegramAutomationStore extends FeatureStore {
     if (!service?.webview) return;
     service.webview
       .executeJavaScript(
-        "(function(){var e=document.getElementById('tg-akg-si');if(e)e.remove();})();",
+        "(function(){var e=document.getElementById('telegram-status-indicator');if(e)e.remove();})();",
       )
       .catch(() => {
         debug('[TG-FLUX] status indicator removal skipped');
       });
+    // Legacy: also remove old AKG status indicator
+    service.webview
+      .executeJavaScript(
+        "(function(){var e=document.getElementById('tg-akg-si');if(e)e.remove();})();",
+      )
+      .catch(() => {});
   };
 
   _fluxStatusToDisplay = (fluxStatus: string): string => {
@@ -970,8 +1096,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     } catch {
       debug('[TG-FLUX] instance status hydration failed');
     }
-    this._statusStreamReady = true;
-    this._detectTelegramServices();
+    this._markStatusStreamReady();
   };
 
   _startStatusStream = () => {
@@ -986,7 +1111,6 @@ export default class TelegramAutomationStore extends FeatureStore {
             typeof d.instanceId === 'string' ? d.instanceId : undefined;
           const status = typeof d.status === 'string' ? d.status : undefined;
           if (!instanceId || !status) return;
-          this._statusStreamReady = true;
           if (status === 'authorized') {
             this._authorizedServiceIds.add(instanceId);
             this._closeSse(instanceId);
@@ -1000,6 +1124,7 @@ export default class TelegramAutomationStore extends FeatureStore {
             instanceId,
             this._fluxStatusToDisplay(status),
           );
+          this._markStatusStreamReady();
         },
         onError: () => {
           debug('[TG-FLUX] status stream error, will reopen');
@@ -1104,7 +1229,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     const existing = this._loginListeners.get(serviceId);
     if (existing?.webview === service.webview) return;
     if (existing) {
-      service.webview.removeEventListener?.('ipc-message', existing.handler);
+      existing.webview.removeEventListener?.('ipc-message', existing.handler);
       this._loginListeners.delete(serviceId);
     }
     const handler = (event: { channel: string; args: unknown[] }) => {
@@ -1118,8 +1243,7 @@ export default class TelegramAutomationStore extends FeatureStore {
   _detachLoginListener = (serviceId: string) => {
     const entry = this._loginListeners.get(serviceId);
     if (!entry) return;
-    const service = this._getService(serviceId);
-    service?.webview?.removeEventListener?.('ipc-message', entry.handler);
+    entry.webview.removeEventListener?.('ipc-message', entry.handler);
     this._loginListeners.delete(serviceId);
   };
 
@@ -1222,9 +1346,17 @@ export default class TelegramAutomationStore extends FeatureStore {
   };
 
   _attachReInjectOnNavigate = (serviceId: string) => {
-    if (this._loginNavListeners.has(serviceId)) return;
     const service = this._getService(serviceId);
     if (!service?.webview) return;
+    const existing = this._loginNavListeners.get(serviceId);
+    if (existing?.webview === service.webview) return;
+    if (existing) {
+      existing.webview.removeEventListener?.(
+        'did-finish-load',
+        existing.handler,
+      );
+      this._loginNavListeners.delete(serviceId);
+    }
 
     const handler = () => {
       if (this._authorizedServiceIds.has(serviceId)) return;
@@ -1239,14 +1371,16 @@ export default class TelegramAutomationStore extends FeatureStore {
     };
 
     service.webview.addEventListener('did-finish-load', handler);
-    this._loginNavListeners.set(serviceId, handler);
+    this._loginNavListeners.set(serviceId, {
+      handler,
+      webview: service.webview,
+    });
   };
 
   _detachReInjectOnNavigate = (serviceId: string) => {
-    const handler = this._loginNavListeners.get(serviceId);
-    if (!handler) return;
-    const service = this._getService(serviceId);
-    service?.webview?.removeEventListener?.('did-finish-load', handler);
+    const entry = this._loginNavListeners.get(serviceId);
+    if (!entry) return;
+    entry.webview.removeEventListener?.('did-finish-load', entry.handler);
     this._loginNavListeners.delete(serviceId);
   };
 
@@ -1402,7 +1536,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     const safeView = view.replaceAll("'", '');
     this._runModalScript(
       serviceId,
-      `if(window.__tgAkgSetView){window.__tgAkgSetView('${safeView}');}`,
+      `if(window.__telegramSetView){window.__telegramSetView('${safeView}');}`,
     );
   };
 
@@ -1412,7 +1546,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     const escaped = dataUrl.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
     service.webview
       .executeJavaScript(
-        `(function(){if(window.__tgAkgSetQr){window.__tgAkgSetQr('${escaped}');return true;}return false;})()`,
+        `(function(){if(window.__telegramSetQr){window.__telegramSetQr('${escaped}');return true;}return false;})()`,
       )
       .catch(() => {
         debug('[TG-FLUX] QR image update skipped');
@@ -1423,21 +1557,21 @@ export default class TelegramAutomationStore extends FeatureStore {
     const escaped = escapeModalString(message);
     this._runModalScript(
       serviceId,
-      `if(window.__tgAkgShowError){window.__tgAkgShowError('${escaped}');}`,
+      `if(window.__telegramShowError){window.__telegramShowError('${escaped}');}`,
     );
   };
 
   _clearModalError = (serviceId: string) => {
     this._runModalScript(
       serviceId,
-      'if(window.__tgAkgClearError){window.__tgAkgClearError();}',
+      'if(window.__telegramClearError){window.__telegramClearError();}',
     );
   };
 
   _setModalLoading = (serviceId: string, loading: boolean) => {
     this._runModalScript(
       serviceId,
-      `if(window.__tgAkgSetLoading){window.__tgAkgSetLoading(${loading ? 'true' : 'false'});}`,
+      `if(window.__telegramSetLoading){window.__telegramSetLoading(${loading ? 'true' : 'false'});}`,
     );
   };
 
@@ -1476,11 +1610,12 @@ export default class TelegramAutomationStore extends FeatureStore {
     return `
 (function() {
   try {
-    if (document.getElementById('tg-akg-qr-modal')) return;
+	    var existingModal = document.getElementById('telegram-qr-modal');
+	    if (existingModal) existingModal.remove();
 
     var BASE64_QR = '${escapedBase64}';
     var BG_IMAGE = '${escapedBg}';
-    var CHANNEL_TYPE = 'tg-akg-login-action';
+    var CHANNEL_TYPE = 'telegram-login-action';
 
     function postAction(payload) {
       window.postMessage({ type: CHANNEL_TYPE, payload: payload }, window.location.origin);
@@ -1496,7 +1631,9 @@ export default class TelegramAutomationStore extends FeatureStore {
       '.tga-content{position:absolute;left:0;right:0;display:flex;flex-direction:column;height:100%;justify-content:end;align-items:center;gap:14px;z-index:2;padding:0 24px;box-sizing:border-box}',
       '.tga-qr-wrapper{position:relative;width:256px;height:256px}',
       '.tga-qr-box{width:256px;height:256px;border-radius:8px;border:1px solid #E1E1E1;background:#FFFFFF;display:flex;align-items:center;justify-content:center;overflow:hidden}',
-      '.tga-qrimg{width:256px;height:256px;image-rendering:pixelated}',
+      '.tga-qrimg{width:256px;height:256px;image-rendering:pixelated;display:none}',
+      '.tga-qr-spinner{width:36px;height:36px;border:3px solid #E1E1E1;border-top-color:#4A90D9;border-radius:50%;animation:tga-spin 0.8s linear infinite}',
+      '@keyframes tga-spin{to{transform:rotate(360deg)}}',
       '.tga-desc{color:#111111;font-size:22px;font-weight:600;line-height:30px;text-align:center;margin:0}',
       '.tga-view{display:none;flex-direction:column;align-items:center;gap:14px;width:100%}',
       '.tga-view.is-active{display:flex;padding-bottom:120px}',
@@ -1513,7 +1650,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     document.head.appendChild(s);
 
     var modal = document.createElement('div');
-    modal.id = 'tg-akg-qr-modal';
+    modal.id = 'telegram-qr-modal';
     var cardBgStyle = BG_IMAGE ? 'background-image:url(\\'' + BG_IMAGE + '\\');' : '';
 
 	    var TITLES = {
@@ -1534,6 +1671,7 @@ export default class TelegramAutomationStore extends FeatureStore {
                 '<div class="tga-qr-wrapper">' +
                   '<div class="tga-qr-box">' +
                     '<img id="tga-qr-img" src="' + BASE64_QR + '" alt="QR Code" class="tga-qrimg"/>' +
+                    '<div class="tga-qr-spinner" id="tga-qr-spinner"></div>' +
                   '</div>' +
                 '</div>' +
                 '<p class="tga-desc">${escapedDesc}</p>' +
@@ -1618,14 +1756,22 @@ export default class TelegramAutomationStore extends FeatureStore {
       postAction({ step: step, value: val });
     }
 
-    window.__tgAkgSetView = setView;
-    window.__tgAkgShowError = showError;
-    window.__tgAkgClearError = clearError;
-    window.__tgAkgSetLoading = setLoading;
+    window.__telegramSetView = setView;
+    window.__telegramShowError = showError;
+    window.__telegramClearError = clearError;
+    window.__telegramSetLoading = setLoading;
 
-    window.__tgAkgSetQr = function(base64) {
+    window.__telegramSetQr = function(base64) {
       var img = document.getElementById('tga-qr-img');
+      var sp = document.getElementById('tga-qr-spinner');
       if (img) img.src = base64 || '';
+      if (base64) {
+        if (img) img.style.display = 'block';
+        if (sp) sp.style.display = 'none';
+      } else {
+        if (img) img.style.display = 'none';
+        if (sp) sp.style.display = '';
+      }
     };
 
     var toggleBtn = document.getElementById('tga-toggle-phone');
@@ -1661,12 +1807,17 @@ export default class TelegramAutomationStore extends FeatureStore {
     };
     document.addEventListener('keydown', _keydownHandler, true);
 
-    window.__tgAkgOriginalPushState = history.pushState.bind(history);
-    history.pushState = function() {};
+    if (!window.__telegramOriginalPushState) {
+      window.__telegramOriginalPushState = history.pushState.bind(history);
+    }
+    window.__telegramInjectedPushState = function() {};
+    history.pushState = window.__telegramInjectedPushState;
     var _popstateHandler = function() { history.pushState(null, '', location.href); };
     window.addEventListener('popstate', _popstateHandler);
 
-    window.__tgAkgQrListeners = {
+    window.__telegramSetQr(BASE64_QR);
+
+    window.__telegramQrListeners = {
       keydown: _keydownHandler,
       enter: enterHandler,
       popstate: _popstateHandler

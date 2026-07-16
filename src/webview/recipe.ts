@@ -214,8 +214,8 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     if (event.data?.type === 'wa-akg:qr-modal-action') {
       ipcRenderer.sendToHost('wa-akg:qr-modal-action', event.data.payload);
     }
-    if (event.data?.type === 'tg-akg-login-action') {
-      ipcRenderer.sendToHost('tg-akg-login-action', event.data.payload);
+    if (event.data?.type === 'telegram-login-action') {
+      ipcRenderer.sendToHost('telegram-login-action', event.data.payload);
     }
   });
 

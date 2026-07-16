@@ -5,7 +5,7 @@ export const TELEGRAM_QR_STREAM_PATH = (instanceId: string): string =>
   `/api/v1/telegram/instances/${encodeURIComponent(instanceId)}/login/qr`;
 
 // Unique IPC channel for Telegram login actions (distinct from WhatsApp's channel).
-export const TELEGRAM_LOGIN_ACTION_CHANNEL = 'tg-akg-login-action';
+export const TELEGRAM_LOGIN_ACTION_CHANNEL = 'telegram-login-action';
 
 export const TELEGRAM_LOGIN_STEP = {
   TOGGLE_PHONE: 'toggle-phone',

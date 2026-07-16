@@ -209,6 +209,8 @@ export default class TelegramAutomationStore extends FeatureStore {
 
   _authorized = false;
 
+  _cancelledServiceIds = new Set<string>();
+
   constructor() {
     super();
     makeObservable(this);
@@ -298,6 +300,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     this._bindingResumesInFlight.clear();
     this._retryCounts.clear();
     this._serviceBindAttempts.clear();
+    this._cancelledServiceIds.clear();
     this._authorizedServiceIds.clear();
     this._serviceBindStatus.clear();
     this._serviceQrDataUrl.clear();
@@ -409,6 +412,7 @@ export default class TelegramAutomationStore extends FeatureStore {
       ? [serviceId]
       : [...this._serviceBindStatus.keys()];
     for (const sid of serviceIds) {
+      this._cancelledServiceIds.add(sid);
       this._removeQrModal({ serviceId: sid });
       this._cancelBindingSafetyNet(sid);
       this._closeSse(sid);
@@ -531,6 +535,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     ) {
       return;
     }
+    this._cancelledServiceIds.delete(serviceId);
     this._bindingResumesInFlight.add(serviceId);
     try {
       const t0 = Date.now();
@@ -679,8 +684,9 @@ export default class TelegramAutomationStore extends FeatureStore {
     this._sseSubscriptions.set(instanceId, subscription);
   };
 
-  @action _handleAuthorized = async (instanceId: string, attempt: number) => {
+  @action _handleAuthorized = async (instanceId: string, attempt?: number) => {
     if (!this.stores) return;
+    if (this._cancelledServiceIds.has(instanceId)) return;
     if (this._authorizedServiceIds.has(instanceId)) return;
     this._authorizedServiceIds.add(instanceId);
     this._closeSse(instanceId);
@@ -695,7 +701,12 @@ export default class TelegramAutomationStore extends FeatureStore {
     try {
       await startInstanceApiV1TelegramInstancesInstanceIdStartPost(instanceId);
     } catch {
-      if (attempt !== this._serviceBindAttempts.get(instanceId)) return;
+      if (this._cancelledServiceIds.has(instanceId)) return;
+      if (
+        attempt !== undefined &&
+        attempt !== this._serviceBindAttempts.get(instanceId)
+      )
+        return;
       runInAction(() => {
         this.bindStatus = TELEGRAM_BIND_STATUS.ERROR;
         this._serviceBindStatus.set(instanceId, TELEGRAM_BIND_STATUS.ERROR);
@@ -704,7 +715,12 @@ export default class TelegramAutomationStore extends FeatureStore {
       return;
     }
 
-    if (attempt !== this._serviceBindAttempts.get(instanceId)) return;
+    if (this._cancelledServiceIds.has(instanceId)) return;
+    if (
+      attempt !== undefined &&
+      attempt !== this._serviceBindAttempts.get(instanceId)
+    )
+      return;
 
     // Best-effort: attach initial digital-human binding. Swallowed on failure
     // since the channel binding already exists and login already succeeded.
@@ -719,7 +735,11 @@ export default class TelegramAutomationStore extends FeatureStore {
       );
     }
 
+    this._cancelledServiceIds.delete(instanceId);
     this.closeBinding(instanceId);
+    // closeBinding removes the status indicator DOM node as part of
+    // binding-state cleanup; re-inject it since the service is authorized.
+    this._injectOrUpdateStatusIndicator(instanceId, 'connected');
   };
 
   _getService(serviceId: string): Service | null {
@@ -1111,14 +1131,25 @@ export default class TelegramAutomationStore extends FeatureStore {
             typeof d.instanceId === 'string' ? d.instanceId : undefined;
           const status = typeof d.status === 'string' ? d.status : undefined;
           if (!instanceId || !status) return;
-          if (status === 'authorized') {
-            this._authorizedServiceIds.add(instanceId);
+          if (
+            status === 'authorized' &&
+            !this._cancelledServiceIds.has(instanceId)
+          ) {
             this._closeSse(instanceId);
             this._removeQrModal({ serviceId: instanceId });
-            this._serviceBindStatus.set(
-              instanceId,
-              TELEGRAM_BIND_STATUS.AUTHORIZED,
-            );
+            runInAction(() => {
+              this._serviceBindStatus.set(
+                instanceId,
+                TELEGRAM_BIND_STATUS.AUTHORIZED,
+              );
+            });
+            // Finalize authorization when status stream is the only login path.
+            this._handleAuthorized(instanceId).catch(error => {
+              debug(
+                '[TG-FLUX] authorization finalization failed via status stream',
+                error instanceof Error ? error.message : error,
+              );
+            });
           }
           this._injectOrUpdateStatusIndicator(
             instanceId,
@@ -1151,6 +1182,7 @@ export default class TelegramAutomationStore extends FeatureStore {
       | { step?: string; value?: string }
       | undefined;
     if (!payload || typeof payload.step !== 'string') return;
+    this._cancelledServiceIds.delete(serviceId);
     const { step } = payload;
     const trimmed =
       typeof payload.value === 'string' ? payload.value.trim() : '';

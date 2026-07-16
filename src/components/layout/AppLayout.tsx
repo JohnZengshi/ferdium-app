@@ -171,18 +171,26 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
   componentDidMount() {
     window.addEventListener(
       'wa-ai-toast',
-      this._handleWaAiToast as EventListener,
+      this._handleAiToast as EventListener,
+    );
+    window.addEventListener(
+      'tg-ai-toast',
+      this._handleAiToast as EventListener,
     );
   }
 
   componentWillUnmount() {
     window.removeEventListener(
       'wa-ai-toast',
-      this._handleWaAiToast as EventListener,
+      this._handleAiToast as EventListener,
+    );
+    window.removeEventListener(
+      'tg-ai-toast',
+      this._handleAiToast as EventListener,
     );
   }
 
-  _handleWaAiToast = (event: CustomEvent) => {
+  _handleAiToast = (event: CustomEvent) => {
     const { theme, message, detail } = event.detail as {
       theme?: string;
       message?: string;

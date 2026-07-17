@@ -205,6 +205,16 @@ type FerdiumBridge = Window & {
 
 const PAGE_SIZE = 20;
 
+/** 判断 customer_jid 是否为 Telegram peer（纯数字或 tg 前缀 id） */
+const isTelegramJid = (jid?: string | null): boolean => {
+  if (!jid) return false;
+  // WA 格式始终含 @s.whatsapp.net / @c.us，凡是这种格式一律不走 TG
+  if (jid.endsWith('@s.whatsapp.net') || jid.endsWith('@c.us')) return false;
+  // TG peer id 为纯数字（私聊，如 8398103325）、负数（群/频道，如 -1001234567890）
+  // 或数字前有 peer 前缀（群/频道，如 peer123、channel123）
+  return /^-?\d+$/u.test(jid) || /^(?:peer|chat|channel)-?\d+$/iu.test(jid);
+};
+
 const formatDateTime = (iso: string): string => {
   if (!iso) return '';
   try {
@@ -360,25 +370,44 @@ const NotificationsTab = (): ReactElement => {
       const sessionId = record.wa_session_id;
       const jid = record.customer_jid;
 
-      if (!sessionId) {
-        MessagePlugin.warning('Missing WhatsApp session');
-        return;
-      }
       if (!jid) {
         MessagePlugin.warning('Missing customer chat ID');
+        if (window.location.search.includes('debug=tg'))
+          console.warn('[JumpToChat][TG] jid empty, record=', record);
+        return;
+      }
+
+      const isTG = isTelegramJid(jid);
+      const platformLabel = isTG ? 'Telegram' : 'WhatsApp';
+
+      // --- 选择 sessionId：TG 的 sessionId 仍走 wa_session_id 字段（后端复用该字段承载两种平台的 session id） ---
+      if (!sessionId) {
+        MessagePlugin.warning(`Missing ${platformLabel} session`);
         return;
       }
 
       const { ferdium } = window as unknown as FerdiumBridge;
       const service = ferdium?.stores?.services?.one(sessionId);
       if (!service) {
-        MessagePlugin.warning('WhatsApp service not found');
+        MessagePlugin.warning(`${platformLabel} service not found`);
         return;
       }
 
-      // 切换到对应 WhatsApp 服务
+      // 同步模块当前服务，避免 AppLayoutContainer reaction 切回该模块第一个服务
+      const module = isTG ? 'telegram' : 'whatsapp';
+      console.warn(
+        '[JumpToChat][TG] isTG=',
+        isTG,
+        'sessionId=',
+        sessionId,
+        'jid=',
+        jid,
+        'module=',
+        module,
+      );
+      navigationStore.setModuleActiveService(module, sessionId);
       ferdium?.actions?.service?.setActive({ serviceId: sessionId });
-      navigationStore.setModule('whatsapp');
+      navigationStore.setModule(module);
 
       // Tier 1: 等待 webview 挂载 + 页面加载完成（最多 30s）
       const wv = await new Promise<WebviewLoader | null>(resolve => {
@@ -399,9 +428,145 @@ const NotificationsTab = (): ReactElement => {
       });
 
       if (!wv) {
-        MessagePlugin.warning('WhatsApp webview not ready, please try again');
+        MessagePlugin.warning(
+          `${platformLabel} webview not ready, please try again`,
+        );
         return;
       }
+
+      /* ---------- Telegram 跳转：hash 路由直接定位 peer ---------- */
+      if (isTG) {
+        // Tier 2: 等待聊天列表渲染（K 版 .ListItem.chat-item-clickable，或通用 chat list 容器）
+        const tgReady = await new Promise<boolean>(resolve => {
+          const start = Date.now();
+          const poll = () => {
+            wv.executeJavaScript(
+              "!!document.querySelector('.ListItem.Chat.chat-item-clickable, .chat-list-container, .chatlist-container, .sidebar-chat-list')",
+            )
+              .then((found: unknown) => {
+                if (found) {
+                  resolve(true);
+                  return;
+                }
+                if (Date.now() - start > 15_000) {
+                  resolve(false);
+                  return;
+                }
+                window.setTimeout(poll, 1000);
+              })
+              .catch(() => {
+                if (Date.now() - start > 15_000) {
+                  resolve(false);
+                  return;
+                }
+                window.setTimeout(poll, 1000);
+              });
+          };
+          poll();
+        });
+
+        if (!tgReady) {
+          MessagePlugin.warning('Telegram chat list not ready, trying anyway');
+        }
+
+        const escapedPeerId = JSON.stringify(jid);
+        const tgScript = `
+          (async function() {
+            var peerId = ${escapedPeerId};
+            var result = { ok: false, method: '', reason: '', hashBefore: '', hashAfter: '' };
+            var wait = function(ms) { return new Promise(function(r) { setTimeout(r, ms); }); };
+
+            result.hashBefore = window.location.hash;
+
+            var link = document.querySelector('a[href="#' + peerId + '"]')
+                     || document.querySelector('[data-peer-id="' + peerId + '"]')
+                     || document.querySelector('div[data-peer-id="' + peerId + '"]');
+
+            if (link) {
+              /* 1. 优先原生 <a> 导航：清掉可能存在的 preventDefault 干扰路径，
+                 直接构造真实指针事件序列（Ripple 组件靠 pointerdown/mousedown 触发，
+                 单纯 .click() 不会走它的路由逻辑） */
+              var rect = link.getBoundingClientRect();
+              var cx = rect.left + rect.width / 2;
+              var cy = rect.top + rect.height / 2;
+              var commonOpts = {
+                bubbles: true, cancelable: true, view: window,
+                clientX: cx, clientY: cy, button: 0, buttons: 1,
+              };
+              link.dispatchEvent(new PointerEvent('pointerdown', Object.assign({ pointerId: 1, pointerType: 'mouse', isPrimary: true }, commonOpts)));
+              link.dispatchEvent(new MouseEvent('mousedown', commonOpts));
+              await wait(30);
+              link.dispatchEvent(new PointerEvent('pointerup', Object.assign({ pointerId: 1, pointerType: 'mouse', isPrimary: true }, commonOpts)));
+              link.dispatchEvent(new MouseEvent('mouseup', commonOpts));
+              link.dispatchEvent(new MouseEvent('click', commonOpts));
+              await wait(50);
+              result.hashAfter = window.location.hash;
+
+              if (result.hashAfter && result.hashAfter !== result.hashBefore) {
+                result.ok = true;
+                result.method = 'pointer-sequence';
+                return result;
+              }
+
+              /* 2. 兜底：直接调用原生 click()（部分场景仍然有效） */
+              link.click();
+              await wait(50);
+              result.hashAfter = window.location.hash;
+              if (result.hashAfter && result.hashAfter !== result.hashBefore) {
+                result.ok = true;
+                result.method = 'native-click';
+                return result;
+              }
+            }
+
+            /* 3. hash 路由兜底 + 轮询验证（K 版可能只监听 hashchange 或 popstate） */
+            var targetHash = '#' + peerId;
+            var oldUrl = location.href;
+            var oldHash = window.location.hash;
+            window.location.hash = targetHash;
+            window.dispatchEvent(new HashChangeEvent('hashchange', {
+              oldURL: oldUrl,
+              newURL: location.href,
+            }));
+            // 轮询最多 1500ms 确认 hash 真的指向目标 peer，防止伪成功
+            var deadline2 = Date.now() + 1500;
+            var hashChanged = window.location.hash === targetHash &&
+              (window.location.hash !== oldHash || !!link);
+            while (!hashChanged && Date.now() < deadline2) {
+              await wait(100);
+              hashChanged = window.location.hash === targetHash;
+            }
+            result.hashAfter = window.location.hash;
+            result.method = hashChanged ? 'hash-fallback' : 'hash-fallback-failed';
+            result.ok = hashChanged;
+            console.warn('[TG-JS][fallback] targetHash=', targetHash, 'hashAfter=', result.hashAfter, 'ok=', result.ok);
+            if (!hashChanged) { result.reason = 'hash-did-not-update'; }
+            return result;
+          })()
+        `;
+
+        try {
+          const res = (await wv.executeJavaScript(tgScript)) as {
+            ok?: boolean;
+            method?: string;
+            reason?: string;
+            hashBefore?: string;
+            hashAfter?: string;
+          };
+          if (!res?.ok) {
+            MessagePlugin.warning(
+              `Failed to open Telegram chat: ${res?.reason || 'unknown'}`,
+            );
+          }
+        } catch {
+          MessagePlugin.warning(
+            'Failed to open Telegram chat, please try again',
+          );
+        }
+        return;
+      }
+
+      /* ---------- WhatsApp 跳转（原有逻辑，不变） ---------- */
 
       // Tier 2: 等待 WhatsApp Web 搜索框出现（最多 20s）
       const waReady = await new Promise<boolean>(resolve => {

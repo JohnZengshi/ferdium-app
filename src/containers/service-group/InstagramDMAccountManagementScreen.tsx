@@ -59,7 +59,7 @@ const messages = defineMessages({
   },
   proxyLocal: {
     id: 'instagramDMAccountMgmt.proxyLocal',
-    defaultMessage: 'Local',
+    defaultMessage: 'Local Direct',
   },
   updateSuccess: {
     id: 'instagramDMAccountMgmt.updateSuccess',
@@ -274,7 +274,7 @@ function InstagramDMAccountManagementScreen({
             size="small"
             onChange={value =>
               updateService(row.id, { isEnabled: value as boolean }).catch(
-                () => undefined,
+                () => {},
               )
             }
           />

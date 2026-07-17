@@ -1,4 +1,5 @@
 import { MessagePlugin } from 'tdesign-react';
+import { logoutAndRedirect } from '../../helpers/auth-helpers';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 /**
  * Custom fetch instance for orval-generated API client.
@@ -95,6 +96,26 @@ const getErrorMessage = (
   nonEmptyString(body.detail) ||
   nonEmptyString(statusText) ||
   `Request failed (HTTP ${status}).`;
+
+// Force-redirect to the auth login screen when an Agent Flow CS request
+// fails with HTTP 401 / AUTHENTICATION_REQUIRED using a Bearer JWT.
+// Trigger the same logout flow as SettingsModal when the Agent Flow CS
+// server rejects our token (401 / AUTHENTICATION_REQUIRED). Best-effort:
+// never throws, never blocks the thrown AgentFlowApiError, and bails when
+// we're already on an auth screen (prevents redirect loops).
+const handleExpiredToken = (): void => {
+  try {
+    const ferdium = globalThis.window?.ferdium;
+    const stores = ferdium?.stores;
+    const actions = ferdium?.actions;
+    if (!stores || !actions) return;
+    const pathname = stores.router?.location?.pathname as string | undefined;
+    if (pathname?.startsWith('/auth')) return;
+    logoutAndRedirect(stores, actions);
+  } catch {
+    // Swallow: redirect is a best-effort side-effect, the caller still gets the thrown error.
+  }
+};
 
 export class AgentFlowApiError extends Error {
   readonly status: number;
@@ -196,6 +217,16 @@ export const useCustomInstance = <T>(
 
     if (!suppressToast) {
       MessagePlugin.error(errorMessage);
+    }
+    // Only force-logout when request used our own Bearer JWT. AKG wag_
+    // key failures must not clear user session or profile state.
+    const hasBearerToken = Boolean(bearerToken && !isAkgKey);
+    const sessionExpired =
+      hasBearerToken &&
+      (response.status === 401 ||
+        parsedBody.code === 'AUTHENTICATION_REQUIRED');
+    if (sessionExpired) {
+      handleExpiredToken();
     }
     throw new AgentFlowApiError(errorMessage, response, body, parsedBody);
   });

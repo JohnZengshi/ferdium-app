@@ -7,6 +7,9 @@ jest.mock('../../../src/whatsapp-automation/api/auth', () => ({
 jest.mock('../../../src/agent-flow-cs/api/auth', () => ({
   getAccessToken: jest.fn(),
 }));
+jest.mock('../../../src/helpers/auth-helpers', () => ({
+  logoutAndRedirect: jest.fn(),
+}));
 
 const {
   MessagePlugin,
@@ -22,12 +25,16 @@ const {
 const {
   getAccessToken,
 }: typeof import('../../../src/agent-flow-cs/api/auth') = require('../../../src/agent-flow-cs/api/auth');
+const {
+  logoutAndRedirect,
+}: typeof import('../../../src/helpers/auth-helpers') = require('../../../src/helpers/auth-helpers');
 
 const mockedFetch = jest.fn<
   ReturnType<typeof fetch>,
   Parameters<typeof fetch>
 >();
 const mockedGetAccessToken = jest.mocked(getAccessToken);
+const mockedLogoutAndRedirect = jest.mocked(logoutAndRedirect);
 const mockedGetApiKey = jest.mocked(getApiKey);
 const mockedMessageError = jest.mocked(MessagePlugin.error);
 
@@ -51,10 +58,16 @@ describe('Agent Flow CS custom instance', () => {
     global.fetch = mockedFetch;
   });
 
+  let ferdiumRef: any;
   beforeEach(() => {
+    ferdiumRef = undefined;
+    (global as any).window = new Proxy({} as any, {
+      get: (_t, p) => (p === 'ferdium' ? ferdiumRef : undefined),
+    });
     mockedFetch.mockReset();
     mockedGetAccessToken.mockReset();
     mockedGetApiKey.mockReset();
+    mockedLogoutAndRedirect.mockReset();
     mockedMessageError.mockReset();
   });
 
@@ -272,5 +285,92 @@ describe('Agent Flow CS custom instance', () => {
     ).rejects.toBe(abortError);
     expect(mockedFetch.mock.calls[0][1]?.signal).toBe(controller.signal);
     expect(mockedMessageError).not.toHaveBeenCalled();
+  });
+
+  it('redirects to login and clears token on HTTP 401 with Bearer JWT', async () => {
+    const push = jest.fn();
+    ferdiumRef = {
+      stores: {
+        router: { push, location: { pathname: '/settings/digital-humans' } },
+        user: { logoutRedirectRoute: '/auth/login' },
+      },
+      actions: {},
+    };
+    mockedGetAccessToken.mockReturnValue('jwt-token');
+    mockedFetch.mockResolvedValue(
+      response({ code: 'AUTHENTICATION_REQUIRED' }, 401, 'Unauthorized'),
+    );
+
+    await expect(useCustomInstance('/api/test')).rejects.toBeInstanceOf(
+      AgentFlowApiError,
+    );
+    expect(mockedLogoutAndRedirect).toHaveBeenCalledTimes(1);
+    expect(push).not.toHaveBeenCalled();
+    expect(mockedMessageError).toHaveBeenCalledWith(
+      'Authentication required. Please sign in again.',
+    );
+  });
+
+  it('redirects even when the caller suppresses the toast (X-Suppress-Error-Toast)', async () => {
+    const push = jest.fn();
+    ferdiumRef = {
+      stores: {
+        router: { push, location: { pathname: '/settings/digital-humans' } },
+        user: { logoutRedirectRoute: '/auth/login' },
+      },
+      actions: {},
+    };
+    mockedGetAccessToken.mockReturnValue('jwt-token');
+    mockedFetch.mockResolvedValue(response({}, 401));
+
+    await expect(
+      useCustomInstance('/api/test', {
+        headers: { 'X-Suppress-Error-Toast': 'true' },
+      }),
+    ).rejects.toBeInstanceOf(AgentFlowApiError);
+    expect(push).not.toHaveBeenCalled();
+    expect(mockedLogoutAndRedirect).toHaveBeenCalledTimes(1);
+    expect(mockedMessageError).not.toHaveBeenCalled();
+  });
+
+  it('does not trigger logout on AKG-key 401 (preserves user session)', async () => {
+    const push = jest.fn();
+    ferdiumRef = {
+      stores: {
+        router: { push, location: { pathname: '/settings/digital-humans' } },
+        user: { logoutRedirectRoute: '/auth/login' },
+      },
+      actions: {},
+    };
+    mockedGetAccessToken.mockReturnValue('wag_access-key');
+    mockedGetApiKey.mockReturnValue('wag_api-key');
+    mockedFetch.mockResolvedValue(
+      response({ code: 'AUTHENTICATION_REQUIRED' }, 401),
+    );
+
+    await expect(useCustomInstance('/api/test')).rejects.toBeInstanceOf(
+      AgentFlowApiError,
+    );
+    expect(push).not.toHaveBeenCalled();
+    expect(mockedLogoutAndRedirect).not.toHaveBeenCalled();
+  });
+
+  it('does not redirect when already on an auth screen (prevents loops)', async () => {
+    const push = jest.fn();
+    ferdiumRef = {
+      stores: {
+        router: { push, location: { pathname: '/auth/login' } },
+        user: { logoutRedirectRoute: '/auth/login' },
+      },
+      actions: {},
+    };
+    mockedGetAccessToken.mockReturnValue('jwt-token');
+    mockedFetch.mockResolvedValue(response({}, 401));
+
+    await expect(useCustomInstance('/api/test')).rejects.toBeInstanceOf(
+      AgentFlowApiError,
+    );
+    expect(push).not.toHaveBeenCalled();
+    expect(mockedLogoutAndRedirect).not.toHaveBeenCalled();
   });
 });

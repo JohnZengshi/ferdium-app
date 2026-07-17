@@ -8,7 +8,7 @@ import {
 import { Button, Dialog, DialogPlugin, Select, Switch } from 'tdesign-react';
 
 import type { StoresProps } from '../../@types/ferdium-components.types';
-import { LIVE_FERDIUM_API, LOCAL_SERVER } from '../../config';
+import { logoutAndRedirect } from '../../helpers/auth-helpers';
 import { isSnap, isWinPortable } from '../../environment';
 import { ferdiumVersion } from '../../environment-remote';
 import { updateVersionParse } from '../../helpers/update-helpers';
@@ -251,18 +251,7 @@ class SettingsModal extends Component<IProps, IState> {
       body: intl.formatMessage(messages.logoutConfirmContent),
       placement: 'center',
       onConfirm: () => {
-        const isUsingWithoutAccount =
-          stores!.settings.app.server === LOCAL_SERVER;
-
-        if (isUsingWithoutAccount) {
-          actions!.settings.update({
-            type: 'app',
-            data: { server: LIVE_FERDIUM_API },
-          });
-        }
-        stores!.user.isLoggingOut = true;
-        actions!.user.logout();
-        stores!.router.push(stores!.user.logoutRedirectRoute);
+        logoutAndRedirect(stores!, actions!, { resetServerToLive: true });
         confirmDia.hide();
       },
       onClose: () => {

@@ -8,11 +8,8 @@ import {
 import { NavLink } from 'react-router-dom';
 import { DialogPlugin } from 'tdesign-react';
 import type { StoresProps } from '../../../@types/ferdium-components.types';
-import {
-  LIVE_FERDIUM_API,
-  LIVE_FRANZ_API,
-  LOCAL_SERVER,
-} from '../../../config';
+import { LIVE_FRANZ_API, LOCAL_SERVER } from '../../../config';
+import { logoutAndRedirect } from '../../../helpers/auth-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 
 const messages = defineMessages({
@@ -78,24 +75,9 @@ class SettingsNavigation extends Component<IProps> {
       body: intl.formatMessage(messages.logoutConfirmContent),
       placement: 'center',
       onConfirm: () => {
-        const isUsingWithoutAccount =
-          this.props.stores!.settings.app.server === LOCAL_SERVER;
-
-        if (isUsingWithoutAccount) {
-          // Reset server back to Ferdium API
-          this.props.actions!.settings.update({
-            type: 'app',
-            data: {
-              server: LIVE_FERDIUM_API,
-            },
-          });
-        }
-        this.props.stores!.user.isLoggingOut = true;
-
-        this.props.actions!.user.logout();
-        this.props.stores!.router.push(
-          this.props.stores!.user.logoutRedirectRoute,
-        );
+        logoutAndRedirect(this.props.stores!, this.props.actions!, {
+          resetServerToLive: true,
+        });
         confirmDia.hide();
       },
       onClose: () => {

@@ -68,6 +68,7 @@ const mockRemote = {
     getFocusedWindow: jest.fn(),
   },
   app: {
+    name: 'Ferdium',
     getVersion: jest.fn(() => '0.0.0-test'),
     getName: jest.fn(() => 'Ferdium'),
     getPath: jest.fn(name => `/mock/${name}`),

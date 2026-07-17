@@ -29,6 +29,7 @@ import {
   pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePost,
   resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePost,
 } from '../../agent-flow-cs/api/generated/telegram/telegram';
+import { SUPPRESS_ERROR_TOAST } from '../../agent-flow-cs/api/customInstance';
 import AvatarCell from '../../components/ui/AvatarCell';
 import EditServiceDrawer from '../../components/ui/EditServiceDrawer';
 import type { ServiceProxy } from '../../components/ui/EditServiceDrawer';
@@ -189,9 +190,12 @@ function TelegramAccountManagementScreen({
     const results = await Promise.all(
       serviceIds.map(async serviceId => {
         try {
-          const response = await getTelegramBindingApiV1TelegramBindGet({
-            instance_id: serviceId,
-          });
+          const response = await getTelegramBindingApiV1TelegramBindGet(
+            {
+              instance_id: serviceId,
+            },
+            SUPPRESS_ERROR_TOAST,
+          );
           if (response.status === 200) {
             return { serviceId, binding: response.data, failed: false };
           }
@@ -314,15 +318,20 @@ function TelegramAccountManagementScreen({
         const response = await (enabled
           ? resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePost(
               serviceId,
+              SUPPRESS_ERROR_TOAST,
             )
           : pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePost(
               serviceId,
+              SUPPRESS_ERROR_TOAST,
             ));
         if (response.status !== 200) throw new Error('Toggle failed');
 
-        const bindingResponse = await getTelegramBindingApiV1TelegramBindGet({
-          instance_id: serviceId,
-        });
+        const bindingResponse = await getTelegramBindingApiV1TelegramBindGet(
+          {
+            instance_id: serviceId,
+          },
+          SUPPRESS_ERROR_TOAST,
+        );
         if (bindingResponse.status !== 200 || !bindingResponse.data)
           throw new Error('Refresh failed');
         const refreshedBinding = bindingResponse.data;
@@ -356,9 +365,7 @@ function TelegramAccountManagementScreen({
     hasError: service.hasCrashed || service.isError,
     persona: personaNameMap.get(service.id) ?? '',
     personaLoadFailed: bindingFailedIds.has(service.id),
-    autoChatActive:
-      bindingMap.get(service.id)?.is_active === true ||
-      bindingMap.get(service.id)?.status === 'active',
+    autoChatActive: bindingMap.get(service.id)?.status === 'active',
   }));
 
   const editingService =

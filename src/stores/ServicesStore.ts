@@ -388,7 +388,7 @@ export default class ServicesStore extends TypedStore {
     return this.allDisplayed.filter(s => s.recipe?.id === TIKTOK_RECIPE_ID);
   }
 
-  @computed get instagramServices(): Service[] {
+  @computed get instagramDMServices(): Service[] {
     return this.allDisplayed.filter(
       s => s.recipe?.id === INSTAGRAM_DM_RECIPE_ID,
     );
@@ -1418,7 +1418,7 @@ export default class ServicesStore extends TypedStore {
   }
 
   @computed get instagramBadge(): number | null {
-    return this.getBadgeCount(this.instagramServices);
+    return this.getBadgeCount(this.instagramDMServices);
   }
 
   getBadgeCount(services: Service[]): number | null {

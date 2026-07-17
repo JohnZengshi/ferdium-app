@@ -21,6 +21,7 @@ import type {
   SendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPost200,
   SendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPost200,
   StopTelegramInstanceApiV1TelegramInstancesInstanceIdStopPost200,
+  SyncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPost202,
   TelegramBindRequest,
   TelegramBindSwitchRequest,
   TelegramBindingResponse,
@@ -1907,6 +1908,105 @@ export const getStartInstanceApiV1TelegramInstancesInstanceIdStartPostUrl = (ins
 export const startInstanceApiV1TelegramInstancesInstanceIdStartPost = async (instanceId: string, options?: RequestInit): Promise<startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse> => {
 
   return useCustomInstance<startInstanceApiV1TelegramInstancesInstanceIdStartPostResponse>(getStartInstanceApiV1TelegramInstancesInstanceIdStartPostUrl(instanceId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse202 = {
+  data: SyncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPost202
+  status: 202
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponseSuccess = (syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse202) & {
+  headers: Headers;
+};
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponseError = (syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse400 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse401 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse403 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse404 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse409 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse413 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse422 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse429 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse500 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse502 | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse503) & {
+  headers: Headers;
+};
+
+export type syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse = (syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponseSuccess | syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponseError)
+
+export const getSyncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostUrl = (instanceId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/telegram/instances/${instanceId}/sync-history`
+}
+
+/**
+ * 手动重触发历史会话批量导入（已绑定但历史缺失时的补救入口）。
+ *
+ * 绑定时机不确定（如先绑定后补配数字人、或首次同步失败）都可能导致
+ * 历史会话缺失；此接口允许显式重新触发，无需重新走 /start + /bind。
+ *
+ * 与 bind 后台任务不同：手动补救强制跳过 7 天幂等标记（force=True），
+ * 确保分页截断/部分失败后仍能真正重拉。
+ * @summary Sync Telegram History
+ */
+export const syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPost = async (instanceId: string, options?: RequestInit): Promise<syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse> => {
+
+  return useCustomInstance<syncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostResponse>(getSyncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPostUrl(instanceId),
   {
     ...options,
     method: 'POST'

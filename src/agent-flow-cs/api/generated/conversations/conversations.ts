@@ -109,8 +109,9 @@ export const getGetConversationByCustomerApiV1ConversationsByCustomerCustomerIdG
  *
  * member 维度：仅定位当前 member 名下的客户会话；owner 请用按会话 ID 的接口。
  *
- * WA session 重建兜底：若精确 4 元组 miss 且为 whatsapp 平台、已传 wa_session_id，
- * 则用新 session_id 重建会话行（best-effort 从 AKG 灌历史），避免历史会话 404。
+ * Session 重建兜底：若精确 4 元组 miss 且为 whatsapp/telegram 平台、已传
+ * wa_session_id，则按该 session/instance 重建会话行（best-effort 灌历史），
+ * 避免历史/导入聊天 404。
  * @summary Get Conversation By Customer
  */
 export const getConversationByCustomerApiV1ConversationsByCustomerCustomerIdGet = async (customerId: string,
@@ -1093,9 +1094,9 @@ export const getResumeConversationByCustomerApiV1ConversationsByCustomerCustomer
  *
  * 恢复后 Agent 不会自动回复，需等待下一条客户消息触发正常流程。
  *
- * WA session 重建兜底：精确 4 元组 miss 且为 whatsapp、已传 wa_session_id 时，
- * 用新 session_id 重建会话行（best-effort 灌历史）后返回。recovery 新建的是
- * active 会话，直接返回；命中已存在会话才走 resume 逻辑。
+ * Session 重建兜底：精确 4 元组 miss 且为 whatsapp/telegram、已传 wa_session_id
+ * 时，按该 session/instance 重建会话行（best-effort 灌历史）后返回。recovery
+ * 新建的是 active 会话，直接返回；命中已存在会话才走 resume 逻辑。
  * @summary Resume Conversation By Customer
  */
 export const resumeConversationByCustomerApiV1ConversationsByCustomerCustomerIdResumePatch = async (customerId: string,

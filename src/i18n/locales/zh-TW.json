@@ -643,7 +643,7 @@
   "knowledgeScreen.createPersonaProfile": "建立數位員工",
   "knowledgeScreen.createTitle": "建立",
   "knowledgeScreen.datePlaceholder": "請選擇日期",
-  "knowledgeScreen.defaultRemarkFallback": "美國 WhatsApp 手機號的人設",
+  "knowledgeScreen.defaultRemarkFallback": "人設備註",
   "knowledgeScreen.deletePersona": "刪除人設",
   "knowledgeScreen.description": "人設資料是您社交帳號的資訊資料，與帳號綁定後，數位員工會以帳號的人設進行聊天",
   "knowledgeScreen.edit": "編輯",

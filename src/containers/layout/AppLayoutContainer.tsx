@@ -31,7 +31,7 @@ class AppLayoutContainer extends Component<IProps> {
         waCount: this.props.stores?.services?.whatsAppServices?.length ?? 0,
         tgCount: this.props.stores?.services?.telegramServices?.length ?? 0,
         ttCount: this.props.stores?.services?.tiktokServices?.length ?? 0,
-        igCount: this.props.stores?.services?.instagramServices?.length ?? 0,
+        igCount: this.props.stores?.services?.instagramDMServices?.length ?? 0,
       }),
       ({ module }) => {
         const { stores } = this.props;
@@ -52,7 +52,7 @@ class AppLayoutContainer extends Component<IProps> {
               : module === 'tiktok'
                 ? stores.services.tiktokServices
                 : module === 'instagramDM'
-                  ? stores.services.instagramServices
+                  ? stores.services.instagramDMServices
                   : [];
         const first = moduleList[0];
         if (first && currentActive?.id !== first.id) {
@@ -149,8 +149,11 @@ class AppLayoutContainer extends Component<IProps> {
       <Services services={services.tiktokServices} {...commonServiceProps} />
     );
 
-    const instagramServicesContainer = (
-      <Services services={services.instagramServices} {...commonServiceProps} />
+    const instagramDMServicesContainer = (
+      <Services
+        services={services.instagramDMServices}
+        {...commonServiceProps}
+      />
     );
 
     return (
@@ -170,7 +173,7 @@ class AppLayoutContainer extends Component<IProps> {
           whatsappServices={whatsappServicesContainer}
           telegramServices={telegramServicesContainer}
           tiktokServices={tiktokServicesContainer}
-          instagramServices={instagramServicesContainer}
+          instagramDMServices={instagramDMServicesContainer}
           installAppUpdate={installUpdate}
           showRequiredRequestsError={requests.showRequiredRequestsError}
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}

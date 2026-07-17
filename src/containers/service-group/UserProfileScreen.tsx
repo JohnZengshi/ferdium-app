@@ -249,7 +249,11 @@ function mapProfileToFanProfile(
   };
 }
 
-function UserProfileScreen(): ReactElement {
+interface UserProfileScreenProps {
+  platform?: ListCustomerProfilesApiV1CustomerProfilesGetParams['platform'];
+}
+
+function UserProfileScreen({ platform }: UserProfileScreenProps): ReactElement {
   const intl = useIntl();
 
   const [data, setData] = useState<FanProfile[]>([]);
@@ -267,6 +271,7 @@ function UserProfileScreen(): ReactElement {
     setLoading(true);
     try {
       const params: ListCustomerProfilesApiV1CustomerProfilesGetParams = {
+        platform,
         page,
         page_size: pageSize,
       };
@@ -288,7 +293,7 @@ function UserProfileScreen(): ReactElement {
     } finally {
       setLoading(false);
     }
-  }, [page, pageSize, searchText, filterStatus, filterPersona, intl]);
+  }, [page, pageSize, searchText, filterStatus, filterPersona, intl, platform]);
 
   useEffect(() => {
     fetchData();

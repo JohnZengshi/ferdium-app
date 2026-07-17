@@ -295,7 +295,7 @@ class HomeScreen extends Component<IHomeScreenProps, HomeScreenState> {
         type: 'Ins DM',
         icon: './assets/images/instagram-dm.svg',
         useIconMask: false,
-        ...getServiceCounts(services.instagramServices),
+        ...getServiceCounts(services.instagramDMServices),
       },
     ];
 

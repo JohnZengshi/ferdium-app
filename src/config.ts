@@ -611,7 +611,7 @@ export const DEFAULT_APP_SETTINGS = {
   whatsappAccountSliderWidth: 300,
   telegramAccountSliderWidth: 300,
   tiktokAccountSliderWidth: 300,
-  instagramAccountSliderWidth: 300,
+  instagramDMAccountSliderWidth: 300,
   isMenuCollapsed: false,
   hideRecipesButton: false,
   hideSplitModeButton: true,

@@ -3030,11 +3030,11 @@ customer_id: string;
  */
 platform: string;
 /**
- * 起始时间 ISO 8601（UTC）
+ * 起始时间：ISO 8601 或 unix 时间戳（UTC）
  */
 start: string;
 /**
- * 结束时间 ISO 8601（UTC）
+ * 结束时间：ISO 8601 或 unix 时间戳（UTC）
  */
 end: string;
 /**
@@ -3185,6 +3185,8 @@ export type LoginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePost200 = { [key
 export type LoginCodeApiV1TelegramInstancesInstanceIdLoginCodePost200 = { [key: string]: unknown };
 
 export type LoginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPost200 = { [key: string]: unknown };
+
+export type SyncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPost202 = { [key: string]: unknown };
 
 export type GetTelegramBindingApiV1TelegramBindGetParams = {
 instance_id?: string | null;

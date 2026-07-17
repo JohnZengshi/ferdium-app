@@ -191,6 +191,8 @@ export default class TelegramAutomationStore extends FeatureStore {
 
   _authorizedServiceIds = new Set<string>();
 
+  @observable instanceStatuses = new Map<string, string>();
+
   _reloadListener: ((params: { serviceId: string }) => void) | null = null;
 
   _deleteListener: ((params: { serviceId: string }) => void) | null = null;
@@ -1108,8 +1110,9 @@ export default class TelegramAutomationStore extends FeatureStore {
           const id = typeof obj.id === 'string' ? obj.id : undefined;
           const status =
             typeof obj.status === 'string' ? obj.status : undefined;
-          if (id && status && status === 'authorized') {
-            this._authorizedServiceIds.add(id);
+          if (id && status) {
+            runInAction(() => this.instanceStatuses.set(id, status));
+            if (status === 'authorized') this._authorizedServiceIds.add(id);
           }
         }
       }
@@ -1131,6 +1134,7 @@ export default class TelegramAutomationStore extends FeatureStore {
             typeof d.instanceId === 'string' ? d.instanceId : undefined;
           const status = typeof d.status === 'string' ? d.status : undefined;
           if (!instanceId || !status) return;
+          runInAction(() => this.instanceStatuses.set(instanceId, status));
           if (
             status === 'authorized' &&
             !this._cancelledServiceIds.has(instanceId)

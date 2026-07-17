@@ -140,7 +140,7 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   whatsappServices: React.ReactElement;
   telegramServices: React.ReactElement;
   tiktokServices: React.ReactElement;
-  instagramServices: React.ReactElement;
+  instagramDMServices: React.ReactElement;
   showServicesUpdatedInfoBar: boolean;
   appUpdateIsDownloaded: boolean;
   authRequestFailed: boolean;
@@ -231,7 +231,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       whatsappServices,
       telegramServices,
       tiktokServices,
-      instagramServices,
+      instagramDMServices,
       showServicesUpdatedInfoBar,
       appUpdateIsDownloaded,
       authRequestFailed,
@@ -386,7 +386,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             <div
               className={`flex-1 flex flex-col min-h-0 ${isInstagramDMMessagesMode ? '' : 'hidden'}`}
             >
-              {instagramServices}
+              {instagramDMServices}
             </div>
             <Outlet />
           </div>
@@ -402,7 +402,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             )}
           {!isMessages &&
             activeModule === 'whatsapp' &&
-            activeServiceTab === 'profile' && <UserProfileScreen />}
+            activeServiceTab === 'profile' && (
+              <UserProfileScreen platform="whatsapp" />
+            )}
           {!isMessages &&
             activeModule === 'telegram' &&
             activeServiceTab === 'account' && (
@@ -410,7 +412,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             )}
           {!isMessages &&
             activeModule === 'telegram' &&
-            activeServiceTab === 'profile' && <UserProfileScreen />}
+            activeServiceTab === 'profile' && (
+              <UserProfileScreen platform="telegram" />
+            )}
           {!isMessages &&
             activeModule === 'tiktok' &&
             activeServiceTab === 'account' && <TikTokAccountManagementScreen />}

@@ -2,7 +2,7 @@ import { inject, observer } from 'mobx-react';
 import { Component } from 'react';
 import type { ReactElement } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
-import type { WrappedComponentProps } from 'react-intl';
+import type { IntlShape, WrappedComponentProps } from 'react-intl';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { AddIcon } from 'tdesign-icons-react';
 import { Badge, Button, Empty, MessagePlugin } from 'tdesign-react';
@@ -18,22 +18,66 @@ import { ServiceSliderItemShell } from './ServiceSliderItemShell';
 
 const messages = defineMessages({
   tabAll: {
-    id: 'instagramAccountSlider.tabAll',
+    id: 'instagramDMAccountSlider.tabAll',
     defaultMessage: 'All',
   },
+  tabOnline: {
+    id: 'instagramDMAccountSlider.tabOnline',
+    defaultMessage: 'Online',
+  },
+  tabOffline: {
+    id: 'instagramDMAccountSlider.tabOffline',
+    defaultMessage: 'Offline',
+  },
+  tabError: {
+    id: 'instagramDMAccountSlider.tabError',
+    defaultMessage: 'Error',
+  },
   bindAccount: {
-    id: 'instagramAccountSlider.bindAccount',
+    id: 'instagramDMAccountSlider.bindAccount',
     defaultMessage: 'Add Account',
   },
   updateSuccess: {
-    id: 'instagramAccountMgmt.updateSuccess',
+    id: 'instagramDMAccountMgmt.updateSuccess',
     defaultMessage: 'Update successful',
   },
   addSuccess: {
-    id: 'instagramAccountMgmt.addSuccess',
+    id: 'instagramDMAccountMgmt.addSuccess',
     defaultMessage: 'Added successfully',
   },
 });
+
+const TAB_IDS = ['all', 'online', 'offline', 'error'] as const;
+type TabId = (typeof TAB_IDS)[number];
+type AccountStatus = Exclude<TabId, 'all'>;
+
+const getTabs = (intl: IntlShape) => [
+  { id: 'all' as const, label: intl.formatMessage(messages.tabAll) },
+  { id: 'online' as const, label: intl.formatMessage(messages.tabOnline) },
+  { id: 'offline' as const, label: intl.formatMessage(messages.tabOffline) },
+  { id: 'error' as const, label: intl.formatMessage(messages.tabError) },
+];
+const tabTextColor = (id: TabId) =>
+  ({
+    all: 'text-brand',
+    online: 'text-success',
+    offline: 'text-warning',
+    error: 'text-error',
+  })[id];
+const tabBadgeBgColor = (id: TabId) =>
+  ({
+    all: '[&_.t-badge--circle]:!bg-brand',
+    online: '[&_.t-badge--circle]:!bg-success',
+    offline: '[&_.t-badge--circle]:!bg-warning',
+    error: '[&_.t-badge--circle]:!bg-error',
+  })[id];
+const getServiceStatus = (service: Service): AccountStatus => {
+  if (service.hasCrashed || service.isError || service.lostRecipeConnection)
+    return 'error';
+  if (!service.isEnabled || !service.isAttached || !service.webview)
+    return 'offline';
+  return 'online';
+};
 
 interface IProps extends WrappedComponentProps {
   stores?: RealStores;
@@ -46,6 +90,7 @@ type ServiceDrawerData = Service & {
 };
 
 interface IInstagramDMAccountSliderState {
+  activeTab: TabId;
   isBindDrawerVisible: boolean;
   editingService: ServiceDrawerData | null;
   bindDrawerKey: number;
@@ -113,6 +158,7 @@ class InstagramDMAccountSlider extends Component<
   constructor(props: IProps) {
     super(props);
     this.state = {
+      activeTab: 'all',
       isBindDrawerVisible: false,
       editingService: null,
       bindDrawerKey: 0,
@@ -127,7 +173,10 @@ class InstagramDMAccountSlider extends Component<
     newIndex: number;
   }) => {
     const { actions, stores } = this.props;
-    const filtered = stores?.services?.instagramServices ?? [];
+    const { activeTab } = this.state;
+    const filtered = (stores?.services?.instagramDMServices ?? []).filter(
+      service => activeTab === 'all' || getServiceStatus(service) === activeTab,
+    );
     const all = stores?.services?.all ?? [];
 
     const service = filtered[oldIndex];
@@ -203,44 +252,65 @@ class InstagramDMAccountSlider extends Component<
 
   render(): ReactElement {
     const { stores, actions, intl } = this.props;
-    const instagramServices = stores?.services?.instagramServices ?? [];
+    const { activeTab } = this.state;
+    const instagramDMServices = stores?.services?.instagramDMServices ?? [];
+    const filteredServices = instagramDMServices.filter(
+      service => activeTab === 'all' || getServiceStatus(service) === activeTab,
+    );
+    const tabs = getTabs(intl);
 
     return (
       <ResizableSidebar
         defaultWidth={
-          stores?.settings.all.app.instagramAccountSliderWidth ?? 300
+          stores?.settings.all.app.instagramDMAccountSliderWidth ?? 300
         }
         onWidthChange={width =>
           actions?.settings.update({
             type: 'app',
-            data: { instagramAccountSliderWidth: width },
+            data: { instagramDMAccountSliderWidth: width },
           })
         }
       >
         <div className="flex flex-row items-start gap-[9px] h-fit flex-shrink-0 w-full">
-          <Badge
-            count={instagramServices.length > 0 || null}
-            size="small"
-            offset={[10, 0]}
-            className="flex-1 min-w-0 [&_.t-badge--circle]:!bg-brand"
-          >
-            <Button
-              className="h-[32px] w-full min-w-0"
-              theme="default"
-              variant="base"
-            >
-              <div className="flex items-center gap-[8px] justify-center">
-                <img
-                  src="./assets/images/sidebar-services.svg"
-                  className="w-[16px] h-[16px] [.compact-mode_&]:hidden"
-                  alt=""
-                />
-                <span className="text-[14px] font-normal leading-[22px] text-brand">
-                  {intl.formatMessage(messages.tabAll)}
-                </span>
-              </div>
-            </Button>
-          </Badge>
+          {tabs.map(tab => {
+            const count =
+              tab.id === 'all'
+                ? instagramDMServices.length
+                : instagramDMServices.filter(
+                    service => getServiceStatus(service) === tab.id,
+                  ).length;
+            return (
+              <Badge
+                key={tab.id}
+                count={count || null}
+                size="small"
+                offset={[10, 0]}
+                className={`flex-1 min-w-0 ${tabBadgeBgColor(tab.id)}`}
+              >
+                <Button
+                  className="h-[32px] w-full min-w-0"
+                  theme="default"
+                  variant={activeTab === tab.id ? 'base' : 'text'}
+                  onClick={() => this.setState({ activeTab: tab.id })}
+                >
+                  <div className="flex items-center gap-[8px] justify-center">
+                    {tab.id === 'all' && (
+                      <img
+                        src="./assets/images/sidebar-services.svg"
+                        className="w-[16px] h-[16px] [.compact-mode_&]:hidden"
+                        alt=""
+                      />
+                    )}
+                    <span
+                      className={`text-[14px] font-normal leading-[22px] ${tabTextColor(tab.id)}`}
+                    >
+                      {tab.label}
+                    </span>
+                  </div>
+                </Button>
+              </Badge>
+            );
+          })}
         </div>
         <Button
           height="40px"
@@ -251,9 +321,9 @@ class InstagramDMAccountSlider extends Component<
           {intl.formatMessage(messages.bindAccount)}
         </Button>
 
-        {instagramServices.length > 0 ? (
+        {filteredServices.length > 0 ? (
           <InstagramSliderList
-            services={instagramServices}
+            services={filteredServices}
             actions={actions}
             onContextMenu={this.handleContextMenu}
             onSortEnd={this.onSortEnd}

@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
+import { clearAccessToken, getAccessToken } from '../agent-flow-cs/api/auth';
 import type { ApiInterface } from '../api';
 import { DEFAULT_APP_SETTINGS, TODOS_PARTITION_ID } from '../config';
 import serverlessLogin from '../helpers/serverless-helpers';
@@ -193,7 +194,7 @@ export default class UserStore extends TypedStore {
 
     if (useAgentFlowAuth) {
       // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
-      const agentFlowToken = localStorage.getItem('agentFlowToken');
+      const agentFlowToken = getAccessToken();
       const apiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
       return Boolean(agentFlowToken && apiKey);
     }
@@ -337,8 +338,7 @@ export default class UserStore extends TypedStore {
 
     // Agent Flow 模式：额外清除 agentFlowToken
     if (useAgentFlowAuth) {
-      localStorage.removeItem('agentFlowToken');
-      window.localStorage.removeItem('agentFlowToken');
+      clearAccessToken();
     }
 
     localStorage.removeItem(API_KEY_STORAGE_KEY);
@@ -413,7 +413,7 @@ export default class UserStore extends TypedStore {
     const { router } = this.stores;
     const route = router.location.pathname;
     const useAgentFlowAuth = process.env.USE_AGENT_FLOW_AUTH === 'true';
-    const agentFlowToken = window.localStorage.getItem('agentFlowToken');
+    const agentFlowToken = getAccessToken();
     const hasAgentFlowToken = Boolean(agentFlowToken);
     const hasWaAkgKey = Boolean(
       window.localStorage.getItem(API_KEY_STORAGE_KEY),

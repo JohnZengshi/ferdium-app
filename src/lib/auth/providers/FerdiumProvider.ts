@@ -7,6 +7,11 @@ import type {
   AuthResultStatus,
 } from '../../../@types/auth';
 import { AuthFieldType, AuthProviderType } from '../../../@types/auth';
+import {
+  clearAccessToken,
+  getAccessToken,
+  setAccessToken,
+} from '../../../agent-flow-cs/api/auth';
 import apiBase from '../../../api/apiBase';
 import { sendAuthRequest } from '../../../api/utils/auth';
 import { hash } from '../../../helpers/password-helpers';
@@ -153,8 +158,7 @@ export default class FerdiumProvider implements AuthProvider {
             debug('No akg_api_key in login response');
           }
 
-          localStorage.setItem('agentFlowToken', data.access_token);
-          window.localStorage.setItem('agentFlowToken', data.access_token);
+          setAccessToken(data.access_token);
 
           if (process.env.FERDIUM_SERVER === 'local') {
             ipcRenderer.send('startLocalServer', { profileEmail: username });
@@ -296,13 +300,14 @@ export default class FerdiumProvider implements AuthProvider {
     window.localStorage.removeItem('authToken');
     localStorage.removeItem(API_KEY_STORAGE_KEY);
     window.localStorage.removeItem(API_KEY_STORAGE_KEY);
+    clearAccessToken();
     debug('Logged out, authToken and AKG API Key removed');
   }
 
   getAuthHeader(): string | null {
     if (USE_AGENT_FLOW_AUTH()) {
       // Agent Flow 模式：使用 agentFlowToken
-      const token = localStorage.getItem('agentFlowToken');
+      const token = getAccessToken();
       if (!token) return null;
       return `Bearer ${token}`;
     }
@@ -316,10 +321,7 @@ export default class FerdiumProvider implements AuthProvider {
   isAuthenticated(): boolean {
     if (USE_AGENT_FLOW_AUTH()) {
       // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
-      return !!(
-        localStorage.getItem('agentFlowToken') &&
-        localStorage.getItem(API_KEY_STORAGE_KEY)
-      );
+      return !!(getAccessToken() && localStorage.getItem(API_KEY_STORAGE_KEY));
     }
 
     // 其他模式：检查 authToken

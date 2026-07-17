@@ -3,12 +3,15 @@
  * Uses Bearer token authentication (POST /api/v1/auth/login).
  */
 
+import localStorage from 'mobx-localstorage';
+
 const debug = require('../../preload-safe-debug')('Ferdium:AgentFlow:Auth');
 
 const AGENT_FLOW_CS_BASE =
   process.env.AGENT_FLOW_CS_BASE ?? 'http://10.0.0.228:8000';
-const TOKEN_STORAGE_KEY =
-  process.env.AGENT_FLOW_TOKEN_STORAGE_KEY ?? 'agentFlowCsAccessToken';
+
+export const AGENT_FLOW_TOKEN_STORAGE_KEY =
+  process.env.AGENT_FLOW_TOKEN_STORAGE_KEY ?? 'agentFlowToken';
 
 export interface AuthCredentials {
   username: string;
@@ -22,8 +25,8 @@ export const getAccessToken = (): string => {
   // 1. Try Ferdium settings store
   try {
     const settings = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settings?.[TOKEN_STORAGE_KEY]) {
-      return settings[TOKEN_STORAGE_KEY];
+    if (settings?.[AGENT_FLOW_TOKEN_STORAGE_KEY]) {
+      return settings[AGENT_FLOW_TOKEN_STORAGE_KEY];
     }
   } catch {
     debug('[Agent Flow CS] Settings store not available in getAccessToken');
@@ -31,7 +34,7 @@ export const getAccessToken = (): string => {
 
   // 2. Try localStorage
   try {
-    const stored = localStorage.getItem(TOKEN_STORAGE_KEY);
+    const stored = localStorage.getItem(AGENT_FLOW_TOKEN_STORAGE_KEY);
     if (stored) {
       try {
         return JSON.parse(stored);
@@ -51,14 +54,21 @@ export const getAccessToken = (): string => {
  */
 export const setAccessToken = (token: string): void => {
   try {
-    localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    localStorage.setItem(AGENT_FLOW_TOKEN_STORAGE_KEY, token);
   } catch {
     debug('[Agent Flow CS] Failed to write access token to localStorage');
   }
   try {
+    window.localStorage.setItem(AGENT_FLOW_TOKEN_STORAGE_KEY, token);
+  } catch {
+    debug(
+      '[Agent Flow CS] Failed to write access token to window.localStorage',
+    );
+  }
+  try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
     if (settingsApp && typeof settingsApp === 'object') {
-      settingsApp[TOKEN_STORAGE_KEY] = token;
+      settingsApp[AGENT_FLOW_TOKEN_STORAGE_KEY] = token;
     }
   } catch {
     debug('[Agent Flow CS] Failed to sync access token to settings store');
@@ -70,14 +80,21 @@ export const setAccessToken = (token: string): void => {
  */
 export const clearAccessToken = (): void => {
   try {
-    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(AGENT_FLOW_TOKEN_STORAGE_KEY);
   } catch {
     debug('[Agent Flow CS] Failed to remove access token from localStorage');
   }
   try {
+    window.localStorage.removeItem(AGENT_FLOW_TOKEN_STORAGE_KEY);
+  } catch {
+    debug(
+      '[Agent Flow CS] Failed to remove access token from window.localStorage',
+    );
+  }
+  try {
     const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
     if (settingsApp && typeof settingsApp === 'object') {
-      settingsApp[TOKEN_STORAGE_KEY] = '';
+      settingsApp[AGENT_FLOW_TOKEN_STORAGE_KEY] = '';
     }
   } catch {
     debug('[Agent Flow CS] Failed to clear access token from settings store');

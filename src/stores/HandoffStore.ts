@@ -8,6 +8,7 @@
  */
 
 import { action, makeObservable, observable, runInAction } from 'mobx';
+import { getAccessToken } from '../agent-flow-cs/api/auth';
 import { listHandoffsByReadApiV1HandoffReadGet } from '../agent-flow-cs/api/generated/handoff/handoff';
 import { API_KEY_STORAGE_KEY } from '../whatsapp-automation/constants';
 import TypedStore from './lib/TypedStore';
@@ -58,7 +59,7 @@ export default class HandoffStore extends TypedStore {
     let isReallyLoggedIn = false;
     if (useAgentFlowAuth) {
       // Agent Flow 模式：检查 agentFlowToken 和 API_KEY
-      const agentFlowToken = window.localStorage.getItem('agentFlowToken');
+      const agentFlowToken = getAccessToken();
       const apiKey = window.localStorage.getItem(API_KEY_STORAGE_KEY);
       isReallyLoggedIn = Boolean(agentFlowToken && apiKey);
     } else {

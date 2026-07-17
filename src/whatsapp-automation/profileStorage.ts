@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { AGENT_FLOW_TOKEN_STORAGE_KEY } from '../agent-flow-cs/api/auth';
 import { API_KEY_STORAGE_KEY, WA_USER_EMAIL_STORAGE_KEY } from './constants';
 
 const PROFILE_STORAGE_PREFIX = 'profileLocalStorage:';
@@ -13,6 +14,7 @@ const EXCLUDED_KEYS = new Set([
   'ferdium-saved-password',
   API_KEY_STORAGE_KEY,
   WA_USER_EMAIL_STORAGE_KEY,
+  AGENT_FLOW_TOKEN_STORAGE_KEY,
 ]);
 
 const normalizeProfileEmail = (email: string): string =>

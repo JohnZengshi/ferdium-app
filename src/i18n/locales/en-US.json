@@ -590,7 +590,7 @@
   "instagramDMAccountMgmt.deleteFailed": "Delete failed",
   "instagramDMAccountMgmt.deleteSuccess": "Deleted successfully",
   "instagramDMAccountMgmt.edit": "Edit",
-  "instagramDMAccountMgmt.proxyLocal": "Local Direct",
+  "instagramDMAccountMgmt.proxyLocal": "Local",
   "instagramDMAccountMgmt.status.available": "Available",
   "instagramDMAccountMgmt.status.error": "Error",
   "instagramDMAccountMgmt.updateFailed": "Update failed",

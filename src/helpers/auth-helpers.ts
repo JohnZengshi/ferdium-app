@@ -1,5 +1,5 @@
-import { LIVE_FERDIUM_API, LOCAL_SERVER } from '../config';
 import type { Actions } from '../actions/lib/actions';
+import { LIVE_FERDIUM_API, LOCAL_SERVER } from '../config';
 import type { RealStores } from '../stores';
 
 /**

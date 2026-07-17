@@ -8,9 +8,9 @@ import {
 import { Button, Dialog, DialogPlugin, Select, Switch } from 'tdesign-react';
 
 import type { StoresProps } from '../../@types/ferdium-components.types';
-import { logoutAndRedirect } from '../../helpers/auth-helpers';
 import { isSnap, isWinPortable } from '../../environment';
 import { ferdiumVersion } from '../../environment-remote';
+import { logoutAndRedirect } from '../../helpers/auth-helpers';
 import { updateVersionParse } from '../../helpers/update-helpers';
 import { APP_LOCALES } from '../../i18n/languages';
 

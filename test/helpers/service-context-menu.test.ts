@@ -248,6 +248,7 @@ describe('openServiceContextMenu', () => {
     expect(actions.service.updateService).toHaveBeenCalledWith({
       serviceId: 'service-1',
       serviceData: { isEnabled: false },
+      redirect: false,
     });
 
     jest.clearAllMocks();

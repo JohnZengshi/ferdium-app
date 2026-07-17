@@ -50,6 +50,7 @@ export function openServiceContextMenu(
         actions?.service?.updateService?.({
           serviceId: service.id,
           serviceData: { isEnabled: !service.isEnabled },
+          redirect: false,
         }),
     },
     {

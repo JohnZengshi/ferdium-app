@@ -250,6 +250,7 @@ const TelegramSliderItem = SortableElement<TelegramSliderItemProps>(
                           MessagePlugin.success(
                             intl.formatMessage(messages.bindPersonaSuccess),
                           );
+                          service.webview?.send('tg-ai-persona-bound-host');
                           confirmDia.hide();
                         } catch (error) {
                           const message =

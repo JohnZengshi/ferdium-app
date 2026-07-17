@@ -250,6 +250,15 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
     );
   });
 
+  ipcRenderer.on('tg-ai-persona-bound-host', () => {
+    window.postMessage(
+      {
+        type: 'tg-ai-persona-bound',
+      },
+      window.location.origin,
+    );
+  });
+
   // SSE 状态变更推送：宿主进程 → 主世界
   ipcRenderer.on('wa-ai-status-change', (_event, payload) => {
     window.postMessage(

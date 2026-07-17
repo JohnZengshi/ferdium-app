@@ -19,6 +19,7 @@ import {
   Tag,
 } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
+import { SUPPRESS_ERROR_TOAST } from '../../agent-flow-cs/api/customInstance';
 import type {
   AppApiSchemasDigitalHumanResponse,
   TelegramBindingResponse,
@@ -29,7 +30,6 @@ import {
   pauseTelegramSessionApiV1TelegramSessionsInstanceIdPausePost,
   resumeTelegramSessionApiV1TelegramSessionsInstanceIdResumePost,
 } from '../../agent-flow-cs/api/generated/telegram/telegram';
-import { SUPPRESS_ERROR_TOAST } from '../../agent-flow-cs/api/customInstance';
 import AvatarCell from '../../components/ui/AvatarCell';
 import EditServiceDrawer from '../../components/ui/EditServiceDrawer';
 import type { ServiceProxy } from '../../components/ui/EditServiceDrawer';

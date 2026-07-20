@@ -114,10 +114,19 @@ export const subscribeSSE = <T = unknown>(
     } catch (error) {
       if (controller.signal.aborted || closed) {
         // Graceful close — not an error
-      } else if (onError) {
-        onError(error);
       } else {
-        console.error('[Agent Flow CS] SSE stream error:', error);
+        // Error still closes stream. Notify both hooks so consumers can clean
+        // stale subscription state and decide whether to reconnect.
+        closed = true;
+        try {
+          if (onError) {
+            onError(error);
+          } else {
+            console.error('[Agent Flow CS] SSE stream error:', error);
+          }
+        } finally {
+          onClose?.();
+        }
       }
     } finally {
       if (!closed) {

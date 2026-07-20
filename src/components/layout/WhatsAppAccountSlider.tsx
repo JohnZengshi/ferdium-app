@@ -23,6 +23,7 @@ import {
   getWhatsappBindingApiV1WhatsappBindGet,
   switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
+import { SUPPRESS_ERROR_TOAST } from '../../agent-flow-cs/api/customInstance';
 import { WHATSAPP_RECIPE_ID } from '../../features/whatsappAutomation/constants';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { openServiceContextMenu } from '../../helpers/service-context-menu';
@@ -281,9 +282,10 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
           let cancelled = false;
           const loadBinding = async () => {
             try {
-              const bindRes = await getWhatsappBindingApiV1WhatsappBindGet({
-                session_id: service.id,
-              });
+              const bindRes = await getWhatsappBindingApiV1WhatsappBindGet(
+                { session_id: service.id },
+                SUPPRESS_ERROR_TOAST,
+              );
               if (
                 cancelled ||
                 bindRes.status !== 200 ||

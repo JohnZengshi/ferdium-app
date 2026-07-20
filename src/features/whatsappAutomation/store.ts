@@ -10,6 +10,7 @@ import {
   runInAction,
 } from 'mobx';
 import { defineMessages } from 'react-intl';
+import QRCode from 'qrcode';
 import { type Socket, io } from 'socket.io-client';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';
@@ -197,9 +198,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _retryCounts = new Map<string, number>();
 
+  _qrRenderSequences = new Map<string, number>();
+
+  _qrInjectionCleanups = new Map<string, () => void>();
+
   _waReactionDisposer: (() => void) | undefined;
 
   _socketConnectWaiters = new Map<string, (() => void)[]>();
+
+  _reloadListener: ((payload: { serviceId: string }) => void) | null = null;
 
   _qrModalActionListeners = new Map<
     string,
@@ -208,7 +215,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _maxRetries = 10;
 
-  _retryIntervalMs = 5000;
+  _retryIntervalMs = 1000;
 
   _qrFetchRetryDelayMs = 800;
 
@@ -280,6 +287,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       ]),
     );
 
+    this._reloadListener = this._onServiceReload.bind(this);
+    this.actions?.service?.reload?.listen?.(this._reloadListener);
+
     this._waReactionDisposer = reaction(
       () =>
         this.whatsAppServices
@@ -295,6 +305,11 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   }
 
   @action stop() {
+    if (this._reloadListener && this.actions?.service?.reload?.off) {
+      this.actions.service.reload.off(this._reloadListener);
+      this._reloadListener = null;
+    }
+
     if (this._waReactionDisposer) {
       this._waReactionDisposer();
       this._waReactionDisposer = undefined;
@@ -310,6 +325,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     }
     this._sockets.clear();
     this._retryCounts.clear();
+    for (const serviceId of this._qrInjectionCleanups.keys()) {
+      this._cancelQrInjection(serviceId);
+    }
+    this._qrRenderSequences.clear();
     this._socketConnectWaiters.clear();
 
     for (const [sid, listener] of this._qrModalActionListeners) {
@@ -611,8 +630,59 @@ export default class WhatsAppAutomationStore extends FeatureStore {
   // ========== ACTION HANDLERS ========= //
 
   @action _setServiceWebview = ({ serviceId }: { serviceId: string }) => {
+    const service = this._getService(serviceId);
+    if (service?.recipe?.id !== WHATSAPP_RECIPE_ID) return;
     debug('_setServiceWebview', serviceId);
     this._attachQrModalActionListener(serviceId);
+    this._restoreQrModal(serviceId).catch(error => {
+      debug('Failed to restore WhatsApp QR modal:', error);
+    });
+  };
+
+  _onServiceReload = ({ serviceId }: { serviceId: string }): void => {
+    const service = this._getService(serviceId);
+    if (service?.recipe?.id !== WHATSAPP_RECIPE_ID || !service.webview) return;
+
+    const restore = () => {
+      this._restoreQrModal(serviceId).catch(error => {
+        debug('Failed to restore WhatsApp QR modal after reload:', error);
+      });
+    };
+    service.webview.addEventListener('did-finish-load', restore, {
+      once: true,
+    });
+    restore();
+    this._checkSessionStatus({ serviceId }).catch(error => {
+      debug('Failed to refresh WhatsApp session after reload:', error);
+    });
+  };
+
+  _restoreQrModal = async (serviceId: string): Promise<void> => {
+    const service = this._getService(serviceId);
+    if (service?.recipe?.id !== WHATSAPP_RECIPE_ID) return;
+    if (!(await this._ensureAuthenticated())) return;
+
+    const status = this.sessionStatuses.get(serviceId);
+    if (status === WA_SESSION_STATUS.CONNECTED) return;
+
+    const base64 = this.qrCodes.get(serviceId) || '';
+    const backgroundBase64 = getAssetBase64(
+      '../../assets/images/whatsapp/qr-modal-background.png',
+    );
+    this._injectQrModal({ serviceId, base64, backgroundBase64 });
+
+    if (status === WA_SESSION_STATUS.SCAN_QR && !base64) {
+      this._fetchAndUpdateQr(serviceId);
+    }
+  };
+
+  _injectLoadingQrModal = (serviceId: string): void => {
+    const service = this._getService(serviceId);
+    if (service?.recipe?.id !== WHATSAPP_RECIPE_ID) return;
+    const backgroundBase64 = getAssetBase64(
+      '../../assets/images/whatsapp/qr-modal-background.png',
+    );
+    this._injectQrModal({ serviceId, base64: '', backgroundBase64 });
   };
 
   _ensureAuthenticated = async (): Promise<boolean> => {
@@ -648,12 +718,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     const authenticated = await this._ensureAuthenticated();
     if (!authenticated) {
       debug('Cannot check session: authentication failed');
+      this._removeQrModal({ serviceId });
       runInAction(() => {
         this.errorMessages.set(serviceId, formatMessage(messages.authFailed));
       });
       return;
     }
 
+    // Show blocking modal only after authentication succeeds.
+    this._injectLoadingQrModal(serviceId);
     this._injectOrUpdateStatusIndicator(
       serviceId,
       WA_SESSION_STATUS.CONNECTING,
@@ -791,6 +864,54 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     }
   };
 
+  _cancelQrInjection = (serviceId: string): void => {
+    this._qrInjectionCleanups.get(serviceId)?.();
+  };
+
+  _scheduleQrInjection = (
+    serviceId: string,
+    base64: string,
+    backgroundBase64?: string,
+    delayMs = this._retryIntervalMs,
+  ): void => {
+    this._cancelQrInjection(serviceId);
+    const service = this._getService(serviceId);
+    const webview = service?.webview;
+    let active = true;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const cleanup = () => {
+      if (!active) return;
+      active = false;
+      if (timer) clearTimeout(timer);
+      webview?.removeEventListener?.('did-finish-load', inject);
+      if (this._qrInjectionCleanups.get(serviceId) === cleanup) {
+        this._qrInjectionCleanups.delete(serviceId);
+      }
+    };
+    const inject = () => {
+      if (!active) return;
+      cleanup();
+      this._injectQrModal({ serviceId, base64, backgroundBase64 });
+    };
+
+    if (webview?.isLoading?.()) {
+      webview.addEventListener('did-finish-load', inject, { once: true });
+    }
+    timer = setTimeout(inject, delayMs);
+    this._qrInjectionCleanups.set(serviceId, cleanup);
+  };
+
+  _nextQrRenderSequence = (serviceId: string): number => {
+    const sequence = (this._qrRenderSequences.get(serviceId) || 0) + 1;
+    this._qrRenderSequences.set(serviceId, sequence);
+    return sequence;
+  };
+
+  _isCurrentQrRender = (serviceId: string, sequence: number): boolean =>
+    this._qrRenderSequences.get(serviceId) === sequence &&
+    this.sessionStatuses.get(serviceId) === WA_SESSION_STATUS.SCAN_QR;
+
   @action _injectQrModal = ({
     serviceId,
     base64,
@@ -801,7 +922,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     backgroundBase64?: string;
   }) => {
     const service = this._getService(serviceId);
-    if (!service?.webview) {
+    if (service?.recipe?.id !== WHATSAPP_RECIPE_ID) return;
+    if (!service.webview) {
       debug('Cannot inject QR modal - no webview for service', serviceId);
       return;
     }
@@ -810,6 +932,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       debug('Skip QR modal injection for already-connected session', serviceId);
       return;
     }
+
+    if (service.webview.isLoading?.()) {
+      debug('Delay QR modal injection until webview load completes', serviceId);
+      this._scheduleQrInjection(serviceId, base64, backgroundBase64, 1000);
+      return;
+    }
+
+    this._cancelQrInjection(serviceId);
 
     const script = this._buildQrModalScript(
       serviceId,
@@ -825,8 +955,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         this._retryCounts.delete(serviceId);
       })
       .catch((error: Error) => {
-        debug('QR modal injection failed:', error);
-        // Retry if the webview hasn't loaded yet or hit a transient error
+        debug('QR modal injection failed:', serviceId, error);
+        // Retry if the webview has not loaded yet or hit transient error.
         this._scheduleRetryInjection(serviceId, base64, backgroundBase64);
       });
   };
@@ -873,16 +1003,17 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       serviceId,
     );
 
-    setTimeout(() => {
-      this._injectQrModal({
-        serviceId,
-        base64,
-        backgroundBase64,
-      });
-    }, this._retryIntervalMs);
+    this._scheduleQrInjection(
+      serviceId,
+      base64,
+      backgroundBase64,
+      this._retryIntervalMs,
+    );
   };
 
   @action _removeQrModal = ({ serviceId }: { serviceId: string }) => {
+    this._cancelQrInjection(serviceId);
+    this._nextQrRenderSequence(serviceId);
     const service = this._getService(serviceId);
     if (!service?.webview) return;
 
@@ -981,13 +1112,21 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           try {
             // POST /api/v1/whatsapp/bind
             // customInstance.ts will automatically attach X-AKG-Api-Key header
-            await createWhatsappBindingApiV1WhatsappBindPost({
+            createWhatsappBindingApiV1WhatsappBindPost({
               session_id: serviceId,
-            });
-            debug(
-              'Agent Flow CS webhook binding triggered for session',
-              serviceId,
-            );
+            })
+              .then(() => {
+                debug(
+                  'Agent Flow CS webhook binding triggered for session',
+                  serviceId,
+                );
+              })
+              .catch(bindError => {
+                debug(
+                  'Agent Flow CS webhook binding failed (non-blocking):',
+                  bindError,
+                );
+              });
           } catch (bindError) {
             // Non-blocking: session is still usable, just webhook won't be registered
             debug(
@@ -1049,6 +1188,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       if (qrResponse.status === 200) {
         const qrData = qrResponse.data;
         const base64 = qrData.base64 || '';
+        if (base64) this.qrCodes.set(serviceId, base64);
         const backgroundBase64 = getAssetBase64(
           '../../assets/images/whatsapp/qr-modal-background.png',
         );
@@ -1093,49 +1233,18 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   /** Fetch fresh QR from REST, then inject or update the modal image. */
   _fetchAndUpdateQr = async (serviceId: string, attempt = 1) => {
+    const sequence = this._nextQrRenderSequence(serviceId);
     try {
       const qrResponse = await getSessionsIdQr(serviceId);
       if (qrResponse.status !== 200) return;
       const { base64 } = qrResponse.data;
-      if (!base64) return;
+      if (!base64 || !this._isCurrentQrRender(serviceId, sequence)) return;
+      this.qrCodes.set(serviceId, base64);
       const backgroundBase64 = getAssetBase64(
         '../../assets/images/whatsapp/qr-modal-background.png',
       );
 
-      const service = this._getService(serviceId);
-      if (!service?.webview) {
-        return;
-      }
-
-      // Check if modal exists, update or inject
-      service.webview
-        .executeJavaScript(
-          `(function() {
-            var el = document.getElementById('wa-akg-qr-modal');
-            if (el) {
-              var img = el.querySelector('.waa-qrimg');
-              if (img) { img.src = '${base64.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}'; }
-              return 'updated';
-            }
-            return 'absent';
-          })()`,
-        )
-        .then((result: string) => {
-          if (result === 'absent') {
-            this._injectQrModal({
-              serviceId,
-              base64,
-              backgroundBase64,
-            });
-          }
-        })
-        .catch(() => {
-          this._injectQrModal({
-            serviceId,
-            base64,
-            backgroundBase64,
-          });
-        });
+      this._injectQrModal({ serviceId, base64, backgroundBase64 });
     } catch (error) {
       const status =
         error && typeof error === 'object' && 'status' in error
@@ -1255,6 +1364,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     serviceId: string,
     update: {
       status: string;
+      qr?: string;
       duplicateSessionId?: string;
       error?: string;
     },
@@ -1276,8 +1386,33 @@ export default class WhatsAppAutomationStore extends FeatureStore {
           this.isLoadingQr.set(serviceId, false);
           this.errorMessages.set(serviceId, undefined);
         });
-        // Fetch new QR and update the existing modal (if any)
-        this._fetchAndUpdateQr(serviceId);
+        // Socket event already carries raw QR in current WA-AKG API.
+        if (update.qr) {
+          const sequence = this._nextQrRenderSequence(serviceId);
+          QRCode.toDataURL(update.qr, {
+            width: 256,
+            margin: 1,
+            errorCorrectionLevel: 'M',
+          })
+            .then(base64 => {
+              if (!this._isCurrentQrRender(serviceId, sequence)) return;
+              this.qrCodes.set(serviceId, base64);
+              this._injectQrModal({
+                serviceId,
+                base64,
+                backgroundBase64: getAssetBase64(
+                  '../../assets/images/whatsapp/qr-modal-background.png',
+                ),
+              });
+              this._updateQrModalStatus(serviceId, WA_SESSION_STATUS.SCAN_QR);
+            })
+            .catch(error => {
+              debug('Failed to render Socket.IO QR:', error);
+              this._fetchAndUpdateQr(serviceId);
+            });
+        } else {
+          this._fetchAndUpdateQr(serviceId);
+        }
         break;
       }
 
@@ -1416,6 +1551,8 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   @action _cleanUpSessionState = (serviceId: string) => {
     this._initializedServices.delete(serviceId);
+    this._cancelQrInjection(serviceId);
+    this._qrRenderSequences.delete(serviceId);
     this._retryCounts.delete(serviceId);
     this.sessionInfo.delete(serviceId);
     this._socketConnectWaiters.delete(serviceId);
@@ -1685,12 +1822,33 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     return `
 (function() {
   try {
-    if (document.getElementById('wa-akg-qr-modal')) return;
-
     var SERVICE_ID = '${escapedServiceId}';
     var BASE64_QR = '${escapedBase64}';
     var BG_IMAGE = '${escapedBg}';
     var ACCENT = ${JSON.stringify(this.stores?.app?.accentColor || '#7266F0')};
+
+    var existingModal = document.getElementById('wa-akg-qr-modal');
+    if (existingModal) {
+      var existingQr = existingModal.querySelector('.waa-qrimg');
+      var existingBox = existingModal.querySelector('.waa-qr-box');
+      if (BASE64_QR && existingBox) {
+        if (existingQr) {
+          existingQr.src = BASE64_QR;
+        } else {
+          existingBox.insertAdjacentHTML('beforeend', '<img src=\"' + BASE64_QR + '\" alt=\"QR Code\" class=\"waa-qrimg\"/>');
+        }
+        var existingOverlay = existingModal.querySelector('.waa-qr-overlay');
+        var existingSpinner = existingModal.querySelector('#waa-qr-loading-spinner');
+        var existingRefresh = existingModal.querySelector('.waa-refresh-btn');
+        if (existingOverlay) existingOverlay.style.display = 'none';
+        if (existingSpinner) existingSpinner.style.display = 'none';
+        if (existingRefresh) {
+          existingRefresh.style.display = 'inline-flex';
+          existingRefresh.disabled = false;
+        }
+      }
+      return;
+    }
 
     /* ── Inject styles ── */
     var s = document.createElement('style');
@@ -1736,10 +1894,10 @@ export default class WhatsAppAutomationStore extends FeatureStore {
                 '<div class=\"waa-qr-box\" id=\"waa-body\">' +
                   (BASE64_QR ? '<img src=\"' + BASE64_QR + '\" alt=\"QR Code\" class=\"waa-qrimg\"/>' : '') +
                 '</div>' +
-                '<div class=\"waa-qr-overlay\" style=\"display:none\">' +
+                '<div class=\"waa-qr-overlay\"' + (BASE64_QR ? ' style=\"display:none\"' : ' style=\"display:flex\"') + '>' +
                   '<div class=\"waa-qr-blur\"></div>' +
                   '<div class=\"waa-qr-spinner\" id=\"waa-qr-loading-spinner\"></div>' +
-                  '<button class=\"waa-refresh-btn\" type=\"button\">${escapedRefresh}</button>' +
+                  '<button class=\"waa-refresh-btn\" type=\"button\"' + (BASE64_QR ? ' style=\"display:inline-flex\"' : ' style=\"display:none\"') + '>${escapedRefresh}</button>' +
                 '</div>' +
               '</div>' +
               '<div class=\"waa-duplicate-error\">' +

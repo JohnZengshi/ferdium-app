@@ -158,6 +158,10 @@ export default class TelegramAutomationStore extends FeatureStore {
 
   _statusStreamSubscription: SSESubscription | null = null;
 
+  _statusStreamReconnectTimer: ReturnType<typeof setTimeout> | null = null;
+
+  _statusStreamRetryMs = 5000;
+
   _statusStreamReady = false;
 
   _moduleActivated = false;
@@ -280,6 +284,10 @@ export default class TelegramAutomationStore extends FeatureStore {
     if (this._tgReactionDisposer) {
       this._tgReactionDisposer();
       this._tgReactionDisposer = null;
+    }
+    if (this._statusStreamReconnectTimer) {
+      clearTimeout(this._statusStreamReconnectTimer);
+      this._statusStreamReconnectTimer = null;
     }
     if (this._statusStreamSubscription) {
       this._statusStreamSubscription.close();
@@ -1124,6 +1132,18 @@ export default class TelegramAutomationStore extends FeatureStore {
 
   _startStatusStream = () => {
     if (this._isStopped) return;
+    // Re-entry guard: tear down any live subscription and clear a pending
+    // reconnect timer before opening a fresh one. Without this, overlapping
+    // calls would leak subscriptions and each leaked sub's error/close
+    // callbacks would schedule still more reconnects.
+    if (this._statusStreamSubscription) {
+      this._statusStreamSubscription.close();
+      this._statusStreamSubscription = null;
+    }
+    if (this._statusStreamReconnectTimer) {
+      clearTimeout(this._statusStreamReconnectTimer);
+      this._statusStreamReconnectTimer = null;
+    }
     this._statusStreamSubscription = subscribeSSE<unknown>(
       '/api/v1/telegram/instances/status/stream',
       {
@@ -1159,21 +1179,37 @@ export default class TelegramAutomationStore extends FeatureStore {
             instanceId,
             this._fluxStatusToDisplay(status),
           );
+          // Healthy event - reset reconnect backoff.
+          this._statusStreamRetryMs = 5000;
           this._markStatusStreamReady();
         },
         onError: () => {
           debug('[TG-FLUX] status stream error, will reopen');
-          setTimeout(() => this._startStatusStream(), 5000);
+          this._scheduleStatusStreamReconnect();
         },
         onClose: () => {
-          if (this._statusStreamSubscription) {
-            debug('[TG-FLUX] status stream closed, will reopen');
-            setTimeout(() => this._startStatusStream(), 5000);
-          }
+          debug('[TG-FLUX] status stream closed, will reopen');
+          this._scheduleStatusStreamReconnect();
         },
       },
     );
     debug('[TG-FLUX] status stream subscribed');
+  };
+
+  _scheduleStatusStreamReconnect = () => {
+    if (this._isStopped) return;
+    // Already a reconnect pending - never schedule a second one. This guard
+    // is what prevents the exponential reconnect storm: even if both an
+    // error and a close somehow fire, only the first schedules a retry.
+    if (this._statusStreamReconnectTimer) return;
+    this._statusStreamSubscription = null;
+    const delay = this._statusStreamRetryMs;
+    this._statusStreamRetryMs = Math.min(this._statusStreamRetryMs * 2, 60_000);
+    debug(`[TG-FLUX] status stream reopen in ${delay}ms`);
+    this._statusStreamReconnectTimer = setTimeout(() => {
+      this._statusStreamReconnectTimer = null;
+      this._startStatusStream();
+    }, delay);
   };
 
   _handleLoginIpcMessage = (

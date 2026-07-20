@@ -82,11 +82,13 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent unchecked
 
 [Registry]
-; Register ferdium:// protocol handler
-Root: HKCR; Subkey: "ferdium"; ValueType: "string"; ValueName: ""; ValueData: "URL:Ferdium Protocol"; Flags: uninsdeletekey
-Root: HKCR; Subkey: "ferdium"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
-Root: HKCR; Subkey: "ferdium\DefaultIcon"; ValueType: "string"; ValueName: ""; ValueData: "{app}\{#MyAppExeName},1"
-Root: HKCR; Subkey: "ferdium\shell\open\command"; ValueType: "string"; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
+; Register aitalk:// protocol handler
+; HKA maps to HKLM\Software\Classes (admin install) or HKCU\Software\Classes (per-user install),
+; so silent per-user auto-update re-installs never hit HKCR access-denied (RegCreateKeyEx code 5).
+Root: HKA; Subkey: "Software\Classes\aitalk"; ValueType: "string"; ValueName: ""; ValueData: "URL:{#MyAppName} Protocol"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\aitalk"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
+Root: HKA; Subkey: "Software\Classes\aitalk\DefaultIcon"; ValueType: "string"; ValueName: ""; ValueData: "{app}\{#MyAppExeName},1"
+Root: HKA; Subkey: "Software\Classes\aitalk\shell\open\command"; ValueType: "string"; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
 
 ; Register uninstall info
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Uninstall\{#MyAppName}"; ValueType: "string"; ValueName: "DisplayName"; ValueData: "{#MyAppName}"; Flags: uninsdeletekey

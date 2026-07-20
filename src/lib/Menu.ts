@@ -158,6 +158,23 @@ export const menuItems = defineMessages({
     id: 'menu.view.toggleDarkMode',
     defaultMessage: 'Toggle Dark Mode',
   },
+  clearCache: {
+    id: 'menu.view.clearCache',
+    defaultMessage: 'Clear Cache',
+  },
+  clearCacheConfirmTitle: {
+    id: 'menu.view.clearCacheConfirmTitle',
+    defaultMessage: 'Clear Cache',
+  },
+  clearCacheConfirmMessage: {
+    id: 'menu.view.clearCacheConfirmMessage',
+    defaultMessage:
+      'This will clear all local cache (localStorage) and reload. Continue?',
+  },
+  clearCacheConfirmCancel: {
+    id: 'menu.view.clearCacheConfirmCancel',
+    defaultMessage: 'Cancel',
+  },
   toggleDevTools: {
     id: 'menu.view.toggleDevTools',
     defaultMessage: 'Toggle Developer Tools',
@@ -594,6 +611,26 @@ function titleBarTemplateFactory(
                 darkMode: !window['ferdium'].stores.settings.app.darkMode,
               },
             });
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.clearCache),
+          click: async () => {
+            const confirmed = await dialog.showMessageBox({
+              type: 'warning',
+              buttons: [
+                intl.formatMessage(menuItems.clearCacheConfirmCancel),
+                intl.formatMessage(menuItems.clearCache),
+              ],
+              defaultId: 0,
+              cancelId: 0,
+              title: intl.formatMessage(menuItems.clearCacheConfirmTitle),
+              message: intl.formatMessage(menuItems.clearCacheConfirmMessage),
+            });
+            if (confirmed.response !== 1) return;
+
+            localStorage.clear();
+            window.location.reload();
           },
         },
       ],

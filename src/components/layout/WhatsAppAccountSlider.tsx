@@ -16,6 +16,7 @@ import {
   Select,
 } from 'tdesign-react';
 import type { Actions } from '../../actions/lib/actions';
+import { SUPPRESS_ERROR_TOAST } from '../../agent-flow-cs/api/customInstance';
 import type { AppApiSchemasDigitalHumanResponse } from '../../agent-flow-cs/api/generated/agentFlowCs.schemas';
 import { listDigitalHumansApiV1DigitalHumansGet } from '../../agent-flow-cs/api/generated/digital-humans/digital-humans';
 import {
@@ -23,7 +24,6 @@ import {
   getWhatsappBindingApiV1WhatsappBindGet,
   switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch,
 } from '../../agent-flow-cs/api/generated/whatsapp/whatsapp';
-import { SUPPRESS_ERROR_TOAST } from '../../agent-flow-cs/api/customInstance';
 import { WHATSAPP_RECIPE_ID } from '../../features/whatsappAutomation/constants';
 import { updateOnboardingStep } from '../../helpers/onboarding-helpers';
 import { openServiceContextMenu } from '../../helpers/service-context-menu';

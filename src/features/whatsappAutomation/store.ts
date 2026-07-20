@@ -9,8 +9,8 @@ import {
   reaction,
   runInAction,
 } from 'mobx';
-import { defineMessages } from 'react-intl';
 import QRCode from 'qrcode';
+import { defineMessages } from 'react-intl';
 import { type Socket, io } from 'socket.io-client';
 import type { Stores } from '../../@types/stores.types';
 import type { Actions } from '../../actions/lib/actions';

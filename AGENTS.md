@@ -316,6 +316,20 @@ pnpm test              # Jest 测试
 pnpm prepare-code      # 完整预提交检查（typecheck + lint + prettier + 翻译）
 ```
 
+**正式包带控制台日志启动**（产品名 AITALK，但 debug 命名空间仍为 `Ferdium:*`，见 `src/preload-safe-debug.ts`）：
+
+```bash
+# macOS
+DEBUG='Ferdium:*' ELECTRON_ENABLE_LOGGING=1 /Applications/AITALK.app/Contents/MacOS/AITALK --enable-logging
+
+# Windows
+set DEBUG=Ferdium:* && AITALK.exe --enable-logging
+```
+
+- `DEBUG='Ferdium:*'` — 应用内部 debug 日志
+- `ELECTRON_ENABLE_LOGGING=1` / `--enable-logging` — Electron/Chromium 日志
+- 渲染进程日志：运行后 `Cmd+Alt+I` 打开 DevTools
+
 ### 3.2 Git 规范
 
 - **提交格式**：`type(scope): description`（Conventional Commits）

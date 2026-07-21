@@ -82,6 +82,10 @@ const messages = defineMessages({
     id: 'notificationsTab.platform.whatsapp',
     defaultMessage: 'WhatsApp',
   },
+  platformTelegram: {
+    id: 'notificationsTab.platform.telegram',
+    defaultMessage: 'Telegram',
+  },
   statusRead: {
     id: 'notificationsTab.status.read',
     defaultMessage: 'Read',
@@ -213,6 +217,15 @@ const isTelegramJid = (jid?: string | null): boolean => {
   // TG peer id 为纯数字（私聊，如 8398103325）、负数（群/频道，如 -1001234567890）
   // 或数字前有 peer 前缀（群/频道，如 peer123、channel123）
   return /^-?\d+$/u.test(jid) || /^(?:peer|chat|channel)-?\d+$/iu.test(jid);
+};
+
+/** 归一化平台判定：优先后端返回的 platform 字段，回退到 jid 规则推断 */
+const isTelegramPlatform = (record: HandoffRecord): boolean => {
+  const p = record.platform?.toLowerCase();
+  if (p === "telegram") return true;
+  if (p === "whatsapp") return false;
+  // platform 缺失时回退旧的 jid 推断逻辑
+  return isTelegramJid(record.customer_jid);
 };
 
 const formatDateTime = (iso: string): string => {
@@ -377,7 +390,7 @@ const NotificationsTab = (): ReactElement => {
         return;
       }
 
-      const isTG = isTelegramJid(jid);
+      const isTG = isTelegramPlatform(record);
       const platformLabel = isTG ? 'Telegram' : 'WhatsApp';
 
       // --- 选择 sessionId：TG 的 sessionId 仍走 wa_session_id 字段（后端复用该字段承载两种平台的 session id） ---
@@ -814,23 +827,33 @@ const NotificationsTab = (): ReactElement => {
       colKey: 'platform',
       title: intl.formatMessage(messages.platform),
       width: 96,
-      cell: () => (
-        <div
-          className="flex items-center gap-[8px]"
-          style={{ whiteSpace: 'nowrap' }}
-        >
-          <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full">
-            <img
-              className="size-[16px]"
-              src="./assets/icons/whats.svg"
-              alt=""
-            />
+      cell: ({ row }) => {
+        const r = row as HandoffRecord;
+        const isTG = isTelegramPlatform(r);
+        return (
+          <div
+            className="flex items-center gap-[8px]"
+            style={{ whiteSpace: 'nowrap' }}
+          >
+            <div className="flex h-[20px] w-[20px] items-center justify-center rounded-full">
+              <img
+                className="size-[16px]"
+                src={
+                  isTG
+                    ? './assets/icons/telegram.svg'
+                    : './assets/icons/whats.svg'
+                }
+                alt=""
+              />
+            </div>
+            <span className="text-[14px] text-primary">
+              {intl.formatMessage(
+                isTG ? messages.platformTelegram : messages.platformWhatsapp,
+              )}
+            </span>
           </div>
-          <span className="text-[14px] text-primary">
-            {intl.formatMessage(messages.platformWhatsapp)}
-          </span>
-        </div>
-      ),
+        );
+      },
     },
     {
       colKey: 'created_at',
@@ -1095,7 +1118,7 @@ function downloadCSV(
       r.reason,
       r.status,
       r.source,
-      'WhatsApp',
+      isTelegramPlatform(r) ? 'Telegram' : 'WhatsApp',
       formatDateTime(r.created_at),
     ]
       .map(cell => `"${String(cell).replaceAll('"', '""')}"`)

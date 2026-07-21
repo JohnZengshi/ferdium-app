@@ -1059,6 +1059,8 @@ export interface HandoffBriefResponse {
   updated_at: string;
   read_at?: string | null;
   customer_jid?: string | null;
+  /** 会话来源平台：whatsapp / telegram */
+  platform?: string | null;
   /** 该会话绑定的 WA-AKG session_id */
   wa_session_id?: string | null;
   digital_human_name?: string | null;

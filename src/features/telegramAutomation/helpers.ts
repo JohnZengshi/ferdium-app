@@ -52,3 +52,38 @@ export const isQrEvent = (event: string, data: unknown): boolean => {
   const type = getStringField(data, 'type').toLowerCase();
   return type === 'qr' || type === 'qr_code';
 };
+
+/**
+ * Proxy shape mirroring `ServiceProxy` from EditServiceDrawer (kept structural
+ * to avoid a features -> components/ui type dependency).
+ */
+export interface TelegramProxyLike {
+  isEnabled?: boolean;
+  protocol?: string;
+  host?: string;
+  port?: string | number;
+  user?: string;
+  password?: string;
+}
+
+/**
+ * Convert an EditServiceDrawer proxy object into a Flux instance `proxy_url`.
+ *
+ * Telegram (gramjs) only supports socks5, so the protocol is forced to socks5
+ * regardless of the drawer's `protocol` field. Returns `null` to clear the
+ * upstream proxy (disabled or invalid). Callers that must omit the field
+ * (e.g. createInstance) should coalesce `null` -> `undefined`.
+ */
+export const serviceProxyToTelegramProxyUrl = (
+  proxy: TelegramProxyLike | null | undefined,
+): string | null => {
+  if (!proxy?.isEnabled) return null;
+  const host = typeof proxy.host === 'string' ? proxy.host.trim() : '';
+  const port = proxy.port == null ? '' : String(proxy.port).trim();
+  if (!host || !port) return null;
+  const creds =
+    proxy.user && proxy.password
+      ? `${encodeURIComponent(proxy.user)}:${encodeURIComponent(proxy.password)}@`
+      : '';
+  return `socks5://${creds}${host}:${port}`;
+};

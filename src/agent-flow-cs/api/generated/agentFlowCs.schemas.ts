@@ -2188,6 +2188,20 @@ export interface TelegramCreateInstanceRequest {
 }
 
 /**
+ * 部分更新 Telegram instance：仅修改显式传入的字段。
+ *
+ * - 字段缺省：不修改（靠 model_fields_set 区分）。
+ * - label：去首尾空格，长度对齐 Flux（1..64）。
+ * - proxy_url：传值即更新；传 null 或空串表示清除代理（路由层归一为 Flux 认的空串）。
+ * 持久化、脱敏、代理重连与失败回滚均由 Flux 承担，本层只做校验与转发。
+ */
+export interface TelegramInstanceUpdateRequest {
+  label?: string | null;
+  /** socks4/socks5/mtproxy 或 tg://proxy 链；null/空串清除代理 */
+  proxy_url?: string | null;
+}
+
+/**
  * Telegram 验证码登录请求体。
  */
 export interface TelegramLoginCodeRequest {
@@ -2998,6 +3012,42 @@ platform?: string | null;
 status?: string | null;
 search?: string | null;
 /**
+ * 负责人子账号名模糊搜索
+ */
+owner_username?: string | null;
+/**
+ * 数字人名模糊搜索
+ */
+digital_human_name?: string | null;
+/**
+ * WA Session ID 精确搜索
+ */
+wa_session_id?: string | null;
+/**
+ * 消息数下限
+ */
+message_count_min?: number | null;
+/**
+ * 消息数上限
+ */
+message_count_max?: number | null;
+/**
+ * 创建时间起始（ISO 8601）
+ */
+created_at_start?: string | null;
+/**
+ * 创建时间截止（ISO 8601）
+ */
+created_at_end?: string | null;
+/**
+ * 最近消息时间起始 ISO 8601
+ */
+last_message_at_start?: string | null;
+/**
+ * 最近消息时间截止 ISO 8601
+ */
+last_message_at_end?: string | null;
+/**
  * @minimum 1
  */
 page?: number;
@@ -3162,6 +3212,8 @@ export type ListTelegramInstancesApiV1TelegramInstancesGet200Item = { [key: stri
 export type CreateInstanceApiV1TelegramInstancesPost201 = { [key: string]: unknown };
 
 export type GetTelegramInstanceApiV1TelegramInstancesInstanceIdGet200 = { [key: string]: unknown };
+
+export type UpdateTelegramInstanceApiV1TelegramInstancesInstanceIdPatch200 = { [key: string]: unknown };
 
 export type GetTelegramInstanceInfoApiV1TelegramInstancesInstanceIdInfoGet200 = { [key: string]: unknown };
 

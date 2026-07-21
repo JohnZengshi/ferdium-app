@@ -44,6 +44,8 @@ import {
   isPasswordRequired,
   isQrEvent,
   parseInstanceId,
+  serviceProxyToTelegramProxyUrl,
+  type TelegramProxyLike,
 } from './helpers';
 
 const debug = require('../../preload-safe-debug')(
@@ -136,7 +138,7 @@ const getAssetBase64 = (assetPath: string): string => {
 
 export interface TelegramBindingInput {
   name: string;
-  proxy?: object | null;
+  proxy?: TelegramProxyLike | null;
 }
 
 export default class TelegramAutomationStore extends FeatureStore {
@@ -347,6 +349,9 @@ export default class TelegramAutomationStore extends FeatureStore {
       const response = await createInstanceApiV1TelegramInstancesPost({
         label: payload.name || 'Telegram',
         engine: 'gramjs',
+        // Sync proxy to Flux at creation (gramjs only supports socks5).
+        // null -> undefined omits the field; no proxy is set upstream.
+        proxy_url: serviceProxyToTelegramProxyUrl(payload.proxy) ?? undefined,
       });
       debug('[TG-PERF] createInstance took', Date.now() - t0, 'ms');
       instanceId = parseInstanceId(response);

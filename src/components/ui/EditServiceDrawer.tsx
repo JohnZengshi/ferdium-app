@@ -59,6 +59,10 @@ const messages = defineMessages({
     id: 'editDrawer.proxyHostPlaceholder',
     defaultMessage: 'e.g. http://127.0.0.1',
   },
+  proxyHostPlaceholderSocks5: {
+    id: 'editDrawer.proxyHostPlaceholderSocks5',
+    defaultMessage: 'e.g. 127.0.0.1',
+  },
   proxyPort: {
     id: 'editDrawer.proxyPort',
     defaultMessage: 'Port',
@@ -145,6 +149,14 @@ const messages = defineMessages({
     defaultMessage:
       'Format not recognized. Use http://[user:pass@]host:port or socks5://[user:pass@]host:port',
   },
+  autoFillFormatHintSocks5: {
+    id: 'editDrawer.autoFillFormatHintSocks5',
+    defaultMessage: 'SOCKS5: socks5://[user:pass@]host:port',
+  },
+  autoFillFormatErrorSocks5: {
+    id: 'editDrawer.autoFillFormatErrorSocks5',
+    defaultMessage: 'Format not recognized. Use socks5://[user:pass@]host:port',
+  },
 });
 
 interface ParsedProxy {
@@ -195,7 +207,17 @@ interface EditServiceDrawerProps {
   onClose: () => void;
   onConfirm: (data: { name: string; proxy: ServiceProxy }) => void;
   defaultName?: string;
+  /**
+   * Restrict the proxy-type picker. Defaults to both HTTP and SOCKS5.
+   * Pass `['socks5']` for services whose backend only supports socks5
+   * (e.g. Telegram/gramjs) - this hides the type row and rejects http
+   * pastes in the auto-fill box.
+   */
+  allowedProxyProtocols?: ('http' | 'socks5')[];
 }
+
+/** Default allowed proxy protocols (HTTP + SOCKS5). Hoisted to a module const so the default param is referentially stable. */
+const DEFAULT_PROXY_PROTOCOLS: ('http' | 'socks5')[] = ['http', 'socks5'];
 
 export default function EditServiceDrawer({
   visible,
@@ -203,16 +225,26 @@ export default function EditServiceDrawer({
   onClose,
   onConfirm,
   defaultName = 'WhatsApp',
+  allowedProxyProtocols = DEFAULT_PROXY_PROTOCOLS,
 }: EditServiceDrawerProps) {
   const intl = useIntl();
 
   const existingProxy = (initialData?.proxy as ServiceProxy | null) || {};
 
+  const isSingleProtocol = allowedProxyProtocols.length === 1;
+  const fallbackProtocol = allowedProxyProtocols[0] ?? 'http';
+  const socks5Only = isSingleProtocol && fallbackProtocol === 'socks5';
+  const initialProtocol =
+    existingProxy?.protocol &&
+    allowedProxyProtocols.includes(existingProxy.protocol as 'http' | 'socks5')
+      ? existingProxy.protocol
+      : fallbackProtocol;
+
   const [remark, setRemark] = useState(initialData?.name ?? '');
   const [proxyEnabled, setProxyEnabled] = useState(
     existingProxy?.isEnabled ?? false,
   );
-  const [proxyType, setProxyType] = useState(existingProxy?.protocol ?? 'http');
+  const [proxyType, setProxyType] = useState(initialProtocol);
   const [proxyHost, setProxyHost] = useState(existingProxy?.host ?? '');
   const [proxyPort, setProxyPort] = useState(
     existingProxy?.port == null ? '' : String(existingProxy.port),
@@ -233,12 +265,32 @@ export default function EditServiceDrawer({
 
       const parsed = parseProxyString(trimmedContent);
       if (!parsed.isEnabled) {
-        MessagePlugin.warning(intl.formatMessage(messages.autoFillFormatError));
+        MessagePlugin.warning(
+          intl.formatMessage(
+            socks5Only
+              ? messages.autoFillFormatErrorSocks5
+              : messages.autoFillFormatError,
+          ),
+        );
+        return;
+      }
+
+      const protocol = (parsed.protocol || fallbackProtocol) as
+        | 'http'
+        | 'socks5';
+      if (!allowedProxyProtocols.includes(protocol)) {
+        MessagePlugin.warning(
+          intl.formatMessage(
+            socks5Only
+              ? messages.autoFillFormatErrorSocks5
+              : messages.autoFillFormatError,
+          ),
+        );
         return;
       }
 
       setProxyEnabled(true);
-      setProxyType(parsed.protocol || 'http');
+      setProxyType(protocol);
       setProxyHost(parsed.host || '');
       setProxyPort(parsed.port || '');
       setProxyUser(parsed.user || '');
@@ -409,24 +461,30 @@ export default function EditServiceDrawer({
                       onChange={val => handleAutoFillRef.current(val)}
                     />
                     <div className="mt-[8px] whitespace-pre-line text-[12px] text-placeholder">
-                      {intl.formatMessage(messages.autoFillFormatHint)}
+                      {intl.formatMessage(
+                        socks5Only
+                          ? messages.autoFillFormatHintSocks5
+                          : messages.autoFillFormatHint,
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-start gap-x-[12px] mb-[16px]">
-                  <div className="w-[82px] pt-[8px] text-[14px] text-primary">
-                    {intl.formatMessage(messages.proxyType)}
+                {!isSingleProtocol && (
+                  <div className="flex items-start gap-x-[12px] mb-[16px]">
+                    <div className="w-[82px] pt-[8px] text-[14px] text-primary">
+                      {intl.formatMessage(messages.proxyType)}
+                    </div>
+                    <Select
+                      className="!w-[406px]"
+                      value={proxyType}
+                      disabled
+                      options={allowedProxyProtocols.map(proto => ({
+                        label: proto === 'socks5' ? 'SOCKS5' : 'HTTP',
+                        value: proto,
+                      }))}
+                    />
                   </div>
-                  <Select
-                    className="!w-[406px]"
-                    value={proxyType}
-                    disabled
-                    options={[
-                      { label: 'HTTP', value: 'http' },
-                      { label: 'SOCKS5', value: 'socks5' },
-                    ]}
-                  />
-                </div>
+                )}
                 <div className="flex items-start gap-x-[12px] mb-[16px]">
                   <div className="w-[82px] pt-[8px] text-[14px] text-primary">
                     {intl.formatMessage(messages.proxyHost)}
@@ -434,7 +492,9 @@ export default function EditServiceDrawer({
                   <Input
                     className="!w-[406px] !h-[40px] !border-line"
                     placeholder={intl.formatMessage(
-                      messages.proxyHostPlaceholder,
+                      socks5Only
+                        ? messages.proxyHostPlaceholderSocks5
+                        : messages.proxyHostPlaceholder,
                     )}
                     value={proxyHost}
                     onChange={val => setProxyHost(val)}

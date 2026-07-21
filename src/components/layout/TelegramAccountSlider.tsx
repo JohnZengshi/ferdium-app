@@ -21,7 +21,9 @@ import {
   createTelegramBindingApiV1TelegramBindPost,
   getTelegramBindingApiV1TelegramBindGet,
   switchTelegramBindingDigitalHumanApiV1TelegramBindPatch,
+  updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatch,
 } from '../../agent-flow-cs/api/generated/telegram/telegram';
+import { serviceProxyToTelegramProxyUrl } from '../../features/telegramAutomation/helpers';
 import { openServiceContextMenu } from '../../helpers/service-context-menu';
 import type Service from '../../models/Service';
 import type { RealStores } from '../../stores';
@@ -456,10 +458,26 @@ class TelegramAccountSlider extends Component<
         },
         redirect: false,
       });
-      MessagePlugin.success({
-        content: intl.formatMessage(messages.updateSuccess),
-        duration: 3000,
-      });
+      // Sync label + proxy to the Flux backend instance (PATCH /telegram/instances/{id}).
+      // Local Ferdium update above is independent and already applied; the success
+      // toast only fires after the backend PATCH resolves so a failed sync surfaces
+      // the customInstance error toast instead of a misleading success.
+      try {
+        await updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatch(
+          editingService.id,
+          {
+            label: data.name || 'Telegram',
+            proxy_url: serviceProxyToTelegramProxyUrl(data.proxy),
+          },
+        );
+        MessagePlugin.success({
+          content: intl.formatMessage(messages.updateSuccess),
+          duration: 3000,
+        });
+      } catch {
+        // customInstance already showed MessagePlugin.error; swallow to avoid
+        // an unhandled rejection while keeping the local update intact.
+      }
       this.closeBindDrawer();
       return;
     }
@@ -574,6 +592,7 @@ class TelegramAccountSlider extends Component<
         <EditServiceDrawer
           key={this.state.bindDrawerKey}
           visible={this.state.isBindDrawerVisible}
+          allowedProxyProtocols={['socks5']}
           initialData={
             this.state.editingService
               ? {

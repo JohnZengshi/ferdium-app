@@ -26,11 +26,13 @@ import type {
   TelegramBindSwitchRequest,
   TelegramBindingResponse,
   TelegramCreateInstanceRequest,
+  TelegramInstanceUpdateRequest,
   TelegramLoginCodeRequest,
   TelegramLoginPasswordRequest,
   TelegramLoginPhoneRequest,
   TelegramSendTextRequest,
-  TelegramWebhookApiV1TelegramWebhooksInstanceIdPost200
+  TelegramWebhookApiV1TelegramWebhooksInstanceIdPost200,
+  UpdateTelegramInstanceApiV1TelegramInstancesInstanceIdPatch200
 } from '../agentFlowCs.schemas';
 
 import { useCustomInstance } from '../../customInstance';
@@ -496,6 +498,105 @@ export const getTelegramInstanceApiV1TelegramInstancesInstanceIdGet = async (ins
     method: 'GET'
 
 
+  }
+);}
+
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse200 = {
+  data: UpdateTelegramInstanceApiV1TelegramInstancesInstanceIdPatch200
+  status: 200
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse400 = {
+  data: ErrorResponse
+  status: 400
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse401 = {
+  data: ErrorResponse
+  status: 401
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse403 = {
+  data: ErrorResponse
+  status: 403
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse404 = {
+  data: ErrorResponse
+  status: 404
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse409 = {
+  data: ErrorResponse
+  status: 409
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse413 = {
+  data: ErrorResponse
+  status: 413
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse422 = {
+  data: ErrorResponse
+  status: 422
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse429 = {
+  data: ErrorResponse
+  status: 429
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse500 = {
+  data: ErrorResponse
+  status: 500
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse502 = {
+  data: ErrorResponse
+  status: 502
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse503 = {
+  data: ErrorResponse
+  status: 503
+}
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponseSuccess = (updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse200) & {
+  headers: Headers;
+};
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponseError = (updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse400 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse401 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse403 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse404 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse409 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse413 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse422 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse429 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse500 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse502 | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse503) & {
+  headers: Headers;
+};
+
+export type updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse = (updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponseSuccess | updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponseError)
+
+export const getUpdateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchUrl = (instanceId: string,) => {
+
+
+
+
+  return `http://10.0.0.228:8000/api/v1/telegram/instances/${instanceId}`
+}
+
+/**
+ * 部分更新 Telegram instance（label / proxy_url）。
+ *
+ * 仅转发用户显式修改的字段给 Flux；未传字段不动。proxy_url 传 null 或空串
+ * 归一为 Flux 认的空串（清除代理）。instance 归属由 Flux instance:manage 校验，
+ * 本层不查本地 binding。响应原样透传 Flux（结构化 proxyKind/proxyHost/proxyPort，
+ * 不含代理密码）。
+ * @summary Update Telegram Instance
+ */
+export const updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatch = async (instanceId: string,
+    telegramInstanceUpdateRequest: TelegramInstanceUpdateRequest, options?: RequestInit): Promise<updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse> => {
+
+  return useCustomInstance<updateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchResponse>(getUpdateTelegramInstanceApiV1TelegramInstancesInstanceIdPatchUrl(instanceId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(telegramInstanceUpdateRequest)
   }
 );}
 

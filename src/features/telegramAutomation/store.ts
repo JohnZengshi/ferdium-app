@@ -39,13 +39,13 @@ import {
 } from './constants';
 import type { TelegramBindStatus, TelegramLoginStep } from './constants';
 import {
+  type TelegramProxyLike,
   extractQrUrl,
   isAuthorizedEvent,
   isPasswordRequired,
   isQrEvent,
   parseInstanceId,
   serviceProxyToTelegramProxyUrl,
-  type TelegramProxyLike,
 } from './helpers';
 
 const debug = require('../../preload-safe-debug')(

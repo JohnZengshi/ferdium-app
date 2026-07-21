@@ -838,6 +838,7 @@
   "notificationsTab.filter.unread": "Unread",
   "notificationsTab.filter.whatsapp": "WhatsApp",
   "notificationsTab.loading": "Loading...",
+  "notificationsTab.platform.telegram": "Telegram",
   "notificationsTab.platform.whatsapp": "WhatsApp",
   "notificationsTab.selected.items": "{count} selected",
   "notificationsTab.status.read": "Read",

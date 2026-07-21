@@ -222,8 +222,8 @@ const isTelegramJid = (jid?: string | null): boolean => {
 /** 归一化平台判定：优先后端返回的 platform 字段，回退到 jid 规则推断 */
 const isTelegramPlatform = (record: HandoffRecord): boolean => {
   const p = record.platform?.toLowerCase();
-  if (p === "telegram") return true;
-  if (p === "whatsapp") return false;
+  if (p === 'telegram') return true;
+  if (p === 'whatsapp') return false;
   // platform 缺失时回退旧的 jid 推断逻辑
   return isTelegramJid(record.customer_jid);
 };

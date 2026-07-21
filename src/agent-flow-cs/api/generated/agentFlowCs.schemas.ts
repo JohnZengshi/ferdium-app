@@ -2866,6 +2866,10 @@ export type ListDigitalHumanAssignmentsApiV1DigitalHumansDigitalHumanIdAssignmen
 export type ListMemberHandoffsApiV1HandoffGetParams = {
 status?: string | null;
 /**
+ * 按来源平台筛选：whatsapp / telegram，不传则不过滤
+ */
+platform?: string | null;
+/**
  * 工单创建时间下界（闭区间，ISO 8601，建议带时区）
  */
 created_after?: string | null;
@@ -2885,6 +2889,10 @@ export type ListHandoffsByReadApiV1HandoffReadGetParams = {
  * true=未读, false=已读
  */
 unread?: boolean;
+/**
+ * 按来源平台筛选：whatsapp / telegram，不传则不过滤
+ */
+platform?: string | null;
 /**
  * 工单创建时间下界（闭区间，ISO 8601，建议带时区）
  */

@@ -259,11 +259,18 @@ const NotificationsTab = (): ReactElement => {
       try {
         const offset = (page - 1) * PAGE_SIZE;
         const [start, end] = dateRange;
-        const timeParams: { created_after?: string; created_before?: string } =
-          {};
+        const timeParams: {
+          created_after?: string;
+          created_before?: string;
+          platform?: string;
+        } = {};
         if (start && end) {
           timeParams.created_after = `${String(start)}T00:00:00`;
           timeParams.created_before = `${String(end)}T23:59:59`;
+        }
+        // 平台筛选：all 不传，交由后端过滤
+        if (socialFilter !== 'all') {
+          timeParams.platform = socialFilter;
         }
         // 筛选全部时走业务态接口，筛选已读/未读时走已读视图接口
         const result: any =
@@ -295,7 +302,7 @@ const NotificationsTab = (): ReactElement => {
         setLoading(false);
       }
     },
-    [intl, statusFilter, dateRange],
+    [intl, statusFilter, dateRange, socialFilter],
   );
 
   useEffect(() => {
@@ -936,7 +943,7 @@ const NotificationsTab = (): ReactElement => {
               options={[
                 { label: intl.formatMessage(messages.filterAll), value: 'all' },
                 { label: 'WhatsApp', value: 'whatsapp' },
-                // { label: 'Telegram', value: 'telegram' },
+                { label: 'Telegram', value: 'telegram' },
               ]}
               value={socialFilter}
               onChange={value => {

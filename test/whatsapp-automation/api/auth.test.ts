@@ -82,16 +82,17 @@ describe('getApiKey', () => {
     expect(getApiKey()).toBe('');
   });
 
-  it('prefers settings store over localStorage', () => {
+  it('returns localStorage value, ignoring settings store', () => {
+    // settings store fallback was removed; localStorage is the single source.
     mockSettingsApp['whatsapp-api-key'] = 'sk-settings-key';
     localStorage.setItem('whatsappAutomationApiKey', '"sk-local-key"');
-    expect(getApiKey()).toBe('sk-settings-key');
+    expect(getApiKey()).toBe('sk-local-key');
   });
 
-  it('returns setting store value even without JSON corruption', () => {
+  it('returns raw localStorage value, ignoring settings store', () => {
     mockSettingsApp['whatsapp-api-key'] = 'sk-settings-clean';
     localStorage.setItem('whatsappAutomationApiKey', 'sk-local-clean');
-    expect(getApiKey()).toBe('sk-settings-clean');
+    expect(getApiKey()).toBe('sk-local-clean');
   });
 
   it('returns empty string if both storage locations are empty', () => {
@@ -122,9 +123,12 @@ describe('setApiKey', () => {
     expect(getApiKey()).toBe('sk-new-key');
   });
 
-  it('also syncs to settings store', () => {
+  it('does not sync to settings store', () => {
     setApiKey('sk-settings-sync');
-    expect(mockSettingsApp['whatsapp-api-key']).toBe('sk-settings-sync');
+    expect(mockSettingsApp['whatsapp-api-key']).toBeUndefined();
+    expect(localStorage.getItem('whatsappAutomationApiKey')).toBe(
+      'sk-settings-sync',
+    );
   });
 });
 
@@ -135,18 +139,20 @@ describe('clearApiKey', () => {
     expect(localStorage.getItem('whatsappAutomationApiKey')).toBeNull();
   });
 
-  it('clears key from settings store', () => {
-    mockSettingsApp['whatsapp-api-key'] = 'sk-clear-me';
+  it('leaves settings store untouched', () => {
+    mockSettingsApp['whatsapp-api-key'] = 'sk-preserved';
+    localStorage.setItem('whatsappAutomationApiKey', 'sk-clear-me');
     clearApiKey();
-    expect(mockSettingsApp['whatsapp-api-key']).toBe('');
+    expect(mockSettingsApp['whatsapp-api-key']).toBe('sk-preserved');
+    expect(localStorage.getItem('whatsappAutomationApiKey')).toBeNull();
   });
 
-  it('clears both localStorage and settings store', () => {
+  it('clears API key and email from localStorage', () => {
     localStorage.setItem('whatsappAutomationApiKey', 'sk-both');
-    mockSettingsApp['whatsapp-api-key'] = 'sk-both';
+    localStorage.setItem('whatsappAutomationUserEmail', 'u@x.com');
     clearApiKey();
     expect(localStorage.getItem('whatsappAutomationApiKey')).toBeNull();
-    expect(mockSettingsApp['whatsapp-api-key']).toBe('');
+    expect(localStorage.getItem('whatsappAutomationUserEmail')).toBeNull();
   });
 
   it('handles missing window.ferdium gracefully', () => {

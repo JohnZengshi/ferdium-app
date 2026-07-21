@@ -23,7 +23,6 @@ const debug = require('../../preload-safe-debug')(
 );
 
 const WA_AKG_BASE = process.env.WA_AKG_BASE ?? 'http://localhost:3000';
-const API_KEY_KEY = process.env.API_KEY_KEY ?? 'whatsapp-api-key';
 
 export interface AuthCredentials {
   email: string;
@@ -164,24 +163,11 @@ async function nodeRequest(options: {
  * Looks in: settings -> localStorage -> (falls back to auto-login)
  */
 export const getApiKey = (): string => {
-  // 1. Try Ferdium settings store
-  try {
-    const settings = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settings?.[API_KEY_KEY]) {
-      return settings[API_KEY_KEY];
-    }
-  } catch {
-    debug('[WhatsApp Automation] Settings store not available in getApiKey');
-  }
-
-  // 2. Try localStorage
   try {
     const stored = localStorage.getItem(API_KEY_STORAGE_KEY);
     if (stored) {
       // Defensive: mobx-localstorage stores values as JSON.stringify'd strings.
-      // If this value was written by mobx-localstorage (e.g. from an older version
-      // of NextAuthProvider), it will have extra quotes. Try parsing it as JSON
-      // first, fall back to raw string.
+      // Try parsing it as JSON first, fall back to raw string.
       try {
         return JSON.parse(stored);
       } catch {
@@ -196,10 +182,7 @@ export const getApiKey = (): string => {
 };
 
 /**
- * Store the API key persistently.
- * Writes to localStorage (canonical storage) and synchronises the
- * Ferdium settings store so getApiKey() returns a consistent value
- * regardless of which path it reads first.
+ * Store the API key persistently in localStorage (canonical storage).
  */
 export const setApiKey = (key: string): void => {
   try {
@@ -207,32 +190,15 @@ export const setApiKey = (key: string): void => {
   } catch {
     debug('[WhatsApp Automation] Failed to write API key to localStorage');
   }
-  try {
-    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settingsApp && typeof settingsApp === 'object') {
-      settingsApp[API_KEY_KEY] = key;
-    }
-  } catch {
-    debug('[WhatsApp Automation] Failed to sync API key to settings store');
-  }
 };
 
 /**
- * Clear the API key from both localStorage and the Ferdium settings store.
- * Ensures that all persisted copies are removed to prevent stale key reuse.
+ * Clear the API key from localStorage.
  */
 export const clearApiKey = (): void => {
   localStorage.removeItem(WA_USER_EMAIL_STORAGE_KEY);
   (window as any).ferdium?.stores?.user?.setProfileEmail?.(null);
   localStorage.removeItem(API_KEY_STORAGE_KEY);
-  try {
-    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settingsApp && typeof settingsApp === 'object') {
-      settingsApp[API_KEY_KEY] = '';
-    }
-  } catch {
-    debug('[WhatsApp Automation] Failed to clear API key from settings store');
-  }
 };
 
 /**

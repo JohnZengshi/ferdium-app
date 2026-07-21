@@ -222,10 +222,11 @@ describe('FerdiumProvider', () => {
         });
       });
 
-      it('stores agentFlowToken in localStorage and window.localStorage', async () => {
+      it('stores agentFlowToken in mobx-localstorage', async () => {
+        // setAccessToken writes only to mobx-localstorage (window.localStorage
+        // dual-write was removed).
         await provider.authenticate({ email: 'user@a.com', password: 'p' });
         expect(mockMobxStorage.agentFlowToken).toBe('tok-123');
-        expect(window.localStorage.getItem('agentFlowToken')).toBe('tok-123');
       });
 
       it('stores akg_api_key when returned', async () => {

@@ -11,6 +11,7 @@ import { ipcRenderer } from 'electron';
 import { type MenuItemConstructorOptions, clipboard } from 'electron';
 import { fromJS } from 'immutable';
 import { action, autorun, makeObservable, observable } from 'mobx';
+import localStorage from 'mobx-localstorage';
 import osName from 'os-name';
 import { type IntlShape, defineMessages } from 'react-intl';
 import semver from 'semver';

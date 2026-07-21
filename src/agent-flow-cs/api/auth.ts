@@ -22,17 +22,6 @@ export interface AuthCredentials {
  * Retrieve the stored access token.
  */
 export const getAccessToken = (): string => {
-  // 1. Try Ferdium settings store
-  try {
-    const settings = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settings?.[AGENT_FLOW_TOKEN_STORAGE_KEY]) {
-      return settings[AGENT_FLOW_TOKEN_STORAGE_KEY];
-    }
-  } catch {
-    debug('[Agent Flow CS] Settings store not available in getAccessToken');
-  }
-
-  // 2. Try localStorage
   try {
     const stored = localStorage.getItem(AGENT_FLOW_TOKEN_STORAGE_KEY);
     if (stored) {
@@ -58,46 +47,16 @@ export const setAccessToken = (token: string): void => {
   } catch {
     debug('[Agent Flow CS] Failed to write access token to localStorage');
   }
-  try {
-    window.localStorage.setItem(AGENT_FLOW_TOKEN_STORAGE_KEY, token);
-  } catch {
-    debug(
-      '[Agent Flow CS] Failed to write access token to window.localStorage',
-    );
-  }
-  try {
-    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settingsApp && typeof settingsApp === 'object') {
-      settingsApp[AGENT_FLOW_TOKEN_STORAGE_KEY] = token;
-    }
-  } catch {
-    debug('[Agent Flow CS] Failed to sync access token to settings store');
-  }
 };
 
 /**
- * Clear the access token from all storage locations.
+ * Clear the access token from storage.
  */
 export const clearAccessToken = (): void => {
   try {
     localStorage.removeItem(AGENT_FLOW_TOKEN_STORAGE_KEY);
   } catch {
     debug('[Agent Flow CS] Failed to remove access token from localStorage');
-  }
-  try {
-    window.localStorage.removeItem(AGENT_FLOW_TOKEN_STORAGE_KEY);
-  } catch {
-    debug(
-      '[Agent Flow CS] Failed to remove access token from window.localStorage',
-    );
-  }
-  try {
-    const settingsApp = (window as any).ferdium?.stores?.settings?.all?.app;
-    if (settingsApp && typeof settingsApp === 'object') {
-      settingsApp[AGENT_FLOW_TOKEN_STORAGE_KEY] = '';
-    }
-  } catch {
-    debug('[Agent Flow CS] Failed to clear access token from settings store');
   }
 };
 

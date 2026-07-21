@@ -84,10 +84,12 @@ DATE=$(date +"%Y%m%d%H%M")
 
 # 公共配置
 REMOTE_DIR=out
-MAC_APP_PATH="out/mac/AITALK.app"
+MAC_X64_APP_PATH="out/mac/AITALK.app"
+MAC_ARM64_APP_PATH="out/mac-arm64/AITALK.app"
+MAC_UNIVERSAL_APP_PATH="out/mac-universal/AITALK.app"
 
 generate_local_update_files() {
-  local source_path="${1:-$MAC_APP_PATH}"
+  local source_path="$1"
   echo "正在生成本地更新文件: $source_path ..."
   ./scripts/generate-local-update-yml.sh "$source_path"
 }
@@ -109,7 +111,7 @@ case "$PLATFORM" in
     # 检查结果
     if [ $? -eq 0 ]; then
       echo "✅ 编译成功: `ls -lrth $LOCAL_FILE`"
-      generate_local_update_files
+      generate_local_update_files "$MAC_UNIVERSAL_APP_PATH"
     else
       echo "❌ 编译失败"
       exit 1
@@ -123,7 +125,7 @@ case "$PLATFORM" in
       exit 1
     fi
     echo "✅ 编译成功"
-    generate_local_update_files
+    generate_local_update_files "$MAC_X64_APP_PATH"
     mkdir -p "${REMOTE_DIR}/mac"
     for ARCH in x64 arm64; do
       LOCAL_FILE="out/AITALK-mac-${APP_VERSION}-${ARCH}-${BUILD_NUMBER}.dmg"

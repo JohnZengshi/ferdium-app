@@ -367,7 +367,7 @@ else
     echo -e "\n${GREEN}[6.5/6] 重新签名应用 (修复 sep/auto 模式签名问题)...${NC}"
     ENTITLEMENTS_FILE="build-helpers/entitlements.mas.plist"
 
-    for APP_DIR in out/mac-*/; do
+    for APP_DIR in out/mac/ out/mac-arm64/; do
         [ -d "$APP_DIR" ] || continue
         for APP_BUNDLE in "$APP_DIR"*.app; do
             [ -d "$APP_BUNDLE" ] || continue
@@ -380,13 +380,15 @@ else
     echo -e "\n${YELLOW}创建 DMG 镜像...${NC}"
     PRODUCT_NAME=$(node -p "require('./package.json').productName")
 
-    for APP_DIR in out/mac-*/; do
+    for APP_DIR in out/mac/ out/mac-arm64/; do
         [ -d "$APP_DIR" ] || continue
         for APP_BUNDLE in "$APP_DIR"*.app; do
             [ -d "$APP_BUNDLE" ] || continue
 
-            # 从目录名推断架构: mac-arm64 -> arm64, mac-x64 -> x64
-            ARCH_NAME="$(basename "$APP_DIR" | sed 's/mac-//')"
+            case "$(basename "$APP_DIR")" in
+                mac) ARCH_NAME="x64" ;;
+                mac-arm64) ARCH_NAME="arm64" ;;
+            esac
 
             # DMG 文件名与 electron-builder 原始命名一致:
             # AITALK-mac-7.1.3-nightly.3-arm64.dmg

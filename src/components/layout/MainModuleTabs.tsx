@@ -200,27 +200,31 @@ const TelegramTabIcon = ({
     WebkitMaskSize: 'contain' as const,
     maskRepeat: 'no-repeat' as const,
     WebkitMaskRepeat: 'no-repeat' as const,
+    maskPosition: 'center' as const,
+    WebkitMaskPosition: 'center' as const,
   };
 
   return (
     <div
-      className={`flex items-center justify-center w-[48px] h-[48px] rounded-[24px] ${
-        isActive
-          ? 'bg-[var(--td-brand-color-light)]'
-          : isHovered
-            ? 'bg-[var(--td-bg-color-component)]'
-            : ''
+      className={`flex items-center justify-center w-[48px] h-[48px] rounded-[24px] transition-colors ${
+        isHovered ? 'bg-[var(--td-bg-color-component)]' : ''
       }`}
     >
       <span
-        className="inline-block w-[24px] h-[24px]"
-        style={{
-          ...mask,
-          backgroundColor: isActive
-            ? 'var(--td-brand-color)'
-            : 'var(--td-text-color-secondary)',
-        }}
-      />
+        className={`flex items-center justify-center w-[24px] h-[24px] rounded-full transition-colors ${
+          isActive ? 'bg-[var(--td-brand-color)]' : ''
+        }`}
+      >
+        <span
+          className={`inline-block transition-colors ${isActive ? 'w-[16px] h-[16px]' : 'w-[24px] h-[24px]'}`}
+          style={{
+            ...mask,
+            backgroundColor: isActive
+              ? 'var(--td-text-color-anti)'
+              : 'var(--td-text-color-secondary)',
+          }}
+        />
+      </span>
     </div>
   );
 };
@@ -282,23 +286,25 @@ const InstagramDMTabIcon = ({
 
   return (
     <div
-      className={`flex items-center justify-center w-[48px] h-[48px] rounded-[24px] ${
-        isActive
-          ? 'bg-[var(--td-brand-color-light)]'
-          : isHovered
-            ? 'bg-[var(--td-bg-color-component)]'
-            : ''
+      className={`flex items-center justify-center w-[48px] h-[48px] rounded-[24px] transition-colors ${
+        isHovered ? 'bg-[var(--td-bg-color-component)]' : ''
       }`}
     >
       <span
-        className="inline-block w-[24px] h-[24px]"
-        style={{
-          ...mask,
-          backgroundColor: isActive
-            ? 'var(--td-brand-color)'
-            : 'var(--td-text-color-secondary)',
-        }}
-      />
+        className={`flex items-center justify-center w-[24px] h-[24px] rounded-md transition-colors ${
+          isActive ? 'bg-[var(--td-brand-color)]' : ''
+        }`}
+      >
+        <span
+          className={`inline-block transition-colors ${isActive ? 'w-[18px] h-[18px]' : 'w-[24px] h-[24px]'}`}
+          style={{
+            ...mask,
+            backgroundColor: isActive
+              ? 'var(--td-text-color-anti)'
+              : 'var(--td-text-color-secondary)',
+          }}
+        />
+      </span>
     </div>
   );
 };

@@ -428,6 +428,7 @@ const NotificationsTab = (): ReactElement => {
       navigationStore.setModuleActiveService(module, sessionId);
       ferdium?.actions?.service?.setActive({ serviceId: sessionId });
       navigationStore.setModule(module);
+      navigationStore.setServiceTab('messages');
 
       // Tier 1: 等待 webview 挂载 + 页面加载完成（最多 30s）
       const wv = await new Promise<WebviewLoader | null>(resolve => {

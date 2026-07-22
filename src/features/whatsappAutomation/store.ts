@@ -213,6 +213,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     (event: { channel: string; args: unknown[] }) => void
   >();
 
+  _statusIndicatorReloadListeners = new Map<
+    string,
+    { webview: Electron.WebviewTag; listener: () => void }
+  >();
+
+  _latestIndicatorStatuses = new Map<string, string>();
+
   _maxRetries = 10;
 
   _retryIntervalMs = 1000;
@@ -336,6 +343,15 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       svc?.webview?.removeEventListener?.('ipc-message', listener);
     }
     this._qrModalActionListeners.clear();
+
+    for (const {
+      webview,
+      listener,
+    } of this._statusIndicatorReloadListeners.values()) {
+      webview.removeEventListener('dom-ready', listener);
+    }
+    this._statusIndicatorReloadListeners.clear();
+    this._latestIndicatorStatuses.clear();
 
     this._initializedServices.clear();
     this.sessionStatuses.clear();
@@ -597,6 +613,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   _detectWhatsAppServices = (): void => {
     const services = this.whatsAppServices;
+    for (const serviceId of this._statusIndicatorReloadListeners.keys()) {
+      const service = this._getService(serviceId);
+      if (!service?.isAttached || !service.webview) {
+        this._detachStatusIndicatorReloadListener(serviceId);
+      }
+    }
+
     if (services.length === 0) {
       debug('No WhatsApp services found via recipe filter');
       return;
@@ -614,6 +637,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         this._initializedServiceInstances.add(service);
         this._checkSessionStatus({ serviceId: service.id });
         this._attachQrModalActionListener(service.id);
+        this._attachStatusIndicatorReloadListener(service.id);
       }
     }
 
@@ -634,6 +658,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     if (service?.recipe?.id !== WHATSAPP_RECIPE_ID) return;
     debug('_setServiceWebview', serviceId);
     this._attachQrModalActionListener(serviceId);
+    this._attachStatusIndicatorReloadListener(serviceId);
     this._restoreQrModal(serviceId).catch(error => {
       debug('Failed to restore WhatsApp QR modal:', error);
     });
@@ -764,7 +789,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
               WA_SESSION_STATUS.CONNECTED,
             );
 
-            this._injectStatusWhenReady(serviceId, WA_SESSION_STATUS.CONNECTED);
+            this._injectStatusWhenReady(serviceId);
             this._notifySessionConnected(serviceId);
             this._refreshSessionDetails(serviceId).catch(error => {
               debug('Error refreshing session details after connect:', error);
@@ -1511,6 +1536,31 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     this._qrModalActionListeners.set(serviceId, this._handleQrModalIpcMessage);
   };
 
+  _attachStatusIndicatorReloadListener = (serviceId: string) => {
+    const service = this._getService(serviceId);
+    if (!service?.webview) return;
+
+    const existing = this._statusIndicatorReloadListeners.get(serviceId);
+    if (existing?.webview === service.webview) return;
+    if (existing) {
+      existing.webview.removeEventListener('dom-ready', existing.listener);
+    }
+
+    const listener = () => this._injectStatusWhenReady(serviceId);
+    service.webview.addEventListener('dom-ready', listener);
+    this._statusIndicatorReloadListeners.set(serviceId, {
+      webview: service.webview,
+      listener,
+    });
+  };
+
+  _detachStatusIndicatorReloadListener = (serviceId: string) => {
+    const existing = this._statusIndicatorReloadListeners.get(serviceId);
+    if (!existing) return;
+    existing.webview.removeEventListener('dom-ready', existing.listener);
+    this._statusIndicatorReloadListeners.delete(serviceId);
+  };
+
   _handleQrModalIpcMessage = (event: { channel: string; args: unknown[] }) => {
     const parsed = parseQrModalActionEvent(event);
     if (!parsed) return;
@@ -1564,6 +1614,9 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       svc?.webview?.removeEventListener?.('ipc-message', listener);
       this._qrModalActionListeners.delete(serviceId);
     }
+
+    this._detachStatusIndicatorReloadListener(serviceId);
+    this._latestIndicatorStatuses.delete(serviceId);
 
     this.sessionStatuses.delete(serviceId);
     this.qrCodes.delete(serviceId);
@@ -1692,6 +1745,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   /** Inject or update a floating status indicator (top-right) in the webview. */
   _injectOrUpdateStatusIndicator = (serviceId: string, status: string) => {
+    this._latestIndicatorStatuses.set(serviceId, status);
     const service = this._getService(serviceId);
     if (!service?.webview) return;
 
@@ -1756,19 +1810,13 @@ export default class WhatsAppAutomationStore extends FeatureStore {
     service.webview.executeJavaScript(script).catch(() => {});
   };
 
-  private _injectStatusWhenReady = (
-    serviceId: string,
-    status: string,
-    attempt = 1,
-  ) => {
+  private _injectStatusWhenReady = (serviceId: string, attempt = 1) => {
     if (attempt > 5) return;
     const service = this._getService(serviceId);
-    if (!service?.webview) return;
+    const status = this._latestIndicatorStatuses.get(serviceId);
+    if (!service?.webview || !status) return;
     this._injectOrUpdateStatusIndicator(serviceId, status);
-    setTimeout(
-      () => this._injectStatusWhenReady(serviceId, status, attempt + 1),
-      1000,
-    );
+    setTimeout(() => this._injectStatusWhenReady(serviceId, attempt + 1), 1000);
   };
 
   _notifySessionConnected = (serviceId: string) => {

@@ -1,3 +1,4 @@
+import type { Stores } from '../../../src/@types/stores.types';
 import WhatsAppAutomationStore from '../../../src/features/whatsappAutomation/store';
 
 // Mock window and localStorage for node test environment
@@ -256,5 +257,91 @@ describe('WhatsAppAutomationStore - 401 Handling', () => {
       );
       expect(mockSettingsStore['whatsapp-api-key']).toBe('valid-key-123');
     });
+  });
+});
+
+describe('WhatsAppAutomationStore - status indicator reload', () => {
+  const createStoreWithWebview = () => {
+    const domReadyListeners: (() => void)[] = [];
+    const webview = {
+      addEventListener: jest.fn((event: string, listener: () => void) => {
+        if (event === 'dom-ready') domReadyListeners.push(listener);
+      }),
+      removeEventListener: jest.fn(),
+      executeJavaScript: jest.fn(() => Promise.resolve()),
+    };
+    const service = { webview, isAttached: true };
+    const store = new WhatsAppAutomationStore();
+    store.stores = {
+      services: {
+        allDisplayed: [],
+        one: jest.fn(() => service),
+      },
+    } as unknown as Stores;
+    return { domReadyListeners, service, store, webview };
+  };
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
+  it('re-reads latest indicator status during retries', () => {
+    jest.useFakeTimers();
+    const { domReadyListeners, store } = createStoreWithWebview();
+    store._latestIndicatorStatuses.set('whatsapp-service', 'CONNECTED');
+    const injectStatusIndicator = jest
+      .spyOn(store, '_injectOrUpdateStatusIndicator')
+      .mockImplementation();
+
+    store._attachStatusIndicatorReloadListener('whatsapp-service');
+    domReadyListeners[0]();
+    store._latestIndicatorStatuses.set('whatsapp-service', 'DISCONNECTED');
+    jest.advanceTimersByTime(1000);
+
+    expect(injectStatusIndicator).toHaveBeenNthCalledWith(
+      1,
+      'whatsapp-service',
+      'CONNECTED',
+    );
+    expect(injectStatusIndicator).toHaveBeenNthCalledWith(
+      2,
+      'whatsapp-service',
+      'DISCONNECTED',
+    );
+  });
+
+  it('restores rendered states missing from session statuses', () => {
+    jest.useFakeTimers();
+    const { domReadyListeners, store } = createStoreWithWebview();
+    store._injectOrUpdateStatusIndicator('whatsapp-service', 'SERVER_ERROR');
+    const injectStatusIndicator = jest
+      .spyOn(store, '_injectOrUpdateStatusIndicator')
+      .mockImplementation();
+
+    store._attachStatusIndicatorReloadListener('whatsapp-service');
+    domReadyListeners[0]();
+
+    expect(store.sessionStatuses.has('whatsapp-service')).toBe(false);
+    expect(injectStatusIndicator).toHaveBeenCalledWith(
+      'whatsapp-service',
+      'SERVER_ERROR',
+    );
+  });
+
+  it('removes reload listener when webview detaches', () => {
+    const { service, store, webview } = createStoreWithWebview();
+    store._attachStatusIndicatorReloadListener('whatsapp-service');
+
+    service.isAttached = false;
+    store._detectWhatsAppServices();
+
+    expect(webview.removeEventListener).toHaveBeenCalledWith(
+      'dom-ready',
+      expect.any(Function),
+    );
+    expect(store._statusIndicatorReloadListeners.has('whatsapp-service')).toBe(
+      false,
+    );
   });
 });

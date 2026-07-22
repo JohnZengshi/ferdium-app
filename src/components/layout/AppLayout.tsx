@@ -263,6 +263,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       home: './assets/images/desktop-1.svg',
       whatsapp: './assets/images/chat-ws.svg',
       telegram: './assets/images/telegram.svg',
+      instagramDM: './assets/images/instagram-dm.svg',
       'knowledge-base': './assets/images/collection.svg',
     };
 

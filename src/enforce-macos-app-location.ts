@@ -5,7 +5,13 @@ import { isMac } from './environment';
 import { isDevMode } from './environment-remote';
 
 export default function enforceMacOSAppLocation(): void {
-  if (isDevMode || !isMac || api.app.isInApplicationsFolder()) {
+  if (
+    isDevMode ||
+    (process.env.PERFORMANCE_METRICS === '1' &&
+      process.env.SKIP_MACOS_APP_LOCATION_CHECK === '1') ||
+    !isMac ||
+    api.app.isInApplicationsFolder()
+  ) {
     return;
   }
 

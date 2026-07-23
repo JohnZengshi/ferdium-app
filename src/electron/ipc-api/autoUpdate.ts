@@ -148,6 +148,16 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
     try {
       autoUpdater.autoInstallOnAppQuit = false;
 
+      // Performance monitoring: skip update checks entirely
+      if (
+        process.env.PERFORMANCE_METRICS === '1' &&
+        process.env.SKIP_AUTO_UPDATE === '1'
+      ) {
+        debug('skipping update check (SKIP_AUTO_UPDATE=1)');
+        event.sender.send('autoUpdate', { available: false });
+        return;
+      }
+
       if (args.action === 'check') {
         const automaticUpdatesEnabled = Boolean(
           params.settings.app.get('automaticUpdates'),

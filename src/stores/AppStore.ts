@@ -581,6 +581,14 @@ export default class AppStore extends TypedStore {
   }
 
   @action _checkForUpdates() {
+    if (
+      process.env.PERFORMANCE_METRICS === '1' &&
+      process.env.SKIP_AUTO_UPDATE === '1'
+    ) {
+      debug('skipping update check (SKIP_AUTO_UPDATE=1)');
+      return;
+    }
+
     if (this.isOnline && this.stores.settings.app.automaticUpdates) {
       debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;

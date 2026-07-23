@@ -64,9 +64,16 @@ import { translateTo } from './helpers/translation-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import generatedTranslations from './i18n/translations';
+import { flushAndShutdown, initMainCollector } from './performance/main';
 import { darkThemeGrayDarkest } from './themes/legacy';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
+
+initMainCollector(
+  userDataPath(),
+  process.env.PERFORMANCE_METRICS_JSONL === '1',
+);
+app.on('will-quit', flushAndShutdown);
 
 // Globally set useragent to fix user agent override in service workers
 debug('Set userAgent to ', userAgent());

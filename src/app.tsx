@@ -11,6 +11,10 @@ import LocalApi from './api/server/LocalApi';
 import ServerApi from './api/server/ServerApi';
 import MenuFactory from './lib/Menu';
 import TouchBarFactory from './lib/TouchBar';
+import {
+  initRendererPerformance,
+  teardownRendererPerformance,
+} from './performance/renderer';
 import storeFactory from './stores';
 
 import I18N from './I18n';
@@ -34,6 +38,7 @@ import FerdiumRoutes from './routes';
 
 // Basic electron Setup
 webFrame.setVisualZoomLevelLimits(1, 1);
+initRendererPerformance();
 
 window.addEventListener('load', () => {
   const serverApi = new ServerApi();
@@ -85,6 +90,7 @@ window.addEventListener('drop', event => event.stopPropagation());
 
 // Clean up stores when window is closing to prevent memory leaks
 window.addEventListener('beforeunload', () => {
+  teardownRendererPerformance();
   try {
     const { stores } = window['ferdium'];
     if (stores) {

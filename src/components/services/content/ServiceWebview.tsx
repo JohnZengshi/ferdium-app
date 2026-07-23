@@ -16,6 +16,7 @@ interface IProps {
   }) => void;
   detachService: (options: { service: ServiceModel }) => void;
   isSpellcheckerEnabled: boolean;
+  onDidStopLoading?: () => void;
   stores?: RealStores;
 }
 
@@ -83,6 +84,7 @@ class ServiceWebview extends Component<IProps> {
 
   refocusWebview(): void {
     const { webview } = this;
+    this.props.onDidStopLoading?.();
     debug('Refocus Webview is called', this.props.service);
     if (!webview) {
       return;

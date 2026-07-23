@@ -1040,17 +1040,18 @@ export default class TelegramAutomationStore extends FeatureStore {
   }
   var s = document.createElement('style');
   s.textContent = [
-    '@keyframes tga-si-pulse{0%{box-shadow:0 0 0 0 ${escColor}88}70%{box-shadow:0 0 0 14px ${escColor}00}100%{box-shadow:0 0 0 0 ${escColor}00}}',
-    '@keyframes tga-si-radar{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}',
-    '#${SID}{position:fixed;top:20px;right:20px;z-index:2147483646;display:flex;align-items:center;gap:10px;background:rgba(11,20,26,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:30px;padding:10px 18px 10px 14px;box-shadow:0 4px 20px rgba(0,0,0,0.4);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;pointer-events:auto;cursor:grab;user-select:none}',
-    '.tga-si-radar{position:relative;width:20px;height:20px;flex-shrink:0}',
-    '.tga-si-dot{position:absolute;inset:4px;border-radius:50%;background:${escColor};z-index:2;animation:tga-si-pulse 2s infinite}',
-    '.tga-si-sweep{position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;border-top-color:${escColor}44;animation:tga-si-radar 2s linear infinite}',
-    '.tga-si-label{font-size:13px;font-weight:600;color:#e9edef;white-space:nowrap}'
+    '#${SID}{position:fixed;top:20px;right:20px;z-index:2147483646;display:flex;align-items:center;gap:0;width:28px;height:28px;box-sizing:border-box;overflow:hidden;background:rgba(11,20,26,0.38);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,0.16);border-radius:16px;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.18);opacity:.58;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;pointer-events:auto;cursor:grab;user-select:none;transition:width .18s ease,opacity .18s ease,background .18s ease,gap .18s ease}',
+    '#${SID}:hover,#${SID}:focus-visible{width:138px;gap:7px;padding-right:12px;opacity:.96;background:rgba(11,20,26,0.88);outline:none}',
+    '.tga-si-radar{position:relative;width:14px;height:14px;flex:0 0 14px}',
+    '.tga-si-dot{position:absolute;inset:3px;border-radius:50%;background:${escColor};z-index:2;box-shadow:0 0 5px ${escColor}88}',
+    '.tga-si-sweep{position:absolute;inset:0;border-radius:50%;border:1px solid ${escColor}55}',
+    '.tga-si-label{max-width:0;overflow:hidden;opacity:0;font-size:12px;font-weight:600;color:#e9edef;white-space:nowrap;transition:max-width .18s ease,opacity .18s ease}',
+    '#${SID}:hover .tga-si-label,#${SID}:focus-visible .tga-si-label{max-width:100px;opacity:1}'
   ].join('');
   document.head.appendChild(s);
   var el = document.createElement('div');
   el.id = '${SID}';
+  el.tabIndex = 0;
   el.dataset.telegramStatus = '${escStatus}';
   el.innerHTML = '<div class="tga-si-radar"><div class="tga-si-dot"></div><div class="tga-si-sweep"></div></div><span class="tga-si-label">${escLabel}</span>';
   document.body.appendChild(el);

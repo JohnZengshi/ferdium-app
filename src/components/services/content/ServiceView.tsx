@@ -58,6 +58,8 @@ class ServiceView extends Component<IProps, IState> {
 
   forceRepaintTimeout: NodeJS.Timeout | undefined;
 
+  postLoginReadyCheckRunning = false;
+
   constructor(props: IProps) {
     super(props);
 
@@ -78,6 +80,61 @@ class ServiceView extends Component<IProps, IState> {
       }
     });
   }
+
+  handleDidStopLoading = () => {
+    const { service, stores } = this.props;
+    const isPostLoginReloading =
+      stores!.whatsappAutomation.postLoginReloadingServices.has(service.id);
+    const wasPostLoginReloadTriggered =
+      stores!.whatsappAutomation.postLoginReloadTriggeredServices.has(
+        service.id,
+      );
+    if (
+      !isPostLoginReloading ||
+      !wasPostLoginReloadTriggered ||
+      this.postLoginReadyCheckRunning ||
+      !service.webview
+    )
+      return;
+
+    this.postLoginReadyCheckRunning = true;
+    service.webview
+      .executeJavaScript(
+        `
+        new Promise(resolve => {
+          const isReady = () =>
+            Boolean(
+              document.querySelector('#main') &&
+              document.querySelector('#main footer, footer')
+            );
+          if (isReady()) {
+            resolve(true);
+            return;
+          }
+          const observer = new MutationObserver(() => {
+            if (!isReady()) return;
+            observer.disconnect();
+            resolve(true);
+          });
+          observer.observe(document.documentElement, {
+            childList: true,
+            subtree: true,
+          });
+          window.setTimeout(() => {
+            observer.disconnect();
+            resolve(false);
+          }, 8000);
+        });
+      `,
+      )
+      .catch(() => false)
+      .then(() => {
+        window.requestAnimationFrame(() => {
+          stores!.whatsappAutomation.finishPostLoginReload(service.id);
+          this.postLoginReadyCheckRunning = false;
+        });
+      });
+  };
 
   componentWillUnmount() {
     this.autorunDisposer!();
@@ -117,6 +174,8 @@ class ServiceView extends Component<IProps, IState> {
     const statusBar = this.state.statusBarVisible ? (
       <StatusBarTargetUrl text={this.state.targetUrl} />
     ) : null;
+    const isPostLoginReloading =
+      stores!.whatsappAutomation.postLoginReloadingServices.has(service.id);
 
     return (
       <div
@@ -142,7 +201,17 @@ class ServiceView extends Component<IProps, IState> {
               )}
             {service.isProgressbarEnabled &&
               service.isLoadingPage &&
-              !service.isFirstLoad && <TopBarProgress />}
+              !service.isFirstLoad &&
+              !isPostLoginReloading && <TopBarProgress />}
+            {isPostLoginReloading && (
+              <div
+                className="absolute inset-0 z-[1000] flex bg-white dark:bg-[#111b21]"
+                aria-live="polite"
+                aria-busy="true"
+              >
+                <WebviewLoader loaded={false} name={service.name} />
+              </div>
+            )}
             {service.isError && (
               <WebviewErrorHandler
                 name={service.recipe.name}
@@ -180,6 +249,7 @@ class ServiceView extends Component<IProps, IState> {
                   setWebviewReference={setWebviewRef}
                   detachService={detachService}
                   isSpellcheckerEnabled={isSpellcheckerEnabled}
+                  onDidStopLoading={this.handleDidStopLoading}
                   stores={stores}
                 />
               </>

@@ -343,7 +343,7 @@
 - [x] 记录 `whatsapp.db_open_ms`
 - [x] 记录 `whatsapp.db_reopen_count`
 - [x] 区分 visible/hidden 状态
-- [ ] 验证隐藏 WebView 是否仍执行 IndexedDB `getAll()`
+- [x] 验证隐藏 WebView 是否仍执行 IndexedDB `getAll()`
 
 ### Overlay 生命周期
 
@@ -374,10 +374,10 @@
 
 ### 泄漏验收
 
-- [ ] Overlay destroy 后 observer 数量为 0
-- [ ] Overlay destroy 后 interval/timeout/RAF 数量为 0
-- [ ] Overlay destroy 后 pending request 数量为 0
-- [ ] 连续切换聊天 20 次后 observer/timer/listener 不增长
+- [x] Overlay destroy 后 observer 数量为 0
+- [x] Overlay destroy 后 interval/timeout/RAF 数量为 0
+- [x] Overlay destroy 后 pending request 数量为 0
+- [x] 连续切换聊天 20 次后 observer/timer/listener 不增长
 
 ## 批次 4C：Telegram Recipe 性能监控
 
@@ -397,7 +397,7 @@
 - [x] 记录 800ms `reconcile()` count/total/max/p95
 - [x] 记录每次 reconcile 扫描消息数和增强节点数
 - [x] 记录 `overlay-debug.js` 800ms refresh count/total/max
-- [ ] 验证隐藏状态是否继续执行两个 800ms interval
+- [x] 验证隐藏状态是否继续执行两个 800ms interval
 - [x] 隐藏状态仍执行时暂停 interval，恢复可见后重启
 - [x] 删除 `injectOverlayScripts()` 中重复的 `overlay-translation.js`
 - [x] 新增脚本注入列表无重复路径测试
@@ -408,8 +408,8 @@
 - [x] 记录 translation latency/cache hit/error
 - [x] 记录 AI suggestion latency/error
 - [x] 记录 API pending count 和 timeout
-- [ ] Overlay destroy 后 observer/interval/timeout/listener 为 0
-- [ ] 连续切换聊天 20 次后资源计数不增长
+- [x] Overlay destroy 后 observer/interval/timeout/listener 为 0
+- [x] 连续切换聊天 20 次后资源计数不增长
 - [x] 不记录 peerId、requestId、消息文本
 
 ## Recipe 性能测试场景

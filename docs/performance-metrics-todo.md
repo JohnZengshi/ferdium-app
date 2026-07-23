@@ -247,10 +247,10 @@
 
 ### `src/stores/ServicesStore.ts`
 
-- [ ] 转发 WebView 性能指标
-- [ ] 保持现有 WebView 引用和初始化行为
-- [ ] 不借埋点任务重构现有监听器生命周期
-- [ ] 为现有潜在监听器泄漏单独创建 Bug 任务
+- [x] 转发 WebView 性能指标（Service.ts 已处理）
+- [x] 保持现有 WebView 引用和初始化行为
+- [x] 不借埋点任务重构现有监听器生命周期
+- [x] 为现有潜在监听器泄漏单独创建 Bug 任务（docs/bug-webview-listener-leak.md）
 
 ### `src/webview/lib/RecipeWebview.ts`
 
@@ -288,41 +288,41 @@
 
 ### 通用指标
 
-- [ ] `recipe.bootstrap_ms`
-- [ ] `recipe.overlay_ready_ms`
-- [ ] `recipe.overlay_reinject_count`
-- [ ] `recipe.overlay_injection_error`
-- [ ] `recipe.overlay_timeout`
-- [ ] `recipe.destroy_ms`
-- [ ] `recipe.poll_count`
-- [ ] `recipe.poll_total_ms`
-- [ ] `recipe.poll_max_ms`
-- [ ] `recipe.mutation_callback_count`
-- [ ] `recipe.mutation_record_count`
-- [ ] `recipe.mutation_added_nodes`
-- [ ] `recipe.reconcile_count`
-- [ ] `recipe.reconcile_total_ms`
-- [ ] `recipe.reconcile_max_ms`
-- [ ] `recipe.reconcile_p95_ms`
-- [ ] `recipe.dom_nodes_scanned`
-- [ ] `recipe.interval_tick_count`
-- [ ] `recipe.api_request_ms`
-- [ ] `recipe.api_request_error`
-- [ ] `recipe.api_request_timeout`
-- [ ] `recipe.api_pending_count`
-- [ ] `recipe.translation_ms`
-- [ ] `recipe.translation_error`
-- [ ] `recipe.translation_cache_hit`
+- [x] `recipe.bootstrap_ms`
+- [x] `recipe.overlay_ready_ms`
+- [x] `recipe.overlay_reinject_count`
+- [x] `recipe.overlay_injection_error`
+- [x] `recipe.overlay_timeout`
+- [x] `recipe.destroy_ms`
+- [x] `recipe.poll_count`
+- [x] `recipe.poll_total_ms`
+- [x] `recipe.poll_max_ms`
+- [x] `recipe.mutation_callback_count`
+- [x] `recipe.mutation_record_count`
+- [x] `recipe.mutation_added_nodes`
+- [x] `recipe.reconcile_count`
+- [x] `recipe.reconcile_total_ms`
+- [x] `recipe.reconcile_max_ms`
+- [x] `recipe.reconcile_p95_ms`
+- [x] `recipe.dom_nodes_scanned`
+- [x] `recipe.interval_tick_count`
+- [x] `recipe.api_request_ms`
+- [x] `recipe.api_request_error`
+- [x] `recipe.api_request_timeout`
+- [x] `recipe.api_pending_count`
+- [x] `recipe.translation_ms`
+- [x] `recipe.translation_error`
+- [x] `recipe.translation_cache_hit`
 
 ### Recipe 标签
 
-- [ ] `recipe_id=whatsapp|telegram`
-- [ ] `page_variant=web_a|web_k|web_z`
-- [ ] `trigger=poll|mutation|interval|navigation`
-- [ ] `visibility=visible|hidden`
-- [ ] `api_group=conversation|translation|suggestion|profile|other`
-- [ ] `status=ok|error|timeout|destroyed`
-- [ ] 禁止记录 Service ID、JID、peerId、requestId、消息文本、URL、API 参数
+- [x] `recipe_id=whatsapp|telegram`
+- [x] `page_variant=web_a|web_k|web_z`
+- [x] `trigger=poll|mutation|interval|navigation`
+- [x] `visibility=visible|hidden`
+- [x] `api_group=conversation|translation|suggestion|profile|other`
+- [x] `status=ok|error|timeout|destroyed`
+- [x] 禁止记录 Service ID、JID、peerId、requestId、消息文本、URL、API 参数
 
 ### 聚合与终端输出
 
@@ -337,40 +337,40 @@
 
 ### `recipes/recipes/whatsapp/webview.js`
 
-- [ ] 记录 `whatsapp.badge_poll_ms`
-- [ ] 记录 `whatsapp.badge_rows_scanned`
-- [ ] 记录 `whatsapp.badge_poll_error`
-- [ ] 记录 `whatsapp.db_open_ms`
-- [ ] 记录 `whatsapp.db_reopen_count`
-- [ ] 区分 visible/hidden 状态
+- [x] 记录 `whatsapp.badge_poll_ms`
+- [x] 记录 `whatsapp.badge_rows_scanned`
+- [x] 记录 `whatsapp.badge_poll_error`
+- [x] 记录 `whatsapp.db_open_ms`
+- [x] 记录 `whatsapp.db_reopen_count`
+- [x] 区分 visible/hidden 状态
 - [ ] 验证隐藏 WebView 是否仍执行 IndexedDB `getAll()`
 
 ### Overlay 生命周期
 
-- [ ] 记录 `whatsapp.overlay_ready_ms`
-- [ ] 记录 `whatsapp.overlay_reinject_count`
-- [ ] 记录 `whatsapp.overlay_timeout`
-- [ ] 记录 Overlay destroy 耗时
-- [ ] BFCache pagehide/pageshow 分别记录 stop/reset/start
+- [x] 记录 `whatsapp.overlay_ready_ms`
+- [x] 记录 `whatsapp.overlay_reinject_count`
+- [x] 记录 `whatsapp.overlay_timeout`
+- [x] 记录 Overlay destroy 耗时
+- [x] BFCache pagehide/pageshow 分别记录 stop/reset/start
 
 ### Mutation 与 reconcile
 
-- [ ] 在 `_scheduleReconcile()` 统计 mutation 合并次数
-- [ ] 在 `waAI.reconcile()` 记录 count/total/max/p95
-- [ ] 在 `ensureBubbleEnhancements()` 记录待处理容器数量
-- [ ] 记录 `whatsapp.message_nodes_scanned`
-- [ ] 记录 `whatsapp.bubble_enhanced_count`
-- [ ] 记录 `whatsapp.reconcile_coalesced_count`
-- [ ] 埋点不得额外执行 `querySelectorAll`
+- [x] 在 `_scheduleReconcile()` 统计 mutation 合并次数
+- [x] 在 `waAI.reconcile()` 记录 count/total/max/p95
+- [x] 在 `ensureBubbleEnhancements()` 记录待处理容器数量
+- [x] 记录 `whatsapp.message_nodes_scanned`
+- [x] 记录 `whatsapp.bubble_enhanced_count`
+- [x] 记录 `whatsapp.reconcile_coalesced_count`
+- [x] 埋点不得额外执行 `querySelectorAll`
 
 ### 周期任务与 API bridge
 
-- [ ] 记录 2 秒 `_nativeBindingInterval` tick 耗时
-- [ ] 记录 native binding/rebind 数量
-- [ ] 记录 API request 耗时、错误、超时
-- [ ] 记录 duplicate request dropped 数量
-- [ ] 记录 pending request 高水位
-- [ ] 不记录 API args、JID、conversation key、消息文本
+- [x] 记录 2 秒 `_nativeBindingInterval` tick 耗时
+- [x] 记录 native binding/rebind 数量
+- [x] 记录 API request 耗时、错误、超时
+- [x] 记录 duplicate request dropped 数量
+- [x] 记录 pending request 高水位
+- [x] 不记录 API args、JID、conversation key、消息文本
 
 ### 泄漏验收
 
@@ -383,34 +383,34 @@
 
 ### `recipes/recipes/telegram/webview.js`
 
-- [ ] 记录 `telegram.badge_scan_ms`
-- [ ] 记录 `telegram.chat_rows_scanned`
-- [ ] 记录 `telegram.badge_scan_count`
-- [ ] 记录 `telegram.badge_scan_error`
-- [ ] 标签区分 `web_a|web_k|web_z`
-- [ ] 标签区分 `poll|mutation`
-- [ ] 统计 chat-list MutationObserver callback/record 数量
-- [ ] 统计 300ms debounce 合并次数
+- [x] 记录 `telegram.badge_scan_ms`
+- [x] 记录 `telegram.chat_rows_scanned`
+- [x] 记录 `telegram.badge_scan_count`
+- [x] 记录 `telegram.badge_scan_error`
+- [x] 标签区分 `web_a|web_k|web_z`
+- [x] 标签区分 `poll|mutation`
+- [x] 统计 chat-list MutationObserver callback/record 数量
+- [x] 统计 300ms debounce 合并次数
 
 ### Overlay reconcile 与 debug
 
-- [ ] 记录 800ms `reconcile()` count/total/max/p95
-- [ ] 记录每次 reconcile 扫描消息数和增强节点数
-- [ ] 记录 `overlay-debug.js` 800ms refresh count/total/max
+- [x] 记录 800ms `reconcile()` count/total/max/p95
+- [x] 记录每次 reconcile 扫描消息数和增强节点数
+- [x] 记录 `overlay-debug.js` 800ms refresh count/total/max
 - [ ] 验证隐藏状态是否继续执行两个 800ms interval
 - [ ] 隐藏状态仍执行时暂停 interval，恢复可见后重启
-- [ ] 删除 `injectOverlayScripts()` 中重复的 `overlay-translation.js`
-- [ ] 新增脚本注入列表无重复路径测试
+- [x] 删除 `injectOverlayScripts()` 中重复的 `overlay-translation.js`
+- [x] 新增脚本注入列表无重复路径测试
 - [ ] 评估 debug overlay 是否只在性能/Debug 模式注入
 
 ### 翻译、AI 与泄漏
 
-- [ ] 记录 translation latency/cache hit/error
-- [ ] 记录 AI suggestion latency/error
-- [ ] 记录 API pending count 和 timeout
+- [x] 记录 translation latency/cache hit/error
+- [x] 记录 AI suggestion latency/error
+- [x] 记录 API pending count 和 timeout
 - [ ] Overlay destroy 后 observer/interval/timeout/listener 为 0
 - [ ] 连续切换聊天 20 次后资源计数不增长
-- [ ] 不记录 peerId、requestId、消息文本
+- [x] 不记录 peerId、requestId、消息文本
 
 ## Recipe 性能测试场景
 

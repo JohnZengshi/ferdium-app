@@ -1,5 +1,6 @@
 import { MessagePlugin } from 'tdesign-react';
 import { logoutAndRedirect } from '../../helpers/auth-helpers';
+import { trackRequest } from '../../performance/request';
 import { getApiKey } from '../../whatsapp-automation/api/auth';
 /**
  * Custom fetch instance for orval-generated API client.
@@ -151,8 +152,6 @@ export const useCustomInstance = <T>(
   url: string,
   options?: RequestInit,
 ): Promise<T> => {
-  const controller = new AbortController();
-
   // Replace the hardcoded base URL with the actual backend URL from .env
   // Handle both absolute URLs (replace host) and relative paths (prepend base)
   const actualUrl = /^https?:\/\//.test(url)
@@ -172,7 +171,7 @@ export const useCustomInstance = <T>(
 
   const config: RequestInit & { signal?: AbortSignal } = {
     ...options,
-    signal: options?.signal ?? controller.signal,
+    signal: options?.signal ?? undefined,
     headers: {
       ...(!isAkgKey && bearerToken
         ? { Authorization: `Bearer ${bearerToken}` }
@@ -183,53 +182,60 @@ export const useCustomInstance = <T>(
     },
   };
 
-  return fetch(actualUrl, config).then(async response => {
-    const body = await response.json().catch(() => ({}));
+  return trackRequest(
+    'agent_flow',
+    actualUrl,
+    config.method ?? 'GET',
+    signal =>
+      fetch(actualUrl, { ...config, signal }).then(async response => {
+        const body = await response.json().catch(() => ({}));
 
-    if (response.ok) {
-      // ORval expects { data, status, headers } for success
-      // The API returns data directly (no { status, message, data } wrapper)
-      const payload: OrvalResponse<T> = {
-        data: body as T,
-        status: response.status,
-        headers: response.headers,
-      };
-      return payload as T;
-    }
+        if (response.ok) {
+          // ORval expects { data, status, headers } for success
+          // The API returns data directly (no { status, message, data } wrapper)
+          const payload: OrvalResponse<T> = {
+            data: body as T,
+            status: response.status,
+            headers: response.headers,
+          };
+          return payload as T;
+        }
 
-    const parsedBody = parseErrorBody(body);
-    const errorMessage = getErrorMessage(
-      parsedBody,
-      response.status,
-      response.statusText,
-    );
+        const parsedBody = parseErrorBody(body);
+        const errorMessage = getErrorMessage(
+          parsedBody,
+          response.status,
+          response.statusText,
+        );
 
-    // Callers that manage their own error display (e.g. TelegramAccountSlider
-    // bind query) can suppress the toast by passing X-Suppress-Error-Toast: true.
-    const rawHeaders = options?.headers;
-    const suppressToast =
-      rawHeaders &&
-      typeof rawHeaders === 'object' &&
-      !Array.isArray(rawHeaders) &&
-      !(rawHeaders instanceof Headers) &&
-      (rawHeaders as Record<string, string>)['X-Suppress-Error-Toast'] ===
-        'true';
+        // Callers that manage their own error display (e.g. TelegramAccountSlider
+        // bind query) can suppress the toast by passing X-Suppress-Error-Toast: true.
+        const rawHeaders = options?.headers;
+        const suppressToast =
+          rawHeaders &&
+          typeof rawHeaders === 'object' &&
+          !Array.isArray(rawHeaders) &&
+          !(rawHeaders instanceof Headers) &&
+          (rawHeaders as Record<string, string>)['X-Suppress-Error-Toast'] ===
+            'true';
 
-    if (!suppressToast) {
-      MessagePlugin.error(errorMessage);
-    }
-    // Only force-logout when request used our own Bearer JWT. AKG wag_
-    // key failures must not clear user session or profile state.
-    const hasBearerToken = Boolean(bearerToken && !isAkgKey);
-    const sessionExpired =
-      hasBearerToken &&
-      (response.status === 401 ||
-        parsedBody.code === 'AUTHENTICATION_REQUIRED');
-    if (sessionExpired) {
-      handleExpiredToken();
-    }
-    throw new AgentFlowApiError(errorMessage, response, body, parsedBody);
-  });
+        if (!suppressToast) {
+          MessagePlugin.error(errorMessage);
+        }
+        // Only force-logout when request used our own Bearer JWT. AKG wag_
+        // key failures must not clear user session or profile state.
+        const hasBearerToken = Boolean(bearerToken && !isAkgKey);
+        const sessionExpired =
+          hasBearerToken &&
+          (response.status === 401 ||
+            parsedBody.code === 'AUTHENTICATION_REQUIRED');
+        if (sessionExpired) {
+          handleExpiredToken();
+        }
+        throw new AgentFlowApiError(errorMessage, response, body, parsedBody);
+      }),
+    options?.signal,
+  );
 };
 
 export default useCustomInstance;

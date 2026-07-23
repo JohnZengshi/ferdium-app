@@ -2,6 +2,10 @@ import { isEqual } from 'lodash';
 import { action } from 'mobx';
 import Request from './Request';
 
+const isPerformanceMetricsEnabled = (): boolean =>
+  process.env.PERFORMANCE_METRICS === '1' ||
+  process.argv.includes('--performance-metrics');
+
 export default class CachedRequest extends Request {
   _apiCalls: any[] = [];
 
@@ -10,6 +14,11 @@ export default class CachedRequest extends Request {
   execute(...callArgs): this {
     // Do not continue if this request is already loading
     if (this.isWaitingForResponse) {
+      if (isPerformanceMetricsEnabled()) {
+        this.skippedInflight = true;
+        this._triggerMetricHooks();
+        this.skippedInflight = false;
+      }
       return this;
     }
 
@@ -28,6 +37,12 @@ export default class CachedRequest extends Request {
 
     // Do not continue if this request is not invalidated (see above)
     if (!this._isInvalidated) {
+      if (isPerformanceMetricsEnabled()) {
+        this.cacheHit = true;
+        this.durationMs = null;
+        this._triggerMetricHooks();
+        this.cacheHit = false;
+      }
       return this;
     }
 
@@ -45,9 +60,21 @@ export default class CachedRequest extends Request {
     );
 
     // Issue api call & save it as promise that is handled to update the results of the operation
+    if (isPerformanceMetricsEnabled()) {
+      this.startedAt = Date.now();
+      this.durationMs = null;
+      this.cacheHit = false;
+      this.skippedInflight = false;
+    }
     this.promise = new Promise(resolve => {
       this.api[this.method](...callArgs)
         .then(result => {
+          if (isPerformanceMetricsEnabled()) {
+            this.durationMs = Math.max(
+              0,
+              Date.now() - (this.startedAt ?? Date.now()),
+            );
+          }
           setTimeout(
             action(() => {
               this.result = result;
@@ -57,7 +84,7 @@ export default class CachedRequest extends Request {
               this.wasExecuted = true;
               this._isInvalidated = false;
               this.isWaitingForResponse = false;
-              this._triggerHooks();
+              this._triggerAllHooks();
               resolve(result);
             }),
             1,
@@ -66,6 +93,12 @@ export default class CachedRequest extends Request {
         })
         .catch(
           action(error => {
+            if (isPerformanceMetricsEnabled()) {
+              this.durationMs = Math.max(
+                0,
+                Date.now() - (this.startedAt ?? Date.now()),
+              );
+            }
             setTimeout(
               action(() => {
                 this.error = error;
@@ -74,7 +107,7 @@ export default class CachedRequest extends Request {
                 this.wasExecuted = true;
                 this._isInvalidated = false;
                 this.isWaitingForResponse = false;
-                this._triggerHooks();
+                this._triggerAllHooks();
                 // reject(error);
               }),
               1,

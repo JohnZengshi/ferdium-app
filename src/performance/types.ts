@@ -105,6 +105,21 @@ export const METRICS = {
   API_CACHE_HIT: 'api.cache_hit',
   API_REQUEST_SKIPPED_INFLIGHT: 'api.request_skipped_inflight',
   API_REQUEST_RETRY: 'api.request_retry_count',
+  AGENT_FLOW_REQUEST: 'agent_flow.request_ms',
+  AGENT_FLOW_REQUEST_ERROR: 'agent_flow.request_error',
+  AGENT_FLOW_REQUEST_TIMEOUT: 'agent_flow.request_timeout',
+  AGENT_FLOW_PENDING_HIGH_WATERMARK: 'agent_flow.pending_high_watermark',
+  AGENT_FLOW_SSE_CONNECT: 'agent_flow.sse_connect_ms',
+  AGENT_FLOW_SSE_OPEN: 'agent_flow.sse_open_count',
+  AGENT_FLOW_SSE_ERROR: 'agent_flow.sse_error',
+  AGENT_FLOW_SSE_CLOSE: 'agent_flow.sse_close_count',
+  AGENT_FLOW_SSE_UPTIME: 'agent_flow.sse_uptime_ms',
+  AGENT_FLOW_SSE_ACTIVE_HIGH_WATERMARK: 'agent_flow.sse_active_high_watermark',
+  WHATSAPP_AUTOMATION_REQUEST: 'whatsapp_automation.request_ms',
+  WHATSAPP_AUTOMATION_REQUEST_ERROR: 'whatsapp_automation.request_error',
+  WHATSAPP_AUTOMATION_REQUEST_TIMEOUT: 'whatsapp_automation.request_timeout',
+  WHATSAPP_AUTOMATION_PENDING_HIGH_WATERMARK:
+    'whatsapp_automation.pending_high_watermark',
 
   // Local server (batch 3)
   LOCAL_SERVER_PORT_SCAN: 'local_server.port_scan_ms',

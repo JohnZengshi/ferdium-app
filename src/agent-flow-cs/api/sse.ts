@@ -1,3 +1,4 @@
+import { beginSseMetrics, resolveSseApiGroup } from '../../performance/request';
 /**
  * SSE (Server-Sent Events) client for Agent Flow CS streaming endpoints.
  *
@@ -57,6 +58,7 @@ export const subscribeSSE = <T = unknown>(
   const { onEvent, onError, onClose } = handlers;
   const controller = new AbortController();
   let closed = false;
+  const metrics = beginSseMetrics(resolveSseApiGroup(path));
 
   const base = AGENT_FLOW_CS_BASE.replace(/\/+$/, '');
   const url = path.startsWith('http') ? path : `${base}${path}`;
@@ -90,6 +92,7 @@ export const subscribeSSE = <T = unknown>(
         throw new Error('Response body is not readable');
       }
 
+      metrics.open();
       const decoder = new TextDecoder();
       let buffer = '';
 
@@ -118,6 +121,7 @@ export const subscribeSSE = <T = unknown>(
         // Error still closes stream. Notify both hooks so consumers can clean
         // stale subscription state and decide whether to reconnect.
         closed = true;
+        metrics.error();
         try {
           if (onError) {
             onError(error);
@@ -129,8 +133,11 @@ export const subscribeSSE = <T = unknown>(
         }
       }
     } finally {
-      if (!closed) {
+      if (closed) {
+        metrics.close(controller.signal.aborted ? 'cancelled' : 'error');
+      } else {
         closed = true;
+        metrics.close('server_closed');
         onClose?.();
       }
     }
@@ -140,6 +147,7 @@ export const subscribeSSE = <T = unknown>(
     close: () => {
       if (!closed) {
         closed = true;
+        metrics.close('cancelled');
         controller.abort();
       }
     },

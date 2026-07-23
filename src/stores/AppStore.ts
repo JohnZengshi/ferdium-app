@@ -96,9 +96,14 @@ export default class AppStore extends TypedStore {
   @observable getAppCacheSizeRequest = new Request(
     this.api.local,
     'getAppCacheSize',
+    'local',
   );
 
-  @observable clearAppCacheRequest = new Request(this.api.local, 'clearCache');
+  @observable clearAppCacheRequest = new Request(
+    this.api.local,
+    'clearCache',
+    'local',
+  );
 
   @observable autoLaunchOnStart = DEFAULT_APP_SETTINGS.autoLaunchOnStart;
 

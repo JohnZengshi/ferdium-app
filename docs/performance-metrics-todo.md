@@ -46,6 +46,7 @@
 - [x] `app_version`
 - [x] `hardware_acceleration`
 - [x] `service_count_bucket`
+- [ ] `api_group`（仅固定枚举）
 
 禁止采集：
 
@@ -60,6 +61,7 @@
 - [x] 请求参数和正文
 - [x] 响应正文
 - [x] 消息内容
+- [ ] JID、peerId、requestId、手机号、会话 ID
 - [x] 本地绝对路径
 
 ## 批次 1：采集基础设施
@@ -174,53 +176,109 @@
 
 ### `src/stores/lib/Request.ts`
 
-- [ ] 增加 `startedAt`
-- [ ] 增加 `durationMs`
-- [ ] API 调用前记录起点
-- [ ] 成功时计算耗时
-- [ ] 失败时计算耗时
-- [ ] 通过现有 Hook 记录 `api.request_ms`
-- [ ] 失败记录 `api.request_error`
-- [ ] 标签包含固定 `method`
+- [x] 增加 `startedAt`
+- [x] 增加 `durationMs`
+- [x] API 调用前记录起点
+- [x] 成功时计算耗时
+- [x] 失败时计算耗时
+- [x] 通过现有 Hook 记录 `api.request_ms`
+- [x] 失败记录 `api.request_error`
+- [x] 标签包含固定 `method`
 - [ ] 标签包含 `backend=local|remote`
-- [ ] 标签包含 `status=ok|error`
-- [ ] 不记录 `callArgs`
-- [ ] 不记录 `error.message`
-- [ ] 不记录响应或完整 URL
+- [x] 标签包含 `status=ok|error`
+- [x] 不记录 `callArgs`
+- [x] 不记录 `error.message`
+- [x] 不记录响应或完整 URL
 
 ### `src/stores/lib/CachedRequest.ts`
 
-- [ ] 复用 Request 计时字段
-- [ ] 缓存命中记录 `api.cache_hit`
-- [ ] inflight 跳过记录 `api.request_skipped_inflight`
-- [ ] 只有真实 API 调用记录 `api.request_ms`
-- [ ] 避免将缓存命中记录为 0ms API 请求
+- [x] 复用 Request 计时字段
+- [x] 缓存命中记录 `api.cache_hit`
+- [x] inflight 跳过记录 `api.request_skipped_inflight`
+- [x] 只有真实 API 调用记录 `api.request_ms`
+- [x] 避免将缓存命中记录为 0ms API 请求
 - [ ] 成功、失败 Hook 各只触发一次
 
 ### `src/electron/ipc-api/localServer.ts`
 
-- [ ] 记录 `local_server.port_scan_ms`
-- [ ] 记录 `local_server.port_scan_attempts`
-- [ ] 记录 `local_server.start_ms`
-- [ ] 启动失败记录 `local_server.start_error`
-- [ ] 计时覆盖收到启动事件到发送端口信息
-- [ ] 不记录 Profile 邮箱
-- [ ] 不记录 Token
-- [ ] 不记录数据库路径
+- [x] 记录 `local_server.port_scan_ms`
+- [x] 记录 `local_server.port_scan_attempts`
+- [x] 记录 `local_server.start_ms`
+- [x] 启动失败记录 `local_server.start_error`
+- [x] 计时覆盖收到启动事件到发送端口信息
+- [x] 不记录 Profile 邮箱
+- [x] 不记录 Token
+- [x] 不记录数据库路径
 
 ### `src/internal-server/start.ts`
 
-- [ ] 记录 `local_server.profile_dir_ms`
-- [ ] 记录 `local_server.db_prepare_ms`
-- [ ] 记录 `local_server.adonis_boot_ms`
-- [ ] 避免性能采集模块形成循环依赖
-- [ ] 性能采集模块不得依赖 Internal Server、Settings、API
+- [x] 记录 `local_server.profile_dir_ms`
+- [x] 记录 `local_server.db_prepare_ms`
+- [x] 记录 `local_server.adonis_boot_ms`
+- [x] 避免性能采集模块形成循环依赖
+- [x] 性能采集模块不得依赖 Internal Server、Settings、API
 
 ### Token 等待
 
-- [ ] 在 `prepareLocalToken()` 记录 `local_server.token_wait_ms`
-- [ ] 区分已有 Token、IPC 获取、MobX 等待、超时
-- [ ] 不记录 Token 内容
+- [x] 在 `prepareLocalToken()` 记录 `local_server.token_wait_ms`
+- [x] 区分已有 Token、IPC 获取、MobX 等待、超时
+- [x] 不记录 Token 内容
+
+### `src/agent-flow-cs/api/customInstance.ts`
+
+- [x] 在 Orval 中央请求实例统一埋点，不修改 generated API 文件
+- [x] 记录 `agent_flow.request_ms`
+- [x] 请求失败记录 `agent_flow.request_error`
+- [x] 仅在可确认超时时记录 `agent_flow.request_timeout`
+- [x] 记录并发请求数高水位 `agent_flow.pending_high_watermark`
+- [x] 标签只包含固定 `method`、`status`、`api_group`
+- [x] `api_group` 仅使用固定枚举：`auth|agent|conversation|rule|knowledge|digital_human|other`
+- [x] URL 只用于本地固定规则分组，不写入指标、Debug、JSONL
+- [x] 成功、HTTP 失败、网络失败、取消各只结束一次计时
+- [x] 保持现有 Toast、401 登出、错误类型和 Promise 行为不变
+- [x] 禁用性能采集时不创建额外计时器，不修改 Request 配置
+- [x] 不新增重试；未来存在重试机制时再增加 retry 指标
+- [x] 不记录 URL/query、请求参数、响应体、Token、用户/会话标识
+
+### `src/agent-flow-cs/api/sse.ts`
+
+- [x] 在现有 `subscribeSSE()` 中央入口统一埋点
+- [x] 记录 `agent_flow.sse_connect_ms`
+- [x] 连接成功记录 `agent_flow.sse_open_count`
+- [x] 异常断开记录 `agent_flow.sse_error`
+- [x] 主动关闭、服务端关闭、异常关闭记录 `agent_flow.sse_close_count`
+- [x] 记录连接存活时间 `agent_flow.sse_uptime_ms`
+- [x] 记录活跃连接数高水位 `agent_flow.sse_active_high_watermark`
+- [x] close/error/finally 共享一次性结束逻辑，避免重复计数
+- [x] 标签只包含固定 `status`、`api_group`
+- [x] 不新增自动重连；未来实现重连时再增加 reconnect 指标
+- [x] 不记录 SSE 数据、事件 ID、订阅路径、JID、customerId、waSessionId
+- [x] 保持 `onEvent`、`onError`、`onClose` 调用顺序和次数不变
+
+### `src/whatsapp-automation/api/customInstance.ts`
+
+- [x] 在 Orval 中央请求实例统一埋点，不修改 generated API 文件
+- [x] 记录 `whatsapp_automation.request_ms`
+- [x] 请求失败记录 `whatsapp_automation.request_error`
+- [x] 仅在可确认超时时记录 `whatsapp_automation.request_timeout`
+- [x] 记录并发请求数高水位 `whatsapp_automation.pending_high_watermark`
+- [x] 标签只包含固定 `method`、`status`、`api_group`
+- [x] `api_group` 仅使用固定枚举：`auth|session|qr|status|control|other`
+- [x] URL 只用于本地固定规则分组，不写入指标、Debug、JSONL
+- [x] 成功、HTTP 失败、网络失败、取消各只结束一次计时
+- [x] 保持现有响应解包、错误字段和 Promise 行为不变
+- [x] 禁用性能采集时不创建额外计时器，不修改 Request 配置
+- [x] 不新增重试；未来存在重试机制时再增加 retry 指标
+- [x] 不记录 URL/query、请求参数、响应体、API Key、手机号、会话 ID
+
+### Agent Flow / WhatsApp Automation 验收
+
+- [x] 增加最小单元测试：成功、HTTP 失败、网络失败、取消各一条
+- [x] 验证禁用模式不产生指标且原请求行为不变
+- [ ] 验证 generated API 均通过各自 `useCustomInstance()` 自动覆盖
+- [x] 验证 SSE 主动关闭、服务端关闭、异常关闭不重复计数
+- [x] 验证指标与日志不包含敏感字段
+- [x] 使用打包性能模式验证终端 Debug 与 JSONL 输出
 
 ## 批次 4：Service WebView
 

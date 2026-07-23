@@ -2,6 +2,8 @@ import { ipcRenderer } from 'electron';
 import { when } from 'mobx';
 import localStorage from 'mobx-localstorage';
 import { ferdiumLocale, ferdiumVersion } from '../../environment-remote';
+import { recordMetric } from '../../performance/renderer';
+import { METRICS } from '../../performance/types';
 import { localServerToken, needsToken } from '../apiBase';
 
 export const prepareAuthRequest = (
@@ -39,10 +41,21 @@ export const prepareLocalToken = async (requestData: {
 }) => {
   if (!needsToken()) return;
 
+  const startedAt = Date.now();
+  const recordWait = (status: 'existing' | 'ipc' | 'mobx' | 'timeout') =>
+    recordMetric(
+      METRICS.LOCAL_SERVER_TOKEN_WAIT,
+      Date.now() - startedAt,
+      'ms',
+      'renderer',
+      { status },
+    );
+
   const existingToken = localServerToken();
   if (existingToken) {
     // eslint-disable-next-line no-param-reassign
     requestData.headers['X-Aitalk-Local-Token'] = existingToken;
+    recordWait('existing');
     return;
   }
 
@@ -53,6 +66,7 @@ export const prepareLocalToken = async (requestData: {
     if (result?.token) {
       // eslint-disable-next-line no-param-reassign
       requestData.headers['X-Aitalk-Local-Token'] = result.token;
+      recordWait('ipc');
       return;
     }
   } catch {
@@ -63,6 +77,7 @@ export const prepareLocalToken = async (requestData: {
   try {
     await when(() => !!localServerToken(), { timeout: 15_000 });
   } catch {
+    recordWait('timeout');
     // Timed out waiting for local server token; proceed without it.
     // The server will reject the request if the token is truly required,
     // but this prevents an unhandled WHEN_TIMEOUT from breaking the
@@ -74,6 +89,7 @@ export const prepareLocalToken = async (requestData: {
   if (delayedToken) {
     // eslint-disable-next-line no-param-reassign
     requestData.headers['X-Aitalk-Local-Token'] = delayedToken;
+    recordWait('mobx');
   }
 };
 

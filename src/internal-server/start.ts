@@ -22,6 +22,7 @@ import { chmod, ensureDir, readFile, stat, writeFile } from 'fs-extra';
 import { LOCAL_HOSTNAME } from '../config';
 import { isWindows } from '../environment';
 import { resolveProfilePath } from '../helpers/profilePath';
+import { recordMetric } from '../performance/record';
 
 process.env.ENV_PATH = join(__dirname, 'env.ini');
 
@@ -46,6 +47,7 @@ async function ensureDB(dbPath: string): Promise<void> {
 }
 
 export const server = async (userPath: string, port: number, token: string) => {
+  const profileStartedAt = Date.now();
   const profileEmail =
     process.env.PROFILE_EMAIL?.trim().toLowerCase() ||
     process.env.WA_AKG_PROFILE_EMAIL?.trim().toLowerCase();
@@ -54,8 +56,23 @@ export const server = async (userPath: string, port: number, token: string) => {
     profilePath = resolveProfilePath(userPath, profileEmail);
   }
   await ensureDir(profilePath);
+  recordMetric(
+    'local_server.profile_dir_ms',
+    Date.now() - profileStartedAt,
+    'ms',
+    'server',
+    { status: 'ok' },
+  );
   const dbPath = join(profilePath, 'server.sqlite');
+  const dbStartedAt = Date.now();
   await ensureDB(dbPath);
+  recordMetric(
+    'local_server.db_prepare_ms',
+    Date.now() - dbStartedAt,
+    'ms',
+    'server',
+    { status: 'ok' },
+  );
 
   // Note: These env vars are used by adonis as env vars
   process.env.DB_PATH = dbPath;
@@ -64,10 +81,18 @@ export const server = async (userPath: string, port: number, token: string) => {
   process.env.PORT = port.toString();
   process.env.FERDIUM_LOCAL_TOKEN = token;
 
+  const adonisStartedAt = Date.now();
   return new Promise<void>((resolve, reject) => {
     let returned = false;
     hooks.after.httpServer(() => {
       if (!returned) {
+        recordMetric(
+          'local_server.adonis_boot_ms',
+          Date.now() - adonisStartedAt,
+          'ms',
+          'server',
+          { status: 'ok' },
+        );
         resolve();
         returned = true;
       }
@@ -78,6 +103,13 @@ export const server = async (userPath: string, port: number, token: string) => {
       .catch(error => {
         console.error(error);
         if (!returned) {
+          recordMetric(
+            'local_server.adonis_boot_ms',
+            Date.now() - adonisStartedAt,
+            'ms',
+            'server',
+            { status: 'error' },
+          );
           returned = true;
           reject(error);
         }

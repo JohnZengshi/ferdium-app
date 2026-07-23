@@ -20,6 +20,7 @@ import { dirname, join } from 'node:path';
 import { ipcMain } from 'electron';
 
 import { MetricCollector } from './collector';
+import { setMetricRecorder } from './record';
 import { type PerformanceMetric, createMetric } from './types';
 
 const debug = require('../preload-safe-debug')('Ferdium:Performance');
@@ -145,6 +146,7 @@ export function initMainCollector(
 
   collector = new MetricCollector(handleFlush, 60_000);
   collector.enable();
+  setMetricRecorder(recordMetric);
   registerIpc();
 }
 
@@ -171,6 +173,7 @@ export function recordMetric(
 export function flushAndShutdown(): void {
   if (!collector) return;
   collector.disable(); // stops timer + final flush
+  setMetricRecorder(null);
 }
 
 export function getSessionId(): string {

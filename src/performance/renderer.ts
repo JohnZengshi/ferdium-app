@@ -14,6 +14,8 @@
 
 import { ipcRenderer } from 'electron';
 
+import { LOCAL_SERVER } from '../config';
+
 import {
   METRICS,
   type MetricProcess,
@@ -28,6 +30,7 @@ let paintObserver: PerformanceObserver | null = null;
 let longTaskObserver: PerformanceObserver | null = null;
 let longTaskFlushTimer: ReturnType<typeof setInterval> | null = null;
 let eventLoopLagTimer: ReturnType<typeof setInterval> | null = null;
+let removeRequestMetricHook: (() => void) | null = null;
 
 // Long task aggregation buffer
 let longTaskCount = 0;
@@ -109,13 +112,41 @@ export function performanceRequestHook(request: {
   method?: string;
   startedAt?: number | null;
   durationMs?: number | null;
+  backend?: 'local' | 'remote' | 'auto';
+  cacheHit?: boolean;
+  skippedInflight?: boolean;
   isError?: boolean;
   isExecuting?: boolean;
 }): void {
+  const configuredBackend = request.backend;
+  const runtimeServer =
+    globalThis.window?.ferdium?.stores?.settings?.all?.app?.server;
+  const backend =
+    configuredBackend && configuredBackend !== 'auto'
+      ? configuredBackend
+      : runtimeServer === LOCAL_SERVER
+        ? 'local'
+        : 'remote';
+  const tags: Record<string, string> = {
+    method: request.method ?? 'unknown',
+    backend,
+  };
+  if (request.cacheHit) {
+    recordMetric(METRICS.API_CACHE_HIT, 1, 'count', 'renderer', tags);
+    return;
+  }
+  if (request.skippedInflight) {
+    recordMetric(
+      METRICS.API_REQUEST_SKIPPED_INFLIGHT,
+      1,
+      'count',
+      'renderer',
+      tags,
+    );
+    return;
+  }
   // Only record when the request has completed (has duration)
-  if (!request.durationMs || request.durationMs <= 0) return;
-
-  const tags: Record<string, string> = { method: request.method ?? 'unknown' };
+  if (request.durationMs === null || request.durationMs === undefined) return;
 
   if (request.isError) {
     tags.status = 'error';
@@ -160,8 +191,10 @@ export function initRendererPerformance(): void {
   try {
     // eslint-disable-next-line global-require
     const Request = require('../stores/lib/Request').default;
-    if (Request?.registerHook) {
-      Request.registerHook(performanceRequestHook);
+    if (Request?.registerMetricHook) {
+      removeRequestMetricHook = Request.registerMetricHook(
+        performanceRequestHook,
+      );
     }
   } catch {
     // Request module not available in this context
@@ -283,6 +316,8 @@ export function teardownRendererPerformance(): void {
 
   flushEventLoopLag();
 
+  removeRequestMetricHook?.();
+  removeRequestMetricHook = null;
   paintObserver?.disconnect();
   longTaskObserver?.disconnect();
   if (longTaskFlushTimer) {

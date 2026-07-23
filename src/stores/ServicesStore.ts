@@ -65,6 +65,7 @@ export default class ServicesStore extends TypedStore {
   @observable clearCacheRequest: Request = new Request(
     this.api.services,
     'clearCache',
+    'local',
   );
 
   @observable filterNeedle: string | null = null;

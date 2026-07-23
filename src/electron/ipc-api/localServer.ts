@@ -4,6 +4,7 @@ import { type BrowserWindow, app, ipcMain } from 'electron';
 import { LOCAL_HOSTNAME, LOCAL_PORT } from '../../config';
 import { userDataPath } from '../../environment-remote';
 import { server } from '../../internal-server/start';
+import { recordMetric } from '../../performance/record';
 
 const portInUse = (port: number): Promise<boolean> =>
   new Promise(resolve => {
@@ -77,6 +78,7 @@ ipcMain.handle('relaunchForProfile', () => {
 
 export default (params: { mainWindow: BrowserWindow }) => {
   ipcMain.on('startLocalServer', (_event, data?: { profileEmail?: string }) => {
+    const requestStartedAt = Date.now();
     (async () => {
       if (!normalizeProfileEmail(data?.profileEmail)) {
         return;
@@ -89,16 +91,46 @@ export default (params: { mainWindow: BrowserWindow }) => {
         setProfileEmail(data?.profileEmail);
 
         // Find next unused port for server
+        const portScanStartedAt = Date.now();
+        let portScanAttempts = 0;
         port = LOCAL_PORT;
-        // eslint-disable-next-line no-await-in-loop
-        while ((await portInUse(port)) && port < LOCAL_PORT + 10) {
+        let occupied = true;
+        while (occupied) {
+          portScanAttempts += 1;
+          // eslint-disable-next-line no-await-in-loop
+          occupied = await portInUse(port);
+          if (!occupied || port >= LOCAL_PORT + 10) break;
           port += 1;
         }
+        recordMetric(
+          'local_server.port_scan_ms',
+          Date.now() - portScanStartedAt,
+          'ms',
+          'main',
+          { status: 'ok' },
+        );
+        recordMetric(
+          'local_server.port_scan_attempts',
+          portScanAttempts,
+          'count',
+          'main',
+          { status: 'ok' },
+        );
         token = randomBytes(256 / 8).toString('base64url');
 
         try {
           await server(userDataPath(), port, token);
         } catch (error) {
+          recordMetric('local_server.start_error', 1, 'count', 'main', {
+            status: 'error',
+          });
+          recordMetric(
+            'local_server.start_ms',
+            Date.now() - requestStartedAt,
+            'ms',
+            'main',
+            { status: 'error' },
+          );
           // Reset flag on failure so retry is possible
           localServerStarted = false;
           throw error;
@@ -110,6 +142,13 @@ export default (params: { mainWindow: BrowserWindow }) => {
         port,
         token,
       });
+      recordMetric(
+        'local_server.start_ms',
+        Date.now() - requestStartedAt,
+        'ms',
+        'main',
+        { status: 'ok' },
+      );
     })().catch(error => {
       console.error('Error while starting local server', error);
     });

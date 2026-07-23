@@ -2,11 +2,29 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 type Hook = (request: Request) => void;
 
+const isPerformanceMetricsEnabled = (): boolean =>
+  process.env.PERFORMANCE_METRICS === '1' ||
+  process.argv.includes('--performance-metrics');
+
 export default class Request {
   static readonly _hooks: Hook[] = [];
 
-  static registerHook(hook: Hook) {
+  static readonly _metricHooks: Hook[] = [];
+
+  static registerHook(hook: Hook): () => void {
     Request._hooks.push(hook);
+    return () => {
+      const index = Request._hooks.indexOf(hook);
+      if (index >= 0) Request._hooks.splice(index, 1);
+    };
+  }
+
+  static registerMetricHook(hook: Hook): () => void {
+    Request._metricHooks.push(hook);
+    return () => {
+      const index = Request._metricHooks.indexOf(hook);
+      if (index >= 0) Request._metricHooks.splice(index, 1);
+    };
   }
 
   @observable result: any = null;
@@ -25,6 +43,16 @@ export default class Request {
 
   method = '';
 
+  backend: 'local' | 'remote' | 'auto' = 'auto';
+
+  startedAt: number | null = null;
+
+  durationMs: number | null = null;
+
+  cacheHit = false;
+
+  skippedInflight = false;
+
   protected isWaitingForResponse = false;
 
   protected currentApiCall: any = null;
@@ -33,11 +61,12 @@ export default class Request {
 
   reset = () => this._reset();
 
-  constructor(api, method) {
+  constructor(api, method, backend: 'local' | 'remote' | 'auto' = 'auto') {
     makeObservable(this);
 
     this.api = api;
     this.method = method;
+    this.backend = backend;
   }
 
   @action _reset(): this {
@@ -48,13 +77,24 @@ export default class Request {
     this.wasExecuted = false;
     this.isWaitingForResponse = false;
     this.promise = Promise;
+    this.startedAt = null;
+    this.durationMs = null;
+    this.cacheHit = false;
+    this.skippedInflight = false;
 
     return this;
   }
 
   execute(...callArgs: any[]): this {
     // Do not continue if this request is already loading
-    if (this.isWaitingForResponse) return this;
+    if (this.isWaitingForResponse) {
+      if (isPerformanceMetricsEnabled()) {
+        this.skippedInflight = true;
+        this._triggerMetricHooks();
+        this.skippedInflight = false;
+      }
+      return this;
+    }
 
     if (!this.api[this.method]) {
       throw new Error(
@@ -73,9 +113,21 @@ export default class Request {
     );
 
     // Issue api call & save it as promise that is handled to update the results of the operation
+    if (isPerformanceMetricsEnabled()) {
+      this.startedAt = Date.now();
+      this.durationMs = null;
+      this.cacheHit = false;
+      this.skippedInflight = false;
+    }
     this.promise = new Promise((resolve, reject) => {
       this.api[this.method](...callArgs)
         .then(result => {
+          if (isPerformanceMetricsEnabled()) {
+            this.durationMs = Math.max(
+              0,
+              Date.now() - (this.startedAt ?? Date.now()),
+            );
+          }
           setTimeout(
             action(() => {
               this.error = null;
@@ -85,7 +137,7 @@ export default class Request {
               this.isError = false;
               this.wasExecuted = true;
               this.isWaitingForResponse = false;
-              this._triggerHooks();
+              this._triggerAllHooks();
               resolve(result);
             }),
             1,
@@ -94,6 +146,12 @@ export default class Request {
         })
         .catch(
           action(error => {
+            if (isPerformanceMetricsEnabled()) {
+              this.durationMs = Math.max(
+                0,
+                Date.now() - (this.startedAt ?? Date.now()),
+              );
+            }
             setTimeout(
               action(() => {
                 this.error = error;
@@ -101,7 +159,7 @@ export default class Request {
                 this.isError = true;
                 this.wasExecuted = true;
                 this.isWaitingForResponse = false;
-                this._triggerHooks();
+                this._triggerAllHooks();
                 reject(error);
               }),
               1,
@@ -146,5 +204,20 @@ export default class Request {
     for (const hook of Request._hooks) {
       hook(this);
     }
+  }
+
+  _triggerMetricHooks(): void {
+    for (const hook of Request._metricHooks) {
+      try {
+        hook(this);
+      } catch {
+        // Performance hooks must never affect request lifecycle
+      }
+    }
+  }
+
+  _triggerAllHooks(): void {
+    this._triggerHooks();
+    this._triggerMetricHooks();
   }
 }

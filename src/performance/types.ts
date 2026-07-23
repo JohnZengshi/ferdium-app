@@ -42,6 +42,11 @@ export const ALLOWED_TAGS = new Set<string>([
   'app_version',
   'hardware_acceleration',
   'service_count_bucket',
+  'page_variant',
+  'trigger',
+  'visibility',
+  'api_group',
+  'script_group',
 ]);
 
 export const VALID_UNITS = new Set<MetricUnit>([
@@ -122,6 +127,33 @@ export const METRICS = {
   WEBVIEW_SCRIPT_INJECTION_COUNT: 'webview.script_injection_count',
   WEBVIEW_SCRIPT_INJECTION_ERROR: 'webview.script_injection_error',
   WEBVIEW_SCRIPT_ACK_TIMEOUT: 'webview.script_ack_timeout',
+
+  // Recipe bridge (batch 4A)
+  RECIPE_BOOTSTRAP: 'recipe.bootstrap_ms',
+  RECIPE_OVERLAY_READY: 'recipe.overlay_ready_ms',
+  RECIPE_OVERLAY_REINJECT: 'recipe.overlay_reinject_count',
+  RECIPE_OVERLAY_INJECTION_ERROR: 'recipe.overlay_injection_error',
+  RECIPE_OVERLAY_TIMEOUT: 'recipe.overlay_timeout',
+  RECIPE_DESTROY: 'recipe.destroy_ms',
+  RECIPE_POLL_COUNT: 'recipe.poll_count',
+  RECIPE_POLL_TOTAL: 'recipe.poll_total_ms',
+  RECIPE_POLL_MAX: 'recipe.poll_max_ms',
+  RECIPE_MUTATION_CALLBACK: 'recipe.mutation_callback_count',
+  RECIPE_MUTATION_RECORD: 'recipe.mutation_record_count',
+  RECIPE_MUTATION_NODES: 'recipe.mutation_added_nodes',
+  RECIPE_RECONCILE_COUNT: 'recipe.reconcile_count',
+  RECIPE_RECONCILE_TOTAL: 'recipe.reconcile_total_ms',
+  RECIPE_RECONCILE_MAX: 'recipe.reconcile_max_ms',
+  RECIPE_RECONCILE_P95: 'recipe.reconcile_p95_ms',
+  RECIPE_DOM_SCANNED: 'recipe.dom_nodes_scanned',
+  RECIPE_INTERVAL_TICK: 'recipe.interval_tick_count',
+  RECIPE_API_REQUEST: 'recipe.api_request_ms',
+  RECIPE_API_ERROR: 'recipe.api_request_error',
+  RECIPE_API_TIMEOUT: 'recipe.api_request_timeout',
+  RECIPE_API_PENDING: 'recipe.api_pending_count',
+  RECIPE_TRANSLATION: 'recipe.translation_ms',
+  RECIPE_TRANSLATION_ERROR: 'recipe.translation_error',
+  RECIPE_TRANSLATION_CACHE_HIT: 'recipe.translation_cache_hit',
 
   // Resource (batch 5)
   RESOURCE_MAIN_RSS: 'resource.main_rss_mb',

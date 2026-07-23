@@ -226,24 +226,24 @@
 
 ### `src/components/services/content/ServiceWebview.tsx`
 
-- [ ] 实例创建时记录 `createdAt`
-- [ ] `onDidAttach` 记录 `webview.attach_ms`
-- [ ] 监听 `dom-ready`
-- [ ] 记录 `webview.dom_ready_ms`
-- [ ] 监听 `did-stop-loading`
-- [ ] 记录 `webview.load_ms`
-- [ ] 卸载记录 `webview.unmount_count`
-- [ ] 标签只包含 `recipe_id`
-- [ ] 标签包含 `partition_type=general|sandbox`
-- [ ] 标签包含固定 `status`
-- [ ] 不使用 `service.id`
-- [ ] 不使用 `service.name`
-- [ ] 不使用 `service.url`
-- [ ] 不使用 `document.title`
-- [ ] 保存并清理所有新增监听器
-- [ ] 每个导航周期只记录一次
-- [ ] 兼容事件注册前已经完成加载的 WebView
-- [ ] `isLoading() === false` 时记录 `status=already_loaded`
+- [x] 实例创建时记录 `createdAt`
+- [x] `onDidAttach` 记录 `webview.attach_ms`
+- [x] 监听 `dom-ready`
+- [x] 记录 `webview.dom_ready_ms`
+- [x] 监听 `did-stop-loading`
+- [x] 记录 `webview.load_ms`
+- [x] 卸载记录 `webview.unmount_count`
+- [x] 标签只包含 `recipe_id`
+- [x] 标签包含 `partition_type=general|sandbox`
+- [x] 标签包含固定 `status`
+- [x] 不使用 `service.id`
+- [x] 不使用 `service.name`
+- [x] 不使用 `service.url`
+- [x] 不使用 `document.title`
+- [x] 保存并清理所有新增监听器
+- [x] 每个导航周期只记录一次
+- [x] 兼容事件注册前已经完成加载的 WebView
+- [x] `isLoading() === false` 时记录 `status=already_loaded`
 
 ### `src/stores/ServicesStore.ts`
 
@@ -254,19 +254,202 @@
 
 ### `src/webview/lib/RecipeWebview.ts`
 
-- [ ] 测量 `injectJSUnsafe()` 批次总耗时
-- [ ] 记录 `webview.script_injection_batch_ms`
-- [ ] 记录 `webview.script_injection_count`
-- [ ] 记录 `webview.script_injection_error`
-- [ ] ACK 超时记录 `webview.script_ack_timeout`
-- [ ] 通过 `sendToHost('performance:metric')` 上报
-- [ ] 脚本名映射为固定分组
-- [ ] 支持 `recipe` 分组
-- [ ] 支持 `darkmode` 分组
-- [ ] 支持 `notifications` 分组
-- [ ] 支持 `automation` 分组
-- [ ] 未识别脚本归入 `other`
-- [ ] 不把任意脚本名用作标签
+- [x] 测量 `injectJSUnsafe()` 批次总耗时
+- [x] 记录 `webview.script_injection_batch_ms`
+- [x] 记录 `webview.script_injection_count`
+- [x] 记录 `webview.script_injection_error`
+- [x] ACK 超时记录 `webview.script_ack_timeout`
+- [x] 通过 `sendToHost('performance:metric')` 上报
+- [x] 脚本名映射为固定分组
+- [x] 支持 `recipe` 分组
+- [x] 支持 `darkmode` 分组
+- [x] 支持 `notifications` 分组
+- [x] 支持 `automation` 分组
+- [x] 未识别脚本归入 `other`
+- [x] 不把任意脚本名用作标签
+
+## 批次 4A：Recipe 通用性能桥接
+
+### 目标
+
+- [x] 打通 Recipe main world → preload → WebView host → Main collector 链路
+- [x] WhatsApp、Telegram 指标统一汇总到 Main
+- [x] 指标经 Main 的白名单校验、PII 过滤、队列和 JSONL 输出
+- [x] 禁用性能模式时不创建 helper、observer、timer 或 IPC
+- [x] Recipe 不直接连接上传端
+
+### 文件
+
+- [x] 新增 `recipes/shared/performance.js`
+- [x] 修改 `src/webview/recipe.ts`，转发 `ferdium-performance-metric`
+- [x] 修改 `src/models/Service.ts`，将 Recipe 指标转交 Main
+- [x] 扩展 `src/performance/types.ts` 指标名和标签白名单
+- [x] 新增 Recipe 性能桥接单元测试
+
+### 通用指标
+
+- [ ] `recipe.bootstrap_ms`
+- [ ] `recipe.overlay_ready_ms`
+- [ ] `recipe.overlay_reinject_count`
+- [ ] `recipe.overlay_injection_error`
+- [ ] `recipe.overlay_timeout`
+- [ ] `recipe.destroy_ms`
+- [ ] `recipe.poll_count`
+- [ ] `recipe.poll_total_ms`
+- [ ] `recipe.poll_max_ms`
+- [ ] `recipe.mutation_callback_count`
+- [ ] `recipe.mutation_record_count`
+- [ ] `recipe.mutation_added_nodes`
+- [ ] `recipe.reconcile_count`
+- [ ] `recipe.reconcile_total_ms`
+- [ ] `recipe.reconcile_max_ms`
+- [ ] `recipe.reconcile_p95_ms`
+- [ ] `recipe.dom_nodes_scanned`
+- [ ] `recipe.interval_tick_count`
+- [ ] `recipe.api_request_ms`
+- [ ] `recipe.api_request_error`
+- [ ] `recipe.api_request_timeout`
+- [ ] `recipe.api_pending_count`
+- [ ] `recipe.translation_ms`
+- [ ] `recipe.translation_error`
+- [ ] `recipe.translation_cache_hit`
+
+### Recipe 标签
+
+- [ ] `recipe_id=whatsapp|telegram`
+- [ ] `page_variant=web_a|web_k|web_z`
+- [ ] `trigger=poll|mutation|interval|navigation`
+- [ ] `visibility=visible|hidden`
+- [ ] `api_group=conversation|translation|suggestion|profile|other`
+- [ ] `status=ok|error|timeout|destroyed`
+- [ ] 禁止记录 Service ID、JID、peerId、requestId、消息文本、URL、API 参数
+
+### 聚合与终端输出
+
+- [x] Recipe 高频事件仅在 WebView 内做数字聚合
+- [x] 每 60 秒最多向 Host flush 一次聚合指标
+- [x] Main 通过 `Ferdium:Performance` 输出 Recipe 指标到启动终端
+- [x] JSONL 同步写入相同 Recipe 指标
+- [ ] 终端格式示例：`Ferdium:Performance webview:recipe.reconcile_max_ms = 42ms {"recipe_id":"whatsapp"}`
+- [x] 每个 WebView 每分钟发往 Host 的指标不超过 30 条
+
+## 批次 4B：WhatsApp Recipe 性能监控
+
+### `recipes/recipes/whatsapp/webview.js`
+
+- [ ] 记录 `whatsapp.badge_poll_ms`
+- [ ] 记录 `whatsapp.badge_rows_scanned`
+- [ ] 记录 `whatsapp.badge_poll_error`
+- [ ] 记录 `whatsapp.db_open_ms`
+- [ ] 记录 `whatsapp.db_reopen_count`
+- [ ] 区分 visible/hidden 状态
+- [ ] 验证隐藏 WebView 是否仍执行 IndexedDB `getAll()`
+
+### Overlay 生命周期
+
+- [ ] 记录 `whatsapp.overlay_ready_ms`
+- [ ] 记录 `whatsapp.overlay_reinject_count`
+- [ ] 记录 `whatsapp.overlay_timeout`
+- [ ] 记录 Overlay destroy 耗时
+- [ ] BFCache pagehide/pageshow 分别记录 stop/reset/start
+
+### Mutation 与 reconcile
+
+- [ ] 在 `_scheduleReconcile()` 统计 mutation 合并次数
+- [ ] 在 `waAI.reconcile()` 记录 count/total/max/p95
+- [ ] 在 `ensureBubbleEnhancements()` 记录待处理容器数量
+- [ ] 记录 `whatsapp.message_nodes_scanned`
+- [ ] 记录 `whatsapp.bubble_enhanced_count`
+- [ ] 记录 `whatsapp.reconcile_coalesced_count`
+- [ ] 埋点不得额外执行 `querySelectorAll`
+
+### 周期任务与 API bridge
+
+- [ ] 记录 2 秒 `_nativeBindingInterval` tick 耗时
+- [ ] 记录 native binding/rebind 数量
+- [ ] 记录 API request 耗时、错误、超时
+- [ ] 记录 duplicate request dropped 数量
+- [ ] 记录 pending request 高水位
+- [ ] 不记录 API args、JID、conversation key、消息文本
+
+### 泄漏验收
+
+- [ ] Overlay destroy 后 observer 数量为 0
+- [ ] Overlay destroy 后 interval/timeout/RAF 数量为 0
+- [ ] Overlay destroy 后 pending request 数量为 0
+- [ ] 连续切换聊天 20 次后 observer/timer/listener 不增长
+
+## 批次 4C：Telegram Recipe 性能监控
+
+### `recipes/recipes/telegram/webview.js`
+
+- [ ] 记录 `telegram.badge_scan_ms`
+- [ ] 记录 `telegram.chat_rows_scanned`
+- [ ] 记录 `telegram.badge_scan_count`
+- [ ] 记录 `telegram.badge_scan_error`
+- [ ] 标签区分 `web_a|web_k|web_z`
+- [ ] 标签区分 `poll|mutation`
+- [ ] 统计 chat-list MutationObserver callback/record 数量
+- [ ] 统计 300ms debounce 合并次数
+
+### Overlay reconcile 与 debug
+
+- [ ] 记录 800ms `reconcile()` count/total/max/p95
+- [ ] 记录每次 reconcile 扫描消息数和增强节点数
+- [ ] 记录 `overlay-debug.js` 800ms refresh count/total/max
+- [ ] 验证隐藏状态是否继续执行两个 800ms interval
+- [ ] 隐藏状态仍执行时暂停 interval，恢复可见后重启
+- [ ] 删除 `injectOverlayScripts()` 中重复的 `overlay-translation.js`
+- [ ] 新增脚本注入列表无重复路径测试
+- [ ] 评估 debug overlay 是否只在性能/Debug 模式注入
+
+### 翻译、AI 与泄漏
+
+- [ ] 记录 translation latency/cache hit/error
+- [ ] 记录 AI suggestion latency/error
+- [ ] 记录 API pending count 和 timeout
+- [ ] Overlay destroy 后 observer/interval/timeout/listener 为 0
+- [ ] 连续切换聊天 20 次后资源计数不增长
+- [ ] 不记录 peerId、requestId、消息文本
+
+## Recipe 性能测试场景
+
+### WhatsApp
+
+- [ ] 空账号
+- [ ] 100/500/2000 个聊天
+- [ ] 打开 1000 条消息的会话
+- [ ] 连续切换聊天 20 次
+- [ ] 滚动历史消息 2 分钟
+- [ ] 开启/关闭自动翻译
+- [ ] 隐藏窗口 5 分钟
+- [ ] BFCache pagehide/pageshow
+- [ ] 网络断开/恢复
+
+### Telegram
+
+- [ ] Web A / Web K / Web Z
+- [ ] 100/500/2000 个聊天
+- [ ] 连续切换聊天 20 次
+- [ ] 滚动历史消息 2 分钟
+- [ ] 翻译开/关
+- [ ] AI suggestion
+- [ ] Debug overlay 显示/隐藏
+- [ ] 窗口隐藏 5 分钟
+- [ ] hashchange/BFCache
+
+### Recipe 验收
+
+- [ ] Overlay ready p50/p95
+- [ ] reconcile p50/p95/max
+- [ ] poll/scan p50/p95/max
+- [ ] 每分钟 DOM 扫描节点数
+- [ ] visible/hidden CPU 对比
+- [ ] 聊天切换后资源计数回落
+- [ ] API timeout/error rate
+- [ ] 连续切换 20 次后 observer/timer/listener 不增长
+- [ ] 单个 WebView 额外 CPU 低于 0.5%
+- [ ] 单个 WebView 额外内存低于 2 MB
 
 ## 批次 5：资源与长稳
 
@@ -542,7 +725,10 @@ pnpm start:performance:packaged -- --reuse
 - [x] 批次 1：基础设施，预计 1 天
 - [ ] 批次 2：启动链路，预计 1 天
 - [ ] 批次 3：API 与本地服务，预计 1 天
-- [ ] 批次 4：WebView，预计 1～2 天
+- [ ] 批次 4：Service WebView，预计 1～2 天
+- [ ] 批次 4A：Recipe 通用性能桥接，预计 1～2 天
+- [ ] 批次 4B：WhatsApp Recipe，预计 1～2 天
+- [ ] 批次 4C：Telegram Recipe，预计 1～2 天
 - [ ] 批次 5：资源与长稳，预计 1 天
 - [ ] 本地验证至少 3 天
 - [ ] 批次 6：生产上传，独立评审、独立实施

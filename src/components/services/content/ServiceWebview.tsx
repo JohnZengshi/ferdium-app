@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import ElectronWebView from 'react-electron-web-view';
 import type ServiceModel from '../../../models/Service';
+import { recordMetric } from '../../../performance/renderer';
 import type { RealStores } from '../../../stores';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:Services');
@@ -25,6 +26,22 @@ class ServiceWebview extends Component<IProps> {
   @observable webview: ElectronWebView | null = null;
 
   private _didStopLoadingWebview: ElectronWebView | null = null;
+
+  private readonly _createdAt = performance.now();
+
+  private _navigationStartedAt = performance.now();
+
+  private _domReadyRecorded = false;
+
+  private _loadRecorded = false;
+
+  private _missedStart = false;
+
+  private _metricListeners: {
+    view: ElectronWebView;
+    type: string;
+    listener: EventListener;
+  }[] = [];
 
   constructor(props: IProps) {
     super(props);
@@ -60,6 +77,119 @@ class ServiceWebview extends Component<IProps> {
     );
   }
 
+  private _metricTags(): Record<string, string> {
+    return {
+      recipe_id: this.props.service.recipe.id,
+      partition_type: this.props.service.partition.includes('sandbox')
+        ? 'sandbox'
+        : 'general',
+    };
+  }
+
+  private _removeMetricListeners(): void {
+    for (const { view, type, listener } of this._metricListeners) {
+      view.removeEventListener(type, listener);
+    }
+    this._metricListeners = [];
+  }
+
+  private _addMetricListener(
+    view: ElectronWebView,
+    type: string,
+    listener: EventListener,
+  ): void {
+    view.addEventListener(type, listener);
+    this._metricListeners.push({ view, type, listener });
+  }
+
+  private _attachMetricListeners(view: ElectronWebView): void {
+    if (process.env.PERFORMANCE_METRICS !== '1') return;
+    this._removeMetricListeners();
+    this._navigationStartedAt = performance.now();
+    this._domReadyRecorded = false;
+    this._loadRecorded = false;
+
+    // Electron #31918: did-start-loading may fire before listeners are
+    // registered. If the WebView is already loading, we missed the start
+    // event and _navigationStartedAt is only an approximation (attach time).
+    try {
+      this._missedStart =
+        typeof view.isLoading === 'function' && view.isLoading();
+    } catch {
+      this._missedStart = false;
+    }
+
+    const tags = this._metricTags();
+    recordMetric(
+      'webview.attach_ms',
+      Math.max(0, performance.now() - this._createdAt),
+      'ms',
+      'webview',
+      { ...tags, status: 'ok' },
+    );
+
+    this._addMetricListener(view, 'did-start-loading', () => {
+      this._navigationStartedAt = performance.now();
+      this._domReadyRecorded = false;
+      this._loadRecorded = false;
+      this._missedStart = false;
+    });
+    this._addMetricListener(view, 'dom-ready', () => {
+      if (this._domReadyRecorded) return;
+      this._domReadyRecorded = true;
+      recordMetric(
+        'webview.dom_ready_ms',
+        Math.max(0, performance.now() - this._navigationStartedAt),
+        'ms',
+        'webview',
+        { ...tags, status: this._missedStart ? 'missed_start' : 'ok' },
+      );
+    });
+    this._addMetricListener(view, 'did-stop-loading', () => {
+      if (this._loadRecorded) return;
+      this._loadRecorded = true;
+      recordMetric(
+        'webview.load_ms',
+        Math.max(0, performance.now() - this._navigationStartedAt),
+        'ms',
+        'webview',
+        { ...tags, status: this._missedStart ? 'missed_start' : 'ok' },
+      );
+    });
+
+    try {
+      if (
+        typeof view.isLoading === 'function' &&
+        !view.isLoading() &&
+        view.getURL() !== 'about:blank'
+      ) {
+        const elapsed = Math.max(
+          0,
+          performance.now() - this._navigationStartedAt,
+        );
+        if (!this._domReadyRecorded) {
+          this._domReadyRecorded = true;
+          recordMetric('webview.dom_ready_ms', elapsed, 'ms', 'webview', {
+            ...tags,
+            status: 'already_loaded',
+          });
+        }
+        if (!this._loadRecorded) {
+          this._loadRecorded = true;
+          recordMetric('webview.load_ms', elapsed, 'ms', 'webview', {
+            ...tags,
+            status: 'already_loaded',
+          });
+        }
+      }
+    } catch (error) {
+      debug(
+        'Could not check WebView loading state for performance metrics',
+        error,
+      );
+    }
+  }
+
   componentDidUpdate(prevProps: IProps): void {
     // 服务重建后新的 Service 实例丢失 webview 引用
     if (prevProps.service !== this.props.service && this.webview?.view) {
@@ -72,6 +202,11 @@ class ServiceWebview extends Component<IProps> {
 
   componentWillUnmount(): void {
     const { service, detachService } = this.props;
+    recordMetric('webview.unmount_count', 1, 'count', 'webview', {
+      ...this._metricTags(),
+      status: 'destroyed',
+    });
+    this._removeMetricListeners();
     detachService({ service });
     if (this._didStopLoadingWebview?.view) {
       this._didStopLoadingWebview.view.removeEventListener(
@@ -142,6 +277,7 @@ class ServiceWebview extends Component<IProps> {
         ref={webview => {
           this._setWebview(webview);
           if (webview?.view && webview !== this._didStopLoadingWebview) {
+            this._attachMetricListeners(webview.view);
             webview.view.addEventListener(
               'did-stop-loading',
               this.refocusWebview,

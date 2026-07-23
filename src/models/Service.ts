@@ -707,6 +707,12 @@ export default class Service {
       const genAtStart = binding.generation;
       const eventWebview = webview;
       switch (e.channel) {
+        case 'performance:metric': {
+          // Forward unconditionally; main collector validates and no-ops
+          // when performance mode is disabled.
+          ipcRenderer.send('performance:metric', e.args[0]);
+          break;
+        }
         case 'inject-js-unsafe': {
           const scripts = e.args
             .map((script, index) => {

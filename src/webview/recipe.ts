@@ -168,6 +168,7 @@ contextBridge.exposeInMainWorld('ferdium', {
     );
   },
   getDisplayMediaSelector,
+  performanceEnabled: process.env.PERFORMANCE_METRICS === '1',
 });
 
 ipcRenderer.sendToHost(
@@ -178,6 +179,8 @@ ipcRenderer.sendToHost(
 );
 
 // ─── Agent Flow CS API Bridge ───
+const RECIPE_PERFORMANCE_ENABLED = process.env.PERFORMANCE_METRICS === '1';
+
 const isAgentFlowMessagingHost = () => {
   const { hostname } = window.location;
   return (
@@ -198,6 +201,18 @@ if (!(window as any).__waAiPreloadBridgeRegistered) {
   // Verify origin: only accept messages from the same window (self-origin)
   window.addEventListener('message', event => {
     if (event.origin !== window.location.origin) return;
+
+    if (event.data?.type === 'ferdium-performance-metric') {
+      if (RECIPE_PERFORMANCE_ENABLED) {
+        ipcRenderer.sendToHost('performance:metric', {
+          ...event.data.payload,
+          process: 'webview',
+          timestamp: Date.now(),
+        });
+      }
+      return;
+    }
+
     if (!isAgentFlowMessagingHost()) return;
     if (event.data?.type === 'wa-ai-api-request') {
       ipcRenderer.sendToHost('wa-ai-api-request', event.data.payload);
@@ -425,6 +440,7 @@ class RecipeController {
         dialogTitleHandler,
         notificationsHandler,
         sessionHandler,
+        RECIPE_PERFORMANCE_ENABLED,
       );
       if (existsSync(modulePath)) {
         require(modulePath)(this.recipe, { ...config, recipe });

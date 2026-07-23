@@ -27,16 +27,65 @@ class RecipeWebview {
 
   injectJSUnsafeRunning = false;
 
+  private recordInjectionMetric(
+    name: string,
+    value: number,
+    unit: 'ms' | 'count',
+    tags?: Record<string, string>,
+  ): void {
+    if (!this.performanceEnabled) return;
+    try {
+      ipcRenderer.sendToHost('performance:metric', {
+        name,
+        value,
+        unit,
+        process: 'webview',
+        timestamp: Date.now(),
+        tags,
+      });
+    } catch {
+      // Performance diagnostics must never affect recipe execution.
+    }
+  }
+
+  private scriptGroup(name: string): string {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('darkmode')) return 'darkmode';
+    if (lowerName.includes('notification')) return 'notifications';
+    if (lowerName.includes('automation') || lowerName.includes('-ai-')) {
+      return 'automation';
+    }
+    if (
+      /recipe|overlay|webview|performance|dom-utils|idb-utils|observers|retry/.test(
+        lowerName,
+      )
+    ) {
+      return 'recipe';
+    }
+    return 'other';
+  }
+
+  performanceEnabled = false;
+
   constructor(
     badgeHandler,
     dialogTitleHandler,
     notificationsHandler,
     sessionHandler,
+    performanceEnabled = false,
   ) {
     this.badgeHandler = badgeHandler;
     this.dialogTitleHandler = dialogTitleHandler;
     this.notificationsHandler = notificationsHandler;
     this.sessionHandler = sessionHandler;
+    this.performanceEnabled = performanceEnabled;
+    // TODO: remove after confirming preload env propagation
+    console.warn(
+      '[perf] RecipeWebview performanceEnabled=',
+      this.performanceEnabled,
+      'env=',
+      process.env.PERFORMANCE_METRICS,
+    );
 
     ipcRenderer.on('poll', () => {
       this.loopFunc();
@@ -175,6 +224,8 @@ class RecipeWebview {
 
     const runBatch = () =>
       new Promise<void>((resolve, reject) => {
+        const metricsEnabled = this.performanceEnabled;
+        const startedAt = metricsEnabled ? performance.now() : 0;
         let index = 0;
         let timeout: ReturnType<typeof setTimeout> | undefined;
         let currentSeq: number | undefined;
@@ -189,7 +240,41 @@ class RecipeWebview {
             timeout = undefined;
           }
           ipcRenderer.removeListener('inject-js-unsafe-ack', onAck);
+          if (metricsEnabled) {
+            this.recordInjectionMetric(
+              'webview.script_injection_batch_ms',
+              Math.max(0, performance.now() - startedAt),
+              'ms',
+            );
+            const groups = new Map<string, number>();
+            for (const script of scripts) {
+              const group = this.scriptGroup(script.name);
+              groups.set(group, (groups.get(group) ?? 0) + 1);
+            }
+            for (const [group, count] of groups) {
+              this.recordInjectionMetric(
+                'webview.script_injection_count',
+                count,
+                'count',
+                { script_group: group },
+              );
+            }
+          }
           if (error) {
+            const currentScript = scripts[index];
+            const tags = currentScript
+              ? { script_group: this.scriptGroup(currentScript.name) }
+              : undefined;
+            if (metricsEnabled) {
+              this.recordInjectionMetric(
+                error instanceof Error && error.message.includes('ACK timeout')
+                  ? 'webview.script_ack_timeout'
+                  : 'webview.script_injection_error',
+                1,
+                'count',
+                tags,
+              );
+            }
             reject(error);
           } else {
             resolve();

@@ -1,5 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 
+const MODULE_COLLAPSED_STORAGE_KEY = 'ferdium.moduleCollapsed';
+
 export type FerdiumModule =
   | 'home'
   | 'whatsapp'
@@ -77,6 +79,40 @@ class NavigationStore {
 
   constructor() {
     makeObservable(this);
+    this.restoreModuleCollapsed();
+  }
+
+  restoreModuleCollapsed() {
+    if (typeof window === 'undefined') return;
+    try {
+      const saved = window.localStorage.getItem(MODULE_COLLAPSED_STORAGE_KEY);
+      if (!saved) return;
+      const parsed = JSON.parse(saved) as Partial<
+        Record<FerdiumModule, boolean>
+      >;
+      for (const module of Object.keys(
+        this.moduleCollapsed,
+      ) as FerdiumModule[]) {
+        const collapsed = parsed[module];
+        if (typeof collapsed === 'boolean') {
+          this.moduleCollapsed[module] = collapsed;
+        }
+      }
+    } catch {
+      window.localStorage.removeItem(MODULE_COLLAPSED_STORAGE_KEY);
+    }
+  }
+
+  persistModuleCollapsed() {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(
+        MODULE_COLLAPSED_STORAGE_KEY,
+        JSON.stringify(this.moduleCollapsed),
+      );
+    } catch {
+      // Keep the in-memory state when storage is unavailable.
+    }
   }
 
   @action
@@ -99,6 +135,7 @@ class NavigationStore {
   @action
   toggleModuleCollapsed(module: FerdiumModule) {
     this.moduleCollapsed[module] = !this.moduleCollapsed[module];
+    this.persistModuleCollapsed();
   }
 
   @action

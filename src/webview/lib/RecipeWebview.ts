@@ -79,14 +79,6 @@ class RecipeWebview {
     this.notificationsHandler = notificationsHandler;
     this.sessionHandler = sessionHandler;
     this.performanceEnabled = performanceEnabled;
-    // TODO: remove after confirming preload env propagation
-    console.warn(
-      '[perf] RecipeWebview performanceEnabled=',
-      this.performanceEnabled,
-      'env=',
-      process.env.PERFORMANCE_METRICS,
-    );
-
     ipcRenderer.on('poll', () => {
       this.loopFunc();
 

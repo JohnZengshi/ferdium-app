@@ -57,6 +57,18 @@ function createBridge(options: { enabled: boolean; hidden?: boolean }) {
             value?: number,
             tags?: Record<string, string>,
           ) => void;
+          gauge: (
+            name: string,
+            value: number,
+            unit: string,
+            tags?: Record<string, string>,
+          ) => void;
+          record: (
+            name: string,
+            value: number,
+            unit: string,
+            tags?: Record<string, string>,
+          ) => void;
           flush: () => void;
           destroy: () => void;
         };
@@ -107,6 +119,19 @@ describe('Recipe performance bridge', () => {
       visibility: 'visible',
       trigger: 'mutation',
     });
+  });
+
+  it('emits exact business metric names through record', () => {
+    const { bridge, messages } = createBridge({ enabled: true });
+
+    bridge.record('whatsapp.badge_poll_ms', 12, 'ms');
+    bridge.record('telegram.badge_scan_ms', 8, 'ms');
+    bridge.flush();
+
+    expect(messages.map(message => message.payload.name)).toEqual([
+      'whatsapp.badge_poll_ms',
+      'telegram.badge_scan_ms',
+    ]);
   });
 
   it('cleans timers and queued metrics on destroy', () => {

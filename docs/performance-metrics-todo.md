@@ -330,7 +330,7 @@
 - [x] 每 60 秒最多向 Host flush 一次聚合指标
 - [x] Main 通过 `Ferdium:Performance` 输出 Recipe 指标到启动终端
 - [x] JSONL 同步写入相同 Recipe 指标
-- [ ] 终端格式示例：`Ferdium:Performance webview:recipe.reconcile_max_ms = 42ms {"recipe_id":"whatsapp"}`
+- [x] 终端格式示例：`Ferdium:Performance webview:recipe.reconcile_max_ms = 42ms {"recipe_id":"whatsapp"}`
 - [x] 每个 WebView 每分钟发往 Host 的指标不超过 30 条
 
 ## 批次 4B：WhatsApp Recipe 性能监控
@@ -398,10 +398,10 @@
 - [x] 记录每次 reconcile 扫描消息数和增强节点数
 - [x] 记录 `overlay-debug.js` 800ms refresh count/total/max
 - [ ] 验证隐藏状态是否继续执行两个 800ms interval
-- [ ] 隐藏状态仍执行时暂停 interval，恢复可见后重启
+- [x] 隐藏状态仍执行时暂停 interval，恢复可见后重启
 - [x] 删除 `injectOverlayScripts()` 中重复的 `overlay-translation.js`
 - [x] 新增脚本注入列表无重复路径测试
-- [ ] 评估 debug overlay 是否只在性能/Debug 模式注入
+- [x] 评估 debug overlay 是否只在性能/Debug 模式注入
 
 ### 翻译、AI 与泄漏
 

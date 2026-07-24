@@ -2525,6 +2525,24 @@ export interface AppApiSchemasOwnersWhatsAppBindRequest {
   digital_human_id?: string | null;
 }
 
+export type TelegramLoginPasswordResponseStatus = typeof TelegramLoginPasswordResponseStatus[keyof typeof TelegramLoginPasswordResponseStatus];
+
+
+export const TelegramLoginPasswordResponseStatus = {
+  authorized: 'authorized',
+  password_submitted: 'password_submitted',
+} as const;
+
+export type TelegramLoginPasswordResponseMe = { [key: string]: unknown } | null;
+
+/**
+ * /login/password response. status=authorized means Telegram authorized the session; password_submitted means the password was accepted but authorization is pending (e.g. QR 2FA, or legacy {ok: true}).
+ */
+export interface TelegramLoginPasswordResponse {
+  status: TelegramLoginPasswordResponseStatus;
+  me?: TelegramLoginPasswordResponseMe;
+}
+
 export type ListRulesApiV1RulesGetParams = {
 rule_type?: string | null;
 /**
@@ -3245,8 +3263,6 @@ export type SendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPos
 export type LoginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePost200 = { [key: string]: unknown };
 
 export type LoginCodeApiV1TelegramInstancesInstanceIdLoginCodePost200 = { [key: string]: unknown };
-
-export type LoginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPost200 = { [key: string]: unknown };
 
 export type SyncTelegramHistoryApiV1TelegramInstancesInstanceIdSyncHistoryPost202 = { [key: string]: unknown };
 

@@ -16,7 +16,6 @@ import type {
   ListTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGet200Item,
   ListTelegramMessagesApiV1TelegramInstancesInstanceIdChatsChatIdMessagesGetParams,
   LoginCodeApiV1TelegramInstancesInstanceIdLoginCodePost200,
-  LoginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPost200,
   LoginPhoneApiV1TelegramInstancesInstanceIdLoginPhonePost200,
   SendTelegramMediaApiV1TelegramInstancesInstanceIdChatsChatIdMediaPost200,
   SendTelegramTextApiV1TelegramInstancesInstanceIdChatsChatIdMessagesPost200,
@@ -29,6 +28,7 @@ import type {
   TelegramInstanceUpdateRequest,
   TelegramLoginCodeRequest,
   TelegramLoginPasswordRequest,
+  TelegramLoginPasswordResponse,
   TelegramLoginPhoneRequest,
   TelegramSendTextRequest,
   TelegramWebhookApiV1TelegramWebhooksInstanceIdPost200,
@@ -1831,7 +1831,7 @@ export const loginCodeApiV1TelegramInstancesInstanceIdLoginCodePost = async (ins
 
 
 export type loginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPostResponse200 = {
-  data: LoginPasswordApiV1TelegramInstancesInstanceIdLoginPasswordPost200
+  data: TelegramLoginPasswordResponse
   status: 200
 }
 

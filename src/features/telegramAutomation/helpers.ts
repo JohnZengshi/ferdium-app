@@ -53,6 +53,39 @@ export const isQrEvent = (event: string, data: unknown): boolean => {
   return type === 'qr' || type === 'qr_code';
 };
 
+// --- HTTP login response classifiers (for /login/phone|code|password bodies) ---
+
+const responseTokens = (data: unknown): string[] => {
+  if (!data || typeof data !== 'object') return [];
+  const obj = data as Record<string, unknown>;
+  const status = typeof obj.status === 'string' ? obj.status : '';
+  const type = typeof obj.type === 'string' ? obj.type : '';
+  return `${status} ${type}`.trim().toLowerCase().split(/\s+/).filter(Boolean);
+};
+
+// 2FA password prompt: an explicit `password_required` status/type.
+export const isPasswordPayload = (data: unknown): boolean =>
+  responseTokens(data).includes('password_required');
+
+// Password was accepted/submitted but final authorization is not yet confirmed.
+// Covers the new `password_submitted` status and the legacy `{ ok: true }` body,
+// which only means the request was accepted - NOT that Telegram authorized.
+export const isPasswordSubmittedPayload = (data: unknown): boolean => {
+  if (!data || typeof data !== 'object') return false;
+  const obj = data as Record<string, unknown>;
+  if (obj.status === 'password_submitted' || obj.type === 'password_submitted')
+    return true;
+  return obj.ok === true;
+};
+
+// Authorization is acknowledged ONLY on an explicit `authorized` status/type.
+// `{ ok: true }` and `unauthorized`/`not_authorized` must NOT match.
+export const isAuthorizedPayload = (data: unknown): boolean => {
+  if (!data || typeof data !== 'object') return false;
+  const obj = data as Record<string, unknown>;
+  return obj.status === 'authorized' || obj.type === 'authorized';
+};
+
 /**
  * Proxy shape mirroring `ServiceProxy` from EditServiceDrawer (kept structural
  * to avoid a features -> components/ui type dependency).

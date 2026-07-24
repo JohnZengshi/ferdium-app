@@ -42,7 +42,10 @@ import {
   type TelegramProxyLike,
   extractQrUrl,
   isAuthorizedEvent,
+  isAuthorizedPayload,
+  isPasswordPayload,
   isPasswordRequired,
+  isPasswordSubmittedPayload,
   isQrEvent,
   parseInstanceId,
   serviceProxyToTelegramProxyUrl,
@@ -86,27 +89,6 @@ const messages = defineMessages({
     defaultMessage: 'Continue',
   },
 });
-
-const payloadStatus = (data: unknown): string => {
-  if (!data || typeof data !== 'object') return '';
-  const obj = data as Record<string, unknown>;
-  const status = typeof obj.status === 'string' ? obj.status : '';
-  const type = typeof obj.type === 'string' ? obj.type : '';
-  return `${status} ${type}`.trim().toLowerCase();
-};
-
-// Treat `{status:'password_required'}` (or equivalent status/type) as a 2FA transition.
-const isPasswordPayload = (data: unknown): boolean =>
-  payloadStatus(data).includes('password');
-
-// Treat `{ok:true}` or an authorized status/type as explicit authorization.
-const isAuthorizedPayload = (data: unknown): boolean => {
-  if (data && typeof data === 'object') {
-    const obj = data as Record<string, unknown>;
-    if (obj.ok === true) return true;
-  }
-  return payloadStatus(data).includes('authorized');
-};
 
 const escapeModalString = (s: string): string =>
   s.replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('</', '<\\/');
@@ -1181,6 +1163,22 @@ export default class TelegramAutomationStore extends FeatureStore {
               );
             });
           }
+          // A pending 2FA password that Telegram rejected surfaces here as an
+          // `error` status. Keep the password page open and prompt retry instead
+          // of silently leaving the user on a stale "submitted" state.
+          if (
+            status === 'error' &&
+            this._serviceBindStatus.get(instanceId) ===
+              TELEGRAM_BIND_STATUS.WAITING_FOR_PASSWORD &&
+            !this._cancelledServiceIds.has(instanceId)
+          ) {
+            this._setModalLoading(instanceId, false);
+            this._setModalView(instanceId, TELEGRAM_LOGIN_STEP.PASSWORD);
+            this._showModalError(
+              instanceId,
+              'Incorrect password, please try again',
+            );
+          }
           this._injectOrUpdateStatusIndicator(
             instanceId,
             this._fluxStatusToDisplay(status),
@@ -1597,6 +1595,12 @@ export default class TelegramAutomationStore extends FeatureStore {
     }
     if (isPasswordPayload(data)) {
       this._showModalError(serviceId, 'Incorrect password, please try again');
+      return;
+    }
+    // Password accepted/submitted but authorization not yet confirmed (e.g. QR
+    // 2FA, or legacy Flux `{ ok: true }`). Keep the password page open and wait
+    // for the global status stream to emit `authorized` or `error`.
+    if (isPasswordSubmittedPayload(data)) {
       return;
     }
     this._showModalError(serviceId, 'Failed to verify password');

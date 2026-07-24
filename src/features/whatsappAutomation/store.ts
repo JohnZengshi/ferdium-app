@@ -271,7 +271,14 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       session_id: serviceId,
       digital_human_id: digitalHumanId,
     })
-      .then(() => this.clearPendingDigitalHuman(serviceId))
+      .then(() => {
+        this.clearPendingDigitalHuman(serviceId);
+        window.dispatchEvent(
+          new CustomEvent('account-persona-binding-updated', {
+            detail: { platform: 'whatsapp', accountId: serviceId },
+          }),
+        );
+      })
       .catch(error => debug('WhatsApp persona binding failed:', error));
   }
 

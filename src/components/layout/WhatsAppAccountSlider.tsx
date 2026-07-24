@@ -239,6 +239,33 @@ const isServiceMatchingTab = (
   }
 };
 
+const PersonaSelect = ({
+  initialValue,
+  options,
+  placeholder,
+  onChange,
+}: {
+  initialValue: string;
+  options: { label: string; value: string }[];
+  placeholder: string;
+  onChange: (value: string) => void;
+}) => {
+  const [value, setValue] = useState(initialValue);
+  return (
+    <Select
+      value={value}
+      placeholder={placeholder}
+      options={options}
+      onChange={nextValue => {
+        const id =
+          typeof nextValue === 'string' ? nextValue : String(nextValue ?? '');
+        setValue(id);
+        onChange(id);
+      }}
+    />
+  );
+};
+
 interface AccountSliderItemProps {
   service: Service;
   actions?: Actions;
@@ -276,12 +303,36 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
         })();
 
         const [boundPersonaName, setBoundPersonaName] = useState<string>('');
+        const [boundPersonaId, setBoundPersonaId] = useState('');
         const [bindingExists, setBindingExists] = useState(false);
+        const [bindingRevision, setBindingRevision] = useState(0);
         const [isLoadingBinding, setIsLoadingBinding] = useState<boolean>(true);
 
         useEffect(() => {
+          const handleBindingUpdated = (event: Event) => {
+            const { detail } = event as CustomEvent;
+            if (
+              detail?.platform === 'whatsapp' &&
+              detail?.accountId === service.id
+            )
+              setBindingRevision(revision => revision + 1);
+          };
+          window.addEventListener(
+            'account-persona-binding-updated',
+            handleBindingUpdated,
+          );
+          return () =>
+            window.removeEventListener(
+              'account-persona-binding-updated',
+              handleBindingUpdated,
+            );
+        }, [service.id]);
+
+        useEffect(() => {
           let cancelled = false;
-          const loadBinding = async () => {
+          const loadBinding = async (revision: number) => {
+            if (revision !== bindingRevision) return;
+            setIsLoadingBinding(true);
             try {
               const bindRes = await getWhatsappBindingApiV1WhatsappBindGet(
                 { session_id: service.id },
@@ -289,8 +340,13 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               );
               if (cancelled || bindRes.status !== 200 || !bindRes.data) return;
               setBindingExists(true);
-              if (!bindRes.data.digital_human_id) return;
+              if (!bindRes.data.digital_human_id) {
+                setBoundPersonaId('');
+                setBoundPersonaName('');
+                return;
+              }
               const boundId = bindRes.data.digital_human_id;
+              setBoundPersonaId(boundId);
               try {
                 const listRes = await listDigitalHumansApiV1DigitalHumansGet();
                 if (cancelled) return;
@@ -307,11 +363,11 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
               if (!cancelled) setIsLoadingBinding(false);
             }
           };
-          loadBinding();
+          loadBinding(bindingRevision);
           return () => {
             cancelled = true;
           };
-        }, [service.id]);
+        }, [bindingRevision, service.id]);
 
         return (
           <ServiceSliderItemShell
@@ -365,7 +421,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                       return;
                     }
 
-                    let selectedPersonaId = '';
+                    let selectedPersonaId = boundPersonaId;
 
                     const confirmDia = DialogPlugin.confirm({
                       placement: 'center',
@@ -384,16 +440,14 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                             label={intl.formatMessage(messages.selectPersona)}
                             name="persona"
                           >
-                            <Select
+                            <PersonaSelect
+                              initialValue={boundPersonaId}
                               placeholder={intl.formatMessage(
                                 messages.selectPersonaPlaceholder,
                               )}
                               options={options}
                               onChange={value => {
-                                selectedPersonaId =
-                                  typeof value === 'string'
-                                    ? value
-                                    : String(value ?? '');
+                                selectedPersonaId = value;
                               }}
                             />
                           </Form.FormItem>
@@ -425,6 +479,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                                 digital_human_id: selectedPersonaId,
                               }));
                           setBindingExists(true);
+                          setBoundPersonaId(selectedPersonaId);
                           setBoundPersonaName(
                             options.find(o => o.value === selectedPersonaId)
                               ?.label ?? '',

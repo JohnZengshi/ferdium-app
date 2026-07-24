@@ -191,6 +191,15 @@ export default class TelegramAutomationStore extends FeatureStore {
       digital_human_id: digitalHumanId,
     });
     this._clearPendingDigitalHuman(instanceId);
+    this._notifyPersonaBindingUpdated(instanceId);
+  }
+
+  _notifyPersonaBindingUpdated(instanceId: string) {
+    window.dispatchEvent(
+      new CustomEvent('account-persona-binding-updated', {
+        detail: { platform: 'telegram', accountId: instanceId },
+      }),
+    );
   }
 
   _retryCounts = new Map<string, number>();
@@ -762,7 +771,10 @@ export default class TelegramAutomationStore extends FeatureStore {
         instance_id: instanceId,
         ...(digitalHumanId ? { digital_human_id: digitalHumanId } : {}),
       });
-      if (digitalHumanId) this._clearPendingDigitalHuman(instanceId);
+      if (digitalHumanId) {
+        this._clearPendingDigitalHuman(instanceId);
+        this._notifyPersonaBindingUpdated(instanceId);
+      }
     } catch (error) {
       debug(
         '[TG-FLUX] initial digital-human binding failed (non-fatal):',

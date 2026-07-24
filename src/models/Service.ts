@@ -920,6 +920,19 @@ export default class Service {
                 service.id;
             }
 
+            // 为 AI 建议接口注入 session_id（Ferdium 服务会话 ID / flux-api instance id）
+            if (api === 'suggestion') {
+              if (
+                enhancedArgs.length === 0 ||
+                typeof enhancedArgs[0] !== 'object' ||
+                enhancedArgs[0] === null
+              ) {
+                enhancedArgs[0] = {};
+              }
+              (enhancedArgs[0] as Record<string, unknown>).session_id =
+                service.id;
+            }
+
             if (
               api === 'owners' &&
               method.includes('getConversationRangeSummary')

@@ -1502,6 +1502,7 @@ export interface LlmCostBreakdownRow {
   label: string;
   cost_usd?: number;
   tokens?: number;
+  web_search_requests?: number;
   calls?: number;
 }
 
@@ -1545,6 +1546,7 @@ export interface LlmCostSummaryResponse {
   total_cost_usd?: number;
   total_prompt_tokens?: number;
   total_completion_tokens?: number;
+  web_search_requests?: number;
   total_calls?: number;
   success_calls?: number;
   failed_calls?: number;
@@ -1562,6 +1564,7 @@ export interface LlmCostTrendPoint {
   cost_usd?: number;
   calls?: number;
   tokens?: number;
+  web_search_requests?: number;
 }
 
 /**
@@ -1955,8 +1958,16 @@ export interface SubAccountListResponse {
 
 /**
  * 根据调用方提交的当前消息与上下文生成客服推荐回复。
+ *
+ * 人设由 session_id 反查 WhatsApp 绑定的数字人决定，调用方不得指定 digital_human_id。
  */
 export interface SuggestionRequest {
+  /**
+     * WhatsApp session_id，用于反查绑定的数字人人设
+     * @minLength 1
+     * @maxLength 128
+     */
+  session_id: string;
   /**
      * 当前需要回复的客户消息
      * @minLength 1

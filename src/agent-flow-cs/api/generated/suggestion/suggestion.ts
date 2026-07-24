@@ -90,7 +90,7 @@ export const getGenerateSuggestionApiV1SuggestionPostUrl = () => {
 }
 
 /**
- * 根据调用方提交的当前消息与上下文生成一条客服推荐回复。
+ * 按 session 绑定的数字人，根据当前消息与上下文生成一条推荐回复。
  * @summary Generate Suggestion
  */
 export const generateSuggestionApiV1SuggestionPost = async (suggestionRequest: SuggestionRequest, options?: RequestInit): Promise<generateSuggestionApiV1SuggestionPostResponse> => {

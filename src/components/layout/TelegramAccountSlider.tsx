@@ -161,6 +161,7 @@ const TelegramSliderItem = SortableElement<TelegramSliderItemProps>(
         intl,
       }: TelegramSliderItemProps & WrappedComponentProps): ReactElement => {
         const [boundPersonaName, setBoundPersonaName] = useState<string>('');
+        const [bindingExists, setBindingExists] = useState(false);
         const [isLoadingBinding, setIsLoadingBinding] = useState<boolean>(true);
         const personaLabel = intl.formatMessage(messages.personaFallback);
 
@@ -172,12 +173,9 @@ const TelegramSliderItem = SortableElement<TelegramSliderItemProps>(
                 { instance_id: service.id },
                 SUPPRESS_ERROR_TOAST,
               );
-              if (
-                cancelled ||
-                bindRes.status !== 200 ||
-                !bindRes.data?.digital_human_id
-              )
-                return;
+              if (cancelled || bindRes.status !== 200 || !bindRes.data) return;
+              setBindingExists(true);
+              if (!bindRes.data.digital_human_id) return;
               const boundId = bindRes.data.digital_human_id;
               try {
                 const listRes = await listDigitalHumansApiV1DigitalHumansGet();
@@ -287,7 +285,7 @@ const TelegramSliderItem = SortableElement<TelegramSliderItemProps>(
                         }
 
                         try {
-                          await (boundPersonaName
+                          await (bindingExists
                             ? switchTelegramBindingDigitalHumanApiV1TelegramBindPatch(
                                 {
                                   digital_human_id: selectedPersonaId,
@@ -298,6 +296,7 @@ const TelegramSliderItem = SortableElement<TelegramSliderItemProps>(
                                 instance_id: service.id,
                                 digital_human_id: selectedPersonaId,
                               }));
+                          setBindingExists(true);
                           setBoundPersonaName(
                             options.find(o => o.value === selectedPersonaId)
                               ?.label ?? '',
@@ -374,6 +373,8 @@ interface ITelegramAccountSliderState {
   isBindDrawerVisible: boolean;
   editingService: ServiceDrawerData | null;
   bindDrawerKey: number;
+  personaOptions: { label: string; value: string }[];
+  personaLoading: boolean;
 }
 
 @inject('stores', 'actions')
@@ -389,6 +390,8 @@ class TelegramAccountSlider extends Component<
       isBindDrawerVisible: false,
       editingService: null,
       bindDrawerKey: 0,
+      personaOptions: [],
+      personaLoading: false,
     };
   }
 
@@ -433,19 +436,40 @@ class TelegramAccountSlider extends Component<
     );
   };
 
-  openBindDrawer = (editingService: ServiceDrawerData | null = null) => {
+  openBindDrawer = async (editingService: ServiceDrawerData | null = null) => {
     this.setState(prev => ({
       isBindDrawerVisible: true,
       editingService,
       bindDrawerKey: prev.bindDrawerKey + 1,
+      personaLoading: !editingService,
     }));
+    if (editingService) return;
+    try {
+      const response = await listDigitalHumansApiV1DigitalHumansGet();
+      this.setState({
+        personaOptions: Array.isArray(response.data)
+          ? response.data.map(persona => ({
+              label: persona.name,
+              value: persona.id,
+            }))
+          : [],
+      });
+    } catch {
+      MessagePlugin.error('获取人设列表失败');
+    } finally {
+      this.setState({ personaLoading: false });
+    }
   };
 
   closeBindDrawer = () => {
     this.setState({ isBindDrawerVisible: false, editingService: null });
   };
 
-  handleBindConfirm = async (data: { name: string; proxy: ServiceProxy }) => {
+  handleBindConfirm = async (data: {
+    name: string;
+    proxy: ServiceProxy;
+    digitalHumanId?: string;
+  }) => {
     const { actions, intl, stores } = this.props;
     const { editingService } = this.state;
 
@@ -482,9 +506,11 @@ class TelegramAccountSlider extends Component<
       return;
     }
 
+    if (!data.digitalHumanId) return;
     stores?.telegramAutomation?.beginBinding({
       name: data.name || 'Telegram',
       proxy: data.proxy,
+      digitalHumanId: data.digitalHumanId,
     });
     this.closeBindDrawer();
   };
@@ -602,6 +628,9 @@ class TelegramAccountSlider extends Component<
                 }
               : null
           }
+          personaOptions={this.state.personaOptions}
+          personaRequired={!this.state.editingService}
+          personaLoading={this.state.personaLoading}
           onClose={this.closeBindDrawer}
           onConfirm={this.handleBindConfirm}
           defaultName="Telegram"

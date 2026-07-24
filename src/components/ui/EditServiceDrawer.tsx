@@ -30,6 +30,18 @@ const messages = defineMessages({
     id: 'editDrawer.accountRemarkPlaceholder',
     defaultMessage: 'Enter notes here',
   },
+  persona: {
+    id: 'editDrawer.persona',
+    defaultMessage: 'Persona',
+  },
+  personaPlaceholder: {
+    id: 'editDrawer.personaPlaceholder',
+    defaultMessage: 'Select a persona',
+  },
+  personaRequired: {
+    id: 'editDrawer.personaRequired',
+    defaultMessage: 'Please select a persona',
+  },
   proxySettings: {
     id: 'editDrawer.proxySettings',
     defaultMessage: 'Proxy Settings',
@@ -204,8 +216,15 @@ interface EditServiceDrawerProps {
     proxy?: ServiceProxy | null;
     cookie?: string;
   } | null;
+  personaOptions?: { label: string; value: string }[];
+  personaRequired?: boolean;
+  personaLoading?: boolean;
   onClose: () => void;
-  onConfirm: (data: { name: string; proxy: ServiceProxy }) => void;
+  onConfirm: (data: {
+    name: string;
+    proxy: ServiceProxy;
+    digitalHumanId?: string;
+  }) => void;
   defaultName?: string;
   /**
    * Restrict the proxy-type picker. Defaults to both HTTP and SOCKS5.
@@ -218,10 +237,14 @@ interface EditServiceDrawerProps {
 
 /** Default allowed proxy protocols (HTTP + SOCKS5). Hoisted to a module const so the default param is referentially stable. */
 const DEFAULT_PROXY_PROTOCOLS: ('http' | 'socks5')[] = ['http', 'socks5'];
+const EMPTY_PERSONA_OPTIONS: { label: string; value: string }[] = [];
 
 export default function EditServiceDrawer({
   visible,
   initialData,
+  personaOptions = EMPTY_PERSONA_OPTIONS,
+  personaRequired = false,
+  personaLoading = false,
   onClose,
   onConfirm,
   defaultName = 'WhatsApp',
@@ -256,6 +279,7 @@ export default function EditServiceDrawer({
   const [cookieEnabled, setCookieEnabled] = useState(!!initialData?.cookie);
   const [cookie, setCookie] = useState(initialData?.cookie ?? '');
   const [isProxyTesting, setIsProxyTesting] = useState(false);
+  const [digitalHumanId, setDigitalHumanId] = useState('');
 
   // Auto-fill textarea (not persisted in state, fires on paste)
   const handleAutoFillRef = useRef(
@@ -344,6 +368,10 @@ export default function EditServiceDrawer({
   }, [proxyHost, proxyPort, proxyType, proxyUser, proxyPassword, intl]);
 
   const handleConfirm = () => {
+    if (personaRequired && !digitalHumanId) {
+      MessagePlugin.warning(intl.formatMessage(messages.personaRequired));
+      return;
+    }
     const proxy: ServiceProxy = proxyEnabled
       ? {
           isEnabled: true,
@@ -355,7 +383,11 @@ export default function EditServiceDrawer({
         }
       : { isEnabled: false };
 
-    onConfirm({ name: remark || defaultName, proxy });
+    onConfirm({
+      name: remark || defaultName,
+      proxy,
+      digitalHumanId: digitalHumanId || undefined,
+    });
   };
 
   return (
@@ -424,6 +456,21 @@ export default function EditServiceDrawer({
                 </span>
               </div>
             </div>
+            {personaRequired && (
+              <div className="flex items-start gap-x-[12px]">
+                <div className="w-[82px] pt-[8px] text-[14px] text-primary">
+                  {intl.formatMessage(messages.persona)}
+                </div>
+                <Select
+                  className="!w-[406px]"
+                  value={digitalHumanId}
+                  options={personaOptions}
+                  loading={personaLoading}
+                  placeholder={intl.formatMessage(messages.personaPlaceholder)}
+                  onChange={value => setDigitalHumanId(String(value))}
+                />
+              </div>
+            )}
           </div>
 
           {/* Proxy Settings */}

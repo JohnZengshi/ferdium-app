@@ -497,6 +497,7 @@ export default class ServicesStore extends TypedStore {
     serviceData,
     redirect = true,
     skipCleanup = false,
+    onCreated = Function.prototype,
   }) {
     if (!this.stores.recipes.isInstalled(recipeId)) {
       debug(`Recipe "${recipeId}" is not installed, installing recipe`);
@@ -532,6 +533,7 @@ export default class ServicesStore extends TypedStore {
     const response = await this.createServiceRequest.execute(recipeId, data)
       .promise;
 
+    onCreated?.(response.data);
     this.allServicesRequest.patch(result => {
       if (!result) return;
       result.push(response.data);
@@ -549,6 +551,7 @@ export default class ServicesStore extends TypedStore {
     if (redirect) {
       this.stores.router.push('/settings/recipes');
     }
+    return response.data;
   }
 
   @action async _createFromLegacyService({ data }) {

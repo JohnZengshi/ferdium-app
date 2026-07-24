@@ -242,6 +242,39 @@ export default class WhatsAppAutomationStore extends FeatureStore {
 
   @observable sessionStatuses = new Map<string, string | undefined>();
 
+  pendingDigitalHumans = new Map<string, string>();
+
+  @action setPendingDigitalHuman(serviceId: string, digitalHumanId: string) {
+    this.pendingDigitalHumans.set(serviceId, digitalHumanId);
+    window.localStorage.setItem(
+      `whatsapp.pendingDigitalHuman.${serviceId}`,
+      digitalHumanId,
+    );
+  }
+
+  getPendingDigitalHuman(serviceId: string): string | null {
+    return (
+      this.pendingDigitalHumans.get(serviceId) ??
+      window.localStorage.getItem(`whatsapp.pendingDigitalHuman.${serviceId}`)
+    );
+  }
+
+  clearPendingDigitalHuman(serviceId: string) {
+    this.pendingDigitalHumans.delete(serviceId);
+    window.localStorage.removeItem(`whatsapp.pendingDigitalHuman.${serviceId}`);
+  }
+
+  bindPendingDigitalHuman(serviceId: string) {
+    const digitalHumanId = this.getPendingDigitalHuman(serviceId);
+    if (!digitalHumanId) return;
+    createWhatsappBindingApiV1WhatsappBindPost({
+      session_id: serviceId,
+      digital_human_id: digitalHumanId,
+    })
+      .then(() => this.clearPendingDigitalHuman(serviceId))
+      .catch(error => debug('WhatsApp persona binding failed:', error));
+  }
+
   @observable qrCodes = new Map<string, string | undefined>();
 
   @observable sessionInfo = new Map<
@@ -822,6 +855,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
             this._refreshSessionDetails(serviceId).catch(error => {
               debug('Error refreshing session details after connect:', error);
             });
+            this.bindPendingDigitalHuman(serviceId);
             this._reloadOnceAfterWhatsAppLogin(serviceId).catch(error => {
               debug('Post-login WhatsApp reload check failed:', error);
             });
@@ -1158,41 +1192,6 @@ export default class WhatsAppAutomationStore extends FeatureStore {
       if (createResponse.status === 200) {
         debug('Session created:', createResponse.data.id);
 
-        // Set agent-flow-cs Bearer token from AKG API key, then notify agent-flow-cs
-        // to bind this session (create WhatsAppBinding + register webhook)
-        const akgApiKey = getApiKey();
-        if (akgApiKey) {
-          try {
-            // POST /api/v1/whatsapp/bind
-            // customInstance.ts will automatically attach X-AKG-Api-Key header
-            createWhatsappBindingApiV1WhatsappBindPost({
-              session_id: serviceId,
-            })
-              .then(() => {
-                debug(
-                  'Agent Flow CS webhook binding triggered for session',
-                  serviceId,
-                );
-              })
-              .catch(bindError => {
-                debug(
-                  'Agent Flow CS webhook binding failed (non-blocking):',
-                  bindError,
-                );
-              });
-          } catch (bindError) {
-            // Non-blocking: session is still usable, just webhook won't be registered
-            debug(
-              'Agent Flow CS webhook binding failed (non-blocking):',
-              bindError,
-            );
-          }
-        } else {
-          debug(
-            'No AKG API key available, skipping agent-flow-cs webhook binding',
-          );
-        }
-
         // Ensure Socket.IO is connected and join room BEFORE starting
         // (so we don't miss early connection.update events)
         this._startSocketIoForSession(serviceId);
@@ -1485,6 +1484,7 @@ export default class WhatsAppAutomationStore extends FeatureStore {
         this._refreshSessionDetails(serviceId).catch(error => {
           debug('Error refreshing session details after connect:', error);
         });
+        this.bindPendingDigitalHuman(serviceId);
         this._reloadOnceAfterWhatsAppLogin(serviceId).catch(error => {
           debug('Post-login WhatsApp reload check failed:', error);
         });

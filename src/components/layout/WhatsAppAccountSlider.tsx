@@ -276,6 +276,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
         })();
 
         const [boundPersonaName, setBoundPersonaName] = useState<string>('');
+        const [bindingExists, setBindingExists] = useState(false);
         const [isLoadingBinding, setIsLoadingBinding] = useState<boolean>(true);
 
         useEffect(() => {
@@ -286,12 +287,9 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                 { session_id: service.id },
                 SUPPRESS_ERROR_TOAST,
               );
-              if (
-                cancelled ||
-                bindRes.status !== 200 ||
-                !bindRes.data?.digital_human_id
-              )
-                return;
+              if (cancelled || bindRes.status !== 200 || !bindRes.data) return;
+              setBindingExists(true);
+              if (!bindRes.data.digital_human_id) return;
               const boundId = bindRes.data.digital_human_id;
               try {
                 const listRes = await listDigitalHumansApiV1DigitalHumansGet();
@@ -415,7 +413,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                         }
 
                         try {
-                          await (boundPersonaName
+                          await (bindingExists
                             ? switchWhatsappBindingDigitalHumanApiV1WhatsappBindPatch(
                                 {
                                   digital_human_id: selectedPersonaId,
@@ -426,6 +424,7 @@ const AccountSliderItem = SortableElement<AccountSliderItemProps>(
                                 session_id: service.id,
                                 digital_human_id: selectedPersonaId,
                               }));
+                          setBindingExists(true);
                           setBoundPersonaName(
                             options.find(o => o.value === selectedPersonaId)
                               ?.label ?? '',
@@ -515,6 +514,8 @@ interface IAccountSliderState {
   isBindDrawerVisible: boolean;
   editingService: ServiceDrawerData | null;
   bindDrawerKey: number;
+  personaOptions: { label: string; value: string }[];
+  personaLoading: boolean;
 }
 
 @inject('stores', 'actions')
@@ -527,6 +528,8 @@ class WhatsAppAccountSlider extends Component<IProps, IAccountSliderState> {
       isBindDrawerVisible: false,
       editingService: null,
       bindDrawerKey: 0,
+      personaOptions: [],
+      personaLoading: false,
     };
   }
 
@@ -589,20 +592,41 @@ class WhatsAppAccountSlider extends Component<IProps, IAccountSliderState> {
     this.setState({ activeTab: id });
   };
 
-  openBindDrawer = (editingService: ServiceDrawerData | null = null) => {
+  openBindDrawer = async (editingService: ServiceDrawerData | null = null) => {
     this.setState(prev => ({
       isBindDrawerVisible: true,
       editingService,
       bindDrawerKey: prev.bindDrawerKey + 1,
+      personaLoading: !editingService,
     }));
+    if (editingService) return;
+    try {
+      const response = await listDigitalHumansApiV1DigitalHumansGet();
+      this.setState({
+        personaOptions: Array.isArray(response.data)
+          ? response.data.map(persona => ({
+              label: persona.name,
+              value: persona.id,
+            }))
+          : [],
+      });
+    } catch {
+      MessagePlugin.error('获取人设列表失败');
+    } finally {
+      this.setState({ personaLoading: false });
+    }
   };
 
   closeBindDrawer = () => {
     this.setState({ isBindDrawerVisible: false, editingService: null });
   };
 
-  handleBindConfirm = (data: { name: string; proxy: ServiceProxy }) => {
-    const { actions } = this.props;
+  handleBindConfirm = (data: {
+    name: string;
+    proxy: ServiceProxy;
+    digitalHumanId?: string;
+  }) => {
+    const { actions, stores } = this.props;
     const { editingService } = this.state;
 
     if (editingService) {
@@ -619,19 +643,30 @@ class WhatsAppAccountSlider extends Component<IProps, IAccountSliderState> {
         duration: 3000,
       });
     } else {
-      actions?.service?.createService?.({
-        recipeId: WHATSAPP_RECIPE_ID,
-        serviceData: {
-          name: data.name || 'WhatsApp',
-          proxy: data.proxy,
-          isHibernationEnabled: true,
-        },
-        redirect: false,
-      });
-      MessagePlugin.success({
-        content: this.props.intl.formatMessage(messages.bindSuccess),
-        duration: 3000,
-      });
+      if (!data.digitalHumanId) return;
+      try {
+        actions?.service?.createService?.({
+          recipeId: WHATSAPP_RECIPE_ID,
+          serviceData: {
+            name: data.name || 'WhatsApp',
+            proxy: data.proxy,
+            isHibernationEnabled: true,
+          },
+          redirect: false,
+          onCreated: (service: Service) => {
+            stores?.whatsappAutomation?.setPendingDigitalHuman(
+              service.id,
+              data.digitalHumanId!,
+            );
+            MessagePlugin.success({
+              content: this.props.intl.formatMessage(messages.bindSuccess),
+              duration: 3000,
+            });
+          },
+        });
+      } catch {
+        return;
+      }
     }
 
     this.closeBindDrawer();
@@ -745,6 +780,9 @@ class WhatsAppAccountSlider extends Component<IProps, IAccountSliderState> {
                 }
               : null
           }
+          personaOptions={this.state.personaOptions}
+          personaRequired={!this.state.editingService}
+          personaLoading={this.state.personaLoading}
           onClose={this.closeBindDrawer}
           onConfirm={this.handleBindConfirm}
         />

@@ -121,6 +121,7 @@ const getAssetBase64 = (assetPath: string): string => {
 export interface TelegramBindingInput {
   name: string;
   proxy?: TelegramProxyLike | null;
+  digitalHumanId: string;
 }
 
 export default class TelegramAutomationStore extends FeatureStore {
@@ -157,6 +158,40 @@ export default class TelegramAutomationStore extends FeatureStore {
   _bindAttempt = 0;
 
   _pendingServiceData: TelegramBindingInput | null = null;
+
+  _pendingDigitalHumans = new Map<string, string>();
+
+  _setPendingDigitalHuman(instanceId: string, digitalHumanId: string) {
+    this._pendingDigitalHumans.set(instanceId, digitalHumanId);
+    window.localStorage.setItem(
+      `telegram.pendingDigitalHuman.${instanceId}`,
+      digitalHumanId,
+    );
+  }
+
+  _getPendingDigitalHuman(instanceId: string): string | null {
+    return (
+      this._pendingDigitalHumans.get(instanceId) ??
+      window.localStorage.getItem(`telegram.pendingDigitalHuman.${instanceId}`)
+    );
+  }
+
+  _clearPendingDigitalHuman(instanceId: string) {
+    this._pendingDigitalHumans.delete(instanceId);
+    window.localStorage.removeItem(
+      `telegram.pendingDigitalHuman.${instanceId}`,
+    );
+  }
+
+  async _bindPendingDigitalHuman(instanceId: string) {
+    const digitalHumanId = this._getPendingDigitalHuman(instanceId);
+    if (!digitalHumanId) return;
+    await createTelegramBindingApiV1TelegramBindPost({
+      instance_id: instanceId,
+      digital_human_id: digitalHumanId,
+    });
+    this._clearPendingDigitalHuman(instanceId);
+  }
 
   _retryCounts = new Map<string, number>();
 
@@ -366,6 +401,7 @@ export default class TelegramAutomationStore extends FeatureStore {
     }
 
     const validId: string = instanceId;
+    this._setPendingDigitalHuman(validId, payload.digitalHumanId);
     try {
       await this.stores.services._createService({
         recipeId: TELEGRAM_RECIPE_ID,
@@ -379,6 +415,7 @@ export default class TelegramAutomationStore extends FeatureStore {
       });
       debug('[TG-PERF] _createService took', Date.now() - t0, 'ms');
     } catch {
+      this._clearPendingDigitalHuman(validId);
       if (attempt !== this._bindAttempt) return;
       runInAction(() => {
         this.bindStatus = TELEGRAM_BIND_STATUS.ERROR;
@@ -719,12 +756,13 @@ export default class TelegramAutomationStore extends FeatureStore {
     )
       return;
 
-    // Best-effort: attach initial digital-human binding. Swallowed on failure
-    // since the channel binding already exists and login already succeeded.
+    const digitalHumanId = this._getPendingDigitalHuman(instanceId);
     try {
       await createTelegramBindingApiV1TelegramBindPost({
         instance_id: instanceId,
+        ...(digitalHumanId ? { digital_human_id: digitalHumanId } : {}),
       });
+      if (digitalHumanId) this._clearPendingDigitalHuman(instanceId);
     } catch (error) {
       debug(
         '[TG-FLUX] initial digital-human binding failed (non-fatal):',
@@ -1108,7 +1146,12 @@ export default class TelegramAutomationStore extends FeatureStore {
             typeof obj.status === 'string' ? obj.status : undefined;
           if (id && status) {
             runInAction(() => this.instanceStatuses.set(id, status));
-            if (status === 'authorized') this._authorizedServiceIds.add(id);
+            if (status === 'authorized') {
+              this._authorizedServiceIds.add(id);
+              this._bindPendingDigitalHuman(id).catch(error => {
+                debug('[TG-FLUX] pending persona binding failed:', error);
+              });
+            }
           }
         }
       }
